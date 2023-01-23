@@ -67,6 +67,11 @@
   'opsz' 48
 }
 
+.i_size{
+    font-variation-settings:
+    'opsz' 40
+}
+
 .fill{
     font-variation-settings:
     'FILL' 1

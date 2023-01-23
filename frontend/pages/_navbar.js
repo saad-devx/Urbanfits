@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 function ListItem(props){
     return (
-        <li className='list_item transition-all' ><Link href='#' className='flex justify-between px-5 border-b-2 border-white hover:border-yellow-600 transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
+        <li className='list_item transition-all' ><Link href='#' className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
     )
 }
 export default function Navbar() {
@@ -41,8 +41,8 @@ export default function Navbar() {
                 <i className='hidden lg:block' />
             </nav>
 
-            <div className={` ${menu} w-full lg:w-[25%] h-full fixed m-0 left-0 top-0 z-10 transition duration-700 bg-white`}>
-                <div className="border-b-2 w-full h-1/5 flex flex-col">
+            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed m-0 left-0 top-0 z-10 transition duration-700 bg-white`}>
+                <div className="border-b-2 w-full h-[16%] flex flex-col">
                     <div className="flex justify-end items-center w-full h-1/2 px-7">
                         <Link href='#' onClick={handleMenu} className=''>
                             <div className={`${bars} menu btn6`}>
@@ -55,8 +55,8 @@ export default function Navbar() {
                         <span className='flex space-x-5' ><Link href='/login' className="flex font_futuraLT"><i className="material-symbols-outlined text-[1.6rem]">search</i></Link><Link href='/login' ><i className="material-symbols-outlined text-[1.6rem]">local_mall</i></Link></span>
                     </div>
                 </div>
-                <div className="w-full h-3/5">
-                    <ul className=' list-none text-lg my-5 space-y-5 font_futuraLT' >
+                <div className="w-full h-1/2 ">
+                    <ul className=' list-none text-lg my-5 space-y-5 lg:space-y-3 font_futuraLT' >
                         <ListItem value='New In' />
                         <ListItem value='Men' />
                         <ListItem value='Women' />
@@ -66,7 +66,12 @@ export default function Navbar() {
                         <ListItem value='Our Essentials' />
                     </ul>
                 </div>
-                <div className="w-full h-1/5 border-t-2"></div>
+                <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">
+                    <span>Language: English</span>
+                    <span>Shipping to: United Arab Emirates</span>
+                    <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">location_on</i> Urban Fits</span>
+                    <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">call</i> +971 52 700 1997</span>
+                </div>
             </div>
         </>
     )
