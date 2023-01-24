@@ -8,19 +8,21 @@ function ListItem(props){
         <li className='list_item transition-all' ><Link href='#' className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
     )
 }
-export default function Navbar() {
+export default function Navbar(props) {
     const [nav, setNav] = useState('')
     const [bars, setBars] = useState('')
     const [menu, setMenu] = useState('-translate-x-full')
     const handleMenu = () => {
         if (bars === '') {
             setBars('open')
+            props.setExpand(true)
             setMenu('')
             setNav('lg:opacity-0 lg:pointer-events-none')
         }
         if (bars === 'open') {
-            setNav('')
             setBars('')
+            props.setExpand(false)
+            setNav('')
             setMenu('-translate-x-full')
         }
     }
@@ -41,7 +43,7 @@ export default function Navbar() {
                 <i className='hidden lg:block' />
             </nav>
 
-            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed m-0 left-0 top-0 z-10 transition duration-700 bg-white`}>
+            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed m-0 left-0 top-0 z-10 transition duration-700 bg-white shadow-lg`}>
                 <div className="border-b-2 w-full h-[16%] flex flex-col">
                     <div className="flex justify-end items-center w-full h-1/2 px-7">
                         <Link href='#' onClick={handleMenu} className=''>

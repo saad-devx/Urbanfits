@@ -246,3 +246,17 @@ input[type="checkbox"]:checked {
     border: none;
 }
 
+
+.border_gradient::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+    z-index: -5;
+}
+
+/* body:has(.border_gradient:hover) .border_gradient::before{
+} */
