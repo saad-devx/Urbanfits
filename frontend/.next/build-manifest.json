@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/userSettings": [
+    "/user/usersettings": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/userSettings.js"
+      "static/chunks/pages/user/usersettings.js"
     ]
   },
   "ampFirstPages": []
