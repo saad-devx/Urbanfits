@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import Button from './_button'
+import Button from './subcomponents/_button'
 import Link from 'next/link'
 export default function Error404() {
   return (
