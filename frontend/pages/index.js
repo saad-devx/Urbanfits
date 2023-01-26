@@ -16,12 +16,12 @@ export default function Home() {
       </Head>
       <main className="w-screen p-10 h-screen text-white bg-slate-700 overflow-x-hidden">
         <h1 className="text-white text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
-        <Link href="/giftcard"><Button value="Go to the Giftcard page" classes="w-full" ></Button></Link>
-        <Link href="/signup"><Button value="Go to the Sign up page" classes="w-full" ></Button></Link><br />
-        <Link href="/login"><Button value="Go to the Log in page" classes="w-full" ></Button></Link>
-        <Link href="/forgotpass"><Button value="Go to the Forgot password page" classes="w-full" ></Button></Link>
-        <Link href="/resetpass"><Button value="Go to the Reset password page" classes="w-full" ></Button></Link>
-        <Link href="/user/usersettings"><Button value="Go to the My Account page" classes="w-full" ></Button></Link>
+        <Button href="/giftcard" value="Go to the Giftcard page" classes="w-full" ></Button>
+        <Button href="/signup" value="Go to the Sign up page" classes="w-full" ></Button>
+        <Button href="/login" value="Go to the Log in page" classes="w-full" ></Button>
+        <Button href="/forgotpassword" value="Go to the Forgot password page" classes="w-full" ></Button>
+        <Button href="/forgotpassword" value="Go to the Reset password page" classes="w-full" ></Button>
+        <Button href="/user/personalinfo" value="Go to the My Account page" classes="w-full" ></Button>
         <h1 className="text-white text-center">Home Page is not ready yet</h1>
       </main>
     </>
