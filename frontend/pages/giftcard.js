@@ -17,8 +17,8 @@ export default function Giftcard() {
                             <Image src={giftBanner} alt='' className={`hidden lg:block`} />
                         </div>
                         <div className="w-full lg:w-11/12 mx-3 p-5 flex flex-col lg:flex-row justify-around items-center space-y-6 lg:space-y-0">
-                            <Card value='Add a personalized messgae, we deliver your gift via email.' sizeClasses='w-full h-72 md:w-1/2 lg:w-2/5 md:h-1/2' />
-                            <Card value='Pick one out and we’ll mail it to the lucky recipent.' sizeClasses='w-full h-72 md:w-1/2 lg:w-2/5 md:h-2/5' />
+                            <Card title="e-Gift Cards" value='Add a personalized messgae, we deliver your gift via email.' valueCenter btnValue="Shop Gift Card" classes='w-full py-20 justify-center items-center h-72 md:w-1/2 lg:w-2/5 md:h-1/2' />
+                            <Card title="Gift Cards" value='Pick one out and we’ll mail it to the lucky recipent.' valueCenter btnValue="Shop Gift Card" classes='w-full py-20 justify-center items-center h-72 md:w-1/2 lg:w-2/5 md:h-2/5' />
                         </div>
                     <Footer classes={expand === true ? 'rounded-3xl' : 'rounded-sm'} />
                     </section>

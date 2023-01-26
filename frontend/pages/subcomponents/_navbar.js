@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 function ListItem(props){
     return (
-        <li className='list_item transition-all' ><Link href='#' className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
+        <li className='list_item transition-all' ><Link href={props.href} className='flex justify-between px-8 border-b-2 text-base border-white transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
     )
 }
 export default function Navbar(props) {
@@ -34,10 +34,10 @@ export default function Navbar(props) {
                     </div>
                 </div>
                 <div className="w-full h-full lg:h-1/3 text-gray-900 flex lg:flex-col justify-around items-center">
-                    <span href='#' className='lg:hidden flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined text-[1.6rem">menu</i></span>
+                    <span className='lg:hidden cursor-pointer flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined text-[1.6rem">menu</i></span>
                     <Link href='/' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">search</i></Link>
                     <Link href='/' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">local_mall</i></Link>
-                    <Link href='/' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">person</i></Link>
+                    <Link href='/user/personalinfo' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">person</i></Link>
                 </div>
                 <i className='hidden lg:block' />
             </nav>
@@ -58,13 +58,14 @@ export default function Navbar(props) {
                 </div>
                 <div className="w-full h-1/2 ">
                     <ul className=' list-none text-lg my-5 space-y-5 lg:space-y-3 font_futuraLT' >
-                        <ListItem value='New In' />
-                        <ListItem value='Men' />
-                        <ListItem value='Women' />
-                        <ListItem value='Eyewear' />
-                        <ListItem value='Kids' />
-                        <ListItem value='Gifts Selection' />
-                        <ListItem value='Our Essentials' />
+                        <ListItem href='/' value='Home' />
+                        <ListItem href='#' value='New In' />
+                        <ListItem href='#' value='Men' />
+                        <ListItem href='#' value='Women' />
+                        <ListItem href='#' value='Eyewear' />
+                        <ListItem href='#' value='Kids' />
+                        <ListItem href='#' value='Gifts Selection' />
+                        <ListItem href='#' value='Our Essentials' />
                     </ul>
                 </div>
                 <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">

@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'gold' : "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)"
+      }
     }
   },
   plugins: [],
