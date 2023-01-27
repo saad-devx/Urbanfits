@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '../subcomponents/_navbar'
-import Card from '../subcomponents/_card'
 import AccountMenu from '../subcomponents/_accountmenu'
 
 export default function EmailPassword() {

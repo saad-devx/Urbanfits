@@ -57,13 +57,10 @@ export default function EmailPassword() {
                                 </div>
                             </div>
                             <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
-                                <input className="bg-transparent outline-none border-none" type="addresstitle" name="addresstitle" id="addresstitle" onChange={onchange} placeholder="Address Title*" />
-                            </div>
-                            <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
-                                <input className="bg-transparent outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Confirm Email*" />
+                                <input className="bg-transparent outline-none border-none" type="text" name="address" id="address" onChange={onchange} placeholder="Address 1*" />
                             </div>
                             <div className=" w-1/2 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
-                                <input className="bg-transparent outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Confirm Email*" />
+                                <input className="bg-transparent outline-none border-none" type="text" name="city" id="city" onChange={onchange} placeholder="City*" />
                             </div>
                             <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
                                 <select defaultValue="Country" className="w-full border-none outline-none bg-transparent border-b-gray-800" autoComplete="honorific-prefix" data-missing-error="This field is required." required aria-required="true">
@@ -75,10 +72,10 @@ export default function EmailPassword() {
                             </div>
                             <div className="flex justify-between w-3/4 ">
                                 <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
-                                    <input className="bg-transparent outline-none border-none" type="number" name="postalcode" id="postalcode" max={4} maxLength={4} onChange={onchange} placeholder="+971" />
+                                    <input className="bg-transparent outline-none border-none" type="tel" name="postalcode" id="postalcode" size="4" maxLength={4} onChange={onchange} placeholder="+971" />
                                 </div>
                                 <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
-                                    <input className="bg-transparent outline-none border-none" type="number" name="phone" id="phone" onChange={onchange} placeholder="Phone Number" />
+                                    <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone" id="phone" size="15" maxLength={15} onChange={onchange} placeholder="Phone Number" />
                                 </div>
                             </div>
                             <div className="w-full flex justify-end space-x-4">

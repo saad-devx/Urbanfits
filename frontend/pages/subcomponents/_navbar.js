@@ -27,7 +27,7 @@ export default function Navbar(props) {
     }
     return (
         <>
-            <nav className={` ${nav} border fixed z-30 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
+            <nav className={` ${nav} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
                         <div className="icon"></div>
