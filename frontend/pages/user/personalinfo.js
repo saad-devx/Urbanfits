@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '../subcomponents/_navbar'
 import Card from '../subcomponents/_card'
+import Button from '../subcomponents/_button'
 import AccountMenu from '../subcomponents/_accountmenu'
 
 export default function Personalinfo() {
@@ -24,7 +25,7 @@ export default function Personalinfo() {
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'w-3/4' : 'w-[95%]'} h-full fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu />
-                    <section className='w-full lg:w-[67%] font_futuraLT text-left p-9 pl-7 overflow-y-scroll scroll-py-10' >
+                    <section className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pb-20 overflow-y-scroll ' >
                         <h2 className="text-3xl mb-4">My Account</h2>
                         <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                         <form className="mt-10 font_futuraLT space-y-5" >
@@ -49,6 +50,10 @@ export default function Personalinfo() {
                                 <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
                                     <input className="bg-transparent outline-none border-none" type="dob" name="dob" id="dob" onChange={onchange} placeholder="Date Of Birth" />
                                 </div>
+                            </div>
+                            <div className="w-3/4 flex justify-end space-x-4">
+                                <Button value="Cancel" bg="bg-gray-200 text-black" classes="w-full md:w-1/3" />
+                                <Button value="Save" classes="w-full md:w-1/3" />
                             </div>
                         </form>
                         <h1 className="text-xl mt-5">Newsletter Subscription</h1>
@@ -85,9 +90,11 @@ export default function Personalinfo() {
                             <h2 className="text-xl mb-8">My Payment Methods</h2>
                             <Link href='/user/paymentmethods' id='address' className=" w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
                         </div>
-                        <Card title="FAQ" value='Find all the answers to the frequently asked questions below.' btnValue="See Your FAQs" btnClasses="w-1/5 text-sm" classes='w-full h-[40%] mb-7 p-10 justify-center items-start' />
-                        <Card title="Customer Care" value='Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone.' btnValue="Get In Touch" btnClasses="w-1/5 text-sm" classes='w-full h-[40%] mb-7 p-10 justify-center items-start' />
-                        <Card title="Privacy Policy" value='Do you have any questions on how we process your data ? Please consult our privacy policy.' btnValue="See Your FAQs" btnClasses="w-1/5 text-sm" classes='w-full h-[40%] mb-7 p-10 justify-center items-start' />
+                        <div className="w-full flex flex-col justify-center items-center">
+                            <Card title="FAQ" value='Find all the answers to the frequently asked questions below.' btnValue="See Your FAQs" btnClasses=" w-1/2 md:w-1/5 text-sm" classes='w-full h-[40%] mb-7 p-10 justify-center items-center md:items-start' />
+                            <Card title="Customer Care" value='Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone.' btnValue="Get In Touch" btnClasses=" w-1/2 md:w-1/5 text-sm" classes='w-full h-[40%] mb-7 p-10 justify-center items-center md:items-start' />
+                            <Card title="Privacy Policy" value='Do you have any questions on how we process your data ? Please consult our privacy policy.' btnValue="See Your FAQs" btnClasses=" w-1/2 md:w-1/5 text-sm" classes='w-full h-[40%] mb-7 p-10 justify-center items-center md:items-start' />
+                        </div>
                     </section>
                 </section>
             </main>

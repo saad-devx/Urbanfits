@@ -111,12 +111,12 @@ export default function Signing(props) {
                 </section>
 
                 <div className="w-full my-5 px-10 font_futuraLT flex flex-col lg:flex-row justify-between lg:space-x-3">
-                    <Button value="Home" classes='w-full' />
-                    <Button value="Catelog" classes='w-full' />
-                    <Button value="Contact Us" classes='w-full' />
-                    <Button value="Privacy Policy" classes='w-full' />
-                    <Button value="Legal Notice" classes='w-full' />
-                    <Button value="Terms & Condition" classes='w-full' />
+                    <Button href='/' value="Home" classes='w-full' />
+                    <Button href='/catelog' value="Catelog" classes='w-full' />
+                    <Button href='/contact' value="Contact Us" classes='w-full' />
+                    <Button href='/privacypolicy' value="Privacy Policy" classes='w-full' />
+                    <Button href='/legalnotice' value="Legal Notice" classes='w-full' />
+                    <Button href='/terms&conditions' value="Terms & Condition" classes='w-full' />
                 </div>
             </main>
         </>

@@ -2,9 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user/personalinfo": "pages/user/personalinfo.js",
-  "/giftcard": "pages/giftcard.js",
-  "/user/email&password": "pages/user/email&password.js",
-  "/user/address": "pages/user/address.js",
-  "/": "pages/index.js"
+  "/user/personalinfo": "pages/user/personalinfo.js"
 }
