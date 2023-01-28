@@ -69,8 +69,8 @@ export default function Navbar(props) {
                     </ul>
                 </div>
                 <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">
-                    <span>Language: English</span>
-                    <span>Shipping to: United Arab Emirates</span>
+                    <Link href='#' ><span>Language: English</span></Link>
+                    <Link href='#' ><span>Shipping to: United Arab Emirates</span></Link>
                     <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">location_on</i> Urban Fits</span>
                     <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">call</i> +971 52 700 1997</span>
                 </div>

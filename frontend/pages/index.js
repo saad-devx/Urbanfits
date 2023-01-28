@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
 import { Inter } from '@next/font/google'
-import Button from './subcomponents/_button'
-import Navbar from './subcomponents/_navbar'
+import Button from './subcomponents/_button';
+import Navbar from './subcomponents/_navbar';
+import Newsletter from './subcomponents/_newsletter';
 import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,15 +18,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Navbar setExpand={setExpand} />
+      {/* <Newsletter /> */}
       <main className={` ${expand === true ? 'w-3/4' : 'w-[95%]'} w-screen p-10 h-screen text-white bg-slate-700 overflow-x-hidden transition-all duration-700 absolute top-0 right-0`}>
         <h1 className="text-white text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
-        <Button href="/giftcard" value="Go to the Giftcard page" classes="w-full" ></Button>
-        <Button href="/signup" value="Go to the Sign up page" classes="w-full" ></Button>
-        <Button href="/login" value="Go to the Log in page" classes="w-full" ></Button>
-        <Button href="/forgotpassword" value="Go to the Forgot password page" classes="w-full" ></Button>
-        <Button href="/forgotpassword" value="Go to the Reset password page" classes="w-full" ></Button>
-        <Button href="/user/personalinfo" value="Go to the My Account page" classes="w-full" ></Button>
-        <h1 className="text-white text-center">Home Page is not ready yet</h1>
+        <h1 className="text-gray-300 text-2xl text-center">Home Page is not ready yet</h1>
+        {/* <Button href="/contact" value="Contact Us page" classes="w-full" ></Button> */}
+        <Button href="/signup" value="Sign up page" classes="w-full" ></Button>
+        <Button href="/login" value="Log in page" classes="w-full" ></Button>
+        <Button href="/giftcard" value="Giftcard page" classes="w-full" ></Button>
+        <Button href="/user/personalinfo" value="My Account page" classes="w-full" ></Button>
+        <Button href="/forgotpassword" value="Forgot password page" classes="w-full" ></Button>
+        <Button href="/resetpassword" value="Reset password page" classes="w-full" ></Button>
       </main>
     </>
   )

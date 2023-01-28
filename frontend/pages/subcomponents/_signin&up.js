@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Button from './_button'
 import Urbanfit_logo from '../../public/U-logo1 1 1.png'
 import google_logo from '../../public/google-logo.png'
-import apple_logo from '../../public/apple-logo.png'
+import apple_logo from '../../public/apple-logo2.png'
 
 // configuring inter font
 const inter = Inter({ subsets: ['latin'] })
@@ -18,9 +18,9 @@ export default function Signing(props) {
     console.log(page)
 
     // configuring router
-    const router = useRouter()
+    const router =useRouter()
 
-    //handling user input details with state hook and onchange event
+    //handling user input details witte hook and onchange event
     const initialFormObj = {
         username: '',
         email: '',
@@ -69,42 +69,43 @@ export default function Signing(props) {
 
                     <div className=" w-[95%] md:w-[400px] mx-auto py-7 bg-white">
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} mx-auto mb-8`} />
-                        <div className={`${router.pathname==='/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
+                        <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
                             <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="33" alt="google" /><p>Apple</p></a></button>
+                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="28" alt="apple" /><p>Apple</p></a></button>
                         </div>
                         <form className="bg-white p-2 font_futuraLT" onSubmit={onsubmit} >
-                            <div className={`data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4`}>
-                                <input className="pl-2 outline-none border-none" type="text" name="username" id="username" onChange={onchange} placeholder="Username" />
+                            <div className={`data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                <input className="outline-none border-none" type="text" name="username" id="username" onChange={onchange} placeholder="Username" />
                             </div>
-                            <div className="data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
-                                <input className="pl-2 outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Email" />
+                            <div className="data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <input className="outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Email" />
                             </div>
-                            <div className={`data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4`}>
-                                <input className="pl-2 outline-none border-none" type='number' name="phone" id="phone" onChange={onchange} placeholder="Phone No." />
+                            <div className={`data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                <input className="outline-none border-none" type='number' name="phone" id="phone" onChange={onchange} placeholder="Phone No." />
                             </div>
-                            <div className={` ${props.type === 'forgotpass' ? 'hidden' : ''} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4`}>
-                                <input className="pl-2 outline-none border-none" type='password' name="password" id="password" onChange={onchange} placeholder="Password" />
+                            <div className={` ${props.type === 'forgotpass' ? 'hidden' : ''} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                <input className="outline-none border-none" type='password' name="password" id="password" onChange={onchange} placeholder="Password" />
                             </div>
-                            <div className={` ${props.type === 'resetpass' ? '' : 'hidden'} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3`}>
-                                <input className="pl-2 outline-none border-none" type='password' name="reppassword" id="reppassword" onChange={onchange} placeholder="Repeat Password" />
+                            <div className={` ${props.type === 'resetpass' ? '' : 'hidden'} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2`}>
+                                <input className="outline-none border-none" type='password' name="reppassword" id="reppassword" onChange={onchange} placeholder="Repeat Password" />
                             </div>
                             <div className="my-3">
                                 <small className='text-gray-400 text-xs '>{props.type === 'forgotpass' ? 'Please enter your username or email address. You will receive an email message with instructions on how to reset your password.' : 'Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.'}</small>
                             </div>
                             <div className={`${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-3 flex items-center border-b`}>
                                 <div className='mx-2' >
-                                    <input className='' type="checkbox" id="todo" name="todo" value="todo" />
+                                    <input className='rounded' type="checkbox" id="todo" name="todo" value="todo" />
                                 </div>
-                                <div className=' text-left h-full flex items-center' >
-                                    <label htmlFor="todo"><small className="ml-1 text-xs text-gray-400">{page === 'login' ? 'Rmember me' : 'Buy creating an account, I agree to the Terms & Conditions.I have read the Legal Notice and Privacy Policy'}</small></label>
+                                <div className=" w-full flex justify-between">
+                                    <small className="ml-1 text-sm text-gray-400">{page === 'login' ? 'Remember me' : 'Buy creating an account, I agree to the Terms & Conditions.I have read the Legal Notice and Privacy Policy'}</small>
+                                    <small className="ml-1 text-sm text-gray-400"><Link href="/forgotpassword" >{page === 'login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
                             <Button value={btnvalue()} classes='w-full' />
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                             <div className={`${page === 'login' ? 'hidden' : ''} ${inter.className} w-full mt-5 flex justify-center space-x-6`}>
                                 <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>
-                                <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="33" alt="google" /><p>Apple</p></a></button>
+                                <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="28" alt="apple" /><p>Apple</p></a></button>
                             </div>
                         </form>
                     </div>

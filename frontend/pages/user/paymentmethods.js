@@ -5,7 +5,7 @@ import Button from '../subcomponents/_button';
 import AccountMenu from '../subcomponents/_accountmenu'
 
 
-export default function EmailPassword() {
+export default function Payments() {
     const [expand, setExpand] = useState(false)
     const initialPaymentObj = {
         cardnumber: null,
@@ -17,22 +17,21 @@ export default function EmailPassword() {
         setCardDetails({ ...cardDetails, [e.target.name]: e.target.value })
         console.log(cardDetails)
     }
-    const {cardnumber, cardexpirydate, cvc} = cardDetails
-    // const [disable, setDisable] = useState(false)
-    const disabler = ()=>{
+    const { cardnumber, cardexpirydate, cvc } = cardDetails
+    const disabler = () => {
         if (!cardnumber || !cardexpirydate || !cvc) {
             return true
         }
     }
 
-    const max = ()=>{
+    const max = () => {
         if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
     }
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
-                <section className={`bg-gray-100 ${expand === true ? 'w-3/4' : 'w-[95%]'} h-full fixed right-0 flex transition-all duration-700`}>
+                <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu />
                     <section className='w-full lg:w-[67%] p-9 pl-7 pb-20 lg:pb-9 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
                         <h2 className="text-3xl mb-4">My Account</h2>
@@ -51,27 +50,27 @@ export default function EmailPassword() {
                                     <path d="M20.7371 9.39043C20.7371 9.39043 21.067 11.0615 21.1408 11.4119H19.6911C19.8344 11.0121 20.3856 9.45781 20.3856 9.45781C20.3769 9.47129 20.5288 9.04902 20.6156 8.78848L20.7371 9.39043ZM25.3335 2.59375V18.4062C25.3335 19.5967 24.4003 20.5625 23.2502 20.5625H2.41683C1.26666 20.5625 0.333496 19.5967 0.333496 18.4062V2.59375C0.333496 1.40332 1.26666 0.4375 2.41683 0.4375H23.2502C24.4003 0.4375 25.3335 1.40332 25.3335 2.59375ZM6.95242 13.8781L9.69547 6.90625H7.85086L6.14513 11.668L5.9585 10.7021L5.35086 7.49473C5.25103 7.05 4.94287 6.92422 4.56093 6.90625H1.75277L1.72238 7.04551C2.40815 7.2252 3.02013 7.48574 3.55398 7.81367L5.1078 13.8781H6.95242ZM11.0496 13.8871L12.1434 6.90625H10.3986L9.30919 13.8871H11.0496ZM17.1217 11.6051C17.1304 10.81 16.6616 10.2035 15.659 9.70488C15.047 9.38594 14.6738 9.17031 14.6738 8.84238C14.6825 8.5459 14.9906 8.24043 15.6764 8.24043C16.245 8.22695 16.6616 8.36621 16.9741 8.50547L17.1304 8.58184L17.3691 7.07246C17.0262 6.9332 16.4793 6.77598 15.8066 6.77598C14.0835 6.77598 12.8726 7.72832 12.8639 9.08496C12.8509 10.0867 13.7319 10.6438 14.3917 10.9807C15.0644 11.3221 15.2944 11.5467 15.2944 11.8477C15.2858 12.3148 14.7476 12.5305 14.2484 12.5305C13.554 12.5305 13.1807 12.4182 12.6121 12.1576L12.3821 12.0453L12.1391 13.6131C12.547 13.8062 13.3022 13.977 14.0835 13.9859C15.9151 13.9904 17.1087 13.0516 17.1217 11.6051ZM23.2502 13.8871L21.8439 6.90625H20.4941C20.0774 6.90625 19.7606 7.03203 19.5826 7.48574L16.9915 13.8871H18.8231C18.8231 13.8871 19.1226 13.0246 19.1877 12.8404H21.4272C21.4793 13.0875 21.6356 13.8871 21.6356 13.8871H23.2502Z" fill="black" />
                                 </svg>
                             </div>
-                            <div className=" w-full py-2 px-3 mb-4 space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition">
+                            <div className=" w-full py-2 mb-4 space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition">
                                 <label htmlFor="cardnumber">Card Number</label>
                                 <input className="bg-transparent outline-none border-none" type="tel" name="cardnumber" id="cardnumber" value={cardDetails.cardnumber} maxLength="16" onChange={onchange} required placeholder="2525 2525 4141 3636" />
                             </div>
                             <div className="flex justify-between w-full lg:w-3/4 ">
-                                <div className=" w-2/5 space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
+                                <div className=" w-2/5 space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     <label htmlFor="cardexpirydate">Expiry Date</label>
                                     <input className="bg-transparent outline-none border-none" type="date" name="cardexpirydate" id="cardexpirydate" value={cardDetails.cardexpirydate} onChange={onchange} required placeholder="MM/YY" />
                                 </div>
-                                <div className=" w-2/5 space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
+                                <div className=" w-2/5 space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     <label htmlFor="cvc">CVC/CVV</label>
                                     <input className="bg-transparent outline-none border-none" type="tel" size={3} maxLength={3} name="cvc" id="cvc" value={cardDetails.cvc} onChange={onchange} required placeholder="3 digits" />
                                 </div>
                             </div>
-                            <div className="w-full space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 px-3 mb-4">
+                            <div className="w-full space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 <label htmlFor="fullname">Card Holder Name</label>
                                 <div className='w-full flex justify-between' ><input className="bg-transparent outline-none border-none" type="tel" value="Muhammad Bilawal" name="fullname" id="fullname" onChange={onchange} placeholder="User Name" /><Link href='/user/personalinfo' ><i class="material-symbols-outlined">edit_square</i></Link></div>
                             </div>
                             <div className="w-full space-y-4">
-                            <p>Urban fit processes the data collected in order to manage your information and to save, if you wish, your means of payment in order to facilitate your future orders. To find out more about how we manage your personal data and to exercise to right your rights, please refer to our privacy policy.</p>
-                            <p>*Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
+                                <p>Urban fit processes the data collected in order to manage your information and to save, if you wish, your means of payment in order to facilitate your future orders. To find out more about how we manage your personal data and to exercise to right your rights, please refer to our privacy policy.</p>
+                                <p>*Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
                             </div>
                             <div className="w-full flex justify-end space-x-4">
                                 <Button value="Cancel" bg="bg-gray-200 text-black" classes="w-full md:w-1/3" />
