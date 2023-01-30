@@ -41,16 +41,16 @@ export default function Home() {
       </Head>
 
       <Navbar setExpand={setExpand} />
-      {/* <LoadingModal show={modal1} toggleModal={toggleModal} />
+      <LoadingModal show={modal1} toggleModal={toggleModal} />
       <Newsletter show={modal2} toggleModal={toggleModal} />
-      <LanguageModal show={modal3} toggleModal={toggleModal} /> */}
+      <LanguageModal show={modal3} toggleModal={toggleModal} />
 
       <main className={` ${expand === true ? 'w-3/4' : 'w-[95%]'} w-screen p-10 h-screen text-white bg-slate-700 overflow-x-hidden transition-all duration-700 absolute top-0 right-0`}>
         <h1 className="text-white text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
         <h1 className="text-gray-300 text-2xl text-center">Home Page is not ready yet</h1>
-        {/* <Button onclick={toggleModal} name="modal1" value="Activate Change Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
+        <Button onclick={toggleModal} name="modal1" value="Activate Change Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
         <Button onclick={toggleModal} name="modal2" value="Activate Newsletter Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
-        <Button onclick={toggleModal} name="modal3" value="Activate Language & Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" /> */}
+        <Button onclick={toggleModal} name="modal3" value="Activate Language & Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
         <Button href="/contact" value="Contact Us page" bg="bg-gradient-to-r from-purple-500 to-pink-500"  classes="w-full" ></Button>
 
         <Button href="/signup" value="Sign up page" classes="w-full" ></Button>

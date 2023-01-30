@@ -75,7 +75,7 @@ export default function Payments() {
                                 <p>*Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
                             </div>
                             <div className="w-full flex justify-end space-x-4">
-                                <Button value="Cancel" bg="bg-gray-200 text-black" classes="w-full md:w-1/3" />
+                                <Button value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" />
                                 <Button disabled={disabler()} type="submit" value="Save Card" classes="w-full md:w-1/3" />
                             </div>
                         </form>

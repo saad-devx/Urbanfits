@@ -39,7 +39,7 @@ export default function EmailPassword() {
                             </div>
                         </form>
                         <div className="w-full flex justify-end space-x-4">
-                            <Button value="Cancel" bg="bg-gray-200 text-black" classes="w-full md:w-1/3" />
+                            <Button value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" />
                             <Button value="Save New Email" classes="w-full md:w-1/3" />
                         </div>
                     </section>

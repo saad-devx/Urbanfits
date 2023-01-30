@@ -56,7 +56,7 @@ export default function Personalinfo() {
                                 </div>
                             </div>
                             <div className="w-full lg:w-3/4 flex justify-end space-x-4">
-                                <Button value="Cancel" bg="bg-gray-200 text-black" classes="w-full md:w-1/3" />
+                                <Button value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" />
                                 <Button value="Save" classes="w-full md:w-1/3" />
                             </div>
                         </form>
