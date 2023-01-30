@@ -17,6 +17,8 @@ export default function Payments() {
         setCardDetails({ ...cardDetails, [e.target.name]: e.target.value })
         console.log(cardDetails)
     }
+
+    // to enable the "save card" button only when the form is filled
     const { cardnumber, cardexpirydate, cvc } = cardDetails
     const disabler = () => {
         if (!cardnumber || !cardexpirydate || !cvc) {
