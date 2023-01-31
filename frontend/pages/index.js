@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
 import { Inter } from '@next/font/google'
-import Button from './subcomponents/_link_btn';
-import Navbar from './subcomponents/_navbar';
+import Button from '../subcomponents/_link_btn';
+import Navbar from '../subcomponents/_navbar';
 import styles from '@/styles/Home.module.css'
-import Newsletter from './subcomponents/_newsletter';
-import LoadingModal from './subcomponents/_loadingmodal';
-import LanguageModal from './subcomponents/_languagemodal';
+import Newsletter from '../subcomponents/_newsletter';
+import LoadingModal from '../subcomponents/_loadingmodal';
+import LanguageModal from '../subcomponents/_languagemodal';
 
 const inter = Inter({ subsets: ['latin'] })
 

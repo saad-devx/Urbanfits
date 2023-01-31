@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import Navbar from '../subcomponents/_navbar';
-import Button from '../subcomponents/_simple_btn';
-import AccountMenu from '../subcomponents/_accountmenu'
-import SuccessAlert from '../subcomponents/_successAlert';
+import Navbar from '../../subcomponents/_navbar';
+import Button from '../../subcomponents/_simple_btn';
+import AccountMenu from '../../subcomponents/_accountmenu'
+import SuccessAlert from '../../subcomponents/_successAlert';
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import Tooltip from '../subcomponents/_tooltip';
+import Tooltip from '../../subcomponents/_tooltip';
 
 export default function EmailPassword() {
     // state to handle navbar expansion and contraction

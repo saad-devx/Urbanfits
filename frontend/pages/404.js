@@ -1,8 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import dynamic from "next/dynamic";
-import LinkBtn from './subcomponents/_link_btn'
-import Link from 'next/link'
+import LinkBtn from '../subcomponents/_link_btn';
 function Error404() {
   return (
     <>
