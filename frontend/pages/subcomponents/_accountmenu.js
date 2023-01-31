@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import dynamic from "next/dynamic";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Button from './_button';
+import Button from './_link_btn';
 
 const Option = (props) => {
     const router = useRouter()

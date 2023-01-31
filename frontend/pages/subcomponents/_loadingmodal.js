@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React , { useState } from 'react'
-import Button from './_button'
+import Button from './_link_btn'
 import LanguageModal from './_languagemodal';
 
 // Country location notifyer Modal Component

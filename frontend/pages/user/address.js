@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '../subcomponents/_navbar';
-import Button from '../subcomponents/_button';
+import Button from '../subcomponents/_simple_btn';
 import AccountMenu from '../subcomponents/_accountmenu'
 
 export default function Address() {
@@ -19,7 +19,6 @@ export default function Address() {
     }
     return (
         <>
-
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'w-3/4' : 'w-[95%]'} h-full fixed right-0 flex transition-all duration-700`}>
@@ -29,7 +28,7 @@ export default function Address() {
                         <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                         <form className="mt-10 font_futuraLT space-y-10" >
                             <h1 className='text-xl' >Add New Address</h1>
-                            <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            {/* <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 <input className="bg-transparent outline-none border-none" type="addresstitle" name="addresstitle" id="addresstitle" onChange={onchange} placeholder="Address Title*" />
                             </div>
                             <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -55,7 +54,7 @@ export default function Address() {
                                 <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     <input className="bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" onChange={onchange} placeholder="Last Name" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 <input className="bg-transparent outline-none border-none" type="text" name="address" id="address" onChange={onchange} placeholder="Address 1*" />
                             </div>
@@ -79,8 +78,8 @@ export default function Address() {
                                 </div>
                             </div>
                             <div className="w-full flex justify-end space-x-4">
-                                <Button value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" />
-                                <Button value="Save" classes="w-full md:w-1/3" />
+                                <Button type="reset" value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" />
+                                <Button type="submit" value="Save" classes="w-full md:w-1/3" />
                             </div>
                         </form>
                     </section>

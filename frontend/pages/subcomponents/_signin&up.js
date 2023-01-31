@@ -4,10 +4,17 @@ import { Inter } from '@next/font/google'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import Button from './_button'
+import Button from './_simple_btn'
+import LinkBtn from './_link_btn'
 import Urbanfit_logo from '../../public/U-logo1 1 1.png'
 import google_logo from '../../public/google-logo.png'
-import apple_logo from '../../public/apple-logo2.png'
+import apple_logo from '../../public/apple-logo2.png';
+import SuccessAlert from './_successAlert'
+
+// imports for validation
+import { useFormik } from 'formik';
+import * as Yup from 'yup'
+import Tooltip from '../subcomponents/_tooltip';
 
 // configuring inter font
 const inter = Inter({ subsets: ['latin'] })
@@ -15,38 +22,57 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Signing(props) {
     const { page } = props
-    console.log(page)
-
     // configuring router
-    const router =useRouter()
+    const router = useRouter()
 
-    //handling user input details witte hook and onchange event
-    const initialFormObj = {
-        username: '',
-        email: '',
-        phone: '',
-        password: '',
+    //                                Frontend Validation and Schemas for different endpoints
+
+    // schema and vallidation for Sign Up
+    const signupuSchema = Yup.object({
+        username: Yup.string().min(3, "Username must be at least 3 characters long").max(20, "Username cannot exceed 20 characters").matches(/^[A-Za-z0-9_]+$/, "Username must contain only letters, numbers, and underscores").notOneOf([' ', '-'], 'Username should not contain any spaces or hyphen symbols').required("Username is required"),
+        email: Yup.string().email().required("Please enter your email address"),
+        phone: Yup.string().matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Please enter a valid phone number with postal code and space eg. +971 0000000000").required(),
+        password: Yup.string().min(8).max(30).required("Please enter your password"),
+        accept_policies: Yup.boolean().oneOf([true], "You can't go further without accepting our policies").required("You can't go further without accepting our policies")
+    })
+    const initialSignupValues = { username: '', email: '', password: '', phone: '', accept_policies: '' }
+
+    // schema and vallidation for Login
+    const loginSchema = Yup.object({
+        email: Yup.string().email().required("Please enter your email address"),
+        password: Yup.string().min(8).max(30).required("Please enter your password"),
+    })
+    const initialLoginValues = { email: '', password: '' }
+
+    //                                     Submit form functionality
+
+    const initialValueChanger = () => { // Initial Values Object would change on the basis of route name
+        let path = router.pathname
+        if (path === "/signup") return initialSignupValues
+        if (path === "/login") return initialLoginValues
     }
-    const [credentials, setCredentials] = useState(initialFormObj)
-    const onchange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value })
-        console.log(credentials)
+    const validationObjectChanger = () => { // Validation Object would change on the basis of route name
+        let path = router.pathname
+        if (path === "/signup") return signupuSchema
+        if (path === "/login") return loginSchema
     }
 
-    //handling onsubmit event and applying frontend validation
-    const onsubmit = (e) => {
-        e.preventDefault()
-        if (credentials) {
-            // yet to do according to the backend API
+    // Submit function
+    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
+        initialValues: initialValueChanger(),
+        validationSchema: validationObjectChanger(),
+        onSubmit: (errors, values) => {
+            console.log(errors, values)
+            handleReset()
+            setAlert(true)
+            setTimeout(()=>{
+                setAlert(false)
+            }, 3000)
         }
-    }
+    })
 
-    //button value renderer
-    const btnvalue = () => {
-        if (props.type === 'forgotpass') return 'Verify'
-        if (page === 'login' || props.type === 'resetpass') return 'Login';
-        if (page === 'signup') return 'Sign Up';
-    }
+
     return (
         <>
             <Head>
@@ -57,7 +83,9 @@ export default function Signing(props) {
 
             <main className={`bg-white lg:overflow-x-hidden`}>
                 <section className='lg:flex lg:items-center lg:justify-center lg:w-screen lg:h-screen' >
+                    <SuccessAlert show={alert} />
                     <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
+                        {/* This image will only show on the top in the Sign Up page */}
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} mx-auto mb-3`} />
                         <div className='w-full mx-auto mb-7' >
                             <h2 className="font_futuraLT font-medium text-4xl leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
@@ -68,41 +96,55 @@ export default function Signing(props) {
                     </div>
 
                     <div className=" w-[95%] md:w-[400px] mx-auto py-7 bg-white">
+                        {/* This image will only show in the Login page */}
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} mx-auto mb-8`} />
+                        {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
                             <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>
                             <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="28" alt="apple" /><p>Apple</p></a></button>
                         </div>
-                        <form className="bg-white p-2 font_futuraLT" onSubmit={onsubmit} >
-                            <div className={`data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                                <input className="outline-none border-none" type="text" name="username" id="username" onChange={onchange} placeholder="Username" />
+                        <form className="bg-white p-2 font_futuraLT" onReset={handleReset} onSubmit={handleSubmit} >
+                            <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
+                                <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
                             </div>
-                            <div className="data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                <input className="outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Email" />
+                            <div className="relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
+                                <input className="w-full outline-none border-none" type="email" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email" />
                             </div>
-                            <div className={`data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                                <input className="outline-none border-none" type='number' name="phone" id="phone" onChange={onchange} placeholder="Phone No." />
+                            <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                {touched.phone && errors.phone ? <Tooltip classes="form-error" content={errors.phone} /> : null}
+                                <input className="w-full outline-none border-none" name="phone" id="phone" value={values.phone} onBlur={handleBlur} onChange={handleChange} placeholder="Phone No." />
                             </div>
-                            <div className={` ${props.type === 'forgotpass' ? 'hidden' : ''} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                                <input className="outline-none border-none" type='password' name="password" id="password" onChange={onchange} placeholder="Password" />
+                            <div className={`relative  ${props.type === 'forgotpass' ? 'hidden' : ''} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
+                                <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder="Password" />
                             </div>
-                            <div className={` ${props.type === 'resetpass' ? '' : 'hidden'} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2`}>
-                                <input className="outline-none border-none" type='password' name="reppassword" id="reppassword" onChange={onchange} placeholder="Repeat Password" />
+                            <div className={`relative  ${props.type === 'resetpass' ? '' : 'hidden'} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2`}>
+                                {touched.reppassword && errors.reppassword ? <Tooltip classes="form-error" content={errors.reppassword} /> : null}
+                                <input className="w-full outline-none border-none" type='password' name="reppassword" id="reppassword" value={values.reppassword} onBlur={handleBlur} onChange={handleChange} placeholder="Repeat Password" />
                             </div>
                             <div className="my-3">
                                 <small className='text-gray-400 text-xs '>{props.type === 'forgotpass' ? 'Please enter your username or email address. You will receive an email message with instructions on how to reset your password.' : 'Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.'}</small>
                             </div>
-                            <div className={`${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-3 flex items-center border-b`}>
+                            <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-3 flex items-center border-b`}>
+                                {errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
                                 <div className='mx-2' >
-                                    <input className='rounded' type="checkbox" id="todo" name="todo" value="todo" />
+                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                                 </div>
                                 <div className=" w-full flex justify-between">
                                     <small className="ml-1 text-sm text-gray-400">{page === 'login' ? 'Remember me' : 'Buy creating an account, I agree to the Terms & Conditions.I have read the Legal Notice and Privacy Policy'}</small>
                                     <small className="ml-1 text-sm text-gray-400"><Link href="/forgotpassword" >{page === 'login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
-                            <Button value={btnvalue()} classes='w-full' />
+                            {/* changing Buttons according to different page endpoints */}
+                            {router.pathname === '/signup' ? <Button value="Sign Up" classes='w-full' type="submit" /> : null}
+                            {router.pathname === '/login' ? <Button value="Login" classes='w-full' type="submit" /> : null}
+                            {router.pathname === '/forgotpassword' ? <Button value="Verify" classes='w-full' type="submit" /> : null}
+                            {router.pathname === '/resetpassword' ? <Button value="Login" classes='w-full' type="submit" /> : null}
+
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
+                            {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                             <div className={`${page === 'login' ? 'hidden' : ''} ${inter.className} w-full mt-5 flex justify-center space-x-6`}>
                                 <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>
                                 <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="28" alt="apple" /><p>Apple</p></a></button>
@@ -112,12 +154,12 @@ export default function Signing(props) {
                 </section>
 
                 <div className="w-full my-5 px-10 font_futuraLT flex flex-col lg:flex-row justify-between lg:space-x-3">
-                    <Button href='/' value="Home" classes='w-full' />
-                    <Button href='/catelog' value="Catelog" classes='w-full' />
-                    <Button href='/contact' value="Contact Us" classes='w-full' />
-                    <Button href='/privacypolicy' value="Privacy Policy" classes='w-full' />
-                    <Button href='/legalnotice' value="Legal Notice" classes='w-full' />
-                    <Button href='/terms&conditions' value="Terms & Condition" classes='w-full' />
+                    <LinkBtn href='/' value="Home" classes='w-full' />
+                    <LinkBtn href='/catelog' value="Catelog" classes='w-full' />
+                    <LinkBtn href='/contact' value="Contact Us" classes='w-full' />
+                    <LinkBtn href='/privacypolicy' value="Privacy Policy" classes='w-full' />
+                    <LinkBtn href='/legalnotice' value="Legal Notice" classes='w-full' />
+                    <LinkBtn href='/terms&conditions' value="Terms & Condition" classes='w-full' />
                 </div>
             </main>
         </>

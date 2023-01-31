@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '../subcomponents/_navbar';
-import Button from '../subcomponents/_button';
+import Button from '../subcomponents/_simple_btn';
 import AccountMenu from '../subcomponents/_accountmenu'
 
 export default function Orders() {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from './_button'
+import Button from './_link_btn'
 
 // Newsletter Modal Component
 export default function Newsletter(props) {
