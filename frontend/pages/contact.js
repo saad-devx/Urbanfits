@@ -69,7 +69,7 @@ export default function Contact() {
                                 <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                             </div>
                             <div className="w-full flex justify-end space-x-4">
-                                <Button value="Cancel" bg="bg-gray-200 text-black" classes="w-full md:w-2/12" />
+                                <Button value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-2/12" />
                                 <Button value="Send" type="submit" classes="w-full md:w-2/12" />
                             </div>
                         </form>

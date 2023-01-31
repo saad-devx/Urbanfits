@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
+import LanguageModal from './_languagemodal';
 
 
-function ListItem(props){
+function ListItem(props) {
     return (
         <li className='list_item transition-all' ><Link href={props.href} className='flex justify-between px-8 border-b-2 text-base border-white transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
     )
@@ -25,8 +26,18 @@ export default function Navbar(props) {
             setMenu('-translate-x-full')
         }
     }
+
+    // states and function for modals
+    const [modal3, setModal3] = useState(false)
+    const toggleModal = (e) => {
+        if (e.target.name === "modal3") {
+            if (modal3 === false) return setModal3(true)
+            if (modal3 === true) return setModal3(false)
+        }
+    }
     return (
         <>
+            <LanguageModal show={modal3} toggleModal={toggleModal} />
             <nav className={` ${nav} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
@@ -69,8 +80,8 @@ export default function Navbar(props) {
                     </ul>
                 </div>
                 <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">
-                    <Link href='#' ><span>Language: English</span></Link>
-                    <Link href='#' ><span>Shipping to: United Arab Emirates</span></Link>
+                    <Link href='#' name="modal3" >Language: English</Link>
+                    <Link href='#' name="modal3" >Shipping to: United Arab Emirates</Link>
                     <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">location_on</i> Urban Fits</span>
                     <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">call</i> +971 52 700 1997</span>
                 </div>
