@@ -29,7 +29,7 @@ export default function LoadingModal(props) {
                         <div className="w-full mt-7 flex flex-col justify-center space-y-3">
                             <Button my="my-0" value="Yes, go to United Arab Emirates site" classes="w-full" />
                             <Button my="my-0" value="No, stay on the United States site" bg="bg-white" text="black" classes="w-full border border-black" />
-                            <Link href="#" onClick={toggleModal} name="modal3" className="w-full text-base text-center text-gray-700 underline " >Choose a different Country/Region</Link>
+                            <Link href="#" onClick={toggleModal} name="modal" className="w-full text-base text-center text-gray-700 underline " >Choose a different Country/Region</Link>
                         </div>
                     </section>
                 </div>

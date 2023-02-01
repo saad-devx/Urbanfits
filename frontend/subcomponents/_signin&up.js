@@ -126,7 +126,7 @@ export default function Signing(props) {
                                 {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
                                 <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
                             </div>
-                            <div className="relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className={` ${page==="login" && props.type==="resetpass"? "hidden" : ''} relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                                 <input className="w-full outline-none border-none" type="email" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email" />
                             </div>
@@ -147,11 +147,11 @@ export default function Signing(props) {
                             </div>
                             <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-3 flex items-center border-b`}>
                                 {errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
-                                <div className='mx-2' >
+                                <div className='mr-2' >
                                     <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                                 </div>
                                 <div className=" w-full flex justify-between">
-                                    <small className="ml-1 text-sm text-gray-400">{page === 'login' ? 'Remember me' : 'Buy creating an account, I agree to the Terms & Conditions.I have read the Legal Notice and Privacy Policy'}</small>
+                                    <small className="ml-1 text-sm text-gray-400">{page === 'login' ? 'Remember me' : <p>Buy creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</small>
                                     <small className="ml-1 text-sm text-gray-400"><Link href="/forgotpassword" >{page === 'login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
