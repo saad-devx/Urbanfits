@@ -20,7 +20,7 @@ export default function Giftcard() {
                             <Card title="e-Gift Cards" value='Add a personalized messgae, we deliver your gift via email.' valueCenter btnValue="Shop Gift Card" classes='w-full py-20 justify-center items-center h-72 md:w-1/2 lg:w-2/5 md:h-1/2' />
                             <Card title="Gift Cards" value='Pick one out and we’ll mail it to the lucky recipent.' valueCenter btnValue="Shop Gift Card" classes='w-full py-20 justify-center items-center h-72 md:w-1/2 lg:w-2/5 md:h-2/5' />
                         </div>
-                    <Footer classes={expand === true ? 'rounded-3xl' : 'rounded-sm'} />
+                    {/* <Footer classes={expand === true ? 'rounded-3xl' : 'rounded-sm'} /> */}
                     </section>
             </main>
         </>
