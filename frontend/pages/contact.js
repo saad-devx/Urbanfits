@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Card from '../subcomponents/_card';
 import Navbar from '../subcomponents/_navbar';
 import Button from '../subcomponents/_link_btn'
+import Footer from '../subcomponents/_footer'
 
 const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" classes='w-full h-1/3 mb-7 p-9 justify-center items-center md:items-start' />
@@ -80,6 +81,7 @@ export default function Contact() {
                         </div>
                     </section>
                 </section>
+                <Footer classes={expand === true ? 'rounded-3xl' : 'rounded-sm'} />
             </main>
         </>
     )

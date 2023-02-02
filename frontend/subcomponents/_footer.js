@@ -5,23 +5,23 @@ export default function Footer() {
     return (
         <footer className="w-full px-4 md:px-24 lg:px-32 pt-20 pb-36 md:pb-7 font_futuraLT bg-gray-100">
             <div className="w-full h-2/6 pb-16 border-b border-b-gray-400 flex flex-col md:flex-row justify-between items-start space-y-7 md:space-y-0">
-                <span className='w-1/2 md:w-1/5 mx-auto flex flex-col justify-center text-center' >
-                    <i class="fa-solid fa-wallet mb-3 text-xl"></i>
+                <span className='w-1/2 text-black md:w-1/5 mx-auto flex flex-col justify-center text-center' >
+                    <i className="fa-solid fa-wallet mb-3 text-xl"></i>
                     <h5 className="text-lg">100% Secure Payment</h5>
                     <p className=" text-xs text-gray-700">Moving your card details to a much more secured place</p>
                 </span>
-                <span className='w-1/2 md:w-1/5 mx-auto flex flex-col justify-center text-center' >
-                    <i class="fa-solid fa-wallet mb-3 text-xl"></i>
+                <span className='w-1/2 text-black md:w-1/5 mx-auto flex flex-col justify-center text-center' >
+                    <i className="fa-solid fa-wallet mb-3 text-xl"></i>
                     <h5 className="text-lg">Trust Pay</h5>
                     <p className=" text-xs text-gray-700">100% payment protection. Easy return and policy</p>
                 </span>
-                <span className='w-1/2 md:w-1/5 mx-auto flex flex-col justify-center text-center' >
-                    <i class="material-symbols-outlined mb-3 text-xl">call</i>
+                <span className='w-1/2 text-black md:w-1/5 mx-auto flex flex-col justify-center text-center' >
+                    <i className="material-symbols-outlined mb-3 text-xl">call</i>
                     <h5 className="text-lg">Help Center</h5>
                     <p className=" text-xs text-gray-700">Got a question ? Look no further. Browser our FAQs or submit your query here.</p>
                 </span>
-                <span className='w-1/2 md:w-1/5 mx-auto flex flex-col justify-center text-center' >
-                    <i class="material-symbols-outlined mb-3 text-xl">local_shipping</i>
+                <span className='w-1/2 text-black md:w-1/5 mx-auto flex flex-col justify-center text-center' >
+                    <i className="material-symbols-outlined mb-3 text-xl">local_shipping</i>
                     <h5 className="text-lg">Express Shipping</h5>
                     <p className=" text-xs text-gray-700">Moving your card details to a much more secured place</p>
                 </span>
@@ -107,7 +107,7 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="w-4/5 mt-10 text-xs mx-auto text-center">
+            <div className="w-4/5 mt-10 text-xs text-black mx-auto text-center">
                 <p>Urban Fits L.L.C., Company Reg. Number - 2447 LLC 2023, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102</p><br /><p>Urban Fits L.L.C. © 2023-2024 All rights reserved.</p>
             </div>
         </footer>

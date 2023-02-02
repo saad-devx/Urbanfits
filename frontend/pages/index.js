@@ -7,6 +7,7 @@ import styles from '@/styles/Home.module.css'
 import Newsletter from '../subcomponents/_newsletter';
 import LoadingModal from '../subcomponents/_loadingmodal';
 import LanguageModal from '../subcomponents/_languagemodal';
+import Footer from '../subcomponents/_footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -45,21 +46,25 @@ export default function Home() {
       <Newsletter show={modal2} toggleModal={toggleModal} />
       <LanguageModal show={modal3} toggleModal={toggleModal} />
 
-      <main className={` ${expand === true ? 'w-3/4' : 'w-full lg:w-[95%]'} w-screen p-10 h-screen text-white bg-slate-700 overflow-x-hidden transition-all duration-700 absolute top-0 right-0`}>
-        <h1 className="text-white text-xl md:text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
-        <h1 className="text-gray-300 text-lg md:text-2xl text-center">Home Page is not ready yet</h1>
+      <main className={` ${expand === true ? 'w-3/4' : 'w-full lg:w-[95%]'} w-screen h-screen text-white bg-slate-700 overflow-x-hidden transition-all duration-700 absolute top-0 right-0`}>
+        <section className="p-10">
 
-        {/* <Button onclick={toggleModal} name="modal3" value="Activate Language & Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" /> */}
-        <Button onclick={toggleModal} name="modal1" value="Activate Change Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
-        <Button onclick={toggleModal} name="modal2" value="Activate Newsletter Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
-        <Button href="/login" value="Log in page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
-        <Button href="/signup" value="Sign up page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
+          <h1 className="text-white text-xl md:text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
+          <h1 className="text-gray-300 text-lg md:text-2xl text-center">Home Page is not ready yet</h1>
 
-        <Button href="/contact" value="Contact Us page" classes="w-full" ></Button>
-        <Button href="/giftcard" value="Giftcard page" classes="w-full" ></Button>
-        <Button href="/user/personalinfo" value="My Account page" classes="w-full" ></Button>
-        <Button href="/forgotpassword" value="Forgot password page" classes="w-full" ></Button>
-        <Button href="/resetpassword" value="Reset password page" classes="w-full" ></Button>
+          {/* <Button onclick={toggleModal} name="modal3" value="Activate Language & Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" /> */}
+          <Button href="/giftcard" value="Giftcard page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
+          <Button onclick={toggleModal} name="modal2" value="Activate Newsletter Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
+          <Button onclick={toggleModal} name="modal1" value="Activate Change Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
+
+          <Button href="/signup" value="Sign up page" classes="w-full" ></Button>
+          <Button href="/login" value="Log in page" classes="w-full" ></Button>
+          <Button href="/contact" value="Contact Us page" classes="w-full" ></Button>
+          <Button href="/user/personalinfo" value="My Account page" classes="w-full" ></Button>
+          <Button href="/forgotpassword" value="Forgot password page" classes="w-full" ></Button>
+          <Button href="/resetpassword" value="Reset password page" classes="w-full" ></Button>
+        </section>
+        <Footer classes={expand === true ? 'rounded-3xl' : 'rounded-sm'} />
       </main>
     </>
   )
