@@ -53,6 +53,7 @@ export default function Home() {
           <h1 className="text-gray-300 text-lg md:text-2xl text-center">Home Page is not ready yet</h1>
 
           {/* <Button onclick={toggleModal} name="modal3" value="Activate Language & Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" /> */}
+          <Button href="/trackorder" value="Track Your Order Page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
           <Button href="/giftcard" value="Giftcard page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
           <Button onclick={toggleModal} name="modal2" value="Activate Newsletter Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
           <Button onclick={toggleModal} name="modal1" value="Activate Change Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />

@@ -38,7 +38,7 @@ export default function Navbar(props) {
     return (
         <>
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            <nav className={` ${nav} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
+            <nav className={` ${nav} ${props.classes} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
                         <div className="icon"></div>
@@ -80,8 +80,8 @@ export default function Navbar(props) {
                     </ul>
                 </div>
                 <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">
-                    <Link href='#' name="modal3" >Language: English</Link>
-                    <Link href='#' name="modal3" >Shipping to: United Arab Emirates</Link>
+                    <Link href='#' onClick={toggleModal} name="modal3" >Language: English</Link>
+                    <Link href='#' onClick={toggleModal} name="modal3" >Shipping to: United Arab Emirates</Link>
                     <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">location_on</i> Urban Fits</span>
                     <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">call</i> +971 52 700 1997</span>
                 </div>

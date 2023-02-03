@@ -13,7 +13,7 @@ import Tooltip from '../../subcomponents/_tooltip';
 
 
 const InfoCard = (props) => {
-    return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" classes='w-full h-1/3 mb-7 p-9 justify-center items-center md:items-start' />
+    return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" round="rounded-2xl" classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
 }
 
 export default function Personalinfo() {
@@ -53,7 +53,7 @@ export default function Personalinfo() {
                         <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                         <form className="mt-10 font_futuraLT space-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                             <h1 className='text-xl' >Personal Information</h1>
-                            <div className="flex justify-between w-full lg:w-3/4 ">
+                            <div className="flex justify-between w-full lg:w-4/5 ">
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                                     <select defaultValue="Title" value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
@@ -68,7 +68,7 @@ export default function Personalinfo() {
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                                 </div>
                             </div>
-                            <div className="flex justify-between w-full lg:w-3/4 ">
+                            <div className="flex justify-between w-full lg:w-4/5 ">
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
@@ -78,12 +78,12 @@ export default function Personalinfo() {
                                     <input className="w-full bg-transparent outline-none border-none" type="date" name="dateofbirth" id="dateofbirth" value={values.dateofbirth} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div>
                             </div>
-                            <div className="w-full lg:w-3/4 flex justify-end space-x-4">
-                                <Button type="reset" value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" />
-                                <Button type="submit" value="Save" classes="w-full md:w-1/3" />
+                            <div className="w-full lg:w-4/5 flex justify-end">
+                                <Button type="reset" value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3 mx-2" />
+                                <Button type="submit" value="Save" classes="w-full md:w-1/3 ml-2" />
                             </div>
                         </form>
-                        <div className='w-full lg:w-5/6' >
+                        <div className='w-full lg:w-4/5' >
                             <h1 className="text-xl mt-5">Newsletter Subscription</h1>
                             <div className="flex justify-between w-3/4 my-7 space-x-4 md:space-x-0">
                                 <div className="w-1/2 md:w-1/4 flex justify-between">
@@ -93,7 +93,7 @@ export default function Personalinfo() {
                                     Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='newsletter_sub_phone' value={values.newsletter_sub_phone} onChange={handleChange} /><span className="slider"></span></label>
                                 </div>
                             </div>
-                            <div className=" w-[90%] space-y-5">
+                            <div className=" w-full space-y-5">
                                 <p>Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our privacy policy.</p>
                                 <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                             </div>
