@@ -1,5 +1,5 @@
 import React from 'react'
-import Signing from '../subcomponents/_signin&up'
+import Signing from '../components/signin&up'
 
 export default function Login() {
   return (

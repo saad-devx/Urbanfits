@@ -2,6 +2,11 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user/personalinfo": "pages/user/personalinfo.js",
-  "/user/email&password": "pages/user/email&password.js"
+  "/user/orders/orders": "pages/user/orders/orders.js",
+  "/user/paymentmethods": "pages/user/paymentmethods.js",
+  "/user/address": "pages/user/address.js",
+  "/user/orders/buyagain": "pages/user/orders/buyagain.js",
+  "/user/orders/notdispatched": "pages/user/orders/notdispatched.js",
+  "/404": "pages/404.js",
+  "/": "pages/index.js"
 }

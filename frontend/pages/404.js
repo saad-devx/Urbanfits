@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import dynamic from "next/dynamic";
-import LinkBtn from '../subcomponents/_link_btn';
+import LinkBtn from '../components/link_btn';
 function Error404() {
   return (
     <>
@@ -17,7 +17,7 @@ function Error404() {
           <div className="lg:w-[37vw] flex flex-col justify-center items-center lg:items-start lg:flex-start space-y-8">
             <h2 className='text-xl font-bold lg:text-[32px] gradient_txt font_futuraLT' >WE CAN'T FIND THAT PAGE</h2>
             <p className="text-center font_futuraLT text-white lg:text-justify lg:text-xl leading-7">We're Fairly Sure That Page Used To Be Here, But Seems To Have Gone Missing. We Do Apologies On It's Behalf.</p>
-            <LinkBtn href="/" value="Back To Home" classes="w-48" />
+            <LinkBtn href="/" classes="w-48" >Back To Home</LinkBtn>
           </div>
         </div>
       </section>

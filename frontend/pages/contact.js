@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import Card from '../subcomponents/_card';
-import Navbar from '../subcomponents/_navbar';
-import Button from '../subcomponents/_simple_btn';
-import Footer from '../subcomponents/_footer'
-import SuccessAlert from '../subcomponents/_successAlert';
+import Card from '../components/card';
+import Navbar from '../components/navbar';
+import Button from '../components/simple_btn';
+import Footer from '../components/footer'
+import SuccessAlert from '../components/successAlert';
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import Tooltip from '../subcomponents/_tooltip';
+import Tooltip from '../components/tooltip';
 
 const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" classes='w-full h-1/3 mb-7 p-9 justify-center items-center md:items-start' />
@@ -97,8 +97,8 @@ export default function Contact() {
                                     <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                                 </div>
                                 <div className="w-full flex justify-end space-x-4">
-                                    <Button value="Cancel" type="reset" bg="bg-gray-200" text="black" classes="w-full md:w-2/12" />
-                                    <Button value="Send" type="submit" classes="w-full md:w-2/12" />
+                                    <Button type="reset" bg="bg-gray-200" text="black" classes="w-full md:w-2/12" >Cancel</Button>
+                                    <Button type="submit" classes="w-full md:w-2/12" >Send</Button>
                                 </div>
                             </form>
                             <div className="w-full flex flex-col justify-center items-center">

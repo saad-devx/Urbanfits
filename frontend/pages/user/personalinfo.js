@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import Navbar from '../../subcomponents/_navbar'
-import Card from '../../subcomponents/_card'
-import Button from '../../subcomponents/_simple_btn';
-import AccountMenu from '../../subcomponents/_accountmenu'
-import SuccessAlert from '../../subcomponents/_successAlert';
+import Navbar from '../../components/navbar'
+import Card from '../../components/card'
+import Button from '../../components/simple_btn';
+import AccountMenu from '../../components/accountmenu'
+import SuccessAlert from '../../components/successAlert';
 
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import Tooltip from '../../subcomponents/_tooltip';
+import Tooltip from '../../components/tooltip';
 
 
 const InfoCard = (props) => {
@@ -79,8 +79,8 @@ export default function Personalinfo() {
                                 </div>
                             </div>
                             <div className="w-full lg:w-4/5 flex justify-end">
-                                <Button type="reset" value="Cancel" bg="bg-gray-200" text="black" classes="w-full md:w-1/3 mx-2" />
-                                <Button type="submit" value="Save" classes="w-full md:w-1/3 ml-2" />
+                                <Button type="reset" bg="bg-gray-200" text="black" classes="w-full md:w-1/3 mx-2" >Cancel</Button>
+                                <Button type="submit" classes="w-full md:w-1/3 ml-2" >Save</Button>
                             </div>
                         </form>
                         <div className='w-full lg:w-4/5' >
@@ -93,7 +93,7 @@ export default function Personalinfo() {
                                     Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='newsletter_sub_phone' value={values.newsletter_sub_phone} onChange={handleChange} /><span className="slider"></span></label>
                                 </div>
                             </div>
-                            <div className=" w-full space-y-5">
+                            <div className=" w-full space-y-5 font_futuraLTlite">
                                 <p>Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our privacy policy.</p>
                                 <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                             </div>

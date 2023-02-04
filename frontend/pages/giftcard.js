@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Navbar from '../subcomponents/_navbar'
+import Navbar from '../components/navbar'
 import Image from 'next/image'
-import Card from '../subcomponents/_card'
-import Footer from '../subcomponents/_footer'
+import Card from '../components/card'
+import Footer from '../components/footer'
 import giftBanner from '../public/giftbanner.png'
 
 export default function Giftcard() {

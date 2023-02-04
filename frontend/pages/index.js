@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
 import { Inter } from '@next/font/google'
-import Button from '../subcomponents/_link_btn';
-import Navbar from '../subcomponents/_navbar';
+import Button from '../components/link_btn';
+import Navbar from '../components/navbar';
 import styles from '@/styles/Home.module.css'
-import Newsletter from '../subcomponents/_newsletter';
-import LoadingModal from '../subcomponents/_loadingmodal';
-import LanguageModal from '../subcomponents/_languagemodal';
-import Footer from '../subcomponents/_footer'
+import Newsletter from '../components/newsletter';
+import LoadingModal from '../components/loadingmodal';
+import LanguageModal from '../components/languagemodal';
+import Footer from '../components/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -52,20 +52,20 @@ export default function Home() {
           <h1 className="text-white text-xl md:text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
           <h1 className="text-gray-300 text-lg md:text-2xl text-center">Home Page is not ready yet</h1>
 
-          {/* <Button onclick={toggleModal} name="modal3" value="Activate Language & Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" /> */}
-          <Button href="/trackorder" value="Track Your Order Page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
-          <Button href="/giftcard" value="Giftcard page" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" ></Button>
-          <Button onclick={toggleModal} name="modal2" value="Activate Newsletter Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
-          <Button onclick={toggleModal} name="modal1" value="Activate Change Country Modal" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" />
+          <Button onclick={toggleModal} name="modal3" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full">Activate Change Language Modal</Button>
+          <Button href="/trackorder" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" >Track Your Order Page</Button>
+          <Button href="/giftcard" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" >Giftcard page</Button>
 
-          <Button href="/signup" value="Sign up page" classes="w-full" ></Button>
-          <Button href="/login" value="Log in page" classes="w-full" ></Button>
-          <Button href="/contact" value="Contact Us page" classes="w-full" ></Button>
-          <Button href="/user/personalinfo" value="My Account page" classes="w-full" ></Button>
-          <Button href="/forgotpassword" value="Forgot password page" classes="w-full" ></Button>
-          <Button href="/resetpassword" value="Reset password page" classes="w-full" ></Button>
+          <Button onclick={toggleModal} name="modal1" classes="w-full">Activate Change Country Modal</Button>
+          <Button onclick={toggleModal} name="modal2" classes="w-full">Activate Newsletter Modal</Button>
+          <Button href="/signup" classes="w-full" >Sign up page</Button>
+          <Button href="/login" classes="w-full" >Log in page</Button>
+          <Button href="/contact" classes="w-full" >Contact Us page</Button>
+          <Button href="/user/personalinfo" classes="w-full" >My Account page</Button>
+          <Button href="/forgotpassword" classes="w-full" >Forgot password page</Button>
+          <Button href="/resetpassword" classes="w-full" >Reset password page</Button>
         </section>
-        <Footer classes={expand === true ? 'rounded-3xl' : 'rounded-sm'} />
+        <Footer />
       </main>
     </>
   )
