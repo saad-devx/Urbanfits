@@ -19,14 +19,14 @@ export default function Newsletter(props) {
     return (
         <>
             <div className={`w-full h-full font_futuraLT fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
-                <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-5/6 md:w-3/4 h-4/5 md:h-[90%] text-sm flex flex-col lg:flex-row bg-white rounded-3xl overflow-hidden transition-all duration-500`}>
+                <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
                     {/* <i className="material-symbols-rounded text-xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</i> */}
                     <button onClick={props.toggleModal} name="modal2" className="fa-solid fa-xmark text-3xl text-gray-700 absolute right-8 top-5 cursor-pointer hover:rotate-180 transition-all duration-700"></button>
-                    <div className="hidden lg:block w-1/2 h-full bg_newsletter"></div>
-                    <section className="w-full h-full p-5 pt-14 md:pt-5 text-gray-700">
+                    <div className=" w-1/2 h-auto bg_newsletter bg-top bg-cover bg-no-repeat"></div>
+                    <section className="w-full h-full p-5 pt-14 md:pt-5">
                         <div className="w-full space-y-5">
                             <h3 className="text-black text-base">Move to the Urban Fit</h3>
-                            <p className=' font-thin' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
+                            <p className='font_futuraLTlite' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
                         </div>
                         <form className="mt-7 font_futuraLT space-y-5 md:space-y-7" >
                             <div className='space-y-3' >
@@ -37,7 +37,7 @@ export default function Newsletter(props) {
                             </div>
                             <div className='space-y-4' >
                                 <h3 className='text-black text-base' >Gender*</h3>
-                                <div className=" w-full md:w-3/4 flex justify-between items-center ">
+                                <div className="font_futuraLTlite w-full md:w-3/5 flex justify-between items-center ">
                                     <div className='mx-2' >
                                         <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onChange={onchange} /><label htmlFor='male'>Male</label>
                                     </div>
@@ -62,7 +62,7 @@ export default function Newsletter(props) {
                                     }) } */}
                                 </div>
                             </div>
-                            <p className='text-xs text-gray-800' >Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
+                            <p className='font_futuraLTlite text-sm' >Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
                             <Button value="Subscribe" type="submit" classes="w-11/12 mx-auto" />
                         </form>
                     </section>

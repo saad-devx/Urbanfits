@@ -3,7 +3,7 @@ import React from 'react';
 const SuccessAlert = (props) => {
 
     return (
-        <div className={`w-2/6 m-auto fixed ${props.show === true ? "top-5" : "-top-36"} left-1/2 -translate-x-1/2 z-50 transition-all duration-700`}>
+        <div className={`w-2/6 m-auto fixed ${props.show === true ? "top-5" : "-top-56"} left-1/2 -translate-x-1/2 z-50 transition-all duration-700`}>
             <div className="bg-white rounded-xl border border-green-600  p-3 shadow-lg">
                 <div className="flex flex-row">
                     <div className="px-2">
