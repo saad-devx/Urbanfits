@@ -23,7 +23,7 @@ export default function Address() {
                 <section className={`bg-gray-100 ${expand === true ? 'w-3/4' : 'w-[95%]'} h-full fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu />
                     <section className='w-full lg:w-[67%] p-9 pl-7 pb-20 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
-                        <div className="w-full lg:w-4/5">
+                        <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Account</h2>
                             <p className='text-sm font_futuraLTlite font-semibold' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                             <form className="mt-10 font_futuraLT space-y-10" >

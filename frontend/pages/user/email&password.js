@@ -42,7 +42,7 @@ export default function EmailPassword() {
                     <SuccessAlert show={alert} />
                     <AccountMenu />
                     <section className='w-full lg:w-[67%] font_futuraLT text-left p-9 pl-7 overflow-y-scroll' >
-                        <div className="w-full lg:w-4/5">
+                        <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Account</h2>
                             <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                             <form className="mt-10 font_futuraLT space-y-10" onReset={handleReset} onSubmit={handleSubmit} >

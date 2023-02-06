@@ -9,7 +9,7 @@ const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
     return (
-        <Link className={` group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href={props.href}><span className={`bg-gold w-2 h-full opacity-0 group-hover:opacity-100 ${route === props.href ? 'opacity-100' : ''} transition`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+        <Link className={`group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href={props.href}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
     )
 }
 
@@ -24,7 +24,7 @@ function AccountMenu() {
                     <Option href='/user/email&password'>Email & Password</Option>
                     <Option href='/user/address'>My Address</Option>
                     <Option href='/user/paymentmethods'>My Payment Methods</Option>
-                    <Link className={` group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 h-full opacity-0 group-hover:opacity-100 ${route === '/user/orders/orders' ? 'opacity-100' : ''} transition`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+                    <Link className={` group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
                     <Button classes="w-full">Logout</Button>
                 </div>
             </div>
