@@ -254,8 +254,14 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-
+/*                                   background for newsletter modal */
 .bg_newsletter {
   background: url(../public/newsletterimg.png) top no-repeat;
   background-size: cover;
+}
+
+/*                                     CSS to hide scroll bar */
+
+.hide_scroll::-webkit-scrollbar {
+  width: 0px;
 }

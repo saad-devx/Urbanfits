@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/user/email&password": [
+    "/home": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/user/email&password.js"
-    ],
-    "/user/personalinfo": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/personalinfo.js"
+      "static/chunks/pages/home.js"
     ]
   },
   "ampFirstPages": []
