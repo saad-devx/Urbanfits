@@ -35,7 +35,7 @@ export default function Payments() {
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu />
-                    <section className='w-full lg:w-[67%] p-9 pl-7 pb-20 lg:pb-9 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
+                    <section className='w-full lg:w-[67%] p-9 pl-7 pb-20 pt-24 lg:pt-9 lg:pb-9 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
                         <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Account</h2>
                             <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>

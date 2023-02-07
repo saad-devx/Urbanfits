@@ -41,7 +41,7 @@ export default function EmailPassword() {
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <SuccessAlert show={alert} />
                     <AccountMenu />
-                    <section className='w-full lg:w-[67%] font_futuraLT text-left p-9 pl-7 overflow-y-scroll' >
+                    <section className='w-full lg:w-[67%] font_futuraLT text-left p-9 pt-24 lg:pt-9 pl-7 overflow-y-scroll' >
                         <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Account</h2>
                             <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
