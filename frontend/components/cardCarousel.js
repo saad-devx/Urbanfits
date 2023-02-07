@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import LinkBtn from './link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
@@ -15,7 +15,7 @@ import image3 from '../public/card imgs/card img3.png'
 const CardSlide = (props) => {
     return (
 
-        <SplideSlide className={` relative  md:p-10`}>
+        <SplideSlide className={` relative  md:p-5`}>
             <div className='relative w-full h-full rounded-3xl font_futuraLT overflow-hidden' >
                 <Image src={props.img} className='w-full h-full object-cover' ></Image>
                 <div className="absolute w-full bottom-0 left-0 p-7 bg-gradient-to-t from-white to-transparent flex flex-col items-start text-black text-5xl">
@@ -29,6 +29,13 @@ const CardSlide = (props) => {
 }
 
 export default function CardCarousel() {
+    const [isMobile, setIsMobile] = useState(1)
+    useEffect(()=>{
+        const media = window.matchMedia('(max-width: 767px)')
+        media.matches ? setIsMobile(1) : setIsMobile(2)
+        console.log(isMobile)
+    })
+
     return (
         <>
             <Splide className='w-full h-full' hasTrack={false}
@@ -36,7 +43,7 @@ export default function CardCarousel() {
                     type: 'loop',
                     drag: true,
                     perMove: 1,
-                    perPage: 2,
+                    perPage: isMobile,
                     gap: "1rem",
                     arrows: false,
                     pauseOnHover: true,

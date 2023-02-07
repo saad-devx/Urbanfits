@@ -14,13 +14,21 @@ const Option = (props) => {
 
 export default function OrdersPage(props) {
     const [expand, setExpand] = useState(false)
+
+    // determining if the scroll direction is upwards or downwards
+    const [direction, setDirection] = useState('')
+    const handleScroll = (e) => {
+        console.log(e.target.scrollTop)
+        e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
+    }
+
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
-                <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
-                    <AccountMenu />
-                    <section className='w-full lg:w-[67%] font_futuraLT text-left p-5 md:p-9 lg:pl-7 lg:pr-16 overflow-y-scroll' >
+                <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} relative h-full lg:fixed right-0 flex transition-all duration-700`}>
+                    <AccountMenu direction={direction} />
+                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-y-scroll' >
                         <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Order</h2>
                             <div className="w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scroll">

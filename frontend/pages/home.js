@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Carousel from '@/components/carousel';
 import Navbar from '../components/navbar'
+import Footer from '@/components/footer';
 import CardCarousel from '@/components/cardCarousel';
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
                     </div>
                     <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                 </section>
+                <Footer />
             </section>
         </main>
     )
