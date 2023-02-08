@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import dynamic from "next/dynamic";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -12,7 +12,7 @@ const Option = (props) => {
     )
 }
 
-// For mobile devices
+// Menu for mobile devices
 const Option_sm = (props) => {
     const router = useRouter()
     const route = router.pathname
@@ -25,6 +25,14 @@ function AccountMenu(props) {
     const router = useRouter()
     const route = router.pathname
 
+    const menuRef = useRef(null)
+    let screen = window.screen.width
+    useEffect(() => {
+        if (route === "/user/email&password") return menuRef.current.scroll((screen / 2.1), 0)
+        if (route === "/user/address") return menuRef.current.scroll((screen / 1.1), 0)
+        if (route === "/user/paymentmethods") return menuRef.current.scroll((screen / 0.8), 0)
+        if (route === "/user/orders/orders") return menuRef.current.scroll((screen * 1.5), 0)
+    })
     return (
         <>
             <div className=" w-1/3 hidden lg:block h-full relative">
@@ -39,13 +47,14 @@ function AccountMenu(props) {
             </div>
 
             {/* To be displayed on the mobile devices */}
-            <div className={`absolute z-30 top-0 left-0 w-full bg-gradient-to-b from-white to-white/75 shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll hide_scroll transition-all duration-300`}>
-                <div className="w-[200%] md:w-full h-full px-4 pt-8 flex justify-between">
+            <div ref={menuRef} className={`absolute z-30 top-0 left-0 w-full bg-gradient-to-b from-white to-white/75 shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth hide_scroll transition-all duration-300`}>
+                <div className="w-[230%] md:w-full h-full px-4 pt-8 flex justify-between">
                     <Option_sm href='/user/personalinfo'>Personal Information</Option_sm>
                     <Option_sm href='/user/email&password'>Email & Password</Option_sm>
                     <Option_sm href='/user/address'>My Address</Option_sm>
                     <Option_sm href='/user/paymentmethods'>My Payment Methods</Option_sm>
                     <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href="/user/orders/orders">My Orders<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === "/user/orders/orders" ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
+                    <button className={`h-full group flex flex-col justify-between items-center transition-all `}> <span className="flex"><span class="material-symbols-rounded">logout</span>Logout</span><span className={`bg-gold-land w-0 h-1 mt-1 rounded-lg group-hover:w-full group-active:w-full group-focus:w-full transition-all duration-300`}></span></button>
                 </div>
             </div>
         </>

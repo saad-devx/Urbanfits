@@ -18,7 +18,6 @@ export default function OrdersPage(props) {
     // determining if the scroll direction is upwards or downwards
     const [direction, setDirection] = useState('')
     const handleScroll = (e) => {
-        console.log(e.target.scrollTop)
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
 
@@ -36,7 +35,7 @@ export default function OrdersPage(props) {
                                     <Option href='/user/orders/orders'>Orders</Option>
                                     <Option href='/user/orders/buyagain'>Buy Again</Option>
                                     <Option href='/user/orders/notdispatched'>Not Yet Dispatched</Option>
-                                    <Option href='/user/orders/cancelorder'>Cancelled Order</Option>
+                                    <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
                                 </div>
                             </div>
                             <section className="w-full h-screen my-5 font_futuraLT">
