@@ -9,7 +9,6 @@ import image1 from '../public/carousel imgs/carousel img1.jpg'
 import image2 from '../public/carousel imgs/carousel img2.jpg'
 import image3 from '../public/carousel imgs/carousel img3.png'
 import image4 from '../public/carousel imgs/carousel img4.jpg'
-import { ref } from 'yup';
 
 //Carousel Images component
 const CarouselSlide = (props) => {
@@ -45,9 +44,9 @@ export default function Carousel(props) {
                     speed: 1500,
                     gap: '0.5rem',
                     cover: true,
-                    autoplay: false,
+                    autoplay: true,
                     resetProgress: false,
-                    interval: 4000,
+                    interval: 3500,
                     drag: false,
                     focus: 0,
                     pauseOnHover: false,
