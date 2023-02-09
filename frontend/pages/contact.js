@@ -28,7 +28,7 @@ export default function Contact() {
     })
     const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
-        initialValues: { title: '', firstname: '', lastname: '', dateofbirth: '', email: '', phone: '', msg: '' },
+        initialValues: { title: 'Title', firstname: '', lastname: '', dateofbirth: '', email: '', phone: '', msg: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
             console.log(values)
@@ -46,15 +46,15 @@ export default function Contact() {
                 <Navbar setExpand={setExpand} />
                 <SuccessAlert show={alert} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
-                    <div className="w-full flex justify-center">
+                    <div className="w-full pb-20 flex justify-center">
                         <section className='w-full p-5 lg:p-0 lg:pt-9 lg:w-[75%] h-full font_futuraLT text-left pt-9' >
                             <h2 className="text-3xl mb-4">Contact Us</h2>
                             <form className="mt-16 pb-20 font_futuraLT space-y-10" onReset={handleReset} onSubmit={handleSubmit}>
                                 <div className="flex justify-between w-full">
                                     <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                         {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
-                                        <select defaultValue="Title" value={values.title} name='title' className="w-full border-none outline-none bg-transparent border-b-gray-800" onBlur={handleBlur} onChange={handleChange} >
-                                            <option disabled >Title</option>
+                                        <select value={values.title} name='title' className="w-full border-none outline-none bg-transparent border-b-gray-800" onBlur={handleBlur} onChange={handleChange} >
+                                            <option id="mr" value="mr">Title</option>
                                             <option id="mr" value="mr">Mr</option>
                                             <option id="ms" value="ms">Ms</option>
                                             <option id="other" value="other">Other</option>

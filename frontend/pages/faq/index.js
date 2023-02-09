@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../../components/navbar';
 import Button from '../../components/simple_btn';
+import LinkBtn from '@/components/link_btn';
 import Footer from '../../components/footer'
 import SearchBar from '@/components/searchBar';
 
@@ -53,7 +54,7 @@ export default function index() {
 
                                 <input type="checkbox" id="option-f" name="selector" value="E" />
                                 <label className="selector border border-gray-400 rounded-full mb-3 px-4 py-2" htmlFor="option-f">Payments</label>
-                                
+
                                 <input type="checkbox" id="option-g" name="selector" value="E" />
                                 <label className="selector border border-gray-400 rounded-full mb-3 px-4 py-2" htmlFor="option-g">Shopping</label>
                             </div>
@@ -76,7 +77,7 @@ export default function index() {
                             <div className="w-full my-10 flex flex-col justify-center items-center">
                                 <div className={`w-full h-[25vh] mb-7 p-9 justify-center items-center md:items-start rounded-2xl bg-white shadow flex flex-col hover:-translate-y-3 transition duration-500 space-y-8`}>
                                     <h2 className="font_futuraLT text-xl md:text-2xl">Can't find answer to your question?</h2>
-                                    <Button classes="w-1/2 md:w-1/3 text-sm" >Contact Us</Button>
+                                    <LinkBtn href="/contact" classes="w-1/2 md:w-1/3 text-sm" >Contact Us</LinkBtn>
                                 </div>
                             </div>
                         </section>
