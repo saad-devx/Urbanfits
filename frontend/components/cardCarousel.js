@@ -9,15 +9,15 @@ import '@splidejs/react-splide/css';
 // images imports
 import Image from 'next/image'
 import image1 from '../public/card imgs/card img5.jpg'
-import image2 from '../public/card imgs/card img2.png'
-import image3 from '../public/card imgs/card img7.jpg'
+import image2 from '../public/card imgs/card img2.jpg'
+import image3 from '../public/card imgs/card img3.jpg'
 
 const CardSlide = (props) => {
     return (
 
         <SplideSlide className={` relative  md:p-5`}>
             <div className='relative w-full h-full rounded-3xl font_futuraLT overflow-hidden' >
-                <Image src={props.img} className='w-full h-full object-cover' alt='' ></Image>
+                <Image unoptimized={true} src={props.img} className='w-full h-full object-cover' alt='' ></Image>
                 <div className="absolute w-full bottom-0 left-0 p-7 bg-gradient-to-t from-white to-transparent flex flex-col items-start text-black text-5xl">
                     <h1 className="text-3xl">Jackets and Coats</h1>
                     <p className="mt-1 mb-4 text-lg">New In Women Wear</p>

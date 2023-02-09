@@ -16,7 +16,8 @@ import LanguageModal from '../components/languagemodal';
 // imports for images
 import image1 from '../public/card imgs/card img5.jpg'
 import image2 from '../public/card imgs/card img6.jpg'
-import image3 from '../public/card imgs/card img8.jpg'
+import image3 from '../public/card imgs/card img1.jpg'
+import image4 from '../public/card imgs/card img8.jpg'
 
 // Confifure font
 const inter = Inter({ subsets: ['latin'] })
@@ -82,6 +83,11 @@ export default function Home() {
                     {/* Shopping Card Section */}
                     <section className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0">
                         <PicCard img={image1} />
+                        <PicCard object_fit="center" img={image2} />
+                    </section>
+                    {/* Shopping Card Section */}
+                    <section className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0">
+                        <PicCard img={image4} />
                         <PicCard img={image3} />
                     </section>
                     {/* some other links section */}
