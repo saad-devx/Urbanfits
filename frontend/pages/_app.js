@@ -1,5 +1,6 @@
 import '@/styles/globals.css'
 import '@/styles/Navbar.css'
+import '@/styles/pillbtns.css'
 
 export default function App({ Component, pageProps }) {
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '../../components/navbar';
 import Button from '../../components/simple_btn';
@@ -26,16 +26,18 @@ export default function Payments() {
         }
     }
 
-    const max = () => {
-        if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
+    // determining if the scroll direction is upwards or downwards
+    const [direction, setDirection] = useState('')
+    const handleScroll = (e) => {
+        e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
-                    <AccountMenu />
-                    <section className='w-full lg:w-[67%] p-9 pl-7 pb-20 pt-24 lg:pt-9 lg:pb-9 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
+                    <AccountMenu direction={direction} />
+                    <section onScroll={handleScroll} className='w-full lg:w-[67%] p-9 pl-7 pb-20 pt-24 lg:pt-9 lg:pb-9 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
                         <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Account</h2>
                             <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
@@ -68,7 +70,7 @@ export default function Payments() {
                                 </div>
                                 <div className="w-full space-y-3 data_field flex flex-col items-start border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     <label htmlFor="fullname">Card Holder Name</label>
-                                    <div className='w-full flex justify-between' ><input className="bg-transparent outline-none border-none" type="tel" value="Muhammad Bilawal" name="fullname" id="fullname" onChange={onchange} placeholder="User Name" /><Link href='/user/personalinfo' ><i class="material-symbols-outlined">edit_square</i></Link></div>
+                                    <div className='w-full flex justify-between' ><input className="bg-transparent outline-none border-none" type="tel" value="Muhammad Bilawal" name="fullname" id="fullname" onChange={onchange} placeholder="User Name" /><Link href='/user/personalinfo' ><i className="material-symbols-outlined">edit_square</i></Link></div>
                                 </div>
                                 <div className="w-full space-y-4 font_futuraLTlite">
                                     <p>Urban fit processes the data collected in order to manage your information and to save, if you wish, your means of payment in order to facilitate your future orders. To find out more about how we manage your personal data and to exercise to right your rights, please refer to our privacy policy.</p>

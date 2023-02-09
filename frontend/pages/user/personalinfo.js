@@ -41,14 +41,20 @@ export default function Personalinfo() {
             }, 3000)
         }
     })
+
+    // determining if the scroll direction is upwards or downwards
+    const [direction, setDirection] = useState('')
+    const handleScroll = (e) => {
+        e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
+    }
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
-                    <AccountMenu />
+                <AccountMenu direction={direction} />
                     <SuccessAlert show={alert} />
-                    <section className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
+                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
                         <h2 className="text-3xl mb-4">My Account</h2>
                         <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                         <form className="mt-10 font_futuraLT space-y-5" onReset={handleReset} onSubmit={handleSubmit} >

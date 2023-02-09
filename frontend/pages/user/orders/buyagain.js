@@ -4,7 +4,7 @@ import OrdersPage from './index'
 export default function Buyagain() {
   return (
     <OrdersPage>
-      Hey This is Buy Again Tab
+      <h1 className="text-xl">Hey This is Buy Again Tab</h1>
     </OrdersPage>
   )
 }

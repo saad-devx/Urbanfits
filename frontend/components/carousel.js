@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import LinkBtn from './link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 // Default theme
@@ -19,7 +19,7 @@ const CarouselSlide = (props) => {
                 <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
                 <LinkBtn my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
             </div>
-            <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="Image 1" />
+            <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="" />
         </SplideSlide>
     )
 }
@@ -31,17 +31,27 @@ export default function Carousel(props) {
         if (play === false) return setPlay(true)
     }
 
+    // splide ref and function to move the slide to prevent the weird effect when the screen is resized
+    let splideRef = useRef(null)
+    // const moveNext = ()=>{
+    //     setTimeout(()=>{   
+    //         splideRef.current.splide.go('>')
+    //     }, 900)
+    //     props.setMove(false)
+    // }
+    // props.move === true? moveNext() :  null
+
     return (
         <div className={` ${props.classes} font_futuraLT transition-all duration-1000 overflow-hidden`}>
-            <Splide className={`w-full h-full relative transition-all duration-1000`} onPaginationMounted={(data) => { data.list.classList.add('hidden') }} hasTrack={false}
+            <Splide ref={splideRef} className={`w-full h-full relative transition-all duration-1000`} onPaginationMounted={(data) => { data.list.classList.add('hidden') }} hasTrack={false}
                 options={{
                     type: 'loop',
                     speed: 1500,
                     gap: '0.5rem',
                     cover: true,
-                    autoplay: play,
+                    autoplay: true,
                     resetProgress: false,
-                    interval: 4000,
+                    interval: 3500,
                     drag: false,
                     focus: 0,
                     pauseOnHover: false,

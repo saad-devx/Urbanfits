@@ -52,6 +52,7 @@ export default function Home() {
           <h1 className="text-white text-xl md:text-3xl text-center font_futuraLT">Welcome to the Urban Fits</h1>
           <h1 className="text-gray-300 text-lg md:text-2xl text-center">Home Page is not ready yet</h1>
 
+          <Button href="/home" bg="bg-gradient-to-r from-cyan-500 to-blue-500" classes="w-full" >Home Page</Button>
           <Button onclick={toggleModal} name="modal3" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full">Activate Change Language Modal</Button>
           <Button href="/trackorder" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" >Track Your Order Page</Button>
           <Button href="/home" bg="bg-gradient-to-r from-purple-500 to-pink-500" classes="w-full" >Home page</Button>

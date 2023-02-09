@@ -9,15 +9,15 @@ export default function Home() {
     const [expand, setExpand] = useState(false)
 
     const [resize, setSize] = useState(false)
-    const getPos = () => {
+    useEffect(() => {
+        // expand === true ? setMove(true) : setMove(false)
         window.addEventListener('scroll', () => {
             let position = document.documentElement.scrollTop
-            if (position >> 0) setSize(true)
+            if (position >> 0) {
+                setSize(true)
+            }
             else { }
         })
-    }
-    useEffect(() => {
-        getPos()
     })
 
 

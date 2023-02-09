@@ -51,15 +51,15 @@ export default function Newsletter(props) {
                             </div>
                             <div className="space-y-4">
                                 <h3 className="text-black text-base">Favourite Subjects*</h3>
-                                <div className="w-full text-xs md:text-sm space-y-2 md:space-y-0 space-x-3">
-                                    <input value="Bags" type="button" name='interest' onClick={() => { onchange; setChecked("bg-gold text-white border-none") }} className={`${checked} p-2 px-3 mb-2 cursor-pointer rounded-3xl md:rounded-3xl border border-gray-400`} />
-                                    <input value="Sneakers" type="button" name='interest' onClick={() => { onchange; setChecked("bg-gold text-white border-none") }} className={`${checked} p-2 px-3 mb-2 cursor-pointer rounded-3xl md:rounded-3xl border border-gray-400`} />
-                                    <input value="Jackets" type="button" name='interest' onClick={() => { onchange; setChecked("bg-gold text-white border-none") }} className={`${checked} p-2 px-3 mb-2 cursor-pointer rounded-3xl md:rounded-3xl border border-gray-400`} />
-                                    <input value="Dresses" type="button" name='interest' onClick={() => { onchange; setChecked("bg-gold text-white border-none") }} className={`${checked} p-2 px-3 mb-2 cursor-pointer rounded-3xl md:rounded-3xl border border-gray-400`} />
-                                    <input value="Fashion Shows" type="button" name='interest' onClick={() => { onchange; setChecked("bg-gold text-white border-none") }} className={`${checked} p-2 px-3 mb-2 cursor-pointer rounded-3xl md:rounded-3xl border border-gray-400`} />
-                                    {/* { ['Bags', 'Sneakers', 'Jackets', 'Dresses', 'Fashion Shows'].map((name) => {
-                                        return <input value={name} type="button"  name='interest' onClick={()=>{onchange; setChecked("bg-gold text-white border-none")}} className={`${checked} p-2 cursor-pointer rounded-2xl md:rounded-3xl border border-gray-400`} />
-                                    }) } */}
+                                <div className="pill-container w-full flex flex-wrap text-xs md:text-sm space-y-2 md:space-y-0 space-x-1">
+                                    {['Bags', 'Sneakers', 'Jackets', 'Dresses', 'Fashion Shows'].map((name) => {
+                                        return (
+                                            <>
+                                                <input type="checkbox" id={name} name="selector" value={name} />
+                                                <label className="selector border border-gray-400 rounded-full mb-3 px-4 py-2" htmlFor={name}>{name}</label>
+                                            </>
+                                        )
+                                    })}
                                 </div>
                             </div>
                             <p className='font_futuraLTlite text-sm' >Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
