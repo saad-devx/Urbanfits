@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
-import { Inter } from '@next/font/google'
-import Button from '@/components/simple_btn';
+// import { Inter } from '@next/font/google'
+import LinkBtn from '@/components/link_btn';
 import Carousel from '@/components/carousel';
 import CardCarousel from '@/components/cardCarousel';
 import PicCard from '@/components/picCard';
@@ -20,7 +20,7 @@ import image3 from '../public/card imgs/card img1.jpg'
 import image4 from '../public/card imgs/card img8.jpg'
 
 // Confifure font
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
     // state for navbar expansion
@@ -82,24 +82,26 @@ export default function Home() {
                     </section>
                     {/* Shopping Card Section */}
                     <section className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0">
-                        <PicCard img={image1} />
-                        <PicCard object_fit="center" img={image2} />
+                        <PicCard object_fit="object-top" img={image1} />
+                        <PicCard img={image2} />
                     </section>
                     {/* Shopping Card Section */}
-                    <section className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0">
-                        <PicCard img={image4} />
-                        <PicCard img={image3} />
+                    <section className="w-full font_futuraLT">
+                        <h3 className="text-4xl ml-10">Urban Unicorn Sneakers</h3>
+                        <div className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between space-y-7 lg:space-y-0">
+                            <PicCard img={image4} />
+                            <PicCard img={image3} />
+                        </div>
                     </section>
                     {/* some other links section */}
                     <section className="w-full p-10">
-                        <Button href="/home" bg="bg-gradient-to-r from-cyan-500 to-blue-500" classes="w-full" >FAQ page</Button>
-                        <Button href="/trackorder" bg="bg-gradient-to-r from-cyan-500 to-blue-500" classes="w-full" >Track Your Order Page</Button>
-
-                        <Button href="/giftcard" classes="w-full" >Giftcard page</Button>
-                        <Button onclick={toggleModal} name="modal1" classes="w-full">Activate Change Country Modal</Button>
-                        <Button onclick={toggleModal} name="modal2" classes="w-full">Activate Newsletter Modal</Button>
-                        <Button href="/contact" classes="w-full" >Contact Us page</Button>
-                        <Button href="/resetpassword" classes="w-full" >Reset password page</Button>
+                        <LinkBtn href="/faq" bg="bg-gradient-to-r from-cyan-500 to-blue-500" classes="w-full" >FAQ page</LinkBtn>
+                        <LinkBtn href="/trackorder" bg="bg-gradient-to-r from-cyan-500 to-blue-500" classes="w-full" >Track Your Order Page</LinkBtn>
+                        <LinkBtn href="/giftcard" classes="w-full" >Giftcard page</LinkBtn>
+                        <LinkBtn onclick={toggleModal} name="modal1" classes="w-full">Activate Change Country Modal</LinkBtn>
+                        <LinkBtn onclick={toggleModal} name="modal2" classes="w-full">Activate Newsletter Modal</LinkBtn>
+                        <LinkBtn href="/contact" classes="w-full" >Contact Us page</LinkBtn>
+                        <LinkBtn href="/resetpassword" classes="w-full" >Reset password page</LinkBtn>
                     </section>
                     <Footer />
                 </section>
