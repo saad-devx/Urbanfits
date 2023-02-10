@@ -17,7 +17,7 @@ const CardSlide = (props) => {
 
         <SplideSlide className={` relative  md:p-5`}>
             <div className='relative w-full h-full rounded-3xl font_futuraLT overflow-hidden' >
-                <Image unoptimized={false} src={props.img} className='w-full h-full object-cover' alt='' ></Image>
+                <Image src={props.img} className='w-full h-full object-cover' alt='' ></Image>
                 <div className="absolute w-full bottom-0 left-0 p-7 bg-gradient-to-t from-white to-transparent flex flex-col items-start text-black text-5xl">
                     <h1 className="text-3xl">Jackets and Coats</h1>
                     <p className="mt-1 mb-4 text-lg">New In Women Wear</p>
@@ -49,7 +49,7 @@ export default function CardCarousel() {
                     pagination: false,
                     focus: 'center',
                     autoScroll: {
-                        pauseOnHover: false,
+                        pauseOnHover: true,
                         pauseOnFocus: false,
                         speed: 1,
                     },

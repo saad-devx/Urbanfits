@@ -75,7 +75,7 @@ export default function Navbar(props) {
                         <ListItem href='#' value='Women' />
                         <ListItem href='#' value='Eyewear' />
                         <ListItem href='#' value='Kids' />
-                        <ListItem href='#' value='Gifts Selection' />
+                        <ListItem href='/giftcard' value='Gifts Selection' />
                         <ListItem href='#' value='Our Essentials' />
                     </ul>
                 </div>
