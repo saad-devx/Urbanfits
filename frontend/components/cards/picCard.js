@@ -9,7 +9,7 @@ export default function PicCard(props) {
             <div className="absolute w-full bottom-0 left-0 p-3 lg:p-7 text-white flex flex-col items-start text-5xl">
                 <h3 className="text-3xl lg:text-4xl">New In</h3>
                 <h3 className="text-3xl lg:text-4xl mt-1 mb-4">Ready To Wear</h3>
-                <LinkBtn href="/" my="my-0" classes="w-1/2 md:w-1/3 lg:w-1/2">Shop Now</LinkBtn>
+                <LinkBtn href={props.href} my="my-0" classes="w-1/2 md:w-1/3 lg:w-1/2">Shop Now</LinkBtn>
             </div>
         </div>
     )

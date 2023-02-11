@@ -17,7 +17,7 @@ const CarouselSlide = (props) => {
             <div className="absolute w-2/6 bottom-[7%] left-[4%] flex flex-col items-start text-white text-5xl">
                 <h1 className="text-white text-4xl md:font-bold">Denim</h1>
                 <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
-                <LinkBtn my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
+                <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
             </div>
             <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="" />
         </SplideSlide>
