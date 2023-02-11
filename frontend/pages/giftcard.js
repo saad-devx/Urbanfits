@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../components/navbar'
 import Image from 'next/image'
-import Card from '../components/card'
+import Card from '../components/cards/card'
 import Footer from '../components/footer'
 import giftBanner from '../public/giftbanner.png'
 

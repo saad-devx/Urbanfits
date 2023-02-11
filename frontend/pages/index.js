@@ -3,16 +3,18 @@ import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
 // import { Inter } from '@next/font/google'
-import Carousel from '@/components/carousel';
-import CardCarousel from '@/components/cardCarousel';
-import Card from '@/components/card';
-import PicCard from '@/components/picCard';
+import Carousel from '@/components/carousels/carousel';
+import CardCarousel from '@/components/carousels/cardCarousel';
+import Card from '@/components/cards/card';
+import PicCard from '@/components/cards/picCard';
 
 // Modal imports
-import LoadingModal from '../components/loadingmodal';
-import LanguageModal from '../components/languagemodal';
+import LoadingModal from '../components/modals/loadingmodal';
+import LanguageModal from '../components/modals/languagemodal';
 
 // imports for images
+import Image from 'next/image';
+import Logo from '../public/logo_black.svg'
 import image1 from '../public/card imgs/card img5.jpg'
 import image2 from '../public/card imgs/card img6.jpg'
 import image3 from '../public/card imgs/card img1.jpg'
@@ -66,9 +68,10 @@ export default function Home() {
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 {/* <section className={`${width} ${resize === true ? setWidth('w-full lg:w-[94.6%]') : ""} ${expand === true ? setWidth('w-3/4') : null} bg-gray-100 absolute right-0 top-0 flex flex-col justify-center items-center space-y-5 transition-all duration-700`}> */}
-                <section className={`${expand === true ? 'w-3/4' : 'w-full'} bg-gray-100 absolute right-0 top-0 flex justify-end transition-all duration-700`}>
+                <section className={`${expand === true ? 'w-full lg:w-[79.4%]' : 'w-full'} bg-gray-100 absolute right-0 top-0 flex justify-center lg:justify-end transition-all duration-700`}>
+                    <Image src={Logo} className={`${resize===true?"":"translate-x-44"} fixed top-10 right-10 z-10 w-28 transition-all duration-700`} ></Image>
                     <div className={`${resize === true ? "w-full lg:w-[94.6%]" : "w-full"} flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
-                        <Carousel classes={resize === true ? "w-11/12 h-[80vh] md:h-[90vh] rounded-[2rem] m-10" : "w-full"} />
+                        <Carousel classes={resize === true ? "w-11/12 h-[80vh] md:h-[90vh] rounded-[2rem] mt-7 mx-auto lg:m-10" : "w-full"} />
                         {/* Auto scroll Carousel  */}
                         <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT">
                             <div className="w-full md:w-[35%] md:h-full p-5 flex flex-col justify-center items-start">
@@ -81,7 +84,7 @@ export default function Home() {
                             <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                         </section>
                         {/* Shopping Card Section */}
-                        <section className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0">
+                        <section className="w-full h-screen p-3 md:p-10 flex flex-col lg:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0">
                             <PicCard object_fit="object-top" img={image1} />
                             <PicCard img={image2} />
                         </section>
@@ -105,10 +108,10 @@ export default function Home() {
                             <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                         </section>
                         {/* Ending Link Cards section */}
-                        <section className="w-full h-[80vh] mx-3 p-5 flex flex-col lg:flex-row justify-around items-center space-y-6 lg:space-y-0">
-                            <Card href="/contact" title="Contact Us" value='If you have any query then please contact us.' valueCenter btnValue="Contact Us" classes='w-full py-20 justify-center items-center h-full md:w-2/6 lg:w-[30%] md:h-3/4' />
-                            <Card href="/customercare" title="Customer Care" value='Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone.' valueCenter btnValue="Get In Touch" classes='scale-110 w-full py-20 justify-center items-center h-full md:w-2/6 lg:w-[30%] md:h-3/4' />
-                            <Card href="/faq" title="FAQ" value='Find all the answers to the frequently asked questions below.' valueCenter btnValue="See Our FAQs" classes='w-full py-20 justify-center items-center h-full md:w-2/6 lg:w-[30%] md:h-3/4' />
+                        <section className="w-full h-auto lg:h-[80vh] p-5 flex flex-col lg:flex-row justify-around items-center space-y-6 lg:space-y-0">
+                            <Card href="/contact" title="Contact Us" value='If you have any query then please contact us.' valueCenter btnValue="Contact Us" classes='w-full md:w-[60vw] py-20 justify-center items-center h-full lg:w-[30%] md:h-3/4' />
+                            <Card href="/customercare" title="Customer Care" value='Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone.' valueCenter btnValue="Get In Touch" classes='lg:scale-110 w-full md:w-[60vw] py-20 justify-center items-center h-full lg:w-[30%] md:h-3/4' />
+                            <Card href="/faq" title="FAQ" value='Find all the answers to the frequently asked questions below.' valueCenter btnValue="See Our FAQs" classes='w-full md:w-[60vw] py-20 justify-center items-center h-full lg:w-[30%] md:h-3/4' />
                         </section>
                         <Footer />
                     </div>

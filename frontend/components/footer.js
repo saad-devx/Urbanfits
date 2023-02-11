@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Newsletter from './newsletter'
+import Newsletter from './modals/newsletter'
 import Link from 'next/link'
 
 export default function Footer() {
@@ -39,7 +39,7 @@ export default function Footer() {
 
             <div className="w-full mt-10 px-7 md:px-10 lg:px-12 flex flex-row flex-wrap justify-between items-center md:items-start text-black">
                 <div className="w-full md:w-1/5 text-sm font-thin pb-10 md:pb-3 space-y-4 flex flex-col items-center md:items-start">
-                    <h1 className="text-2xl text-black font_futuraLT">Urban Fits</h1>
+                    <h1 className="text-2xl text-black font_futuraLT"><Link href="/">Urban Fits</Link></h1>
                     <p className='text-xs text-start' >This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good.<br /><br />500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102<br /><br />+0123.456.8386</p>
                 </div>
                 <div className="list-none text-sm font-thin pb-7 md:pb-3 space-y-4 flex flex-col items-start">

@@ -9,7 +9,7 @@ import LinkBtn from './link_btn'
 import SuccessAlert from './successAlert'
 
 // imports for images
-import Urbanfit_logo from '../public/logo.svg'
+import Urbanfit_logo from '../public/logo_gold.svg'
 import google_logo from '../public/google-logo.png'
 import apple_logo from '../public/apple-logo2.png';
 
