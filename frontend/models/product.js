@@ -11,6 +11,14 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a price for your product"],
         maxlength: [10, "Price can't be more than 10 figures"]
     },
+    size:{
+        type: Array,
+        default: ["M", "L"]
+    },
+    color:{
+        type: Array,
+        default: ["black", "white"]
+    },
     description: {
         type: String,
         required: [true, "Please enter a description for your product"],
@@ -34,6 +42,6 @@ const ProductSchema = mongoose.Schema({
         default: 1
     }
 
-}, {timestamps: true} )
+}, { timestamps: true })
 
 module.exports = mongoose.models.Product || mongoose.model("Product", ProductSchema)

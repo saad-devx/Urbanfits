@@ -6,10 +6,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Button from './simple_btn'
 import LinkBtn from './link_btn'
-import Urbanfit_logo from '../public/U-logo1 1 1.png'
+import SuccessAlert from './successAlert'
+
+// imports for images
+import Urbanfit_logo from '../public/logo_gold.svg'
 import google_logo from '../public/google-logo.png'
 import apple_logo from '../public/apple-logo2.png';
-import SuccessAlert from './successAlert'
 
 // imports for validation
 import { useFormik } from 'formik';
@@ -104,7 +106,7 @@ export default function Signing(props) {
                     <SuccessAlert show={alert} />
                     <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
                         {/* This image will only show on the top in the Sign Up page */}
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} mx-auto mb-3`} />
+                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/2 mx-auto mb-3`} />
                         <div className='w-full mx-auto mb-7' >
                             <h2 className="font_futuraLT font-medium text-4xl leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
                         </div>
@@ -115,7 +117,7 @@ export default function Signing(props) {
 
                     <div className=" w-[95%] md:w-[400px] mx-auto py-7 bg-white">
                         {/* This image will only show in the Login page */}
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} mx-auto mb-8`} />
+                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/2 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
                             <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>

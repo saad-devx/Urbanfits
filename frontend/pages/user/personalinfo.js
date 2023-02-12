@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '../../components/navbar'
-import Card from '../../components/card'
+import Card from '../../components/cards/card'
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 import SuccessAlert from '../../components/successAlert';

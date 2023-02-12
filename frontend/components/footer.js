@@ -1,9 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
+import Newsletter from './modals/newsletter'
 import Link from 'next/link'
 
 export default function Footer() {
+    const [modal2, setModal2] = useState(false)
+
+    const toggleModal = (e) => {
+    if (e.target.name === "modal2") {
+        if (modal2 === false) return setModal2(true)
+        if (modal2 === true) return setModal2(false)
+    }
+}
     return (
         <footer className="border-t border-gray-300 w-full pt-10 md:pt-20 pb-36 md:pb-7 font_futuraLTlite bg-gray-100">
+            <Newsletter show={modal2} toggleModal={toggleModal} />
             <div className="w-full h-2/6 px-4 md:px-24 lg:px-32 pb-7 md:pb-16 border-b border-b-gray-400 flex flex-row flex-wrap justify-between items-start md:space-y-0">
                 <span className='w-1/2 text-black md:w-1/5 mx-auto mb-7 flex flex-col justify-center text-center' >
                     <i className="fa-solid fa-wallet mb-3 text-xl"></i>
@@ -29,7 +39,7 @@ export default function Footer() {
 
             <div className="w-full mt-10 px-7 md:px-10 lg:px-12 flex flex-row flex-wrap justify-between items-center md:items-start text-black">
                 <div className="w-full md:w-1/5 text-sm font-thin pb-10 md:pb-3 space-y-4 flex flex-col items-center md:items-start">
-                    <h1 className="text-2xl text-black font_futuraLT">Urban Fits</h1>
+                    <h1 className="text-2xl text-black font_futuraLT"><Link href="/">Urban Fits</Link></h1>
                     <p className='text-xs text-start' >This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good.<br /><br />500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102<br /><br />+0123.456.8386</p>
                 </div>
                 <div className="list-none text-sm font-thin pb-7 md:pb-3 space-y-4 flex flex-col items-start">
@@ -38,10 +48,10 @@ export default function Footer() {
                         <Link href='/'>Contact Us</Link>
                     </li>
                     <li>
-                        <Link href='/contact'>Newsletter</Link>
+                        <button onClick={toggleModal} name="modal2">Newsletter</button>
                     </li>
                     <li>
-                        <Link href='/returnsshipping'>FAQ</Link>
+                        <Link href='/faq'>FAQ</Link>
                     </li>
                     <li>
                         <Link href='/user/myorders'>+0123.456.8386</Link>
@@ -53,7 +63,7 @@ export default function Footer() {
                         <Link href='/about'>Delivery Information</Link>
                     </li>
                     <li>
-                        <Link href=''>Track Your Order</Link>
+                        <Link href='/trackorder'>Track Your Order</Link>
                     </li>
                     <li>
                         <Link href='/privacypolicy'>Order Status</Link>
@@ -96,7 +106,7 @@ export default function Footer() {
                     </li>
                 </div>
                 <div className="w-full text-black md:w-1/5 flex flex-col justify-center md:justify-start items-center md:items-end text-sm font-thin space-y-4">
-                    <h3 className="text-lg font_futuraLT">Contact With Us</h3>
+                    <h3 className="text-lg font_futuraLT"><Link href="/contact">Contact With Us</Link></h3>
                     <div className="space-x-5">
                         <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>
                         <Link href='#' ><i className="fa-brands fa-facebook-f"></i></Link>

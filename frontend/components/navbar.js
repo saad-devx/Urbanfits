@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
-import LanguageModal from './languagemodal';
+import Image from 'next/image';
+import LanguageModal from './modals/languagemodal';
+import Logo from '../public/logo_black.svg'
 
 
 function ListItem(props) {
@@ -38,6 +40,7 @@ export default function Navbar(props) {
     return (
         <>
             <LanguageModal show={modal3} toggleModal={toggleModal} />
+            <Image src={Logo} className={`fixed top-10 right-10 z-10 w-28 transition-all duration-700`} ></Image>
             <nav className={` ${nav} ${props.classes} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
@@ -75,7 +78,7 @@ export default function Navbar(props) {
                         <ListItem href='#' value='Women' />
                         <ListItem href='#' value='Eyewear' />
                         <ListItem href='#' value='Kids' />
-                        <ListItem href='#' value='Gifts Selection' />
+                        <ListItem href='/giftcard' value='Gifts Selection' />
                         <ListItem href='#' value='Our Essentials' />
                     </ul>
                 </div>
