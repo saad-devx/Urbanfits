@@ -35,6 +35,11 @@
     src: local('Futura LT BookOblique'), url('FuturaLT-BookOblique.woff') format('woff');
     }*/
 
+    * {
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      tap-highlight-color: rgba(0,0,0,0);
+    }
+
 .font_futuraLT {
   font-family: 'Futura LT Pro';
 }

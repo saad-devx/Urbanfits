@@ -64,7 +64,7 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className="w-full h-full">
-                <Navbar setExpand={setExpand} classes={resize === true ? "" : "-translate-x-56 opacity-0 pointer-events-none"} />
+                <Navbar logoNull setExpand={setExpand} classes={resize === true ? "" : "-translate-x-56 opacity-0 pointer-events-none"} />
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 {/* <section className={`${width} ${resize === true ? setWidth('w-full lg:w-[94.6%]') : ""} ${expand === true ? setWidth('w-3/4') : null} bg-gray-100 absolute right-0 top-0 flex flex-col justify-center items-center space-y-5 transition-all duration-700`}> */}

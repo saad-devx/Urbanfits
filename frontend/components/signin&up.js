@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { Inter } from '@next/font/google'
+import { toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import Button from './simple_btn'
 import LinkBtn from './link_btn'
-import SuccessAlert from './successAlert'
-
+import jwt from 'jsonwebtoken';
 // imports for images
 import Urbanfit_logo from '../public/logo_gold.svg'
 import google_logo from '../public/google-logo.png'
@@ -15,7 +16,6 @@ import apple_logo from '../public/apple-logo2.png';
 
 // imports for validation
 import { useFormik } from 'formik';
-import * as Yup from 'yup'
 import Tooltip from './tooltip';
 
 // configuring inter font
@@ -26,69 +26,69 @@ export default function Signing(props) {
     const { page } = props
     // configuring router
     const router = useRouter()
-
-    //                                Frontend Validation and Schemas for different endpoints
-
-    // schema and vallidation for Sign Up
-    const signupuSchema = Yup.object({
-        username: Yup.string().min(3, "Username must be at least 3 characters long").max(20, "Username cannot exceed 20 characters").matches(/^[A-Za-z0-9_]+$/, "Username must contain only letters, numbers, and underscores").notOneOf([' ', '-'], 'Username should not contain any spaces or hyphen symbols').required("Username is required"),
-        email: Yup.string().email().required("Please enter your email address"),
-        phone: Yup.string().matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Please enter a valid phone number with postal code and space eg. +971 0000000000").required(),
-        password: Yup.string().min(8).max(30).required("Please enter your password"),
-        accept_policies: Yup.boolean().oneOf([true], "You can't go further without accepting our policies").required("You can't go further without accepting our policies")
-    })
-    const initialSignupValues = { username: '', email: '', password: '', phone: '', accept_policies: '' }
-
-    // schema and vallidation for Login
-    const loginSchema = Yup.object({
-        email: Yup.string().email().required("Please enter your email address"),
-        password: Yup.string().min(8).max(30).required("Please enter your password"),
-    })
-    const initialLoginValues = { email: '', password: '' }
-
-    // schema and vallidation for Login
-    const forgotpassSchema = Yup.object({
-        email: Yup.string().email().required("Please enter your email address"),
-    })
-    const initialForgotPasswordValues = { email: '' }
-
-    // schema and vallidation for Login
-    const resetpassSchema = Yup.object({
-        email: Yup.string().email().required("Please enter your email address"),
-        password: Yup.string().min(8).max(30).required("Please enter your password"),
-        confirm_password: Yup.string().min(8).max(30).oneOf([Yup.ref("password"), null], "Passowrd must match").required("Please enter your password")
-    })
-    const initialResetPasswordValues = { email: '', password: '', confirm_password: '' }
-
     //                                     Submit form functionality
 
     const initialValueChanger = () => { // Initial Values Object would change on the basis of route name
         let path = router.pathname
-        if (path === "/signup") return initialSignupValues
-        if (path === "/login") return initialLoginValues
-        if (path === "/forgotpassword") return initialForgotPasswordValues
-        if (path === "/resetpassword") return initialResetPasswordValues
+        if (path === "/signup") return props.initialSignupValues
+        if (path === "/login") return props.initialLoginValues
+        if (path === "/forgotpassword") return props.initialForgotPasswordValues
+        if (path === "/resetpassword") return props.initialResetPasswordValues
     }
     const validationObjectChanger = () => { // Validation Object would change on the basis of route name
         let path = router.pathname
-        if (path === "/signup") return signupuSchema
-        if (path === "/login") return loginSchema
-        if (path === "/forgotpassword") return forgotpassSchema
-        if (path === "/resetpassword") return resetpassSchema
+        if (path === "/signup") return props.signupuSchema
+        if (path === "/login") return props.loginSchema
+        if (path === "/forgotpassword") return props.forgotpassSchema
+        if (path === "/resetpassword") return props.resetpassSchema
+    }
+    //                                      Submit function
+
+    // setting request method according to the pathname
+    const getMethod = () => {
+        let path = router.pathname
+        if (path === "/signup") return "POST"
+        if (path === "/login") return "POST"
+        if (path === "/forgotpassword") return "POST"
+        if (path === "/resetpassword") return "PUT"
     }
 
-    // Submit function
-    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: initialValueChanger(),
         validationSchema: validationObjectChanger(),
-        onSubmit: (errors, values) => {
-            console.log(errors, values)
+        onSubmit: async (values) => {
+            let user = JSON.stringify(values)
+            let path = router.pathname
+            console.log(process.env.HOST)
+            let response = await fetch(`${process.env.HOST}/api/user${path}`, {
+                method: getMethod(),
+                headers: { "Content-Type": "application/json" },
+                body: user
+            })
+            const toaster = (type, msg) => {
+                toast(msg, {
+                    position: "top-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    type: type,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide
+                })
+            }
+            let res = await response.json()
+            if (!res.success) return toaster("error", res.msg)
+            if (res.success) toaster("success", res.msg)
+            localStorage.setItem("authToken", res.payload)
+            console.log(res.payload, "MuhammadBilawalAshrafOwnsUrbanFisBrand")
+            const decodedPayload = jwt.decode(res.payload)
+
+            console.log(decodedPayload)
+            router.push('/')
             handleReset()
-            setAlert(true)
-            setTimeout(() => {
-                setAlert(false)
-            }, 3000)
         }
     })
 
@@ -103,7 +103,6 @@ export default function Signing(props) {
 
             <main className={`bg-white lg:overflow-x-hidden`}>
                 <section className='lg:flex lg:items-center lg:justify-center lg:w-screen lg:h-screen' >
-                    <SuccessAlert show={alert} />
                     <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
                         {/* This image will only show on the top in the Sign Up page */}
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/2 mx-auto mb-3`} />
@@ -128,9 +127,9 @@ export default function Signing(props) {
                                 {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
                                 <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
                             </div>
-                            <div className={` ${page==="login" && props.type==="resetpass"? "hidden" : ''} relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            <div className={` ${page === "login" && props.type === "resetpass" ? "hidden" : ''} relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                                <input className="w-full outline-none border-none" type="email" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email" />
+                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email or Username" />
                             </div>
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.phone && errors.phone ? <Tooltip classes="form-error" content={errors.phone} /> : null}
