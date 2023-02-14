@@ -14,8 +14,6 @@ export default function Newsletter(props) {
         console.log(letterDetails)
     }
 
-    // to make the interest buttons show a checked effect
-    const [checked, setChecked] = useState("")
     return (
         <>
             <div className={`w-full h-full font_futuraLT fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
