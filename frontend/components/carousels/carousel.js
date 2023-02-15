@@ -43,6 +43,7 @@ export default function Carousel(props) {
                     gap: '0.5rem',
                     cover: true,
                     autoplay: true,
+                    waitForTransition: true,
                     resetProgress: false,
                     interval: 3500,
                     drag: false,

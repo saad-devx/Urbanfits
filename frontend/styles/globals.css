@@ -280,3 +280,24 @@ input:checked+.slider:before {
   opacity: 1;
   border: none !important;
 }
+
+/* hiding element when out of focus */
+.group:not(:focus) .minus_icon {
+  display: none;
+}
+
+/* Toast css */
+.toast{
+  font-family: 'Futura LT Pro' !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .toast{
+    top: 10px !important;
+    left: 10px !important;
+    width: 65% !important;
+    border-radius: 10px !important;
+    height: 100px !important;
+    font-size: smaller !important;
+  }
+}

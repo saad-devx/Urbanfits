@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../link_btn'
 
-// Newsletter Modal Component
 export default function Newsletter(props) {
     const initialNewsletterObj = {
         email: '',
@@ -36,13 +35,13 @@ export default function Newsletter(props) {
                             <div className='space-y-4' >
                                 <h3 className='text-black text-base' >Gender*</h3>
                                 <div className="font_futuraLTlite w-full md:w-3/5 flex justify-between items-center ">
-                                    <div className='mx-2' >
+                                    <div className='mr-2' >
                                         <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onChange={onchange} /><label htmlFor='male'>Male</label>
                                     </div>
-                                    <div className='mx-2' >
+                                    <div className='mr-2' >
                                         <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="female" name="gender" value="female" onChange={onchange} /><label htmlFor='female'>Female</label>
                                     </div>
-                                    <div className='mx-2' >
+                                    <div className='mr-2' >
                                         <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="fluid" name="gender" value="fluid" onChange={onchange} /><label htmlFor='fluid'>Fluid</label>
                                     </div>
                                 </div>
