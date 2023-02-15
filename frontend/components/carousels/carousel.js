@@ -33,13 +33,6 @@ export default function Carousel(props) {
 
     // splide ref and function to move the slide to prevent the weird effect when the screen is resized
     let splideRef = useRef(null)
-    // const moveNext = ()=>{
-    //     setTimeout(()=>{   
-    //         splideRef.current.splide.go('>')
-    //     }, 900)
-    //     props.setMove(false)
-    // }
-    // props.move === true? moveNext() :  null
 
     return (
         <div className={` ${props.classes} font_futuraLT transition-all duration-1000 overflow-hidden`}>

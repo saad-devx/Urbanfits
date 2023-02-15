@@ -2,6 +2,10 @@
     opacity: 0;
     width: 0;
 }
+.pill-container input[type=radio] {
+    opacity: 0;
+    width: 0;
+}
 
 .selector {
     letter-spacing: 1.1px;
@@ -15,6 +19,12 @@
 }
 
 input[type=checkbox]:checked+label {
+    background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+    border: 1px solid white;
+    color: white;
+}
+
+input[type=radio]:checked+label {
     background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
     border: 1px solid white;
     color: white;
