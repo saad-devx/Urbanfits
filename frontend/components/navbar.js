@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link'
 import Image from 'next/image';
 import LanguageModal from './modals/languagemodal';
+import Search from './search';
 import Logo from '../public/logo_black.svg'
 
 
@@ -37,10 +38,18 @@ export default function Navbar(props) {
             if (modal3 === true) return setModal3(false)
         }
     }
+
+    // state for search componenet
+    const [search, setSearch] = useState(false)
+    const toggleSearch = ()=>{
+        if (search === false) return setSearch(true)
+        if (search === true) return setSearch(false)
+    }
     return (
         <>
+            <Search search={search} toggleSearch={toggleSearch} />
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            {props.logoNull?null: <Image src={Logo} className={`fixed top-10 right-10 z-10 w-16 md:w-24 lg:w-28 transition-all duration-700`} ></Image>}
+            {props.logoNull ? null : <Image src={Logo} className={`fixed top-10 right-10 z-10 w-16 md:w-24 lg:w-28 transition-all duration-700`} ></Image>}
             <nav className={` ${nav} ${props.classes} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
@@ -49,7 +58,7 @@ export default function Navbar(props) {
                 </div>
                 <div className="w-full h-full lg:h-1/3 text-gray-900 flex lg:flex-col justify-around items-center">
                     <span className='lg:hidden cursor-pointer flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined text-[1.6rem">menu</i></span>
-                    <Link href='/' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">search</i></Link>
+                    <button onClick={null} className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">search</i></button>
                     <Link href='/' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">local_mall</i></Link>
                     <Link href='/user/personalinfo' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">person</i></Link>
                 </div>

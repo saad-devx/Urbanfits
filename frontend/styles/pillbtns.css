@@ -24,7 +24,7 @@ input[type=checkbox]:checked+label {
     color: white;
 }
 
-input[type=radio]:checked+label {
+.pill-container input[type=radio]:checked+label {
     background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
     border: 1px solid white;
     color: white;

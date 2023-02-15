@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import Navbar from '../../components/navbar';
-import Button from '../../components/simple_btn';
 import LinkBtn from '@/components/link_btn';
 import Footer from '../../components/footer'
 import SearchBar from '@/components/searchBar';
 
-const Accordian = (props) => {
+export const Accordian = (props) => {
     return (
         <div className="group outline-none accordion-section mb-7 border-b border-b-gray-300" tabindex={props.index}>
             <div className="group flex justify-between py-3 items-center text-gray-700 transition ease duration-500 cursor-pointer pr-10 relative">
