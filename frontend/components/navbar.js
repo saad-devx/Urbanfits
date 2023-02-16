@@ -58,7 +58,7 @@ export default function Navbar(props) {
                 </div>
                 <div className="w-full h-full lg:h-1/3 text-gray-900 flex lg:flex-col justify-around items-center">
                     <span className='lg:hidden cursor-pointer flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined text-[1.6rem">menu</i></span>
-                    <button onClick={null} className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">search</i></button>
+                    <button onClick={toggleSearch} className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">search</i></button>
                     <Link href='/' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">local_mall</i></Link>
                     <Link href='/user/personalinfo' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">person</i></Link>
                 </div>

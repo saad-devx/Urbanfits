@@ -28,6 +28,9 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: [true, "Please enter a category for your product"]
     },
+    subcategories: {
+        type: Array
+    },
     ratings: {
         type: Number,
         default: 0
