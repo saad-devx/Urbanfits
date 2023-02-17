@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-//Carousel Images component
+//Carousel Image Slide component
 const CarouselSlide = (props) => {
   return (
     <SplideSlide className='w-full h-[60vh] lg:h-[80vh]' >
@@ -25,7 +25,6 @@ export default function ProductCarousel(props) {
   return (
     <>
       <div className="productCarousel">
-
         <Splide className='w-full h-[60vh] lg:h-[80vh] overflow-hidden border-2 border-white bg-white rounded-lg lg:rounded-b-none' ref={slider1} options={{
           type: 'loop',
           rewind: true,
@@ -35,11 +34,9 @@ export default function ProductCarousel(props) {
           speed: 700,
           arrows: true,
         }} >
-
           {props.img_array.map((img) => {
             return <CarouselSlide img={img.url} />
           })}
-
         </Splide>
 
         <Splide className='hidden md:flex justify-center bg-white rounded-b-lg' ref={slider2} options={{
@@ -59,13 +56,15 @@ export default function ProductCarousel(props) {
             },
           },
         }} >
-
           {props.img_array.map((img) => {
             return <CarouselSlide img={img.url} />
           })}
-
         </Splide>
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  return { props: { img_array: context.img_array } }
 }

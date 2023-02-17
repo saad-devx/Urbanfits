@@ -70,7 +70,7 @@ export default function Product(props) {
                                     <ProductCarousel img_array={product.images} />
                                     <div className="w-full my-5">
                                         <h3 className="text-3xl mb-4">{product.name}</h3>
-                                        <h4 className="Slug text-xl">Product Slug Here</h4>
+                                        <h4 className="Slug text-xl">{product.slug && product.slug}</h4>
                                         <p className="description font_futuraLTlite my-3">{product.description}</p>
                                         <ul className='pl-4 list-disc font_futuraLTlite text-sm leading-6' >
                                             <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
@@ -89,15 +89,9 @@ export default function Product(props) {
                                     <div className="w-full h-28 p-4 rounded-2xl bg-white items-center">
                                         <small className="w-full">Choose a Color:</small>
                                         <span className="w-full my-3 mx-auto flex flex-wrap justify-center space-x-3">
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-red-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-blue-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-black" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-orange-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-green-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-yellow-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-indigo-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-purple-600" ></input>
-                                            <input type="button" className="w-5 h-5 mb-3 outline-none border-none rounded-full bg-gray-600" ></input>
+                                            {product.color.map(color => {
+                                                return <input type="button" className={`w-5 h-5 mb-3 outline-none ${color==="white"?"border":"border-none"} cursor-pointer rounded-full bg-${color}${color === "black" ? "" : "-600"}`} ></input>
+                                            })}
                                         </span>
                                     </div>
 
@@ -205,11 +199,9 @@ export default function Product(props) {
                             <div className="w-full mt-10">
                                 <h3 className="text-2xl">More To Explore</h3>
                                 <div className="w-full my-5 flex flex-wrap">
-                                    <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >Ready to Wear</LinkBtn>
-                                    <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >Atelier Urban</LinkBtn>
-                                    <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >Essentials</LinkBtn>
-                                    <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >Bags</LinkBtn>
-                                    <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >Sneakers</LinkBtn>
+                                    {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
+                                        return <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
+                                    })}
                                 </div>
                                 <div className="flex flex-wrap justify-between md:justify-center lg:justify-between space-y-4 lg:space-y-0">
                                     <SuggestionCard btnValue="Shope Now" title="Ready to Wear" img={image1} ></SuggestionCard>
@@ -227,11 +219,7 @@ export default function Product(props) {
 }
 
 export async function getServerSideProps(context) {
-    // const router = useRouter()
     const { p_id } = await context.query
-    // Fetch Product from external API
     let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
-
-    // Passing product data to the page via props
     return { props: { response } }
 }

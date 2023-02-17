@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import LinkBtn from '@/components/link_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 
@@ -16,7 +16,7 @@ export default function Search(props) {
 
     return (
         <>
-            <section className={`bg-gray-100/30 backdrop-blur-[8px] w-full lg:w-[100%] h-full fixed right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.search === true ? "" : "translate-x-full"} font_futuraLT`}>
+            <section className={`bg-gray-100/30 backdrop-blur-[12px] w-full lg:w-[100%] h-full fixed right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.search === true ? "" : "translate-x-full opacity-0"} font_futuraLT`}>
                 <div className="w-full flex justify-center">
                     <section className='w-full p-3 lg:p-0 lg:pt-9 lg:w-[85%] h-full font_futuraLT text-left pt-14' >
                         <button onClick={props.toggleSearch} className="fa-solid fa-xmark text-3xl text-black absolute right-8 top-5 cursor-pointer hover:rotate-180 transition-all duration-700"></button>
