@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import dynamic from "next/dynamic";
 import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
@@ -23,7 +24,7 @@ import image4 from '../public/card imgs/card img8.jpg'
 // Confifure font
 // const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+function Home() {
     // state for navbar expansion
     const [expand, setExpand] = useState(false)
     // states and function for modals
@@ -121,3 +122,5 @@ export default function Home() {
         </>
     )
 }
+
+export default dynamic(() => Promise.resolve(Home), { ssr: false })

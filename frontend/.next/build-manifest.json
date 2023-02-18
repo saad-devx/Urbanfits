@@ -29,6 +29,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/products/product/[p_id].js"
+    ],
+    "/user/paymentmethods": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/paymentmethods.js"
     ]
   },
   "ampFirstPages": []
