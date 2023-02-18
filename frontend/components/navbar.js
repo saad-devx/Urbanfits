@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCart } from "react-use-cart";
 import Link from 'next/link'
 import Image from 'next/image';
 import LanguageModal from './modals/languagemodal';
@@ -12,6 +13,7 @@ function ListItem(props) {
         <li className='list_item transition-all' ><Link href={props.href} className='flex justify-between px-8 border-b-2 text-base border-white transition-all' >{props.value}<i className="material-symbols-outlined text-lg translate-y-1 transition-all">chevron_right</i></Link></li>
     )
 }
+
 export default function Navbar(props) {
     const [nav, setNav] = useState('')
     const [bars, setBars] = useState('')
@@ -52,12 +54,13 @@ export default function Navbar(props) {
         if (cart === false) return setCart(true)
         if (cart === true) return setCart(false)
     }
+    const {totalUniqueItems} = useCart()
     return (
         <>
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            {props.logoNull ? null : <Image src={Logo} className={`fixed top-10 right-10 z-10 w-16 md:w-24 lg:w-28 transition-all duration-700`} ></Image>}
+            {props.logoNull ? null : <Image src={Logo} className={`fixed top-10 right-10 z-10 w-16 md:w-24 lg:w-28 transition-all duration-700`} alt="Urban images" ></Image>}
             <nav className={` ${nav} ${props.classes} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
@@ -65,10 +68,10 @@ export default function Navbar(props) {
                     </div>
                 </div>
                 <div className="w-full h-full lg:h-1/3 text-gray-900 flex lg:flex-col justify-around items-center">
-                    <span className='lg:hidden cursor-pointer flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined text-[1.6rem">menu</i></span>
-                    <button onClick={toggleSearch} className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">search</i></button>
-                    <button onClick={null} className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">local_mall</i></button>
-                    <Link href='/user/personalinfo' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined text-[1.6rem]">person</i></Link>
+                    <span className='lg:hidden cursor-pointer flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined ">menu</i></span>
+                    <button onClick={toggleSearch} className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">search</i></button>
+                    <button onClick={toggleCart} className='relative flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">local_mall</i> <span className={`${totalUniqueItems==0?"hidden":''} absolute top-2 right-2 lg:top-3 lg:-right-3 w-4 h-4 flex justify-center items-center text-white rounded-full bg-gold-land text-[9px]`}>{totalUniqueItems}</span></button>
+                    <Link href='/user/personalinfo' className=' flex justify-center items-center w-[20%] h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i></Link>
                 </div>
                 <i className='hidden lg:block' />
             </nav>
@@ -83,20 +86,20 @@ export default function Navbar(props) {
                         </div>
                     </div>
                     <div className="flex justify-between items-center w-full h-1/2 p-5">
-                        <Link href='/login' className="flex font_futuraLT"><i className="material-symbols-outlined text-[1.6rem]">person</i>Login</Link>
-                        <span className='flex space-x-5' ><Link href='/login' className="flex font_futuraLT"><i className="material-symbols-outlined text-[1.6rem]">search</i></Link><Link href='/login' ><i className="material-symbols-outlined text-[1.6rem]">local_mall</i></Link></span>
+                        <Link href='/login' className="flex font_futuraLT"><i className="material-symbols-outlined">person</i>Login</Link>
+                        <span className='flex space-x-5' ><Link href='/login' className="flex font_futuraLT"><i className="material-symbols-outlined">search</i></Link><Link href='/login' ><i className="material-symbols-outlined">local_mall</i></Link></span>
                     </div>
                 </div>
                 <div className="w-full h-1/2 ">
                     <ul className=' list-none text-lg my-5 space-y-5 lg:space-y-3 font_futuraLT' >
                         <ListItem href='/' value='Home' />
-                        <ListItem href='#' value='New In' />
-                        <ListItem href='#' value='Men' />
-                        <ListItem href='#' value='Women' />
-                        <ListItem href='#' value='Eyewear' />
-                        <ListItem href='#' value='Kids' />
+                        <ListItem href='/products/new in' value='New In' />
+                        <ListItem href='/products/men' value='Men' />
+                        <ListItem href='/products/women' value='Women' />
+                        <ListItem href='/products/eyewear' value='Eyewear' />
+                        <ListItem href='/products/kids' value='Kids' />
                         <ListItem href='/giftcard' value='Gifts Selection' />
-                        <ListItem href='#' value='Our Essentials' />
+                        <ListItem href='/products/essentials' value='Our Essentials' />
                     </ul>
                 </div>
                 <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">

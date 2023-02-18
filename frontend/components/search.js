@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useCart } from "react-use-cart";
+import 'react-toastify/dist/ReactToastify.css';
 import LinkBtn from '@/components/link_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 
@@ -13,13 +15,14 @@ export default function Search(props) {
         setResults(results)
         console.log(query, results)
     }
-
+    //Cart function
+    const { addItem } = useCart()
     return (
         <>
             <section className={`bg-gray-100/30 backdrop-blur-[12px] w-full lg:w-[100%] h-full fixed right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.search === true ? "" : "translate-x-full opacity-0"} font_futuraLT`}>
                 <div className="w-full flex justify-center">
                     <section className='w-full p-3 lg:p-0 lg:pt-9 lg:w-[85%] h-full font_futuraLT text-left pt-14' >
-                        <button onClick={props.toggleSearch} className="fa-solid fa-xmark text-3xl text-black absolute right-8 top-5 cursor-pointer hover:rotate-180 transition-all duration-700"></button>
+                        <button onClick={props.toggleSearch} className="absolute right-8 top-11 cursor-pointer"><i className="fa-solid fa-arrow-left mr-2"></i>Back</button>
                         {/* Search Bar */}
                         <div className='w-full h-[5vh] bg-white/40 lg:h-[7vh] px-5 py-2 flex justify-start items-center border border-gray-400 hover:bg-white/70 transition-all duration-300 rounded-full' >
                             <i className="material-symbols-outlined mr-4 translate-y-[1px] text-[2rem]">search</i><input type="text" onChange={onchange} value={query} className="bg-transparent outline-none border-none w-full h-full placeholder:text-gray-700" placeholder='Search' />
@@ -37,18 +40,17 @@ export default function Search(props) {
                         <section className={`${query !== "" ? "hidden" : ""} w-full my-10 mx-auto`}>
                             <h1 className="text-2xl mb-7">Top Searches</h1>
                             <div className="w-full flex flex-wrap justify-between overflow-hidden">
-                                <Shoppingcard img={image1} />
-                                <Shoppingcard img={image1} />
-                                <Shoppingcard img={image1} />
-                                <Shoppingcard img={image1} />
+                                {[image1, image1, image1, image1].map((img, index) => {
+                                    return <Shoppingcard li_key={index} img={img} />
+                                })}
                             </div>
                         </section>
                         {/*                      When query mathes the results and being fethed for api               */}
                         <section className={`${query === "" ? "hidden" : ""} w-full my-10 mx-auto`}>
                             <div className="w-full flex flex-wrap overflow-hidden">
-                            {results.length !== 0 ? results.map((result) => {
-                                return <Shoppingcard id={result._id} name={result.name} price={result.price} colors={result.color.length} img={result.images[0].url} />
-                            }) : <h6 className="text-xl md:text-3xl text-gray-500 w-full text-center">No search results found!</h6>}
+                                {results.length !== 0 ? results.map((result) => {
+                                    return <Shoppingcard addItem={() => addItem({ ...result, id: result._id })} id={result._id} name={result.name} price={result.price} colors={result.color.length} img={result.images[0].url} />
+                                }) : <h6 className="text-xl md:text-3xl text-gray-500 w-full text-center">No search results found!</h6>}
                             </div>
                         </section>
 

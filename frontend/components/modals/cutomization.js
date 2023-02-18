@@ -12,7 +12,7 @@ export default function Cutomization(props) {
             <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
                 <button onClick={props.toggleModal} name="modal4" className="fa-solid fa-xmark text-3xl text-gray-700 absolute right-8 top-5 cursor-pointer hover:rotate-180 transition-all duration-700"></button>
                 <div className="hidden md:block w-1/2 h-auto">
-                    <Image src={image} className="w-full h-full object-cover" ></Image>
+                    <Image src={image} className="w-full h-full object-cover" alt="Urban images" ></Image>
                 </div>
                 <section className="w-full h-full p-7 pt-14 md:pt-7">
                     <div className="w-full space-y-5">

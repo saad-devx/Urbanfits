@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useCart } from "react-use-cart";
+import dynamic from "next/dynamic";
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import SuggestionCard from '@/components/cards/suggestionPicCard';
@@ -16,12 +18,10 @@ import image1 from '../../../public/card imgs/card img6.jpg'
 import image2 from '../../../public/card imgs/card img11.jpg'
 import image3 from '../../../public/card imgs/card img8.jpg'
 
-export default function Product(props) {
-    const { response } = props
-    const product = response.product
-
+const Product = (props) => {
+    const product = { ...props.response.product, id: props.response.product._id }
+    // const product = response.product
     const [expand, setExpand] = useState(false)
-
 
     // confguring the Quantity conter of the prodcut
     const [quantity, setQuantity] = useState(1)
@@ -57,6 +57,8 @@ export default function Product(props) {
             transition: Slide
         })
     }
+    //Cart function
+    const { addItem } = useCart()
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
@@ -90,7 +92,7 @@ export default function Product(props) {
                                         <small className="w-full">Choose a Color:</small>
                                         <span className="w-full my-3 mx-auto flex flex-wrap justify-center space-x-3">
                                             {product.color.map(color => {
-                                                return <input type="button" className={`w-5 h-5 mb-3 outline-none ${color==="white"?"border":"border-none"} cursor-pointer rounded-full bg-${color}${color === "black" ? "" : "-600"}`} ></input>
+                                                return <input type="button" className={`w-5 h-5 mb-3 outline-none ${color === "white" ? "border" : "border-none"} cursor-pointer rounded-full bg-${color}${color === "black" ? "" : "-600"}`} ></input>
                                             })}
                                         </span>
                                     </div>
@@ -124,7 +126,7 @@ export default function Product(props) {
                                         <p>Price :</p> <p>${product.price}</p>
                                     </div>
                                     <div className="w-full">
-                                        <Button onclick={showToast} classes="w-full" my="my-2" >Add to Cart</Button>
+                                        <Button onclick={() => { addItem(product); showToast() }} classes="w-full" my="my-2" >Add to Cart</Button>
                                         <Button onclick={toggleModal} name="modal4" classes="w-full" my="my-2" >Customization</Button>
                                     </div>
                                     {/* Accordian */}
@@ -200,13 +202,13 @@ export default function Product(props) {
                                 <h3 className="text-2xl">More To Explore</h3>
                                 <div className="w-full my-5 flex flex-wrap">
                                     {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
-                                        return <LinkBtn classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
+                                        return <LinkBtn href={`/products/${link}`} classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
                                     })}
                                 </div>
                                 <div className="flex flex-wrap justify-between md:justify-center lg:justify-between space-y-4 lg:space-y-0">
-                                    <SuggestionCard btnValue="Shope Now" title="Ready to Wear" img={image1} ></SuggestionCard>
-                                    <SuggestionCard btnValue="Shope Now" title="Bags" img={image2} ></SuggestionCard>
-                                    <SuggestionCard btnValue="Shope Now" title="Shoes" img={image3} ></SuggestionCard>
+                                    <SuggestionCard href="/products/Ready to Wear" btnValue="Shope Now" title="Ready to Wear" img={image1} />
+                                    <SuggestionCard href="/products/Bags" btnValue="Shope Now" title="Bags" img={image2} />
+                                    <SuggestionCard href="/products/Shoes" btnValue="Shope Now" title="Shoes" img={image3} />
                                 </div>
                             </div>
                         </section>
@@ -221,5 +223,6 @@ export default function Product(props) {
 export async function getServerSideProps(context) {
     const { p_id } = await context.query
     let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
-    return { props: { response } }
+    return { props: { response, p_id } }
 }
+export default dynamic(() => Promise.resolve(Product), { ssr: false })
