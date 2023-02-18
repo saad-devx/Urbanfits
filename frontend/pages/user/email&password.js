@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Navbar from '../../components/navbar';
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
-import SuccessAlert from '../../components/successAlert';
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -20,17 +19,12 @@ export default function EmailPassword() {
         confirm_email: Yup.string().email().required("Please enter your email address").oneOf([Yup.ref("email"), null], "Email must match"),
         password: Yup.string().min(8).max(30).required("Please enter your password")
     })
-    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: { email: '', password: '', confirm_email: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
             console.log(values)
             handleReset()
-            setAlert(true)
-            setTimeout(() => {
-                setAlert(false)
-            }, 3000)
         }
     })
 
@@ -44,7 +38,6 @@ export default function EmailPassword() {
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
-                    <SuccessAlert show={alert} />
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 pt-24 lg:pt-9 pl-7 overflow-y-scroll' >
                         <div className="w-full lg:w-5/6">
