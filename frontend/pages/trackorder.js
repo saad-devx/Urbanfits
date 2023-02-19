@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Button from '@/components/simple_btn'
-import SuccessAlert from '@/components/successAlert'
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -18,24 +17,18 @@ export default function Trackorder() {
         orderemail: Yup.string().email().required("Please enter your email address"),
         ordernumber: Yup.string().matches(/^\d{9,20}$/, "Order Number should'nt contain spaces and must be between 9 and 20 digits").required("Please enter your order number")
     })
-    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: { orderemail: '', ordernumber: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
             console.log(values)
             handleReset()
-            setAlert(true)
-            setTimeout(() => {
-                setAlert(false)
-            }, 3000)
         }
     })
     return (
         <>
             <Navbar setExpand={setExpand} />
             <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[94.6%]'} h-full lg:fixed right-0 transition-all duration-700 overflow-y-scroll`}>
-                <SuccessAlert show={alert} />
                 <div className="mx-5 lg:mx-48 my-20">
                     <h2 className="text-3xl md:text-5xl mb-8">Track Your Order</h2>
                     <form className="w-full mt-16 pb-10 lg:pb-0 font_futuraLT space-y-10" onReset={handleReset} onSubmit={handleSubmit} >

@@ -3,7 +3,6 @@ import Card from '../components/cards/card';
 import Navbar from '../components/navbar';
 import Button from '../components/simple_btn';
 import Footer from '../components/footer'
-import SuccessAlert from '../components/successAlert';
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -26,17 +25,12 @@ export default function Contact() {
         msg: Yup.string().min(6).max(1000).required("Please leave a message here"),
 
     })
-    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: { title: 'Title', firstname: '', lastname: '', dateofbirth: '', email: '', phone: '', msg: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
             console.log(values)
             handleReset()
-            setAlert(true)
-            setTimeout(() => {
-                setAlert(false)
-            }, 3000)
         }
     })
 
@@ -44,7 +38,6 @@ export default function Contact() {
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
-                <SuccessAlert show={alert} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                     <div className="w-full pb-20 flex justify-center">
                         <section className='w-full p-5 lg:p-0 lg:pt-9 lg:w-[75%] h-full font_futuraLT text-left pt-9' >

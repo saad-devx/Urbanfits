@@ -28,7 +28,7 @@ const OrderCard = (props) => {
             <div className="w-full h-full flex justify-between items-center text-xs md:text-sm">
                 <div className="w-full md:w-3/4 h-full flex items-center">
                     <span className=' w-24 md:w-28 mr-10' >
-                        <Image src={props.img} className="w-full object-cover" ></Image>
+                        <Image alt="Urban images" src={props.img} className="w-full object-cover" ></Image>
                     </span>
                     <div className="flex flex-col space-y-2">
                         <h3 className="">{props.product_title}</h3>

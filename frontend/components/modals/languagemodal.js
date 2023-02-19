@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Button from '../simple_btn'
-import SuccessAlert from '../successAlert'
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -13,22 +12,16 @@ export default function LanguageModal(props) {
         country: Yup.string().required("Please select your country"),
         language: Yup.string().required("Please select your prefered language")
     })
-    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue } = useFormik({
         initialValues: { country: 'uae', language: 'english' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
             console.log(values)
-            setAlert(true)
-            setTimeout(() => {
-                setAlert(false)
-            }, 3000)
         }
     })
 
     return (
         <>
-            <SuccessAlert show={alert} />
             <div className={`w-full h-full font_futuraLT fixed inset-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
                 <div className={` ${props.show === false ? "translate-y-10" : ''} relative max-w-[45rem] w-11/12 md:w-4/6 lg:w-2/5 py-5 text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
                     {/* <i className="material-symbols-rounded text-xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</i> */}

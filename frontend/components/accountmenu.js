@@ -54,7 +54,7 @@ function AccountMenu(props) {
                     <Option_sm href='/user/address'>My Address</Option_sm>
                     <Option_sm href='/user/paymentmethods'>My Payment Methods</Option_sm>
                     <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href="/user/orders/orders">My Orders<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === "/user/orders/orders" ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
-                    <button className={`h-full group flex flex-col justify-between items-center transition-all `}> <span className="flex"><span class="material-symbols-rounded">logout</span>Logout</span><span className={`bg-gold-land w-0 h-1 mt-1 rounded-lg group-hover:w-full group-active:w-full group-focus:w-full transition-all duration-300`}></span></button>
+                    <button className={`h-full group flex flex-col justify-between items-center transition-all `}> <span className="flex"><span className="material-symbols-rounded">logout</span>Logout</span><span className={`bg-gold-land w-0 h-1 mt-1 rounded-lg group-hover:w-full group-active:w-full group-focus:w-full transition-all duration-300`}></span></button>
                 </div>
             </div>
         </>

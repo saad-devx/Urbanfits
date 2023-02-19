@@ -1,25 +1,19 @@
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image'
 
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-// Default theme
 import '@splidejs/react-splide/css';
 
-// imports for images
-import Image from 'next/image'
-import image1 from '../../public/card imgs/card img5.jpg'
-import image2 from '../../public/card imgs/card img3.jpg'
-import image3 from '../../public/carousel imgs/carousel img6.jpg'
-
-//Carousel Images component
+//Carousel Image Slide component
 const CarouselSlide = (props) => {
   return (
     <SplideSlide className='w-full h-[60vh] lg:h-[80vh]' >
-      <Image className='w-full h-full object-contain object-center' src={props.img} alt="" />
+      <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={props.img} alt="Urban images" />
     </SplideSlide>
   )
 }
 
-export default function ProductCarousel() {
+export default function ProductCarousel(props) {
 
   const slider1 = useRef(null);
   const slider2 = useRef(null);
@@ -31,7 +25,6 @@ export default function ProductCarousel() {
   return (
     <>
       <div className="productCarousel">
-
         <Splide className='w-full h-[60vh] lg:h-[80vh] overflow-hidden border-2 border-white bg-white rounded-lg lg:rounded-b-none' ref={slider1} options={{
           type: 'loop',
           rewind: true,
@@ -41,16 +34,9 @@ export default function ProductCarousel() {
           speed: 700,
           arrows: true,
         }} >
-
-          <CarouselSlide img={image1} />
-          <CarouselSlide img={image2} />
-          <CarouselSlide img={image3} />
-          <CarouselSlide img={image1} />
-          <CarouselSlide img={image1} />
-          <CarouselSlide img={image2} />
-          <CarouselSlide img={image3} />
-          <CarouselSlide img={image1} />
-
+          {props.img_array.map((img) => {
+            return <CarouselSlide img={img.url} />
+          })}
         </Splide>
 
         <Splide className='hidden md:flex justify-center bg-white rounded-b-lg' ref={slider2} options={{
@@ -70,18 +56,15 @@ export default function ProductCarousel() {
             },
           },
         }} >
-
-          <CarouselSlide img={image1} />
-          <CarouselSlide img={image2} />
-          <CarouselSlide img={image3} />
-          <CarouselSlide img={image1} />
-          <CarouselSlide img={image1} />
-          <CarouselSlide img={image2} />
-          <CarouselSlide img={image3} />
-          <CarouselSlide img={image1} />
-
+          {props.img_array.map((img) => {
+            return <CarouselSlide img={img.url} />
+          })}
         </Splide>
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  return { props: { img_array: context.img_array } }
 }

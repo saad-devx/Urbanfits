@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import dynamic from "next/dynamic";
 import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
@@ -23,7 +24,7 @@ import image4 from '../public/card imgs/card img8.jpg'
 // Confifure font
 // const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+function Home() {
     // state for navbar expansion
     const [expand, setExpand] = useState(false)
     // states and function for modals
@@ -40,16 +41,17 @@ export default function Home() {
         }
     }
 
-
     const [resize, setResize] = useState(false)
     useEffect(() => {
         const setSizefunc = () => {
             let position = window.pageYOffset
             if (position >> 0) {
                 setResize(true)
+                console.log(position)
             }
         }
         window.addEventListener('scroll', setSizefunc)
+        return()=>{window.removeEventListener('scroll', setSizefunc)}
     }, [])
 
     useEffect(() => {
@@ -69,7 +71,7 @@ export default function Home() {
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 {/* <section className={`${width} ${resize === true ? setWidth('w-full lg:w-[94.6%]') : ""} ${expand === true ? setWidth('w-3/4') : null} bg-gray-100 absolute right-0 top-0 flex flex-col justify-center items-center space-y-5 transition-all duration-700`}> */}
                 <section className={`${expand === true ? 'w-full lg:w-[79.4%]' : 'w-full'} bg-gray-100 absolute right-0 top-0 flex justify-center lg:justify-end transition-all duration-700`}>
-                    <Image src={Logo} className={`${resize===true?"":"translate-x-44"} fixed top-10 right-10 z-10 w-28 transition-all duration-700`} ></Image>
+                    <Image alt="Urban images" src={Logo} className={`${resize===true?"":"translate-x-44"} fixed top-10 right-10 z-10 w-28 transition-all duration-700`} ></Image>
                     <div className={`${resize === true ? "w-full lg:w-[94.6%]" : "w-full"} flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
                         <Carousel classes={resize === true ? "w-11/12 h-[80vh] md:h-[90vh] rounded-[2rem] mt-7 mx-auto lg:m-10" : "w-full"} />
                         {/* Auto scroll Carousel  */}
@@ -120,3 +122,5 @@ export default function Home() {
         </>
     )
 }
+
+export default dynamic(() => Promise.resolve(Home), { ssr: false })

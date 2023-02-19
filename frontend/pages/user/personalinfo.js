@@ -4,7 +4,6 @@ import Navbar from '../../components/navbar'
 import Card from '../../components/cards/card'
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
-import SuccessAlert from '../../components/successAlert';
 
 // imports for Schema and validation
 import { useFormik } from 'formik';
@@ -28,17 +27,12 @@ export default function Personalinfo() {
         newsletter_sub_email: Yup.bool(),
         newsletter_sub_phone: Yup.bool()
     })
-    const [alert, setAlert] = useState(false) // state to show the alert after the submit function runs
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: { title: '', firstname: '', lastname: '', dateofbirth: '', newsletter_sub_email: false, newsletter_sub_phone: false },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
             console.log(values)
             handleReset()
-            setAlert(true)
-            setTimeout(() => {
-                setAlert(false)
-            }, 3000)
         }
     })
 
@@ -53,7 +47,6 @@ export default function Personalinfo() {
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                 <AccountMenu direction={direction} />
-                    <SuccessAlert show={alert} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
                         <h2 className="text-3xl mb-4">My Account</h2>
                         <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>

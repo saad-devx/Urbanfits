@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import LinkBtn from '../link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 // Default theme
@@ -13,13 +13,13 @@ import image4 from '../../public/carousel imgs/carousel img4.jpg'
 //Carousel Images component
 const CarouselSlide = (props) => {
     return (
-        <SplideSlide className={`${props.size} relative  p-10`}>
+        <SplideSlide key={props.li_key} className={`${props.size} relative  p-10`}>
             <div className="absolute w-2/6 bottom-[7%] left-[4%] flex flex-col items-start text-white text-5xl">
                 <h1 className="text-white text-4xl md:font-bold">Denim</h1>
                 <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
                 <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
             </div>
-            <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="" />
+            <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="Urban images" />
         </SplideSlide>
     )
 }
@@ -34,29 +34,32 @@ export default function Carousel(props) {
     // splide ref and function to move the slide to prevent the weird effect when the screen is resized
     let splideRef = useRef(null)
 
+    //Carousel Options
+    const carousel_options = {
+        type: 'loop',
+        speed: 1500,
+        gap: '0.5rem',
+        cover: true,
+        autoplay: true,
+        waitForTransition: true,
+        resetProgress: false,
+        interval: 3500,
+        drag: false,
+        focus: 0,
+        pauseOnHover: false,
+        pauseOnFocus: false,
+        pagination: false
+    }
     return (
         <div className={` ${props.classes} font_futuraLT transition-all duration-1000 overflow-hidden`}>
-            <Splide ref={splideRef} className={`w-full h-full relative transition-all duration-1000`} onPaginationMounted={(data) => { data.list.classList.add('hidden') }} hasTrack={false}
-                options={{
-                    type: 'loop',
-                    speed: 1500,
-                    gap: '0.5rem',
-                    cover: true,
-                    autoplay: true,
-                    waitForTransition: true,
-                    resetProgress: false,
-                    interval: 3500,
-                    drag: false,
-                    focus: 0,
-                    pauseOnHover: false,
-                    pauseOnFocus: false,
-                    pagination: false
-                }}>
+            <Splide ref={splideRef} className={`w-full h-full relative transition-all duration-1000`} hasTrack={false}
+                options={useMemo(()=>{
+                    return carousel_options
+                }, [carousel_options])}>
                 <SplideTrack className='w-full h-screen' >
-                    <CarouselSlide size={props.classes} img={image1} ></CarouselSlide>
-                    <CarouselSlide size={props.classes} img={image2} ></CarouselSlide>
-                    <CarouselSlide size={props.classes} img={image3} ></CarouselSlide>
-                    <CarouselSlide size={props.classes} img={image4} ></CarouselSlide>
+                    {[image1, image2, image3, image4].map((img, index) => {
+                        return <CarouselSlide li_key={index} size={props.classes} img={img} />
+                    })}
                 </SplideTrack>
 
                 {/* Carousel Title */}
