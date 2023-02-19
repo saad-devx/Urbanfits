@@ -75,12 +75,12 @@ function Home() {
                     <div className={`${resize === true ? "w-full lg:w-[94.6%]" : "w-full"} flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
                         <Carousel classes={resize === true ? "w-11/12 h-[80vh] md:h-[90vh] rounded-[2rem] mt-7 mx-auto lg:m-10" : "w-full"} />
                         {/* Auto scroll Carousel  */}
-                        <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT">
+                        <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT">
                             <div className="w-full md:w-[35%] md:h-full p-5 flex flex-col justify-center items-start">
                                 <h2 className="text-2xl md:text-5xl word-wrap leading-tight">Newest Gear to Work</h2>
                                 <h4 className="font_futuraLTlite text-lg">Innovation and Comfort for Women</h4>
                             </div>
-                            <div className="w-full md:w-[65%] h-full">
+                            <div className="w-full md:w-[70%] h-full">
                                 <CardCarousel />
                             </div>
                             <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
@@ -101,10 +101,10 @@ function Home() {
                         {/* Auto scroll Carousel  */}
                         <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT">
                             <div className="w-full md:w-[35%] md:h-full p-5 flex flex-col justify-center items-start">
-                                <h2 className="text-2xl md:text-5xl word-wrap leading-tight">Newest Gear to Work</h2>
+                                <h2 className="text-2xl md:text-5xl word-wrap leading-tight self-start">Newest Gear to Work</h2>
                                 <h4 className="font_futuraLTlite text-lg">Innovation and Comfort for Men</h4>
                             </div>
-                            <div className="w-full md:w-[65%] h-full">
+                            <div className="w-full md:w-[70%] h-full">
                                 <CardCarousel />
                             </div>
                             <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>

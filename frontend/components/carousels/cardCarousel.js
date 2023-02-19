@@ -35,7 +35,7 @@ export default function CardCarousel() {
 
     return (
         <>
-            <Splide className='w-full h-full' hasTrack={false}
+            <Splide className='w-full h-11/12 cursor-grab' hasTrack={false}
                 options={{
                         type: 'loop',
                         drag: true,
