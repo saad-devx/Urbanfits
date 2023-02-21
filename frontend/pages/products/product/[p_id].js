@@ -3,6 +3,7 @@ import { useCart } from "react-use-cart";
 import dynamic from "next/dynamic";
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
+import Accordians from '@/components/accordians';
 import SuggestionCard from '@/components/cards/suggestionPicCard';
 import LinkBtn from '@/components/link_btn';
 import Button from '@/components/simple_btn';
@@ -20,7 +21,6 @@ import image3 from '../../../public/card imgs/card img8.jpg'
 
 const Product = (props) => {
     const product = { ...props.response.product, id: props.response.product._id }
-    // const product = response.product
     const [expand, setExpand] = useState(false)
 
     // confguring the Quantity conter of the prodcut
@@ -84,7 +84,6 @@ const Product = (props) => {
                                             <li>Lorem ipsum dolor sit amet consectetur.</li>
                                             <li>Lorem ipsum dolor amet consectetur.</li>
                                         </ul>
-
                                     </div>
                                 </div>
                                 <div className="details w-full lg:w-[30%] m-0 space-y-3">
@@ -130,71 +129,7 @@ const Product = (props) => {
                                         <Button onclick={toggleModal} name="modal4" classes="w-full" my="my-2" >Customization</Button>
                                     </div>
                                     {/* Accordian */}
-                                    <div className="group p-5 outline-none accordion-section rounded-2xl bg-white mb-7 border-b" tabIndex={1}>
-                                        <div className="group flex justify-between h-12 items-center text-gray-500 transition ease duration-700 cursor-pointer relative">
-                                            <div className="group-focus:text-black text-base transition ease duration-700">Contact</div>
-                                            <span className="transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 ">
-                                                <i className="fas fa-minus minus_icon group-focus:block"></i>
-                                                <i className="fas fa-plus group-focus:hidden"></i>
-                                            </span>
-                                        </div>
-                                        <div className="group-focus:max-h-screen max-h-0 border-b-gray-300 text-sm leading-5 rounded overflow-hidden ease duration-700">
-                                            <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
-                                                <i className="material-symbols-outlined mr-6">mail</i>
-                                                <span>
-                                                    <h5 className='mb-2'>Email</h5>
-                                                    <p className=' font_futuraLTlite '>Send us an email : Our customer care team will get back to you as soon as possible.</p>
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center py-2">
-                                                <i className="material-symbols-outlined mr-6">call</i>
-                                                <span>
-                                                    <h5 className='mb-2'>Call</h5>
-                                                    <p className=' font_futuraLTlite '>You can also call us on the following number +1 (559) 554-0082 Monday to Saturday from 9am to 8pm, except public holiday. </p>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="group p-5 outline-none accordion-section rounded-2xl bg-white mb-7 border-b" tabIndex={1}>
-                                        <div className="group flex justify-between h-12 items-center text-gray-500 transition ease duration-700 cursor-pointer relative">
-                                            <div className="group-focus:text-black text-base transition ease duration-700">Delivery & Return</div>
-                                            <span className="transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 ">
-                                                <i className="fas fa-minus minus_icon group-focus:block"></i>
-                                                <i className="fas fa-plus group-focus:hidden"></i>
-                                            </span>
-                                        </div>
-                                        <div className="group-focus:max-h-screen max-h-0 border-b-gray-300 text-sm leading-5 rounded overflow-hidden ease duration-700">
-                                            <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
-                                                <i className="material-symbols-outlined mr-6">local_mall</i>
-                                                <span>
-                                                    <h5 className='mb-2'>Delivery</h5>
-                                                    <p className=' font_futuraLTlite '>-Express delivery made within 2-4 working days(30$)<br />-Potential delays to be communicated due to customs-approved treatment.</p>
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
-                                                <i className="material-symbols-outlined mr-6">local_shipping</i>
-                                                <span>
-                                                    <h5 className='mb-2'>Return</h5>
-                                                    <p className=' font_futuraLTlite '>We make return easy for you. For more information see our return policy.<br />-Potential delays to be communicated due to customs-approved treatment.</p>
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
-                                                <i className="material-symbols-outlined mr-6">credit_card</i>
-                                                <span>
-                                                    <h5 className='mb-2'>Payment</h5>
-                                                    <p className=' font_futuraLTlite '>Credit card, Debit card & Paypal.</p>
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center py-2">
-                                                <i className="material-symbols-outlined mr-6">search</i>
-                                                <span>
-                                                    <h5 className='mb-2'>FAQ</h5>
-                                                    <p className=' font_futuraLTlite '>Looking for information? See our FAQs</p>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <Accordians />
                                 </div>
                             </div>
 

@@ -1,16 +1,18 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Newsletter from './modals/newsletter'
 import Link from 'next/link'
+import Image from 'next/image'
+import truck from '../public/truck.svg'
 
 export default function Footer() {
     const [modal2, setModal2] = useState(false)
 
     const toggleModal = (e) => {
-    if (e.target.name === "modal2") {
-        if (modal2 === false) return setModal2(true)
-        if (modal2 === true) return setModal2(false)
+        if (e.target.name === "modal2") {
+            if (modal2 === false) return setModal2(true)
+            if (modal2 === true) return setModal2(false)
+        }
     }
-}
     return (
         <footer className="border-t border-gray-300 w-full pt-10 md:pt-20 pb-36 md:pb-7 font_futuraLTlite bg-gray-100">
             <Newsletter show={modal2} toggleModal={toggleModal} />
@@ -30,8 +32,8 @@ export default function Footer() {
                     <h5 className=" text-base md:text-lg font_futuraLT">Help Center</h5>
                     <p className=" text-xs text-gray-700">Got a question ? Look no further. Browser our FAQs or submit your query here.</p>
                 </span>
-                <span className='w-1/2 text-black md:w-1/5 mx-auto mb-7 flex flex-col justify-center text-center' >
-                    <i className="material-symbols-outlined mb-3 text-xl">local_shipping</i>
+                <span className='w-1/2 text-black md:w-1/5 mx-auto mb-7 flex flex-col justify-center items-center text-center' >
+                    <Image className='mb-3' src={truck} />
                     <h5 className=" text-base md:text-lg font_futuraLT">Express Shipping</h5>
                     <p className=" text-xs text-gray-700">Moving your card details to a much more secured place</p>
                 </span>

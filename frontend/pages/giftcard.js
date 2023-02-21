@@ -3,9 +3,10 @@ import Navbar from '../components/navbar'
 import Image from 'next/image'
 import Card from '../components/cards/card'
 import Footer from '../components/footer'
+import dynamic from "next/dynamic";
 import giftBanner from '../public/giftbanner.png'
 
-export default function Giftcard() {
+function Giftcard() {
     const [expand, setExpand] = useState(false)
     return (
         <>
@@ -26,3 +27,4 @@ export default function Giftcard() {
         </>
     )
 }
+export default dynamic(() => Promise.resolve(Giftcard), { ssr: false })

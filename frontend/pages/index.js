@@ -15,7 +15,7 @@ import LanguageModal from '../components/modals/languagemodal';
 
 // imports for images
 import Image from 'next/image';
-import Logo from '../public/logo_black.svg'
+import Logo from '../public/logos/logo_black.svg'
 import image1 from '../public/card imgs/card img5.jpg'
 import image2 from '../public/card imgs/card img6.jpg'
 import image3 from '../public/card imgs/card img1.jpg'
@@ -52,7 +52,7 @@ function Home() {
         }
         window.addEventListener('scroll', setSizefunc)
         return()=>{window.removeEventListener('scroll', setSizefunc)}
-    }, [])
+    }, [resize])
 
     useEffect(() => {
         setModal1(true)
@@ -71,7 +71,7 @@ function Home() {
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 {/* <section className={`${width} ${resize === true ? setWidth('w-full lg:w-[94.6%]') : ""} ${expand === true ? setWidth('w-3/4') : null} bg-gray-100 absolute right-0 top-0 flex flex-col justify-center items-center space-y-5 transition-all duration-700`}> */}
                 <section className={`${expand === true ? 'w-full lg:w-[79.4%]' : 'w-full'} bg-gray-100 absolute right-0 top-0 flex justify-center lg:justify-end transition-all duration-700`}>
-                    <Image alt="Urban images" src={Logo} className={`${resize===true?"":"translate-x-44"} fixed top-10 right-10 z-10 w-28 transition-all duration-700`} ></Image>
+                    <Image alt="Urban images" src={Logo} className={`${resize===true?"":"translate-x-44"} fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20 transition-all duration-700`} ></Image>
                     <div className={`${resize === true ? "w-full lg:w-[94.6%]" : "w-full"} flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
                         <Carousel classes={resize === true ? "w-11/12 h-[80vh] md:h-[90vh] rounded-[2rem] mt-7 mx-auto lg:m-10" : "w-full"} />
                         {/* Auto scroll Carousel  */}

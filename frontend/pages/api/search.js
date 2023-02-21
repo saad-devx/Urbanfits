@@ -21,7 +21,6 @@ const UpdateProducts = async (req, res) => {
                   ]
             }
             const results = await Product.find(searchQuery)
-            console.log(results.length)
             res.json(results);
         }
         else {
