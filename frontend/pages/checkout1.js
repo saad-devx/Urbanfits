@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar';
 import Accordians from '@/components/accordians';
@@ -10,7 +10,16 @@ import shirt_img from '../public/card imgs/card img4.png'
 export default function Checkout1(props) {
     const [expand, setExpand] = useState(false)
     const router = useRouter()
+    // state and funciton to handle modify input fields
+    const name = useRef(null)
+    const email = useRef(null)
     const [readOnly, setReadOnly] = useState(true)
+    const handleModify = (e) => {
+        setReadOnly(false)
+        let elemName = e.target.getAttribute("name")
+        if (elemName === "name") return name.current.focus()
+        if (elemName === "email") return email.current.focus()
+    }
     return (
         <>
             <Navbar setExpand={setExpand} />
@@ -19,14 +28,58 @@ export default function Checkout1(props) {
                     <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_futuraLT text-left pt-5' >
                         <div className="w-full flex flex-col lg:flex-row">
                             <div className="w-full lg:w-[60%] mb-3 mr-auto">
-                                <div className="w-full border-b border-b-gray-300 mb-5"><button onClick={router.back}><i class="fa-solid fa-arrow-left mr-2"></i>Back</button></div>
-                                <span className=" mb-7 flex justify-between text-2xl"> <h1>1. Contact Informaton</h1> <i class="fa-solid fa-circle-check"></i> </span>
-                                <span className="flex flex-col">
+                                <div className="w-full border-b border-b-gray-300 mb-5"><button onClick={router.back}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button></div>
+                                <span className=" mb-7 flex justify-between text-2xl"> <h1>1. Contact Informaton</h1> <i className="fa-solid fa-circle-check"></i> </span>
+                                <span className="flex flex-col mb-6">
                                     <label htmlFor="name">Name</label>
                                     <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                        <input className="w-full bg-transparent outline-none border-none" readOnly={readOnly} type="email" name="name" id="name" placeholder="John Doe" /><button onClick={()=>{setReadOnly(false)}} ><i className="material-symbols-outlined">edit_square</i></button>
+                                        <input className="w-full bg-transparent outline-none border-none" onBlur={() => { setReadOnly(true) }} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button onClick={handleModify} ><i className="material-symbols-outlined" title='Edit' name="name">edit_square</i></button>
                                     </div>
                                 </span>
+                                <span className="flex flex-col">
+                                    <label htmlFor="email">Email</label>
+                                    <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                        <input className="w-full bg-transparent outline-none border-none" onBlur={() => { setReadOnly(true) }} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="John Doe" /><button onClick={handleModify} ><i className="material-symbols-outlined" title='Edit' name="email">edit_square</i></button>
+                                    </div>
+                                </span>
+                                <span className=" my-7 flex justify-between text-2xl"> <h1>2. Shipping Imformation</h1> <i className="fa-solid fa-circle-check"></i> </span>
+                                <div className="flex flex-col mb-6">
+                                    <label className='w-full border-b border-b-gray-400 pb-3' htmlFor="delivery_options">Delivery Option</label>
+                                    <div id="delivery_options" className="w-full p-3 flex justify-between">
+                                        <span className="flex">
+                                            <input className='rounded mx-2 translate-y-1' type="radio" id="express" name="language" defaultChecked={true} value="english" onBlur={null} onChange={null} /><label className='flex flex-col cursor-pointer' htmlFor="express">Express Delivery <p className="font_futuraLTlite text-xs">2-4 working days</p></label>
+                                        </span>
+                                        <span className="flex">
+                                            <input className='rounded mx-2 translate-y-1' type="radio" id="standard" name="language" defaultChecked={true} value="english" onBlur={null} onChange={null} /><label className='flex flex-col cursor-pointer' htmlFor="standard">Standard Delivery <p className="font_futuraLTlite text-xs">3-5 working days</p></label>
+                                        </span>
+                                        <span className="flex">
+                                            <input className='rounded mx-2 translate-y-1' type="radio" id="free" name="language" defaultChecked={true} value="english" onBlur={null} onChange={null} /><label className='flex flex-col cursor-pointer' htmlFor="free">Free Delivery <p className="font_futuraLTlite text-xs">5-7 working days</p></label>
+                                        </span>
+                                    </div>
+                                    <h1 className=" my-7 text-2xl">Enter Your Shipping Address</h1>
+                                    <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                        <input className="bg-transparent outline-none border-none" type="text" name="address" id="address" onChange={onchange} placeholder="Address 1*" />
+                                    </div>
+                                    <div className=" w-1/2 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                        <input className="bg-transparent outline-none border-none" type="text" name="city" id="city" onChange={onchange} placeholder="City*" />
+                                    </div>
+                                    <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                        <select defaultValue="Country" className="w-full border-none outline-none bg-transparent border-b-gray-800" autoComplete="honorific-prefix" data-missing-error="This field is required." required aria-required="true">
+                                            <option disabled >Country</option>
+                                            <option id="mr" value="mr">UAE</option>
+                                            <option id="ms" value="ms">USA</option>
+                                            <option id="other" value="other">Pakistan</option>
+                                        </select>
+                                    </div>
+                                    <div className="flex justify-between w-3/4 ">
+                                        <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                            <input className="bg-transparent outline-none border-none" type="tel" name="postalcode" id="postalcode" size="4" maxLength={4} onChange={onchange} placeholder="+971" />
+                                        </div>
+                                        <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                            <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone" id="phone" size="15" maxLength={15} onChange={onchange} placeholder="Phone Number" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="details w-full lg:w-[31%] m-0 space-y-3">
                                 <h3 className="text-2xl mb-5">Order Summary</h3>

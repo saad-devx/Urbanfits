@@ -2,13 +2,14 @@ import '@/styles/globals.css'
 import '@/styles/Navbar.css'
 import '@/styles/pillbtns.css'
 import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
 import LoadingBar from 'react-top-loading-bar'
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
@@ -30,3 +31,4 @@ export default function App({ Component, pageProps }) {
     </>
   )
 }
+export default dynamic(() => Promise.resolve(App), { ssr: false })

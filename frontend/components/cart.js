@@ -69,7 +69,7 @@ export default function Cart(props) {
                         <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_futuraLTlite">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
                         <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                     </section>
-                        : <section className='w-full p-5 md:p-7 lg:px-0 lg:py-20 lg:w-[90%] h-full font_futuraLT text-left' >
+                        : <section className='w-full p-5 md:p-7 lg:px-0 lg:pb-20 lg:pt-12 lg:w-[90%] h-full font_futuraLT text-left' >
                             <div className="w-full flex flex-col lg:flex-row gap-5">
                                 <div className="w-full lg:w-[70%] mb-3">
                                     <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i class="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>

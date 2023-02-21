@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import dynamic from "next/dynamic";
+import _ from 'lodash';
 import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
@@ -42,17 +43,20 @@ function Home() {
     }
 
     const [resize, setResize] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
     useEffect(() => {
-        const setSizefunc = () => {
-            let position = window.pageYOffset
-            if (position >> 0) {
-                setResize(true)
-                console.log(position)
-            }
-        }
-        window.addEventListener('scroll', setSizefunc)
+        
+        window.addEventListener('scroll', _.debounce(setSizefunc, 100))
         return()=>{window.removeEventListener('scroll', setSizefunc)}
-    }, [resize])
+    }, [])
+
+    const setSizefunc = () => {
+        let position = window.pageYOffset
+        if (position >= 1) {
+            setResize(true)
+            console.log(position)
+        }
+    }
 
     useEffect(() => {
         setModal1(true)
