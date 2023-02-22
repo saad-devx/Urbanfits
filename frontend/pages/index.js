@@ -45,18 +45,20 @@ function Home() {
     const [resize, setResize] = useState(false)
 
     useEffect(() => {
+        const setSizefunc = () => {
+            let position = window.pageYOffset
+            if (position >> 0) {
+                setResize(true)
+                console.log(position)
+            }
+        }
+        window.addEventListener('scroll', _.debounce(setSizefunc, 200))
+        window.removeEventListener('scroll', setSizefunc)
+    })
+
+    useEffect(() => {
         setModal1(true)
     }, [])
-    const setSizefunc = () => {
-        let position = window.pageYOffset
-        if (position >> 0) {
-            setResize(true)
-            console.log(position)
-        }
-    }
-    window.addEventListener('scroll', _.debounce(setSizefunc, 1))
-    window.removeEventListener('scroll', setSizefunc)
-
 
     return (
         <>

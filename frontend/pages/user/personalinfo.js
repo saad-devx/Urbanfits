@@ -10,7 +10,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
-
+// little function to use inside right this component to avoid mess
 const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" round="rounded-2xl" classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
 }
@@ -36,7 +36,7 @@ export default function Personalinfo() {
         }
     })
 
-    // determining if the scroll direction is upwards or downwards
+    // determining if the scroll direction is upwards or downwards (so that if user scrolls down, the menu in mobile will disappear giving user a full screen view)
     const [direction, setDirection] = useState('')
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')

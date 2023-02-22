@@ -83,7 +83,7 @@ export default function Cart(props) {
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>Subtotal</small> <small>$0</small></span>
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>Shipping</small> <small>$0</small></span>
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>Sales Tax</small> <small>$0</small></span>
-                                        <Button onclick={()=>{console.log(items)}} classes="w-full" >Checkout</Button>
+                                        <LinkBtn href="/checkout/step1" onclick={props.toggleCart} classes="w-full" >Checkout</LinkBtn>
                                     </div>
                                     {/* Accordian */}
                                     <Accordians />

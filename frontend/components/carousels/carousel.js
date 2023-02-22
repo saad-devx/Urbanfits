@@ -19,7 +19,7 @@ const CarouselSlide = (props) => {
                 <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
                 <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
             </div>
-            <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="Urban images" />
+            <Image className='w-full h-full transition-all duration-700' src={props.img} alt="Urban images" />
         </SplideSlide>
     )
 }
