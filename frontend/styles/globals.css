@@ -321,3 +321,10 @@ input:checked+.slider:before {
 ::-webkit-scrollbar{
   visibility: hidden;
 }
+
+/* for section to section scroll animation */
+
+.section_container{
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+}

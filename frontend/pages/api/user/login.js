@@ -3,7 +3,7 @@ import User from "@/models/user"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 
-// Only accessable by Admin 
+
 const Login = async (req, res) => {
     if (req.method === 'POST') {
         await ConnectDB()
