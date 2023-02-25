@@ -51,13 +51,15 @@ function Home() {
             }
         }
         if (resize === true) return window.removeEventListener('scroll', setSizefunc)
-        console.log(resize)
 
         window.addEventListener('scroll', setSizefunc)
     }, [resize])
 
     useEffect(() => {
+        let item = localStorage.getItem("loadingModal")
+        if(item) return
         setModal1(true)
+        localStorage.setItem("loadingModal", true)
     }, [])
 
     return (

@@ -1,30 +1,50 @@
 import React from 'react'
 import Button from '../simple_btn'
+import { toast, Slide } from 'react-toastify';
 // imports for validation
 import Tooltip from '../tooltip';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
 export default function Newsletter(props) {
+    // function to show toast
+    const toaster = (type, msg) => {
+        toast(msg, {
+            position: "top-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            type: type,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide
+        })
+    }
+    
+    // schema and validation with yup and fromik
     const newsLetterSchema = Yup.object({
         "email": Yup.string().email().required("Please enter your email address"),
         "gender": Yup.string().required("Please select your gender"),
         "interests": Yup.array().min(1, "Please select at least one interest")
     })
-    const initialNewsLetterValues = { "email": '', "gender": '', "interests": [] }
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue } = useFormik({
-        initialValues: initialNewsLetterValues,
+        initialValues: { "email": '', "gender": '', "interests": [] },
         validationSchema: newsLetterSchema,
         onSubmit: async () => {
             let id = "63f0eacb88ecc61447b648d3"
-            let res = await fetch(`http://localhost:3000/api/newsletter?id=${id}`, {
+            let res = await fetch(`${process.env.HOST}/api/newsletter?id=${id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({...values, user: id})
             })
-            console.log(await res.json())
+            let response = await res.json()
+            toaster(response.success?"success":"error", response.message)
+            response.success===true?props.setModal2(false): null
         }
     })
+    // function to get input from pill buttons in an array
     const onCheck = (e) => {
         if (e.target.checked) {
             setFieldValue('interests', [

@@ -3,7 +3,7 @@ import '@/styles/Navbar.css'
 import '@/styles/pillbtns.css'
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast, Slide } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";

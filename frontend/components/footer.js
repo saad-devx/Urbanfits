@@ -15,7 +15,7 @@ export default function Footer() {
     }
     return (
         <footer className="border-t border-gray-300 w-full pt-10 md:pt-20 pb-36 md:pb-7 font_futuraLTlite bg-gray-100">
-            <Newsletter show={modal2} toggleModal={toggleModal} />
+            <Newsletter show={modal2} setModal2={setModal2} toggleModal={toggleModal} />
             <div className="w-full h-2/6 px-4 md:px-24 lg:px-32 pb-7 md:pb-16 border-b border-b-gray-400 flex flex-row flex-wrap justify-between items-start md:space-y-0">
                 <span className='w-1/2 text-black md:w-1/5 mx-auto mb-7 flex flex-col justify-center text-center' >
                     <i className="fa-solid fa-wallet mb-3 text-xl"></i>

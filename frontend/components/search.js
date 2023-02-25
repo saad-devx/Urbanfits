@@ -13,7 +13,6 @@ export default function Search(props) {
         setQuery(e.target.value)
         let results = await (await fetch(`${process.env.HOST}/api/search?q=${query}`)).json()
         setResults(results)
-        console.log(query, results)
     }
     //Cart function
     const { addItem } = useCart()
@@ -55,7 +54,6 @@ export default function Search(props) {
                                         </>
                                     )
                                 }).slice(0, 4) : <h6 className="text-xl md:text-3xl text-gray-500 w-full text-center">No search results found!</h6>}
-                                {console.log(results)}
                                 <div className={`w-full flex justify-center ${results.length ===0 ? "hidden" : ""}`}> <LinkBtn classes="w-1/3" href={`/products/${results.length !==0 ?results[0].category :""}`} >View All</LinkBtn> </div>
                             </div>
                         </section>
