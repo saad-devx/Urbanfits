@@ -18,7 +18,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-input[type=checkbox]:checked+label {
+.pill-container input[type=checkbox]:checked+label {
     background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
     border: 1px solid white;
     color: white;

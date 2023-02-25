@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState } from 'react'
 import LinkBtn from '../link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 // Default theme
@@ -34,28 +34,24 @@ export default function Carousel(props) {
     // splide ref and function to move the slide to prevent the weird effect when the screen is resized
     let splideRef = useRef(null)
 
-    //Carousel Options
-    const carousel_options = {
-        type: 'loop',
-        speed: 1500,
-        gap: '0.5rem',
-        cover: true,
-        autoplay: true,
-        waitForTransition: true,
-        resetProgress: false,
-        interval: 2500,
-        drag: false,
-        focus: 0,
-        pauseOnHover: true,
-        pauseOnFocus: true,
-        pagination: false
-    }
     return (
         <div className={` ${props.classes} font_futuraLT transition-all duration-1000 overflow-hidden snap-center`}>
             <Splide ref={splideRef} className={`w-full h-full relative transition-all duration-1000`} hasTrack={false}
-                options={useMemo(()=>{
-                    return carousel_options
-                }, [carousel_options])}>
+                options={{
+                    type: 'loop',
+                    speed: 1000,
+                    gap: '0.5rem',
+                    cover: true,
+                    autoplay: true,
+                    waitForTransition: true,
+                    resetProgress: false,
+                    interval: 2500,
+                    drag: false,
+                    focus: 0,
+                    pauseOnHover: true,
+                    pauseOnFocus: true,
+                    pagination: false
+                }}>
                 <SplideTrack className='w-full h-screen' >
                     {[image1, image2, image3, image4].map((img, index) => {
                         return <CarouselSlide li_key={index} size={props.classes} img={img} />

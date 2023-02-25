@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import dynamic from "next/dynamic";
-import _ from 'lodash';
+// import _ from 'lodash';
 import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
@@ -43,18 +43,18 @@ function Home() {
     }
 
     const [resize, setResize] = useState(false)
-
     useEffect(() => {
         const setSizefunc = () => {
             let position = window.pageYOffset
             if (position >> 0) {
                 setResize(true)
-                console.log(position)
             }
         }
-        window.addEventListener('scroll', _.debounce(setSizefunc, 200))
-        window.removeEventListener('scroll', setSizefunc)
-    })
+        if (resize === true) return window.removeEventListener('scroll', setSizefunc)
+        console.log(resize)
+
+        window.addEventListener('scroll', setSizefunc)
+    }, [resize])
 
     useEffect(() => {
         setModal1(true)
@@ -125,3 +125,6 @@ function Home() {
 }
 
 export default dynamic(() => Promise.resolve(Home), { ssr: false })
+export async function getServerSideProps(context) {
+    return { props: {} }
+}
