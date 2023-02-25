@@ -26,7 +26,10 @@ export default function LoadingModal(props) {
                             <p className='text-xs md:text-base' >You are trying to access the united states sites - would you like to go to the United Arab Emirates site?</p>
                         </div>
                         <div className="w-full mt-7 flex flex-col justify-center space-y-3">
-                            {/* <LinkBtn href="/products/product/productdetails" my="my-0" value="" bg="bg-gradient-to-r from-cyan-500 to-blue-500" text="black" classes="w-full text-xs md:text-base border border-black">Product Detail Page</LinkBtn> */}
+                            <LinkBtn href="/products/Urban T-Shirt" my="my-0" value="" bg="bg-gradient-to-r from-cyan-500 to-blue-500" text="black" classes="w-full text-xs md:text-base">Product Page</LinkBtn>
+                            <LinkBtn href="/checkout/step1" my="my-0" value="" bg="bg-gradient-to-r from-cyan-500 to-blue-500" text="black" classes="w-full text-xs md:text-base">Checkout page 1</LinkBtn>
+                            <LinkBtn href="/checkout/step2" my="my-0" value="" bg="bg-gradient-to-r from-cyan-500 to-blue-500" text="black" classes="w-full text-xs md:text-base">Checkout page 2</LinkBtn>
+                            <LinkBtn href="/checkout/thanks" my="my-0" value="" bg="bg-gradient-to-r from-cyan-500 to-blue-500" text="black" classes="w-full text-xs md:text-base">Thank You Page</LinkBtn>
                             <LinkBtn my="my-0" value="" classes="w-full text-xs md:text-base">Yes, go to United Arab Emirates site</LinkBtn>
                             <LinkBtn my="my-0" value="" bg="bg-white" text="black" classes="w-full text-xs md:text-base border border-black">No, stay on the United States site</LinkBtn>
                             <Link href="#" onClick={toggleModal} name="modal3" className="w-full text-xs md:text-base text-center text-gray-500 underline " >Choose a different Country/Region</Link>

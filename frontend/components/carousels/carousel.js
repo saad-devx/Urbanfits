@@ -19,7 +19,7 @@ const CarouselSlide = (props) => {
                 <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
                 <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
             </div>
-            <Image unoptimized={false} className='w-full h-full transition-all duration-700' src={props.img} alt="Urban images" />
+            <Image className='w-full h-full transition-all duration-700' src={props.img} alt="Urban images" />
         </SplideSlide>
     )
 }
@@ -43,15 +43,15 @@ export default function Carousel(props) {
         autoplay: true,
         waitForTransition: true,
         resetProgress: false,
-        interval: 3500,
+        interval: 2500,
         drag: false,
         focus: 0,
-        pauseOnHover: false,
-        pauseOnFocus: false,
+        pauseOnHover: true,
+        pauseOnFocus: true,
         pagination: false
     }
     return (
-        <div className={` ${props.classes} font_futuraLT transition-all duration-1000 overflow-hidden`}>
+        <div className={` ${props.classes} font_futuraLT transition-all duration-1000 overflow-hidden snap-center`}>
             <Splide ref={splideRef} className={`w-full h-full relative transition-all duration-1000`} hasTrack={false}
                 options={useMemo(()=>{
                     return carousel_options

@@ -13,7 +13,7 @@ import image3 from '../../public/card imgs/card img3.jpg'
 const CardSlide = (props) => {
     return (
 
-        <SplideSlide key={props.key} className={` relative  md:p-5`}>
+        <SplideSlide key={props.li_key} className={` relative  md:p-5`}>
             <div className='relative w-full h-full rounded-3xl font_futuraLT overflow-hidden' >
                 <Image src={props.img} className='w-full h-full object-cover' alt="Urban images" ></Image>
                 <div className="absolute w-full bottom-0 left-0 p-7 bg-gradient-to-t from-white to-transparent flex flex-col items-start text-black text-5xl">
@@ -35,7 +35,7 @@ export default function CardCarousel() {
 
     return (
         <>
-            <Splide className='w-full h-full' hasTrack={false}
+            <Splide className='w-full h-11/12 cursor-grab' hasTrack={false}
                 options={{
                         type: 'loop',
                         drag: true,
@@ -55,7 +55,7 @@ export default function CardCarousel() {
 
                 <SplideTrack className='w-full h-full' >
                     {[image1, image2, image3].map((img, index) => {
-                        return <CardSlide key={index} img={img} />
+                        return <CardSlide li_key={index} img={img} />
                     })}
                 </SplideTrack>
             </Splide>

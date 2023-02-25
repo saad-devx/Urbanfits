@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/products/product/[p_id]": [
+    "/products/[category]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/products/product/[p_id].js"
-    ],
-    "/user/paymentmethods": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/paymentmethods.js"
+      "static/chunks/pages/products/[category].js"
     ]
   },
   "ampFirstPages": []

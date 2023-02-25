@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Inter } from '@next/font/google'
 import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head'
@@ -10,16 +9,13 @@ import Button from './simple_btn'
 import LinkBtn from './link_btn'
 import jwt from 'jsonwebtoken';
 // imports for images
-import Urbanfit_logo from '../public/logo_gold.svg'
-import google_logo from '../public/google-logo.png'
-import apple_logo from '../public/apple-logo2.png';
+import Urbanfit_logo from '../public/logos/logo_gold_outlined.svg'
+import google_logo from '../public/logos/google-logo.svg'
+import apple_logo from '../public/logos/apple-logo.svg';
 
 // imports for validation
 import { useFormik } from 'formik';
 import Tooltip from './tooltip';
-
-// configuring inter font
-const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Signing(props) {
@@ -105,7 +101,7 @@ export default function Signing(props) {
                 <section className='lg:flex lg:items-center lg:justify-center lg:w-screen lg:h-screen' >
                     <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
                         {/* This image will only show on the top in the Sign Up page */}
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/2 mx-auto mb-3`} />
+                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/4 mx-auto mb-3`} />
                         <div className='w-full mx-auto mb-7' >
                             <h2 className="font_futuraLT font-medium text-4xl leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
                         </div>
@@ -114,13 +110,13 @@ export default function Signing(props) {
                         </div>
                     </div>
 
-                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 bg-white">
+                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 font_futuraLT bg-white">
                         {/* This image will only show in the Login page */}
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/2 mx-auto mb-8`} />
+                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/4 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg font-semibold flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="28" alt="apple" /><p>Apple</p></a></button>
+                            <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                         </div>
                         <form className="bg-white p-2 font_futuraLT" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
@@ -164,9 +160,9 @@ export default function Signing(props) {
 
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                             {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
-                            <div className={`${page === 'login' ? 'hidden' : ''} ${inter.className} w-full mt-5 flex justify-center space-x-6`}>
-                                <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={google_logo} className='inline' width="28" alt="google" /><p>Google</p></a></button>
-                                <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex items-center space-x-3'><Image src={apple_logo} className='inline translate-y-[-1px]' width="28" alt="apple" /><p>Apple</p></a></button>
+                            <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
+                            <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                             </div>
                         </form>
                     </div>
