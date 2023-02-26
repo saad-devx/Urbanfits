@@ -79,7 +79,7 @@ export default function Signing(props) {
             if (!res.success) return toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
             localStorage.setItem("authToken", res.payload)
-            console.log(res.payload, "MuhammadBilawalAshrafOwnsUrbanFisBrand")
+            console.log(res.payload, process.env.SECRET_KEY)
             const decodedPayload = jwt.decode(res.payload)
 
             console.log(decodedPayload)
