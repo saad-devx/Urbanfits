@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import dynamic from "next/dynamic";
-// import _ from 'lodash';
 import Head from 'next/head'
 import Navbar from '../components/navbar'
 import Footer from '@/components/footer';
-// import { Inter } from '@next/font/google'
 import Carousel from '@/components/carousels/carousel';
 import CardCarousel from '@/components/carousels/cardCarousel';
 import Card from '@/components/cards/card';
 import PicCard from '@/components/cards/picCard';
-
 // Modal imports
 import LoadingModal from '../components/modals/loadingmodal';
 import LanguageModal from '../components/modals/languagemodal';
-
 // imports for images
 import Image from 'next/image';
 import Logo from '../public/logos/logo_black.svg'
@@ -22,15 +17,39 @@ import image2 from '../public/card imgs/card img6.jpg'
 import image3 from '../public/card imgs/card img1.jpg'
 import image4 from '../public/card imgs/card img8.jpg'
 
-// Confifure font
-// const inter = Inter({ subsets: ['latin'] })
-
-function Home() {
+export default function Home() {
     // state for navbar expansion
     const [expand, setExpand] = useState(false)
     // states and function for modals
     const [modal1, setModal1] = useState(false)
     const [modal3, setModal3] = useState(false)
+
+    useEffect(() => {
+        let item = localStorage.getItem("loadingModal")
+        if (item) return
+        setModal1(true)
+        localStorage.setItem("loadingModal", true)
+    }, [])
+
+    useEffect(() => {
+        let carousel = document.querySelector("#carousel")
+        let wrapper = document.querySelector("#content_wrapper")
+        let navbar = document.querySelector("#navbar")
+        navbar.classList.add("opacity-0", "pointer-events-none")
+        wrapper.classList.add("lg:w-full")
+        const setSizefunc = async () => {
+            let position = window.pageYOffset
+            console.log(position)
+            if (position >> 0) {
+                carousel.classList.add("w-[80%]", "h-[80vh]", "md:h-[80vh]", "rounded-[2rem]", "mt-7", "mx-auto", "lg:m-10")
+                wrapper.classList.remove("lg:w-full")
+                navbar.classList.remove("opacity-0", "pointer-events-none")
+                window.removeEventListener('scroll', setSizefunc)
+            }
+        }
+        window.addEventListener('scroll', setSizefunc)
+    }, [])
+
     const toggleModal = (e) => {
         if (e.target.name === "modal1") {
             if (modal1 === false) return setModal1(true)
@@ -42,26 +61,6 @@ function Home() {
         }
     }
 
-    const [resize, setResize] = useState(false)
-    useEffect(() => {
-        const setSizefunc = () => {
-            let position = window.pageYOffset
-            if (position >> 0) {
-                setResize(true)
-            }
-        }
-        if (resize === true) return window.removeEventListener('scroll', setSizefunc)
-
-        window.addEventListener('scroll', setSizefunc)
-    }, [resize])
-
-    useEffect(() => {
-        let item = localStorage.getItem("loadingModal")
-        if(item) return
-        setModal1(true)
-        localStorage.setItem("loadingModal", true)
-    }, [])
-
     return (
         <>
             <Head>
@@ -70,13 +69,15 @@ function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className="w-full h-full section_container">
-                <Navbar logoNull setExpand={setExpand} classes={resize === true ? "" : "-translate-x-56 opacity-0 pointer-events-none"} />
+                <Navbar logoNull setExpand={setExpand} />
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 <section className={`${expand === true ? 'w-full lg:w-[79.4%]' : 'w-full'} bg-gray-100 float-right flex justify-center lg:justify-end transition-all duration-700`}>
-                    <Image alt="Urban images" src={Logo} className={`${resize === true ? "" : "translate-x-44"} fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20 transition-all duration-700`} ></Image>
-                    <div className={`${resize === true ? "w-full lg:w-[94.6%]" : "w-full"} flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
-                        <Carousel classes={resize === true ? "w-11/12 h-[80vh] md:h-[90vh] rounded-[2rem] mt-7 mx-auto lg:m-10" : "w-full h-screen"} />
+                    <Image alt="Urban images" src={Logo} className="fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20" />
+                    <div id='content_wrapper' className="w-full lg:w-[94.6%] flex flex-col justify-center items-center space-y-5">
+                        <div id='carousel' className="w-full h-screen font_futuraLT transition-all duration-1000 overflow-hidden snap-center">
+                            <Carousel />
+                        </div>
                         {/* Auto scroll Carousel  */}
                         <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT">
                             <div className="w-full md:w-[35%] md:h-full p-5 flex flex-col justify-center items-start">
@@ -124,9 +125,4 @@ function Home() {
             </main>
         </>
     )
-}
-
-export default dynamic(() => Promise.resolve(Home), { ssr: false })
-export async function getServerSideProps(context) {
-    return { props: {} }
 }

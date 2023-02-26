@@ -3,7 +3,7 @@ import '@/styles/Navbar.css'
 import '@/styles/pillbtns.css'
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { ToastContainer, toast, Slide } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
@@ -12,6 +12,12 @@ import LoadingBar from 'react-top-loading-bar'
 function App({ Component, pageProps }) {
   const [progress, setProgress] = useState(0)
   const router = useRouter()
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", () => {
+        localStorage.removeItem("loadingModal")
+    })
+},[])
 
   useEffect(() => {
     router.events.on("routeChangeStart", () => {

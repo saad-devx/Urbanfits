@@ -82,7 +82,7 @@ export default function Navbar(props) {
             <Cart cart={cart} toggleCart={toggleCart} />
             <LanguageModal show={modal3} toggleModal={toggleModal} />
             {props.logoNull ? null : <Link href="/" ><Image src={Logo} className={`fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-24 lg:w-20 transition-all duration-700`} alt="Urban images" ></Image></Link>}
-            <nav className={` ${nav} ${props.classes} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
+            <nav id='navbar' className={` ${nav} ${props.classes} border fixed z-40 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white bg-opacity-70 backdrop-blur flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
                 <div onClick={handleMenu} className={`hidden lg:block`}>
                     <div className={`${bars} menu btn6`}>
                         <div className="icon"></div>
