@@ -36,13 +36,12 @@ export default function Home() {
         let wrapper = document.querySelector("#content_wrapper")
         let navbar = document.querySelector("#navbar")
         navbar.classList.add("opacity-0", "pointer-events-none")
-        wrapper.classList.add("lg:w-full")
         const setSizefunc = async () => {
             let position = window.pageYOffset
             console.log(position)
             if (position >> 0) {
-                carousel.classList.add("w-[80%]", "h-[80vh]", "md:h-[80vh]", "rounded-[2rem]", "mt-7", "mx-auto", "lg:m-10")
-                wrapper.classList.remove("lg:w-full")
+                carousel.classList.add("w-4/5", "h-[80vh]", "rounded-[2rem]", "mt-7", "mx-auto", "lg:m-10")
+                wrapper.classList.add("lg:w-[94.6%]")
                 navbar.classList.remove("opacity-0", "pointer-events-none")
                 window.removeEventListener('scroll', setSizefunc)
             }
@@ -72,19 +71,19 @@ export default function Home() {
                 <Navbar logoNull setExpand={setExpand} />
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
-                <section className={`${expand === true ? 'w-full lg:w-[79.4%]' : 'w-full'} bg-gray-100 float-right flex justify-center lg:justify-end transition-all duration-700`}>
+                <section className={`${expand === true ? 'w-full lg:w-4/5' : 'w-full'} bg-gray-100 float-right flex justify-center lg:justify-end transition-all duration-700`}>
                     <Image alt="Urban images" src={Logo} className="fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20" />
-                    <div id='content_wrapper' className="w-full lg:w-[94.6%] flex flex-col justify-center items-center space-y-5">
+                    <div id='content_wrapper' className="w-full flex flex-col justify-center items-center space-y-5">
                         <div id='carousel' className="w-full h-screen font_futuraLT transition-all duration-1000 overflow-hidden snap-center">
                             <Carousel />
                         </div>
                         {/* Auto scroll Carousel  */}
                         <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT">
-                            <div className="w-full md:w-[35%] md:h-full p-5 flex flex-col justify-center items-start">
+                            <div className="w-full md:w-35pr md:h-full p-5 flex flex-col justify-center items-start">
                                 <h2 className="text-2xl md:text-5xl word-wrap leading-tight">Newest Gear to Work</h2>
                                 <h4 className="font_futuraLTlite text-lg">Innovation and Comfort for Women</h4>
                             </div>
-                            <div className="w-full md:w-[70%] h-full">
+                            <div className="w-full md:w-70pr h-full">
                                 <CardCarousel />
                             </div>
                             <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
@@ -104,11 +103,11 @@ export default function Home() {
                         </section>
                         {/* Auto scroll Carousel  */}
                         <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT snap-center">
-                            <div className="w-full md:w-[35%] md:h-full p-5 flex flex-col justify-center items-start">
+                            <div className="w-full md:w-35pr md:h-full p-5 flex flex-col justify-center items-start">
                                 <h2 className="text-2xl md:text-5xl word-wrap leading-tight self-start">Newest Gear to Work</h2>
                                 <h4 className="font_futuraLTlite text-lg">Innovation and Comfort for Men</h4>
                             </div>
-                            <div className="w-full md:w-[70%] h-full">
+                            <div className="w-full md:w-70pr h-full">
                                 <CardCarousel />
                             </div>
                             <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>

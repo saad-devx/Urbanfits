@@ -81,9 +81,7 @@ export default function Signing(props) {
             localStorage.setItem("authToken", res.payload)
             console.log(res.payload, process.env.SECRET_KEY)
             const decodedPayload = jwt.decode(res.payload)
-
-            console.log(decodedPayload)
-            router.push('/')
+            router.push('/user/personalinfo')
             handleReset()
         }
     })

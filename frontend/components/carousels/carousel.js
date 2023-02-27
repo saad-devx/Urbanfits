@@ -18,7 +18,7 @@ export default function Carousel() {
     }
 
     return (
-        <Splide onResize={()=>{console.log("Carousel has been resized")}} onResized={()=>{console.log("Carousel has been resized")}} className="w-full h-full relative transition-all duration-1000" hasTrack={false}
+        <Splide className="w-full h-full relative transition-all duration-1000" hasTrack={false}
             options={{
                 type: 'loop',
                 speed: 700,

@@ -13,7 +13,7 @@ const Login = async (req, res) => {
         const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
         const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
         if (req.body.password !== originalPassword) return res.status(404).json({ success: false, msg: "Your password is incorrect" })
-        const payload = jwt.sign({username: user.username, email: user.email, phone:user.phone }, process.env.SECRET_KEY)
+        const payload = jwt.sign({...user}, process.env.SECRET_KEY)
         res.status(200).json({
             success: true,
             msg: "You are Logged in successfully !",

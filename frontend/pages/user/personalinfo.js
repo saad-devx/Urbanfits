@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import jwt from 'jsonwebtoken';
 import Navbar from '../../components/navbar'
 import Card from '../../components/cards/card'
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
+// image imports
+import Image from 'next/image';
+import female_avatar from '../../public/avatars/female.svg'
+import male_avatar from '../../public/avatars/male.svg'
 
 // imports for Schema and validation
 import { useFormik } from 'formik';
@@ -41,15 +46,26 @@ export default function Personalinfo() {
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
+    // getting user payload form jwt token in localstorage
+    const [user, setUser] = useState(false)
+    useEffect(() => {
+        const userData = jwt.decode(localStorage.getItem("authToken"))
+        if (userData) return setUser(userData._doc)
+    }, [])
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
-                <AccountMenu direction={direction} />
+                    <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
-                        <h2 className="text-3xl mb-4">My Account</h2>
-                        <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                        <div className="flex items-center gap-3">
+                            <Image className="w-1/6 rounded-full" src={male_avatar} ></Image>
+                            <span>
+                                <h2 className="lg:text-2xl mb-4">My Account</h2>
+                                <p className='text-sm' >Welcome {user.firstname?user.firstname: ''} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                            </span>
+                        </div>
                         <form className="mt-10 font_futuraLT space-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                             <h1 className='text-xl' >Personal Information</h1>
                             <div className="flex justify-between w-full lg:w-5/6 ">

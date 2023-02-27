@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        '35pr': '35%',
+        '70pr': '70%',
+      },
+      height: {
+        '35pr': '35%',
+      },
       backgroundImage: {
         'gold' : "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",
         'gold-land' : "linear-gradient(90deg, #FAE892 0%, #B3903E 100%)",

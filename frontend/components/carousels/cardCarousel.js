@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LinkBtn from '../link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
-import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+// import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 // Default theme
 import '@splidejs/react-splide/css';
 // images imports
@@ -29,12 +29,18 @@ export default function CardCarousel() {
                 pauseOnHover: true,
                 pagination: false,
                 focus: 'center',
-                autoScroll: {
-                    pauseOnHover: true,
-                    pauseOnFocus: false,
-                    speed: 1,
-                },
-            }} extensions={{ AutoScroll }}>
+                autoplay: true,
+                type: 'loop',
+                speed: 400,
+                interval: 1700,
+                // autoScroll: {
+                //     pauseOnHover: true,
+                //     pauseOnFocus: false,
+                //     speed: 1,
+                // },
+            }}
+            // extensions={{ AutoScroll }}
+            >
 
             <SplideTrack className='w-full h-full' >
                 {[image1, image2, image3].map((img, index) => {

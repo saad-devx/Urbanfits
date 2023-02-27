@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import dynamic from "next/dynamic";
+import { toast, Slide } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Button from './simple_btn';
@@ -21,7 +21,7 @@ const Option_sm = (props) => {
     )
 }
 
-function AccountMenu(props) {
+export default function AccountMenu(props) {
     const router = useRouter()
     const route = router.pathname
 
@@ -33,6 +33,27 @@ function AccountMenu(props) {
         if (route === "/user/paymentmethods") return menuRef.current.scroll((screen / 0.8), 0)
         if (route === "/user/orders/orders") return menuRef.current.scroll((screen * 1.5), 0)
     })
+    // function to show toast
+    const toaster = (type, msg) => {
+        toast(msg, {
+            position: "top-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            type: type,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide
+        })
+    }
+    // function to lohgout the user
+    const logOut = ()=>{
+        localStorage.removeItem("authToken")
+        router.push('/')
+        toaster("success", "You have been logged out successfully!")
+    }
     return (
         <>
             <div className=" w-1/3 hidden lg:block h-full relative">
@@ -42,12 +63,12 @@ function AccountMenu(props) {
                     <Option href='/user/address'>My Address</Option>
                     <Option href='/user/paymentmethods'>My Payment Methods</Option>
                     <Link className={` group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
-                    <Button classes="w-full">Logout</Button>
+                    <Button onclick={logOut} classes="w-full">Logout</Button>
                 </div>
             </div>
 
             {/* To be displayed on the mobile devices */}
-            <div ref={menuRef} className={`absolute z-30 top-0 left-0 w-full bg-gradient-to-b from-white to-white/75 shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth hide_scroll transition-all duration-300`}>
+            <div ref={menuRef} id="account_menu" className={`absolute z-10 top-0 left-0 w-full bg-gradient-to-b from-white to-white/75 shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth transition-all duration-300`}>
                 <div className="w-[230%] md:w-full h-full px-4 pt-8 flex justify-between">
                     <Option_sm href='/user/personalinfo'>Personal Information</Option_sm>
                     <Option_sm href='/user/email&password'>Email & Password</Option_sm>
@@ -60,5 +81,3 @@ function AccountMenu(props) {
         </>
     )
 }
-
-export default dynamic(() => Promise.resolve(AccountMenu), { ssr: false })

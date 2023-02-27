@@ -25,7 +25,20 @@ const UserSchema = mongoose.Schema({
     role: {
         type: String,
         default: "user"
+    },
+    firstname: {
+        type: String
+    },
+    lastname: {
+        type: String
+    },
+    title: {
+        type: String
+    },
+    gender: {
+        type: String
     }
+
 
 }, { timestamps: true })
 
