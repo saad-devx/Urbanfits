@@ -104,7 +104,7 @@ export default function Navbar(props) {
                     <span className='lg:hidden cursor-pointer flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined ">menu</i></span>
                     <button onClick={toggleSearch} className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">search</i></button>
                     <button onClick={toggleCart} className='relative flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">local_mall</i> <span className={`${totalUniqueItems == 0 ? "hidden" : ''} absolute top-2 right-2 lg:top-3 lg:-right-3 w-4 h-4 flex justify-center items-center text-white rounded-full bg-gold-land text-[9px]`}>{totalUniqueItems}</span></button>
-                    {user ? <Link href='/user/personalinfo' title='Me' className='lg:mt-5 w-10 lg:w-auto rounded-full overflow-hidden' ><Image src={user.gender.toLowerCase() === "female" ? female_avatar : male_avatar} className="w-full h-full object-cover" /></Link>
+                    {user ? <Link href='/user/personalinfo' title='Me' className='lg:mt-5 w-10 lg:w-auto rounded-full overflow-hidden' ><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" /></Link>
                         : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i></Link>}
                 </div>
                 <i className='hidden lg:block' />
@@ -120,7 +120,7 @@ export default function Navbar(props) {
                         </div>
                     </div>
                     <div className="flex justify-between items-center w-full h-1/2 p-5">
-                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender.toLowerCase() === "female" ? female_avatar : male_avatar} className="w-full h-full object-cover" /></span> <span>{user.username}</span> </Link>
+                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" /></span> <span>{user.username}</span> </Link>
                             : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i>Login</Link>}
                         <span className='flex space-x-5' ><button onClick={toggleSearch} className="flex font_futuraLT"><i className="material-symbols-outlined">search</i></button><button onClick={toggleCart} ><i className="material-symbols-outlined">local_mall</i></button></span>
                     </div>
