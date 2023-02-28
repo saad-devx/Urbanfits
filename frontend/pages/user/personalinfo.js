@@ -22,7 +22,8 @@ const InfoCard = (props) => {
 
 export default function Personalinfo() {
     const [expand, setExpand] = useState(false)
-
+    // user data state
+    const [user, setUser] = useState({})
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
@@ -32,25 +33,46 @@ export default function Personalinfo() {
         newsletter_sub_email: Yup.bool(),
         newsletter_sub_phone: Yup.bool()
     })
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
-        initialValues: { title: '', firstname: '', lastname: '', dateofbirth: '', newsletter_sub_email: false, newsletter_sub_phone: false },
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
+        initialValues: { title: user.title, firstname: user.firstname, lastname: user.lastname, date_of_birth: '', newsletter_sub_email: false, newsletter_sub_phone: false },
         validationSchema: validatedSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             console.log(values)
+            let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(values)
+            })
+            let res = await response.json()
+            localStorage.setItem("authToken", res.payload)
+            console.log(res)
             handleReset()
         }
     })
-
     // determining if the scroll direction is upwards or downwards (so that if user scrolls down, the menu in mobile will disappear giving user a full screen view)
     const [direction, setDirection] = useState('')
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
     // getting user payload form jwt token in localstorage
-    const [user, setUser] = useState(false)
+    const ifExists = (data, return_type) => {
+        if (data) return data
+        else return return_type || ""
+    }
     useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) return setUser(userData._doc)
+        const userData = jwt.decode(localStorage.getItem("authToken"))._doc
+        if (userData) {
+            console.log(userData)
+            setUser(userData)
+            setValues({
+                title: ifExists(userData.title),
+                firstname: ifExists(userData.firstname),
+                lastname: ifExists(userData.lastname),
+                dateofbirth: ifExists(userData.date_of_birth, null),
+                newsletter_sub_email: ifExists(userData.newsletter_sub_email, false),
+                newsletter_sub_phone: ifExists(userData.newsletter_sub_phone, false)
+            })
+        }
     }, [])
     return (
         <>
@@ -59,11 +81,11 @@ export default function Personalinfo() {
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
-                        <div className="flex items-center gap-3">
-                            <Image className="w-1/6 rounded-full" src={male_avatar} ></Image>
+                        <div className="flex flex-row-reverse lg:flex-row items-center gap-3">
+                            <Image className="w-1/3 lg:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
                             <span>
-                                <h2 className="lg:text-2xl mb-4">My Account</h2>
-                                <p className='text-sm' >Welcome {user.firstname?user.firstname: ''} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                                <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
+                                <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
                             </span>
                         </div>
                         <form className="mt-10 font_futuraLT space-y-5" onReset={handleReset} onSubmit={handleSubmit} >
@@ -73,9 +95,9 @@ export default function Personalinfo() {
                                     {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                                     <select defaultValue="Title" value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                         <option defaultChecked >Title</option>
-                                        <option id="mr" value="mr">Mr</option>
-                                        <option id="ms" value="ms">Ms</option>
-                                        <option id="other" value="other">Other</option>
+                                        <option id="Mr" value="Mr.">Mr</option>
+                                        <option id="Mrs" value="Mrs.">Ms</option>
+                                        <option id="other" value="Other">Other</option>
                                     </select>
                                 </div>
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -89,8 +111,8 @@ export default function Personalinfo() {
                                     <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
                                 </div>
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    {touched.dateofbirth && errors.dateofbirth ? <Tooltip classes="form-error" content={errors.dateofbirth} /> : null}
-                                    <input className="w-full bg-transparent outline-none border-none" type="date" name="dateofbirth" id="dateofbirth" value={values.dateofbirth} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
+                                    {touched.date_of_birth && errors.date_of_birth ? <Tooltip classes="form-error" content={errors.date_of_birth} /> : null}
+                                    <input className="w-full bg-transparent outline-none border-none" type="date" name="date_of_birth" id="date_of_birth" value={values.date_of_birth} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div>
                             </div>
                             <div className="w-full lg:w-4/5 flex justify-end">

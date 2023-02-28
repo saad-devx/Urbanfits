@@ -7,7 +7,7 @@ import '@splidejs/react-splide/css';
 //Carousel Image Slide component
 const CarouselSlide = (props) => {
   return (
-    <SplideSlide className='w-full h-[60vh] lg:h-[80vh]' >
+    <SplideSlide className='w-full h-60vh lg:h-80vh' >
       <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={props.img} alt="Urban images" />
     </SplideSlide>
   )
@@ -25,7 +25,7 @@ export default function ProductCarousel(props) {
   return (
     <>
       <div className="productCarousel">
-        <Splide className='w-full h-[60vh] lg:h-[80vh] overflow-hidden border-2 border-white bg-white rounded-lg lg:rounded-b-none' ref={slider1} options={{
+        <Splide className='w-full h-60vh lg:h-80vh overflow-hidden border-2 border-white bg-white rounded-lg lg:rounded-b-none' ref={slider1} options={{
           type: 'loop',
           rewind: true,
           gap: "0.5rem",

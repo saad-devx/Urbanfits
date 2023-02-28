@@ -26,8 +26,8 @@ export default function AccountMenu(props) {
     const route = router.pathname
 
     const menuRef = useRef(null)
-    let screen = window.screen.width
     useEffect(() => {
+        let screen = window.screen.width
         if (route === "/user/email&password") return menuRef.current.scroll((screen / 2.1), 0)
         if (route === "/user/address") return menuRef.current.scroll((screen / 1.1), 0)
         if (route === "/user/paymentmethods") return menuRef.current.scroll((screen / 0.8), 0)

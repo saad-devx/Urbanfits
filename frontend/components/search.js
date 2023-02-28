@@ -23,7 +23,7 @@ export default function Search(props) {
                     <section className='w-full p-3 lg:p-0 lg:pt-9 lg:w-[85%] h-full font_futuraLT text-left pt-14' >
                         <button onClick={props.toggleSearch} className="absolute right-8 top-5 lg:top-11 cursor-pointer"><i className="fa-solid fa-arrow-left mr-2"></i>Back</button>
                         {/* Search Bar */}
-                        <div className='w-full h-[5vh] bg-white/40 lg:h-[7vh] px-5 py-2 flex justify-start items-center border border-gray-400 hover:bg-white/70 transition-all duration-300 rounded-full' >
+                        <div className='w-full h-12 bg-white/40 px-5 py-2 flex justify-start items-center border border-gray-400 hover:bg-white/70 transition-all duration-300 rounded-full' >
                             <i className="material-symbols-outlined mr-4 translate-y-[1px] text-[2rem]">search</i><input type="text" onChange={onchange} value={query} className="bg-transparent outline-none border-none w-full h-full placeholder:text-gray-700" placeholder='Search' />
                         </div>
                         {/*                                         pill buttons */}

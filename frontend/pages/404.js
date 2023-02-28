@@ -1,8 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
-import dynamic from "next/dynamic";
 import LinkBtn from '../components/link_btn';
-function Error404() {
+export default function Error404() {
   return (
     <>
       <Head>
@@ -25,5 +24,4 @@ function Error404() {
     </>
   )
 }
-
-export default dynamic(() => Promise.resolve(Error404), { ssr: false })
+// export default dynamic(() => Promise.resolve(Error404), { ssr: false })

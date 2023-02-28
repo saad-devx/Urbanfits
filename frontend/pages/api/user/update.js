@@ -14,7 +14,7 @@ const UpdateUser = async (req, res) => {
             const payload = jwt.sign({...user}, process.env.SECRET_KEY)
             res.status(200).json({
                 success: true,
-                msg: `User with id ${req.query.id} has been updated successfully`,
+                msg: `Your data has been updated successfully`,
                 payload
             })
         }

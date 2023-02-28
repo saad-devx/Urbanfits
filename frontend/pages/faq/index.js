@@ -32,7 +32,7 @@ export default function index() {
                         <section className='w-full p-5 lg:p-0 lg:pt-9 lg:w-[75%] h-full font_futuraLT text-left pt-9' >
                             <h2 className="text-5xl mb-16">FAQ</h2>
                             {/*                                         Search Bar */}
-                            <div className='w-full h-[5vh] bg-white lg:h-[7vh] px-5 py-2 flex justify-start items-center border border-gray-400 rounded-full' >
+                            <div className='w-full h-12 bg-white px-5 py-2 flex justify-start items-center border border-gray-400 rounded-full' >
                                 <i className="material-symbols-outlined mr-4 translate-y-[1px] text-[2rem]">search</i><input type="text" className="bg-transparent outline-none border-none w-full h-full" placeholder='Type a Question here' />
                             </div>
 

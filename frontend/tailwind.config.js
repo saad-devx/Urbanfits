@@ -10,9 +10,15 @@ module.exports = {
       width: {
         '35pr': '35%',
         '70pr': '70%',
+        '49pr': '49%',
+        '30pr': '30%',
+        '20pr': '20%',
+        '60vw': '60vw',
       },
       height: {
         '35pr': '35%',
+        '60vh': '60vh',
+        '80vh': '80vh',
       },
       backgroundImage: {
         'gold' : "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",

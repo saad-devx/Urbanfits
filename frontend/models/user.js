@@ -37,6 +37,19 @@ const UserSchema = mongoose.Schema({
     },
     gender: {
         type: String
+    },
+    date_of_birth: {
+        type: String
+    },
+    newsletter_sub_email: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    newsletter_sub_phone: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 
 

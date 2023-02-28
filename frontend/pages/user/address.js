@@ -32,7 +32,7 @@ export default function Address() {
                                 <input className="bg-transparent outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Confirm Email*" />
                             </div>
                             <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                <input className="bg-transparent outline-none border-none" type="password" name="password" id="password" onChange={onchange} placeholder="Password*" /><Link href='/resetpassword' ><i class="material-symbols-outlined">edit_square</i></Link>
+                                <input className="bg-transparent outline-none border-none" type="password" name="password" id="password" onChange={onchange} placeholder="Password*" /><Link href='/resetpassword' ><i className="material-symbols-outlined">edit_square</i></Link>
                                 </div>
                             <div className="flex justify-between w-3/4 ">
                                 <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
