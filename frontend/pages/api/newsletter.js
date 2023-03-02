@@ -11,9 +11,10 @@ const CreateNewsletter = async (req, res) => {
             if (!user) return res.status(404).send({ success: false, message: "User not found" })
             let letter = await Newsletter.findOne({ email: req.body.email })
             if (letter) return res.status(400).json({ success: false, message: "This email has already subscribed our Newsletter" })
-            letter = await Newsletter.create(req.body)
+            letter = await ( await Newsletter.create(req.body)).populate("user")
             res.status(200).json({
                 success: true,
+                data: letter,
                 message: "You have successfully subscribed to our newsletter!"
             })
         }

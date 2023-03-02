@@ -318,7 +318,7 @@ input:checked+.slider:before {
 
 /*                                     CSS to hide scroll bar */
 
-#account_menu::-webkit-scrollbar {
+.account_menu::-webkit-scrollbar {
   display: none;
 }
 

@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import Loader from './loader';
 import Button from './simple_btn'
 import LinkBtn from './link_btn'
-import jwt from 'jsonwebtoken';
 // imports for images
 import Urbanfit_logo from '../public/logos/logo_gold_outlined.svg'
 import google_logo from '../public/logos/google-logo.svg'
@@ -22,6 +22,22 @@ export default function Signing(props) {
     const { page } = props
     // configuring router
     const router = useRouter()
+    //state to handle loader component
+    const [loader, setLoader] = useState(false)
+    const toaster = (type, msg) => {
+        toast(msg, {
+            position: "top-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            type: type,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide
+        })
+    }
     //                                     Submit form functionality
 
     const initialValueChanger = () => { // Initial Values Object would change on the basis of route name
@@ -53,40 +69,23 @@ export default function Signing(props) {
         initialValues: initialValueChanger(),
         validationSchema: validationObjectChanger(),
         onSubmit: async (values) => {
+            setLoader(<Loader />)
             let user = JSON.stringify(values)
             let path = router.pathname
-            console.log(process.env.HOST)
             let response = await fetch(`${process.env.HOST}/api/user${path}`, {
                 method: getMethod(),
                 headers: { "Content-Type": "application/json" },
                 body: user
             })
-            const toaster = (type, msg) => {
-                toast(msg, {
-                    position: "top-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    type: type,
-                    progress: undefined,
-                    theme: "colored",
-                    transition: Slide
-                })
-            }
             let res = await response.json()
+            localStorage.setItem("authToken", res.payload)
             if (!res.success) return toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
-            localStorage.setItem("authToken", res.payload)
-            // console.log(res.payload, process.env.SECRET_KEY)
-            // const decodedPayload = jwt.decode(res.payload)
             router.push('/user/personalinfo')
             handleReset()
+            setLoader(null)
         }
     })
-
-
     return (
         <>
             <Head>
@@ -95,6 +94,7 @@ export default function Signing(props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
+            {loader}
             <main className={`bg-white lg:overflow-x-hidden`}>
                 <section className='lg:flex lg:items-center lg:justify-center lg:w-screen lg:h-screen' >
                     <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
@@ -159,8 +159,8 @@ export default function Signing(props) {
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                             {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                             <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
-                            <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
+                                <button className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                                <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                             </div>
                         </form>
                     </div>

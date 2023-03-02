@@ -30,7 +30,7 @@ export default function OrdersPage(props) {
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-y-scroll' >
                         <div className="w-full lg:w-5/6">
                             <h2 className="text-3xl mb-4">My Order</h2>
-                            <div className="w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scroll">
+                            <div className="account_menu w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scroll">
                                 <div className="w-[150%] md:w-full h-full flex justify-between  border-b border-b-gray-300 ">
                                     <Option href='/user/orders/orders'>Orders</Option>
                                     <Option href='/user/orders/buyagain'>Buy Again</Option>

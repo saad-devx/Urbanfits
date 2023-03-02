@@ -3,6 +3,7 @@ import Link from 'next/link'
 import jwt from 'jsonwebtoken';
 import { toast, Slide } from 'react-toastify';
 import Navbar from '../../components/navbar'
+import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
@@ -23,6 +24,8 @@ const InfoCard = (props) => {
 
 export default function Personalinfo() {
     const [expand, setExpand] = useState(false)
+      //state to handle loader component
+      const [loader, setLoader] = useState(false)
     const toaster = (type, msg) => {
         toast(msg, {
             position: "top-left",
@@ -49,10 +52,10 @@ export default function Personalinfo() {
         newsletter_sub_phone: Yup.bool()
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', date_of_birth: '', newsletter_sub_email: true, newsletter_sub_phone: false },
+        initialValues: { title: 'Title', firstname: '', lastname: '', date_of_birth: '', newsletter_sub_email: false, newsletter_sub_phone: false },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
-            console.log(values)
+            setLoader(<Loader />)
             let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -61,6 +64,7 @@ export default function Personalinfo() {
             let res = await response.json()
             localStorage.setItem("authToken", res.payload)
             toaster(res.success === true ? "success" : "error", res.msg)
+            setLoader(null)
         }
     })
     // determining if the scroll direction is upwards or downwards (so that if user scrolls down, the menu in mobile will disappear giving user a full screen view)
@@ -84,7 +88,7 @@ export default function Personalinfo() {
                 firstname: ifExists(userData.firstname),
                 lastname: ifExists(userData.lastname),
                 date_of_birth: ifExists(userData.date_of_birth),
-                newsletter_sub_email: true,
+                newsletter_sub_email: ifExists(userData.newsletter_sub_email, false),
                 newsletter_sub_phone: ifExists(userData.newsletter_sub_phone, false)
             })
         }
@@ -93,6 +97,7 @@ export default function Personalinfo() {
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
+                {loader}
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
@@ -154,7 +159,7 @@ export default function Personalinfo() {
                             <div className='my-14 space-y-5' >
                                 <h2 className="text-xl">Email & Password</h2>
                                 <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    <input className="bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
+                                    <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
                                 </div>
                             </div>
                             <div className='my-14 space-y-5' >
