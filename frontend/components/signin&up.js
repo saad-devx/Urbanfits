@@ -79,11 +79,11 @@ export default function Signing(props) {
             })
             let res = await response.json()
             localStorage.setItem("authToken", res.payload)
+            setLoader(null)
             if (!res.success) return toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
             router.push('/user/personalinfo')
             handleReset()
-            setLoader(null)
         }
     })
     return (
