@@ -27,6 +27,7 @@ export default function ProductCarousel(props) {
       <div className="productCarousel">
         <Splide className='w-full h-60vh lg:h-80vh overflow-hidden border-2 border-white bg-white rounded-lg lg:rounded-b-none' ref={slider1} options={{
           type: 'loop',
+          focus: "center",
           rewind: true,
           gap: "0.5rem",
           waitForTransition: true,

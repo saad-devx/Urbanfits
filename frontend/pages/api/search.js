@@ -9,17 +9,17 @@ const UpdateProducts = async (req, res) => {
             console.log(req.query.q)
             const searchTerm = req.query.q
             const results = await Product.find({
-                // $or: [
-                //     { category: { $regex: searchTerm, $options: "i" } },
-                //     { name: { $regex: searchTerm, $options: "i" } },
-                //     { subcategories: { $elemMatch: { $regex: searchTerm, $options: "i" } } },
-                //     { description: { $regex: searchTerm, $options: "i" } }
-                // ]
                 $or: [
                     { category: { $regex: searchTerm, $options: "i" } },
                     { name: { $regex: searchTerm, $options: "i" } },
-                    { subcategories: {$in: searchTerm}  }
+                    { subcategories: { $elemMatch: { $regex: searchTerm, $options: "i" } } },
+                    { description: { $regex: searchTerm, $options: "i" } }
                 ]
+                // $or: [
+                //     // { category: { $regex: searchTerm, $options: "i" } },
+                //     // { name: { $regex: searchTerm, $options: "i" } },
+                //     { subcategories: {$in: searchTerm}  }
+                // ]
             })
             res.json(results);
         }

@@ -72,7 +72,7 @@ export default function Cart(props) {
                         : <section className='w-full p-5 md:p-7 lg:px-0 lg:pb-20 lg:pt-12 lg:w-[90%] h-full font_futuraLT text-left' >
                             <div className="w-full flex flex-col lg:flex-row gap-5">
                                 <div className="w-full lg:w-[70%] mb-3">
-                                    <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i class="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>
+                                    <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>
                                     {items.map((product, index) => {
                                         return <CartItem li_key={index} product={product} size={product.size[0]} toggleCart={props.toggleCart} />
                                     })}

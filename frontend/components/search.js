@@ -11,17 +11,16 @@ export default function Search(props) {
     const [loader, setLoader] = useState(null)
     const [query, setQuery] = useState("")
     const [results, setResults] = useState([])
-    let search = document.querySelector('#search')
-    const onchange = async () => {
+    const onchange = async (e) => {
         setLoader(<Loader />)
-        console.log(search.value)
-        setQuery(search.value)
+        // console.log(e.target.value)
+        setQuery(e.target.value)
         let results = await (await fetch(`${process.env.HOST}/api/search?q=${query}`)).json()
-        console.log(results)
+        // console.log(results)
         setResults(results)
         setLoader(null)
     }
-    //Cart function
+    // destructuring Cart function
     const { addItem } = useCart()
     return (
         <>

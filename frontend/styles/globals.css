@@ -322,9 +322,39 @@ input:checked+.slider:before {
   display: none;
 }
 
-/* for section to section scroll animation */
+ /* CSS for square notation classes */
 
-/* .section_container{
-  height: 100vh;
-  scroll-snap-type: y mandatory;
-} */
+/* 
+  @media only screen and (min-width: 1024px){
+    .lgw-94p6pr{
+      width: 94.6%;
+    }
+  }
+
+ .w-20pr{
+  width: 20%;
+ }
+ .w-30pr{
+  width: 30%;
+ }
+ .w-35pr{
+  width: 35%;
+ }
+ .w-49pr{
+  width: 49%;
+ }
+ .w-60pr{
+  width: 60%;
+ }
+ .w-70pr{
+  width: 70%;
+ }
+ .h-35pr{
+  height: 35%;
+ }
+ .h-60vh{
+  height: 60vh;
+ }
+ .h-80vh{
+  height: 80vh;
+ } */

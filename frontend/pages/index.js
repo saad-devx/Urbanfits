@@ -49,8 +49,9 @@ export default function Home() {
                     "lg:m-10"
                 );
                 wrapper.classList.add("lg:w-[94.6%]");
-                navbar.classList.remove("opacity-0", "pointer-events-none");
+                navbar.classList.remove("opacity-0", "pointer-events-none")
                 window.removeEventListener("scroll", setSizefunc);
+
             }
         };
         window.addEventListener("scroll", setSizefunc);
@@ -100,7 +101,7 @@ export default function Home() {
                         </section>
                         {/* Shopping Card Section */}
                         <section className="w-full h-screen p-3 md:p-10 flex flex-col lg:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0 snap-center">
-                            <PicCard object_fit="object-top" img={image1} />
+                            <PicCard img={image1} />
                             <PicCard img={image2} />
                         </section>
                         {/* Shopping Card Section */}
