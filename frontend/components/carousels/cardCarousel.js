@@ -41,7 +41,6 @@ export default function CardCarousel() {
             }}
         // extensions={{ AutoScroll }}
         >
-
             <SplideTrack className='w-full h-full' >
                 {[image1, image2, image3].map((img, index) => {
                     return <SplideSlide key={index} className={` relative  md:p-5`}>

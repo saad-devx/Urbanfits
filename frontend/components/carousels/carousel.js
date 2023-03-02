@@ -21,19 +21,14 @@ export default function Carousel() {
         <Splide className="w-full h-full relative transition-all duration-1000" hasTrack={false}
             options={{
                 type: 'loop',
-                autoWidth: true,
-                autoHeight: true,
                 speed: 700,
                 gap: '0.5rem',
                 cover: true,
                 autoplay: true,
                 waitForTransition: true,
-                resetProgress: false,
                 interval: 2200,
                 drag: false,
-                focus: 0,
                 pauseOnHover: true,
-                pauseOnFocus: false,
                 pagination: false
             }}>
             <SplideTrack className='w-full h-full' >

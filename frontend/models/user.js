@@ -8,8 +8,8 @@ const UserSchema = mongoose.Schema({
         minLength: [4, "Username should have more than 4 characters"],
         unique: [true, "This username is already in use"]
     },
-    phone:{
-        type:String,
+    phone: {
+        type: String,
         required: true
     },
     email: {
@@ -50,7 +50,20 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false,
         required: true
-    }
+    },
+    addresses: [
+        {
+            address_title: { type: String, required: true },
+            firstname: { type: String, required: true },
+            lastname: { type: String, required: true },
+            address: { type: String, required: true },
+            apt_suite: { type: String },
+            city: { type: String, required: true },
+            country: { type: String, required: true },
+            phone_prefix: { type: String, required: true },
+            phone_number: { type: String, required: true },
+        }
+    ]
 
 
 }, { timestamps: true })

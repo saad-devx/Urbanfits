@@ -1,10 +1,17 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 const CryptoJS = require("crypto-js")
+import NextCors from 'nextjs-cors';
 const jwt = require("jsonwebtoken")
 
 const UpdateUser = async (req, res) => {
     try {
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         if (req.method === 'PUT') {
             await ConnectDB()
             if (!req.query.id) return res.status(400).json({ success: false, msg: "User id not provided" })
