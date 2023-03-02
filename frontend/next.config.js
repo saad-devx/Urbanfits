@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ['images.unsplash.com', "pbs.twimg.com"]
   },
   env: {
-    MONGO_URI: "mongodb://localhost:27017/urbanfits",
+    MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     HOST: "http://localhost:3000",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand"
   }

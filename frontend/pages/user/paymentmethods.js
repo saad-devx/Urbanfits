@@ -1,12 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import jwt from 'jsonwebtoken';
 import Navbar from '../../components/navbar';
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
+// image imports
+import Image from 'next/image';
+import female_avatar from '../../public/avatars/female.svg'
+import male_avatar from '../../public/avatars/male.svg'
 
 
 export default function Payments() {
     const [expand, setExpand] = useState(false)
+    // user data state
+    const [user, setUser] = useState({})
+    // getting user payload form jwt token in localstorage
+    const ifExists = (data, return_type) => {
+        if (data) return data
+        if (return_type === false) return false
+        if (return_type !== false) return return_type
+        else return ""
+    }
     const initialPaymentObj = {
         cardnumber: null,
         cardexpirydate: null,
@@ -31,6 +45,13 @@ export default function Payments() {
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
+    useEffect(() => {
+        const userData = jwt.decode(localStorage.getItem("authToken"))._doc
+        if (userData) {
+            setUser(userData)
+            // setValues({ email: ifExists(userData.email) })
+        }
+    }, [])
     return (
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
@@ -39,8 +60,13 @@ export default function Payments() {
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] p-9 pl-7 pb-20 pt-24 lg:pt-9 lg:pb-9 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
                         <div className="w-full lg:w-5/6">
-                            <h2 className="text-3xl mb-4">My Account</h2>
-                            <p className='text-sm' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                            <div className="flex flex-row-reverse md:flex-row items-center gap-3">
+                                <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
+                                <span>
+                                    <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
+                                    <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                                </span>
+                            </div>
                             <form className="mt-10 font_futuraLT space-y-10" >
                                 <h1 className='text-xl' >Add New Payment Method</h1>
                                 <div className=' w-32 flex justify-between' >

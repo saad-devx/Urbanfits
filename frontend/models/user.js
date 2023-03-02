@@ -25,7 +25,33 @@ const UserSchema = mongoose.Schema({
     role: {
         type: String,
         default: "user"
+    },
+    firstname: {
+        type: String
+    },
+    lastname: {
+        type: String
+    },
+    title: {
+        type: String
+    },
+    gender: {
+        type: String
+    },
+    date_of_birth: {
+        type: String
+    },
+    newsletter_sub_email: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    newsletter_sub_phone: {
+        type: Boolean,
+        default: false,
+        required: true
     }
+
 
 }, { timestamps: true })
 

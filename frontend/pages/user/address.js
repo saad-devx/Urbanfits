@@ -1,17 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../../components/navbar';
+import jwt from 'jsonwebtoken';
 import Button from '../../components/simple_btn';
 import AccountMenu from '../../components/accountmenu'
+// image imports
+import Image from 'next/image';
+import female_avatar from '../../public/avatars/female.svg'
+import male_avatar from '../../public/avatars/male.svg'
 
 export default function Address() {
     const [expand, setExpand] = useState(false)
+    // user data state
+    const [user, setUser] = useState({})
+    // getting user payload form jwt token in localstorage
+    const ifExists = (data, return_type) => {
+        if (data) return data
+        if (return_type === false) return false
+        if (return_type !== false) return return_type
+        else return ""
+    }
 
-    const onchange = () => {}
+    const onchange = () => { }
     // determining if the scroll direction is upwards or downwards
     const [direction, setDirection] = useState('')
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
+    useEffect(() => {
+        const userData = jwt.decode(localStorage.getItem("authToken"))._doc
+        if (userData) {
+            setUser(userData)
+            // setValues({
+            //     title: ifExists(userData.title),
+            //     firstname: ifExists(userData.firstname),
+            //     lastname: ifExists(userData.lastname),
+            //     date_of_birth: ifExists(userData.date_of_birth),
+            //     newsletter_sub_email: ifExists(userData.newsletter_sub_email, false),
+            //     newsletter_sub_phone: ifExists(userData.newsletter_sub_phone, false)
+            // })
+        }
+    }, [])
 
     return (
         <>
@@ -21,8 +49,13 @@ export default function Address() {
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] p-9 pl-7 pt-24 lg:pt-9 pb-20 font_futuraLT text-left overflow-y-scroll scroll-py-10' >
                         <div className="w-full lg:w-5/6">
-                            <h2 className="text-3xl mb-4">My Account</h2>
-                            <p className='text-sm font_futuraLTlite font-semibold' >Welcome !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                            <div className="flex flex-row-reverse md:flex-row items-center gap-3">
+                                <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
+                                <span>
+                                    <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
+                                    <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                                </span>
+                            </div>
                             <form className="mt-10 font_futuraLT space-y-10" >
                                 <h1 className='text-xl' >Add New Address</h1>
                                 {/* <div className=" w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -32,7 +65,7 @@ export default function Address() {
                                 <input className="bg-transparent outline-none border-none" type="email" name="email" id="email" onChange={onchange} placeholder="Confirm Email*" />
                             </div>
                             <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                <input className="bg-transparent outline-none border-none" type="password" name="password" id="password" onChange={onchange} placeholder="Password*" /><Link href='/resetpassword' ><i class="material-symbols-outlined">edit_square</i></Link>
+                                <input className="bg-transparent outline-none border-none" type="password" name="password" id="password" onChange={onchange} placeholder="Password*" /><Link href='/resetpassword' ><i className="material-symbols-outlined">edit_square</i></Link>
                                 </div>
                             <div className="flex justify-between w-3/4 ">
                                 <div className=" w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">

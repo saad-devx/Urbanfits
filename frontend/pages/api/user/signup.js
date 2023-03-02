@@ -1,6 +1,7 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
-const CryptoJS = require("crypto-js");
+const CryptoJS = require("crypto-js")
+const jwt = require("jsonwebtoken")
 
 // Only accessable by Admin 
 const Signup = async (req, res) => {
@@ -11,10 +12,11 @@ const Signup = async (req, res) => {
         user = await User.findOne({"username": req.body.username})
         if(user) return res.status(400).json({ success: false, msg: "A user with this Email or Username already exists" })
         user = await User.create({...req.body, password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString()})
+        const payload = jwt.sign({...user}, process.env.SECRET_KEY)
         res.status(200).json({
             success: true,
             msg: "You're Resgistered successfully !",
-            user
+            payload
         })
     }
     else {

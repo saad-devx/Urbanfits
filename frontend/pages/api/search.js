@@ -6,21 +6,21 @@ const UpdateProducts = async (req, res) => {
     try {
         if (req.method === 'GET') {
             await ConnectDB()
+            console.log(req.query.q)
             const searchTerm = req.query.q
-            const searchQuery = {
-                //  $or: [
-                //     { name: { $regex: searchTerm, $options: 'i' } },
-                //     { description: { $regex: searchTerm, $options: 'i' } },
-                //     { category: { $regex: searchTerm, $options: 'i' } }
+            const results = await Product.find({
+                // $or: [
+                //     { category: { $regex: searchTerm, $options: "i" } },
+                //     { name: { $regex: searchTerm, $options: "i" } },
+                //     { subcategories: { $elemMatch: { $regex: searchTerm, $options: "i" } } },
+                //     { description: { $regex: searchTerm, $options: "i" } }
                 // ]
                 $or: [
-                    { name: { $regex: new RegExp('^' + searchTerm, 'i') } },
-                    // { subcategories: { $in: subcategories } },
-                    { description: { $regex: new RegExp('^' + searchTerm, 'i') } },
-                    { category: { $regex: new RegExp('^' + searchTerm, 'i') } },
-                  ]
-            }
-            const results = await Product.find(searchQuery)
+                    { category: { $regex: searchTerm, $options: "i" } },
+                    { name: { $regex: searchTerm, $options: "i" } },
+                    { subcategories: {$in: searchTerm}  }
+                ]
+            })
             res.json(results);
         }
         else {
