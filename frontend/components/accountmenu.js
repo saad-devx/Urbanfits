@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react'
-import { toast, Slide } from 'react-toastify';
-import Link from 'next/link';
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
+import { toast, Slide } from 'react-toastify';
+import Logout from './modals/logout';
+import Link from 'next/link';
 import Button from './simple_btn';
 
 const Option = (props) => {
@@ -49,13 +50,23 @@ export default function AccountMenu(props) {
         })
     }
     // function to lohgout the user
-    const logOut = ()=>{
+    const logOut = () => {
         localStorage.removeItem("authToken")
         router.push('/')
         toaster("success", "You have been logged out successfully!")
     }
+
+    // states and function for modals
+    const [modal5, setModal5] = useState(false)
+    const toggleModal = (e, name) => {
+        if (name||e.target.name === "modal5") {
+            if (modal5 === false) return setModal5(true)
+            if (modal5 === true) return setModal5(false)
+        }
+    }
     return (
         <>
+            <Logout logOut={logOut} modal5={modal5} toggleModal={toggleModal} />
             <div className=" w-1/3 hidden lg:block h-full relative">
                 <div className="flex flex-col absolute top-[7%] right-[17%] items-center w-[60%] h-full list-none font_futuraLT">
                     <Option href='/user/personalinfo'>Personal Information</Option>
@@ -63,7 +74,7 @@ export default function AccountMenu(props) {
                     <Option href='/user/address'>My Address</Option>
                     <Option href='/user/paymentmethods'>My Payment Methods</Option>
                     <Link className={` group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
-                    <Button onclick={logOut} classes="w-full">Logout</Button>
+                    <Button onclick={toggleModal} name="modal5" classes="w-full">Logout</Button>
                 </div>
             </div>
 
@@ -75,7 +86,7 @@ export default function AccountMenu(props) {
                     <Option_sm href='/user/address'>My Address</Option_sm>
                     <Option_sm href='/user/paymentmethods'>My Payment Methods</Option_sm>
                     <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href="/user/orders/orders">My Orders<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === "/user/orders/orders" ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
-                    <button className={`h-full group flex flex-col justify-between items-center transition-all `}> <span className="flex"><span className="material-symbols-rounded">logout</span>Logout</span><span className={`bg-gold-land w-0 h-1 mt-1 rounded-lg group-hover:w-full group-active:w-full group-focus:w-full transition-all duration-300`}></span></button>
+                    <button onClick={(e)=>{toggleModal(e, "modal5")}} name="modal5" className={`h-full group flex flex-col justify-between items-center transition-all `}> <span className="flex"><span className="material-symbols-rounded">logout</span>Logout</span><span className={`bg-gold-land w-0 h-1 mt-1 rounded-lg group-hover:w-full group-active:w-full group-focus:w-full transition-all duration-300`}></span></button>
                 </div>
             </div>
         </>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import jwt from 'jsonwebtoken';
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -78,10 +79,17 @@ export default function Signing(props) {
                 body: user
             })
             let res = await response.json()
+            let token = jwt.decode(res.payload)
             localStorage.setItem("authToken", res.payload)
-            setLoader(null)
+            let address = await fetch(`${process.env.HOST}/api/user/addresses/create?user_id=${token._doc._id}`, {
+                method: getMethod(),
+                headers: { "Content-Type": "application/json" }
+            })
+            let parsedAddress = await address.json()
+            localStorage.setItem("addressToken", parsedAddress.payload)
             if (!res.success) return toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
+            setLoader(null)
             router.push('/user/personalinfo')
             handleReset()
         }

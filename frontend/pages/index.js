@@ -41,9 +41,10 @@ export default function Home() {
             console.log(position);
             if (position >> 0) {
                 carousel.classList.add(
-                    "w-4/5",
+                    "lg:w-4/5",
+                    "w-11/12",
                     "h-80vh",
-                    "rounded-[2rem]",
+                    "rounded-2rem",
                     "mt-7",
                     "mx-auto",
                     "lg:m-10"
@@ -85,7 +86,7 @@ export default function Home() {
                             <Carousel />
                         </div>
                         {/* Auto scroll Carousel  */}
-                        <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT">
+                        <section className="relative w-full h-80vh lg:h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT">
                             <div className="w-full md:w-35pr md:h-full p-5 flex flex-col justify-center items-start">
                                 <h2 className="text-2xl md:text-5xl word-wrap leading-tight">
                                     Newest Gear to Work
@@ -106,14 +107,14 @@ export default function Home() {
                         </section>
                         {/* Shopping Card Section */}
                         <section className="w-full font_futuraLT snap-center">
-                            <h3 className="text-4xl ml-10">Urban Unicorn Sneakers</h3>
+                            <h3 className="text-4xl mx-3 md:ml-10">Urban Unicorn Sneakers</h3>
                             <div className="w-full h-screen p-3 md:p-10 flex flex-col md:flex-row justify-between space-y-7 lg:space-y-0">
                                 <PicCard img={image4} />
                                 <PicCard img={image3} />
                             </div>
                         </section>
                         {/* Auto scroll Carousel  */}
-                        <section className="relative w-full h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT snap-center">
+                        <section className="relative w-full h-80vh lg:h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT snap-center">
                             <div className="w-full md:w-35pr md:h-full p-5 flex flex-col justify-center items-start">
                                 <h2 className="text-2xl md:text-5xl word-wrap leading-tight self-start">
                                     Newest Gear to Work

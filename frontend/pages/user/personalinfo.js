@@ -105,7 +105,7 @@ export default function Personalinfo() {
                             <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
                             <span>
                                 <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
-                                <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                                <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your personal details here in this area to tell us about you for more assistence.</p>
                             </span>
                         </div>
                         <form className="mt-10 font_futuraLT space-y-5" onReset={handleReset} onSubmit={handleSubmit} >

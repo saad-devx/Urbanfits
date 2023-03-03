@@ -15,6 +15,9 @@ module.exports = {
         '20pr': '20%',
         '60vw': '60vw',
       },
+      borderRadius: {
+        '2rem': '2rem',
+      },
       height: {
         '35pr': '35%',
         '60vh': '60vh',
