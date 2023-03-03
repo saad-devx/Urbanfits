@@ -5,13 +5,13 @@ import NextCors from 'nextjs-cors';
 const jwt = require("jsonwebtoken")
 
 const Login = async (req, res) => {
+    await NextCors(req, res, {
+        // Options
+        methods: ['POST'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    })
     try {
-        await NextCors(req, res, {
-            // Options
-            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-            origin: '*',
-            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        });
         if (req.method === 'POST') {
             await ConnectDB()
             let user = await User.findOne({ email: req.body.email })
