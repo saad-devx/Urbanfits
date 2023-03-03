@@ -6,9 +6,10 @@ import '@splidejs/react-splide/css';
 
 import Image from 'next/image';
 import image1 from '../../public/carousel imgs/carousel img1.jpg'
-import image2 from '../../public/carousel imgs/carousel img2.jpg'
-import image3 from '../../public/carousel imgs/carousel img3.png'
-import image4 from '../../public/carousel imgs/carousel img4.jpg'
+import image2 from '../../public/carousel imgs/carousel img5.jpg'
+import image3 from '../../public/carousel imgs/carousel img6.jpg'
+import image4 from '../../public/carousel imgs/carousel img3.png'
+import image5 from '../../public/carousel imgs/carousel img4.jpg'
 
 export default function Carousel() {
     const [play, setPlay] = useState(true)
@@ -32,7 +33,7 @@ export default function Carousel() {
                 pagination: false
             }}>
             <SplideTrack className='w-full h-full' >
-                {[image1, image2, image3, image4].map((img, index) => {
+                {[image1, image2, image3, image4, image5].map((img, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
                         <div className="absolute w-2/6 bottom-[7%] left-[4%] flex flex-col items-start text-white text-5xl">
                             <h1 className="text-white text-4xl md:font-bold">Denim</h1>
