@@ -33,7 +33,7 @@ export default function Footer() {
                     <p className=" text-xs text-gray-700">Got a question ? Look no further. Browser our FAQs or submit your query here.</p>
                 </span>
                 <span className='w-1/2 text-black md:w-1/5 mx-auto mb-7 flex flex-col justify-center items-center text-center' >
-                    <Image className='mb-3' src={truck} />
+                    <Image className='mb-3' src={truck} alt="delivery vehicle" />
                     <h5 className=" text-base md:text-lg font_futuraLT">Express Shipping</h5>
                     <p className=" text-xs text-gray-700">Moving your card details to a much more secured place</p>
                 </span>

@@ -65,7 +65,26 @@ export default function Signing(props) {
         if (path === "/forgotpassword") return "POST"
         if (path === "/resetpassword") return "PUT"
     }
-
+    // function to get address data from server and it'll run only when user signs up
+    const initiateAddress = async (user_id) => {
+        if (router.pathname === "/signup") {
+            console.log("signup function is running", user_id)
+            let address = await fetch(`${process.env.HOST}/api/user/addresses/create?user_id=${user_id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            })
+            let parsedAddress = await address.json()
+            localStorage.setItem("addressToken", parsedAddress.payload)
+        }
+        else if (router.pathname === "/login") {
+            console.log("Login function is running", user_id)
+            let address = await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user_id}`)
+            let parsedAddress = await address.json()
+            localStorage.setItem("addressToken", parsedAddress.payload)
+        }
+        else return
+    }
+    //onSubmit function and destructuring Formik functions
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: initialValueChanger(),
         validationSchema: validationObjectChanger(),
@@ -79,16 +98,13 @@ export default function Signing(props) {
                 body: user
             })
             let res = await response.json()
-            let token = jwt.decode(res.payload)
-            localStorage.setItem("authToken", res.payload)
-            let address = await fetch(`${process.env.HOST}/api/user/addresses/create?user_id=${token._doc._id}`, {
-                method: getMethod(),
-                headers: { "Content-Type": "application/json" }
-            })
-            let parsedAddress = await address.json()
-            localStorage.setItem("addressToken", parsedAddress.payload)
-            if (!res.success) return toaster("error", res.msg)
-            if (res.success) toaster("success", res.msg)
+            if(res.payload) {
+                let token = jwt.decode(res.payload)
+                localStorage.setItem("authToken", res.payload)
+                await initiateAddress(token._doc._id)
+                if (!res.success) return toaster("error", res.msg)
+                if (res.success) toaster("success", res.msg)
+            }
             setLoader(null)
             router.push('/user/personalinfo')
             handleReset()
@@ -131,7 +147,7 @@ export default function Signing(props) {
                             </div>
                             <div className={` ${page === "login" && props.type === "resetpass" ? "hidden" : ''} relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email or Username" />
+                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email" />
                             </div>
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.phone && errors.phone ? <Tooltip classes="form-error" content={errors.phone} /> : null}

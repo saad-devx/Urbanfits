@@ -55,9 +55,11 @@ export default function EmailPassword() {
                 body: JSON.stringify({ email: values.confirm_email })
             })
             let res = await response.json()
-            localStorage.setItem("authToken", res.payload)
-            if (!res.success) return toaster("error", res.msg)
+            if (!res.success) toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
+            if(!res.payload) return setLoader(null)
+            localStorage.setItem("authToken", res.payload)
+            handleReset()
             setLoader(null)
             setValues({ confirm_email: '', password: '' })
         }
@@ -75,10 +77,11 @@ export default function EmailPassword() {
         else return ""
     }
     useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))._doc
+        const userData = jwt.decode(localStorage.getItem("authToken"))
         if (userData) {
-            setUser(userData)
-            setValues({ email: ifExists(userData.email) })
+            let user = userData._doc
+            setUser(user)
+            setValues({ email: ifExists(user.email) })
         }
     }, [])
     return (

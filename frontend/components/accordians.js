@@ -49,7 +49,7 @@ export default function Accordians() {
                     </div>
                     <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
                         {/* <i className="material-symbols-outlined mr-6">local_shipping</i> */}
-                        <Image className='mr-6' src={truck} />
+                        <Image className='mr-6' src={truck} alt="delivery vehicle" />
                         <span>
                             <h5 className='mb-2'>Return</h5>
                             <p className=' font_futuraLTlite '>We make return easy for you. For more information see our return policy.<br />-Potential delays to be communicated due to customs-approved treatment.</p>

@@ -29,13 +29,14 @@ export default function Carousel() {
                 waitForTransition: true,
                 interval: 2200,
                 drag: false,
-                pauseOnHover: true,
+                pauseOnHover: false,
+                pauseOnFocus: false,
                 pagination: false
             }}>
             <SplideTrack className='w-full h-full' >
                 {[image1, image2, image3, image4, image5].map((img, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
-                        <div className="absolute w-2/6 bottom-[7%] left-[4%] flex flex-col items-start text-white text-5xl">
+                        <div className="absolute w-2/6 bottom-[8%] left-[4%] flex flex-col items-start text-white text-5xl">
                             <h1 className="text-white text-4xl md:font-bold">Denim</h1>
                             <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
                             <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
@@ -52,8 +53,7 @@ export default function Carousel() {
             </div>
 
             {/* Buttons for next, prev slide and to pause the carousel */}
-            <div className="splide__arrows absolute flex space-x-5 bottom-12 right-10">
-
+            <div className="splide__arrows absolute flex space-x-5 bottom-[8%] right-10">
                 <button className="splide__arrow--prev hover:bg-gray-500 flex justify-center items-center w-8 h-8 rounded-full bg-white rotate-180 transition-all duration-500" >
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.4689 22.4366C15.9575 22.1485 16.1328 21.6349 15.8823 21.2215C15.8197 21.115 14.8551 20.1066 13.7464 18.9854L11.7295 16.9372L17.2979 16.9247C23.3798 16.9059 23.0729 16.9247 23.3548 16.5426C23.455 16.411 23.4863 16.2732 23.4863 15.9976C23.4863 15.722 23.455 15.5842 23.3548 15.4527C23.0729 15.0706 23.3798 15.0894 17.2979 15.0706L11.7295 15.0581L13.7464 13.0099C14.8551 11.8887 15.8197 10.8803 15.8823 10.7738C16.1141 10.3917 15.995 9.94699 15.5816 9.62755C15.2747 9.38953 14.924 9.38953 14.5857 9.62128C14.4542 9.71524 13.0574 11.0807 11.479 12.6591C9.14265 15.008 8.61024 15.5717 8.56014 15.7659C8.42234 16.2732 8.39102 16.2357 11.479 19.3361C13.0574 20.9146 14.4417 22.2738 14.5669 22.3615C14.8926 22.587 15.1682 22.612 15.4689 22.4366Z" fill="black" />

@@ -1,13 +1,14 @@
 import React from 'react'
 import styles from '@/styles/Loader.module.css'
 import Image from 'next/image'
-import Urban_logo from "@/public/logos/logo_white.svg"
+import Urban_logo from "@/public/logos/logo_gold.svg"
 
 export default function Loader() {
     return (
         <section className='fixed top-0 z-[999] w-screen h-full flex justify-center items-center bg-black/60'>
-            <div className={styles.loader}>
-                <Image unoptimized={true} className='absolute z-50 w-1/2 top-1/2 left-1/2 -translate-x-1/2' src={Urban_logo} alt="Urban logo" ></Image>
+            <div className='flex justify-center items-center'>
+                <Image unoptimized={true} className='fixed w-10 z-50 translate-x-[2px] translate-y-1' src={Urban_logo} alt="Urban logo" ></Image>
+                <div className={styles.loader}></div>
             </div>
         </section>
     )

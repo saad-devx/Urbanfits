@@ -56,11 +56,13 @@ export default function Personalinfo() {
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
+            console.log("i am running")
             let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values)
             })
+            console.log("i am running")
             let res = await response.json()
             localStorage.setItem("authToken", res.payload)
             toaster(res.success === true ? "success" : "error", res.msg)
@@ -80,16 +82,17 @@ export default function Personalinfo() {
         else return ""
     }
     useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))._doc
+        const userData = jwt.decode(localStorage.getItem("authToken"))
         if (userData) {
-            setUser(userData)
+            let user = userData._doc
+            setUser(user)
             setValues({
-                title: ifExists(userData.title),
-                firstname: ifExists(userData.firstname),
-                lastname: ifExists(userData.lastname),
-                date_of_birth: ifExists(userData.date_of_birth),
-                newsletter_sub_email: ifExists(userData.newsletter_sub_email, false),
-                newsletter_sub_phone: ifExists(userData.newsletter_sub_phone, false)
+                title: ifExists(user.title),
+                firstname: ifExists(user.firstname),
+                lastname: ifExists(user.lastname),
+                date_of_birth: ifExists(user.date_of_birth),
+                newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
+                newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
             })
         }
     }, [])
