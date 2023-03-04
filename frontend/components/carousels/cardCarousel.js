@@ -13,7 +13,7 @@ import image3 from '../../public/card imgs/card img3.jpg'
 export default function CardCarousel() {
     const [isMobile, setIsMobile] = useState(1)
     useEffect(() => {
-        const media = window.matchMedia('(max-width: 767px)')
+        const media = window.matchMedia('(max-width: 967px)')
         media.matches ? setIsMobile(1) : setIsMobile(2)
     }, [])
 

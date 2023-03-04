@@ -6,12 +6,12 @@ const jwt = require("jsonwebtoken")
 
 const UpdateUser = async (req, res) => {
     try {
-        await NextCors(req, res, {
-            // Options
-            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-            origin: '*',
-            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        });
+        // await NextCors(req, res, {
+        //     // Options
+        //     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        //     origin: '*',
+        //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        // });
         if (req.method === 'PUT') {
             await ConnectDB()
             if (!req.query.id) return res.status(400).json({ success: false, msg: "User id not provided" })
@@ -39,6 +39,7 @@ const UpdateUser = async (req, res) => {
         }
     }
     catch (err) {
+        console.log(err)
         res.status(500).send("Internal Server Error occurred. Please retry")
     }
 }

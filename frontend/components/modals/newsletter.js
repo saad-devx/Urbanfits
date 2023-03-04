@@ -83,13 +83,13 @@ export default function Newsletter(props) {
                                 { errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                 <div className="font_futuraLTlite w-full md:w-3/5 flex justify-between items-center ">
                                     <div className='mr-2' >
-                                        <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='male'>Male</label>
+                                        <input key={1} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='male'>Male</label>
                                     </div>
                                     <div className='mr-2' >
-                                        <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="female" name="gender" value="female" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='female'>Female</label>
+                                        <input key={2} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="female" name="gender" value="female" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='female'>Female</label>
                                     </div>
                                     <div className='mr-2' >
-                                        <input className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="fluid" name="gender" value="fluid" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='fluid'>Fluid</label>
+                                        <input key={3} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="fluid" name="gender" value="fluid" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='fluid'>Fluid</label>
                                     </div>
                                 </div>
                             </div>
@@ -97,11 +97,11 @@ export default function Newsletter(props) {
                                 <h3 className="text-black text-base">Favourite Subjects*</h3>
                                 <div className="pill-container w-full flex flex-wrap text-xs md:text-sm space-y-2 md:space-y-0 space-x-1">
                                     {touched.interests && errors.interests ? <Tooltip classes="form-error" content={errors.interests} /> : null}
-                                    {['Bags', 'Sneakers', 'Jackets', 'Dresses', 'Fashion Shows'].map((name) => {
+                                    {['Bags', 'Sneakers', 'Jackets', 'Dresses', 'Fashion Shows'].map((name, index) => {
                                         return (
                                             <>
-                                                <input onChange={onCheck} checked={values.interests.includes(name.toLowerCase())} type="checkbox" id={name.toLowerCase()} onBlur={handleBlur} name="interests" value={name.toLowerCase()} />
-                                                <label className="selector border border-gray-400 rounded-full mb-3 px-4 py-2" htmlFor={name.toLowerCase()}>{name}</label>
+                                                <input key={name} onChange={onCheck} checked={values.interests.includes(name.toLowerCase())} type="checkbox" id={name.toLowerCase()} onBlur={handleBlur} name="interests" value={name.toLowerCase()} />
+                                                <label key={index} className="selector border border-gray-400 rounded-full mb-3 px-4 py-2" htmlFor={name.toLowerCase()}>{name}</label>
                                             </>
                                         )
                                     })}
