@@ -10,10 +10,13 @@ module.exports = {
       width: {
         '35pr': '35%',
         '70pr': '70%',
-        '49pr': '49%',
+        '48pr': '48%',
         '30pr': '30%',
         '20pr': '20%',
         '60vw': '60vw',
+      },
+      borderRadius: {
+        '2rem': '2rem',
       },
       height: {
         '35pr': '35%',

@@ -8,8 +8,8 @@ const UserSchema = mongoose.Schema({
         minLength: [4, "Username should have more than 4 characters"],
         unique: [true, "This username is already in use"]
     },
-    phone:{
-        type:String,
+    phone: {
+        type: String,
         required: true
     },
     email: {
@@ -51,8 +51,6 @@ const UserSchema = mongoose.Schema({
         default: false,
         required: true
     }
-
-
 }, { timestamps: true })
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema)

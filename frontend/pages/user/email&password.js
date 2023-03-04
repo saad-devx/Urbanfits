@@ -94,7 +94,7 @@ export default function EmailPassword() {
                                 <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
                                 <span>
                                     <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
-                                    <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your card details and address in this area to complete your future  purchases faster.</p>
+                                    <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save or change your email address and password in this area to to tell us about you for further assistence.</p>
                                 </span>
                             </div>
                             <form className="w-full mt-10 font_futuraLT space-y-10 overflow-x-hidden" onReset={handleReset} onSubmit={handleSubmit} >

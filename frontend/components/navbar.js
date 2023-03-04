@@ -74,7 +74,7 @@ export default function Navbar(props) {
         if (search === false) return setSearch(true)
         if (search === true) return setSearch(false)
     }
-    // state for search componenet
+    // state for cart componenet
     const [cart, setCart] = useState(false)
     const toggleCart = () => {
         if (cart === false) return setCart(true)

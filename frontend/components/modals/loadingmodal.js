@@ -19,7 +19,7 @@ export default function LoadingModal(props) {
             <LanguageModal show={modal3} toggleModal={toggleModal} />
             <div className={`w-full h-full font_futuraLT fixed inset-0 z-30 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
                 <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/5 lg:w-[33rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
-                    <button onClick={props.toggleModal} name="modal1" className="fa-solid fa-xmark text-2xl md:text-3xl text-gray-700 absolute right-8 top-5 cursor-pointer hover:rotate-180 transition-all duration-700"></button>
+                    <button onClick={props.toggleModal} name="modal1" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
                     <section className="w-full h-full p-7">
                         <div className="w-full space-y-5">
                             <h2 className="text-xl md:text-2xl">Change Country</h2>

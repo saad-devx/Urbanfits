@@ -15,11 +15,14 @@ export default function CardCarousel() {
     useEffect(() => {
         const media = window.matchMedia('(max-width: 767px)')
         media.matches ? setIsMobile(1) : setIsMobile(2)
-    })
+    }, [])
 
     return (
-        <Splide className='w-full h-11/12 cursor-grab' hasTrack={false}
+        <Splide className="w-full h-11/12 cursor-grab" hasTrack={false}
             options={{
+                autoplay: true,
+                speed: 400,
+                interval: 1700,
                 type: 'loop',
                 drag: true,
                 perMove: 1,
@@ -29,19 +32,15 @@ export default function CardCarousel() {
                 pauseOnHover: true,
                 pagination: false,
                 focus: 'center',
-                autoplay: true,
-                type: 'loop',
-                speed: 400,
-                interval: 1700,
                 // autoScroll: {
                 //     pauseOnHover: true,
                 //     pauseOnFocus: false,
                 //     speed: 1,
                 // },
+                // autoScroll: false
             }}
-            // extensions={{ AutoScroll }}
-            >
-
+        // extensions={{ AutoScroll }}
+        >
             <SplideTrack className='w-full h-full' >
                 {[image1, image2, image3].map((img, index) => {
                     return <SplideSlide key={index} className={` relative  md:p-5`}>
