@@ -2,8 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user/email&password": "pages/user/email&password.js",
-  "/user/address": "pages/user/address.js",
+  "/login": "pages/login.js",
+  "/api/user/login": "pages/api/user/login.js",
   "/api/user/addresses/get": "pages/api/user/addresses/get.js",
-  "/api/user/addresses/update": "pages/api/user/addresses/update.js"
+  "/": "pages/index.js"
 }

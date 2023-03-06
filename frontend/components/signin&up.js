@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { toast, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toaster from './toast_function';
 import jwt from 'jsonwebtoken';
 import Head from 'next/head'
 import Link from 'next/link'
@@ -25,20 +24,6 @@ export default function Signing(props) {
     const router = useRouter()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
     //                                     Submit form functionality
 
     const initialValueChanger = () => { // Initial Values Object would change on the basis of route name
@@ -66,9 +51,9 @@ export default function Signing(props) {
         if (path === "/resetpassword") return "PUT"
     }
     // function to get address data from server and it'll run only when user signs up
-    const initiateAddress = async (user_id) => {
+    const initiateAddress = async (payload) => {
+        let user_id = jwt.decode(payload)._doc._id
         if (router.pathname === "/signup") {
-            console.log("signup function is running", user_id)
             let address = await fetch(`${process.env.HOST}/api/user/addresses/create?user_id=${user_id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" }
@@ -77,7 +62,6 @@ export default function Signing(props) {
             localStorage.setItem("addressToken", parsedAddress.payload)
         }
         else if (router.pathname === "/login") {
-            console.log("Login function is running", user_id)
             let address = await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user_id}`)
             let parsedAddress = await address.json()
             localStorage.setItem("addressToken", parsedAddress.payload)
@@ -90,20 +74,21 @@ export default function Signing(props) {
         validationSchema: validationObjectChanger(),
         onSubmit: async (values) => {
             setLoader(<Loader />)
-            let user = JSON.stringify(values)
             let path = router.pathname
             let response = await fetch(`${process.env.HOST}/api/user${path}`, {
                 method: getMethod(),
                 headers: { "Content-Type": "application/json" },
-                body: user
+                body: JSON.stringify(values)
             })
             let res = await response.json()
-            if(res.payload) {
-                let token = jwt.decode(res.payload)
+            if(res.success && res.payload) {
                 localStorage.setItem("authToken", res.payload)
-                await initiateAddress(token._doc._id)
-                if (!res.success) return toaster("error", res.msg)
-                if (res.success) toaster("success", res.msg)
+                await initiateAddress(res.payload)
+                toaster("success", res.msg)
+            }
+            else {
+                toaster("error", res.msg)
+                return setLoader(null)
             }
             setLoader(null)
             router.push('/user/personalinfo')

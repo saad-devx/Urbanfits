@@ -51,9 +51,12 @@ const AddressForm = (props) => {
         let userAddress = jwt.decode(localStorage.getItem("addressToken"))
         if (userAddress) {
             let addressObj = userAddress._doc
+            if(addressObj.addresses.length === 0) return
             let address = addressObj.addresses.filter((address) => {
                 return address.tag === tag
             })
+            console.log(address)
+            if(address.length === 0) return console.log(`${tag} address not found`)
             setValues(address[0])
         }
         else return router.push('/access denied')
