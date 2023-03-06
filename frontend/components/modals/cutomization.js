@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Button from '../simple_btn'
+import Button from '../buttons/simple_btn'
 import Cart from '../cart'
 
 import Image from 'next/image'

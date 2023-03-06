@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../simple_btn';
+import Button from '../buttons/simple_btn';
 
 export default function Logout(props) {
     return (

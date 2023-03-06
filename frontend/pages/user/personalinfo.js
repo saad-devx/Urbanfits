@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
-import { toast, Slide } from 'react-toastify';
+import toaster from '@/components/toast_function';
 import Navbar from '../../components/navbar'
 import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
-import Button from '../../components/simple_btn';
+import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 // image imports
 import Image from 'next/image';
@@ -23,23 +24,10 @@ const InfoCard = (props) => {
 }
 
 export default function Personalinfo() {
+    const router = useRouter()
     const [expand, setExpand] = useState(false)
-      //state to handle loader component
-      const [loader, setLoader] = useState(false)
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
+    //state to handle loader component
+    const [loader, setLoader] = useState(false)
     // user data state
     const [user, setUser] = useState({})
     // getting data from input fields and applying validation
@@ -95,6 +83,7 @@ export default function Personalinfo() {
                 newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
             })
         }
+        else return router.push('/access denied')
     }, [])
     return (
         <>
@@ -105,7 +94,7 @@ export default function Personalinfo() {
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                            <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
+                            <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} alt="avatar" />
                             <span>
                                 <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
                                 <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your personal details here in this area to tell us about you for more assistence.</p>

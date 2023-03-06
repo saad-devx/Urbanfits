@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
-import { toast, Slide } from 'react-toastify';
+import toaster from '@/components/toast_function';
 import Loader from '@/components/loader';
 import Navbar from '../../components/navbar';
-import Button from '../../components/simple_btn';
+import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 // image imports
 import Image from 'next/image';
@@ -17,27 +18,13 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 export default function EmailPassword() {
+    const router = useRouter()
     // state to handle navbar expansion and contraction
     const [expand, setExpand] = useState(false)
     //state to handle loader component
     const [loader, setLoader] = useState(false)
     // user data state
     const [user, setUser] = useState({})
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
-
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         email: Yup.string().email().required("Please enter your email address"),
@@ -83,6 +70,7 @@ export default function EmailPassword() {
             setUser(user)
             setValues({ email: ifExists(user.email) })
         }
+        else return router.push('/access denied')
     }, [])
     return (
         <>
@@ -94,7 +82,7 @@ export default function EmailPassword() {
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 pt-24 lg:pt-9 pl-7 overflow-y-scroll' >
                         <div className="w-full lg:w-5/6">
                             <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                                <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
+                                <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} alt="avatar" />
                                 <span>
                                     <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
                                     <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save or change your email address and password in this area to to tell us about you for further assistence.</p>

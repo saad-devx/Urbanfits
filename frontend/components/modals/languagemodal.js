@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from '../simple_btn'
+import Button from '../buttons/simple_btn'
 
 // imports for the schema and validation
 import { useFormik } from 'formik';

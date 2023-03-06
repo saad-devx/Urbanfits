@@ -16,7 +16,6 @@ const GetAddress = async (req, res) => {
             const payload = jwt.sign({...addresses}, process.env.SECRET_KEY)
             res.status(200).json({
                 success: true,
-                msg: "User Address schema has been created successfully",
                 payload
             })
         }

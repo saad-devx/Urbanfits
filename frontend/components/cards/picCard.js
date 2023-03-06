@@ -1,5 +1,5 @@
 import React from 'react'
-import LinkBtn from '../link_btn'
+import LinkBtn from '../buttons/link_btn'
 import Image from 'next/image'
 
 export default function PicCard(props) {

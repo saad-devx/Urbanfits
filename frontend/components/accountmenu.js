@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { toast, Slide } from 'react-toastify';
 import Logout from './modals/logout';
 import Link from 'next/link';
-import Button from './simple_btn';
+import Button from './buttons/simple_btn';
 
 const Option = (props) => {
     const router = useRouter()

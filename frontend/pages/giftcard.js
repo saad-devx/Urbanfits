@@ -10,7 +10,7 @@ function Giftcard() {
     const [expand, setExpand] = useState(false)
     return (
         <>
-            <main className="w-full h-full bg-gray-100 transition duration-700">
+            <main className="w-full h-full bg-gray-100">
                 <Navbar setExpand={setExpand} />
                 <section className={`${expand === true ? 'w-3/4' : 'w-full lg:w-[95%]'} absolute right-0 top-0 pt-7 flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
                     <div className={` ${expand === true ? 'rounded-3xl' : 'rounded-sm'} overflow-hidden w-[95%] lg:w-11/12 h-[40vh] lg:h-auto relative mx-5 lg:mx-auto bg_giftbanner bg-no-repeat bg-cover bg-right transition-all duration-700`}>

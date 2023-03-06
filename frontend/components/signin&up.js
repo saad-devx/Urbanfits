@@ -7,8 +7,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import Loader from './loader';
-import Button from './simple_btn'
-import LinkBtn from './link_btn'
+import Button from './buttons/simple_btn'
+import LinkBtn from './buttons/link_btn'
 // imports for images
 import Urbanfit_logo from '../public/logos/logo_gold_outlined.svg'
 import google_logo from '../public/logos/google-logo.svg'

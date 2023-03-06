@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import LinkBtn from '../link_btn';
+import LinkBtn from '../buttons/link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 // import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 // Default theme

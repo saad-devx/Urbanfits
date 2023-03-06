@@ -5,8 +5,8 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Accordians from '@/components/accordians';
 import SuggestionCard from '@/components/cards/suggestionPicCard';
-import LinkBtn from '@/components/link_btn';
-import Button from '@/components/simple_btn';
+import LinkBtn from '@/components/buttons/link_btn';
+import Button from '@/components/buttons/simple_btn';
 import Link from 'next/link';
 import ProductCarousel from '@/components/carousels/productCarousel';
 import Cutomization from '@/components/modals/cutomization';

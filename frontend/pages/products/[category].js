@@ -3,10 +3,10 @@ import { useCart } from "react-use-cart";
 import dynamic from "next/dynamic";
 import SuggestionCard from '@/components/cards/suggestionPicCard';
 import Navbar from '../../components/navbar';
-import Button from '../../components/simple_btn';
+import Button from '../../components/buttons/simple_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 import Footer from '../../components/footer'
-import LinkBtn from '@/components/link_btn';
+import LinkBtn from '@/components/buttons/link_btn';
 
 // imports for images
 import image1 from '../../public/card imgs/card img4.png'
