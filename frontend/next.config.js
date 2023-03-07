@@ -7,8 +7,12 @@ const nextConfig = {
   env: {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     // HOST: "http://localhost:3000",
-    HOST: "https://urbanfits-dark-reaper6.vercel.app",
-    SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand"
+    HOST: "https://urbanfits.vercel.app",
+    SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand",
+    GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "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"
+    // GOOGLE_CLIENT_ID: "567262921949-bnrbq0imsh84oe2rt455529e809e5o83.apps.googleusercontent.com", // my testing credentials
+    // GOOGLE_CLIENT_SECRET: "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"
   },
   async headers() {
     return [
@@ -25,5 +29,4 @@ const nextConfig = {
     ]
   }
 }
-
 module.exports = nextConfig

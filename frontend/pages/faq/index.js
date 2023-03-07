@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from '../../components/navbar';
-import LinkBtn from '@/components/link_btn';
+import LinkBtn from '@/components/buttons/link_btn';
 import Footer from '../../components/footer'
 
 export const Accordian = (props) => {

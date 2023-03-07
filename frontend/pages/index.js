@@ -73,12 +73,12 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className="w-full h-full section_container">
-                <Navbar logoNull setExpand={setExpand} />
+                <Navbar logoNull transition="duration-1000 ease-linear" setExpand={setExpand} />
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
-                <section className={`${expand === true ? "w-full lg:w-4/5" : "w-full"} bg-gray-100 float-right flex justify-center lg:justify-end transition-all duration-700`} >
+                <section className={`${expand === true ? "w-full lg:w-4/5" : "w-full"} bg-gray-100 float-right flex justify-center lg:justify-end transition-all ease-linear duration-700`} >
                     <Image alt="Urban images" src={Logo} className="fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20" />
-                    <div id="content_wrapper" className="w-full flex flex-col justify-center items-center space-y-5 transition-all duration-1000" >
+                    <div id="content_wrapper" className="w-full flex flex-col justify-center items-center space-y-5 transition-all ease-linear duration-1000" >
                         <div id="carousel" className="w-full h-screen font_futuraLT transition-all duration-1000 ease-linear overflow-hidden" >
                             <Carousel />
                         </div>

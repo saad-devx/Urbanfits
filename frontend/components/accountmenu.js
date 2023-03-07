@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from 'next/router';
-import { toast, Slide } from 'react-toastify';
+import toaster from '../utils/toast_function';
 import Logout from './modals/logout';
 import Link from 'next/link';
-import Button from './simple_btn';
+import Button from './buttons/simple_btn';
 
 const Option = (props) => {
     const router = useRouter()
@@ -34,24 +35,9 @@ export default function AccountMenu(props) {
         if (route === "/user/paymentmethods") return menuRef.current.scroll((screen / 0.8), 0)
         if (route === "/user/orders/orders") return menuRef.current.scroll((screen * 1.5), 0)
     })
-    // function to show toast
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
     // function to lohgout the user
     const logOut = () => {
-        localStorage.removeItem("authToken")
+        localStorage.clear()
         router.push('/')
         toaster("success", "You have been logged out successfully!")
     }

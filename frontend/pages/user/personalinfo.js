@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
-import { toast, Slide } from 'react-toastify';
+import toaster from '@/utils/toast_function';
 import Navbar from '../../components/navbar'
 import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
-import Button from '../../components/simple_btn';
+import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 // image imports
 import Image from 'next/image';
@@ -22,24 +23,31 @@ const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" round="rounded-2xl" classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
 }
 
+// Function to show addresses of the user in a container
+const AddressContainer = (tag) => {
+    let userAddress = jwt.decode(localStorage.getItem("addressToken"))
+    if (userAddress._doc.addresses.length=== 0) return <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
+    return <div>{userAddress._doc.addresses.address}</div>
+    // if (userAddress) {
+    //     let addressObj = userAddress._doc
+    //     console.log(addressObj)
+    //     if (addressObj.addresses.length === 0) return <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
+    //     let address = addressObj.addresses.filter((address) => {
+    //         return address.tag === tag
+    //     })
+    //     console.log(address)
+    //     if (address.length === 0) return console.log(`${tag} address not found`)
+    //     return <div className="w-full p-4">
+    //         {address[0]}
+    //     </div>
+    // }
+}
+
 export default function Personalinfo() {
+    const router = useRouter()
     const [expand, setExpand] = useState(false)
-      //state to handle loader component
-      const [loader, setLoader] = useState(false)
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
+    //state to handle loader component
+    const [loader, setLoader] = useState(false)
     // user data state
     const [user, setUser] = useState({})
     // getting data from input fields and applying validation
@@ -95,6 +103,7 @@ export default function Personalinfo() {
                 newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
             })
         }
+        else return router.push('/access denied')
     }, [])
     return (
         <>
@@ -105,7 +114,7 @@ export default function Personalinfo() {
                     <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                            <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} />
+                            <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} alt="avatar" />
                             <span>
                                 <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
                                 <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your personal details here in this area to tell us about you for more assistence.</p>
@@ -168,11 +177,13 @@ export default function Personalinfo() {
                             <div className='my-14 space-y-5' >
                                 <h2 className="text-xl mb-8">My Addresses</h2>
                                 <div>
-                                    <h5 className='text-lg my-2' >Shipping (0)</h5>
+                                    <h5 className='text-lg my-2' >Shipping</h5>
+                                    {/* <AddressContainer tag="shipping" /> */}
                                     <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
                                 </div>
                                 <div>
-                                    <h5 className='text-lg my-2' >Billing (0)</h5>
+                                    <h5 className='text-lg my-2' >Billing</h5>
+                                    {/* <AddressContainer tag="billing" /> */}
                                     <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
                                 </div>
                             </div>

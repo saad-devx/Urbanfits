@@ -7,12 +7,12 @@ const jwt = require("jsonwebtoken")
 // Only accessable by Admin 
 const Signup = async (req, res) => {
     try {
-        // await NextCors(req, res, {
-        //     // Options
-        //     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-        //     origin: '*',
-        //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        // });
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
         if (req.method === 'POST') {
             await ConnectDB()
             let user = await User.findOne({ "email": req.body.email })

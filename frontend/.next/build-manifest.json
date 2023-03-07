@@ -29,16 +29,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/user/address.js"
-    ],
-    "/user/email&password": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/email&password.js"
-    ],
-    "/user/personalinfo": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/personalinfo.js"
     ]
   },
   "ampFirstPages": []

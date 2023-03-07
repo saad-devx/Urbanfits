@@ -27,7 +27,7 @@ export default function Shoppingcard(props) {
                     <button onClick={()=>{props.addItem(); showToast()}} className="w-9 h-9 absolute top-2 md:top-4 right-2 md:right-4 transition-all duration-300 rounded-full flex justify-center items-center bg-white/60 hover:bg-gold-land hover:text-white">
                         <i className="material-symbols-outlined text-xl md:text-[1.6rem]">local_mall</i>
                     </button>
-                    <Image src={props.img} width={640} height={853} className={`w-full h-full object-cover ${!props.object_fit ? "object-center" : props.object_fit}`} alt='Urban Fits' ></Image>
+                    <Image src={props.img} width={640} height={853} className={`w-full h-full object-cover ${!props.object_fit ? "object-center" : props.object_fit}`} alt='Urban Fits' />
                 </div>
                 <div className=" w-full h-full my-2 lg:my-4 px-3 text-black flex flex-col items-start">
                     <h4 className=" md:text-lg">{props.name}</h4>

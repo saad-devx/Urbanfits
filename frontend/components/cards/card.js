@@ -1,5 +1,5 @@
 import React from 'react'
-import LinkBtn from '../link_btn'
+import LinkBtn from '../buttons/link_btn'
 
 
 const Card = (props)=> {

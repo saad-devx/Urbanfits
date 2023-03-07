@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import LinkBtn from '../link_btn'
+import LinkBtn from '../buttons/link_btn'
 
 export default function SuggestionCard(props) {
     return (

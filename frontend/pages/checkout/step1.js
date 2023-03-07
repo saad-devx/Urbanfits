@@ -4,7 +4,7 @@ import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import LanguageModal from '@/components/modals/languagemodal';
 import Accordians from '@/components/accordians';
-import LinkBtn from '@/components/link_btn';
+import LinkBtn from '@/components/buttons/link_btn';
 // imports for images
 import Image from 'next/image';
 import shirt_img from '../../public/card imgs/card img4.png'

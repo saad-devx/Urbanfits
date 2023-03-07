@@ -23,9 +23,9 @@ function ListItem(props) {
         <>
             {props.submenu ?
                 <>
-                    <li onClick={toggleSubMenu} className='list_item transition-all mb-3' ><button className='w-full flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}<i className={`material-symbols-outlined text-lg translate-y-1 transition-all ${dropdown === true ? "rotate-90" : ""}`}>chevron_right</i></button></li>
+                    <li onClick={toggleSubMenu} className='list_item mb-3' ><button className='w-full flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}<i className={`material-symbols-outlined text-lg translate-y-1 transition-all ${dropdown === true ? "rotate-90" : ""}`}>chevron_right</i></button></li>
                     {props.submenu ?
-                        <ul className={`${dropdown === true ? "" : "hidden"} pl-14 pb-3 font_futuraLTlite transition-all duration-500 overflow-hidden w-full list-none `}>
+                        <ul className={`${dropdown === true ? "" : "hidden"} pl-14 pb-3 font_futuraLTlite duration-500 overflow-hidden w-full list-none `}>
                             {props.submenu.map((value) => {
                                 return (
                                     <li><Link href={`/products/${value.toLowerCase() === "view all" ? props.value : value}`} >{value}</Link></li>
@@ -34,7 +34,7 @@ function ListItem(props) {
                         </ul>
                         : null}
                 </>
-                : <li onClick={toggleSubMenu} className='list_item transition-all mb-3' ><Link href={props.href} className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}</Link></li>
+                : <li onClick={toggleSubMenu} className='list_item mb-3' ><Link href={props.href} className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}</Link></li>
             }
         </>
     )
@@ -104,15 +104,13 @@ export default function Navbar(props) {
                     <span className='lg:hidden cursor-pointer flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined ">menu</i></span>
                     <button onClick={toggleSearch} className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">search</i></button>
                     <button onClick={toggleCart} className='relative flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">local_mall</i> <span className={`${totalUniqueItems == 0 ? "hidden" : ''} absolute top-2 right-2 lg:top-3 lg:-right-3 w-4 h-4 flex justify-center items-center text-white rounded-full bg-gold-land text-[9px]`}>{totalUniqueItems}</span></button>
-                    {/* {user ? <Link href='/user/personalinfo' title='Me' className='lg:mt-5 w-8 lg:w-auto rounded-full border overflow-hidden' ><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" /></Link>
-                    //     : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i></Link>} */}
-                    {user ? <Link href='/user/personalinfo' className='mr-4 lg:mr-0 lg:mt-4' title='Me' ><div  className='w-8 rounded-full border overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full object-cover" /></div></Link>
+                    {user ? <Link href='/user/personalinfo' className='mr-4 lg:mr-0 lg:mt-4' title='Me' ><div  className='w-8 rounded-full border overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full object-cover" alt="avatar" /></div></Link>
                         : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i></Link>}
                 </div>
                 <i className='hidden lg:block' />
             </nav>
 
-            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed m-0 left-0 top-0 z-30 transition duration-700 bg-white shadow-lg`}>
+            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed m-0 left-0 top-0 z-30 transition-all ${props.transition?props.transition:'duration-700'} bg-white shadow-lg`}>
                 <div className="border-b-2 w-full h-1/6 flex flex-col">
                     <div className="flex justify-end items-center w-full h-1/2 px-7">
                         <div onClick={handleMenu} className=''>
@@ -122,7 +120,7 @@ export default function Navbar(props) {
                         </div>
                     </div>
                     <div className="flex justify-between items-center w-full h-1/2 p-5">
-                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" /></span> <span>{user.username}</span> </Link>
+                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" alt="avatar" /></span> <span>{user.username}</span> </Link>
                             : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i>Login</Link>}
                         <span className='flex space-x-5' ><button onClick={toggleSearch} className="flex font_futuraLT"><i className="material-symbols-outlined">search</i></button><button onClick={toggleCart} ><i className="material-symbols-outlined">local_mall</i></button></span>
                     </div>

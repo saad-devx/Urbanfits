@@ -9,8 +9,7 @@ const UserSchema = mongoose.Schema({
         unique: [true, "This username is already in use"]
     },
     phone: {
-        type: String,
-        required: true
+        type: String
     },
     email: {
         type: String,

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import Accordians from './accordians';
-import LinkBtn from '@/components/link_btn';
-import Button from './simple_btn';
+import LinkBtn from '@/components/buttons/link_btn';
+import Button from './buttons/simple_btn';
 import Link from 'next/link';
 import SuggestionCard from './cards/suggestionPicCard';
 // Image imports
