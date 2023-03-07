@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from 'next/router';
-import toaster from './toast_function';
+import toaster from '../utils/toast_function';
 import Logout from './modals/logout';
 import Link from 'next/link';
 import Button from './buttons/simple_btn';

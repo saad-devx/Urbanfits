@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.1",
     "next": "13.1.2",
+    "next-auth": "^4.20.1",
     "nextjs-cors": "^2.1.2",
     "nodemailer": "^6.9.1",
     "postcss": "^8.4.21",

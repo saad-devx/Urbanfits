@@ -1,5 +1,5 @@
 import Loader from "./loader";
-import toaster from "./toast_function";
+import toaster from "../utils/toast_function";
 
 export default async function onsubmitFunc(setLoader, callback){
     setLoader(<Loader/>)

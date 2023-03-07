@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
-import toaster from '@/components/toast_function';
+import toaster from '@/utils/toast_function';
 import Navbar from '../../components/navbar'
 import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
@@ -21,6 +21,26 @@ import Tooltip from '../../components/tooltip';
 // little function to use inside right this component to avoid mess
 const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" round="rounded-2xl" classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
+}
+
+// Function to show addresses of the user in a container
+const AddressContainer = (tag) => {
+    let userAddress = jwt.decode(localStorage.getItem("addressToken"))
+    if (userAddress._doc.addresses.length=== 0) return <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
+    return <div>{userAddress._doc.addresses.address}</div>
+    // if (userAddress) {
+    //     let addressObj = userAddress._doc
+    //     console.log(addressObj)
+    //     if (addressObj.addresses.length === 0) return <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
+    //     let address = addressObj.addresses.filter((address) => {
+    //         return address.tag === tag
+    //     })
+    //     console.log(address)
+    //     if (address.length === 0) return console.log(`${tag} address not found`)
+    //     return <div className="w-full p-4">
+    //         {address[0]}
+    //     </div>
+    // }
 }
 
 export default function Personalinfo() {
@@ -157,11 +177,13 @@ export default function Personalinfo() {
                             <div className='my-14 space-y-5' >
                                 <h2 className="text-xl mb-8">My Addresses</h2>
                                 <div>
-                                    <h5 className='text-lg my-2' >Shipping (0)</h5>
+                                    <h5 className='text-lg my-2' >Shipping</h5>
+                                    {/* <AddressContainer tag="shipping" /> */}
                                     <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
                                 </div>
                                 <div>
-                                    <h5 className='text-lg my-2' >Billing (0)</h5>
+                                    <h5 className='text-lg my-2' >Billing</h5>
+                                    {/* <AddressContainer tag="billing" /> */}
                                     <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
                                 </div>
                             </div>

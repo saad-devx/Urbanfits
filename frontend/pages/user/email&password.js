@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
-import toaster from '@/components/toast_function';
+import toaster from '@/utils/toast_function';
 import Loader from '@/components/loader';
 import Navbar from '../../components/navbar';
 import Button from '../../components/buttons/simple_btn';

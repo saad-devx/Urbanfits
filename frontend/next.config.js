@@ -8,22 +8,25 @@ const nextConfig = {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     // HOST: "http://localhost:3000",
     HOST: "https://urbanfits.vercel.app",
-    SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand"
+    SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand",
+    GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "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"
+    // GOOGLE_CLIENT_ID: "567262921949-bnrbq0imsh84oe2rt455529e809e5o83.apps.googleusercontent.com", // my testing credentials
+    // GOOGLE_CLIENT_SECRET: "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"
+  },
+  async headers() {
+    return [
+      {
+        // matching all API routes
+        source: "/api/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
+          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
+        ]
+      }
+    ]
   }
-  // async headers() {
-  //   return [
-  //     {
-  //       // matching all API routes
-  //       source: "/api/:path*",
-  //       headers: [
-  //         { key: "Access-Control-Allow-Credentials", value: "true" },
-  //         { key: "Access-Control-Allow-Origin", value: "*" },
-  //         { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-  //         { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
-  //       ]
-  //     }
-  //   ]
-  // }
 }
-
 module.exports = nextConfig

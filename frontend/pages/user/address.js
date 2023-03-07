@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import onsubmitFunc from '@/components/onsubmit_function';
-import toaster from '@/components/toast_function';
+import storeAddress from '@/utils/get_address';
+import toaster from '@/utils/toast_function';
 import Navbar from '../../components/navbar';
 import jwt from 'jsonwebtoken';
 import Button from '../../components/buttons/simple_btn';
@@ -55,8 +56,7 @@ const AddressForm = (props) => {
             let address = addressObj.addresses.filter((address) => {
                 return address.tag === tag
             })
-            console.log(address)
-            if(address.length === 0) return console.log(`${tag} address not found`)
+            if(address.length === 0) return
             setValues(address[0])
         }
         else return router.push('/access denied')
@@ -155,12 +155,7 @@ export default function Address() {
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
-    // function to get address
-    const storeAddress = async (user_id) => {
-        let res = await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user_id}`)
-        let address = await res.json()
-        localStorage.setItem("addressToken", address.payload)
-    }
+
     useEffect(() => {
         const userData = jwt.decode(localStorage.getItem("authToken"))
         if (userData) {
