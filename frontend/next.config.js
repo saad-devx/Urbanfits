@@ -11,8 +11,6 @@ const nextConfig = {
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand",
     GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
     GOOGLE_CLIENT_SECRET: "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"
-    // GOOGLE_CLIENT_ID: "567262921949-bnrbq0imsh84oe2rt455529e809e5o83.apps.googleusercontent.com", // my testing credentials
-    // GOOGLE_CLIENT_SECRET: "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"
   },
   async headers() {
     return [

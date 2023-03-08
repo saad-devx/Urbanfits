@@ -47,7 +47,7 @@ export default function Footer() {
                 <div className="list-none text-sm font-thin pb-7 md:pb-3 space-y-4 flex flex-col items-start">
                     <h3 className="text-black text-lg font_futuraLT">Get Help</h3>
                     <li>
-                        <Link href='/'>Contact Us</Link>
+                        <Link href='/contact'>Contact Us</Link>
                     </li>
                     <li>
                         <button onClick={toggleModal} name="modal2">Newsletter</button>

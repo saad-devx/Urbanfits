@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
+import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
+import { Avatar } from './personalinfo';
 import Loader from '@/components/loader';
 import Navbar from '../../components/navbar';
 import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
-// image imports
-import Image from 'next/image';
-import female_avatar from '../../public/avatars/female.svg'
-import male_avatar from '../../public/avatars/male.svg'
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -44,7 +42,7 @@ export default function EmailPassword() {
             let res = await response.json()
             if (!res.success) toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
-            if(!res.payload) return setLoader(null)
+            if (!res.payload) return setLoader(null)
             localStorage.setItem("authToken", res.payload)
             handleReset()
             setLoader(null)
@@ -57,12 +55,6 @@ export default function EmailPassword() {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
     // getting user payload form jwt token in localstorage
-    const ifExists = (data, return_type) => {
-        if (data) return data
-        if (return_type === false) return false
-        if (return_type !== false) return return_type
-        else return ""
-    }
     useEffect(() => {
         const userData = jwt.decode(localStorage.getItem("authToken"))
         if (userData) {
@@ -79,10 +71,10 @@ export default function EmailPassword() {
                 {loader}
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu direction={direction} />
-                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 pt-24 lg:pt-9 pl-7 overflow-y-scroll' >
+                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left px-4 pt-24 lg:pt-9 lg:pl-7 overflow-y-scroll' >
                         <div className="w-full lg:w-5/6">
                             <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                                <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} alt="avatar" />
+                                <Avatar user={user} />
                                 <span>
                                     <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
                                     <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save or change your email address and password in this area to to tell us about you for further assistence.</p>
