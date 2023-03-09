@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user/address": "pages/user/address.js",
-  "/api/user/addresses/get": "pages/api/user/addresses/get.js"
+  "/api/user/forgotpassword": "pages/api/user/forgotpassword.js",
+  "/faq": "pages/faq.js"
 }

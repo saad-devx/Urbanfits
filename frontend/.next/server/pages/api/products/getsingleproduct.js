@@ -1,0 +1,66 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "pages/api/products/getsingleproduct";
+exports.ids = ["pages/api/products/getsingleproduct"];
+exports.modules = {
+
+/***/ "mongoose":
+/*!***************************!*\
+  !*** external "mongoose" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = require("mongoose");
+
+/***/ }),
+
+/***/ "(api)/./models/product.js":
+/*!***************************!*\
+  !*** ./models/product.js ***!
+  \***************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("\nconst mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\nconst ProductSchema = mongoose.Schema({\n    name: {\n        type: String,\n        required: [\n            true,\n            \"Please enter a name for your product\"\n        ],\n        trim: true\n    },\n    price: {\n        type: Number,\n        required: [\n            true,\n            \"Please enter a price for your product\"\n        ],\n        maxlength: [\n            10,\n            \"Price can't be more than 10 figures\"\n        ]\n    },\n    size: {\n        type: Array,\n        default: [\n            \"M\",\n            \"L\"\n        ]\n    },\n    color: {\n        type: Array,\n        default: [\n            \"black\",\n            \"white\"\n        ]\n    },\n    description: {\n        type: String,\n        required: [\n            true,\n            \"Please enter a description for your product\"\n        ],\n        trim: true\n    },\n    category: {\n        type: String,\n        required: [\n            true,\n            \"Please enter a category for your product\"\n        ]\n    },\n    subcategories: {\n        type: Array\n    },\n    ratings: {\n        type: Number,\n        default: 0\n    },\n    images: [\n        {\n            public_id: {\n                type: String,\n                required: true\n            },\n            url: {\n                type: String,\n                required: true\n            }\n        }\n    ],\n    stock: {\n        type: Number,\n        required: [\n            true,\n            \"Please enter stock of the product\"\n        ],\n        default: 1\n    }\n}, {\n    timestamps: true\n});\nmodule.exports = mongoose.models.Product || mongoose.model(\"Product\", ProductSchema);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9tb2RlbHMvcHJvZHVjdC5qcy5qcyIsIm1hcHBpbmdzIjoiQUFBQTtBQUFBLE1BQU1BLFdBQVdDLG1CQUFPQSxDQUFDO0FBRXpCLE1BQU1DLGdCQUFnQkYsU0FBU0csTUFBTSxDQUFDO0lBQ2xDQyxNQUFNO1FBQ0ZDLE1BQU1DO1FBQ05DLFVBQVU7WUFBQyxJQUFJO1lBQUU7U0FBdUM7UUFDeERDLE1BQU0sSUFBSTtJQUNkO0lBQ0FDLE9BQU87UUFDSEosTUFBTUs7UUFDTkgsVUFBVTtZQUFDLElBQUk7WUFBRTtTQUF3QztRQUN6REksV0FBVztZQUFDO1lBQUk7U0FBc0M7SUFDMUQ7SUFDQUMsTUFBSztRQUNEUCxNQUFNUTtRQUNOQyxTQUFTO1lBQUM7WUFBSztTQUFJO0lBQ3ZCO0lBQ0FDLE9BQU07UUFDRlYsTUFBTVE7UUFDTkMsU0FBUztZQUFDO1lBQVM7U0FBUTtJQUMvQjtJQUNBRSxhQUFhO1FBQ1RYLE1BQU1DO1FBQ05DLFVBQVU7WUFBQyxJQUFJO1lBQUU7U0FBOEM7UUFDL0RDLE1BQU0sSUFBSTtJQUNkO0lBQ0FTLFVBQVU7UUFDTlosTUFBTUM7UUFDTkMsVUFBVTtZQUFDLElBQUk7WUFBRTtTQUEyQztJQUNoRTtJQUNBVyxlQUFlO1FBQ1hiLE1BQU1RO0lBQ1Y7SUFDQU0sU0FBUztRQUNMZCxNQUFNSztRQUNOSSxTQUFTO0lBQ2I7SUFDQU0sUUFBUTtRQUFDO1lBQ0xDLFdBQVc7Z0JBQUVoQixNQUFNQztnQkFBUUMsVUFBVSxJQUFJO1lBQUM7WUFDMUNlLEtBQUs7Z0JBQUVqQixNQUFNQztnQkFBUUMsVUFBVSxJQUFJO1lBQUM7UUFDeEM7S0FBRTtJQUNGZ0IsT0FBTztRQUNIbEIsTUFBTUs7UUFDTkgsVUFBVTtZQUFDLElBQUk7WUFBRTtTQUFvQztRQUNyRE8sU0FBUztJQUNiO0FBRUosR0FBRztJQUFFVSxZQUFZLElBQUk7QUFBQztBQUV0QkMsT0FBT0MsT0FBTyxHQUFHMUIsU0FBUzJCLE1BQU0sQ0FBQ0MsT0FBTyxJQUFJNUIsU0FBUzZCLEtBQUssQ0FBQyxXQUFXM0IiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly91cmJhbi1maXRzLy4vbW9kZWxzL3Byb2R1Y3QuanM/MDczYyJdLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCBtb25nb29zZSA9IHJlcXVpcmUoJ21vbmdvb3NlJylcclxuXHJcbmNvbnN0IFByb2R1Y3RTY2hlbWEgPSBtb25nb29zZS5TY2hlbWEoe1xyXG4gICAgbmFtZToge1xyXG4gICAgICAgIHR5cGU6IFN0cmluZyxcclxuICAgICAgICByZXF1aXJlZDogW3RydWUsIFwiUGxlYXNlIGVudGVyIGEgbmFtZSBmb3IgeW91ciBwcm9kdWN0XCJdLFxyXG4gICAgICAgIHRyaW06IHRydWVcclxuICAgIH0sXHJcbiAgICBwcmljZToge1xyXG4gICAgICAgIHR5cGU6IE51bWJlcixcclxuICAgICAgICByZXF1aXJlZDogW3RydWUsIFwiUGxlYXNlIGVudGVyIGEgcHJpY2UgZm9yIHlvdXIgcHJvZHVjdFwiXSxcclxuICAgICAgICBtYXhsZW5ndGg6IFsxMCwgXCJQcmljZSBjYW4ndCBiZSBtb3JlIHRoYW4gMTAgZmlndXJlc1wiXVxyXG4gICAgfSxcclxuICAgIHNpemU6e1xyXG4gICAgICAgIHR5cGU6IEFycmF5LFxyXG4gICAgICAgIGRlZmF1bHQ6IFtcIk1cIiwgXCJMXCJdXHJcbiAgICB9LFxyXG4gICAgY29sb3I6e1xyXG4gICAgICAgIHR5cGU6IEFycmF5LFxyXG4gICAgICAgIGRlZmF1bHQ6IFtcImJsYWNrXCIsIFwid2hpdGVcIl1cclxuICAgIH0sXHJcbiAgICBkZXNjcmlwdGlvbjoge1xyXG4gICAgICAgIHR5cGU6IFN0cmluZyxcclxuICAgICAgICByZXF1aXJlZDogW3RydWUsIFwiUGxlYXNlIGVudGVyIGEgZGVzY3JpcHRpb24gZm9yIHlvdXIgcHJvZHVjdFwiXSxcclxuICAgICAgICB0cmltOiB0cnVlXHJcbiAgICB9LFxyXG4gICAgY2F0ZWdvcnk6IHtcclxuICAgICAgICB0eXBlOiBTdHJpbmcsXHJcbiAgICAgICAgcmVxdWlyZWQ6IFt0cnVlLCBcIlBsZWFzZSBlbnRlciBhIGNhdGVnb3J5IGZvciB5b3VyIHByb2R1Y3RcIl1cclxuICAgIH0sXHJcbiAgICBzdWJjYXRlZ29yaWVzOiB7XHJcbiAgICAgICAgdHlwZTogQXJyYXlcclxuICAgIH0sXHJcbiAgICByYXRpbmdzOiB7XHJcbiAgICAgICAgdHlwZTogTnVtYmVyLFxyXG4gICAgICAgIGRlZmF1bHQ6IDBcclxuICAgIH0sXHJcbiAgICBpbWFnZXM6IFt7XHJcbiAgICAgICAgcHVibGljX2lkOiB7IHR5cGU6IFN0cmluZywgcmVxdWlyZWQ6IHRydWUgfSxcclxuICAgICAgICB1cmw6IHsgdHlwZTogU3RyaW5nLCByZXF1aXJlZDogdHJ1ZSB9LFxyXG4gICAgfV0sXHJcbiAgICBzdG9jazoge1xyXG4gICAgICAgIHR5cGU6IE51bWJlcixcclxuICAgICAgICByZXF1aXJlZDogW3RydWUsIFwiUGxlYXNlIGVudGVyIHN0b2NrIG9mIHRoZSBwcm9kdWN0XCJdLFxyXG4gICAgICAgIGRlZmF1bHQ6IDFcclxuICAgIH1cclxuXHJcbn0sIHsgdGltZXN0YW1wczogdHJ1ZSB9KVxyXG5cclxubW9kdWxlLmV4cG9ydHMgPSBtb25nb29zZS5tb2RlbHMuUHJvZHVjdCB8fCBtb25nb29zZS5tb2RlbChcIlByb2R1Y3RcIiwgUHJvZHVjdFNjaGVtYSkiXSwibmFtZXMiOlsibW9uZ29vc2UiLCJyZXF1aXJlIiwiUHJvZHVjdFNjaGVtYSIsIlNjaGVtYSIsIm5hbWUiLCJ0eXBlIiwiU3RyaW5nIiwicmVxdWlyZWQiLCJ0cmltIiwicHJpY2UiLCJOdW1iZXIiLCJtYXhsZW5ndGgiLCJzaXplIiwiQXJyYXkiLCJkZWZhdWx0IiwiY29sb3IiLCJkZXNjcmlwdGlvbiIsImNhdGVnb3J5Iiwic3ViY2F0ZWdvcmllcyIsInJhdGluZ3MiLCJpbWFnZXMiLCJwdWJsaWNfaWQiLCJ1cmwiLCJzdG9jayIsInRpbWVzdGFtcHMiLCJtb2R1bGUiLCJleHBvcnRzIiwibW9kZWxzIiwiUHJvZHVjdCIsIm1vZGVsIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(api)/./models/product.js\n");
+
+/***/ }),
+
+/***/ "(api)/./pages/api/products/getsingleproduct.js":
+/*!************************************************!*\
+  !*** ./pages/api/products/getsingleproduct.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_connect_db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/utils/connect_db */ \"(api)/./utils/connect_db.js\");\n/* harmony import */ var _models_product__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/models/product */ \"(api)/./models/product.js\");\n/* harmony import */ var _models_product__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_models_product__WEBPACK_IMPORTED_MODULE_1__);\n\n\n// Only Accessable by Admin\nconst GetSingleProducts = async (req, res)=>{\n    try {\n        await (0,_utils_connect_db__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n        let product = await _models_product__WEBPACK_IMPORTED_MODULE_1___default().findById(req.query.id);\n        res.status(200).json({\n            msg: \"Success !\",\n            product\n        });\n    } catch (err) {\n        res.status(500).send(\"Internal Server Error occurred. Please retry\");\n    }\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GetSingleProducts);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvcHJvZHVjdHMvZ2V0c2luZ2xlcHJvZHVjdC5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQTBDO0FBQ0o7QUFFdEMsMkJBQTJCO0FBQzNCLE1BQU1FLG9CQUFvQixPQUFPQyxLQUFLQyxNQUFRO0lBQzFDLElBQUk7UUFDQSxNQUFNSiw2REFBU0E7UUFDZixJQUFJSyxVQUFVLE1BQU1KLCtEQUFnQixDQUFDRSxJQUFJSSxLQUFLLENBQUNDLEVBQUU7UUFDakRKLElBQUlLLE1BQU0sQ0FBQyxLQUFLQyxJQUFJLENBQUM7WUFDakJDLEtBQUs7WUFDTE47UUFDSjtJQUNKLEVBQ0EsT0FBT08sS0FBSztRQUNSUixJQUFJSyxNQUFNLENBQUMsS0FBS0ksSUFBSSxDQUFDO0lBQ3pCO0FBQ0o7QUFFQSxpRUFBZVgsaUJBQWlCQSxFQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vdXJiYW4tZml0cy8uL3BhZ2VzL2FwaS9wcm9kdWN0cy9nZXRzaW5nbGVwcm9kdWN0LmpzPzExYzciXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IENvbm5lY3REQiBmcm9tIFwiQC91dGlscy9jb25uZWN0X2RiXCJcclxuaW1wb3J0IFByb2R1Y3QgZnJvbSBcIkAvbW9kZWxzL3Byb2R1Y3RcIlxyXG5cclxuLy8gT25seSBBY2Nlc3NhYmxlIGJ5IEFkbWluXHJcbmNvbnN0IEdldFNpbmdsZVByb2R1Y3RzID0gYXN5bmMgKHJlcSwgcmVzKSA9PiB7XHJcbiAgICB0cnkge1xyXG4gICAgICAgIGF3YWl0IENvbm5lY3REQigpXHJcbiAgICAgICAgbGV0IHByb2R1Y3QgPSBhd2FpdCBQcm9kdWN0LmZpbmRCeUlkKHJlcS5xdWVyeS5pZClcclxuICAgICAgICByZXMuc3RhdHVzKDIwMCkuanNvbih7XHJcbiAgICAgICAgICAgIG1zZzogXCJTdWNjZXNzICFcIixcclxuICAgICAgICAgICAgcHJvZHVjdFxyXG4gICAgICAgIH0pXHJcbiAgICB9XHJcbiAgICBjYXRjaCAoZXJyKSB7XHJcbiAgICAgICAgcmVzLnN0YXR1cyg1MDApLnNlbmQoXCJJbnRlcm5hbCBTZXJ2ZXIgRXJyb3Igb2NjdXJyZWQuIFBsZWFzZSByZXRyeVwiKVxyXG4gICAgfVxyXG59XHJcblxyXG5leHBvcnQgZGVmYXVsdCBHZXRTaW5nbGVQcm9kdWN0cyJdLCJuYW1lcyI6WyJDb25uZWN0REIiLCJQcm9kdWN0IiwiR2V0U2luZ2xlUHJvZHVjdHMiLCJyZXEiLCJyZXMiLCJwcm9kdWN0IiwiZmluZEJ5SWQiLCJxdWVyeSIsImlkIiwic3RhdHVzIiwianNvbiIsIm1zZyIsImVyciIsInNlbmQiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(api)/./pages/api/products/getsingleproduct.js\n");
+
+/***/ }),
+
+/***/ "(api)/./utils/connect_db.js":
+/*!*****************************!*\
+  !*** ./utils/connect_db.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\nconst ConnectDB = async ()=>{\n    if (mongoose.connections[0].readyState) return console.log(\"Success! Connection already exists\\n\");\n    else return mongoose.connect(\"mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority\", {\n        useNewUrlParser: true,\n        useUnifiedTopology: true,\n        dbName: \"Urbanfits\"\n    }, console.log(\"Connected to the mongodb successfully!\\n\"));\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ConnectDB);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi91dGlscy9jb25uZWN0X2RiLmpzLmpzIiwibWFwcGluZ3MiOiI7Ozs7QUFBQSxNQUFNQSxXQUFXQyxtQkFBT0EsQ0FBQztBQUV6QixNQUFNQyxZQUFZLFVBQVU7SUFDeEIsSUFBR0YsU0FBU0csV0FBVyxDQUFDLEVBQUUsQ0FBQ0MsVUFBVSxFQUFFLE9BQU9DLFFBQVFDLEdBQUcsQ0FBQztTQUNyRCxPQUFPTixTQUFTTyxPQUFPLENBQUNDLHdHQUFxQixFQUFDO1FBQy9DRyxpQkFBaUIsSUFBSTtRQUNyQkMsb0JBQW9CLElBQUk7UUFDeEJDLFFBQVE7SUFDVixHQUFHUixRQUFRQyxHQUFHLENBQUM7QUFDckI7QUFFQSxpRUFBZUosU0FBU0EsRUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovL3VyYmFuLWZpdHMvLi91dGlscy9jb25uZWN0X2RiLmpzP2NlZmQiXSwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgbW9uZ29vc2UgPSByZXF1aXJlKCdtb25nb29zZScpXHJcblxyXG5jb25zdCBDb25uZWN0REIgPSBhc3luYyAoKT0+e1xyXG4gICAgaWYobW9uZ29vc2UuY29ubmVjdGlvbnNbMF0ucmVhZHlTdGF0ZSkgcmV0dXJuIGNvbnNvbGUubG9nKFwiU3VjY2VzcyEgQ29ubmVjdGlvbiBhbHJlYWR5IGV4aXN0c1xcblwiKVxyXG4gICAgZWxzZSByZXR1cm4gbW9uZ29vc2UuY29ubmVjdChwcm9jZXNzLmVudi5NT05HT19VUkkse1xyXG4gICAgICAgIHVzZU5ld1VybFBhcnNlcjogdHJ1ZSxcclxuICAgICAgICB1c2VVbmlmaWVkVG9wb2xvZ3k6IHRydWUsXHJcbiAgICAgICAgZGJOYW1lOiBcIlVyYmFuZml0c1wiXHJcbiAgICAgIH0sIGNvbnNvbGUubG9nKFwiQ29ubmVjdGVkIHRvIHRoZSBtb25nb2RiIHN1Y2Nlc3NmdWxseSFcXG5cIikpXHJcbn1cclxuXHJcbmV4cG9ydCBkZWZhdWx0IENvbm5lY3REQiJdLCJuYW1lcyI6WyJtb25nb29zZSIsInJlcXVpcmUiLCJDb25uZWN0REIiLCJjb25uZWN0aW9ucyIsInJlYWR5U3RhdGUiLCJjb25zb2xlIiwibG9nIiwiY29ubmVjdCIsInByb2Nlc3MiLCJlbnYiLCJNT05HT19VUkkiLCJ1c2VOZXdVcmxQYXJzZXIiLCJ1c2VVbmlmaWVkVG9wb2xvZ3kiLCJkYk5hbWUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(api)/./utils/connect_db.js\n");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../../../webpack-api-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/products/getsingleproduct.js"));
+module.exports = __webpack_exports__;
+
+})();

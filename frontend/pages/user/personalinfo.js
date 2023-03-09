@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
 import toaster from '@/utils/toast_function';
+import ifExists from '@/utils/if_exists';
 import Navbar from '../../components/navbar'
 import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
@@ -23,24 +24,36 @@ const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" round="rounded-2xl" classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
 }
 
+// User Avatar based on the gender
+export function Avatar ({user}){
+    return <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.gender) === "Male" ? male_avatar : female_avatar} alt="avatar" />
+}
+
 // Function to show addresses of the user in a container
-const AddressContainer = (tag) => {
+const AddressContainer = (props) => {
+    const { tag } = props
+    const addressLink = <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
     let userAddress = jwt.decode(localStorage.getItem("addressToken"))
-    if (userAddress._doc.addresses.length=== 0) return <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
-    return <div>{userAddress._doc.addresses.address}</div>
-    // if (userAddress) {
-    //     let addressObj = userAddress._doc
-    //     console.log(addressObj)
-    //     if (addressObj.addresses.length === 0) return <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
-    //     let address = addressObj.addresses.filter((address) => {
-    //         return address.tag === tag
-    //     })
-    //     console.log(address)
-    //     if (address.length === 0) return console.log(`${tag} address not found`)
-    //     return <div className="w-full p-4">
-    //         {address[0]}
-    //     </div>
-    // }
+    if (userAddress) {
+        let addressObj = userAddress._doc
+        if (addressObj.addresses.length === 0) return addressLink
+        let address = addressObj.addresses.filter((address) => {
+            return address.tag === tag
+        })
+        if (address.length === 0) return addressLink
+        let field = address[0]
+        return <div className="w-full p-4 text-sm border border-yellow-500 flex justify-between items-start rounded-lg bg-white">
+            <div>
+                <span>{field.address_title}</span><br />
+                <span>{field.firstname} {field.lastname}</span><br />
+                <span>{field.address}</span><br />
+                <span>{field.city}, {field.country}</span><br />
+                <span>{field.phone_prefix} {field.phone_number}</span>
+            </div>
+            <Link href='/user/address' className='text-sm' >Modify<i class="fa-regular fa-pen-to-square mx-2"></i></Link>
+        </div>
+    }
+    else return addressLink
 }
 
 export default function Personalinfo() {
@@ -60,7 +73,7 @@ export default function Personalinfo() {
         newsletter_sub_phone: Yup.bool()
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', date_of_birth: '', newsletter_sub_email: false, newsletter_sub_phone: false },
+        initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', newsletter_sub_email: false, newsletter_sub_phone: false },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
@@ -82,13 +95,6 @@ export default function Personalinfo() {
     const handleScroll = (e) => {
         e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
     }
-    // getting user payload form jwt token in localstorage
-    const ifExists = (data, return_type) => {
-        if (data) return data
-        if (return_type === false) return false
-        if (return_type !== false) return return_type
-        else return ""
-    }
     useEffect(() => {
         const userData = jwt.decode(localStorage.getItem("authToken"))
         if (userData) {
@@ -98,7 +104,7 @@ export default function Personalinfo() {
                 title: ifExists(user.title),
                 firstname: ifExists(user.firstname),
                 lastname: ifExists(user.lastname),
-                date_of_birth: ifExists(user.date_of_birth),
+                gender: ifExists(user.gender),
                 newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
                 newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
             })
@@ -112,9 +118,9 @@ export default function Personalinfo() {
                 {loader}
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full lg:fixed right-0 flex transition-all duration-700`}>
                     <AccountMenu direction={direction} />
-                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-9 lg:pl-7 pt-24 lg:pt-9 pb-20 overflow-x-hidden overflow-y-scroll ' >
+                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 overflow-x-hidden overflow-y-scroll ' >
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                            <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.title) === "Mrs." ? female_avatar : male_avatar} alt="avatar" />
+                            <Avatar user={user} />
                             <span>
                                 <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
                                 <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your personal details here in this area to tell us about you for more assistence.</p>
@@ -124,28 +130,36 @@ export default function Personalinfo() {
                             <h1 className='text-xl' >Personal Information</h1>
                             <div className="flex justify-between w-full lg:w-5/6 ">
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    {errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
+                                    {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                                     <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                         <option >Title</option>
                                         <option id="Mr" value="Mr.">Mr</option>
                                         <option id="Mrs" value="Mrs.">Ms</option>
-                                        <option id="other" value="Other">Other</option>
                                     </select>
                                 </div>
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    {errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
+                                    {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                                 </div>
                             </div>
                             <div className="flex justify-between w-full lg:w-5/6 ">
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    {errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
+                                    {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
                                 </div>
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    {errors.date_of_birth ? <Tooltip classes="form-error" content={errors.date_of_birth} /> : null}
-                                    <input className="w-full bg-transparent outline-none border-none" type="date" name="date_of_birth" id="date_of_birth" value={values.date_of_birth} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
+                                    {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
+                                    <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                        <option disabled >Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
                                 </div>
+                                {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                    {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
+                                    <input className="w-full bg-transparent outline-none border-none" type="text" name="gender" id="gender" value={values.gender} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
+                                </div> */}
                             </div>
                             <div className="w-full lg:w-5/6 ">
                                 <h1 className="text-xl mt-5">Newsletter Subscription</h1>
@@ -178,13 +192,11 @@ export default function Personalinfo() {
                                 <h2 className="text-xl mb-8">My Addresses</h2>
                                 <div>
                                     <h5 className='text-lg my-2' >Shipping</h5>
-                                    {/* <AddressContainer tag="shipping" /> */}
-                                    <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
+                                    <AddressContainer tag="shipping" />
                                 </div>
                                 <div>
                                     <h5 className='text-lg my-2' >Billing</h5>
-                                    {/* <AddressContainer tag="billing" /> */}
-                                    <Link href='/user/address' id='address' className="w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
+                                    <AddressContainer tag="billing" />
                                 </div>
                             </div>
                             <div className='my-14 space-y-5' >

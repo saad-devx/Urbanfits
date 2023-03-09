@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Card from '../components/cards/card';
+import toaster from '@/utils/toast_function';
 import Navbar from '../components/navbar';
 import Button from '../components/buttons/simple_btn';
 import Footer from '../components/footer'
@@ -10,7 +11,7 @@ import * as Yup from 'yup'
 import Tooltip from '../components/tooltip';
 
 const InfoCard = (props) => {
-    return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" classes='w-full h-1/3 mb-7 p-9 justify-center items-center md:items-start' />
+    return <Card href={props.href} title={props.title} value={props.value} btnValue={props.btnValue} btnClasses="w-1/2 md:w-1/3 text-sm" classes='w-full h-1/3 mb-7 p-9 justify-center items-center md:items-start' />
 }
 
 export default function Contact() {
@@ -22,14 +23,23 @@ export default function Contact() {
         lastname: Yup.string().min(2).required("Please enter your Last name"),
         phone: Yup.string().matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Please enter a valid phone number with postal code and space eg. +971 0000000000").required(),
         email: Yup.string().email().required("Please enter your email address"),
-        msg: Yup.string().min(6).max(1000).required("Please leave a message here"),
+        msg: Yup.string().min(20, "message must be atleast 20 characters").max(1000).required("Please leave a message here"),
+        dateofbirth: Yup.string()
 
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: { title: 'Title', firstname: '', lastname: '', dateofbirth: '', email: '', phone: '', msg: '' },
         validationSchema: validatedSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             console.log(values)
+            let response = await fetch(`${process.env.HOST}/api/contact`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(values)
+            })
+            let res = await response.json()
+            console.log(res)
+            toaster(res.success? "success": "error", res.msg)
             handleReset()
         }
     })
@@ -81,7 +91,7 @@ export default function Contact() {
                                 <div className="flex flex-col justify-end">
                                     <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mt-4">
                                         {touched.msg && errors.msg ? <Tooltip classes="form-error" content={errors.msg} /> : null}
-                                        <input className="w-full bg-transparent outline-none border-none" type="text" value={values.msg} name="msg" id="msg" maxLength={100} onBlur={handleBlur} onChange={handleChange} placeholder="Type Your Message here..." />
+                                        <input className="w-full bg-transparent outline-none border-none" type="text" value={values.msg} name="msg" id="msg" maxLength={1000} onBlur={handleBlur} onChange={handleChange} placeholder="Type Your Message here..." />
                                     </div>
                                     <small className='self-end text-gray-500 my-3' >1000 characters max</small>
                                 </div>
@@ -95,9 +105,9 @@ export default function Contact() {
                                 </div>
                             </form>
                             <div className="w-full flex flex-col justify-center items-center">
-                                <InfoCard title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="Get In Touch" />
-                                <InfoCard title="Customer Care" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." btnValue="See Your FAQs" />
-                                <InfoCard title="Privacy Policy" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="See Your FAQs" />
+                                <InfoCard href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="See Your FAQs" />
+                                <InfoCard href="#" title="Customer Care" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." btnValue="Get In Touch" />
+                                <InfoCard href="#" title="Privacy Policy" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="Read our Policy" />
                             </div>
                         </section>
                     </div>
