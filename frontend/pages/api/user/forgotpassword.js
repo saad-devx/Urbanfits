@@ -10,44 +10,58 @@ const forgotPassword = async (req, res) => {
 
         if (req.method === 'POST') {
             await ConnectDB()
-            let user = await User.findOne({ email: req.body.email })
-            if (!user) user = await User.findOne({ username: req.body.email }) //because user can put the username or email in the same field and api should verify from both ways
-            if (!user) return res.status(404).json({ success: false, msg: "You don't have an account with this email!" })
-            const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '2m' })
+            // let user = await User.findOne({ email: req.body.email })
+            // if (!user) user = await User.findOne({ username: req.body.email }) //because user can put the username or email in the same field and api should verify from both ways
+            // if (!user) return res.status(404).json({ success: false, msg: "You don't have an account with this email!" })
+            // const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '2m' })
 
             // create a nodemailer transport object
+            // const transport = nodemailer.createTransport({
+            //     host: "smtp.mailgun.org",
+            //     port: 587,
+            //     auth: {
+            //         user: "postmaster@sandboxbc29305ee82541a796810e1c2d98a909.mailgun.org",
+            //         pass: "5b95478b2a44a24bab25ad1f7156eafd-52d193a0-daa82d90"
+            //     }
+            // });
+
+            // // create email message object
+            // const message = {
+            //     from: 'binarshadsaad6@gmail.com',
+            //     to: 'saad19rsf@gmail.com',
+            //     text: "hellow this is a text email body to check the email service",
+            //     subject: 'You subscribed our Newsletter',
+            //     html: `<html><body><h1>Fitte Moooo!</h1><p>Dear valuable Jheengu this email is to notify you that you have successfully recieved the 'Fitte Moo' reward for literally just existing at this time of morning.</p></body></html>`
+            // };
+
+            // // send email using nodemailer
+            // let info = await transport.sendMail(message);
+            // console.log(info)
+            // res.json({ success: true, info })
+
+            // USING GMAIL
             const transport = nodemailer.createTransport({
-                host: "smtp-relay.sendinblue.com",
-                port: 587,
-                secure: false,
+                host: "smtp.gmail.com",
+                // port: 587,
                 auth: {
-                    user: "binarshadsaad6@gmail.com",
-                    pass: "rO2FdLIhB8RYjfg9",
-                },
+                    user: "dark.reaper1911@gmail.com",
+                    pass: "19114666"
+                }
             });
 
             // create email message object
             const message = {
-                from: 'dark_reaper6@outlook.com',
-                to: "binarshadsaad6@gmail.com",
-                subject: "Test Email from Sendinblue",
+                from: 'dark.reaper1911@gmail.com',
+                to: 'saad19rsf@gmail.com',
                 text: "hellow this is a text email body to check the email service",
-                html: "<p>hellow this is a text email body to check the email service</p>",
+                subject: 'You subscribed our Newsletter',
+                html: `<html><body><h1>Fitte Moooo!</h1><p>Dear valuable Jheengu this email is to notify you that you have successfully recieved the 'Fitte Moo' reward for literally just existing at this time of morning.</p></body></html>`
             };
 
             // send email using nodemailer
-            transport.sendMail(message, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log("Email sent: " + info.response);
-                    res.status(200).json({
-                        success: true,
-                        msg: "Email send successfully, maybe",
-                        messageId: info.messageId
-                    })
-                }
-            });
+            let info = await transport.sendMail(message);
+            console.log(info)
+            res.json({ success: true, info })
 
         }
         else {

@@ -153,12 +153,12 @@ export default function Signing(props) {
                             {router.pathname === '/resetpassword' ? <Button classes='w-full' type="submit" >Login</Button> : null}
 
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
+                        </form>
                             {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                             <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
                                 <button onClick={()=>{signIn("google")}} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
                                 <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                             </div>
-                        </form>
                     </div>
                 </section>
 
