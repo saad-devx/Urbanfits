@@ -14,7 +14,7 @@ export default function Signup() {
   const initialSignupValues = { "username": '', "email": '', "password": '', "phone": '', "accept_policies": '' }
   return (
     <>
-      <Signing page='signup' signupuSchema={signupuSchema} initialSignupValues={initialSignupValues} />
+      <Signing page='signup' validationSchema={signupuSchema} initialValues={initialSignupValues} />
     </>
   )
 }

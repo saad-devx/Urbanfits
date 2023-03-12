@@ -9,6 +9,6 @@ export default function ForgotPassword() {
     })
     const initialForgotPasswordValues = { email: '' }
   return (
-    <Signing page='login' type='forgotpass' forgotpassSchema={forgotpassSchema} initialForgotPasswordValues={initialForgotPasswordValues} />
+    <Signing page='login' type='forgotpass' validationSchema={forgotpassSchema} initialValues={initialForgotPasswordValues} />
   )
 }

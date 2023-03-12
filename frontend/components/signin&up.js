@@ -26,37 +26,19 @@ export default function Signing(props) {
     const router = useRouter()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    //                                     Submit form functionality
-
-    const initialValueChanger = () => { // Initial Values Object would change on the basis of route name
-        let path = router.pathname
-        if (path === "/signup") return props.initialSignupValues
-        if (path === "/login") return props.initialLoginValues
-        if (path === "/forgotpassword") return props.initialForgotPasswordValues
-        if (path === "/resetpassword") return props.initialResetPasswordValues
-    }
-    const validationObjectChanger = () => { // Validation Object would change on the basis of route name
-        let path = router.pathname
-        if (path === "/signup") return props.signupuSchema
-        if (path === "/login") return props.loginSchema
-        if (path === "/forgotpassword") return props.forgotpassSchema
-        if (path === "/resetpassword") return props.resetpassSchema
-    }
     //                                      Submit function
 
     // setting request method according to the pathname
     const getMethod = () => {
-        let path = router.pathname
-        if (path === "/signup") return "POST"
-        if (path === "/login") return "POST"
-        if (path === "/forgotpassword") return "POST"
-        if (path === "/resetpassword") return "PUT"
+        if (router.pathname === "/resetpassword") return "PUT"
+        else return "POST"
     }
     //onSubmit function and destructuring Formik functions
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
-        initialValues: initialValueChanger(),
-        validationSchema: validationObjectChanger(),
+        initialValues: props.initialValues,
+        validationSchema: props.validationSchema,
         onSubmit: async (values) => {
+            console.log(values);
             setLoader(<Loader />)
             let path = router.pathname
             let response = await fetch(`${process.env.HOST}/api/user${path}`, {
@@ -70,13 +52,16 @@ export default function Signing(props) {
                 await initiateAddress(res.payload, router)
                 toaster("success", res.msg)
             }
+            else if(res.success) {
+                toaster("success", res.msg)
+            }
             else {
                 toaster("error", res.msg)
                 return setLoader(null)
             }
             setLoader(null)
-            router.push('/user/personalinfo')
-            handleReset()
+            // router.push('/user/personalinfo')
+            // handleReset()
         }
     })
     if(session){
@@ -119,7 +104,7 @@ export default function Signing(props) {
                             </div>
                             <div className={` ${page === "login" && props.type === "resetpass" ? "hidden" : ''} relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email" />
+                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder={router.pathname==='/login'? 'Username or Email': 'Email'} />
                             </div>
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.phone && errors.phone ? <Tooltip classes="form-error" content={errors.phone} /> : null}
@@ -127,10 +112,10 @@ export default function Signing(props) {
                             </div>
                             <div className={`relative  ${props.type === 'forgotpass' ? 'hidden' : ''} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                                <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder="Password" />
+                                <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder={router.pathname==='/resetpassword'? 'New Password': 'Password'} />
                             </div>
                             <div className={`relative  ${props.type === 'resetpass' ? '' : 'hidden'} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2`}>
-                                {touched.reppassword && errors.reppassword ? <Tooltip classes="form-error" content={errors.reppassword} /> : null}
+                                {touched.confirm_password && errors.confirm_password ? <Tooltip classes="form-error" content={errors.confirm_password} /> : null}
                                 <input className="w-full outline-none border-none" type='password' name="confirm_password" id="confirm_password" value={values.confirm_password} onBlur={handleBlur} onChange={handleChange} placeholder="Confirm Password" />
                             </div>
                             <div className="my-3">
