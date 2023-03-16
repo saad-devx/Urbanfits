@@ -9,90 +9,78 @@ var _client = require("./client");
 
 var _clientLegacy = require("./client-legacy");
 
-var _stateHandler = require("./state-handler");
+var checks = _interopRequireWildcard(require("./checks"));
 
-var _pkceHandler = require("./pkce-handler");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-async function getAuthorizationUrl(params) {
-  const {
-    options,
-    query
-  } = params;
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+async function getAuthorizationUrl({
+  options,
+  query
+}) {
+  var _provider$version;
+
   const {
     logger,
     provider
   } = options;
+  let params = {};
 
-  try {
-    var _provider$version;
-
-    let params = {};
-
-    if (typeof provider.authorization === "string") {
-      const parsedUrl = new URL(provider.authorization);
-      const parsedParams = Object.fromEntries(parsedUrl.searchParams.entries());
-      params = { ...params,
-        ...parsedParams
-      };
-    } else {
-      var _provider$authorizati;
-
-      params = { ...params,
-        ...((_provider$authorizati = provider.authorization) === null || _provider$authorizati === void 0 ? void 0 : _provider$authorizati.params)
-      };
-    }
+  if (typeof provider.authorization === "string") {
+    const parsedUrl = new URL(provider.authorization);
+    const parsedParams = Object.fromEntries(parsedUrl.searchParams);
+    params = { ...params,
+      ...parsedParams
+    };
+  } else {
+    var _provider$authorizati;
 
     params = { ...params,
-      ...query
+      ...((_provider$authorizati = provider.authorization) === null || _provider$authorizati === void 0 ? void 0 : _provider$authorizati.params)
     };
+  }
 
-    if ((_provider$version = provider.version) !== null && _provider$version !== void 0 && _provider$version.startsWith("1.")) {
-      var _provider$authorizati2, _provider$authorizati3;
+  params = { ...params,
+    ...query
+  };
 
-      const client = (0, _clientLegacy.oAuth1Client)(options);
-      const tokens = await client.getOAuthRequestToken(params);
-      const url = `${(_provider$authorizati2 = (_provider$authorizati3 = provider.authorization) === null || _provider$authorizati3 === void 0 ? void 0 : _provider$authorizati3.url) !== null && _provider$authorizati2 !== void 0 ? _provider$authorizati2 : provider.authorization}?${new URLSearchParams({
-        oauth_token: tokens.oauth_token,
-        oauth_token_secret: tokens.oauth_token_secret,
-        ...tokens.params
-      })}`;
-      logger.debug("GET_AUTHORIZATION_URL", {
-        url
-      });
-      return {
-        redirect: url
-      };
-    }
+  if ((_provider$version = provider.version) !== null && _provider$version !== void 0 && _provider$version.startsWith("1.")) {
+    var _provider$authorizati2;
 
-    const client = await (0, _client.openidClient)(options);
-    const authorizationParams = params;
-    const cookies = [];
-    const state = await (0, _stateHandler.createState)(options);
+    const client = (0, _clientLegacy.oAuth1Client)(options);
+    const tokens = await client.getOAuthRequestToken(params);
+    const url = `${(_provider$authorizati2 = provider.authorization) === null || _provider$authorizati2 === void 0 ? void 0 : _provider$authorizati2.url}?${new URLSearchParams({
+      oauth_token: tokens.oauth_token,
+      oauth_token_secret: tokens.oauth_token_secret,
+      ...tokens.params
+    })}`;
 
-    if (state) {
-      authorizationParams.state = state.value;
-      cookies.push(state.cookie);
-    }
+    _clientLegacy.oAuth1TokenStore.set(tokens.oauth_token, tokens.oauth_token_secret);
 
-    const pkce = await (0, _pkceHandler.createPKCE)(options);
-
-    if (pkce) {
-      authorizationParams.code_challenge = pkce.code_challenge;
-      authorizationParams.code_challenge_method = pkce.code_challenge_method;
-      cookies.push(pkce.cookie);
-    }
-
-    const url = client.authorizationUrl(authorizationParams);
     logger.debug("GET_AUTHORIZATION_URL", {
       url,
-      cookies
+      provider
     });
     return {
-      redirect: url,
-      cookies
+      redirect: url
     };
-  } catch (error) {
-    logger.error("GET_AUTHORIZATION_URL_ERROR", error);
-    throw error;
   }
+
+  const client = await (0, _client.openidClient)(options);
+  const authorizationParams = params;
+  const cookies = [];
+  await checks.state.create(options, cookies, authorizationParams);
+  await checks.pkce.create(options, cookies, authorizationParams);
+  await checks.nonce.create(options, cookies, authorizationParams);
+  const url = client.authorizationUrl(authorizationParams);
+  logger.debug("GET_AUTHORIZATION_URL", {
+    url,
+    cookies,
+    provider
+  });
+  return {
+    redirect: url,
+    cookies
+  };
 }
