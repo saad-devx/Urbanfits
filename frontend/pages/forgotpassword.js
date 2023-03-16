@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 export default function ForgotPassword() {
       // schema and vallidation for forgot password
       const forgotpassSchema = Yup.object({
-        "email": Yup.string().email().required("Please enter your email address"),
+        "email": Yup.string().required("Please enter your Email or Username address"),
     })
     const initialForgotPasswordValues = { email: '' }
   return (

@@ -1,0 +1,66 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "pages/api/sendotp";
+exports.ids = ["pages/api/sendotp"];
+exports.modules = {
+
+/***/ "mongoose":
+/*!***************************!*\
+  !*** external "mongoose" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = require("mongoose");
+
+/***/ }),
+
+/***/ "twilio":
+/*!*************************!*\
+  !*** external "twilio" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("twilio");
+
+/***/ }),
+
+/***/ "(api)/./pages/api/sendotp.js":
+/*!******************************!*\
+  !*** ./pages/api/sendotp.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_connect_db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/utils/connect_db */ \"(api)/./utils/connect_db.js\");\n\n// import { Twilio } from \"twilio\";\nconst SendOtp = async (req, res)=>{\n    try {\n        if (req.method === \"POST\") {\n            await (0,_utils_connect_db__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n            const accountSid = \"ACc5361c82b5155fcdc1c7e968d3f7d7ea\";\n            const authToken = \"f1f51dc1278638394b98bfbeeaa62aaf\";\n            const client = __webpack_require__(/*! twilio */ \"twilio\")(accountSid, authToken);\n            // const otp = require('crypto-random-string')({ length: 6, type: 'numeric' });\n            const otp = 352061;\n            client.messages.create({\n                body: `Heyy jheengu pal! Your OTP code is ${otp}`,\n                from: \"03164975295\",\n                to: \"03420046922\"\n            }).then((message)=>console.log(message.sid)).catch((error)=>console.log(error));\n            // const accountSid = \"ACc5361c82b5155fcdc1c7e968d3f7d7ea\";\n            // const authToken = \"f1f51dc1278638394b98bfbeeaa62aaf\";\n            // const verifySid = \"VA9e639d7b6a3c9926e7a2a9fc48cc5d96\";\n            // const client = require(\"twilio\")(accountSid, authToken);\n            // client.verify.v2\n            //     .services(verifySid)\n            //     .verifications.create({ to: \"+923164975295\", channel: \"sms\" })\n            // .then((verification) => console.log(verification.status, 'yeah baby'))\n            // .then(() => {\n            //     const readline = require(\"readline\").createInterface({\n            //         input: process.stdin,\n            //         output: process.stdout,\n            //     });\n            //     readline.question(\"Please enter the OTP:\", (otpCode) => {\n            //         client.verify.v2\n            //             .services(verifySid)\n            //             // .verificationChecks.create({ to: \"+923164975295\", code: otpCode })\n            //             // .then((verification_check) => console.log(verification_check.status))\n            //             .then(() => readline.close());\n            //     });\n            // });\n            res.status(200).json({\n                success: true,\n                msg: \"Your mobile otp sent successfully !\"\n            });\n        } else {\n            res.status(400).json({\n                success: false,\n                msg: \"bad request, you are using wrong request method!\"\n            });\n        }\n    } catch (error) {\n        console.log(error);\n        res.status(500).json({\n            success: false,\n            msg: \"Internal server error, please try again later\"\n        });\n    }\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SendOtp);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvc2VuZG90cC5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUEwQztBQUMxQyxtQ0FBbUM7QUFFbkMsTUFBTUMsVUFBVSxPQUFPQyxLQUFLQyxNQUFRO0lBQ2hDLElBQUk7UUFDQSxJQUFJRCxJQUFJRSxNQUFNLEtBQUssUUFBUTtZQUN2QixNQUFNSiw2REFBU0E7WUFDZixNQUFNSyxhQUFhO1lBQ25CLE1BQU1DLFlBQVk7WUFDbEIsTUFBTUMsU0FBU0MsbUJBQU9BLENBQUMsd0JBQVVILFlBQVlDO1lBRTdDLCtFQUErRTtZQUMvRSxNQUFNRyxNQUFNO1lBRVpGLE9BQU9HLFFBQVEsQ0FDVkMsTUFBTSxDQUFDO2dCQUNKQyxNQUFNLENBQUMsbUNBQW1DLEVBQUVILElBQUksQ0FBQztnQkFDakRJLE1BQU07Z0JBQ05DLElBQUk7WUFDUixHQUNDQyxJQUFJLENBQUNDLENBQUFBLFVBQVdDLFFBQVFDLEdBQUcsQ0FBQ0YsUUFBUUcsR0FBRyxHQUN2Q0MsS0FBSyxDQUFDQyxDQUFBQSxRQUFTSixRQUFRQyxHQUFHLENBQUNHO1lBRWhDLDJEQUEyRDtZQUMzRCx3REFBd0Q7WUFDeEQsMERBQTBEO1lBQzFELDJEQUEyRDtZQUUzRCxtQkFBbUI7WUFDbkIsMkJBQTJCO1lBQzNCLHFFQUFxRTtZQUNqRSx5RUFBeUU7WUFDekUsZ0JBQWdCO1lBQ2hCLDZEQUE2RDtZQUM3RCxnQ0FBZ0M7WUFDaEMsa0NBQWtDO1lBQ2xDLFVBQVU7WUFDVixnRUFBZ0U7WUFDaEUsMkJBQTJCO1lBQzNCLG1DQUFtQztZQUNuQyxvRkFBb0Y7WUFDcEYsdUZBQXVGO1lBQ3ZGLDZDQUE2QztZQUM3QyxVQUFVO1lBQ1YsTUFBTTtZQUdWbEIsSUFBSW1CLE1BQU0sQ0FBQyxLQUFLQyxJQUFJLENBQUM7Z0JBQ2pCQyxTQUFTLElBQUk7Z0JBQ2JDLEtBQUs7WUFDVDtRQUNKLE9BQ0s7WUFDRHRCLElBQUltQixNQUFNLENBQUMsS0FBS0MsSUFBSSxDQUFDO2dCQUFFQyxTQUFTLEtBQUs7Z0JBQUVDLEtBQUs7WUFBbUQ7UUFDbkcsQ0FBQztJQUNMLEVBQ0EsT0FBT0osT0FBTztRQUNWSixRQUFRQyxHQUFHLENBQUNHO1FBQ1psQixJQUFJbUIsTUFBTSxDQUFDLEtBQUtDLElBQUksQ0FBQztZQUFFQyxTQUFTLEtBQUs7WUFBRUMsS0FBSztRQUFnRDtJQUNoRztBQUNKO0FBQ0EsaUVBQWV4QixPQUFPQSxFQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vdXJiYW4tZml0cy8uL3BhZ2VzL2FwaS9zZW5kb3RwLmpzPzJjZWQiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IENvbm5lY3REQiBmcm9tIFwiQC91dGlscy9jb25uZWN0X2RiXCJcclxuLy8gaW1wb3J0IHsgVHdpbGlvIH0gZnJvbSBcInR3aWxpb1wiO1xyXG5cclxuY29uc3QgU2VuZE90cCA9IGFzeW5jIChyZXEsIHJlcykgPT4ge1xyXG4gICAgdHJ5IHtcclxuICAgICAgICBpZiAocmVxLm1ldGhvZCA9PT0gJ1BPU1QnKSB7XHJcbiAgICAgICAgICAgIGF3YWl0IENvbm5lY3REQigpXHJcbiAgICAgICAgICAgIGNvbnN0IGFjY291bnRTaWQgPSAnQUNjNTM2MWM4MmI1MTU1ZmNkYzFjN2U5NjhkM2Y3ZDdlYSc7XHJcbiAgICAgICAgICAgIGNvbnN0IGF1dGhUb2tlbiA9ICdmMWY1MWRjMTI3ODYzODM5NGI5OGJmYmVlYWE2MmFhZic7XHJcbiAgICAgICAgICAgIGNvbnN0IGNsaWVudCA9IHJlcXVpcmUoJ3R3aWxpbycpKGFjY291bnRTaWQsIGF1dGhUb2tlbik7XHJcblxyXG4gICAgICAgICAgICAvLyBjb25zdCBvdHAgPSByZXF1aXJlKCdjcnlwdG8tcmFuZG9tLXN0cmluZycpKHsgbGVuZ3RoOiA2LCB0eXBlOiAnbnVtZXJpYycgfSk7XHJcbiAgICAgICAgICAgIGNvbnN0IG90cCA9IDM1MjA2MVxyXG5cclxuICAgICAgICAgICAgY2xpZW50Lm1lc3NhZ2VzXHJcbiAgICAgICAgICAgICAgICAuY3JlYXRlKHtcclxuICAgICAgICAgICAgICAgICAgICBib2R5OiBgSGV5eSBqaGVlbmd1IHBhbCEgWW91ciBPVFAgY29kZSBpcyAke290cH1gLFxyXG4gICAgICAgICAgICAgICAgICAgIGZyb206ICcwMzE2NDk3NTI5NScsXHJcbiAgICAgICAgICAgICAgICAgICAgdG86ICcwMzQyMDA0NjkyMidcclxuICAgICAgICAgICAgICAgIH0pXHJcbiAgICAgICAgICAgICAgICAudGhlbihtZXNzYWdlID0+IGNvbnNvbGUubG9nKG1lc3NhZ2Uuc2lkKSlcclxuICAgICAgICAgICAgICAgIC5jYXRjaChlcnJvciA9PiBjb25zb2xlLmxvZyhlcnJvcikpO1xyXG5cclxuICAgICAgICAgICAgLy8gY29uc3QgYWNjb3VudFNpZCA9IFwiQUNjNTM2MWM4MmI1MTU1ZmNkYzFjN2U5NjhkM2Y3ZDdlYVwiO1xyXG4gICAgICAgICAgICAvLyBjb25zdCBhdXRoVG9rZW4gPSBcImYxZjUxZGMxMjc4NjM4Mzk0Yjk4YmZiZWVhYTYyYWFmXCI7XHJcbiAgICAgICAgICAgIC8vIGNvbnN0IHZlcmlmeVNpZCA9IFwiVkE5ZTYzOWQ3YjZhM2M5OTI2ZTdhMmE5ZmM0OGNjNWQ5NlwiO1xyXG4gICAgICAgICAgICAvLyBjb25zdCBjbGllbnQgPSByZXF1aXJlKFwidHdpbGlvXCIpKGFjY291bnRTaWQsIGF1dGhUb2tlbik7XHJcblxyXG4gICAgICAgICAgICAvLyBjbGllbnQudmVyaWZ5LnYyXHJcbiAgICAgICAgICAgIC8vICAgICAuc2VydmljZXModmVyaWZ5U2lkKVxyXG4gICAgICAgICAgICAvLyAgICAgLnZlcmlmaWNhdGlvbnMuY3JlYXRlKHsgdG86IFwiKzkyMzE2NDk3NTI5NVwiLCBjaGFubmVsOiBcInNtc1wiIH0pXHJcbiAgICAgICAgICAgICAgICAvLyAudGhlbigodmVyaWZpY2F0aW9uKSA9PiBjb25zb2xlLmxvZyh2ZXJpZmljYXRpb24uc3RhdHVzLCAneWVhaCBiYWJ5JykpXHJcbiAgICAgICAgICAgICAgICAvLyAudGhlbigoKSA9PiB7XHJcbiAgICAgICAgICAgICAgICAvLyAgICAgY29uc3QgcmVhZGxpbmUgPSByZXF1aXJlKFwicmVhZGxpbmVcIikuY3JlYXRlSW50ZXJmYWNlKHtcclxuICAgICAgICAgICAgICAgIC8vICAgICAgICAgaW5wdXQ6IHByb2Nlc3Muc3RkaW4sXHJcbiAgICAgICAgICAgICAgICAvLyAgICAgICAgIG91dHB1dDogcHJvY2Vzcy5zdGRvdXQsXHJcbiAgICAgICAgICAgICAgICAvLyAgICAgfSk7XHJcbiAgICAgICAgICAgICAgICAvLyAgICAgcmVhZGxpbmUucXVlc3Rpb24oXCJQbGVhc2UgZW50ZXIgdGhlIE9UUDpcIiwgKG90cENvZGUpID0+IHtcclxuICAgICAgICAgICAgICAgIC8vICAgICAgICAgY2xpZW50LnZlcmlmeS52MlxyXG4gICAgICAgICAgICAgICAgLy8gICAgICAgICAgICAgLnNlcnZpY2VzKHZlcmlmeVNpZClcclxuICAgICAgICAgICAgICAgIC8vICAgICAgICAgICAgIC8vIC52ZXJpZmljYXRpb25DaGVja3MuY3JlYXRlKHsgdG86IFwiKzkyMzE2NDk3NTI5NVwiLCBjb2RlOiBvdHBDb2RlIH0pXHJcbiAgICAgICAgICAgICAgICAvLyAgICAgICAgICAgICAvLyAudGhlbigodmVyaWZpY2F0aW9uX2NoZWNrKSA9PiBjb25zb2xlLmxvZyh2ZXJpZmljYXRpb25fY2hlY2suc3RhdHVzKSlcclxuICAgICAgICAgICAgICAgIC8vICAgICAgICAgICAgIC50aGVuKCgpID0+IHJlYWRsaW5lLmNsb3NlKCkpO1xyXG4gICAgICAgICAgICAgICAgLy8gICAgIH0pO1xyXG4gICAgICAgICAgICAgICAgLy8gfSk7XHJcblxyXG5cclxuICAgICAgICAgICAgcmVzLnN0YXR1cygyMDApLmpzb24oe1xyXG4gICAgICAgICAgICAgICAgc3VjY2VzczogdHJ1ZSxcclxuICAgICAgICAgICAgICAgIG1zZzogXCJZb3VyIG1vYmlsZSBvdHAgc2VudCBzdWNjZXNzZnVsbHkgIVwiLFxyXG4gICAgICAgICAgICB9KVxyXG4gICAgICAgIH1cclxuICAgICAgICBlbHNlIHtcclxuICAgICAgICAgICAgcmVzLnN0YXR1cyg0MDApLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgbXNnOiBcImJhZCByZXF1ZXN0LCB5b3UgYXJlIHVzaW5nIHdyb25nIHJlcXVlc3QgbWV0aG9kIVwiIH0pXHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG4gICAgY2F0Y2ggKGVycm9yKSB7XHJcbiAgICAgICAgY29uc29sZS5sb2coZXJyb3IpXHJcbiAgICAgICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgbXNnOiBcIkludGVybmFsIHNlcnZlciBlcnJvciwgcGxlYXNlIHRyeSBhZ2FpbiBsYXRlclwiIH0pXHJcbiAgICB9XHJcbn1cclxuZXhwb3J0IGRlZmF1bHQgU2VuZE90cCJdLCJuYW1lcyI6WyJDb25uZWN0REIiLCJTZW5kT3RwIiwicmVxIiwicmVzIiwibWV0aG9kIiwiYWNjb3VudFNpZCIsImF1dGhUb2tlbiIsImNsaWVudCIsInJlcXVpcmUiLCJvdHAiLCJtZXNzYWdlcyIsImNyZWF0ZSIsImJvZHkiLCJmcm9tIiwidG8iLCJ0aGVuIiwibWVzc2FnZSIsImNvbnNvbGUiLCJsb2ciLCJzaWQiLCJjYXRjaCIsImVycm9yIiwic3RhdHVzIiwianNvbiIsInN1Y2Nlc3MiLCJtc2ciXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(api)/./pages/api/sendotp.js\n");
+
+/***/ }),
+
+/***/ "(api)/./utils/connect_db.js":
+/*!*****************************!*\
+  !*** ./utils/connect_db.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\nconst ConnectDB = async ()=>{\n    if (mongoose.connections[0].readyState) return console.log(\"Success! Connection already exists\\n\");\n    else return mongoose.connect(\"mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority\", {\n        useNewUrlParser: true,\n        useUnifiedTopology: true,\n        dbName: \"Urbanfits\"\n    }, console.log(\"Connected to the mongodb successfully!\\n\"));\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ConnectDB);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi91dGlscy9jb25uZWN0X2RiLmpzLmpzIiwibWFwcGluZ3MiOiI7Ozs7QUFBQSxNQUFNQSxXQUFXQyxtQkFBT0EsQ0FBQztBQUV6QixNQUFNQyxZQUFZLFVBQVU7SUFDeEIsSUFBR0YsU0FBU0csV0FBVyxDQUFDLEVBQUUsQ0FBQ0MsVUFBVSxFQUFFLE9BQU9DLFFBQVFDLEdBQUcsQ0FBQztTQUNyRCxPQUFPTixTQUFTTyxPQUFPLENBQUNDLHdHQUFxQixFQUFDO1FBQy9DRyxpQkFBaUIsSUFBSTtRQUNyQkMsb0JBQW9CLElBQUk7UUFDeEJDLFFBQVE7SUFDVixHQUFHUixRQUFRQyxHQUFHLENBQUM7QUFDckI7QUFFQSxpRUFBZUosU0FBU0EsRUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovL3VyYmFuLWZpdHMvLi91dGlscy9jb25uZWN0X2RiLmpzP2NlZmQiXSwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgbW9uZ29vc2UgPSByZXF1aXJlKCdtb25nb29zZScpXHJcblxyXG5jb25zdCBDb25uZWN0REIgPSBhc3luYyAoKT0+e1xyXG4gICAgaWYobW9uZ29vc2UuY29ubmVjdGlvbnNbMF0ucmVhZHlTdGF0ZSkgcmV0dXJuIGNvbnNvbGUubG9nKFwiU3VjY2VzcyEgQ29ubmVjdGlvbiBhbHJlYWR5IGV4aXN0c1xcblwiKVxyXG4gICAgZWxzZSByZXR1cm4gbW9uZ29vc2UuY29ubmVjdChwcm9jZXNzLmVudi5NT05HT19VUkkse1xyXG4gICAgICAgIHVzZU5ld1VybFBhcnNlcjogdHJ1ZSxcclxuICAgICAgICB1c2VVbmlmaWVkVG9wb2xvZ3k6IHRydWUsXHJcbiAgICAgICAgZGJOYW1lOiBcIlVyYmFuZml0c1wiXHJcbiAgICAgIH0sIGNvbnNvbGUubG9nKFwiQ29ubmVjdGVkIHRvIHRoZSBtb25nb2RiIHN1Y2Nlc3NmdWxseSFcXG5cIikpXHJcbn1cclxuXHJcbmV4cG9ydCBkZWZhdWx0IENvbm5lY3REQiJdLCJuYW1lcyI6WyJtb25nb29zZSIsInJlcXVpcmUiLCJDb25uZWN0REIiLCJjb25uZWN0aW9ucyIsInJlYWR5U3RhdGUiLCJjb25zb2xlIiwibG9nIiwiY29ubmVjdCIsInByb2Nlc3MiLCJlbnYiLCJNT05HT19VUkkiLCJ1c2VOZXdVcmxQYXJzZXIiLCJ1c2VVbmlmaWVkVG9wb2xvZ3kiLCJkYk5hbWUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(api)/./utils/connect_db.js\n");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../../webpack-api-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/sendotp.js"));
+module.exports = __webpack_exports__;
+
+})();

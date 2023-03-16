@@ -3,7 +3,10 @@ import Card from '../components/cards/card';
 import toaster from '@/utils/toast_function';
 import Navbar from '../components/navbar';
 import Button from '../components/buttons/simple_btn';
+import Head from 'next/head';
 import Footer from '../components/footer'
+import Loader from '@/components/loader';
+import countryCodes from '@/static data/countryCodes';
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -16,22 +19,27 @@ const InfoCard = (props) => {
 
 export default function Contact() {
     const [expand, setExpand] = useState(false)
+    const [loader, setLoader] = useState(null)
 
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
         firstname: Yup.string().min(2).required("Please enter your First name"),
         lastname: Yup.string().min(2).required("Please enter your Last name"),
-        phone: Yup.string().matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Please enter a valid phone number with postal code and space eg. +971 0000000000").required(),
+        // phone: Yup.string().matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, "Please enter a valid phone number with postal code and space eg. +971 0000000000").required(),
+        phone_prefix: Yup.string().required('Phone prefix is required to save'),
+        phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save'),
         email: Yup.string().email().required("Please enter your email address"),
+        subject: Yup.string().min(2, "message must be atleast 2 characters").max(100, "Subject cannot exceed 100 characters").required("Please type a your subject here"),
         msg: Yup.string().min(20, "message must be atleast 20 characters").max(1000).required("Please leave a message here"),
         dateofbirth: Yup.string()
 
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', dateofbirth: '', email: '', phone: '', msg: '' },
+        initialValues: { title: 'Title', firstname: '', lastname: '', phone_prefix: 'Select Country Code', phone_number: '', email: '', subject: '', msg: '' },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             console.log(values)
+            setLoader(<Loader />)
             let response = await fetch(`${process.env.HOST}/api/contact`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -39,13 +47,20 @@ export default function Contact() {
             })
             let res = await response.json()
             console.log(res)
-            toaster(res.success? "success": "error", res.msg)
-            handleReset()
+            toaster(res.success ? "success" : "error", res.msg)
+            setLoader(null)
+            // handleReset()
         }
     })
 
     return (
         <>
+        <Head>
+                <title>UF - Contact Us</title>
+                <meta name="description" content="Urban Fits, The brand of culture" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
+            {loader}
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
@@ -78,20 +93,29 @@ export default function Contact() {
                                         <input className="w-full bg-transparent outline-none border-none" type="email" value={values.email} name="email" id="email" onBlur={handleBlur} onChange={handleChange} placeholder="Email*" />
                                     </div>
                                 </div>
-                                <div className="flex justify-between w-full ">
+                                <div className="flex justify-between w-full">
                                     <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                        {touched.phone && errors.phone ? <Tooltip classes="form-error" content={errors.phone} /> : null}
-                                        <input className="w-full bg-transparent outline-none border-none" type="phone" value={values.phone} name="phone" id="phone" onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number*" />
+                                        {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
+                                        <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                            {countryCodes.map((item) => {
+                                                if (!item.code) return <option disabled>{item.name}</option>
+                                                return <option value={item.code}>{item.name} {item.code}</option>
+                                            })}
+                                        </select>
                                     </div>
                                     <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                        {touched.dateofbirth && errors.dateofbirth ? <Tooltip classes="form-error" content={errors.dateofbirth} /> : null}
-                                        <input className="w-full bg-transparent outline-none border-none" type="date" value={values.dateofbirth} name="dateofbirth" id="dateofbirth" onBlur={handleBlur} onChange={handleChange} placeholder="Date Of Birth" />
+                                        {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
+                                        <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                                     </div>
                                 </div>
+                                <div className="relative w-full md:w-4/6 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                        {touched.subject && errors.subject ? <Tooltip classes="form-error" content={errors.subject} /> : null}
+                                        <input className="w-full bg-transparent outline-none border-none" type="text" name="subject" id="subject" size="100" maxLength={100} value={values.subject} onBlur={handleBlur} onChange={handleChange} placeholder="Subject" />
+                                    </div>
                                 <div className="flex flex-col justify-end">
-                                    <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mt-4">
+                                    <div className="relative w-full data_field flex items-center border rounded-md border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition p-2 mt-4">
                                         {touched.msg && errors.msg ? <Tooltip classes="form-error" content={errors.msg} /> : null}
-                                        <input className="w-full bg-transparent outline-none border-none" type="text" value={values.msg} name="msg" id="msg" maxLength={1000} onBlur={handleBlur} onChange={handleChange} placeholder="Type Your Message here..." />
+                                        <textarea rows={5} className="w-full bg-transparent outline-none border-none" type="text" value={values.msg} name="msg" id="msg" maxLength={1000} onBlur={handleBlur} onChange={handleChange} placeholder="Type Your Message here..." />
                                     </div>
                                     <small className='self-end text-gray-500 my-3' >1000 characters max</small>
                                 </div>

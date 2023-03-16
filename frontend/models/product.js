@@ -48,3 +48,23 @@ const ProductSchema = mongoose.Schema({
 }, { timestamps: true })
 
 module.exports = mongoose.models.Product || mongoose.model("Product", ProductSchema)
+
+
+const newProductSchema = {
+    id: 1,
+    category: '',
+    description: '',
+    slug: '',
+    varients: [
+        {
+            color: 'red',
+            images: [{
+                image_id: '415j39g',
+                url: 'https://blabla...'
+            }],
+            stock: 57,
+            size: [34, 38, 42, 46]
+        }
+    ],
+    price: 74.99
+}

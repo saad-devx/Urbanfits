@@ -9,6 +9,7 @@ import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
 import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
+import countryCodes from '@/static data/countryCodes';
 // image imports
 import Image from 'next/image';
 import female_avatar from '../../public/avatars/female.svg'
@@ -25,7 +26,7 @@ const InfoCard = (props) => {
 }
 
 // User Avatar based on the gender
-export function Avatar ({user}){
+export function Avatar({ user }) {
     return <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.gender) === "Male" ? male_avatar : female_avatar} alt="avatar" />
 }
 
@@ -68,22 +69,23 @@ export default function Personalinfo() {
         title: Yup.string().required("Please enter a title"),
         firstname: Yup.string().min(2).required("Please enter your First name"),
         lastname: Yup.string().min(2).required("Please enter your Last name"),
-        dateofbirth: Yup.date(),
+        gender: Yup.string().required('Gender is required field'),
+        phone_prefix: Yup.string().required('Phone prefix is required to save'),
+        phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save'),
         newsletter_sub_email: Yup.bool(),
         newsletter_sub_phone: Yup.bool()
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', newsletter_sub_email: false, newsletter_sub_phone: false },
+        initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '', newsletter_sub_email: false, newsletter_sub_phone: false },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
+            console.log(values)
             setLoader(<Loader />)
-            console.log("i am running")
             let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values)
             })
-            console.log("i am running")
             let res = await response.json()
             localStorage.setItem("authToken", res.payload)
             toaster(res.success === true ? "success" : "error", res.msg)
@@ -105,6 +107,8 @@ export default function Personalinfo() {
                 firstname: ifExists(user.firstname),
                 lastname: ifExists(user.lastname),
                 gender: ifExists(user.gender),
+                phone_prefix: ifExists(user.phone_prefix),
+                phone_number: ifExists(user.phone_number),
                 newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
                 newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
             })
@@ -142,7 +146,7 @@ export default function Personalinfo() {
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                                 </div>
                             </div>
-                            <div className="flex justify-between w-full lg:w-5/6 ">
+                            <div className="flex justify-between w-full lg:w-5/6">
                                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
@@ -160,6 +164,21 @@ export default function Personalinfo() {
                                     {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="gender" id="gender" value={values.gender} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div> */}
+                            </div>
+                            <div className="flex justify-between w-full lg:w-5/6">
+                                <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                    {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
+                                    <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                        {countryCodes.map((item) => {
+                                            if (!item.code) return <option disabled>{item.name}</option>
+                                            return <option value={item.code}>{item.name} {item.code}</option>
+                                        })}
+                                    </select>
+                                </div>
+                                <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                    {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
+                                    <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
+                                </div>
                             </div>
                             <div className="w-full lg:w-5/6 ">
                                 <h1 className="text-xl mt-5">Newsletter Subscription</h1>
