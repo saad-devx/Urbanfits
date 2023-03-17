@@ -155,7 +155,7 @@ export default function Signing(props) {
                                 </div>
                                 <div className=" w-full flex justify-between text-sm]">
                                     <small className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>Buy creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</small>
-                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{page === 'login' ? 'Forgot Password?' : ''}</Link></small>
+                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname=== '/login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
                             {/* changing Buttons according to different page endpoints */}

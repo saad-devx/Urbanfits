@@ -37,9 +37,9 @@ export default function Carousel() {
                 {[image1, image2, image3, image4, image5].map((img, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
                         <div className="absolute w-2/6 bottom-[8%] left-[4%] flex flex-col items-start text-white text-5xl">
-                            <h1 className="text-white text-4xl md:font-bold">Denim</h1>
-                            <p className="mt-1 mb-4 text-xl font_futuraLTlite">For Women</p>
-                            <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-base" >Shope Now</LinkBtn>
+                            <h1 className="text-white text-2xl md:text-[38px] md:font-bold">Denim</h1>
+                            <p className="mt-1 mb-4 text-base md:text-xl font_futuraLTlite">For Women</p>
+                            <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-2xl" >Shop Now</LinkBtn>
                         </div>
                         <Image className='w-full h-full transition-all duration-700' src={img} alt="Urban images" />
                     </SplideSlide>
@@ -48,8 +48,8 @@ export default function Carousel() {
 
             {/* Carousel Title */}
             <div className="w-full text-center absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-white space-y-5">
-                <h1 className="text-5xl md:text-8xl">Urban Fits</h1>
-                <h3 className="font_futuraLTlite text-3xl md:text-5xl">United Arab Emirates</h3>
+                <h1 className="text-[45px] md:text-[86px]">Urban Fits</h1>
+                <h3 className="font_futuraLTlite text-[26px] md:text-[44px]">United Arab Emirates</h3>
             </div>
 
             {/* Buttons for next, prev slide and to pause the carousel */}
