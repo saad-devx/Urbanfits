@@ -2,15 +2,21 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', "pbs.twimg.com"]
+    domains: ['images.unsplash.com', "pbs.twimg.com", "i.etsystatic.com"]
   },
   env: {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
-    // HOST: "http://localhost:3000",
-    HOST: "https://urbanfits.vercel.app",
+    HOST: "http://localhost:3000",
+    // HOST: "https://urbanfits.vercel.app",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand",
-    GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
-    GOOGLE_CLIENT_SECRET: "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"
+    // Google client credentials
+    GOOGLE_CLIENT_ID: "",
+    GOOGLE_CLIENT_SECRET: "",
+    // Email SMTP credentials
+    SMTP_HOST: "smtp.sendgrid.net",
+    SMTP_USER: "apikey",
+    SMTP_PASSWORD: "",
+    SMTP_SENDER_EMAIL: "",
   },
   async headers() {
     return [

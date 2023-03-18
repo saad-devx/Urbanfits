@@ -23,30 +23,24 @@ export default function Home() {
     // states and function for modals
     const [modal1, setModal1] = useState(false);
     const [modal3, setModal3] = useState(false);
+    const [carouselClasses, setCarouselClasses] = useState('w-full h-screen');
+
+    // useEffect(() => {
+    //     let item = localStorage.getItem("loadingModal");
+    //     if (item) return;
+    //     setModal1(true);
+    //     localStorage.setItem("loadingModal", true);
+    // }, []);
 
     useEffect(() => {
-        let item = localStorage.getItem("loadingModal");
-        if (item) return;
-        setModal1(true);
-        localStorage.setItem("loadingModal", true);
-    }, []);
-
-    useEffect(() => {
-        let carousel = document.querySelector("#carousel");
+        // let carousel = document.querySelector("#carousel");
         let wrapper = document.querySelector("#content_wrapper");
         let navbar = document.querySelector("#navbar");
         navbar.classList.add("opacity-0", "pointer-events-none");
-        const setSizefunc=()=>{
+        const setSizefunc = () => {
             let position = window.pageYOffset;
             if (position >> 0) {
-                carousel.classList.add(
-                    'lg:w-4/5',
-                    'w-11/12',
-                    'h-80vh',
-                    'rounded-2rem',
-                    'mt-7',
-                    'mx-auto',
-                    'lg:m-10');
+                setCarouselClasses('w-11/12 lg:w-90pr h-80vh lg:h-90vh rounded-2rem mt-7')
                 wrapper.classList.add('lg:w-[94.6%]');
                 navbar.classList.remove('opacity-0', 'pointer-events-none')
                 window.removeEventListener('scroll', setSizefunc);
@@ -73,63 +67,43 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className="w-full h-full section_container">
-                <Navbar logoNull transition="duration-1000 ease-linear" setExpand={setExpand} />
+                <Navbar logoNull transition="duration-700 lg:ease-linear" setExpand={setExpand} />
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 <section className={`${expand === true ? "w-full lg:w-4/5" : "w-full"} bg-gray-100 float-right flex justify-center lg:justify-end transition-all ease-linear duration-700`} >
                     <Image alt="Urban images" src={Logo} className="fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20" />
-                    <div id="content_wrapper" className="w-full flex flex-col justify-center items-center space-y-5 transition-all ease-linear duration-1000" >
-                        <div id="carousel" className="w-full h-screen font_futuraLT transition-all duration-1000 ease-linear overflow-hidden" >
+                    <div id="content_wrapper" className="w-full flex flex-col justify-center items-center space-y-5 transition-all ease-linear duration-700" >
+                        <div className={`${carouselClasses} flex justify-center items-center font_futuraLT transition-all duration-1000 ease-linear overflow-hidden`} >
                             <Carousel />
                         </div>
                         {/* Auto scroll Carousel  */}
-                        <section className="relative w-full h-80vh lg:h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT">
-                            <div className="w-full md:w-35pr md:h-full p-5 flex flex-col justify-center items-start">
-                                <h2 className="text-2xl md:text-4xl lg:text-5xl word-wrap leading-tight">
-                                    Newest Gear to Work
-                                </h2>
-                                <h4 className="font_futuraLTlite text-lg">
-                                    Innovation and Comfort for Women
-                                </h4>
+                        <section className="relative w-full h-80vh lg:h-screen p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT overflow-hidden">
+                            <div className="lg:absolute left-0 w-full md:w-[35vw] md:h-full lg:pl-5 mb-3 lg:m-0 leading-7 flex flex-col justify-center items-start">
+                                <h2 className="text-xl md:text-[44px] lg:text-5xl word-wrap leading-tight">Newest Gear to Work</h2>
+                                <h4 className="font_futuraLTlite">Innovation and Comfort for Women</h4>
                             </div>
-                            <div className="w-full md:w-70pr h-full flex items-center">
+                            <div className="lg:absolute h-80vh w-full lg:ml-[40rem] lg:w-[80vw] md:h-[95%] rounded-3xl flex items-center">
                                 <CardCarousel />
                             </div>
-                            <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+                            <div className="hidden lg:block absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                         </section>
                         {/* Shopping Card Section */}
-                        <section className="w-full h-screen p-3 md:p-10 flex flex-col lg:flex-row justify-between font_futuraLT space-y-7 lg:space-y-0 snap-center">
+                        <section className="w-full h-screen p-5 md:p-10 flex flex-col lg:flex-row justify-between font_futuraLT space-y-5 lg:space-y-0">
                             <PicCard img={image1} />
                             <PicCard img={image2} />
                         </section>
                         {/* Shopping Card Section */}
-                        <section className="w-full font_futuraLT snap-center">
-                            <h3 className="text-4xl mx-3 md:ml-10">Urban Unicorn Sneakers</h3>
-                            <div className="w-full h-screen p-3 md:p-10 flex flex-col lg:flex-row justify-between space-y-7 lg:space-y-0">
+                        <section className="w-full p-5 md:p-10 font_futuraLT">
+                            <h3 className="text-xl lg:text-4xl translate-y-5 mb-5 lg:m-0">Urban Unicorn Sneakers</h3>
+                            <div className="w-full h-screen py-5 md:py-10 flex flex-col lg:flex-row justify-between space-y-5 lg:space-y-0">
                                 <PicCard img={image4} />
                                 <PicCard img={image3} />
                             </div>
                         </section>
-                        {/* Auto scroll Carousel  */}
-                        <section className="relative w-full h-80vh lg:h-screen p-3 md:p-5 md:pr-0 flex flex-col md:flex-row font_futuraLT snap-center">
-                            <div className="w-full md:w-35pr md:h-full p-5 flex flex-col justify-center items-start">
-                                <h2 className="text-2xl md:text-4xl lg:text-5xl word-wrap leading-tight self-start">
-                                    Newest Gear to Work
-                                </h2>
-                                <h4 className="font_futuraLTlite text-lg">
-                                    Innovation and Comfort for Men
-                                </h4>
-                            </div>
-                            <div className="w-full md:w-70pr h-full flex items-center">
-                                <CardCarousel />
-                            </div>
-                            <div className="absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
-                        </section>
-                        {/* Ending Link Cards section */}
                         <section className="w-full h-auto lg:h-80vh p-5 flex flex-col lg:flex-row justify-around items-center space-y-6 lg:space-y-0">
-                            <Card href="/contact" title="Contact Us" value="If you have any query then please contact us." valueCenter btnValue="Contact Us" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
-                            <Card href="/customercare" title="Customer Care" value="Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone." valueCenter btnValue="Get In Touch" classes="lg:scale-110 w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
-                            <Card href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." valueCenter btnValue="See Our FAQs" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
+                            <Card href="/contact" title="Contact Us" value="If you have any query then please contact us." valueCenter btnClasses="w-1/2 py-5" btnValue="Contact Us" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
+                            <Card href="/customercare" title="Customer Care" value="Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone." valueCenter btnClasses="w-1/2 py-5" btnValue="Get In Touch" classes="lg:scale-110 w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
+                            <Card href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." valueCenter btnClasses="w-1/2 py-5" btnValue="See Our FAQs" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
                         </section>
                         <Footer />
                     </div>

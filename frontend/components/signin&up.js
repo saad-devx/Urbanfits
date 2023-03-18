@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
+import countryCodes from '@/static data/countryCodes';
 import toaster from '../utils/toast_function';
 import initiateAddress from '@/utils/init_address';
 import Head from 'next/head'
@@ -22,41 +23,21 @@ import Tooltip from './tooltip';
 export default function Signing(props) {
     const { data: session } = useSession()
     const { page } = props
+    const [resendOption, setResendOption] = useState(null)
     // configuring router
     const router = useRouter()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    //                                     Submit form functionality
-
-    const initialValueChanger = () => { // Initial Values Object would change on the basis of route name
-        let path = router.pathname
-        if (path === "/signup") return props.initialSignupValues
-        if (path === "/login") return props.initialLoginValues
-        if (path === "/forgotpassword") return props.initialForgotPasswordValues
-        if (path === "/resetpassword") return props.initialResetPasswordValues
-    }
-    const validationObjectChanger = () => { // Validation Object would change on the basis of route name
-        let path = router.pathname
-        if (path === "/signup") return props.signupuSchema
-        if (path === "/login") return props.loginSchema
-        if (path === "/forgotpassword") return props.forgotpassSchema
-        if (path === "/resetpassword") return props.resetpassSchema
-    }
     //                                      Submit function
 
     // setting request method according to the pathname
     const getMethod = () => {
-        let path = router.pathname
-        if (path === "/signup") return "POST"
-        if (path === "/login") return "POST"
-        if (path === "/forgotpassword") return "POST"
-        if (path === "/resetpassword") return "PUT"
+        if (router.pathname === "/resetpassword") return "PUT"
+        else return "POST"
     }
-    //onSubmit function and destructuring Formik functions
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
-        initialValues: initialValueChanger(),
-        validationSchema: validationObjectChanger(),
-        onSubmit: async (values) => {
+    const onsubmit = async (values) => {
+        try {
+            console.log(values);
             setLoader(<Loader />)
             let path = router.pathname
             let response = await fetch(`${process.env.HOST}/api/user${path}`, {
@@ -65,23 +46,43 @@ export default function Signing(props) {
                 body: JSON.stringify(values)
             })
             let res = await response.json()
-            if(res.success && res.payload) {
+            if (res.success && res.payload) {
                 localStorage.setItem("authToken", res.payload)
                 await initiateAddress(res.payload, router)
                 toaster("success", res.msg)
             }
-            else {
-                toaster("error", res.msg)
+            else if (res.resetPassToken && res.success) {
+                setResendOption(<span>We just sent you and email, check your inbox and follow the link. <br /> Didn't get the mail? <button type='submit' className="border-b border-b-yellow-700">Resend Email</button></span>)
                 return setLoader(null)
+            }
+            else if (res.resetPassword) {
+                toaster('success', res.msg)
+                setLoader(null)
+                return router.push('/login')
+            }
+            else {
+                setLoader(null)
+                return toaster('error', res.msg)
             }
             setLoader(null)
             router.push('/user/personalinfo')
-            handleReset()
         }
+        catch (error) {
+            setLoader(null)
+            console.log(error)
+            toaster("error", "Sorry some error occurred, We're trying to fix it")
+
+        }
+    }
+    //onSubmit function and destructuring Formik functions
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
+        initialValues: props.initialValues,
+        validationSchema: props.validationSchema,
+        onSubmit: onsubmit
     })
-    if(session){
+    if (session) {
         console.log(session)
-        return <div>signed in with {session.user.email} <br /> <button onClick={()=>{signOut()}} >Sign out</button></div>
+        return <div>signed in with {session.user.email} <br /> <button onClick={() => { signOut() }} >Sign out</button></div>
     }
     return (
         <>
@@ -109,7 +110,7 @@ export default function Signing(props) {
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/4 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <button onClick={()=>{signIn("google")}} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button onClick={() => { signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
                             <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                         </div>
                         <form className="bg-white p-2 font_futuraLT" onReset={handleReset} onSubmit={handleSubmit} >
@@ -117,33 +118,44 @@ export default function Signing(props) {
                                 {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
                                 <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
                             </div>
-                            <div className={` ${page === "login" && props.type === "resetpass" ? "hidden" : ''} relative ata_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            <div className={` ${page === "login" && props.type === "resetpass" ? "hidden" : ''} relative data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email" />
+                                <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder={router.pathname === '/login' || router.pathname === '/forgotpassword' ? 'Username or Email' : 'Email'} />
                             </div>
-                            <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                                {touched.phone && errors.phone ? <Tooltip classes="form-error" content={errors.phone} /> : null}
-                                <input className="w-full outline-none border-none" name="phone" id="phone" value={values.phone} onBlur={handleBlur} onChange={handleChange} placeholder="Phone No." />
+                            {resendOption}
+                            <div className={`${page === 'login' ? 'hidden' : ''} relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
+                                <select defaultValue='Country Code' value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                    <option value={null}>Select Country Code</option>
+                                    {countryCodes.map((item) => {
+                                        if (!item.code) return <option disabled>{item.name}</option>
+                                        return <option value={item.code}>{item.name} {item.code}</option>
+                                    })}
+                                </select>
+                            </div>
+                            <div className={`${page === 'login' ? 'hidden' : ''} relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                                {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
+                                <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                             </div>
                             <div className={`relative  ${props.type === 'forgotpass' ? 'hidden' : ''} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                                <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder="Password" />
+                                <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder={router.pathname === '/resetpassword' ? 'New Password' : 'Password'} />
                             </div>
                             <div className={`relative  ${props.type === 'resetpass' ? '' : 'hidden'} data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2`}>
-                                {touched.reppassword && errors.reppassword ? <Tooltip classes="form-error" content={errors.reppassword} /> : null}
+                                {touched.confirm_password && errors.confirm_password ? <Tooltip classes="form-error" content={errors.confirm_password} /> : null}
                                 <input className="w-full outline-none border-none" type='password' name="confirm_password" id="confirm_password" value={values.confirm_password} onBlur={handleBlur} onChange={handleChange} placeholder="Confirm Password" />
                             </div>
                             <div className="my-3">
                                 <small className='text-gray-400 text-xs '>{props.type === 'forgotpass' ? 'Please enter your username or email address. You will receive an email message with instructions on how to reset your password.' : 'Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.'}</small>
                             </div>
                             <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-3 flex items-center border-b`}>
-                                {errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
+                                {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
                                 <div className='mr-2' >
                                     <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                                 </div>
                                 <div className=" w-full flex justify-between text-sm]">
                                     <small className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>Buy creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</small>
-                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{page === 'login' ? 'Forgot Password?' : ''}</Link></small>
+                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname=== '/login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
                             {/* changing Buttons according to different page endpoints */}
@@ -154,11 +166,11 @@ export default function Signing(props) {
 
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                         </form>
-                            {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
-                            <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
-                                <button onClick={()=>{signIn("google")}} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                                <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
-                            </div>
+                        {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
+                        <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
+                            <button onClick={() => { signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
+                        </div>
                     </div>
                 </section>
 

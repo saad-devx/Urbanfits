@@ -1,19 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image'
-
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-//Carousel Image Slide component
-const CarouselSlide = (props) => {
-  return (
-    <SplideSlide className='w-full h-60vh lg:h-80vh' >
-      <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={props.img} alt="Urban images" />
-    </SplideSlide>
-  )
-}
-
 export default function ProductCarousel(props) {
+  const [images, setImages] = useState([])
+  useEffect(() => {
+    setImages(props.img_array)
+  }, [props.img_array])
 
   const slider1 = useRef(null);
   const slider2 = useRef(null);
@@ -35,8 +29,10 @@ export default function ProductCarousel(props) {
           speed: 700,
           arrows: true,
         }} >
-          {props.img_array.map((img) => {
-            return <CarouselSlide img={img.url} />
+          {images.map((img) => {
+            return <SplideSlide className='w-full h-60vh lg:h-80vh' >
+            <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={img.url} alt="Urban images" />
+          </SplideSlide>
           })}
         </Splide>
 
@@ -57,8 +53,10 @@ export default function ProductCarousel(props) {
             },
           },
         }} >
-          {props.img_array.map((img) => {
-            return <CarouselSlide img={img.url} />
+          {images.map((img) => {
+            return <SplideSlide className='w-full h-60vh lg:h-80vh' >
+              <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={img.url} alt="Urban images" />
+            </SplideSlide>
           })}
         </Splide>
       </div>

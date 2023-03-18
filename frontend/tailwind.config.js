@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       width: {
         '35pr': '35%',
+        '90pr': '90%',
         '70pr': '70%',
         '48pr': '48%',
         '30pr': '30%',
@@ -21,6 +22,8 @@ module.exports = {
         '35pr': '35%',
         '60vh': '60vh',
         '80vh': '80vh',
+        '80pr': '80%',
+        '90vh': '90vh',
       },
       backgroundImage: {
         'gold' : "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",

@@ -104,7 +104,7 @@ export default function Cutomization(props) {
                                 </span>
                             </div>
                         </div>
-                        <Button type="submit" onclick={props.showToast} classes="w-11/12 mx-auto" >Add to Cart</Button>
+                        <Button type="submit" onclick={()=>{props.toaster('Your items has been added to the cart')}} classes="w-11/12 mx-auto" >Add to Cart</Button>
                         <span className="w-11/12 flex justify-end">
                             <button onClick={toggleCart} className='underline'>View Cart</button>
                         </span>

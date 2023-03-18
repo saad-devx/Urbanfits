@@ -10,6 +10,6 @@ export default function Login() {
   })
   const initialLoginValues = { "email": '', "password": '' }
   return (
-    <Signing page='login' loginSchema={loginSchema} initialLoginValues={initialLoginValues} />
+    <Signing page='login' validationSchema={loginSchema} initialValues={initialLoginValues} />
   )
 }
