@@ -2,19 +2,19 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', "pbs.twimg.com"]
+    domains: ['images.unsplash.com', "pbs.twimg.com", "i.etsystatic.com"]
   },
   env: {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
-    // HOST: "http://localhost:3000",
-    HOST: "https://urbanfits.vercel.app",
+    HOST: "http://localhost:3000",
+    // HOST: "https://urbanfits.vercel.app",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand",
     // Google client credentials
     GOOGLE_CLIENT_ID: "",
     GOOGLE_CLIENT_SECRET: "",
     // Email SMTP credentials
     SMTP_HOST: "smtp.sendgrid.net",
-    SMTP_USER: "",
+    SMTP_USER: "apikey",
     SMTP_PASSWORD: "",
     SMTP_SENDER_EMAIL: "",
   },

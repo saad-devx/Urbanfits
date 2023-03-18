@@ -12,8 +12,7 @@ const UpdateProducts = async (req, res) => {
                 $or: [
                     { category: { $regex: searchTerm, $options: "i" } },
                     { name: { $regex: searchTerm, $options: "i" } },
-                    { subcategories: { $elemMatch: { $regex: searchTerm, $options: "i" } } },
-                    { description: { $regex: searchTerm, $options: "i" } }
+                    { tags: { $elemMatch: { $regex: searchTerm, $options: "i" } } }
                 ]
                 // $or: [
                 //     // { category: { $regex: searchTerm, $options: "i" } },

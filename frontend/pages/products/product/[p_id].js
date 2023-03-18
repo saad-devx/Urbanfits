@@ -10,8 +10,7 @@ import Button from '@/components/buttons/simple_btn';
 import Link from 'next/link';
 import ProductCarousel from '@/components/carousels/productCarousel';
 import Cutomization from '@/components/modals/cutomization';
-import { toast, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toaster from '@/utils/toast_function';
 
 
 // image imports
@@ -20,7 +19,8 @@ import image2 from '../../../public/card imgs/card img11.jpg'
 import image3 from '../../../public/card imgs/card img8.jpg'
 
 const Product = (props) => {
-    const product = { ...props.response.product, id: props.response.product._id }
+    const productData = { ...props.response.product, id: props.response.product._id }
+    const [product, setProduct] = useState(productData.varients[0])
     const [expand, setExpand] = useState(false)
 
     // confguring the Quantity conter of the prodcut
@@ -32,30 +32,23 @@ const Product = (props) => {
         if (name === "decrement") return setQuantity(quantity - 1)
         if (name === "increment") return setQuantity(quantity + 1)
     }
+    // Color select function to change the product data according to the color
+    const onColorSelect = (e)=>{
+        const color  = e.target.name
+        e.target.style.border = '2.5px solid golden'
+        let newProduct = productData.varients.filter((variant)=>{
+            return variant.color === color
+        })
+        setProduct(newProduct[0])
+    }
 
     // setting up teh toggle fucntion and state for the size cutomization modal 
     const [modal4, setModal4] = useState(false)
-
     const toggleModal = (e) => {
         if (e.target.name === "modal4") {
             if (modal4 === false) return setModal4(true)
             if (modal4 === true) return setModal4(false)
         }
-    }
-    // Setting up Toast
-    const showToast = () => {
-        toast("Your item is added to the Cart", {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: "success",
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
     }
     //Cart function
     const { addItem } = useCart()
@@ -63,7 +56,7 @@ const Product = (props) => {
         <>
             <main className="bg-gray-100 w-full h-screen font_futuraLT">
                 <Navbar setExpand={setExpand} />
-                <Cutomization show={modal4} toggleModal={toggleModal} showToast={showToast} />
+                <Cutomization show={modal4} toggleModal={toggleModal} toaster={toaster} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                     <div className="w-full pb-20 flex justify-center">
                         <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_futuraLT text-left pt-5' >
@@ -71,27 +64,18 @@ const Product = (props) => {
                                 <div className="w-full lg:w-[70%] mb-3">
                                     <ProductCarousel img_array={product.images} />
                                     <div className="w-full my-5">
-                                        <h3 className="text-3xl mb-4">{product.name}</h3>
-                                        <h4 className="Slug text-xl">{product.slug && product.slug}</h4>
-                                        <p className="description font_futuraLTlite my-3">{product.description}</p>
-                                        <ul className='pl-4 list-disc font_futuraLTlite text-sm leading-6' >
-                                            <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
-                                            <li>Lorem ipsum dolor sit amet consectetur.</li>
-                                            <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-                                            <li>Lorem ipsum dolor sit amet.</li>
-                                            <li>Lorem ipsum dolor sit.</li>
-                                            <li>Lorem ipsum dolor sit amet consectetur adipisicing.</li>
-                                            <li>Lorem ipsum dolor sit amet consectetur.</li>
-                                            <li>Lorem ipsum dolor amet consectetur.</li>
-                                        </ul>
+                                        <h3 className="text-3xl mb-4">{productData.name}</h3>
+                                        <h4 className="Slug text-xl">{productData.slug && productData.slug}</h4>
+                                        <p className="description font_futuraLTlite my-3">{productData.description}</p>
                                     </div>
                                 </div>
                                 <div className="details w-full lg:w-[30%] m-0 space-y-3">
                                     <div className="w-full h-28 p-4 rounded-2xl bg-white items-center">
                                         <small className="w-full">Choose a Color:</small>
                                         <span className="w-full my-3 mx-auto flex flex-wrap justify-center space-x-3">
-                                            {product.color.map(color => {
-                                                return <input type="button" className={`w-5 h-5 mb-3 outline-none ${color === "white" ? "border" : "border-none"} cursor-pointer rounded-full bg-${color}${color === "black" ? "" : "-600"}`} ></input>
+                                            {productData.varients.map(variant => {
+                                                let {color} = variant
+                                                return <button style={{background: color}} name={color} onClick={onColorSelect} className={`w-6 h-6 mb-3 cursor-pointer rounded-full focus:scale-110 border-2 focus:border-gray-400 transition-all`} ></button>
                                             })}
                                         </span>
                                     </div>
@@ -122,7 +106,7 @@ const Product = (props) => {
                                         </span>
                                     </div>
                                     <div className="flex justify-between p-3 text-lg">
-                                        <p>Price :</p> <p>${product.price}</p>
+                                        <p>Price :</p> <p>${productData.price}</p>
                                     </div>
                                     <div className="w-full">
                                         <Button onclick={() => { addItem(product); showToast() }} classes="w-full" my="my-2" >Add to Cart</Button>

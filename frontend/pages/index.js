@@ -40,7 +40,7 @@ export default function Home() {
         const setSizefunc = () => {
             let position = window.pageYOffset;
             if (position >> 0) {
-                setCarouselClasses('w-11/12 h-80vh lg:w-90pr lg:h-90vh rounded-2rem mt-7')
+                setCarouselClasses('w-11/12 lg:w-90pr h-80vh lg:h-90vh rounded-2rem mt-7')
                 wrapper.classList.add('lg:w-[94.6%]');
                 navbar.classList.remove('opacity-0', 'pointer-events-none')
                 window.removeEventListener('scroll', setSizefunc);
