@@ -1,0 +1,9 @@
+.DS_Store
+.vscode
+
+# Node files
+node_modules/
+
+# Next.js
+.next
+.vercel

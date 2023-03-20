@@ -2,8 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/products/[category]": "pages/products/[category].js",
+  "/api/search": "pages/api/search.js",
   "/products/product/[p_id]": "pages/products/product/[p_id].js",
   "/api/products/getsingleproduct": "pages/api/products/getsingleproduct.js"
 }
