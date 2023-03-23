@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
 import countryCodes from '@/static data/countryCodes';
@@ -35,12 +35,12 @@ export default function Signing(props) {
         if (router.pathname === "/resetpassword") return "PUT"
         else return "POST"
     }
-    const onsubmit = async (values) => {
+    const onsubmit = async (values, x, oAuthQuery) => {
         try {
-            console.log(values);
+            console.log(oAuthQuery)
             setLoader(<Loader />)
             let path = router.pathname
-            let response = await fetch(`${process.env.HOST}/api/user${path}`, {
+            let response = await fetch(`${process.env.HOST}/api/user${path}${oAuthQuery?oAuthQuery:''}`, {
                 method: getMethod(),
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values)
@@ -80,10 +80,21 @@ export default function Signing(props) {
         validationSchema: props.validationSchema,
         onSubmit: onsubmit
     })
-    if (session) {
+    const oauth = localStorage.getItem('oauth')
+    useEffect(() => {
         console.log(session)
-        return <div>signed in with {session.user.email} <br /> <button onClick={() => { signOut() }} >Sign out</button></div>
-    }
+        if (oauth && session) {
+            let username = session.user.email.split('@')[0]
+            let name = session.user.name.split(' ')
+            let firstname = name[0]
+            name.shift()
+            let lastname = name.join(' ')
+            const loginDetails = { email: session.user.email, username, firstname, lastname }
+            onsubmit(loginDetails, null, '?auth=OAuth')
+            return localStorage.setItem('oauth', false)
+        }
+        else return
+    }, [session])
     return (
         <>
             <Head>
@@ -110,7 +121,7 @@ export default function Signing(props) {
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/4 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <button onClick={() => { signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
                             <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                         </div>
                         <form className="bg-white p-2 font_futuraLT" onReset={handleReset} onSubmit={handleSubmit} >
@@ -155,7 +166,7 @@ export default function Signing(props) {
                                 </div>
                                 <div className=" w-full flex justify-between text-sm]">
                                     <small className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>Buy creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</small>
-                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname=== '/login' ? 'Forgot Password?' : ''}</Link></small>
+                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname === '/login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
                             {/* changing Buttons according to different page endpoints */}
@@ -168,7 +179,7 @@ export default function Signing(props) {
                         </form>
                         {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                         <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
-                            <button onClick={() => { signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
                             <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/router';
-import Navbar from '@/components/navbar';
+import Navbar from '@/components/oldnavbar';
 import Footer from '@/components/footer';
 import LanguageModal from '@/components/modals/languagemodal';
 import Accordians from '@/components/accordians';

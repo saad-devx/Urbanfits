@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
-import Navbar from '@/components/navbar'
+import Navbar from '@/components/oldnavbar'
 import Footer from '@/components/footer'
 import Accordians from '@/components/accordians';
 import SuggestionCard from '@/components/cards/suggestionPicCard';

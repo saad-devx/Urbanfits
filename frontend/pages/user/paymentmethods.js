@@ -3,7 +3,7 @@ import Link from 'next/link'
 import jwt from 'jsonwebtoken';
 import ifExists from '@/utils/if_exists';
 import { Avatar } from './personalinfo';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/oldnavbar';
 import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 

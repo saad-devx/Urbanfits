@@ -27,6 +27,16 @@ export default function CardCarousel() {
                 drag: true,
                 perMove: 1,
                 perPage: isMobile,
+                // breakpoints: {
+                //     640: {
+                //       perPage: 1,
+                
+                //     },
+                //     1024: {
+                //       perPage: 3,
+                     
+                //     },
+                // },
                 pauseOnHover: true,
                 pauseOnFocus: false,
                 pagination: false,

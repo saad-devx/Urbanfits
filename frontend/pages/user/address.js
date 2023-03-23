@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
-import onsubmitFunc from '@/components/onsubmit_function';
 import { Avatar } from './personalinfo';
 import ifExists from '@/utils/if_exists';
 import storeAddress from '@/utils/get_address';
 import toaster from '@/utils/toast_function';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/oldnavbar';
 import jwt from 'jsonwebtoken';
+import countryCodes from '@/static data/countryCodes';
 import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 import Loader from '@/components/loader';
@@ -29,7 +29,7 @@ const AddressForm = (props) => {
             apt_suite: '',
             city: '',
             country: 'Country',
-            phone_prefix: '',
+            phone_prefix: 'Select Country Code',
             phone_number: ''
         },
         validationSchema: Yup.object({
@@ -100,10 +100,15 @@ const AddressForm = (props) => {
                     <option value="pk">Pakistan</option>
                 </select>
             </div>
-            <div className="flex justify-between w-3/4 ">
+            <div className="flex justify-between w-full lg:w-5/6">
                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                     {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
-                    <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_prefix" id="phone_prefix" size="4" maxLength={4} value={values.phone_prefix} onBlur={handleBlur} onChange={handleChange} placeholder="+971" />
+                    <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                        {countryCodes.map((item) => {
+                            if (!item.code) return <option disabled>{item.name}</option>
+                            return <option value={item.code}>{item.name} {item.code}</option>
+                        })}
+                    </select>
                 </div>
                 <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                     {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}

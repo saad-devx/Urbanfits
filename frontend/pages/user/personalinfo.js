@@ -4,7 +4,7 @@ import Link from 'next/link'
 import jwt from 'jsonwebtoken';
 import toaster from '@/utils/toast_function';
 import ifExists from '@/utils/if_exists';
-import Navbar from '../../components/navbar'
+import Navbar from '../../components/oldnavbar'
 import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
 import Button from '../../components/buttons/simple_btn';

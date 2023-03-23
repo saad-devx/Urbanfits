@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Card from '../components/cards/card';
 import toaster from '@/utils/toast_function';
-import Navbar from '../components/navbar';
+import Navbar from '../components/oldnavbar';
 import Button from '../components/buttons/simple_btn';
 import Head from 'next/head';
 import Footer from '../components/footer'

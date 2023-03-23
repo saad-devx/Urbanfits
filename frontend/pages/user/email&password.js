@@ -6,7 +6,7 @@ import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
 import { Avatar } from './personalinfo';
 import Loader from '@/components/loader';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/oldnavbar';
 import Button from '../../components/buttons/simple_btn';
 import AccountMenu from '../../components/accountmenu'
 

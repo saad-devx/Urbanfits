@@ -46,7 +46,6 @@ function CartItem(props) {
                     <span key={3} className="w-full md:mb-1 mx-auto flex justify-between"><small>Quantity</small><small>{quantity}</small></span>
                     <span key={4} className="w-full md:mb-1 mx-auto flex justify-between"><small>Price(per piece)</small><small>${product.price}</small></span>
                     <span key={5} className="w-full md:mb-1 mx-auto flex justify-between"><small>Discount</small><small>{product.discount ? product.discount : 0}%</small></span>
-                    {/* <span key={7} className="w-full md:mb-1 mx-auto flex justify-between"><small>Sale Price</small><small>${product.price * quantity.toFixed(3)}</small></span> */}
                     <span key={7} className="w-full md:mb-1 mx-auto flex justify-between"><small>Sale Price</small><small>${props.get3dpNumber(product.price * quantity)}</small></span>
                 </div>
                 <div className=" text-sm md:text-base w-full flex justify-between">

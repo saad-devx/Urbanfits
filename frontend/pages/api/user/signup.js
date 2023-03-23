@@ -14,25 +14,39 @@ const Signup = async (req, res) => {
         //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         // });
         if (req.method === 'POST') {
+
             await ConnectDB()
-            let user = await User.findOne({ "email": req.body.email })
-            if (user) return res.status(400).json({ success: false, msg: "A user with this Email or Username already exists" })
-            user = await User.findOne({ "username": req.body.username })
-            if (user) return res.status(400).json({ success: false, msg: "A user with this Email or Username already exists" })
-            user = await User.create({ ...req.body, password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString() })
-            const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
-            res.status(200).json({
-                success: true,
-                msg: "You're Resgistered successfully !",
-                payload
-            })
+            if (req.query.auth === 'OAuth') {
+                let user = await User.findOne({ "email": req.body.email })
+                if (user) return res.status(400).json({ success: false, msg: "A user with this Email already exists" })
+                user = await User.create(req.body)
+                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                return res.status(200).json({
+                    success: true,
+                    msg: "You are Resgistered successfully !",
+                    payload
+                })
+            }
+            else {
+                let user = await User.findOne({ "email": req.body.email })
+                if (user) return res.status(400).json({ success: false, msg: "A user with this Email already exists" })
+                user = await User.findOne({ "username": req.body.username })
+                if (user) return res.status(400).json({ success: false, msg: "A user with this Username already exists" })
+                user = await User.create({ ...req.body, password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString() })
+                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                res.status(200).json({
+                    success: true,
+                    msg: "You're Resgistered successfully !",
+                    payload
+                })
+            }
         }
         else {
             res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
         }
     }
     catch (error) {
-        consolel.log(error)
+        console.log(error)
         res.status(500).json({ success: false, msg: "Internal server error occured, please try again later" })
     }
 }

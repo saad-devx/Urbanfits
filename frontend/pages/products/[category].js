@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useCart } from "react-use-cart";
 import dynamic from "next/dynamic";
 import SuggestionCard from '@/components/cards/suggestionPicCard';
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/oldnavbar';
 import Button from '../../components/buttons/simple_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 import Footer from '../../components/footer'

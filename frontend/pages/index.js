@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import Navbar from "../components/navbar";
+import Navbar from "../components/oldnavbar";
 import Footer from "@/components/footer";
 import Carousel from "@/components/carousels/carousel";
 import CardCarousel from "@/components/carousels/cardCarousel";
