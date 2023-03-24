@@ -84,7 +84,7 @@ export default function Cart(props) {
                             <div className="w-full flex flex-col lg:flex-row gap-5">
                                 <div className="w-full lg:w-[70%] mb-3">
                                     <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>
-                                    {items.map((product, index) => {
+                                    {items.map((product) => {
                                         return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />
                                     })}
                                 </div>
@@ -97,7 +97,6 @@ export default function Cart(props) {
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>Total</small> <small>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</small></span>
                                         <LinkBtn href="/checkout/step1" onclick={props.toggleCart} classes="w-full" >Checkout</LinkBtn>
                                     </div>
-                                    {/* Accordian */}
                                     <Accordians />
                                 </div>
                             </div>

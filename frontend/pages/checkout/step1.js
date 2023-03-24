@@ -13,7 +13,7 @@ import toaster from '@/utils/toast_function';
 import Image from 'next/image';
 import shirt_img from '../../public/card imgs/card img4.png'
 // imports for Schema and validation
-import { useFormik, useField } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 import Button from '@/components/buttons/simple_btn';
@@ -86,8 +86,6 @@ export default function Checkout1(props) {
         onSubmit: (values) => {
             console.log(values)
             // router.push('/chceckout/step2')
-
-            // handleReset()
         }
     })
 
@@ -104,7 +102,7 @@ export default function Checkout1(props) {
             phone_number: !obj ? '' : obj.phone_number
         }
     }
-    const getAddressToken = async (user_id)=>{
+    const getAddressToken = async (user_id) => {
         let response = await (await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user_id}`)).json()
         localStorage.setItem('addressToken', response.payload)
         return jwt.decode(response.payload)
@@ -117,15 +115,10 @@ export default function Checkout1(props) {
                 const userData = jwt.decode(localStorage.getItem("authToken"))
                 if (!userData) return
                 let userAddress = jwt.decode(localStorage.getItem("addressToken"))
-                if(!userAddress) userAddress = await getAddressToken(userData._doc._id)
-                // let response = await (await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${userData._doc._id}`)).json()
-                // if (!response.payload) return
-                // localStorage.setItem('addressToken', response.payload)
-                // userAddress = jwt.decode(response.payload)
+                if (!userAddress) userAddress = await getAddressToken(userData._doc._id)
 
                 let shippingAddress = userAddress._doc.addresses.filter(address => { return address.tag === 'shipping' })[0]
                 let billingAddress = userAddress._doc.addresses.filter(address => { return address.tag === 'billing' })[0]
-
                 setValues({
                     name: ifExists(userData._doc.firstname) + ' ' + ifExists(userData._doc.lastname),
                     email: ifExists(userData._doc.email),
@@ -323,8 +316,7 @@ export default function Checkout1(props) {
                             </div>
                             <div className="details w-full lg:w-[31%] m-0 space-y-3">
                                 <h3 className="text-2xl mb-5">Order Summary</h3>
-                                {/* summary here */}
-                                <div className=" hidden lg:flex relative mb-3 p-5 pt-10 bg-white card_boxshadow w-full h-64 md:h-[21rem] flex-col justify-between items-center rounded-xl md:rounded-3xl">
+                                <div className=" hidden lg:flex relative mb-3 p-5 pt-10 bg-white card_boxshadow w-full h-64 md:h-[21.5rem] flex-col justify-between items-center rounded-xl md:rounded-3xl">
                                     <h3 className="absolute top-[6%] left-[7%] lg:text-lg text-end">Product Title Here</h3>
                                     <div className="flex justify-between items-center">
                                         <div className=" w-[35%] md:w-1/3">
@@ -345,12 +337,11 @@ export default function Checkout1(props) {
                                         <span key={3} className="w-full mx-auto flex justify-between"><small>Quantity</small> <small>{props.quantity}</small></span>
                                         <span key={4} className="w-full mx-auto flex justify-between"><small>Price</small> <small>${props.price}</small></span>
                                     </div>
-                                    <div className="w-full pt-2 flex justify-between border-t border-t-gray-400">
+                                    <div className="w-full py-2 mb-4 flex justify-between border-t border-t-gray-400">
                                         <h4 className="text-lg">Total</h4>
                                         <h4 className="text-lg">$89.78</h4>
                                     </div>
                                 </div>
-                                {/* Accordian */}
                                 <Accordians />
                             </div>
                         </div>

@@ -59,6 +59,6 @@
     background-image: url(../public/giftbanner.png);
 }
 
-.list_item:hover i{
+/* .list_item:hover i{
     transform:  translate(5px, 4px);
-}
+} */

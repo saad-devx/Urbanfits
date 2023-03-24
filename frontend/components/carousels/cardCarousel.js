@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LinkBtn from '../buttons/link_btn';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
-import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+// import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 // Default theme
 import '@splidejs/react-splide/css';
 // images imports
@@ -27,16 +27,6 @@ export default function CardCarousel() {
                 drag: true,
                 perMove: 1,
                 perPage: isMobile,
-                // breakpoints: {
-                //     640: {
-                //       perPage: 1,
-                
-                //     },
-                //     1024: {
-                //       perPage: 3,
-                     
-                //     },
-                // },
                 pauseOnHover: true,
                 pauseOnFocus: false,
                 pagination: false,
@@ -53,7 +43,7 @@ export default function CardCarousel() {
             <SplideTrack className='w-full h-full' >
                 {[image1, image2, image3].map((img, index) => {
                     return <SplideSlide key={index} className={`relative md:p-3`}>
-                        <div className='relative w-full h-full rounded-3xl font_futuraLT overflow-hidden' >
+                        <div className='relative w-full h-full rounded-[2rem] md:rounded-[3rem] lg:rounded-[2rem] font_futuraLT overflow-hidden' >
                             <Image src={img} className='w-full h-full object-cover' alt="Urban images" />
                             <div className="absolute w-full bottom-0 left-0 p-7 bg-gradient-to-t from-white to-transparent flex flex-col items-start text-black text-5xl">
                                 <h1 className="text-3xl">Jackets and Coats</h1>
