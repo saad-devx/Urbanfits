@@ -30,9 +30,9 @@ export default function Search(props) {
     return (
         <>
             {loader}
-            <section className={`bg-gray-100/30 backdrop-blur-[12px] w-full lg:w-[100%] h-full fixed right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.search === true ? "" : "translate-x-full opacity-0"} font_futuraLT`}>
+            <section className={`bg-gray-100/30 backdrop-blur-[12px] w-full lg:w-[100%] h-full fixed top-0 right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.search === true ? "" : "translate-x-full opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
-                    <section className='w-full p-3 lg:p-0 lg:pt-9 lg:w-[85%] h-full font_futuraLT text-left pt-14' >
+                    <section className='w-full p-3 lg:p-0 lg:pt-9 lg:w-[85%] h-full font_gotham text-left pt-14' >
                         <button onClick={props.toggleSearch} className="absolute right-8 top-5 lg:top-11 cursor-pointer"><i className="fa-solid fa-arrow-left mr-2"></i>Back</button>
                         {/* Search Bar */}
                         <div className='w-full h-12 bg-white/40 px-5 py-2 flex justify-start items-center border border-gray-400 hover:bg-white/70 transition-all duration-300 rounded-full' >

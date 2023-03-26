@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
-import Navbar from '@/components/oldnavbar'
+import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Accordians from '@/components/accordians';
 import SuggestionCard from '@/components/cards/suggestionPicCard';
@@ -58,19 +58,19 @@ export default function Product(props) {
     const { addItem } = useCart()
     return (
         <>
-            <main className="bg-gray-100 w-full h-screen font_futuraLT">
+            <main className="bg-gray-100 w-full h-screen font_gotham">
                 <Navbar setExpand={setExpand} />
                 <Cutomization show={modal4} toggleModal={toggleModal} toaster={toaster} />
                 <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                     <div className="w-full pb-20 flex justify-center">
-                        <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_futuraLT text-left pt-5' >
+                        <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
                             <div className="w-full flex flex-col lg:flex-row lg:space-x-2">
                                 <div className="w-full lg:w-[70%] mb-3">
                                     <ProductCarousel img_array={product.images} />
                                     <div className="w-full my-5">
                                         <h3 className="text-3xl mb-4">{productData.name}</h3>
                                         <h4 className="Slug text-xl">{productData.slug && productData.slug}</h4>
-                                        <p className="description font_futuraLTlite my-3">{productData.description}</p>
+                                        <p className="description font_gotam_light my-3">{productData.description}</p>
                                     </div>
                                 </div>
                                 <div className="details w-full lg:w-[30%] m-0 space-y-3">

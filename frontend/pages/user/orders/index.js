@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-import Navbar from '../../../components/oldnavbar';
+import Navbar from '../../../components/navbar';
 import AccountMenu from '../../../components/accountmenu'
 
 const Option = (props) => {
@@ -13,8 +13,6 @@ const Option = (props) => {
 }
 
 export default function OrdersPage(props) {
-    const [expand, setExpand] = useState(false)
-
     // determining if the scroll direction is upwards or downwards
     const [direction, setDirection] = useState('')
     const handleScroll = (e) => {
@@ -23,26 +21,24 @@ export default function OrdersPage(props) {
 
     return (
         <>
-            <main className="bg-gray-100 w-full h-screen font_futuraLT">
-                <Navbar setExpand={setExpand} />
-                <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} relative h-full lg:fixed right-0 flex transition-all duration-700`}>
-                    <AccountMenu direction={direction} />
-                    <section onScroll={handleScroll} className='w-full lg:w-[67%] font_futuraLT text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-y-scroll' >
-                        <div className="w-full lg:w-5/6">
-                            <h2 className="text-3xl mb-4">My Order</h2>
-                            <div className="account_menu w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scroll">
-                                <div className="w-[150%] md:w-full h-full flex justify-between  border-b border-b-gray-300 ">
-                                    <Option href='/user/orders/orders'>Orders</Option>
-                                    <Option href='/user/orders/buyagain'>Buy Again</Option>
-                                    <Option href='/user/orders/notdispatched'>Not Yet Dispatched</Option>
-                                    <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
-                                </div>
+            <Navbar lowerLogo />
+            <main className={`bg-gray-100 w-full h-90vh lg:h-[87vh] lg:fixed right-0 font_gotham flex overflow-hidden transition-all duration-700`}>
+                <AccountMenu direction={direction} />
+                <section onScroll={handleScroll} className='w-full lg:w-[67%] bg-gray-100 font_gotham text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-x-hidden overflow-y-scroll' >
+                    <div className="w-full lg:w-5/6">
+                        <h2 className="text-3xl mb-4">My Order</h2>
+                        <div className="account_menu w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scroll">
+                            <div className="w-[150%] md:w-full h-full flex justify-between  border-b border-b-gray-300 ">
+                                <Option href='/user/orders/orders'>Orders</Option>
+                                <Option href='/user/orders/buyagain'>Buy Again</Option>
+                                <Option href='/user/orders/notdispatched'>Not Yet Dispatched</Option>
+                                <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
                             </div>
-                            <section className="w-full h-screen my-5 font_futuraLT">
-                                {props.children}
-                            </section>
                         </div>
-                    </section>
+                        <section className="w-full h-screen my-5 font_gotham">
+                            {props.children}
+                        </section>
+                    </div>
                 </section>
             </main>
         </>

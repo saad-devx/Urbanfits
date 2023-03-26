@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import jwt from 'jsonwebtoken';
-import Navbar from '@/components/oldnavbar';
+import Navbar from '@/components/navbar';
 import Loader from '@/components/loader';
 import Footer from '@/components/footer';
 import countryCodes from '@/static data/countryCodes';
@@ -162,7 +162,7 @@ export default function Checkout1(props) {
             {loader}
             <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
-                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_futuraLT text-left pt-5' >
+                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
                         <div className="w-full flex flex-col lg:flex-row">
                             <div className="w-full lg:w-[60%] mb-3 mr-auto">
                                 <form className="w-full" onSubmit={handleSubmit} onReset={handleReset} >
@@ -186,13 +186,13 @@ export default function Checkout1(props) {
                                         {touched.delivery_option && errors.delivery_option ? <Tooltip classes="form-error" content={errors.delivery_option} /> : null}
                                         <div id="delivery_options" className="w-full py-3 flex justify-between">
                                             <span className="flex">
-                                                <input className='rounded mx-2 translate-y-1' type="radio" id="express" name="delivery_option" defaultChecked value="express" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-xs lg:text-base' htmlFor="express">Express Delivery <p className="font_futuraLTlite text-xs">2-4 working days</p></label>
+                                                <input className='rounded mx-2 translate-y-1' type="radio" id="express" name="delivery_option" defaultChecked value="express" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-xs lg:text-base' htmlFor="express">Express Delivery <p className="font_gotam_light text-xs">2-4 working days</p></label>
                                             </span>
                                             <span className="flex">
-                                                <input className='rounded mx-2 translate-y-1' type="radio" id="standard" name="delivery_option" value="standard" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-xs lg:text-base' htmlFor="standard">Standard Delivery <p className="font_futuraLTlite text-xs">3-5 working days</p></label>
+                                                <input className='rounded mx-2 translate-y-1' type="radio" id="standard" name="delivery_option" value="standard" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-xs lg:text-base' htmlFor="standard">Standard Delivery <p className="font_gotam_light text-xs">3-5 working days</p></label>
                                             </span>
                                             <span className="flex">
-                                                <input className='rounded mx-2 translate-y-1' type="radio" id="free" name="delivery_option" value="free" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-xs lg:text-base' htmlFor="free">Free Delivery <p className="font_futuraLTlite text-xs">5-7 working days</p></label>
+                                                <input className='rounded mx-2 translate-y-1' type="radio" id="free" name="delivery_option" value="free" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-xs lg:text-base' htmlFor="free">Free Delivery <p className="font_gotam_light text-xs">5-7 working days</p></label>
                                             </span>
                                         </div>
                                         <h1 className=" my-7 text-2xl">Enter Your Shipping Address</h1>
@@ -322,13 +322,13 @@ export default function Checkout1(props) {
                                         <div className=" w-[35%] md:w-1/3">
                                             <Image width={640} height={853} src={shirt_img} alt="Urban images" className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
                                         </div>
-                                        <div className="w-1/2 h-auto text-xs md:text-sm my-5 md:my-3 font_futuraLTlite">
-                                            <span key={1} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Color:</small> <small>{props.color}</small></span>
-                                            <span key={2} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Size:</small> <small>{props.size}</small></span>
-                                            <span key={3} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Quantity:</small> <small>{props.quantity}</small></span>
-                                            <span key={4} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Price:</small> <small>${props.price}</small></span>
-                                            <span key={5} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Discount:</small> <small>{props.discount ? props.discount : 0}</small></span>
-                                            <span key={6} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Sale Price:</small> <small>${props.price + 0}</small></span>
+                                        <div className="w-1/2 h-auto text-xs md:text-sm my-5 md:my-3 font_gotam_light">
+                                            <span key={1} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Color:</small> <small>{props.color}</small></span>
+                                            <span key={2} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Size:</small> <small>{props.size}</small></span>
+                                            <span key={3} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Quantity:</small> <small>{props.quantity}</small></span>
+                                            <span key={4} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Price:</small> <small>${props.price}</small></span>
+                                            <span key={5} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Discount:</small> <small>{props.discount ? props.discount : 0}</small></span>
+                                            <span key={6} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Sale Price:</small> <small>${props.price + 0}</small></span>
                                         </div>
                                     </div>
                                     <div className="w-full h-auto my-5 md:my-3">

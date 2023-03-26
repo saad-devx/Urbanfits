@@ -18,14 +18,14 @@ export default function Accordians() {
                         <i className="material-symbols-outlined mr-6">mail</i>
                         <span>
                             <h5 className='mb-2'>Email</h5>
-                            <p className=' font_futuraLTlite '>Send us an email : Our customer care team will get back to you as soon as possible.</p>
+                            <p className=' font_gotam_light '>Send us an email : Our customer care team will get back to you as soon as possible.</p>
                         </span>
                     </div>
                     <div className="flex items-center py-2">
                         <i className="material-symbols-outlined mr-6">call</i>
                         <span>
                             <h5 className='mb-2'>Call</h5>
-                            <p className=' font_futuraLTlite '>You can also call us on the following number +1 (559) 554-0082 Monday to Saturday from 9am to 8pm, except public holiday. </p>
+                            <p className=' font_gotam_light '>You can also call us on the following number +1 (559) 554-0082 Monday to Saturday from 9am to 8pm, except public holiday. </p>
                         </span>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ export default function Accordians() {
                         <i className="material-symbols-outlined mr-6">local_mall</i>
                         <span>
                             <h5 className='mb-2'>Delivery</h5>
-                            <p className=' font_futuraLTlite '>-Express delivery made within 2-4 working days(30$)<br />-Potential delays to be communicated due to customs-approved treatment.</p>
+                            <p className=' font_gotam_light '>-Express delivery made within 2-4 working days(30$)<br />-Potential delays to be communicated due to customs-approved treatment.</p>
                         </span>
                     </div>
                     <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
@@ -52,21 +52,21 @@ export default function Accordians() {
                         <Image className='mr-6' src={truck} alt="delivery vehicle" />
                         <span>
                             <h5 className='mb-2'>Return</h5>
-                            <p className=' font_futuraLTlite '>We make return easy for you. For more information see our return policy.<br />-Potential delays to be communicated due to customs-approved treatment.</p>
+                            <p className=' font_gotam_light '>We make return easy for you. For more information see our return policy.<br />-Potential delays to be communicated due to customs-approved treatment.</p>
                         </span>
                     </div>
                     <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
                         <i className="fa-regular fa-credit-card mr-6 text-xl"></i>
                         <span>
                             <h5 className='mb-2'>Payment</h5>
-                            <p className=' font_futuraLTlite '>Credit card, Debit card & Paypal.</p>
+                            <p className=' font_gotam_light '>Credit card, Debit card & Paypal.</p>
                         </span>
                     </div>
                     <div className="flex items-center py-2">
                         <i className="material-symbols-outlined mr-6">search</i>
                         <span>
                             <h5 className='mb-2'>FAQ</h5>
-                            <p className=' font_futuraLTlite '>Looking for information? See our FAQs</p>
+                            <p className=' font_gotam_light '>Looking for information? See our FAQs</p>
                         </span>
                     </div>
                 </div>

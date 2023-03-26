@@ -61,16 +61,16 @@ export default function Newsletter(props) {
 
     return (
         <>
-            <div className={`w-full h-full font_futuraLT fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
+            <div className={`w-full h-full font_gotham fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
                 <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
                 <button onClick={props.toggleModal} name="modal2" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
                     <div className=" w-1/2 h-auto bg_newsletter bg-top bg-cover bg-no-repeat"></div>
                     <section className="w-full h-full p-5 pt-14 md:pt-5">
                         <div className="w-full space-y-5">
                             <h3 className="text-black text-base">Move to the Urban Fit</h3>
-                            <p className='font_futuraLTlite' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
+                            <p className='font_gotam_light' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
                         </div>
-                        <form className="mt-7 font_futuraLT space-y-5 md:space-y-7" onReset={handleReset} onSubmit={handleSubmit} >
+                        <form className="mt-7 font_gotham space-y-5 md:space-y-7" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className='space-y-3' >
                                 <h3 className='text-black text-base' >Email Sign Up*</h3>
                                 <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -81,7 +81,7 @@ export default function Newsletter(props) {
                             <div className='relative space-y-4' >
                                 <h3 className='text-black text-base' >Gender*</h3>
                                 { errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
-                                <div className="font_futuraLTlite w-full md:w-3/5 flex justify-between items-center ">
+                                <div className="font_gotam_light w-full md:w-3/5 flex justify-between items-center ">
                                     <div className='mr-2' >
                                         <input key={1} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='male'>Male</label>
                                     </div>
@@ -107,7 +107,7 @@ export default function Newsletter(props) {
                                     })}
                                 </div>
                             </div>
-                            <p className='font_futuraLTlite text-sm' >Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
+                            <p className='font_gotam_light text-sm' >Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
                             <Button type="submit" classes="w-11/12 mx-auto" >Subscribe</Button>
                         </form>
                     </section>

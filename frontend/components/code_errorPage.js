@@ -14,8 +14,8 @@ export default function HttpErrorPage(props) {
                     <div className="w-full h-full px-2 lg:px-0 flex flex-col lg:flex-row justify-center items-center bg-right lg:bg-top lg:space-x-20">
                         <h1 className="text-white mb-6 text-8xl lg:text-[12rem]">{props.error}</h1>
                         <div className="lg:w-[37vw] flex flex-col justify-center items-center lg:items-start lg:flex-start space-y-8">
-                            <h2 className='text-xl font-bold lg:text-[32px] gradient_txt font_futuraLT' >{props.heading}</h2>
-                            <p className="text-center font_futuraLT text-white lg:text-justify lg:text-xl leading-7">{props.message}</p>
+                            <h2 className='text-xl font-bold lg:text-[32px] gradient_txt font_gotham' >{props.heading}</h2>
+                            <p className="text-center font_gotham text-white lg:text-justify lg:text-xl leading-7">{props.message}</p>
                             <LinkBtn href="/" classes="w-48" >Back To Home</LinkBtn>
                         </div>
                     </div>

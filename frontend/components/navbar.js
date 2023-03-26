@@ -1,52 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from "react-use-cart";
 import jwt from 'jsonwebtoken';
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import LanguageModal from './modals/languagemodal';
 import Search from './search';
 import Cart from './cart';
-import Logo from '../public/logos/logo_black.svg'
-// image imports
 import Image from 'next/image';
-import female_avatar from '../public/avatars/female.svg'
-import male_avatar from '../public/avatars/male.svg'
+import Logo from '@/public/logos/logo_black.svg'
 
-function ListItem(props) {
-    const [openMenu, setOpenMenu] = useState(false)
-    const toggleMenu = () => {
-        if (openMenu) return setOpenMenu(false)
-        if (!openMenu) return setOpenMenu(true)
-    }
-    if (props.submenu) return (
-        <ul className='list_item mb-3 px-8' >
-            <button onClick={toggleMenu} className={`w-full flex ${openMenu ? '' : 'justify-between'} border-b-2 border-white transition-all`} ><i className={`${openMenu ? '' : 'hidden'} material-symbols-outlined text-lg transition-all mr-4`}>chevron_left</i>{props.value}<i className={`${openMenu ? 'hidden' : ''} material-symbols-outlined text-lg transition-all `}>chevron_right</i></button>
-            <ul className={`${openMenu === true ? 'pt-3' : 'h-0'} text-gray-500 group-focus-within:h-auto overflow-hidden space-y-3`} >
-                {props.submenu.map((value) => {
-                    return (
-                        <li><Link href={`/products/${value.toLowerCase() === "view all" ? props.value : value}`} >{value}</Link></li>
-                    )
-                })}
-            </ul>
-        </ul>
+const ListItem = (props) => {
+    const router = useRouter()
+    return (
+        <>
+            <Link onClick={props.handleMenu} href={router.asPath === props.href ? '/' : props.href} className={`${props.classes} stroke_text hover:text-zinc-800 transition-all duration-500`}>{router.asPath === props.href ? 'Home' : props.children}</Link>
+        </>
     )
-    else return <li className='mb-3' ><Link href={props.href} className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}</Link></li>
 }
 
 export default function Navbar(props) {
-    const [nav, setNav] = useState('')
     const [bars, setBars] = useState('')
     const [menu, setMenu] = useState('-translate-x-full')
     const handleMenu = () => {
         if (bars === '') {
             setBars('open')
-            props.setExpand(true)
             setMenu('')
-            setNav('lg:opacity-0 lg:pointer-events-none')
         }
         if (bars === 'open') {
             setBars('')
-            props.setExpand(false)
-            setNav('')
             setMenu('-translate-x-full')
         }
     }
@@ -75,57 +56,57 @@ export default function Navbar(props) {
     const { totalUniqueItems } = useCart()
 
     // getting user payload form jwt token in localstorage
-    const [user, setUser] = useState(false)
-    useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) return setUser(userData._doc)
-    }, [])
+    // const [user, setUser] = useState(false)
+    // useEffect(() => {
+    //     const userData = jwt.decode(localStorage.getItem("authToken"))
+    //     if (userData) return setUser(userData._doc)
+    // }, [])
     return (
         <>
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            {props.logoNull ? null : <Link href="/" ><Image src={Logo} className={`fixed top-6 right-6 md:top-[13%] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-700`} alt="Urban images" ></Image></Link>}
-            <nav id='navbar' className={` ${props.classes} absolute border lg:static z-20 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:rounded-none rounded-full w-4/5 h-[8%] lg:w-full lg:h-[5.4%] lg:py-5 shadow-sm bg-white flex justify-between items-center transition-all duration-700 m-0`}>
-                <span className='cursor-pointer flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined ">menu</i></span>
-                <button onClick={toggleSearch} className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">search</i></button>
-                <button onClick={toggleCart} className='relative flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">local_mall</i> <span className={`${totalUniqueItems == 0 ? "hidden" : ''} absolute top-2 right-2 lg:top-3 lg:-right-3 w-4 h-4 flex justify-center items-center text-white rounded-full bg-gold-land text-[9px]`}>{totalUniqueItems}</span></button>
+            <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo?'top-[18vh]': 'top-[14vh]'} right-6 md:top-[17vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
+            <div id='navbar' className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[10vh] lg:h-[13vh] lg:min-h-[80px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
+            <nav id='navbar' className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[10vh] lg:h-[13vh] lg:min-h-[80px]'} fixed border z-30 top-0 left-0 lg:translate-x-0 w-full  p-7 lg:px-14 shadow-sm bg-white font_gotham font-semibold text-sm flex justify-between items-center overflow-hidden transition-all duration-1000 ease-linear`}>
+                <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
+                    <div className={`${bars} menu btn3`}>
+                        <div className="icon"></div>
+                    </div>
+                    <span className='hidden lg:block tracking-[1.5em]'>MENU</span>
+                </button>
+                <button onClick={toggleSearch} className='hidden group lg:flex lg:flex-col justify-center items-center text-center tracking-[1.5em]' >&nbsp;SRCH<span className="w-0 group-hover:w-full h-[2px] bg-black transition-all"></span></button>
+                <button onClick={toggleCart} className='group flex justify-center items-center gap-5 lg:gap-10' >
+                    <div className="flex">
+                        <span className="hidden lg:block w-10 group-hover:w-6 h-[2px] mx-1 bg-black transition-all"></span>
+                        <span className="w-5 group-hover:w-9 h-[2px] mx-1 bg-black transition-all"></span>
+                    </div>
+                    <span className="tracking-[0.7em] lg:tracking-[1.5em]">CART</span>
+                    <span>{totalUniqueItems}</span>
+                </button>
             </nav>
 
-            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed left-0 top-0 z-30 transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
-                <div className="border-b-2 w-full h-1/6 flex flex-col">
-                    <div className="flex justify-end items-center w-full h-1/2 px-7">
-                        <div onClick={handleMenu} className=''>
-                            <div className={`${bars} menu btn6`}>
-                                <div className="icon"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-between items-center w-full h-1/2 p-8">
-                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" alt="avatar" /></span> <span>{user.username.length > 14 ? `${user.username.substr(0, 14)}...` : user.username}</span> </Link>
-                            : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i>Login</Link>}
-                        <span className='flex space-x-5' ><button onClick={toggleSearch} className="flex font_futuraLT"><i className="material-symbols-outlined">search</i></button><button onClick={toggleCart} ><i className="material-symbols-outlined">local_mall</i></button></span>
-                    </div>
-                </div>
-                <div className="w-full h-3/5 overflow-y-scroll">
-                    <ul className=' list-none text-lg my-5 font_futuraLT' >
-                        {/* <ListItem2 /> */}
-                        <ListItem key={1} href='/' value='Home' />
-                        <ListItem key={2} submenu={["View All", "Men", "Women", "Kids"]} href='/products/new in' value='New In' />
-                        <ListItem key={3} submenu={["View All", "Bags", "Sneakers", "Jewelary"]} href='/products/men' value='Men' />
-                        <ListItem key={4} submenu={["View All", "Bags", "Sneakers", "Jewelary"]} href='/products/women' value='Women' />
-                        <ListItem key={5} href='/products/eyewear' value='Eyewear' />
-                        <ListItem key={6} href='/products/kids' value='Kids' />
-                        <ListItem key={7} href='/giftcard' value='Gifts Selection' />
-                        <ListItem key={8} submenu={["View All", "Bags", "Sneakers", "Jewelary"]} href='/products/essentials' value='Our Essentials' />
-                    </ul>
-                </div>
-                <div className="w-full h-1/4 py-5 px-8 flex flex-col font_futuraLT text-sm text-gray-800 border-t-2 space-y-2">
-                    <Link href='#' onClick={toggleModal} name="modal3" >Language: English</Link>
-                    <Link href='#' onClick={toggleModal} name="modal3" >Shipping to: United Arab Emirates</Link>
-                    <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">location_on</i> Urban Fits</span>
-                    <span className='text-sm text-gray-800' ><i className="material-symbols-outlined text-xs ">call</i> +971 52 700 1997</span>
-                </div>
+            <div className={`${menu} w-full h-90vh lg:h-[87vh] fixed left-0 bottom-0 z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
+                <ul className='w-90pr h-auto list-none flex flex-col gap-[10vh] lg:gap-[12vh] leading-[0.84] lg:leading-[105px] font_gotham_black text-6xl lg:text-9xl font-bold'>
+                    <li className='w-full border-b' >
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/Women'>Women</ListItem>
+                    </li>
+                    <li className='w-full border-b flex'>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[30%]' href='/products/Men'>Men</ListItem>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[10%] hidden lg:block' href='/products/Kids'>Kids</ListItem>
+                    </li>
+                    <li className='w-full border-b flex lg:hidden'>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/Kids'>Kids</ListItem>
+                    </li>
+                    <li className='w-full border-b flex justify-start lg:justify-between lg:px-14' >
+                        <ListItem handleMenu={handleMenu} href='/stories'>Stories</ListItem>
+                        <ListItem handleMenu={handleMenu} classes='hidden lg:block' href='/sale'>Sale</ListItem>
+                    </li>
+                    <li className='w-full border-b flex lg:hidden'>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>
+                    </li>
+                    <button onClick={toggleSearch} className='lg:hidden group flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-4/5 group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
+                </ul>
             </div>
         </>
     )

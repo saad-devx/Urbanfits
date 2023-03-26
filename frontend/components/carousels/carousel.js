@@ -6,10 +6,11 @@ import '@splidejs/react-splide/css';
 
 import Image from 'next/image';
 import image1 from '../../public/carousel imgs/carousel img1.jpg'
-import image2 from '../../public/carousel imgs/carousel img5.jpg'
-import image3 from '../../public/carousel imgs/carousel img6.jpg'
-import image4 from '../../public/carousel imgs/carousel img3.png'
-import image5 from '../../public/carousel imgs/carousel img4.jpg'
+import image2 from '../../public/carousel imgs/carousel img2.jpg'
+import image3 from '../../public/carousel imgs/carousel img3.jpg'
+import image4 from '../../public/carousel imgs/carousel img4.jpg'
+import image5 from '../../public/carousel imgs/carousel img5.jpg'
+import image6 from '../../public/carousel imgs/carousel img6.jpg'
 
 export default function Carousel(props) {
     const [play, setPlay] = useState(true)
@@ -28,18 +29,18 @@ export default function Carousel(props) {
                 cover: true,
                 autoplay: true,
                 waitForTransition: true,
-                interval: 2200,
+                interval: 3200,
                 drag: false,
                 pauseOnHover: false,
                 pauseOnFocus: false,
                 pagination: false
             }}>
             <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
-                {[image1, image2, image3, image4, image5].map((img, index) => {
+                {[image1, image2, image3, image4, image5, image6].map((img, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
                         <div className={`absolute w-2/6 ${props.carousel_textContainer} flex flex-col items-start text-white transition-all duration-1000 ease-linear text-5xl`}>
                             <h1 className="text-white text-2xl md:text-[38px] md:font-bold">Denim</h1>
-                            <p className="mt-1 mb-4 text-base md:text-xl font_futuraLTlite">For Women</p>
+                            <p className="mt-1 mb-4 text-base md:text-xl font_gotam_light">For Women</p>
                             <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-2xl" >Shop Now</LinkBtn>
                         </div>
                         <Image className='w-full h-full' src={img} alt="Urban images" />
@@ -50,7 +51,7 @@ export default function Carousel(props) {
             {/* Carousel Title */}
             <div className="w-full text-center absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-white space-y-5">
                 <h1 className="text-[45px] md:text-[86px]">Urban Fits</h1>
-                <h3 className="font_futuraLTlite text-[26px] md:text-[44px]">United Arab Emirates</h3>
+                <h3 className="font_gotam_light text-[26px] md:text-[44px]">United Arab Emirates</h3>
             </div>
 
             {/* Buttons for next, prev slide and to pause the carousel */}

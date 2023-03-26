@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/router';
-import Navbar from '@/components/oldnavbar';
+import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import LanguageModal from '@/components/modals/languagemodal';
 import Accordians from '@/components/accordians';
@@ -65,7 +65,7 @@ export default function Checkout2(props) {
             <LanguageModal show={modal3} toggleModal={toggleModal} />
             <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
-                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_futuraLT text-left pt-5' >
+                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
                         <div className="w-full flex flex-col lg:flex-row">
                             <div className="w-full lg:w-[60%] mb-3 mr-auto">
                                 <form className="w-full">
@@ -143,13 +143,13 @@ export default function Checkout2(props) {
                                         <div className=" w-[35%] md:w-1/3">
                                             <Image width={640} height={853} src={shirt_img} alt="Urban images" className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
                                         </div>
-                                        <div className="w-1/2 h-auto text-xs md:text-sm my-5 md:my-3 font_futuraLTlite">
-                                            <span key={1} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Color:</small> <small>{props.color}</small></span>
-                                            <span key={2} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Size:</small> <small>{props.size}</small></span>
-                                            <span key={3} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Quantity:</small> <small>{props.quantity}</small></span>
-                                            <span key={4} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Price:</small> <small>${props.price}</small></span>
-                                            <span key={5} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Discount:</small> <small>{props.discount ? props.discount : 0}</small></span>
-                                            <span key={6} className="w-full mx-auto flex justify-between"><small className='font_futuraLT'>Sale Price:</small> <small>${props.price + 0}</small></span>
+                                        <div className="w-1/2 h-auto text-xs md:text-sm my-5 md:my-3 font_gotam_light">
+                                            <span key={1} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Color:</small> <small>{props.color}</small></span>
+                                            <span key={2} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Size:</small> <small>{props.size}</small></span>
+                                            <span key={3} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Quantity:</small> <small>{props.quantity}</small></span>
+                                            <span key={4} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Price:</small> <small>${props.price}</small></span>
+                                            <span key={5} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Discount:</small> <small>{props.discount ? props.discount : 0}</small></span>
+                                            <span key={6} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Sale Price:</small> <small>${props.price + 0}</small></span>
                                         </div>
                                     </div>
                                     <div className="w-full h-auto my-5 md:my-3">

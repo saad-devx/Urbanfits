@@ -109,14 +109,14 @@ export default function Signing(props) {
                         {/* This image will only show on the top in the Sign Up page */}
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/4 mx-auto mb-3`} />
                         <div className='w-full mx-auto mb-7' >
-                            <h2 className="font_futuraLT font-medium text-4xl leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
+                            <h2 className="font_gotham font-medium text-4xl leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
                         </div>
                         <div className='w-[304px] mx-auto leading-8' >
                             <h3 className=" font-light text-2xl text-center">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</h3>
                         </div>
                     </div>
 
-                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 font_futuraLT bg-white">
+                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 font_gotham bg-white">
                         {/* This image will only show in the Login page */}
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/4 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
@@ -124,7 +124,7 @@ export default function Signing(props) {
                             <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
                             <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                         </div>
-                        <form className="bg-white p-2 font_futuraLT" onReset={handleReset} onSubmit={handleSubmit} >
+                        <form className="bg-white p-2 font_gotham" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
                                 <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
@@ -178,14 +178,14 @@ export default function Signing(props) {
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                         </form>
                         {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
-                        <div className={`${page === 'login' ? 'hidden' : ''} font_futuraLT w-full mt-5 flex justify-center space-x-6`}>
+                        <div className={`${page === 'login' ? 'hidden' : ''} font_gotham w-full mt-5 flex justify-center space-x-6`}>
                             <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
                             <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
                         </div>
                     </div>
                 </section>
 
-                <div className="w-full my-5 px-10 font_futuraLT flex flex-col lg:flex-row justify-between lg:space-x-3">
+                <div className="w-full my-5 px-10 font_gotham flex flex-col lg:flex-row justify-between lg:space-x-3">
                     <LinkBtn href='/' classes='w-full'>Home</LinkBtn>
                     <LinkBtn href='/catelog' classes='w-full'>Catelog</LinkBtn>
                     <LinkBtn href='/contact' classes='w-full'>Contact Us</LinkBtn>

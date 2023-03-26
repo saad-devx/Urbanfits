@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/router';
-import Navbar from '@/components/oldnavbar';
+import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import LanguageModal from '@/components/modals/languagemodal';
 import Accordians from '@/components/accordians';
@@ -65,12 +65,12 @@ export default function Thanks(props) {
             <LanguageModal show={modal3} toggleModal={toggleModal} />
             <section className={`bg-gray-100 ${expand === true ? 'lg:w-3/4' : 'w-full lg:w-[95%]'} h-full fixed right-0 transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
-                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_futuraLT text-left pt-5' >
+                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
                         <div className="w-full flex flex-col lg:flex-row">
                             <section className="w-full lg:w-3/5 space-y-7 mb-3 mr-auto">
-                                <span className="font_futuraLTlite">Thank you for doing business with us. We have emailed you the purchases <br /> receipt for the transaction.</span>
+                                <span className="font_gotam_light">Thank you for doing business with us. We have emailed you the purchases <br /> receipt for the transaction.</span>
                                 <h4>By Admin</h4>
-                                <span className="w-4/5 font_futuraLTlite">Payment to be made upon delivery. <br /> Order status changed from Pending payment to processing. 03-12-2021 05:35 PM </span>
+                                <span className="w-4/5 font_gotam_light">Payment to be made upon delivery. <br /> Order status changed from Pending payment to processing. 03-12-2021 05:35 PM </span>
                                 <div className="w-full py-8 text-sm border-y border-y-gray-400 flex flex-col justify-start">
                                     <h3 className="text-2xl mb-4">Shipping Details</h3>
                                     <span>Muhammad Bilawal Ashraf</span>
@@ -86,7 +86,7 @@ export default function Thanks(props) {
                                         </div>
                                         <span className="">
                                             <h1 className="text-2xl">Product Title Here</h1>
-                                            <span className="font_futuraLTlite space-x-5"> <small>Qty:1</small> <small>$30</small> </span>
+                                            <span className="font_gotam_light space-x-5"> <small>Qty:1</small> <small>$30</small> </span>
                                         </span>
                                     </div>
                                     <h4 className="text-xl my-5">Price Details</h4>

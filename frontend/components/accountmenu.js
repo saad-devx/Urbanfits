@@ -53,8 +53,8 @@ export default function AccountMenu(props) {
     return (
         <>
             <Logout logOut={logOut} modal5={modal5} toggleModal={toggleModal} />
-            <div className=" w-1/3 hidden lg:block h-full relative">
-                <div className="flex flex-col absolute top-[7%] right-[17%] items-center w-[60%] h-full list-none font_futuraLT">
+            <div className=" w-1/3 hidden lg:block h-[87vh] relative">
+                <div className="flex flex-col absolute top-[7%] right-[17%] items-center w-[60%] h-full list-none font_gotham">
                     <Option href='/user/personalinfo'>Personal Information</Option>
                     <Option href='/user/email&password'>Email & Password</Option>
                     <Option href='/user/address'>My Address</Option>
@@ -65,7 +65,7 @@ export default function AccountMenu(props) {
             </div>
 
             {/* To be displayed on the mobile devices */}
-            <div ref={menuRef} className={`account_menu absolute z-10 top-0 left-0 w-full bg-gradient-to-b from-white to-white/75 shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth transition-all duration-300`}>
+            <div ref={menuRef} className={`account_menu absolute z-10 top-[10vh] left-0 w-full bg-gradient-to-b from-white to-white/75 shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth transition-all duration-300`}>
                 <div className="w-[230%] md:w-full h-full px-4 pt-8 flex justify-between">
                     <Option_sm href='/user/personalinfo'>Personal Information</Option_sm>
                     <Option_sm href='/user/email&password'>Email & Password</Option_sm>

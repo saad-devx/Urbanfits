@@ -40,7 +40,7 @@ function CartItem(props) {
             </div>
             <div className="w-4/6 md:w-2/5 flex flex-col items-end">
                 <h3 className="w-full lg:text-2xl text-end">{product.name}</h3>
-                <div className="w-3/4 h-auto text-sm md:text-base my-5 md:my-3 font_futuraLTlite">
+                <div className="w-3/4 h-auto text-sm md:text-base my-5 md:my-3 font_gotam_light">
                     <span key={1} className="w-full md:mb-1 mx-auto flex justify-between"><small>Color</small><small>{product.color}</small></span>
                     <span key={2} className="w-full md:mb-1 mx-auto flex justify-between"><small>Size</small><small>{product.size}</small></span>
                     <span key={3} className="w-full md:mb-1 mx-auto flex justify-between"><small>Quantity</small><small>{quantity}</small></span>
@@ -72,15 +72,15 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-gray-100/40 backdrop-blur-[14px] w-full lg:w-[100%] h-full fixed right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "translate-x-full opacity-0"} font_futuraLT`}>
+            <section className={`bg-gray-100/40 backdrop-blur-[14px] w-full lg:w-[100%] h-full fixed top-0 right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "translate-x-full opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ? <section className="w-full h-screen flex flex-col justify-center items-center space-y-4" >
                         <Image src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                         <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
-                        <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_futuraLTlite">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
+                        <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
                         <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                     </section>
-                        : <section className='w-full p-5 md:p-7 lg:px-0 lg:pb-20 lg:pt-12 lg:w-[90%] h-full font_futuraLT text-left' >
+                        : <section className='w-full p-5 md:p-7 lg:px-0 lg:pb-20 lg:pt-12 lg:w-[90%] h-full font_gotham text-left' >
                             <div className="w-full flex flex-col lg:flex-row gap-5">
                                 <div className="w-full lg:w-[70%] mb-3">
                                     <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>

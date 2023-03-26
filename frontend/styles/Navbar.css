@@ -1,64 +1,67 @@
-.btn6 {
+.btn3 {
     width: 30px;
-    height: 25px;
-    cursor: pointer;
-    transition-duration: 0.7s;
+    height: 10px;
+    position: relative;
+    transition-duration: 0.3s;
 }
 
-.btn6 .icon {
-    transition-duration: 0.7s;
+.btn3 .icon {
+    transition-duration: 0.3s;
     position: absolute;
+    height: 0px;
     width: 30px;
-    height: 2px;
-    top: 30px;
     background-color: #212121;
+    top: 0;
 }
 
-.btn6 .icon:before {
-    transition-duration: 0.7s;
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    background-color: #212121;
-    content: "";
-    top: -8px;
-}
-
-.btn6 .icon:after {
-    transition-duration: 0.7s;
+.btn3 .icon:before {
+    transition-duration: 0.3s;
     position: absolute;
     width: 30px;
     height: 2px;
     background-color: #212121;
     content: "";
+    left: 0;
+    top: 0;
+}
+
+.btn3 .icon:after {
+    transition-duration: 0.3s;
+    position: absolute;
+    width: 23px;
+    height: 2px;
+    background-color: #212121;
+    content: "";
+    left: 0;
     top: 8px;
 }
 
-.btn6.open .icon {
-    width: 29px;
-    border-radius: 1px;
-    transition-duration: 0.7s;
-    transform: rotateZ(180deg);
+@media only screen and (min-width: 1000px) {
+    .menu_parent:hover .icon::before {
+        width: 23px;
+    }
+
+    .menu_parent:hover .icon::after {
+        width: 30px;
+    }
 }
 
-.btn6.open .icon:before {
-    top: -10px;
-    border-radius: 1px;
-    width: 19px;
-    transform: rotateZ(45deg) scaleX(0.75) translate(18px, -6.2px);
+.btn3.open .icon {
+    transition-duration: 0.3s;
 }
 
-.btn6.open .icon:after {
-    top: 10px;
-    border-radius: 1px;
-    width: 19px;
-    transform: rotateZ(-45deg) scaleX(0.75) translate(18px, 6.2px);
+.btn3.open .icon:before {
+    width: 30px;
+    top: 4px;
+    transform: rotateZ(26deg) translate(2px, -1px);
 }
 
-.bg_giftbanner {
-    background-image: url(../public/giftbanner.png);
+.btn3.open .icon:after {
+    width: 30px;
+    top: 4px;
+    transform: rotateZ(-26deg) translate(2px, 1px);
 }
 
-/* .list_item:hover i{
-    transform:  translate(5px, 4px);
-} */
+.btn3:hover {
+    cursor: pointer;
+}
