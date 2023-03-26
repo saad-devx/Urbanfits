@@ -11,33 +11,25 @@ import Image from 'next/image';
 import female_avatar from '../public/avatars/female.svg'
 import male_avatar from '../public/avatars/male.svg'
 
-
 function ListItem(props) {
-
-    const [dropdown, setDropdown] = useState(false)
-    const toggleSubMenu = () => {
-        if (dropdown === false) return setDropdown(true)
-        if (dropdown === true) return setDropdown(false)
+    const [openMenu, setOpenMenu] = useState(false)
+    const toggleMenu = () => {
+        if (openMenu) return setOpenMenu(false)
+        if (!openMenu) return setOpenMenu(true)
     }
-    return (
-        <>
-            {props.submenu ?
-                <>
-                    <li onClick={toggleSubMenu} className='list_item mb-3' ><button className='w-full flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}<i className={`material-symbols-outlined text-lg translate-y-1 transition-all ${dropdown === true ? "rotate-90" : ""}`}>chevron_right</i></button></li>
-                    {props.submenu ?
-                        <ul className={`${dropdown === true ? "" : "hidden"} pl-14 pb-3 font_futuraLTlite duration-500 overflow-hidden w-full list-none `}>
-                            {props.submenu.map((value) => {
-                                return (
-                                    <li><Link href={`/products/${value.toLowerCase() === "view all" ? props.value : value}`} >{value}</Link></li>
-                                )
-                            })}
-                        </ul>
-                        : null}
-                </>
-                : <li onClick={toggleSubMenu} className='list_item mb-3' ><Link href={props.href} className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}</Link></li>
-            }
-        </>
+    if (props.submenu) return (
+        <ul className='list_item mb-3 px-8' >
+            <button onClick={toggleMenu} className={`w-full flex ${openMenu ? '' : 'justify-between'} border-b-2 border-white transition-all`} ><i className={`${openMenu ? '' : 'hidden'} material-symbols-outlined text-lg transition-all mr-4`}>chevron_left</i>{props.value}<i className={`${openMenu ? 'hidden' : ''} material-symbols-outlined text-lg transition-all `}>chevron_right</i></button>
+            <ul className={`${openMenu === true ? 'pt-3' : 'h-0'} text-gray-500 group-focus-within:h-auto overflow-hidden space-y-3`} >
+                {props.submenu.map((value) => {
+                    return (
+                        <li><Link href={`/products/${value.toLowerCase() === "view all" ? props.value : value}`} >{value}</Link></li>
+                    )
+                })}
+            </ul>
+        </ul>
     )
+    else return <li className='mb-3' ><Link href={props.href} className='flex justify-between px-8 border-b-2 border-white transition-all' >{props.value}</Link></li>
 }
 
 export default function Navbar(props) {
@@ -93,24 +85,14 @@ export default function Navbar(props) {
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            {props.logoNull ? null : <Link href="/" ><Image src={Logo} className={`fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-24 lg:w-20 transition-all duration-700`} alt="Urban images" ></Image></Link>}
-            <nav id='navbar' className={` ${nav} ${props.classes} border fixed z-20 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-0 lg:top-0 lg:rounded-none rounded-full w-4/5 lg:w-[5.4%] h-[8%] lg:h-full lg:py-5 shadow-md bg-white flex lg:flex-col lg:justify-between items-center transition duration-700 lg:space-y-10`}>
-                <div onClick={handleMenu} className={`hidden lg:block`}>
-                    <div className={`${bars} menu btn6`}>
-                        <div className="icon"></div>
-                    </div>
-                </div>
-                <div className="w-full h-full lg:h-35pr px-3 lg:px-0 text-gray-900 flex lg:flex-col justify-between items-center">
-                    <span className='lg:hidden cursor-pointer flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined ">menu</i></span>
-                    <button onClick={toggleSearch} className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">search</i></button>
-                    <button onClick={toggleCart} className='relative flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">local_mall</i> <span className={`${totalUniqueItems == 0 ? "hidden" : ''} absolute top-2 right-2 lg:top-3 lg:-right-3 w-4 h-4 flex justify-center items-center text-white rounded-full bg-gold-land text-[9px]`}>{totalUniqueItems}</span></button>
-                    {user ? <Link href='/user/personalinfo' className='mr-4 lg:mr-0 lg:mt-4' title='Me' ><div  className='w-8 rounded-full border overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full object-cover" alt="avatar" /></div></Link>
-                        : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i></Link>}
-                </div>
-                <i className='hidden lg:block' />
+            {props.logoNull ? null : <Link href="/" ><Image src={Logo} className={`fixed top-6 right-6 md:top-[13%] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-700`} alt="Urban images" ></Image></Link>}
+            <nav id='navbar' className={` ${props.classes} absolute border lg:static z-20 bottom-8 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:rounded-none rounded-full w-4/5 h-[8%] lg:w-full lg:h-[5.4%] lg:py-5 shadow-sm bg-white flex justify-between items-center transition-all duration-700 m-0`}>
+                <span className='cursor-pointer flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' onClick={handleMenu} ><i className="material-symbols-outlined ">menu</i></span>
+                <button onClick={toggleSearch} className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">search</i></button>
+                <button onClick={toggleCart} className='relative flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">local_mall</i> <span className={`${totalUniqueItems == 0 ? "hidden" : ''} absolute top-2 right-2 lg:top-3 lg:-right-3 w-4 h-4 flex justify-center items-center text-white rounded-full bg-gold-land text-[9px]`}>{totalUniqueItems}</span></button>
             </nav>
 
-            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed m-0 left-0 top-0 z-30 transition-all ${props.transition?props.transition:'duration-700'} bg-white shadow-lg`}>
+            <div className={` ${menu} w-full lg:w-1/4 h-screen fixed left-0 top-0 z-30 transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
                 <div className="border-b-2 w-full h-1/6 flex flex-col">
                     <div className="flex justify-end items-center w-full h-1/2 px-7">
                         <div onClick={handleMenu} className=''>
@@ -120,13 +102,14 @@ export default function Navbar(props) {
                         </div>
                     </div>
                     <div className="flex justify-between items-center w-full h-1/2 p-8">
-                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" alt="avatar" /></span> <span>{user.username}</span> </Link>
+                        {user ? <Link href='/user/personalinfo' title='Me' className='flex items-center gap-3' ><span className='w-10 rounded-full overflow-hidden'><Image src={user.gender === "Female" ? female_avatar : male_avatar} className="w-full h-full object-cover" alt="avatar" /></span> <span>{user.username.length > 14 ? `${user.username.substr(0, 14)}...` : user.username}</span> </Link>
                             : <Link href='/login' title="Login" className=' flex justify-center items-center w-20pr h-3/4 rounded-full bg-gradient-to-r ' ><i className="material-symbols-outlined">person</i>Login</Link>}
                         <span className='flex space-x-5' ><button onClick={toggleSearch} className="flex font_futuraLT"><i className="material-symbols-outlined">search</i></button><button onClick={toggleCart} ><i className="material-symbols-outlined">local_mall</i></button></span>
                     </div>
                 </div>
                 <div className="w-full h-3/5 overflow-y-scroll">
                     <ul className=' list-none text-lg my-5 font_futuraLT' >
+                        {/* <ListItem2 /> */}
                         <ListItem key={1} href='/' value='Home' />
                         <ListItem key={2} submenu={["View All", "Men", "Women", "Kids"]} href='/products/new in' value='New In' />
                         <ListItem key={3} submenu={["View All", "Bags", "Sneakers", "Jewelary"]} href='/products/men' value='Men' />

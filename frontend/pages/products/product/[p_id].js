@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
-import dynamic from "next/dynamic";
-import Navbar from '@/components/navbar'
+import { useRouter } from 'next/router';
+import Navbar from '@/components/oldnavbar'
 import Footer from '@/components/footer'
 import Accordians from '@/components/accordians';
 import SuggestionCard from '@/components/cards/suggestionPicCard';
@@ -11,18 +11,27 @@ import Link from 'next/link';
 import ProductCarousel from '@/components/carousels/productCarousel';
 import Cutomization from '@/components/modals/cutomization';
 import toaster from '@/utils/toast_function';
-
-
 // image imports
 import image1 from '../../../public/card imgs/card img6.jpg'
 import image2 from '../../../public/card imgs/card img11.jpg'
 import image3 from '../../../public/card imgs/card img8.jpg'
 
-const Product = (props) => {
+export default function Product(props) {
     const productData = { ...props.response.product, id: props.response.product._id }
-    const [product, setProduct] = useState(productData.varients[0])
+    const router = useRouter()
     const [expand, setExpand] = useState(false)
-
+    const [product, setProduct] = useState(productData.variants[0])
+    const [sizevalue, setSizevalue] = useState(null)
+    
+    useEffect(() => {
+        const { color } = router.query
+        if(!color) return
+        let newProduct = productData.variants.filter((variant) => {
+            return variant.color_name === color
+        })
+        setProduct(newProduct[0])
+        setSizevalue(null)
+    }, [router.query.color])
     // confguring the Quantity conter of the prodcut
     const [quantity, setQuantity] = useState(1)
     const changeQuantity = (e) => {
@@ -32,14 +41,9 @@ const Product = (props) => {
         if (name === "decrement") return setQuantity(quantity - 1)
         if (name === "increment") return setQuantity(quantity + 1)
     }
-    // Color select function to change the product data according to the color
-    const onColorSelect = (e)=>{
-        const color  = e.target.name
-        e.target.style.border = '2.5px solid golden'
-        let newProduct = productData.varients.filter((variant)=>{
-            return variant.color === color
-        })
-        setProduct(newProduct[0])
+    // size vaue channge funciton
+    const onSizeChange = (e) => {
+        setSizevalue(e.target.value)
     }
 
     // setting up teh toggle fucntion and state for the size cutomization modal 
@@ -73,9 +77,9 @@ const Product = (props) => {
                                     <div className="w-full h-28 p-4 rounded-2xl bg-white items-center">
                                         <small className="w-full">Choose a Color:</small>
                                         <span className="w-full my-3 mx-auto flex flex-wrap justify-center space-x-3">
-                                            {productData.varients.map(variant => {
-                                                let {color} = variant
-                                                return <button style={{background: color}} name={color} onClick={onColorSelect} className={`w-6 h-6 mb-3 cursor-pointer rounded-full focus:scale-110 border-2 focus:border-gray-400 transition-all`} ></button>
+                                            {productData.variants.map(variant => {
+                                                let { color, color_name } = variant
+                                                return <Link style={{ background: color}} name={color} title={color_name} href={`/products/product/${productData.id}?color=${color_name}`} className={`w-6 h-6 mb-3 cursor-pointer rounded-full ${router.query.color===color_name?`scale-105 opacity-100`:'opacity-70 border-2'} transition-all`} ></Link>
                                             })}
                                         </span>
                                     </div>
@@ -84,9 +88,9 @@ const Product = (props) => {
                                         <small className='w-full' >{product.stock} Pieces left in Stock</small>
                                         <div className="flex justify-end my-5">
                                             <span className="w-full flex justify-end">
-                                                <span onClick={changeQuantity} name="decrement" className="fa-solid fa-circle-minus text-2xl cursor-pointer active:-translate-x-2 transition-all text-gray-300"></span>
+                                                <span onClick={(e)=>{changeQuantity(e)}} name="decrement" className="fa-solid fa-circle-minus text-2xl cursor-pointer active:-translate-x-2 transition-all text-gray-300"></span>
                                                 <input type="number" readOnly className='w-1/6 h-auto text-sm text-center mx-3 border-none outline-none pointer-events-none' value={quantity} />
-                                                <span onClick={changeQuantity} name="increment" className="fa-solid fa-circle-plus text-2xl cursor-pointer active:translate-x-2 transition-all text-gray-300"></span>
+                                                <span onClick={(e)=>{changeQuantity(e)}} name="increment" className="fa-solid fa-circle-plus text-2xl cursor-pointer active:translate-x-2 transition-all text-gray-300"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -97,9 +101,10 @@ const Product = (props) => {
                                             <small><Link href="/product/sizechart" className='underline'>Size Chart</Link></small>
                                         </span>
                                         <span className="w-full mt-3 flex flex-wrap justify-end pill-container text-xs">
-                                            {product.size.map((value) => {
+                                            {product.size.map((value, index) => {
+                                                console.log(product.color_name, router.query.color)
                                                 return <>
-                                                    <input type="radio" id={value} name="size" value={value} />
+                                                    <input type="radio" id={value} onChange={onSizeChange} name="size" value={value} />
                                                     <label className="selector border border-gray-400 rounded-full w-10 mb-2 mr-1 px-1 py-1" htmlFor={value}>{value}</label>
                                                 </>
                                             })}
@@ -109,7 +114,7 @@ const Product = (props) => {
                                         <p>Price :</p> <p>${productData.price}</p>
                                     </div>
                                     <div className="w-full">
-                                        <Button onclick={() => { addItem(product); showToast() }} classes="w-full" my="my-2" >Add to Cart</Button>
+                                        <Button onclick={() => {addItem({ id: product._id, name: productData.name, price: productData.price, shipping_fee: productData.shipping_detials.fees, stock: product.stock, size: sizevalue?sizevalue:product.size[0], color: product.color_name, images: product.images }, quantity); toaster('success', 'Your items has been added to the cart') }} classes="w-full" my="my-2" >Add to Cart</Button>
                                         <Button onclick={toggleModal} name="modal4" classes="w-full" my="my-2" >Customization</Button>
                                     </div>
                                     {/* Accordian */}
@@ -144,4 +149,3 @@ export async function getServerSideProps(context) {
     let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
     return { props: { response, p_id } }
 }
-export default dynamic(() => Promise.resolve(Product), { ssr: false })

@@ -62,7 +62,7 @@ export default function Search(props) {
                                 {results.length !== 0 ? results.map((result) => {
                                     return (
                                         <>
-                                            <Shoppingcard addItem={() => addItem({ ...result, id: result._id })} id={result._id} name={result.name} price={result.price} colors={result.varients.length} img={result.varients[0].images[0].url} />
+                                            <Shoppingcard addItem={() => addItem({ ...result, id: result._id })} id={result._id} name={result.name} price={result.price} colors={result.variants.length} img={result.variants[0].images[0].url} />
                                         </>
                                     )
                                 }).slice(0, 4) : <h6 className="text-xl md:text-3xl text-gray-500 w-full text-center">No search results found!</h6>}

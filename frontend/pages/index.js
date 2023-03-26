@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import Navbar from "../components/navbar";
+import Navbar from "../components/oldnavbar";
 import Footer from "@/components/footer";
 import Carousel from "@/components/carousels/carousel";
 import CardCarousel from "@/components/carousels/cardCarousel";
@@ -24,6 +24,7 @@ export default function Home() {
     const [modal1, setModal1] = useState(false);
     const [modal3, setModal3] = useState(false);
     const [carouselClasses, setCarouselClasses] = useState('w-full h-screen');
+    const [carousel_textContainer, setTextContainer] = useState('bottom-[8%] left-[4%]')
 
     // useEffect(() => {
     //     let item = localStorage.getItem("loadingModal");
@@ -33,7 +34,6 @@ export default function Home() {
     // }, []);
 
     useEffect(() => {
-        // let carousel = document.querySelector("#carousel");
         let wrapper = document.querySelector("#content_wrapper");
         let navbar = document.querySelector("#navbar");
         navbar.classList.add("opacity-0", "pointer-events-none");
@@ -41,6 +41,7 @@ export default function Home() {
             let position = window.pageYOffset;
             if (position >> 0) {
                 setCarouselClasses('w-11/12 lg:w-90pr h-80vh lg:h-90vh rounded-2rem mt-7')
+                setTextContainer('bottom-[26.4%] left-[4%] lg:bottom-[17%] lg:left-[4%]')
                 wrapper.classList.add('lg:w-[94.6%]');
                 navbar.classList.remove('opacity-0', 'pointer-events-none')
                 window.removeEventListener('scroll', setSizefunc);
@@ -74,28 +75,28 @@ export default function Home() {
                     <Image alt="Urban images" src={Logo} className="fixed top-6 right-6 md:top-10 md:right-10 z-10 w-14 md:w-20" />
                     <div id="content_wrapper" className="w-full flex flex-col justify-center items-center space-y-5 transition-all ease-linear duration-700" >
                         <div className={`${carouselClasses} flex justify-center items-center font_futuraLT transition-all duration-1000 ease-linear overflow-hidden`} >
-                            <Carousel />
+                            <Carousel carousel_textContainer={carousel_textContainer} />
                         </div>
                         {/* Auto scroll Carousel  */}
-                        <section className="relative w-full h-80vh lg:h-screen p-5 md:pr-0 flex flex-col md:flex-row items-center justify-center font_futuraLT overflow-hidden">
-                            <div className="lg:absolute left-0 w-full md:w-[35vw] md:h-full lg:pl-5 mb-3 lg:m-0 leading-7 flex flex-col justify-center items-start">
-                                <h2 className="text-xl md:text-[44px] lg:text-5xl word-wrap leading-tight">Newest Gear to Work</h2>
+                        <section className="relative w-full h-80vh md:h-screen p-5 mf:p-10 lg:pr-0 flex flex-col lg:flex-row items-center justify-center font_futuraLT overflow-hidden">
+                            <div className="lg:absolute left-0 w-full lg:w-[35vw] lg:h-full md:pl-5 mb-3 lg:m-0 leading-7 flex flex-col justify-center items-start">
+                                <h2 className="text-xl md:text-3xl lg:text-5xl word-wrap leading-tight">Newest Gear to Work</h2>
                                 <h4 className="font_futuraLTlite">Innovation and Comfort for Women</h4>
                             </div>
-                            <div className="lg:absolute h-80vh w-full lg:ml-[40rem] lg:w-[80vw] md:h-[95%] rounded-3xl flex items-center">
+                            <div className="lg:absolute h-80vh w-full lg:ml-[40rem] lg:w-[80vw] lg:h-[95%] rounded-3xl flex items-center">
                                 <CardCarousel />
                             </div>
                             <div className="hidden lg:block absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                         </section>
                         {/* Shopping Card Section */}
-                        <section className="w-full h-screen p-5 md:p-10 flex flex-col lg:flex-row justify-between font_futuraLT space-y-5 lg:space-y-0">
+                        <section className="w-full h-screen md:h-auto lg:h-screen p-5 md:p-10 flex flex-col lg:flex-row justify-between font_futuraLT space-y-5 lg:space-y-0">
                             <PicCard img={image1} />
                             <PicCard img={image2} />
                         </section>
                         {/* Shopping Card Section */}
                         <section className="w-full p-5 md:p-10 font_futuraLT">
-                            <h3 className="text-xl lg:text-4xl translate-y-5 mb-5 lg:m-0">Urban Unicorn Sneakers</h3>
-                            <div className="w-full h-screen py-5 md:py-10 flex flex-col lg:flex-row justify-between space-y-5 lg:space-y-0">
+                            <h3 className="text-xl md:text-3xl lg:text-4xl translate-y-5 mb-5 lg:m-0">Urban Unicorn Sneakers</h3>
+                            <div className="w-full h-screen md:h-auto lg:h-screen py-5 md:py-10 flex flex-col lg:flex-row justify-between space-y-5 lg:space-y-0">
                                 <PicCard img={image4} />
                                 <PicCard img={image3} />
                             </div>

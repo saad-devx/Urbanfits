@@ -26,7 +26,7 @@ export default function ProductCarousel(props) {
           gap: "0.5rem",
           waitForTransition: true,
           pagination: false,
-          speed: 700,
+          speed: 500,
           arrows: true,
         }} >
           {images.map((img) => {
@@ -40,10 +40,9 @@ export default function ProductCarousel(props) {
           fixedWidth: 150,
           fixedHeight: 100,
           arrows: false,
-          speed: 700,
+          speed: 500,
           type: "loop",
-          gap: 3,
-          rewind: true,
+          gap: 2,
           pagination: false,
           isNavigation: true,
           breakpoints: {

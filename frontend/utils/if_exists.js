@@ -1,4 +1,3 @@
-// getting user payload form jwt token in localstorage
 const ifExists = (data, return_type) => {
     if (data) return data
     if (return_type === false) return false

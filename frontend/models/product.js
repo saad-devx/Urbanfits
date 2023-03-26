@@ -31,11 +31,12 @@ const ProductSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    varients: [
+    variants: [
         {
             color: {
                 type: String,
             },
+            color_name: {type: String},
             images: [{
                 public_id: { type: String, required: true },
                 url: { type: String, required: true },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from '../components/navbar'
+import Navbar from '@/components/navbar'
 import Image from 'next/image'
 import Card from '../components/cards/card'
 import Footer from '../components/footer'
@@ -11,9 +11,9 @@ function Giftcard() {
     return (
         <>
             <main className="w-full h-full bg-gray-100">
-                <Navbar setExpand={setExpand} />
-                <section className={`${expand === true ? 'w-3/4' : 'w-full lg:w-[95%]'} absolute right-0 top-0 pt-7 flex flex-col justify-center items-center space-y-5 transition-all duration-700`}>
-                    <div className={` ${expand === true ? 'rounded-3xl' : 'rounded-sm'} overflow-hidden w-[95%] lg:w-11/12 h-[40vh] lg:h-auto relative mx-5 lg:mx-auto bg_giftbanner bg-no-repeat bg-cover bg-right transition-all duration-700`}>
+                <section className={`${expand === true ? 'w-3/4' : 'w-full'} float-right flex flex-col justify-center items-center  transition-all duration-700`}>
+                    <Navbar setExpand={setExpand} />
+                    <div className={` ${expand === true ? 'rounded-3xl' : 'rounded-sm'} mt-7 overflow-hidden w-[95%] lg:w-11/12 h-[40vh] lg:h-auto relative mx-5 lg:mx-auto bg_giftbanner bg-no-repeat bg-cover bg-right transition-all duration-700`}>
                         <h1 className="w-full text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[6vw] lg:text-[4vw] font_futuraLT ">Urban Gift Cards</h1>
                         <Image src={giftBanner} alt="Urban images" className={`hidden lg:block`} />
                     </div>

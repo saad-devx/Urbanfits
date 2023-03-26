@@ -11,17 +11,18 @@ import image3 from '../../public/carousel imgs/carousel img6.jpg'
 import image4 from '../../public/carousel imgs/carousel img3.png'
 import image5 from '../../public/carousel imgs/carousel img4.jpg'
 
-export default function Carousel() {
+export default function Carousel(props) {
     const [play, setPlay] = useState(true)
     const togglePlay = () => {
         if (play === true) return setPlay(false)
         if (play === false) return setPlay(true)
     }
-
     return (
-        <Splide className="w-full h-full relative transition-all duration-1000" hasTrack={false}
+        <Splide fixed className="w-full h-full relative transition-all duration-1000" hasTrack={false}
             options={{
                 type: 'loop',
+                fixedWidth: '100vw',
+                fixedHeight: '100vh',
                 speed: 700,
                 gap: '0.5rem',
                 cover: true,
@@ -33,15 +34,15 @@ export default function Carousel() {
                 pauseOnFocus: false,
                 pagination: false
             }}>
-            <SplideTrack className='w-full h-full' >
+            <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
                 {[image1, image2, image3, image4, image5].map((img, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
-                        <div className="absolute w-2/6 bottom-[8%] left-[4%] flex flex-col items-start text-white text-5xl">
+                        <div className={`absolute w-2/6 ${props.carousel_textContainer} flex flex-col items-start text-white transition-all duration-1000 ease-linear text-5xl`}>
                             <h1 className="text-white text-2xl md:text-[38px] md:font-bold">Denim</h1>
                             <p className="mt-1 mb-4 text-base md:text-xl font_futuraLTlite">For Women</p>
                             <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-2xl" >Shop Now</LinkBtn>
                         </div>
-                        <Image className='w-full h-full transition-all duration-700' src={img} alt="Urban images" />
+                        <Image className='w-full h-full' src={img} alt="Urban images" />
                     </SplideSlide>
                 })}
             </SplideTrack>
