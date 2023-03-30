@@ -79,7 +79,6 @@ export default function Personalinfo() {
         initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '', newsletter_sub_email: false, newsletter_sub_phone: false },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
-            console.log(values)
             setLoader(<Loader />)
             let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
                 method: "PUT",

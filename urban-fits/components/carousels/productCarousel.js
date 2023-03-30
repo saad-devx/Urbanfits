@@ -18,12 +18,13 @@ export default function ProductCarousel(props) {
 
   return (
     <>
-      <div className="productCarousel">
+      <div className="relative productCarousel">
         <Splide className='w-full h-60vh lg:h-80vh overflow-hidden border-2 border-white bg-white rounded-lg lg:rounded-b-none' ref={slider1} options={{
-          type: 'loop',
+          type: 'fade',
           focus: "center",
           rewind: true,
           gap: "0.5rem",
+          cover: true,
           waitForTransition: true,
           pagination: false,
           speed: 500,
@@ -31,33 +32,42 @@ export default function ProductCarousel(props) {
         }} >
           {images.map((img) => {
             return <SplideSlide className='w-full h-60vh lg:h-80vh' >
-            <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={img.url} alt="Urban images" />
-          </SplideSlide>
-          })}
-        </Splide>
-
-        <Splide className='hidden md:flex justify-center bg-white rounded-b-lg' ref={slider2} options={{
-          fixedWidth: 150,
-          fixedHeight: 100,
-          arrows: false,
-          speed: 500,
-          type: "loop",
-          gap: 2,
-          pagination: false,
-          isNavigation: true,
-          breakpoints: {
-            600: {
-              fixedWidth: 60,
-              fixedHeight: 44,
-            },
-          },
-        }} >
-          {images.map((img) => {
-            return <SplideSlide className='w-full h-60vh lg:h-80vh' >
-              <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={img.url} alt="Urban images" />
+              <Image width={1400} height={1900} className='w' src={img.url} alt="Urban images" />
             </SplideSlide>
           })}
         </Splide>
+
+        <div className="absolute right-0 top-0">
+
+          <Splide className='bg-slate-600 rounded-b-lg' ref={slider2} options={{
+            fixedWidth : 100,
+            fixedHeight: 60,
+            gap        : 10,
+            rewind     : true,
+            pagination : false,
+            arrows: false,
+            speed: 500,
+            type: "loop",
+            direction: 'ttb',
+            width: '180px',
+            height: '400px',
+            perPage: 3,
+            pagination: false,
+            isNavigation: true,
+            // breakpoints: {
+            //   600: {
+            //     fixedWidth: 60,
+            //     fixedHeight: 44,
+            //   },
+            // },
+          }} >
+            {images.map((img) => {
+              return <SplideSlide className='w-full h-60vh lg:h-80vh' >
+                <Image width={1400} height={1900} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+              </SplideSlide>
+            })}
+          </Splide>
+        </div>
       </div>
     </>
   );
