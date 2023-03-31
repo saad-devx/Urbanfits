@@ -57,6 +57,7 @@ export default function HomeCarousel2() {
         interval: 2200,
         type: 'loop',
         drag: false,
+        // arrows: false,
         perMove: 1,
         direction: 'ltr',
         gap: '1rem',
@@ -71,18 +72,19 @@ export default function HomeCarousel2() {
         {[image1, image1, image1, image1, image1, image1, image1].map((img, index) => {
           return <SplideSlide key={index} className={`group relative aspect-auto md:p-3 transition-all duration-500`}>
             <Image src={img} className='w-full h-full object-contain -translate-x-[3.4vw]' alt="Urban images" />
-            <div className="opacity-0 group-hover:opacity-100 bg-white/50 p-3 rounded-lg absolute -left-20 top-[15%] transition-all">
+            {/* <div className="opacity-0 group-hover:opacity-100 bg-white/50 p-3 rounded-lg absolute -left-20 top-[15%] transition-all">
               <h3 className='text-lg text-black font-semibold'>Moodi G ka Corler</h3>
             </div>
             <div className="opacity-0 group-hover:opacity-100 bg-white/50 p-3 rounded-lg absolute -left-20 bottom-[15%] transition-all">
               <h3 className='text-lg text-black font-semibold'>Moodi G ka Pajama</h3>
-            </div>
+            </div> */}
           </SplideSlide>
         })}
       </SplideTrack>
 
-      <h2 className="lg:hidden absolute left-5 bottom-8 text-xl md:text-3xl lg:text-5xl word-wrap leading-tight">Urban<br />New Arrival</h2>
-      <div className="splide__arrows absolute flex space-x-5 bottom-[3%] right-20">
+      <h2 className="lg:hidden absolute left-5 bottom-8 text-xl md:text-3xl lg:text-5xl word-wrap leading-tight">URBAN<br />NEW ARRIVAL</h2>
+      <div className="bg-transparent absolute top-0"></div>
+      <div className="splide__arrows absolute flex space-x-5 bottom-[30%] -left-[45%]">
         <div className="splide__arrows">
           <button className="splide__arrow--prev active:bg-gray-500 justify-center items-center w-8 h-8 border border-yellow-600 rounded-full bg-white rotate-180 transition-all duration-500" >
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

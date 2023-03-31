@@ -49,7 +49,7 @@ function CartItem(props) {
                     <span key={7} className="w-full md:mb-1 mx-auto flex justify-between"><small>Sale Price</small><small>${props.get3dpNumber(product.price * quantity)}</small></span>
                 </div>
                 <div className=" text-sm md:text-base w-full flex justify-between">
-                    <small><Link href={`/products/product/${product.id}`} onClick={() => { props.toggleCart() }} >Edit<i className="fa-regular fa-pen-to-square ml-1"></i></Link></small>
+                    <small><Link href={`/products/product/${product.product_id}?color=${product.color}`} onClick={() => { props.toggleCart() }} >Edit<i className="fa-regular fa-pen-to-square ml-1"></i></Link></small>
                     <small onClick={() => { removeItem(product.id) }} ><button>Remove <i className="fa-solid fa-trash text-gray-800 ml-1"></i></button></small>
                     <span className="w-20 md:w-24 flex justify-between">
                         <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="fa-solid fa-circle-minus text-lg md:text-xl cursor-pointer active:-translate-x-2 transition-all text-gray-300"></span>
@@ -72,7 +72,7 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-gray-100/40 backdrop-blur-[14px] w-full lg:w-[100%] h-full fixed top-0 right-0 z-50 transition-all duration-[1s] overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "translate-x-full opacity-0"} font_gotham`}>
+            <section className={`bg-gray-100/40 backdrop-blur-[14px] w-full lg:w-[100%] h-full fixed top-0 right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "translate-x-full opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ? <section className="w-full h-screen flex flex-col justify-center items-center space-y-4" >
                         <Image src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />

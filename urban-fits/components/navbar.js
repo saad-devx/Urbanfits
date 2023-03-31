@@ -13,14 +13,25 @@ const ListItem = (props) => {
     const router = useRouter()
     return (
         <>
-            <Link onClick={props.handleMenu} href={router.asPath === props.href ? '/' : props.href} className={`${props.classes} stroke_text hover:text-zinc-800 transition-all duration-500`}>{router.asPath === props.href ? 'Home' : props.children}</Link>
+            <Link onClick={props.handleMenu} href={router.asPath === props.href ? '/' : props.href} className={`${props.classes} stroke_text hover:text-gotham-black transition-all duration-500`}>{router.asPath === props.href ? 'Home' : props.children}</Link>
         </>
+    )
+}
+
+const SocialIcons = ({classes}) => {
+    return (
+        <div className={`${classes} w-full lg:w-auto flex justify-between space-x-20 text-base text-black`}>
+            <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>
+            <Link href='#' ><i className="fa-brands fa-facebook-f"></i></Link>
+            <Link href='#' ><i className="fa-solid fa-paper-plane"></i></Link>
+            <Link href='#' ><i className="fa-brands fa-instagram"></i></Link>
+        </div>
     )
 }
 
 export default function Navbar(props) {
     const [bars, setBars] = useState('')
-    const [menu, setMenu] = useState('-translate-x-full')
+    const [menu, setMenu] = useState('-translate-y-[100vh]')
     const handleMenu = () => {
         if (bars === '') {
             setBars('open')
@@ -28,7 +39,7 @@ export default function Navbar(props) {
         }
         if (bars === 'open') {
             setBars('')
-            setMenu('-translate-x-full')
+            setMenu('-translate-y-[100vh]')
         }
     }
 
@@ -66,28 +77,28 @@ export default function Navbar(props) {
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo?'top-[18vh]': 'top-[14vh]'} right-6 md:top-[17vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
-            <div id='navbar' className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[10vh] lg:h-[13vh] lg:min-h-[80px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
-            <nav id='navbar' className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[10vh] lg:h-[13vh] lg:min-h-[80px]'} fixed border z-30 top-0 left-0 lg:translate-x-0 w-full  p-7 lg:px-14 shadow-sm bg-white font_gotham font-semibold text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
+            <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[14vh]'} right-6 md:top-[17vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
+            <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[10vh] lg:h-[13vh] lg:min-h-[80px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
+            <nav className={`${props.hideNav ? 'bg-transparent' : 'bg-white'} h-[10vh] lg:h-[13vh] lg:min-h-[80px] fixed z-40 top-0 left-0 lg:translate-x-0 w-full  p-7 lg:px-14 shadow-sm bg-transparent font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
                 <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
                     <div className={`${bars} menu btn3`}>
                         <div className="icon"></div>
                     </div>
                     <span className='hidden lg:block tracking-[1.5em]'>MENU</span>
                 </button>
-                <button onClick={toggleSearch} className='hidden group lg:flex lg:flex-col justify-center items-center text-center tracking-[1.5em]' >&nbsp;SRCH<span className="w-0 group-hover:w-full h-[2px] bg-black transition-all"></span></button>
+                <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex lg:flex-col justify-center items-center text-center tracking-[1.5em]' >&nbsp;SRCH<span className="w-0 group-hover:w-full h-[2px] bg-black transition-all"></span></button>
                 <button onClick={toggleCart} className='group flex justify-center items-center gap-5 lg:gap-10' >
                     <div className="flex">
-                        <span className="hidden lg:block w-10 group-hover:w-6 h-[2px] mx-1 bg-black transition-all"></span>
-                        <span className="w-5 group-hover:w-9 h-[2px] mx-1 bg-black transition-all"></span>
+                        <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                        <span className="hidden lg:block w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
                     </div>
                     <span className="tracking-[0.7em] lg:tracking-[1.5em]">CART</span>
                     <span>{totalUniqueItems}</span>
                 </button>
             </nav>
 
-            <div className={`${menu} w-full h-90vh lg:h-87vh fixed left-0 bottom-0 z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
-                <ul className='w-90pr h-auto list-none flex flex-col gap-[10vh] lg:gap-[12vh] leading-[0.84] lg:leading-[105px] font_gotham_black text-6xl lg:text-9xl font-bold'>
+            <div className={`${menu} w-full h-90vh lg:h-87vh border-t border-yellow-500 fixed left-0 bottom-0 z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
+                <ul className='w-90pr h-auto list-none flex flex-col gap-[7vh] lg:gap-[10vh] leading-[0.7] lg:leading-[0.74em] font_gotham_bold text-5xl lg:text-8xl'>
                     <li className='w-full border-b' >
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/Women'>Women</ListItem>
                     </li>
@@ -105,7 +116,17 @@ export default function Navbar(props) {
                     <li className='w-full border-b flex lg:hidden'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>
                     </li>
-                    <button onClick={toggleSearch} className='lg:hidden group flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-4/5 group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
+                    <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-4/5 group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
+                    <div className="w-full flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
+                        <div className='group flex justify-center items-center tracking-[1.5em] text-base'><Link href="/login">LOGIN</Link><Link className='hidden lg:block' href="/signup">/SIGNUP</Link>
+                            <span className="flex my-auto">
+                                <span className="hidden lg:block w-20 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                                <span className="w-4/5 lg:w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                            </span>
+                        </div>
+                        <SocialIcons classes='hidden lg:block' />
+                    </div>
+                    <SocialIcons classes='lg:hidden' />
                 </ul>
             </div>
         </>

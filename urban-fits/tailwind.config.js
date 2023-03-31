@@ -27,9 +27,20 @@ module.exports = {
         '80pr': '80%',
         '90vh': '90vh',
       },
+      letterSpacing: {
+        expand: '0.2em'
+      },
+      fontSize: {
+        '10px': '10px',
+        '13px': '13px',
+      },
+      colors: {
+        'gotham-black': '#383838',
+      },
       backgroundImage: {
         'gold' : "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",
         'gold-land' : "linear-gradient(90deg, #FAE892 0%, #B3903E 100%)",
+        'metal-gold': "linear-gradient(270deg, rgba(250, 232, 146, 0.2) 0.02%, rgba(179, 144, 62, 0) 55.35%);"
       }
     }
   },
