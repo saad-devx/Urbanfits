@@ -86,6 +86,10 @@
   font-family: 'Gotham Pro';
 }
 
+.font_gotham_light {
+  font-family: 'Gotham Pro Light';
+}
+
 .font_gotham_black {
   font-family: 'Gotham Pro Black';
 }
@@ -95,10 +99,6 @@
 
 .font_gotham_medium{
   font-family: 'Gotham Pro Meduim';
-}
-
-.font_gotham_light {
-  font-family: 'Gotham Pro Light';
 }
 
 .stroke_text {
@@ -397,4 +397,34 @@ input:checked+.slider:before {
 footer li{
   letter-spacing: 0.1em;
   font-size: 13px;
+}
+
+/* height css for layout accordint to the navbar height in pixels */
+.layout_height{
+  height: calc(100vh - 50px);
+}
+
+/* css for carousel pagination */
+.homeCarousel2 .splide__pagination{
+  margin-left: 0rem !important;
+  padding-left: 4.2rem !important;
+  width: 100vw !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: flex-end !important;
+  bottom: 8rem !important;
+}
+
+@media screen and (max-width: 900px) {
+  .homeCarousel2 .splide__pagination{
+  padding-left: 0.9rem !important;
+  bottom: 1.25rem !important;
+  }
+}
+
+.homeCarousel2 .splide__pagination .is-active{
+  transform: none !important;
+  background: black !important;
+  height: 28px !important;
+  transition: all 0.4s;
 }

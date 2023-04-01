@@ -21,6 +21,7 @@ export default function Home() {
     const [modal1, setModal1] = useState(false);
     const [modal3, setModal3] = useState(false);
     const [hideNav, setHideNav] = useState(true);
+    const [carouselContainer, setCarouselContainer] = useState('h-screen');
     const [carouselClasses, setCarouselClasses] = useState('w-full h-screen');
     const [carousel_textContainer, setTextContainer] = useState('bottom-[8%] left-[4%]')
 
@@ -35,7 +36,8 @@ export default function Home() {
         const setSizefunc = () => {
             let position = window.pageYOffset;
             if (position >> 0) {
-                setCarouselClasses('w-11/12 lg:w-90pr h-80vh lg:h-85vh rounded-2rem my-[3vh]')
+                setCarouselContainer('layout_height')
+                setCarouselClasses('w-11/12 lg:w-90pr h-80vh lg:h-86vh rounded-2rem')
                 setTextContainer('bottom-[26.4%] left-[4%] lg:bottom-[26.4%] lg:left-[4%]')
                 setHideNav(false)
                 window.removeEventListener('scroll', setSizefunc);
@@ -66,28 +68,12 @@ export default function Home() {
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 <Navbar hideNav={hideNav} />
                 <section className='w-full bg-white flex justify-center lg:justify-end transition-all ease-linear duration-700' >
-                    <div className="w-full flex flex-col justify-center items-center gap-y-5 transition-all ease-linear duration-700" >
-                        <div className={`${carouselClasses} flex justify-center items-center font_gotham transition-all duration-700 ease-linear overflow-hidden`} >
-                            <HomeCarousel carousel_textContainer={carousel_textContainer} />
-                        </div>
-                        {/* Auto scroll Carousel  */}
-                        {/* <section className="relative w-full h-80vh md:h-87vh p-5 mf:p-10 lg:pr-0 flex flex-col lg:flex-row items-center justify-center font_gotham overflow-hidden">
-                            <div className="lg:absolute left-0 w-full lg:w-[35vw] lg:h-full md:pl-5 lg:pl-10 mb-3 lg:m-0 leading-7 flex flex-col justify-center items-start">
-                                <h2 className="text-xl md:text-3xl lg:text-5xl word-wrap leading-tight">Newest Gear to<br/>Work</h2>
-                                <h4 className="font_gotam_light">Innovation and Comfort for Women</h4>
+                    <div className="w-full flex flex-col justify-center items-center gap-y-5 transition-all ease-linear duration-700 overflow-hidden" >
+                        <section className={`${carouselContainer} w-screen flex justify-center items-center transition-all duration-700 ease-linear`}>
+                            <div className={`${carouselClasses} flex justify-center items-center font_gotham transition-all duration-700 ease-linear overflow-hidden`} >
+                                <HomeCarousel carousel_textContainer={carousel_textContainer} />
                             </div>
-                            <div className="lg:absolute h-80vh w-full lg:ml-[40rem] lg:w-[80vw] lg:h-[95%] rounded-3xl flex items-center">
-                                <CardCarousel />
-                            </div>
-                            <div className="hidden lg:block absolute w-1/5 h-full top-0 right-0 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
-                        </section> */}
-                        {/* Shopping Card Section */}
-                        {/* <section className="w-full p-5 md:p-10 md:pb-0 font_gotham">
-                            <div className="w-full h-87vh md:h-auto lg:h-87vh py-5 md:py-10 flex flex-col lg:flex-row justify-around space-y-5 lg:space-y-0">
-                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image1} />
-                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image2} />
-                            </div>
-                        </section> */}
+                        </section>
                         {/* Shopping Card Section */}
                         <div className="w-90pr flex items-center mt-10 mb-3 text-base lg:text-[26px] leading-3 font_gotham_medium tracking-expand ml-7"><h3>READY TO WEAR&nbsp;</h3><span className="w-14 md:w-20 h-[2px] mx-1 bg-black transition-all"></span></div>
                         <section className="w-full h-90vh md:h-auto lg:h-87vh p-5 pt-0 md:p-10 md:pt-0 flex flex-col lg:flex-row justify-around font_gotham gap-5 lg:gap-0">
@@ -100,7 +86,7 @@ export default function Home() {
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image3} />
                         </section>
                         {/* second carousel */}
-                        <section className="relative bg_metal_gold w-full h-60vh lg:h-87vh lg:px-10 lg:pr-0 flex flex-col-reverse lg:flex-row items-center justify-center font_gotham overflow-hidden">
+                        <section className="relative bg_metal_gold w-full h-60vh lg:h-87vh min-h-[500px] lg:px-10 lg:pr-0 flex flex-col-reverse lg:flex-row items-center justify-center font_gotham overflow-hidden">
                             <div className="hidden lg:flex left-0 w-full lg:w-[35vw] lg:h-full md:pl-10 mb-3 lg:m-0 leading-7 flex-col justify-center items-start">
                                 <h2 className="text-xl md:text-3xl lg:text-[32px] word-wrap font_gotham_medium leading-tight">URBAN<br />NEW ARRIVAL</h2>
                             </div>
