@@ -54,6 +54,12 @@ export default function HomeCarousel(props) {
                 <h3 className="font_gotam_light text-base md:text-[28px] text-white">UNITED ARAB EMIRATES</h3>
             </div>
 
+            {/* Scroll down indicator */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-default">
+                <i class="fa-solid fa-chevron-up fa-bounce text-white text-xl md:text-2xl"></i>
+                <span className='text-white text-sm md:text-sm font_gotham_medium tracking-widest' >SCROLL DOWN</span>
+            </div>
+
             {/* Buttons for next, prev slide and to pause the carousel */}
             <div className="splide__arrows absolute flex space-x-5 bottom-[8%] right-10">
                 <button className="splide__arrow--prev hover:bg-gray-500 flex justify-center items-center w-8 h-8 rounded-full bg-white rotate-180 transition-all duration-500" >

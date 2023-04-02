@@ -22,7 +22,7 @@ export default function OrdersPage(props) {
     return (
         <>
             <Navbar lowerLogo />
-            <main className={`bg-gray-100 w-full h-90vh lg:h-[87vh] lg:fixed right-0 font_gotham flex overflow-hidden transition-all duration-700`}>
+            <main className={`bg-gray-100 w-full h-90vh lg_layout_height lg:fixed right-0 font_gotham flex overflow-hidden transition-all duration-700`}>
                 <AccountMenu direction={direction} />
                 <section onScroll={handleScroll} className='w-full lg:w-[67%] bg-gray-100 font_gotham text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-x-hidden overflow-y-scroll' >
                     <div className="w-full lg:w-5/6">

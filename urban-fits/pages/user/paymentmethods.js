@@ -51,7 +51,7 @@ export default function Payments() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <Navbar lowerLogo />
-                <main className={`bg-gray-100 w-full h-90vh lg:h-[87vh] lg:fixed right-0 flex overflow-hidden transition-all duration-700`}>
+                <main className={`bg-gray-100 w-full h-90vh lg_layout_height lg:fixed right-0 flex overflow-hidden transition-all duration-700`}>
                 <AccountMenu direction={direction} />
                     <section onScroll={handleScroll} className='w-full lg:w-[67%] px-4 lg:pl-7 pb-20 pt-24 lg:pt-9 lg:pb-9 font_gotham text-left overflow-x-hidden overflow-y-scroll scroll-py-10' >
                         <div className="w-full lg:w-5/6">

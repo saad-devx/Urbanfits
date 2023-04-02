@@ -104,25 +104,25 @@ export default function Signing(props) {
             </Head>
             {loader}
             <main className={`bg-white lg:overflow-x-hidden`}>
-                <section className='lg:flex lg:items-center lg:justify-center lg:w-screen lg:h-screen' >
+                <section className='lg:flex lg:items-center lg:justify-center lg:w-screen' >
                     <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
                         {/* This image will only show on the top in the Sign Up page */}
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/4 mx-auto mb-3`} />
+                        {/* <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/4 mx-auto mb-3`} /> */}
                         <div className='w-full mx-auto mb-7' >
-                            <h2 className="font_gotham font-medium text-4xl leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
+                            <h2 className="w-[478px] font_gotham_medium text-[38px] leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
                         </div>
                         <div className='w-[304px] mx-auto leading-8' >
                             <h3 className=" font-light text-2xl text-center">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</h3>
                         </div>
                     </div>
 
-                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 font_gotham bg-white">
+                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 pt-16 font_gotham bg-white">
                         {/* This image will only show in the Login page */}
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? '' : 'hidden'} w-1/4 mx-auto mb-8`} />
+                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={` w-1/4 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
                             <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
+                            <button className="w-1/2 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></a></button>
                         </div>
                         <form className="bg-white p-2 font_gotham" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
@@ -164,34 +164,34 @@ export default function Signing(props) {
                                 <div className='mr-2' >
                                     <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                                 </div>
-                                <div className=" w-full flex justify-between text-sm]">
+                                <div className=" w-full flex justify-between text-sm">
                                     <small className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>Buy creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</small>
                                     <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname === '/login' ? 'Forgot Password?' : ''}</Link></small>
                                 </div>
                             </div>
                             {/* changing Buttons according to different page endpoints */}
-                            {router.pathname === '/signup' ? <Button classes='w-full' type="submit" >Sign Up</Button> : null}
-                            {router.pathname === '/login' ? <Button classes='w-full' type="submit" >Login</Button> : null}
-                            {router.pathname === '/forgotpassword' ? <Button classes='w-full' type="submit" >Verify</Button> : null}
-                            {router.pathname === '/resetpassword' ? <Button classes='w-full' type="submit" >Login</Button> : null}
+                            {router.pathname === '/signup' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >SIGN UP</Button> : null}
+                            {router.pathname === '/login' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >LOGIN</Button> : null}
+                            {router.pathname === '/forgotpassword' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >VERIFY</Button> : null}
+                            {router.pathname === '/resetpassword' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >LOGIN</Button> : null}
 
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                         </form>
                         {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                         <div className={`${page === 'login' ? 'hidden' : ''} font_gotham w-full mt-5 flex justify-center space-x-6`}>
                             <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black text-white rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p>Apple</p></a></button>
+                            <button className="w-1/2 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></a></button>
                         </div>
                     </div>
                 </section>
 
                 <div className="w-full my-5 px-10 font_gotham flex flex-col lg:flex-row justify-between lg:space-x-3">
-                    <LinkBtn href='/' classes='w-full'>Home</LinkBtn>
-                    <LinkBtn href='/catelog' classes='w-full'>Catelog</LinkBtn>
-                    <LinkBtn href='/contact' classes='w-full'>Contact Us</LinkBtn>
-                    <LinkBtn href='/privacypolicy' classes='w-full'>Privacy Policy</LinkBtn>
-                    <LinkBtn href='/legalnotice' classes='w-full'>Legal Notice</LinkBtn>
-                    <LinkBtn href='/terms&conditions' classes='w-full'>Terms & Condition</LinkBtn>
+                    <LinkBtn href='/' classes='w-full'>HOME</LinkBtn>
+                    <LinkBtn href='/catelog' classes='w-full'>CATALOG</LinkBtn>
+                    <LinkBtn href='/contact' classes='w-full'>CONTACT US</LinkBtn>
+                    <LinkBtn href='/privacypolicy' classes='w-full'>PRIVACY POLICY</LinkBtn>
+                    <LinkBtn href='/legalnotice' classes='w-full'>LEGAL NOTICE</LinkBtn>
+                    <LinkBtn href='/terms&conditions' classes='w-full'>TERMS & CONDITIONS</LinkBtn>
                 </div>
             </main>
         </>

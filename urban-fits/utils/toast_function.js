@@ -10,7 +10,7 @@ export default function toaster (type, msg) {
         draggable: true,
         type: type,
         progress: undefined,
-        theme: "colored",
+        theme: "light",
         transition: Slide
     })
 }

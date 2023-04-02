@@ -30,6 +30,7 @@ const SocialIcons = ({ classes }) => {
 }
 
 export default function Navbar(props) {
+
     const [bars, setBars] = useState('')
     const [menu, setMenu] = useState('-translate-y-[100vh]')
     const handleMenu = () => {
@@ -67,11 +68,11 @@ export default function Navbar(props) {
     const { totalUniqueItems } = useCart()
 
     // getting user payload form jwt token in localstorage
-    // const [user, setUser] = useState(false)
-    // useEffect(() => {
-    //     const userData = jwt.decode(localStorage.getItem("authToken"))
-    //     if (userData) return setUser(userData._doc)
-    // }, [])
+    const [user, setUser] = useState(null)
+    useEffect(() => {
+        const userData = jwt.decode(localStorage.getItem("authToken"))
+        if (userData) return setUser(userData._doc)
+    }, [])
     return (
         <>
             <Search search={search} toggleSearch={toggleSearch} />
@@ -117,9 +118,14 @@ export default function Navbar(props) {
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>
                     </li>
                     <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
-                    <Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>
+                    {user && user.email?<Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>:<Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>}
                     <div className="w-full flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
-                        <div className='hidden  group lg:flex justify-center items-center tracking-[1.5em] text-base'><Link className='hidden lg:block' href="/login">LOGIN</Link><Link className='hidden lg:block' href="/signup">/SIGNUP</Link>
+                        <div className='hidden group lg:flex justify-center items-center tracking-[1.5em] text-base'>
+                            {user && user.email? <Link href='/user/personalinfo' >MY ACCOUNT</Link>
+                            :<span className='flex' >
+                                <Link href="/login">LOGIN</Link>
+                                <Link href="/signup">/SIGNUP</Link>
+                            </span>}
                             <span className="flex my-auto">
                                 <span className="w-20 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
                                 <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>

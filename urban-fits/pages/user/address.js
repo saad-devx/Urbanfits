@@ -171,7 +171,7 @@ export default function Address() {
             </Head>
             {loader}
             <Navbar lowerLogo />
-            <main className={`bg-gray-100 w-full h-90vh lg:h-[87vh] lg:fixed right-0 flex overflow-hidden font_gotham transition-all duration-700`}>
+            <main className={`bg-gray-100 w-full h-90vh lg_layout_height lg:fixed right-0 flex overflow-hidden font_gotham transition-all duration-700`}>
                 <AccountMenu direction={direction} />
                 <section onScroll={handleScroll} className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflwo-x-hidden overflow-y-scroll scroll-py-10' >
                     <div className="w-full lg:w-5/6">

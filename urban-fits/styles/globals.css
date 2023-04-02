@@ -404,6 +404,12 @@ footer li{
   height: calc(100vh - 50px);
 }
 
+@media screen and (min-width: 1024px) {
+  .lg_layout_height{
+    height: calc(100vh - 50px);
+  }
+}
+
 /* css for carousel pagination */
 .homeCarousel2 .splide__pagination{
   margin-left: 0rem !important;
