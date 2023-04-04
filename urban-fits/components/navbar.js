@@ -80,14 +80,14 @@ export default function Navbar(props) {
             <LanguageModal show={modal3} toggleModal={toggleModal} />
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[14vh]'} right-6 md:top-[17vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
-            <nav className={`${props.hideNav ? 'bg-transparent' : 'bg-white'} h-[50px] fixed z-40 top-0 left-0 lg:translate-x-0 w-full  p-7 lg:px-14 shadow-sm bg-transparent font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
+            <nav className={`${props.hideNav ? 'bg-transparent' : 'bg-white'} h-[50px] fixed z-40 top-0 left-0 w-full  p-7 lg:px-14 shadow-sm bg-transparent font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
                 <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
                     <div className={`${bars} menu btn3`}>
                         <div className="icon"></div>
                     </div>
                     <span className='hidden lg:block tracking-[1.5em]'>MENU</span>
                 </button>
-                <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex lg:flex-col justify-center items-center text-center tracking-[1.5em]' >&nbsp;SRCH<span className="w-0 group-hover:w-full h-[2px] bg-black transition-all"></span></button>
+                <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex justify-center items-center text-center tracking-[1.5em]' ><span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span>&nbsp;SRCH<span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span></button>
                 <button onClick={toggleCart} className='group flex justify-center items-center gap-5 lg:gap-10' >
                     <div className="flex">
                         <span className="hidden lg:block w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>

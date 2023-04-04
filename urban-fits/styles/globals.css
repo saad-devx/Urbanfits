@@ -56,10 +56,10 @@
   font-family: 'Gotham Pro Bold';
   src: url('../public/fonts/GothamPro-Bold.eot');
   src: local('Gotham Pro Bold'), local('GothamPro-Bold'),
-      url('../public/fonts/GothamPro-Bold.eot?#iefix') format('embedded-opentype'),
-      url('../public/fonts/GothamPro-Bold.woff2') format('woff2'),
-      url('../public/fonts/GothamPro-Bold.woff') format('woff'),
-      url('../public/fonts/GothamPro-Bold.ttf') format('truetype');
+    url('../public/fonts/GothamPro-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/GothamPro-Bold.woff2') format('woff2'),
+    url('../public/fonts/GothamPro-Bold.woff') format('woff'),
+    url('../public/fonts/GothamPro-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -68,10 +68,10 @@
   font-family: 'Gotham Pro Meduim';
   src: url('../public/fonts/GothamPro-Medium.eot');
   src: local('Gotham Pro Medium'), local('GothamPro-Medium'),
-      url('../public/fonts/GothamPro-Medium.eot?#iefix') format('embedded-opentype'),
-      url('../public/fonts/GothamPro-Medium.woff2') format('woff2'),
-      url('../public/fonts/GothamPro-Medium.woff') format('woff'),
-      url('../public/fonts/GothamPro-Medium.ttf') format('truetype');
+    url('../public/fonts/GothamPro-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/GothamPro-Medium.woff2') format('woff2'),
+    url('../public/fonts/GothamPro-Medium.woff') format('woff'),
+    url('../public/fonts/GothamPro-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
@@ -93,11 +93,12 @@
 .font_gotham_black {
   font-family: 'Gotham Pro Black';
 }
+
 .font_gotham_bold {
   font-family: 'Gotham Pro Bold';
 }
 
-.font_gotham_medium{
+.font_gotham_medium {
   font-family: 'Gotham Pro Meduim';
 }
 
@@ -107,7 +108,8 @@
   -webkit-text-stroke-width: 0.6px;
 }
 
-.bg_metal_gold{ /* background for second home carousel */
+.bg_metal_gold {
+  /* background for second home carousel */
   background: linear-gradient(-270deg, rgba(107, 107, 107, 0.2) 0.02%, rgba(179, 144, 62, 0.25) 55.35%);
 }
 
@@ -389,48 +391,32 @@ input:checked+.slider:before {
 
 /*                                     CSS to hide scroll bar */
 
-.account_menu::-webkit-scrollbar {
+.hide_scrollbar::-webkit-scrollbar{
   display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar_x::-webkit-scrollbar {
+  height: 5px;
+}
+.scrollbar_x::-webkit-scrollbar-thumb{
+  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
 }
 
 /* css for footer */
-footer li{
+footer li {
   letter-spacing: 0.1em;
   font-size: 13px;
 }
 
 /* height css for layout accordint to the navbar height in pixels */
-.layout_height{
+.layout_height {
   height: calc(100vh - 50px);
 }
 
 @media screen and (min-width: 1024px) {
-  .lg_layout_height{
+  .lg_layout_height {
     height: calc(100vh - 50px);
   }
-}
-
-/* css for carousel pagination */
-.homeCarousel2 .splide__pagination{
-  margin-left: 0rem !important;
-  padding-left: 4.2rem !important;
-  width: 100vw !important;
-  display: flex !important;
-  justify-content: flex-start !important;
-  align-items: flex-end !important;
-  bottom: 8rem !important;
-}
-
-@media screen and (max-width: 900px) {
-  .homeCarousel2 .splide__pagination{
-  padding-left: 0.9rem !important;
-  bottom: 1.25rem !important;
-  }
-}
-
-.homeCarousel2 .splide__pagination .is-active{
-  transform: none !important;
-  background: black !important;
-  height: 28px !important;
-  transition: all 0.4s;
 }

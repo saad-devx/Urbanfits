@@ -82,22 +82,16 @@ export default function Home() {
                         {/* Collection Section */}
                         <div className="w-90pr flex justify-between items-center">
                             <h2 className="font_gotham_medium text-base lg:text-[26px]" >NEW COLLECTION</h2>
-                            <Link href="products/New In" className="hidden lg:flex items-center group">
+                            <Link href="products/New In" className="flex items-center group">
                                 <span className="w-10 h-[2px] group-hover:w-16 mr-4 bg-black transition-all" ></span>
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
                         <section className="w-90pr flex justify-between flex-wrap">
-                            <Shoppingcard HomeSection margin='0' colors={3} price={67.99} name="Leather Jacket - Men" img={image5} />
-                            <Shoppingcard HomeSection margin='0' colors={0} price={45.99} name="Ladies Herbel Bag" img={image6} />
-                            <Shoppingcard HomeSection margin='0' colors={2} price={72.99} name="Men Joggers" img={image7} />
-                            <div className="lg:hidden flex justify-center items-center lg:w-[32%] md:h-[549px] w-48pr my-3 md:my-5">
-                                <Link href='/products/New In' className="w-90pr group h-1/4 flex flex-col justify-between">
-                                    <span className="w-3/5 group-hover:w-0 h-[2px] self-start  mr-4 bg-black transition-all" ></span>
-                                    <h1 className="font_gotham_medium text-sm text-center tracking-expand">SEE MORE</h1>
-                                    <span className="w-3/5 group-hover:w-0 h-[2px] self-end mr-4 bg-black transition-all" ></span>
-                                </Link>
-                            </div>
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3' colors={3} price={67.99} name="Leather Jacket - Men" img={image5} />
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3' colors={0} price={45.99} name="Ladies Herbel Bag" img={image6} />
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3' colors={2} price={72.99} name="Men Joggers" img={image7} />
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3 lg:hidden' colors={2} price={72.99} name="Men Joggers" img={image7} />
                         </section>
                         {/* Shopping Card Section */}
                         <div className="w-90pr flex items-center mt-10 mb-3 text-base lg:text-[26px] leading-3 font_gotham_medium tracking-expand ml-7"><h3>READY TO WEAR&nbsp;</h3><span className="w-14 md:w-20 h-[2px] mx-1 bg-black transition-all"></span></div>
@@ -122,22 +116,16 @@ export default function Home() {
                         {/* Collection Section */}
                         <div className="w-90pr mt-5 md:mt-10 flex justify-between items-center">
                             <h2 className="font_gotham_medium text-base lg:text-[26px]" >READY TO WEAR</h2>
-                            <Link href="products/New In" className="hidden lg:flex items-center group">
+                            <Link href="products/New In" className="flex items-center group">
                                 <span className="w-10 h-[2px] group-hover:w-16 mr-4 bg-black transition-all" ></span>
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
                         <section className="w-90pr flex justify-between flex-wrap">
-                            <Shoppingcard HomeSection margin='0' colors={3} price={67.99} name="Leather Jacket - Men" img={image5} />
-                            <Shoppingcard HomeSection margin='0' colors={0} price={45.99} name="Ladies Herbel Bag" img={image6} />
-                            <Shoppingcard HomeSection margin='0' colors={2} price={72.99} name="Men Joggers" img={image7} />
-                            <div className="lg:hidden flex justify-center items-center lg:w-[32%] md:h-[549px] w-48pr my-3 md:my-5">
-                                <Link href='/products/New In' className="w-90pr group h-1/4 flex flex-col justify-between">
-                                    <span className="w-3/5 group-hover:w-0 h-[2px] self-start  mr-4 bg-black transition-all" ></span>
-                                    <h1 className="font_gotham_medium text-sm text-center tracking-expand">SEE MORE</h1>
-                                    <span className="w-3/5 group-hover:w-0 h-[2px] self-end mr-4 bg-black transition-all" ></span>
-                                </Link>
-                            </div>
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3' colors={3} price={67.99} name="Leather Jacket - Men" img={image5} />
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3' colors={0} price={45.99} name="Ladies Herbel Bag" img={image6} />
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3' colors={2} price={72.99} name="Men Joggers" img={image7} />
+                            <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3 lg:hidden' colors={2} price={72.99} name="Men Joggers" img={image7} />
                         </section>
                         <section className="w-full h-auto lg:h-80vh p-5 flex flex-col lg:flex-row justify-center items-center gap-5">
                             <Card href="/contact" title="CONTACT US" value="If you have any query then please contact us." valueCenter btnClasses="w-1/2 py-5" btnValue="Contact Us" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />

@@ -55,9 +55,9 @@ export default function HomeCarousel(props) {
             </div>
 
             {/* Scroll down indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-default">
-                <i class="fa-solid fa-chevron-up fa-bounce text-white text-xl md:text-2xl"></i>
-                <span className='text-white text-sm md:text-sm font_gotham_medium tracking-widest' >SCROLL DOWN</span>
+            <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-default">
+                <i class="fa-solid fa-chevron-up fa-bounce text-white text-base md:text-2xl"></i>
+                <span className='text-white text-[10px] md:text-sm font_gotham_medium tracking-widest' >SCROLL DOWN</span>
             </div>
 
             {/* Buttons for next, prev slide and to pause the carousel */}

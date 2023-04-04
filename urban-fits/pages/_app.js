@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import '@/styles/Navbar.css'
 import '@/styles/pillbtns.css'
+import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'
 import { SessionProvider } from "next-auth/react"
 import dynamic from 'next/dynamic';

@@ -65,7 +65,7 @@ export default function AccountMenu(props) {
             </div>
 
             {/* To be displayed on the mobile devices */}
-            <div ref={menuRef} className={`account_menu absolute z-10 top-[50px] left-0 w-full bg-white shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth transition-all duration-300`}>
+            <div ref={menuRef} className={`hide_scrollbar absolute z-10 top-[50px] left-0 w-full bg-white shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth transition-all duration-300`}>
                 <div className="w-[230%] md:w-full h-full px-4 pt-8 flex justify-between">
                     <Option_sm href='/user/personalinfo'>Personal Information</Option_sm>
                     <Option_sm href='/user/email&password'>Email & Password</Option_sm>
