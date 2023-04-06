@@ -17,6 +17,7 @@ import image2 from '../../../public/card imgs/card img11.jpg'
 import image3 from '../../../public/card imgs/card img8.jpg'
 
 export default function Product(props) {
+    console.log(props.response.product)
     const productData = { ...props.response.product, id: props.response.product._id }
     const router = useRouter()
     const [product, setProduct] = useState(productData.variants[0])
@@ -63,7 +64,7 @@ export default function Product(props) {
                 <div className="w-full pb-20 flex justify-center">
                     <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
                         <div className="w-full flex flex-col lg:flex-row lg:space-x-2">
-                            <div className="w-full lg:w-[70%] mb-3">
+                            <div className="w-full lg:w-[65%] mb-3">
                                 <ProductCarousel img_array={product.images} />
                                 <div className="w-full my-5">
                                     <h3 className="text-3xl mb-4">{productData.name}</h3>
@@ -111,7 +112,7 @@ export default function Product(props) {
                                     <p>Price :</p> <p>${productData.price}</p>
                                 </div>
                                 <div className="w-full">
-                                    <Button onclick={() => { addItem({ product_id: productData.id, id: product._id, name: productData.name, price: productData.price, shipping_fee: productData.shipping_detials.fees, stock: product.stock, size: sizevalue ? sizevalue : product.size[0], color: product.color_name, images: product.images }, quantity); toaster('success', 'Your items has been added to the cart') }} classes="w-full" my="my-2" >Add to Cart</Button>
+                                    <Button onclick={() => { addItem({ product_id: productData.id, id: product._id, name: productData.name, price: productData.price, shipping_fee: productData.shipping_detials.fees, stock: product.stock, size: sizevalue ? sizevalue : product.size[0], sizes: product.size, color: product.color_name, images: product.images }, quantity); toaster('success', 'Your items has been added to the cart') }} classes="w-full" my="my-2" >Add to Cart</Button>
                                     <Button onclick={toggleModal} name="modal4" classes="w-full" my="my-2" >Customization</Button>
                                 </div>
                                 {/* Accordian */}
@@ -120,7 +121,7 @@ export default function Product(props) {
                         </div>
 
                         <div className="w-full mt-10">
-                            <h3 className="text-2xl">More To Explore</h3>
+                            <h3 className="text-2xl font_gotham_medium tracking-widest">MORE TO EXPLORE</h3>
                             <div className="w-full my-5 flex flex-wrap">
                                 {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
                                     return <LinkBtn href={`/products/${link}`} classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
@@ -142,6 +143,89 @@ export default function Product(props) {
 
 export async function getServerSideProps(context) {
     const { p_id } = await context.query
-    let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
+    // let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
+    let response = {
+        product:{
+            "seo_detials": {
+                "title": "Vintage Shirt",
+                "description": "cool and cheap affordable Vintage T-Shirt, newest item of this season. Stop staring and buy now",
+                "meta_keywords": [
+                    "T-Shirt",
+                    "Men",
+                    "vintage",
+                    "summer"
+                ]
+            },
+            "shipping_detials": {
+                "width": "18",
+                "height": "30",
+                "weight": "250",
+                "fees": 3.24
+            },
+            "_id": "6416bff63b9101bcd0595a31",
+            "name": "Vintage T-Shirt",
+            "price": 78.99,
+            "description": "cool and cheap affordable Vintage T-Shirt, newest item of this season. Stop staring and buy now",
+            "category": "T-Shirt",
+            "slug": "Cool vintage Men T-shirt",
+            "tags": [
+                "T-Shirt",
+                "Men",
+                "vintage",
+                "summer"
+            ],
+            "ratings": 0,
+            "createdAt": "2023-03-19T07:55:34.175Z",
+            "updatedAt": "2023-03-19T07:55:34.175Z",
+            "__v": 0,
+            "variants": [
+                {
+                    "color": "#000000",
+                    "color_name": "black",
+                    "images": [
+                        {
+                            "public_id": "1",
+                            "url": "https://i.etsystatic.com/36407195/r/il/fb3379/4333913052/il_1140xN.4333913052_pau8.jpg",
+                            "_id": "6416bff63b9101bcd0595a33"
+                        },
+                        {
+                            "public_id": "2",
+                            "url": "https://i.etsystatic.com/36407195/r/il/4cfe4e/4381306977/il_1140xN.4381306977_ee7f.jpg",
+                            "_id": "6416bff63b9101bcd0595a34"
+                        }
+                    ],
+                    "size": [
+                        "M",
+                        "L",
+                        "XL"
+                    ],
+                    "stock": 28,
+                    "_id": "6416bff63b9101bcd0595a32"
+                },
+                {
+                    "color": "#ff0000",
+                    "color_name": "red",
+                    "images": [
+                        {
+                            "public_id": "1",
+                            "url": "https://i.etsystatic.com/6920740/r/il/574a03/3912644169/il_1140xN.3912644169_hz8i.jpg",
+                            "_id": "6416bff63b9101bcd0595a36"
+                        },
+                        {
+                            "public_id": "2",
+                            "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg",
+                            "_id": "6416bff63b9101bcd0595a37"
+                        }
+                    ],
+                    "size": [
+                        "S",
+                        "L"
+                    ],
+                    "stock": 32,
+                    "_id": "6416bff63b9101bcd0595a35"
+                }
+            ]
+        }
+    }
     return { props: { response, p_id } }
 }

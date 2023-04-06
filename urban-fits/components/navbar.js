@@ -112,7 +112,7 @@ export default function Navbar(props) {
                     </li>
                     <li className='w-full border-b flex justify-start lg:justify-between lg:px-14' >
                         <ListItem handleMenu={handleMenu} href='/stories'>Stories</ListItem>
-                        <ListItem handleMenu={handleMenu} classes='hidden lg:block' href='/sale'>Sale</ListItem>
+                        <ListItem handleMenu={handleMenu} classes='hidden lg:block' href='/sales'>Sale</ListItem>
                     </li>
                     <li className='w-full border-b flex lg:hidden'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>

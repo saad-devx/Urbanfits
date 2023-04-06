@@ -54,7 +54,7 @@ export default function productlisting(props) {
                         </div>
                         <Button classes="mx-auto w-36" >Load More</Button>
                         <div className="w-full mt-10">
-                            <h3 className="text-2xl">More To Explore</h3>
+                            <h3 className="text-2xl font_gotham_medium tracking-widest">MORE TO EXPLORE</h3>
                             <div className="w-full my-5 flex flex-wrap">
                                 {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
                                     return <LinkBtn href={`/products/${link}`} classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
