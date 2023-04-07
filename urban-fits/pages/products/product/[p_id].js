@@ -63,7 +63,7 @@ export default function Product(props) {
             <section className={`bg-white w-full h-full font_gotham transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
                     <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
-                        <div className="w-full flex flex-col lg:flex-row lg:space-x-2">
+                        <div className="w-full flex flex-col lg:flex-row lg:justify-between lg:space-x-2">
                             <div className="w-full lg:w-[65%] mb-3">
                                 <ProductCarousel img_array={product.images} />
                                 <div className="w-full my-5">
@@ -72,7 +72,7 @@ export default function Product(props) {
                                     <p className="description font_gotam_light my-3">{productData.description}</p>
                                 </div>
                             </div>
-                            <div className="details w-full lg:w-[30%] m-0 space-y-3">
+                            <div className="details border border-red-700 w-full lg:w-[30%] m-0 space-y-3">
                                 <div className="w-full h-28 p-4 rounded-2xl bg-white items-center">
                                     <small className="w-full">Choose a Color:</small>
                                     <span className="w-full my-3 mx-auto flex flex-wrap justify-center space-x-3">

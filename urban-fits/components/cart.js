@@ -35,9 +35,9 @@ function CartItem(props) {
     return (
         <li key={props.li_key} className="relative group w-full h-[250px] my-8 flex justify-between items-center border-y md:border-none">
             <div className="w-4/5 md:w-auto h-full mr-4 flex justify-center items-center overflow-hidden">
-                <Image width={160} height={200} src={product.images[0].url} alt="Urban images" className="w-full object-cover object-top group-hover:scale-110 transition-all duration-700" ></Image>
+                <Image width={160} height={200} src={product.images[0].url} alt="Urban images" className="w-full md:w-90pr object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
             </div>
-            <div className="w-full md:w-[85%] py-3 md:p-0 md:border-y h-full flex flex-col md:flex-row justify-between items-start md:justify-between md:items-center font_gotham_medium tracking-widest">
+            <div className="w-full md:w-[85%] py-3 md:p-0 h-full flex flex-col md:flex-row justify-between items-start md:justify-between md:items-center font_gotham_medium tracking-widest">
                 <h3 className="max-w-[13rem] font_gotham_medium text-xs lg:text-sm transition-all duration-700">{product.name.toUpperCase()}</h3>
                 <h3 className="text-xs md:text-sm">{product.color.toUpperCase()}</h3>
                 <select type="select" defaultValue={product.size} className="w-90pr md:w-24 h-9 md:h-11 font_gotham_medium tracking-widest text-gotham-black text-xs px-5 border outline-none">

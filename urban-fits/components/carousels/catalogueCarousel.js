@@ -22,8 +22,7 @@ export default function CatalogueCarousel() {
             pagination.style.left = `calc(25% - ((${slideData.length * 0.9 * 2}rem + ${slideData.length * 2}px) / 2))`
         }
         else {
-            pagination.style.left = `50%`
-            pagination.style.transform = `translateX(-50%)`
+            pagination.style.width = `calc(${slideData.length * 0.9 * 2}rem + ${slideData.length * 2}px)`
         }
         let pageItems = document.querySelectorAll('.splide__pagination__page')
         pageItems.forEach((item) => {
@@ -56,14 +55,20 @@ export default function CatalogueCarousel() {
             <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
                 {slideData.map((pair, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
-                        <Link href='/products/Carousel Item' className="flex justify-center items-center w-full h-full bg-white">
+                        <section className="flex justify-center items-center w-full h-full bg-white">
                             <div className="w-full lg:w-1/2 h-full flex justify-center items-center">
-                                <Image src={pair.pairImg} className='w-[65%] md:w-1/2 lg:w-2/5 z-10' />
+                                <Link href='/products/Carousel Item' className='w-3/5 h-[45%] md:h-3/5 lg:w-[42%] lg:h-[68%] z-20 flex flex-col justify-center items-center bg-gray-100 overflow-hidden' >
+                                    <Image src={pair.pairImg} className='w-4/5' />
+                                    <span className="w-36 my-4 justify-self-end font_gotham_medium text-[10px] tracking-widest">
+                                        SATIN FINISH PLAYSUIT DRESS <br />
+                                        $26
+                                    </span>
+                                </Link>
                             </div>
                             <div className="absolute top-0 left-0 z-[5] opacity-10 lg:opacity-100 lg:static pointer-events-none lg:pointer-events-auto w-full lg:w-1/2 h-full">
                                 <Image className='h-full object-cover' src={pair.img} alt="Urban images" />
                             </div>
-                        </Link>
+                        </section>
                         <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_gotham_medium tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >SHOP</Link>
                     </SplideSlide>
                 })}

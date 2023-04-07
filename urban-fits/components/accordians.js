@@ -7,7 +7,7 @@ export default function Accordians() {
         <>
             <div className="group p-5 outline-none accordion-section rounded-2xl bg-white mb-7 border-b card_boxshadow" tabIndex={1}>
                 <div className="group flex justify-between h-12 items-center text-gray-500 transition ease duration-700 cursor-pointer relative">
-                    <div className="group-focus:text-black text-base transition ease duration-700">Contact</div>
+                    <div className="group-focus:text-black text-base font_gotham_medium tracking-widest transition ease duration-700">CONTACT</div>
                     <span className="transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 ">
                         <i className="fas fa-minus minus_icon group-focus:block"></i>
                         <i className="fas fa-plus group-focus:hidden"></i>
@@ -33,7 +33,7 @@ export default function Accordians() {
 
             <div className="group p-5 outline-none accordion-section rounded-2xl bg-white mb-7 border-b card_boxshadow" tabIndex={1}>
                 <div className="group flex justify-between h-12 items-center text-gray-500 transition ease duration-700 cursor-pointer relative">
-                    <div className="group-focus:text-black text-base transition ease duration-700">Delivery & Return</div>
+                    <div className="group-focus:text-black text-base font_gotham_medium tracking-widest transition ease duration-700">DELIVERY & RETURN</div>
                     <span className="transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 ">
                         <i className="fas fa-minus minus_icon group-focus:block"></i>
                         <i className="fas fa-plus group-focus:hidden"></i>
@@ -48,7 +48,6 @@ export default function Accordians() {
                         </span>
                     </div>
                     <div className="flex items-center mb-3 py-2 border-b border-b-gray-400">
-                        {/* <i className="material-symbols-outlined mr-6">local_shipping</i> */}
                         <Image className='mr-6' src={truck} alt="delivery vehicle" />
                         <span>
                             <h5 className='mb-2'>Return</h5>

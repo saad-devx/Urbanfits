@@ -14,8 +14,7 @@
       bottom: 1.25rem !important;
     }
     .catalogue_carousel .splide__pagination {
-      left: 50% !important;
-      transform: translateX(-50%);
+      margin: auto !important;
     }
   }
   
@@ -45,6 +44,12 @@
     background: black !important;
     height: 28px !important;
     transition: all 0.4s;
+  }
+
+  .bg_grain{
+    background-image: url(../public/catalogueCarousel\ imgs/grainbg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   /* Css for product carousel */
