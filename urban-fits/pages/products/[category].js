@@ -21,7 +21,6 @@ export default function productlisting(props) {
             let position = window.pageYOffset;
             if (position >> 2) {
                 setHideNav(false)
-                // window.removeEventListener('scroll', setSizefunc);
             }
             else setHideNav(true)
         }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState}  from 'react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Link from 'next/link'
@@ -20,8 +20,8 @@ export default function CutomerServices(props) {
         <>
             <Navbar />
             <main className='w-full p-5 lg:p-10 2xl:p-14 flex justify-between bg-white'>
-                <div onClick={toggleMenu} className={`lg:hidden ${sideMenu?'rotate-90':''} w-10 h-10 flex justify-center items-center rounded-full shadow-md fixed top-[70px] left-3 z-30 bg-gray-200 transition-all duration-500`}><i className={`fa-solid transition-all ${sideMenu?'fa-xmark':' fa-ellipsis-vertical'}`}></i></div>
-                <section className={`${sideMenu?'max-h-screen top-[130px]':'max-h-0 lg:max-h-none top-[110px] lg:h-full'} w-3/4 md:1/2 lg:w-1/4 rounded-2xl lg:rounded-none shadow-lg lg:shadow-none fixed left-5 z-30 lg:z-0 lg:static transition-all duration-500 overflow-hidden`}>
+            <div onClick={toggleMenu} className={`lg:hidden ${sideMenu?'rotate-90':''} w-10 h-10 flex justify-center items-center rounded-full shadow-md fixed top-[70px] left-3 z-10 bg-gray-200 transition-all duration-500`}><i className={`fa-solid transition-all ${sideMenu?'fa-xmark':' fa-ellipsis-vertical'}`}></i></div>
+                <section className={`${sideMenu?'max-h-screen top-[130px]':'max-h-0 top-[110px]'} w-3/4 md:1/2 lg:w-1/4 lg:h-auto lg:max-h-none fixed left-5 z-10 lg:z-0 lg:static rounded-2xl lg:rounded-none shadow-lg lg:shadow-none transition-all duration-500 overflow-hidden lg:overflow-visible`}>
                     <div className="sticky top-16 left-0 right-0 w-full py-8 2xl:py-10 px-7 gap-y-4 flex flex-col bg-gray-50 font_gotham rounded-2xl">
                         <h1 className="mb-3 2xl:mb-5 font_gotham_bold tracking-widest">CUSTOMER SERVICES</h1>
                         <MenuLink href='/returns&refund' >Returns & Refund</MenuLink>

@@ -3,7 +3,6 @@ import { useCart } from "react-use-cart";
 import jwt from 'jsonwebtoken';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
-import LanguageModal from './modals/languagemodal';
 import Search from './search';
 import Cart from './cart';
 import Image from 'next/image';
@@ -33,6 +32,10 @@ export default function Navbar(props) {
 
     const [bars, setBars] = useState('')
     const [menu, setMenu] = useState('-translate-y-[100vh]')
+    const [search, setSearch] = useState(false)
+    const [cart, setCart] = useState(false)
+    const [navBg, setNavBg] = useState('bg-transparent')
+
     const handleMenu = () => {
         if (bars === '') {
             setBars('open')
@@ -43,30 +46,22 @@ export default function Navbar(props) {
             setMenu('-translate-y-[100vh]')
         }
     }
-
-    // states and function for modals
-    const [modal3, setModal3] = useState(false)
-    const toggleModal = (e) => {
-        if (e.target.name === "modal3") {
-            if (modal3 === false) return setModal3(true)
-            if (modal3 === true) return setModal3(false)
-        }
-    }
-
-    // state for search componenet
-    const [search, setSearch] = useState(false)
     const toggleSearch = () => {
         if (search === false) return setSearch(true)
         if (search === true) return setSearch(false)
     }
-    // state for cart componenet
-    const [cart, setCart] = useState(false)
     const toggleCart = () => {
         if (cart === false) return setCart(true)
         if (cart === true) return setCart(false)
     }
-    const { totalUniqueItems } = useCart()
 
+    useEffect(() => {
+        if (bars == 'open' || search || cart || props.hideNav == false) return setNavBg('bg-white')
+        if (props.hideNav == true) return setNavBg('bg-transparent')
+        else return setNavBg('bg-whtie')
+    }, [props.hideNav, bars, search, cart])
+
+    const { totalUniqueItems } = useCart()
     // getting user payload form jwt token in localstorage
     const [user, setUser] = useState(null)
     useEffect(() => {
@@ -77,10 +72,9 @@ export default function Navbar(props) {
         <>
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
-            <LanguageModal show={modal3} toggleModal={toggleModal} />
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
-            <nav className={`${props.hideNav ? 'bg-transparent' : 'bg-white'} h-[50px] fixed z-40 top-0 left-0 w-full  p-7 lg:px-14 shadow-sm bg-transparent font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
+            <nav id='navbar' className={`${navBg} h-[50px] fixed z-40 top-0 left-0 w-full  p-7 lg:px-14 shadow-sm bg-transparent font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
                 <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
                     <div className={`${bars} menu btn3`}>
                         <div className="icon"></div>
@@ -117,23 +111,25 @@ export default function Navbar(props) {
                     <li className='w-full border-b flex lg:hidden'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>
                     </li>
-                    <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
-                    {user && user.email?<Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>:<Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>}
-                    <div className="w-full flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
-                        <div className='hidden group lg:flex justify-center items-center tracking-[1.5em] text-base'>
-                            {user && user.email? <Link href='/user/personalinfo' >MY ACCOUNT</Link>
-                            :<span className='flex' >
-                                <Link href="/login">LOGIN</Link>
-                                <Link href="/signup">/SIGNUP</Link>
-                            </span>}
-                            <span className="flex my-auto">
-                                <span className="w-20 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
-                                <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
-                            </span>
+                    <div className="w-full h-[25vh] lg:h-20 2xl:h-28 mt-0 flex flex-col lg:flex-row justify-between lg:items-end z-40">
+                        <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
+                        {user && user.email ? <Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link> : <Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>}
+                        <div className="w-full flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
+                            <div className='hidden group lg:flex justify-center items-center tracking-[1.5em] text-base'>
+                                {user && user.email ? <Link href='/user/personalinfo' >MY ACCOUNT</Link>
+                                    : <span className='flex' >
+                                        <Link href="/login">LOGIN</Link>
+                                        <Link href="/signup">/SIGNUP</Link>
+                                    </span>}
+                                <span className="flex my-auto">
+                                    <span className="w-20 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                                    <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                                </span>
+                            </div>
+                            <SocialIcons classes='hidden lg:block' />
                         </div>
-                        <SocialIcons classes='hidden lg:block' />
+                        <SocialIcons classes='lg:hidden' />
                     </div>
-                    <SocialIcons classes='lg:hidden' />
                 </ul>
             </div>
         </>
