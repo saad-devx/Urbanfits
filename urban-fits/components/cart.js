@@ -83,7 +83,7 @@ export default function Cart(props) {
                                 <div className="w-full lg:w-[65%] mb-3">
                                     <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag ({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>
                                     <div className="hidden md:flex justify-between w-full font_gotham_medium tracking-widest text-xs">
-                                        <span className="md:w-[35vw] lg:w-[23vw] 2xl:w-[18vw] 2xl:bg-green-600 text-gray-500">PRODUCT</span>
+                                        <span className="md:w-[35vw] lg:w-[23vw] 2xl:w-[18vw] text-gray-500">PRODUCT</span>
                                         <span className='text-gray-500'>COLOR</span>
                                         <span className='text-gray-500'>SIZE</span>
                                         <span className='text-gray-500'>UNIT</span>
