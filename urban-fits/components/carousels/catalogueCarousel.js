@@ -38,10 +38,11 @@ export default function CatalogueCarousel() {
     return (
         <Splide onPaginationMounted={onPGMounted} className="catalogue_carousel w-screen h-screen relative transition-all duration-1000" hasTrack={false}
             options={{
-                type: 'loop',
+                type: 'fade',
+                rewind: true,
                 fixedWidth: '100vw',
                 fixedHeight: '100vh',
-                speed: 700,
+                speed: 900,
                 gap: '0.5rem',
                 arrows: false,
                 autoplay: true,
@@ -69,12 +70,12 @@ export default function CatalogueCarousel() {
                                 <Image className='h-full object-cover' src={pair.img} alt="Urban images" />
                             </div>
                         </section>
-                        <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_gotham_medium tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >SHOP</Link>
+                        <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_gotham_medium tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >BUY</Link>
                     </SplideSlide>
                 })}
             </SplideTrack>
 
-            <Image src={Logo} className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[9%]" />
+            <Image src={Logo} className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100px]" />
         </Splide>
     )
 }

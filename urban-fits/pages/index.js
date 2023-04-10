@@ -128,9 +128,9 @@ export default function Home() {
                             <Shoppingcard classes="w-48pr lg:w-[32%] md:h-[549px]" margin='my-3 lg:hidden' colors={2} price={72.99} name="Men Joggers" img={image7} />
                         </section>
                         <section className="w-full h-auto lg:h-80vh p-5 flex flex-col lg:flex-row justify-center items-center gap-5">
-                            <Card href="/contact" title="CONTACT US" value="If you have any query then please contact us." valueCenter btnClasses="w-1/2 py-5" btnValue="Contact Us" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
-                            <Card href="/customercare" title="CUSTOMER CARE" value="Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone." valueCenter btnClasses="w-1/2 py-5" btnValue="Get In Touch" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
-                            <Card href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." valueCenter btnClasses="w-1/2 py-5" btnValue="See Our FAQs" classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
+                            <Card href="/contact" title="CONTACT US" value="If you have any query then please contact us." valueCenter btnClasses="w-1/2 py-5" btnValue="COTNACT US" btnFont='font_gotham_light' classes="w-full h-full md:w-60vw md:h-3/4 lg:w-30pr py-20 lg:py-16 justify-center items-center" />
+                            <Card href="/customercare" title="CUSTOMER CARE" value="Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone." valueCenter btnClasses="w-1/2 py-5" btnValue="GET IN TOUCH" btnFont='font_gotham_light' classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
+                            <Card href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." valueCenter btnClasses="w-1/2 py-5" btnValue="SEE OUR FAQs" btnFont='font_gotham_light' classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
                         </section>
                         <Footer />
                     </div>

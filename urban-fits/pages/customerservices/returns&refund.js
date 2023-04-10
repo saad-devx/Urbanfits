@@ -9,7 +9,7 @@ const Accordian = (props) => {
         if (open) return setOpen(false)
     }
     return (
-        <div className="p-5 outline-none accordion-section rounded-xl bg-gray-50 mb-6" tabIndex={1}>
+        <div className="p-6 outline-none accordion-section rounded-xl bg-gray-50 mb-6" tabIndex={1}>
             <div onClick={toggleAccordian} className={`${open ? 'border-b' : null} flex justify-between h-8 items-center transition ease duration-700 cursor-pointer relative`}>
                 <div className="text-sm font_gotham_medium text-black tracking-widest transition ease duration-700">{props.title}</div>
                 <i className={`${open ? '-rotate-180' : null} fa-solid fa-caret-down transform transition ease duration-500`}></i>

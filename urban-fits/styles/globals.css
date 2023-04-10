@@ -141,7 +141,7 @@
 }
 
 .card_boxshadow {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.25);
 
 }
 
@@ -406,8 +406,8 @@ input:checked+.slider:before {
 
 /* css for footer */
 footer li {
-  letter-spacing: 0.1em;
-  font-size: 13px;
+  font-size: 12px;
+  color: black;
 }
 
 /* height css for layout accordint to the navbar height in pixels */
@@ -419,4 +419,12 @@ footer li {
   .lg_layout_height {
     height: calc(100vh - 50px);
   }
+}
+
+/* CSS for product listing page image sections */
+.bglisting_black{
+  background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 89.11%, rgba(0, 0, 0, 0) 100%);
+}
+.bglisting_white{
+  background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
 }

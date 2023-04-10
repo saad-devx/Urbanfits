@@ -40,7 +40,7 @@ export default function Signing(props) {
             console.log(oAuthQuery)
             setLoader(<Loader />)
             let path = router.pathname
-            let response = await fetch(`${process.env.HOST}/api/user${path}${oAuthQuery?oAuthQuery:''}`, {
+            let response = await fetch(`${process.env.HOST}/api/user${path}${oAuthQuery ? oAuthQuery : ''}`, {
                 method: getMethod(),
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values)
@@ -104,20 +104,14 @@ export default function Signing(props) {
             </Head>
             {loader}
             <main className={`bg-white lg:overflow-x-hidden`}>
-                <section className='lg:flex lg:items-center lg:justify-center lg:w-screen' >
-                    <div className=" w-[95%] md:w-[407px] mt-16 lg:mt-0 mx-auto ">
-                        {/* This image will only show on the top in the Sign Up page */}
-                        {/* <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={`${page === 'login' ? 'hidden' : ''} w-1/4 mx-auto mb-3`} /> */}
-                        <div className='w-full mx-auto mb-7' >
-                            <h2 className="w-[478px] font_gotham_medium text-[38px] leading-[47px] text-center">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
-                        </div>
-                        <div className='w-[304px] mx-auto leading-8' >
-                            <h3 className=" font-light text-2xl text-center">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</h3>
-                        </div>
+                <section className='lg:flex lg:items-center text-center lg:justify-center lg:w-screen' >
+                    <div className=" w-[95%] md:w-full lg:w-[470px] mt-16 lg:mt-0 mx-auto ">
+                        <h2 className="w-full lg:w-[470px]- font_gotham_medium text-2xl lg:text-[38px] lg:leading-[47px]">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
+                        <br />
+                        <p className="font_gotham_light text-xl">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</p>
                     </div>
 
-                    <div className=" w-[95%] md:w-[400px] mx-auto py-7 pt-16 font_gotham bg-white">
-                        {/* This image will only show in the Login page */}
+                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 mx-auto py-7 pt-16 font_gotham bg-white">
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={` w-1/4 mx-auto mb-8`} />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
@@ -170,10 +164,10 @@ export default function Signing(props) {
                                 </div>
                             </div>
                             {/* changing Buttons according to different page endpoints */}
-                            {router.pathname === '/signup' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >SIGN UP</Button> : null}
-                            {router.pathname === '/login' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >LOGIN</Button> : null}
-                            {router.pathname === '/forgotpassword' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >VERIFY</Button> : null}
-                            {router.pathname === '/resetpassword' ? <Button classes='w-full text-sm font_gotham tracking_widest' type="submit" >LOGIN</Button> : null}
+                            {router.pathname === '/signup' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >SIGN UP</LinkBtn> : null}
+                            {router.pathname === '/login' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</LinkBtn> : null}
+                            {router.pathname === '/forgotpassword' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >VERIFY</LinkBtn> : null}
+                            {router.pathname === '/resetpassword' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</LinkBtn> : null}
 
                             <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                         </form>

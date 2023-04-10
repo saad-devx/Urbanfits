@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { useCart } from "react-use-cart";
-import SuggestionCard from '@/components/cards/suggestionPicCard';
 import CatalogueCarousel from '@/components/carousels/catalogueCarousel';
 import Navbar from '../../components/navbar';
 import Button from '../../components/buttons/simple_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 import Footer from '../../components/footer'
 import LinkBtn from '@/components/buttons/link_btn';
+import ListingShopSection from '@/components/listingShop_section';
 
 // imports for images
+import Image from 'next/image';
 import image1 from '../../public/card imgs/card img4.png'
 import image2 from '../../public/card imgs/card img10.jpg'
+import listingBg1 from '@/public/listingbg.jpg'
 
 export default function productlisting(props) {
     const { category } = props
@@ -27,8 +28,6 @@ export default function productlisting(props) {
         window.addEventListener('scroll', setSizefunc);
     }, []);
 
-    //Cart function
-    const { addItem } = useCart()
     return (
         <>
             <Navbar hideNav={hideNav} />
@@ -41,15 +40,11 @@ export default function productlisting(props) {
                             <div className="w-full flex my-4 items-center">
                                 <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
                             </div>
-                            {/* shopping card from here */}
-                            <Shoppingcard img={image2} />
-                            <Shoppingcard img={image1} />
-                            <Shoppingcard img={image1} />
-                            <Shoppingcard img={image1} />
-                            <Shoppingcard img={image1} />
-                            <Shoppingcard img={image1} />
-                            <Shoppingcard img={image1} />
-                            <Shoppingcard img={image1} />
+                            {/* {[{ img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }].map((product, index) => {
+                                if (index == 4) return <h1 className="w-full text-4xl">Picture section here</h1>
+                                return <Shoppingcard img={product.img} />
+                            })} */}
+                            <ListingShopSection img={listingBg1} />
                         </div>
                         <Button classes="mx-auto w-36" >Load More</Button>
                         <div className="w-full mt-10">
