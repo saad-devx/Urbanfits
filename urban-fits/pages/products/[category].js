@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import CatalogueCarousel from '@/components/carousels/catalogueCarousel';
 import Navbar from '../../components/navbar';
-import Button from '../../components/buttons/simple_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 import Footer from '../../components/footer'
 import LinkBtn from '@/components/buttons/link_btn';
 import ListingShopSection from '@/components/listingShop_section';
 
 // imports for images
-import Image from 'next/image';
-import image1 from '../../public/card imgs/card img4.png'
-import image2 from '../../public/card imgs/card img10.jpg'
-import listingBg1 from '@/public/listingbg.jpg'
+import image1 from '../../public/card imgs/card img6.jpg'
+import image2 from '../../public/card imgs/card img2.jpg'
+import image3 from '../../public/card imgs/card img10.jpg'
+import listingBg1 from '@/public/listingbg1.jpg'
+import listingBg2 from '@/public/listingbg2.jpg'
 
 export default function productlisting(props) {
     const { category } = props
@@ -28,6 +28,12 @@ export default function productlisting(props) {
         window.addEventListener('scroll', setSizefunc);
     }, []);
 
+    const product = {
+        name: 'Sample Product title - UF',
+        price: '76.99',
+        variants: [1, 2, 3, 4]
+    }
+
     return (
         <>
             <Navbar hideNav={hideNav} />
@@ -40,13 +46,26 @@ export default function productlisting(props) {
                             <div className="w-full flex my-4 items-center">
                                 <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
                             </div>
-                            {/* {[{ img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }, { img: image1 }, { img: image2 }].map((product, index) => {
-                                if (index == 4) return <h1 className="w-full text-4xl">Picture section here</h1>
-                                return <Shoppingcard img={product.img} />
-                            })} */}
-                            <ListingShopSection img={listingBg1} />
+                            {[{ img: image1 }, { img: image2 }, { img: image3 }, { img: image1 }, { img: image2 }, { img: image3 }, { img: image1 }, { img: image2 }, { img: image3 }, { img: image1 }, { img: image2 }, { img: image3 }].map((productData, index) => {
+                                const product = {
+                                    name: 'Sample Product title - UF',
+                                    price: '76.99',
+                                    variants: [1, 2, 3, 4]
+                                }
+                                if (index == 4) return <>
+                                    <ListingShopSection img={listingBg1} />
+                                    <Shoppingcard product={product} img={productData.img} />
+                                </>
+                                return <Shoppingcard product={product} img={productData.img} />
+                            })}
                         </div>
-                        <Button classes="mx-auto w-36" >Load More</Button>
+                        <button className="group flex items-center w-auto mx-auto font_gotham_bold text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300">
+                            <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                            <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                            &nbsp;MORE
+                            <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                            <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                        </button>
                         <div className="w-full mt-10">
                             <h3 className="text-2xl font_gotham_medium tracking-widest">MORE TO EXPLORE</h3>
                             <div className="w-full my-5 flex flex-wrap">
@@ -55,15 +74,16 @@ export default function productlisting(props) {
                                 })}
                             </div>
                             <section className="w-full my-6 md:my-10 flex flex-wrap overflow-hidden">
-                                <Shoppingcard colors={3} price={67.99} name="Leather Jacket - Men" img={image2} />
-                                <Shoppingcard colors={0} price={45.99} name="Ladies Herbel Bag" img={image2} />
-                                <Shoppingcard colors={2} price={72.99} name="Men Joggers" img={image2} />
-                                <Shoppingcard colors={2} price={72.99} name="Men Joggers" img={image2} />
+                                <Shoppingcard product={product} img={image3} />
+                                <Shoppingcard product={product} img={image3} />
+                                <Shoppingcard product={product} img={image3} />
+                                <Shoppingcard product={product} img={image3} />
                             </section>
                         </div>
                     </div>
                 </section>
             </main>
+            <ListingShopSection whiteTheme img={listingBg2} />
             <Footer />
         </>
     )

@@ -65,6 +65,13 @@ export default function Cart(props) {
         return num.toFixed(3)
     }
 
+    // temporary product data for shopping card
+    const product = {
+        name: 'Sample Product name',
+        price: '76.99',
+        variants: [1, 2, 3, 4]
+    }
+
     return (
         <>
             <section className={`bg-white border-t w-full layout_height fixed top-[50px] right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "translate-x-full opacity-0"} font_gotham`}>
@@ -116,10 +123,10 @@ export default function Cart(props) {
                                     })}
                                 </div>
                                 <section className="w-full my-6 md:my-10 flex flex-wrap overflow-hidden">
-                                    <Shoppingcard colors={3} price={67.99} name="Leather Jacket - Men" img={image1} />
-                                    <Shoppingcard colors={0} price={45.99} name="Ladies Herbel Bag" img={image1} />
-                                    <Shoppingcard colors={2} price={72.99} name="Men Joggers" img={image1} />
-                                    <Shoppingcard colors={2} price={72.99} name="Men Joggers" img={image1} />
+                                    <Shoppingcard product={product} img={image1} />
+                                    <Shoppingcard product={product} img={image1} />
+                                    <Shoppingcard product={product} img={image1} />
+                                    <Shoppingcard product={product} img={image1} />
                                 </section>
                             </div>
                         </section>}
