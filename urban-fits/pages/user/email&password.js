@@ -72,7 +72,7 @@ export default function EmailPassword() {
             </Head>
             {loader}
             <Navbar lowerLogo />
-            <main className={`bg-gray-100 h-90vh lg:h-[87vh] flex transition-all overflow-hidden duration-700`}>
+            <main className={`bg-gray-100 h-90vh lg_layout_height flex transition-all overflow-hidden duration-700`}>
                 <AccountMenu direction={direction} />
                 <section onScroll={handleScroll} className='w-full lg:w-[67%] font_gotham text-left px-4 pt-24 lg:pt-9 lg:pl-7 overflow-y-scroll' >
                     <div className="w-full lg:w-5/6 h-screen">

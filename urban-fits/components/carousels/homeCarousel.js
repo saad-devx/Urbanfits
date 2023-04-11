@@ -39,9 +39,9 @@ export default function HomeCarousel(props) {
                 {[image1, image2, image3, image4, image5, image6].map((img, index) => {
                     return <SplideSlide key={index} className="w-full h-full p-10">
                         <div className={`absolute w-2/6 ${props.carousel_textContainer} flex flex-col items-start text-white transition-all duration-1000 ease-linear text-5xl`}>
-                            <h1 className="text-white text-2xl md:text-[38px] font_gotham_medium tracking-expand">DENIM</h1>
+                            <h1 className="text-white text-2xl md:text-[38px] font_gotham font-semibold tracking-expand">DENIM</h1>
                             <p className="mt-1 mb-4 text-base md:text-xl font_gotam_light text-white">For Women</p>
-                            <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-3/4 text-xs md:text-2xl" >Shop Now</LinkBtn>
+                            <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-[198px] text-xs md:text-base" >Shop Now</LinkBtn>
                         </div>
                         <Image className='w-full h-full' src={img} alt="Urban images" />
                     </SplideSlide>
@@ -52,6 +52,12 @@ export default function HomeCarousel(props) {
             <div className="w-full text-center absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-cente space-y-5">
                 <h1 className="text-[28px] md:text-[64px] text-white font_gotham_medium tracking-expand">URBAN FITS</h1>
                 <h3 className="font_gotam_light text-base md:text-[28px] text-white">UNITED ARAB EMIRATES</h3>
+            </div>
+
+            {/* Scroll down indicator */}
+            <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-default">
+                <i class="fa-solid fa-chevron-up fa-bounce text-white text-base md:text-2xl"></i>
+                <span className='text-white text-[10px] md:text-sm font_gotham_medium tracking-widest' >SCROLL DOWN</span>
             </div>
 
             {/* Buttons for next, prev slide and to pause the carousel */}

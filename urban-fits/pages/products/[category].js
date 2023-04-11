@@ -1,58 +1,89 @@
-import React, { useState } from 'react'
-import { useCart } from "react-use-cart";
-import dynamic from "next/dynamic";
-import SuggestionCard from '@/components/cards/suggestionPicCard';
+import React, { useState, useEffect } from 'react'
+import CatalogueCarousel from '@/components/carousels/catalogueCarousel';
 import Navbar from '../../components/navbar';
-import Button from '../../components/buttons/simple_btn';
 import Shoppingcard from '@/components/cards/shoppingcard';
 import Footer from '../../components/footer'
 import LinkBtn from '@/components/buttons/link_btn';
+import ListingShopSection from '@/components/listingShop_section';
 
 // imports for images
-import image1 from '../../public/card imgs/card img4.png'
-import image2 from '../../public/card imgs/card img10.jpg'
+import image1 from '../../public/card imgs/card img6.jpg'
+import image2 from '../../public/card imgs/card img2.jpg'
+import image3 from '../../public/card imgs/card img10.jpg'
+import listingBg1 from '@/public/listingbg1.jpg'
+import listingBg2 from '@/public/listingbg2.jpg'
 
-function productlisting(props) {
+export default function productlisting(props) {
     const { category } = props
-    //Cart function
-    const { addItem } = useCart()
+    const [hideNav, setHideNav] = useState(true);
+
+    useEffect(() => {
+        const setSizefunc = () => {
+            let position = window.pageYOffset;
+            if (position >> 2) {
+                setHideNav(false)
+            }
+            else setHideNav(true)
+        }
+        window.addEventListener('scroll', setSizefunc);
+    }, []);
+
+    const product = {
+        name: 'Sample Product title - UF',
+        price: '76.99',
+        variants: [1, 2, 3, 4]
+    }
+
     return (
         <>
-            <Navbar />
-            <div className="w-full pb-20 bg-gray-100 flex justify-center font_gotham">
-                <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-9' >
-                    <h2 className="text-3xl md:text-4xl mb-4 capitalize">{category}</h2>
-                    <p className='transition-all duration-500 font_gotham' >Urban fit is about Parisian couture and a 75-year heritage with a contemporary twist. Designer clothing for women inspired by Pierre Urban fit archives and inspirations, reworked for the modern world by Olivier Rousting. Discover the latest pieces. Find sophisticated creations for your bold, confident self. Impressive detailing, meticulously crafted skirts and dresses, expertly tailored pants and jackets with structured shoulders and elegant lines. The newest Urban fit blazer with its iconic six gold buttons or vibrant casual wear for easy weekends. Create an audacious wardrobe in signature monochrome for the contemporary woman. Graphic lines showcase your silhouette, reflecting the distinctive flair for which Urban fit is so well known. Unleash your expressive nature in a hypnotizing long dress, and accessorize with a timeless bag bearing the Urban fit logo. Add the perfect finishing touch with a playful pair of Urban fit labyrinth pattern stiletto boots, inspired by Urban fit fascination with Renaissance gardens. Opt for a classic skirt with gold buttons and matching leather biker jacket or choose playful, more deconstructed creations. Find fresh looks to create your unique wardrobe.</p>
-                    <div className="w-full my-6 md:my-10 flex flex-wrap overflow-hidden">
-                        <div className="w-full flex my-4 items-center">
-                            <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
-                        </div>
-                        {/* shopping card from here */}
-                        <Shoppingcard img={image2} />
-                        <Shoppingcard img={image1} />
-                        <Shoppingcard img={image1} />
-                        <Shoppingcard img={image1} />
-                        <Shoppingcard img={image1} />
-                        <Shoppingcard img={image1} />
-                        <Shoppingcard img={image1} />
-                        <Shoppingcard img={image1} />
-                    </div>
-                    <Button classes="mx-auto w-36" >Load More</Button>
-                    <div className="w-full mt-10">
-                        <h3 className="text-2xl">More To Explore</h3>
-                        <div className="w-full my-5 flex flex-wrap">
-                            {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
-                                return <LinkBtn href={`/products/${link}`} classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
+            <Navbar hideNav={hideNav} />
+            <main className="w-full pb-20 bg-white flex justify-center font_gotham overflow-hidden">
+                <section className='' >
+                    <CatalogueCarousel />
+                    <div className='w-full p-5 md:p-7 lg:p-10 lg:pt-9 h-full font_gotham text-left pt-9' >
+                        <h2 className="text-3xl md:text-4xl mb-4 capitalize">{category}</h2>
+                        <div className="w-full my-6 md:my-10 flex flex-wrap overflow-hidden">
+                            <div className="w-full flex my-4 items-center">
+                                <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
+                            </div>
+                            {[{ img: image1 }, { img: image2 }, { img: image3 }, { img: image1 }, { img: image2 }, { img: image3 }, { img: image1 }, { img: image2 }, { img: image3 }, { img: image1 }, { img: image2 }, { img: image3 }].map((productData, index) => {
+                                const product = {
+                                    name: 'Sample Product title - UF',
+                                    price: '76.99',
+                                    variants: [1, 2, 3, 4]
+                                }
+                                if (index == 4) return <>
+                                    <ListingShopSection img={listingBg1} />
+                                    <Shoppingcard product={product} img={productData.img} />
+                                </>
+                                return <Shoppingcard product={product} img={productData.img} />
                             })}
                         </div>
-                        <div className="flex flex-wrap justify-between md:justify-center lg:justify-between space-y-4 lg:space-y-0">
-                            <SuggestionCard href="/products/Ready to Wear" btnValue="Shope Now" title="Ready to Wear" img={image2} />
-                            <SuggestionCard href="/products/Bags" btnValue="Shope Now" title="Bags" img={image2} />
-                            <SuggestionCard href="/products/Shoes" btnValue="Shope Now" title="Shoes" img={image2} />
+                        <button className="group flex items-center w-auto mx-auto font_gotham_bold text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300">
+                            <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                            <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                            &nbsp;MORE
+                            <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                            <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                        </button>
+                        <div className="w-full mt-10">
+                            <h3 className="text-2xl font_gotham_medium tracking-widest">MORE TO EXPLORE</h3>
+                            <div className="w-full my-5 flex flex-wrap">
+                                {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
+                                    return <LinkBtn href={`/products/${link}`} classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
+                                })}
+                            </div>
+                            <section className="w-full my-6 md:my-10 flex flex-wrap overflow-hidden">
+                                <Shoppingcard product={product} img={image3} />
+                                <Shoppingcard product={product} img={image3} />
+                                <Shoppingcard product={product} img={image3} />
+                                <Shoppingcard product={product} img={image3} />
+                            </section>
                         </div>
                     </div>
                 </section>
-            </div>
+            </main>
+            <ListingShopSection whiteTheme img={listingBg2} />
             <Footer />
         </>
     )
@@ -63,4 +94,3 @@ export async function getServerSideProps(context) {
     // let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
     return { props: { category } }
 }
-export default dynamic(() => Promise.resolve(productlisting), { ssr: false })

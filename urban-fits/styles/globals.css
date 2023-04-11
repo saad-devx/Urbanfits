@@ -56,10 +56,10 @@
   font-family: 'Gotham Pro Bold';
   src: url('../public/fonts/GothamPro-Bold.eot');
   src: local('Gotham Pro Bold'), local('GothamPro-Bold'),
-      url('../public/fonts/GothamPro-Bold.eot?#iefix') format('embedded-opentype'),
-      url('../public/fonts/GothamPro-Bold.woff2') format('woff2'),
-      url('../public/fonts/GothamPro-Bold.woff') format('woff'),
-      url('../public/fonts/GothamPro-Bold.ttf') format('truetype');
+    url('../public/fonts/GothamPro-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/GothamPro-Bold.woff2') format('woff2'),
+    url('../public/fonts/GothamPro-Bold.woff') format('woff'),
+    url('../public/fonts/GothamPro-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -68,10 +68,10 @@
   font-family: 'Gotham Pro Meduim';
   src: url('../public/fonts/GothamPro-Medium.eot');
   src: local('Gotham Pro Medium'), local('GothamPro-Medium'),
-      url('../public/fonts/GothamPro-Medium.eot?#iefix') format('embedded-opentype'),
-      url('../public/fonts/GothamPro-Medium.woff2') format('woff2'),
-      url('../public/fonts/GothamPro-Medium.woff') format('woff'),
-      url('../public/fonts/GothamPro-Medium.ttf') format('truetype');
+    url('../public/fonts/GothamPro-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/GothamPro-Medium.woff2') format('woff2'),
+    url('../public/fonts/GothamPro-Medium.woff') format('woff'),
+    url('../public/fonts/GothamPro-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
@@ -86,19 +86,20 @@
   font-family: 'Gotham Pro';
 }
 
+.font_gotham_light {
+  font-family: 'Gotham Pro Light';
+}
+
 .font_gotham_black {
   font-family: 'Gotham Pro Black';
 }
+
 .font_gotham_bold {
   font-family: 'Gotham Pro Bold';
 }
 
-.font_gotham_medium{
+.font_gotham_medium {
   font-family: 'Gotham Pro Meduim';
-}
-
-.font_gotham_light {
-  font-family: 'Gotham Pro Light';
 }
 
 .stroke_text {
@@ -107,7 +108,8 @@
   -webkit-text-stroke-width: 0.6px;
 }
 
-.bg_metal_gold{ /* background for second home carousel */
+.bg_metal_gold {
+  /* background for second home carousel */
   background: linear-gradient(-270deg, rgba(107, 107, 107, 0.2) 0.02%, rgba(179, 144, 62, 0.25) 55.35%);
 }
 
@@ -139,7 +141,7 @@
 }
 
 .card_boxshadow {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.25);
 
 }
 
@@ -389,12 +391,40 @@ input:checked+.slider:before {
 
 /*                                     CSS to hide scroll bar */
 
-.account_menu::-webkit-scrollbar {
+.hide_scrollbar::-webkit-scrollbar{
   display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar_x::-webkit-scrollbar {
+  height: 5px;
+}
+.scrollbar_x::-webkit-scrollbar-thumb{
+  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
 }
 
 /* css for footer */
-footer li{
-  letter-spacing: 0.1em;
-  font-size: 13px;
+footer li {
+  font-size: 12px;
+  color: black;
+}
+
+/* height css for layout accordint to the navbar height in pixels */
+.layout_height {
+  height: calc(100vh - 50px);
+}
+
+@media screen and (min-width: 1024px) {
+  .lg_layout_height {
+    height: calc(100vh - 50px);
+  }
+}
+
+/* CSS for product listing page image sections */
+.bglisting_black{
+  background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 89.11%, rgba(0, 0, 0, 0) 100%);
+}
+.bglisting_white{
+  background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
 }
