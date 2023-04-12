@@ -3,7 +3,7 @@ import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import Accordians from '@/components/accordians';
+import Accordians from '@/components/accordians/accordians';
 import SuggestionCard from '@/components/cards/suggestionPicCard';
 import LinkBtn from '@/components/buttons/link_btn';
 import Button from '@/components/buttons/simple_btn';

@@ -5,7 +5,7 @@ export default function MyAccount() {
     return (
         <CutomerServices>
             <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">MY ACCOUNT</h1>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 Register to My Account to take full advantage of your Online Experience.<br /><br />
                 <h1 className="mb-3 font_gotham_medium tracking-widest">WHAT IS MY ACCOUNT?</h1>
                 <p>

@@ -7,7 +7,7 @@ export default function Delivery() {
         <CustomerServices>
             <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">DELIVERY</h1>
 
-            <div className="w-full p-7 mb-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <p>Every order that is sent from our warehouse is carefully inspected. You can track and trace your order via MyAccount.
                     Delivery Times, Areas, Tracking, Damages, Collect in Store.</p> <br />
                 <h1 className="mb-3 font_gotham_medium tracking-widest">DELIVERY TIMES</h1>
@@ -36,7 +36,7 @@ export default function Delivery() {
                     We cannot change your order (product, size, color, address) once it has been shipped.
                 </p>
             </div>
-            <div className="w-full p-7 my-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 my-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">TRACK YOUR ORDER</h1>
                 <p>
                     You can always track your order(s) anytime/24 hours per day via My Account. As soon as your order is dispatched from our warehouse we send you an email that will include a tracking number for your order with a link to track the package whenever you want to check on its progress.<br />
@@ -44,7 +44,7 @@ export default function Delivery() {
                     Should you need any assistance, please do not hesitate to contact us.
                 </p>
             </div>
-            <div className="w-full p-7 my-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 my-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">DAMAGES</h1>
                 <p>
                     Every order that we send from our warehouse is carefully inspected.<br />

@@ -5,7 +5,7 @@ export default function Payment() {
     return (
         <CustomerServices>
             <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">PAYMENT</h1>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <div className="w-full flex mb-3 gap-x-20">
                     <span className="flex flex-col items-start">
                         <h3 className="mb-2 font_gotham_medium tracking-widest text-sm">CREDIT CARD *</h3>

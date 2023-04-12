@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import LanguageModal from '@/components/modals/languagemodal';
-import Accordians from '@/components/accordians';
+import Accordians from '@/components/accordians/accordians';
 import LinkBtn from '@/components/buttons/link_btn';
 // imports for images
 import Image from 'next/image';

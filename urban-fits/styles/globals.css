@@ -80,6 +80,7 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   tap-highlight-color: rgba(0, 0, 0, 0);
   color: #383838;
+  scroll-behavior: smooth;
 }
 
 .font_gotham {
@@ -428,3 +429,16 @@ footer li {
 .bglisting_white{
   background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
 }
+
+/* CSS for section to section scrolling */
+/* #container{
+  height: 100%;
+  overflow-y: scroll;
+  white-space: nowrap;
+  scroll-snap-type: y mandatory;
+}
+
+.box_1, .box_2 {
+  display: inline-flex;
+  scroll-snap-align: start;
+} */
