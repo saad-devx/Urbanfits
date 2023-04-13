@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import truck from '../public/truck.svg'
+import truck from '@/public/truck.svg'
 
 export default function Accordians() {
     return (
