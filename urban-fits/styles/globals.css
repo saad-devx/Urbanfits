@@ -76,6 +76,15 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Urbanist';
+  src: url('../public/fonts/Urbanist-VariableFont.ttf');
+  src: local('Urbanist VariableFont'), local('Urbanist-VariableFont'),
+    url('../public/fonts/Urbanist-VariableFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   tap-highlight-color: rgba(0, 0, 0, 0);
@@ -101,6 +110,9 @@
 
 .font_gotham_medium {
   font-family: 'Gotham Pro Meduim';
+}
+.font_urbanist {
+  font-family: 'Urbanist';
 }
 
 .stroke_text {
