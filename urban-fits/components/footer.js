@@ -66,7 +66,7 @@ export default function Footer() {
                                 <Link href='/contact'>Contact Us</Link>
                             </li>
                             <li>
-                                <Link href='/customerservices/sizeguides'>Size Guides</Link>
+                                <Link href='/customerservices/sizeguide'>Size Guides</Link>
                             </li>
                             <li>
                                 <Link href='/'>SITE MAP</Link>

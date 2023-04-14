@@ -53,25 +53,18 @@ export default function Home() {
         window.addEventListener('scroll', setSizefunc);
     }, []);
 
-    useEffect(() => {
-        // Get all sections on the page
-        const sections = document.querySelectorAll('section');
-        // Listen for the scroll event on the window
-        window.addEventListener('scroll', () => {
-            // Loop through each section to check if it's in view
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                // Check if the section is in view
-                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
-                    // Scroll to the section with smooth scrolling
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-    })
+    // useEffect(() => {
+    //     const sections = document.querySelectorAll('section');
+    //     window.addEventListener('scroll', () => {
+    //         sections.forEach(section => {
+    //             const sectionTop = section.offsetTop;
+    //             const sectionBottom = sectionTop + section.offsetHeight;
+    //             if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+    //                 section.scrollIntoView({ behavior: 'smooth' });
+    //             }
+    //         });
+    //     });
+    // })
 
     const toggleModal = (e) => {
         if (e.target.name === "modal1") {
@@ -101,10 +94,10 @@ export default function Home() {
                 <LoadingModal show={modal1} toggleModal={toggleModal} />
                 <LanguageModal show={modal3} toggleModal={toggleModal} />
                 <Navbar hideNav={hideNav} />
-                <main className='w-full bg-white flex justify-center lg:justify-end transition-all ease-linear  overflow-hidden' >
-                    <div className="w-full flex flex-col justify-center items-center gap-y-5 transition-all ease-linear  overflow-x-hidden">
+                <main className='w-full bg-white flex justify-center lg:justify-end transition-all ease-linear duration-700 overflow-hidden' >
+                    <div className="w-full flex flex-col justify-center items-center gap-y-5 transition-all ease-linear duration-700 overflow-x-hidden">
                         <section id="section1" className={`box_1 ${carouselContainer} w-screen mb-7 lg:mb-10 flex justify-center items-center transition-all  ease-linear`}>
-                            <div className={`${carouselClasses} flex justify-center items-center font_gotham transition-all  ease-linear overflow-hidden`} >
+                            <div className={`${carouselClasses} flex justify-center items-center font_gotham transition-all duration-700 ease-linear overflow-hidden`} >
                                 <HomeCarousel carousel_textContainer={carousel_textContainer} />
                             </div>
                         </section>
@@ -150,17 +143,17 @@ export default function Home() {
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
-                        <section id="section6" className="w-full px-5 md:px-7 lg:px-10 flex justify-between flex-wrap">
+                        <section id="section6" className="w-full my-5 px-5 md:px-7 lg:px-10 flex justify-between flex-wrap">
                             <Shoppingcard margin='0' product={product} img={image5} />
                             <Shoppingcard margin='0' product={product} img={image6} />
                             <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image7} />
                         </section>
-                        <section id="section7" className="w-full h-auto lg:h-80vh p-5 flex flex-col lg:flex-row justify-center items-center gap-5">
+                        {/* <section id="section7" className="w-full h-auto lg:h-80vh p-5 flex flex-col lg:flex-row justify-center items-center gap-5">
                             <Card href="/contact" title="CONTACT US" value="If you have any query then please contact us." valueCenter btnClasses="w-1/2 py-5" btnValue="COTNACT US" btnFont='font_gotham_light' classes="w-full h-full md:w-60vw md:h-3/4 lg:w-30pr py-20 lg:py-16 justify-center items-center" />
                             <Card href="/customercare" title="CUSTOMER CARE" value="Do you have any questions? We are here to help you. You can contact our customer care team by email or over the phone." valueCenter btnClasses="w-1/2 py-5" btnValue="GET IN TOUCH" btnFont='font_gotham_light' classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
                             <Card href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." valueCenter btnClasses="w-1/2 py-5" btnValue="SEE OUR FAQs" btnFont='font_gotham_light' classes="w-full md:w-60vw py-20 justify-center items-center h-full lg:w-30pr md:h-3/4" />
-                        </section>
+                        </section> */}
                     </div>
                 </main>
                 <ListingShopSection classes='translate-y-5' img={listingBg2} whiteTheme />

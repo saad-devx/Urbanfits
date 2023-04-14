@@ -53,7 +53,7 @@ export default function productlisting(props) {
                                     variants: [1, 2, 3, 4]
                                 }
                                 if (index == 4) return <>
-                                    <ListingShopSection img={listingBg1} />
+                                    <ListingShopSection classes='my-7' img={listingBg1} />
                                     <Shoppingcard product={product} img={productData.img} />
                                 </>
                                 return <Shoppingcard product={product} img={productData.img} />
