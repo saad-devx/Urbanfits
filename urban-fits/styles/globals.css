@@ -421,6 +421,7 @@ input:checked+.slider:before {
 footer li {
   font-size: 12px;
   color: black;
+  font-family: 'Gotham Pro Light';
 }
 
 /* height css for layout accordint to the navbar height in pixels */

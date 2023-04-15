@@ -146,12 +146,6 @@ export default function Address() {
     }
     // user data state
     const [user, setUser] = useState({})
-    // determining if the scroll direction is upwards or downwards
-    const [direction, setDirection] = useState('')
-    const handleScroll = (e) => {
-        e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
-    }
-
     useEffect(() => {
         const userData = jwt.decode(localStorage.getItem("authToken"))
         if (userData) {
@@ -171,9 +165,9 @@ export default function Address() {
             </Head>
             {loader}
             <Navbar lowerLogo />
-            <main className={`bg-gray-100 w-full h-90vh lg_layout_height lg:fixed right-0 flex overflow-hidden font_gotham transition-all duration-700`}>
-                <AccountMenu direction={direction} />
-                <section onScroll={handleScroll} className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflwo-x-hidden overflow-y-scroll scroll-py-10' >
+            <main className={`bg-white w-full lg_layout_height flex overflow-hidden font_gotham transition-all duration-700`}>
+                <AccountMenu />
+                <section className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflwo-x-hidden overflow-y-scroll scroll-py-10' >
                     <div className="w-full lg:w-5/6">
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
                             <Avatar user={user} />

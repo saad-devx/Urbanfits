@@ -48,11 +48,6 @@ export default function EmailPassword() {
             setValues({ confirm_email: '', password: '' })
         }
     })
-    // determining if the scroll direction is upwards or downwards
-    const [direction, setDirection] = useState('')
-    const handleScroll = (e) => {
-        e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
-    }
     // getting user payload form jwt token in localstorage
     useEffect(() => {
         const userData = jwt.decode(localStorage.getItem("authToken"))
@@ -72,9 +67,9 @@ export default function EmailPassword() {
             </Head>
             {loader}
             <Navbar lowerLogo />
-            <main className={`bg-gray-100 h-90vh lg_layout_height flex transition-all overflow-hidden duration-700`}>
-                <AccountMenu direction={direction} />
-                <section onScroll={handleScroll} className='w-full lg:w-[67%] font_gotham text-left px-4 pt-24 lg:pt-9 lg:pl-7 overflow-y-scroll' >
+            <main className={`bg-white lg_layout_height flex transition-all overflow-hidden duration-700`}>
+                <AccountMenu />
+                <section className='w-full lg:w-[67%] font_gotham text-left px-4 pt-24 lg:pt-9 lg:pl-7 overflow-y-scroll' >
                     <div className="w-full lg:w-5/6 h-screen">
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
                             <Avatar user={user} />

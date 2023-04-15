@@ -38,8 +38,8 @@ function CartItem(props) {
                 <Image width={129} height={160} src={product.images[0].url} alt="Urban images" className="w-full h-full lg:w-[129px] lg:h-[160px] object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
             </div>
             <div className="w-1/2 md:w-[85%] lg:py-3 md:p-0 h-full flex flex-col md:flex-row justify-between items-start md:justify-between md:items-center font_gotham_medium tracking-widest">
-                <h3 className="max-w-[13rem] font_gotham_medium text-[10px] md:text-xs lg:text-sm text-black transition-all duration-700">{product.name.toUpperCase()}</h3>
-                <h3 className="text-[10px] md:text-xs lg:text-sm">{product.color.toUpperCase()}</h3>
+                <h3 className="w-[155px] font_gotham_medium text-[10px] md:text-xs lg:text-sm text-black transition-all duration-700">{product.name.toUpperCase()}</h3>
+                <h3 className="w-[100px] text-[10px] md:text-xs lg:text-sm">NAVY BLUE</h3>
                 <select type="select" defaultValue={product.size} className="w-90pr md:w-24 h-10 md:h-11 font_gotham_medium tracking-widest text-[10px] md:text-xs px-5 border outline-none">
                     {product.sizes.map(size => {
                         return <option value={size}>{size}</option>
@@ -74,26 +74,26 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-white border-t w-full layout_height fixed top-[50px] right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "translate-x-full opacity-0"} font_gotham`}>
+            <section className={`bg-white border-t w-full layout_height fixed top-[50px] right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ?
-                        <section className="w-full h-screen flex flex-col justify-center items-center space-y-4" >
+                        <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
                             <Image src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                             <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
                             <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
                             <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                         </section>
                         :
-                        <section className='w-full h-full p-5 pt-0 lg:pt-0 md:p-7 lg:p-10 text-left' >
-                            <div className="hidden lg:block relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
-                                <Image unoptimized={true} src={CartBg} className='w-full object-cover' />
+                        <section className='w-full h-full pt-0 lg:pt-0 md:p-7 lg:p-10 text-left' >
+                            <div className="relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
+                                <Image unoptimized={true} src={CartBg} className='h-full lg:w-full lg:h-auto object-cover' />
                                 <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font_gotham_bold text-white text-2xl lg:text-[32px] text-center tracking-expand my-10">SHOPPOING CART</h1>
                             </div>
                             <div className="w-full px-4 lg:px-14 flex flex-col lg:justify-between">
                                 <div className="w-full mb-3">
                                     <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag ({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>
                                     <div className="hidden md:flex justify-between w-full mb-3 font_gotham_medium tracking-widest text-xs">
-                                        <span className="md:w-[35vw] lg:w-[20vw] 2xl:w-[18vw] text-gray-500">PRODUCT</span>
+                                        <span className="md:w-[35vw] lg:w-[21vw] 2xl:w-[20vw] text-gray-500">PRODUCT</span>
                                         <span className='text-gray-500'>COLOR</span>
                                         <span className='text-gray-500'>SIZE</span>
                                         <span className='text-gray-500'>UNIT</span>
@@ -103,8 +103,8 @@ export default function Cart(props) {
                                         return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />
                                     })}
                                 </div>
-                                <div className="w-[400px] self-end">
-                                    <h3 className="text-center font_gotham_medium tracking-expand mb-5">ORDER SUMMARY</h3>
+                                <div className="w-full lg:w-[400px] self-center lg:self-end">
+                                    <h3 className="text-center text-xs lg:text-base font_gotham_medium tracking-[0.3em] lg:tracking-expand mb-5">ORDER SUMMARY</h3>
                                     <div className="w-full h-auto p-4 rounded-2xl font_gotham_medium bg-white items-center border">
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>SUBTOTAL</small> <small>${get3dpNumber(cartTotal)}</small></span>
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>SHIPPING</small> <small>${items[0].shipping_fee}</small></span>

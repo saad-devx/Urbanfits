@@ -13,21 +13,16 @@ const Option = (props) => {
 }
 
 export default function OrdersPage(props) {
-    // determining if the scroll direction is upwards or downwards
-    const [direction, setDirection] = useState('')
-    const handleScroll = (e) => {
-        e.target.scrollTop > 7 ? setDirection("-translate-y-20") : setDirection('translate-y-0')
-    }
 
     return (
         <>
             <Navbar lowerLogo />
-            <main className={`bg-gray-100 w-full h-90vh lg_layout_height lg:fixed right-0 font_gotham flex overflow-hidden transition-all duration-700`}>
-                <AccountMenu direction={direction} />
-                <section onScroll={handleScroll} className='w-full lg:w-[67%] bg-gray-100 font_gotham text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-x-hidden overflow-y-scroll' >
+            <main className={`bg-white w-full lg_layout_height font_gotham flex overflow-hidden transition-all duration-700`}>
+                <AccountMenu />
+                <section className='w-full lg:w-[67%] bg-white font_gotham text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-x-hidden' >
                     <div className="w-full lg:w-5/6">
                         <h2 className="text-3xl mb-4">My Order</h2>
-                        <div className="account_menu w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scroll">
+                        <div className="account_menu w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scrollbar">
                             <div className="w-[150%] md:w-full h-full flex justify-between  border-b border-b-gray-300 ">
                                 <Option href='/user/orders/orders'>Orders</Option>
                                 <Option href='/user/orders/buyagain'>Buy Again</Option>
@@ -35,7 +30,7 @@ export default function OrdersPage(props) {
                                 <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
                             </div>
                         </div>
-                        <section className="w-full h-screen my-5 font_gotham">
+                        <section className="w-full my-5 font_gotham">
                             {props.children}
                         </section>
                     </div>

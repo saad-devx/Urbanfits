@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSession, signOut } from "next-auth/react"
+// import { useSession, signOut } from "next-auth/react"
 import { useRouter } from 'next/router';
 import toaster from '../utils/toast_function';
 import Logout from './modals/logout';
@@ -10,7 +10,7 @@ const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
     return (
-        <Link className={`group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href={props.href}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+        <Link className={`${route === props.href ? 'shadow-md--' : 'h-0'} group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all`} href={props.href}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
     )
 }
 
@@ -59,13 +59,13 @@ export default function AccountMenu(props) {
                     <Option href='/user/email&password'>Email & Password</Option>
                     <Option href='/user/address'>My Address</Option>
                     <Option href='/user/paymentmethods'>My Payment Methods</Option>
-                    <Link className={` group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+                    <Link className={`group w-full h-[10%] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
                     <Button onclick={toggleModal} name="modal5" classes="w-full">Logout</Button>
                 </div>
             </div>
 
             {/* To be displayed on the mobile devices */}
-            <div ref={menuRef} className={`hide_scrollbar absolute z-10 top-[50px] left-0 w-full bg-white shadow-md text-sm md:text-base lg:hidden ${props.direction} overflow-x-scroll scroll-smooth transition-all duration-300`}>
+            <div ref={menuRef} className='hide_scrollbar absolute z-10 top-[50px] left-0 w-full bg-white shadow-md text-sm md:text-base lg:hidden overflow-x-scroll scroll-smooth transition-all duration-300'>
                 <div className="w-[230%] md:w-full h-full px-4 pt-8 flex justify-between">
                     <Option_sm href='/user/personalinfo'>Personal Information</Option_sm>
                     <Option_sm href='/user/email&password'>Email & Password</Option_sm>

@@ -40,6 +40,8 @@ export default function Navbar(props) {
         if (bars === '') {
             setBars('open')
             setMenu('')
+            setSearch(false)
+            setCart(false)
         }
         if (bars === 'open') {
             setBars('')
@@ -47,11 +49,22 @@ export default function Navbar(props) {
         }
     }
     const toggleSearch = () => {
-        if (search === false) return setSearch(true)
+        if (search === false) {
+            setCart(false)
+            setMenu()
+            setBars('')
+            setMenu('-translate-y-[100vh]')
+            return setSearch(true)
+        }
         if (search === true) return setSearch(false)
     }
     const toggleCart = () => {
-        if (cart === false) return setCart(true)
+        if (cart === false) {
+            setMenu('-translate-y-[100vh]')
+            setBars('')
+            setSearch(false)
+            return setCart(true)
+        }
         if (cart === true) return setCart(false)
     }
 
@@ -93,9 +106,13 @@ export default function Navbar(props) {
             </nav>
 
             <div className={`${menu} w-full layout_height fixed left-0 bottom-0 z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
-                <ul className='w-90pr h-auto list-none flex flex-col gap-[7vh] lg:gap-[10vh] leading-[0.7] lg:leading-[0.74em] font_gotham_bold text-5xl lg:text-8xl'>
-                    <li className='w-full border-b' >
+                <ul className='w-90pr h-auto list-none flex flex-col gap-[6vh] lg:gap-[10vh] leading-[0.7] lg:leading-[0.74em] font_gotham_bold text-5xl lg:text-8xl'>
+                    <li className='w-full border-b flex' >
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/Women'>Women</ListItem>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[27%] hidden lg:block' href='/'>Home</ListItem>
+                    </li>
+                    <li className='w-full border-b flex lg:hidden' >
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[27%]' href='/'>Home</ListItem>
                     </li>
                     <li className='w-full border-b flex'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[30%]' href='/products/Men'>Men</ListItem>
@@ -111,10 +128,10 @@ export default function Navbar(props) {
                     <li className='w-full border-b flex lg:hidden'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>
                     </li>
-                    <div className="w-full h-[25vh] lg:h-20 2xl:h-28 mt-0 flex flex-col lg:flex-row justify-between lg:items-end z-40">
+                    <div className="w-full h-[20vh] lg:h-20 2xl:h-28 mt-0 flex flex-col lg:flex-row justify-between lg:items-end z-40">
                         <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
                         {user && user.email ? <Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link> : <Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>}
-                        <div className="w-full flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
+                        <div className="hidden w-full lg:flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
                             <div className='hidden group lg:flex justify-center items-center tracking-[1.5em] text-base'>
                                 {user && user.email ? <Link href='/user/personalinfo' >MY ACCOUNT</Link>
                                     : <span className='flex' >
