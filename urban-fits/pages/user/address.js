@@ -63,7 +63,7 @@ const AddressForm = (props) => {
 
     return (
         <form className="mt-10 font_gotham space-y-10 overflow-hidden" onReset={handleReset} onSubmit={handleSubmit} >
-            <h1 className='text-xl' >{props.heading}</h1>
+            <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >{props.heading}</h1>
             <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                 {touched.address_title && errors.address_title ? <Tooltip classes="form-error" content={errors.address_title} /> : null}
                 <input className="w-full bg-transparent outline-none border-none" type="text" name="address_title" id="address_title" value={values.address_title} onBlur={handleBlur} onChange={handleChange} placeholder="Address Title*" />
@@ -172,12 +172,12 @@ export default function Address() {
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
                             <Avatar user={user} />
                             <span>
-                                <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
+                            <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
                                 <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your address details and phone number here for easy and fast in delivery process in the future.</p>
                             </span>
                         </div>
-                        <AddressForm tag="shipping" heading="Add or Change the Shipping Address" onsubmit={onsubmit} />
-                        <AddressForm tag="billing" heading="Add or Change the Billing Address" onsubmit={onsubmit} />
+                        <AddressForm tag="shipping" heading="ADD OR CHANGE THE SHIPPING ADDRESS" onsubmit={onsubmit} />
+                        <AddressForm tag="billing" heading="ADD OR CHANGE THE BILLING ADDRESS" onsubmit={onsubmit} />
                     </div>
                 </section>
             </main>

@@ -74,12 +74,12 @@ export default function EmailPassword() {
                         <div className="flex flex-row-reverse md:flex-row items-center gap-3">
                             <Avatar user={user} />
                             <span>
-                                <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
+                                <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
                                 <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save or change your email address and password in this area to to tell us about you for further assistence.</p>
                             </span>
                         </div>
                         <form className="w-full mt-10 font_gotham space-y-10 overflow-x-hidden" onReset={handleReset} onSubmit={handleSubmit} >
-                            <h1 className='text-xl' >Change Email</h1>
+                            <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >CHANGE EMAIL</h1>
                             <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" name="email" id="email" value={values.email} onChange={handleChange} onBlur={handleBlur} placeholder="Email*" />

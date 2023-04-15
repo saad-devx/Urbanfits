@@ -52,7 +52,8 @@ export default function Payments() {
                             <div className="flex flex-row-reverse md:flex-row items-center gap-3">
                                 <Avatar user={user} />
                                 <span>
-                                    <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
+                                    
+                            <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
                                     <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your card details in this area to complete your future  purchases faster.</p>
                                 </span>
                             </div>

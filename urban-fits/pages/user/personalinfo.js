@@ -124,12 +124,12 @@ export default function Personalinfo() {
                     <div className="flex flex-row-reverse md:flex-row items-center gap-3">
                         <Avatar user={user} />
                         <span>
-                            <h2 className="text-xl lg:text-2xl mb-4">My Account</h2>
-                            <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your personal details here in this area to tell us about you for more assistence.</p>
+                            <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
+                            <p className='text-sm lg:text-base font_gotham_light' >Welcome {ifExists(user.firstname)} !<br />Save your personal details here in this area to tell us about you for more assistence.</p>
                         </span>
                     </div>
                     <form className="mt-10 font_gotham space-y-5" onReset={handleReset} onSubmit={handleSubmit} >
-                        <h1 className='text-xl' >Personal Information</h1>
+                        <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >PERSONAL INFORMATION</h1>
                         <div className="flex justify-between w-full lg:w-5/6 ">
                             <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
@@ -179,7 +179,7 @@ export default function Personalinfo() {
                             </div>
                         </div>
                         <div className="w-full lg:w-5/6 ">
-                            <h1 className="text-xl mt-5">Newsletter Subscription</h1>
+                            <h1 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mt-5">NEWSLETTER SUBSCRIPTION</h1>
                             <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
                                 <div className="w-1/2 md:w-1/4 flex justify-between">
                                     Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='newsletter_sub_email' checked={values.newsletter_sub_email} value={values.newsletter_sub_email} onChange={handleChange} /><span className="slider"></span></label>
@@ -188,7 +188,7 @@ export default function Personalinfo() {
                                     Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='newsletter_sub_phone' checked={values.newsletter_sub_phone} value={values.newsletter_sub_phone} onChange={handleChange} /><span className="slider"></span></label>
                                 </div>
                             </div>
-                            <div className=" w-full space-y-5 font_gotam_light">
+                            <div className=" w-full space-y-5 font_gotham_light">
                                 <p>Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our privacy policy.</p>
                                 <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                             </div>
@@ -200,25 +200,21 @@ export default function Personalinfo() {
                     </form>
                     <div className='w-full lg:w-5/6' >
                         <div className='my-14 space-y-5' >
-                            <h2 className="text-xl">Email & Password</h2>
+                            <h2 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest">EMAIL & PASSWORD</h2>
                             <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
                             </div>
                         </div>
                         <div className='my-14 space-y-5' >
-                            <h2 className="text-xl mb-8">My Addresses</h2>
+                            <h2 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mb-8">MY ADDRESSES</h2>
                             <div>
-                                <h5 className='text-lg my-2' >Shipping</h5>
+                                <h5 className='text-lg font_gotham_medium tracking-widest my-2' >SHIPPING</h5>
                                 <AddressContainer tag="shipping" />
                             </div>
                             <div>
-                                <h5 className='text-lg my-2' >Billing</h5>
+                                <h5 className='text-lg font_gotham_medium tracking-widest my-2' >BILLING</h5>
                                 <AddressContainer tag="billing" />
                             </div>
-                        </div>
-                        <div className='my-14 space-y-5' >
-                            <h2 className="text-xl mb-8">My Payment Methods</h2>
-                            <Link href='/user/paymentmethods' id='address' className=" w-full px-3 py-5 border border-gray-400 rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
                         </div>
                         <div className="w-full flex flex-col justify-center items-center">
                             <InfoCard title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="Get In Touch" />
