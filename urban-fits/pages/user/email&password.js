@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
+import User from '.';
 import Link from 'next/link'
 import jwt from 'jsonwebtoken';
 import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
 import Head from 'next/head';
-import { Avatar } from './personalinfo';
 import Loader from '@/components/loader';
-import Navbar from '../../components/navbar';
 import Button from '../../components/buttons/simple_btn';
-import AccountMenu from '../../components/accountmenu'
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -66,40 +64,27 @@ export default function EmailPassword() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             {loader}
-            <Navbar lowerLogo />
-            <main className={`bg-white lg_layout_height flex transition-all overflow-hidden duration-700`}>
-                <AccountMenu />
-                <section className='w-full lg:w-[67%] font_gotham text-left px-4 pt-24 lg:pt-9 lg:pl-7 overflow-y-scroll' >
-                    <div className="w-full lg:w-5/6 h-screen">
-                        <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                            <Avatar user={user} />
-                            <span>
-                                <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
-                                <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save or change your email address and password in this area to to tell us about you for further assistence.</p>
-                            </span>
-                        </div>
-                        <form className="w-full mt-10 font_gotham space-y-10 overflow-x-hidden" onReset={handleReset} onSubmit={handleSubmit} >
-                            <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >CHANGE EMAIL</h1>
-                            <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                                <input className="w-full bg-transparent outline-none border-none" name="email" id="email" value={values.email} onChange={handleChange} onBlur={handleBlur} placeholder="Email*" />
-                            </div>
-                            <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                {touched.confirm_email && errors.confirm_email ? <Tooltip classes="form-error" content={errors.confirm_email} /> : null}
-                                <input className="w-full bg-transparent outline-none border-none" name="confirm_email" id="confirm_email" value={values.confirm_email} onChange={handleChange} onBlur={handleBlur} placeholder="Confirm Email*" />
-                            </div>
-                            <div className="relative w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                                <input className="w-full bg-transparent outline-none border-none" type="password" name="password" id="password" value={values.password} onChange={handleChange} onBlur={handleBlur} placeholder="Password*" /><Link href='/resetpassword' ><i className="material-symbols-outlined">edit_square</i></Link>
-                            </div>
-                            <div className="w-full flex justify-end space-x-4">
-                                <Button type="reset" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" >Cancel</Button>
-                                <Button type="submit" classes="w-full md:w-1/3" >Save New Email</Button>
-                            </div>
-                        </form>
+            <User>
+                <form className="w-full mt-10 font_gotham space-y-10 overflow-x-hidden" onReset={handleReset} onSubmit={handleSubmit} >
+                    <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >CHANGE EMAIL</h1>
+                    <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" name="email" id="email" value={values.email} onChange={handleChange} onBlur={handleBlur} placeholder="Email*" />
                     </div>
-                </section>
-            </main>
+                    <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        {touched.confirm_email && errors.confirm_email ? <Tooltip classes="form-error" content={errors.confirm_email} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" name="confirm_email" id="confirm_email" value={values.confirm_email} onChange={handleChange} onBlur={handleBlur} placeholder="Confirm Email*" />
+                    </div>
+                    <div className="relative w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" type="password" name="password" id="password" value={values.password} onChange={handleChange} onBlur={handleBlur} placeholder="Password*" /><Link href='/resetpassword' ><i className="material-symbols-outlined">edit_square</i></Link>
+                    </div>
+                    <div className="w-full flex justify-end space-x-4">
+                        <Button type="reset" bg="bg-gray-100" text="black" font='font_gotham_medium' classes="w-full md:w-1/3" >CANCEL</Button>
+                        <Button type="submit" classes="w-full md:w-1/3" font='font_gotham_medium' >SAVE NEW EMAIL</Button>
+                    </div>
+                </form>
+            </User>
         </>
     )
 }

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
+import React from 'react'
 import { useRouter } from 'next/router';
-import Navbar from '../../../components/navbar';
-import AccountMenu from '../../../components/accountmenu'
+import Link from 'next/link'
+import User from '..';
 
 const Option = (props) => {
     const router = useRouter()
@@ -13,29 +12,22 @@ const Option = (props) => {
 }
 
 export default function OrdersPage(props) {
-
     return (
         <>
-            <Navbar lowerLogo />
-            <main className={`bg-white w-full lg_layout_height font_gotham flex overflow-hidden transition-all duration-700`}>
-                <AccountMenu />
-                <section className='w-full lg:w-[67%] bg-white font_gotham text-left p-5 md:p-9 pt-24 lg:pl-7 lg:pr-16 overflow-x-hidden' >
-                    <div className="w-full lg:w-5/6">
-                            <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
-                        <div className="account_menu w-full h-[10] text-sm md:text-base overflow-x-scroll hide_scrollbar">
-                            <div className="w-[150%] md:w-full h-full flex justify-between  border-b border-b-gray-300 ">
-                                <Option href='/user/orders/orders'>Orders</Option>
-                                <Option href='/user/orders/buyagain'>Buy Again</Option>
-                                <Option href='/user/orders/notdispatched'>Not Yet Dispatched</Option>
-                                <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
-                            </div>
-                        </div>
-                        <section className="w-full my-5 font_gotham">
-                            {props.children}
-                        </section>
+            <User>
+            <h1 className='my-5 text-xl lg:text-[22px] font_gotham_medium tracking-widest' >MY ORDERS</h1>
+                <div className="w-full text-sm md:text-base overflow-x-scroll hide_scrollbar">
+                    <div className="w-[150%] md:w-full h-full flex justify-between border-b border-b-gray-300 ">
+                        <Option href='/user/orders/orders'>Orders</Option>
+                        <Option href='/user/orders/buyagain'>Buy Again</Option>
+                        <Option href='/user/orders/notdispatched'>Not Yet Dispatched</Option>
+                        <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
                     </div>
+                </div>
+                <section className="w-full my-5 font_gotham">
+                    {props.children}
                 </section>
-            </main>
+            </User>
         </>
     )
 }
