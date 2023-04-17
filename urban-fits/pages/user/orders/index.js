@@ -14,8 +14,8 @@ const Option = (props) => {
 export default function OrdersPage(props) {
     return (
         <>
-            <User>
-            <h1 className='my-5 text-xl lg:text-[22px] font_gotham_medium tracking-widest' >MY ORDERS</h1>
+            <User profileNull >
+            <h1 className='my-5 text-2xl lg:text-3xl font_gotham_medium tracking-wide lg:tracking-widest'>MY ORDERS</h1>
                 <div className="w-full text-sm md:text-base overflow-x-scroll hide_scrollbar">
                     <div className="w-[150%] md:w-full h-full flex justify-between border-b border-b-gray-300 ">
                         <Option href='/user/orders/orders'>Orders</Option>

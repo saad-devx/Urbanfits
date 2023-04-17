@@ -5,8 +5,8 @@ import Button from './buttons/simple_btn';
 import Shoppingcard from './cards/shoppingcard';
 // Image imports
 import Image from 'next/image'
-import EmptyCartVector from "../public/emptyCart.svg"
-import CartBg from '@/public/cartbg.jpg'
+import EmptyCartVector from "../public/cart/emptyCart.svg"
+import CartBg from '@/public/cart/cartbg.jpg'
 const image1 = 'https://images.unsplash.com/photo-1551377293-17f3c11c4768?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80'
 
 // Cart item function
@@ -33,25 +33,43 @@ function CartItem(props) {
     }
 
     return (
-        <li key={props.li_key} className="relative group w-full h-[140px] mb-10 flex justify-between items-center">
-            <div className="w-1/2 lg:auto md:w-auto h-full mr-5 flex justify-center items-center overflow-hidden">
-                <Image width={129} height={160} src={product.images[0].url} alt="Urban images" className="w-full h-full lg:w-[129px] lg:h-[160px] object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
+        <li key={props.li_key} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
+            <div className="w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
+                <Image width={129} height={160} src={product.images[0].url} alt="Urban images" className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
             </div>
-            <div className="w-1/2 md:w-[85%] lg:py-3 md:p-0 h-full flex flex-col md:flex-row justify-between items-start md:justify-between md:items-center font_gotham_medium tracking-widest">
-                <h3 className="w-[155px] font_gotham_medium text-[10px] md:text-xs lg:text-sm text-black transition-all duration-700">{product.name.toUpperCase()}</h3>
-                <h3 className="w-[100px] text-[10px] md:text-xs lg:text-sm">NAVY BLUE</h3>
-                <select type="select" defaultValue={product.size} className="w-90pr md:w-24 h-10 md:h-11 font_gotham_medium tracking-widest text-[10px] md:text-xs px-5 border outline-none">
+            {/* to be displayed from md breakpoint */}
+            <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_gotham_medium tracking-widest">
+                <h3 className="w-[145px] font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()}</h3>
+                <h3 className="w-[100px]">NAVY BLUE</h3>
+                <select type="select" defaultValue={product.size} className="w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
                     {product.sizes.map(size => {
                         return <option value={size}>{size}</option>
                     })}
                 </select>
-                <span className="w-90pr md:w-24 h-10 md:h-11 px-5 font_gotham_light border flex justify-between items-center">
+                <span className="w-24 h-11 px-5 font_gotham_light border flex justify-between items-center">
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
-                    <input type="number" readOnly className='w-2/5 md:w-3/5 h-auto text-[10px] md:text-xs font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
+                    <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                 </span>
-                <h3 className="font_gotham_bold self-start md:self-center text-xs md:text-sm">${product.price}</h3>
-                <button onClick={() => { removeItem(product.id) }} className="absolute bottom-0 right-0 font_gotham_medium text-xs tracking-widest flex"><i className="fa-solid fa-trash group-hover:animate-bounce mx-2"></i>REMOVE</button>
+                <h3 className="font_gotham_bold self-center text-xs">${product.price}</h3>
+                <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_gotham_medium text-xs tracking-widest"></button>
+            </div>
+            {/* to be displayed in mobile */}
+            <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_gotham_medium tracking-widest">
+                <h3 className="w-full font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()} </h3>
+                <h3 className="font_gotham_black self-start text-xs">${product.price}</h3>
+                <div className="w-full flex self-end gap-3">
+                    <select type="select" defaultValue={product.size} className="w-[100px] h-[30px] font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
+                        {product.sizes.map(size => {
+                            return <option value={size}>{size}</option>
+                        })}
+                    </select>
+                    <span className="w-[100px] h-[30px] px-5 font_gotham_light border flex justify-between items-center">
+                        <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
+                        <input type="number" readOnly className='w-2/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
+                        <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
+                    </span>
+                </div>
             </div>
         </li>
     )
@@ -74,7 +92,7 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-white border-t w-full layout_height fixed top-[50px] right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
+            <section className={`bg-white w-full layout_height fixed top-[50px] right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ?
                         <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
@@ -84,23 +102,23 @@ export default function Cart(props) {
                             <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                         </section>
                         :
-                        <section className='w-full h-full pt-0 lg:pt-0 md:p-7 lg:p-10 text-left' >
+                        <section className='w-full h-full pt-0 lg:p-10 lg:pt-0 text-left' >
                             <div className="relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
-                                <Image unoptimized={true} src={CartBg} className='h-full lg:w-full lg:h-auto object-cover' />
-                                <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font_gotham_bold text-white text-2xl lg:text-[32px] text-center tracking-expand my-10">SHOPPOING CART</h1>
+                                <Image src={CartBg} className='h-full lg:w-full lg:h-auto object-cover object-center' />
+                                <h1 className="w-full text-center absolute top-1/2 -translate-y-1/2 font_gotham_bold text-white text-2xl md:text-[32px] tracking-[0.15em] lg:tracking-expand my-10">SHOPPING CART</h1>
                             </div>
                             <div className="w-full px-4 lg:px-14 flex flex-col lg:justify-between">
                                 <div className="w-full mb-3">
-                                    <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag ({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span>
-                                    <div className="hidden md:flex justify-between w-full mb-3 font_gotham_medium tracking-widest text-xs">
-                                        <span className="md:w-[35vw] lg:w-[21vw] 2xl:w-[20vw] text-gray-500">PRODUCT</span>
-                                        <span className='text-gray-500'>COLOR</span>
-                                        <span className='text-gray-500'>SIZE</span>
-                                        <span className='text-gray-500'>UNIT</span>
-                                        <span className='text-gray-500'>PRICE</span>
+                                    {/* <span className="w-full flex justify-between border-b border-b-gray-300 mb-5"> <h5>Shopping Bag ({totalUniqueItems})</h5> <button onClick={props.toggleCart}><i className="fa-solid fa-arrow-left mr-2"></i>Back</button> </span> */}
+                                    <div className="hidden lg:flex justify-between w-full mt-7 mb-3 font_gotham_medium tracking-widest text-xs">
+                                        <span className="md:w-[35vw] lg:w-[18vw] 2xl:w-[18vw] text-gray-300">PRODUCT</span>
+                                        <span className='text-gray-300 translate-x-2'>COLOR</span>
+                                        <span className='text-gray-300'>SIZE</span>
+                                        <span className='text-gray-300'>UNITS</span>
+                                        <span className='w-[10%] text-gray-300'>AMOUNT</span>
                                     </div>
                                     {items.map((product) => {
-                                        return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />
+                                        return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />  
                                     })}
                                 </div>
                                 <div className="w-full lg:w-[400px] self-center lg:self-end">

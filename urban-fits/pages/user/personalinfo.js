@@ -23,7 +23,7 @@ import Tooltip from '../../components/tooltip';
 
 // little function to use inside right this component to avoid mess
 const InfoCard = (props) => {
-    return <Card title={props.title} value={props.value} btnValue={props.btnValue} btnClasses=" w-1/2 md:w-1/3 text-sm" round="rounded-2xl" classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
+    return <Card title={props.title} value={props.value} btnValue={props.btnValue} classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
 }
 
 // User Avatar based on the gender
@@ -209,7 +209,7 @@ export default function Personalinfo() {
                     <div className="w-full flex flex-col justify-center items-center">
                         <InfoCard title="FAQ" value="Find all the answers to the frequently asked questions below." href='/faq' btnValue="Get In Touch" />
                         <InfoCard title="CUSTOMER CARE" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." href='/customerservices/returns&refund' btnValue="See Your FAQs" />
-                        <InfoCard title="Privacy Policy" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="GSee Your FAQs" />
+                        <InfoCard title="PRIVACY POLICY" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="See Your FAQs" />
                     </div>
                 </div>
             </User>

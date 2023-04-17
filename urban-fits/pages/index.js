@@ -6,20 +6,21 @@ import HomeCarousel from "@/components/carousels/homeCarousel";
 import HomeCarousel2 from "@/components/carousels/homeCarousel2";
 import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
-import Card from "@/components/cards/card";
+// import Card from "@/components/cards/card";
 import PicCard from "@/components/cards/picCard";
 import Shoppingcard from "@/components/cards/shoppingcard";
 // Modal imports
 import LoadingModal from "../components/modals/loadingmodal";
 import LanguageModal from "../components/modals/languagemodal";
 // imports for images
-import image1 from "@/public/card imgs/card img5.jpg";
-import image2 from "@/public/card imgs/card img6.jpg";
+import image0 from "@/public/card imgs/card img5.jpg";
+import image1 from "@/public/card imgs/card img6.jpg";
+import image2 from "@/public/card imgs/card img8.jpg";
 import image3 from "@/public/card imgs/card img1.jpg";
-import image4 from "@/public/card imgs/card img8.jpg";
-import image5 from "@/public/card imgs/card img9.jpg";
-import image7 from "@/public/card imgs/card img7.jpg";
-import image6 from "@/public/card imgs/card img11.jpg";
+import image4 from "@/public/card imgs/card img13.png";
+import image5 from "@/public/card imgs/card img14.png";
+import image6 from "@/public/card imgs/card img15.png";
+import image7 from "@/public/card imgs/card img16.png";
 import listingBg2 from '@/public/listingbg2.jpg'
 
 export default function Home() {
@@ -109,21 +110,21 @@ export default function Home() {
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
-                        <section id="section2" className="box_2 w-full px-5 md:px-7 lg:px-10 flex justify-between flex-wrap">
+                        <section id="section2" className="box_2 w-full px-5 md:px-7 lg:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                            <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image5} />
                             <Shoppingcard margin='0' product={product} img={image6} />
-                            <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image7} />
                         </section>
                         {/* Shopping Card Section */}
                         <div className="box_1 w-full mt-10 lg:mt-20 px-5 md:px-7 lg:px-10 flex items-center mb-3 text-sm lg:text-[20px] leading-3 font_gotham_medium tracking-expand"><h3>URBAN FITS COLLECTION&nbsp;</h3><span className="w-14 md:w-20 h-[2px] mx-1 bg-black transition-all"></span></div>
                         <section id="section3" className="w-full h-screen md:h-auto lg:h-[85vh] px-5 md:px-7 lg:px-10 flex flex-col lg:flex-row justify-between gap-y-5 font_gotham">
-                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image1} />
-                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image2} />
+                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image0} />
+                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image1} />
                         </section>
                         {/* Shopping Card Section */}
                         <section id="section4" className="box_2 w-full h-screen md:h-auto lg:h-[85vh] px-5 md:px-7 lg:px-10 my-5 flex flex-col lg:flex-row justify-between gap-y-5 font_gotham">
-                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image4} />
+                            <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image2} />
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image3} />
                         </section>
                         {/* second carousel */}
@@ -143,10 +144,10 @@ export default function Home() {
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
-                        <section id="section6" className="w-full my-5 px-5 md:px-7 lg:px-10 flex justify-between flex-wrap">
+                        <section id="section6" className="w-full my-5 px-5 md:px-7 lg:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                            <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image5} />
                             <Shoppingcard margin='0' product={product} img={image6} />
-                            <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image7} />
                         </section>
                         {/* <section id="section7" className="w-full h-auto lg:h-80vh p-5 flex flex-col lg:flex-row justify-center items-center gap-5">

@@ -15,7 +15,7 @@ export default function Footer() {
     return (
         <>
             <footer className="border-t w-full pt-10 font_gotham text-gotham-black bg-white">
-                <section className="pt-10 md:p-24 lg:pt-28 lg:pb-16 md:pb-7">
+                <section className="pt-10 md:p-5 lg:p-24 lg:pt-28 lg:pb-16 md:pb-7">
                     <div className="w-full h-2/6 pb-7 px-6 md:pb-16 lg:px-[5%] border-b border-b-gray-200 flex flex-row flex-wrap justify-between items-start">
                         <div className="w-full lg:w-1/2 flex justify-around items-start">
                             <span className='w-1/2 md:w-48pr mx-auto lg:mx-0 mb-7 flex flex-col justify-center text-center' >
@@ -46,10 +46,10 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    <div className="w-full mt-10 px-6 lg:px-0 flex flex-col lg:flex-row justify-between items-start md:items-start">
-                        <div className="w-full md:w-1/5 text-sm pb-10 md:pb-3 space-y-5 lg:space-y-4 flex flex-col items-center md:items-start">
-                            <h1 className="text-[26px] font_gotham_medium tracking-widest lg:tracking-widest"><Link href="/">URBAN FITS</Link></h1>
-                            <div className="lg:hidden space-x-10 text-lg text-black">
+                    <div className="w-full mt-10 px-6 lg:px-0 flex flex-col md:flex-row md:flex-wrap justify-between items-start md:items-start">
+                        <div className="w-full md:w-1/5 md:mr-3 md:-translate-y-1.5 lg:mr-0 text-sm pb-10 md:pb-3 space-y-5 lg:space-y-4 flex flex-col items-center md:items-start">
+                            <h1 className="text-2xl lg:text-[26px] font_gotham_medium whitespace-nowrap tracking-[0.4em] md:tracking-wide lg:tracking-widest"><Link href="/">URBAN FITS</Link></h1>
+                            <div className="lg:hidden space-x-10 md:space-x-6 text-lg text-black">
                                 <Link href='#' ><i className="fa-solid fa-paper-plane"></i></Link>
                                 <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>
                                 <Link href='#' ><i className="fa-brands fa-facebook-f"></i></Link>

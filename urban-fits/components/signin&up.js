@@ -104,21 +104,21 @@ export default function Signing(props) {
             </Head>
             {loader}
             <main className={`bg-white lg:overflow-x-hidden`}>
-                <section className='lg:flex lg:items-center text-center lg:justify-center lg:w-screen' >
+                <section className='lg:flex lg:items-center text-center lg:justify-center min-w-screen min-h-screen' >
                     <div className=" w-[95%] md:w-full lg:w-[470px] mt-16 lg:mt-0 mx-auto ">
                         <h2 className="w-full lg:w-[470px]- font_gotham_medium text-2xl lg:text-[38px] lg:leading-[47px]">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
                         <br />
-                        <p className="font_gotham_light text-xl">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</p>
+                        <p className="font_gotham_light text-xl md:text-2xl">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</p>
                     </div>
 
-                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 mx-auto py-7 pt-16 font_gotham bg-white">
-                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className={` w-1/4 mx-auto mb-8`} />
+                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 max-w-[400px] mx-auto py-7 pt-16 font_gotham bg-white">
+                        <Image src={Urbanfit_logo} alt="Urbanfits Logo" className='w-[100px] h-[100px] mx-auto mb-8' />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></a></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></a></button>
                         </div>
-                        <form className="bg-white p-2 font_gotham" onReset={handleReset} onSubmit={handleSubmit} >
+                        <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                                 {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
                                 <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
@@ -150,36 +150,36 @@ export default function Signing(props) {
                                 {touched.confirm_password && errors.confirm_password ? <Tooltip classes="form-error" content={errors.confirm_password} /> : null}
                                 <input className="w-full outline-none border-none" type='password' name="confirm_password" id="confirm_password" value={values.confirm_password} onBlur={handleBlur} onChange={handleChange} placeholder="Confirm Password" />
                             </div>
-                            <div className="my-3">
-                                <small className='text-gray-400 text-xs '>{props.type === 'forgotpass' ? 'Please enter your username or email address. You will receive an email message with instructions on how to reset your password.' : 'Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.'}</small>
+                            <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
+                                {props.type === 'forgotpass' ? 'Please enter your username or email address. You will receive an email message with instructions on how to reset your password.' : 'Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.'}
                             </div>
-                            <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-3 flex items-center border-b`}>
+                            <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-5 flex items-center`}>
                                 {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
                                 <div className='mr-2' >
                                     <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                                 </div>
-                                <div className=" w-full flex justify-between text-sm">
-                                    <small className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>Buy creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</small>
-                                    <small className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname === '/login' ? 'Forgot Password?' : ''}</Link></small>
+                                <div className=" w-full flex justify-between text-sm text-left">
+                                    <span className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>By creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</span>
+                                    <span className="ml-1 text-gray-400"><Link href="/forgotpassword" >{router.pathname === '/login' ? 'Forgot Password?' : ''}</Link></span>
                                 </div>
                             </div>
                             {/* changing Buttons according to different page endpoints */}
-                            {router.pathname === '/signup' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >SIGN UP</LinkBtn> : null}
-                            {router.pathname === '/login' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</LinkBtn> : null}
-                            {router.pathname === '/forgotpassword' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >VERIFY</LinkBtn> : null}
-                            {router.pathname === '/resetpassword' ? <LinkBtn classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</LinkBtn> : null}
+                            {router.pathname === '/signup' ? <Button classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >SIGN UP</Button> : null}
+                            {router.pathname === '/login' ? <Button classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</Button> : null}
+                            {router.pathname === '/forgotpassword' ? <Button classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >VERIFY</Button> : null}
+                            {router.pathname === '/resetpassword' ? <Button classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</Button> : null}
 
-                            <Link href={page === 'login' ? '/signup' : '/login'} className='underline underline-offset-1'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
+                            <Link href={page === 'login' ? '/signup' : '/login'} className='underline text-xs md:text-sm'><h1 className='w-full text-center' >{page === 'login' ? 'Create a New Account' : 'Log in with an Existing Account'}</h1></Link>
                         </form>
                         {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                         <div className={`${page === 'login' ? 'hidden' : ''} font_gotham w-full mt-5 flex justify-center space-x-6`}>
-                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-1/2 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-1/2 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></a></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
+                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
                         </div>
                     </div>
                 </section>
 
-                <div className="w-full my-5 px-10 font_gotham flex flex-col lg:flex-row justify-between lg:space-x-3">
+                <div className="w-full max-w-[400px] mx-auto lg:max-w-none my-5 px-10 font_gotham flex flex-col lg:flex-row justify-between lg:space-x-3">
                     <LinkBtn href='/' classes='w-full'>HOME</LinkBtn>
                     <LinkBtn href='/catelog' classes='w-full'>CATALOG</LinkBtn>
                     <LinkBtn href='/contact' classes='w-full'>CONTACT US</LinkBtn>

@@ -108,9 +108,21 @@
   font-family: 'Gotham Pro Bold';
 }
 
+@media only screen and (min-width: 1000px) {
+  .lg\:font_gotham_bold {
+    font-family: 'Gotham Pro Bold';
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .sm\:font_gotham_medium {
+    font-family: 'Gotham Pro Meduim';
+  }
+}
+
 .font_gotham_medium {
   font-family: 'Gotham Pro Meduim';
 }
+
 .font_urbanist {
   font-family: 'Urbanist';
 }
@@ -404,7 +416,7 @@ input:checked+.slider:before {
 
 /*                                     CSS to hide scroll bar */
 
-.hide_scrollbar::-webkit-scrollbar{
+.hide_scrollbar::-webkit-scrollbar {
   display: none;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -413,7 +425,8 @@ input:checked+.slider:before {
 .scrollbar_x::-webkit-scrollbar {
   height: 5px;
 }
-.scrollbar_x::-webkit-scrollbar-thumb{
+
+.scrollbar_x::-webkit-scrollbar-thumb {
   background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
 }
 
@@ -436,10 +449,11 @@ footer li {
 }
 
 /* CSS for product listing page image sections */
-.bglisting_black{
+.bglisting_black {
   background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 89.11%, rgba(0, 0, 0, 0) 100%);
 }
-.bglisting_white{
+
+.bglisting_white {
   background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
 }
 

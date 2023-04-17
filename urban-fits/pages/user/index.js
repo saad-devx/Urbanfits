@@ -71,12 +71,12 @@ export default function User(props) {
             <main className={`bg-white w-full flex font_gotham transition-all duration-700`}>
                 <Logout logOut={logOut} modal5={modal5} toggleModal={toggleModal} />
                 <div className="w-[33%] min-h-screen hidden lg:block">
-                    <div className="flex flex-col sticky top-[100px] left-20 items-center w-[280px] list-none font_gotham">
+                    <div className="flex flex-col sticky top-[100px] left-20 2xl:left-28 items-center w-[280px] list-none font_gotham">
                         <Option href='/user/personalinfo'>Personal Information</Option>
                         <Option href='/user/email&password'>Email & Password</Option>
                         <Option href='/user/address'>My Address</Option>
                         <Option href='/user/paymentmethods'>My Payment Methods</Option>
-                        <Link className={`group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+                        <Link className={`${route === '/user/orders/orders'? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
                         <Button onclick={toggleModal} name="modal5" classes="w-full">Logout</Button>
                     </div>
                 </div>
@@ -93,11 +93,11 @@ export default function User(props) {
                 </div>
                 <section className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflow-x-hidden overflow-y-scroll' >
                     <div className="w-full lg:w-5/6">
-                        <div className="flex flex-row-reverse md:flex-row items-center gap-3">
-                            <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-gray-100" src={ifExists(user.gender) === "Male" ? male_avatar : female_avatar} alt="avatar" />
+                        <div className={`${props.profileNull? 'hidden': null} flex flex-row-reverse md:flex-row items-center gap-3`}>
+                            <Image className="w-1/3 md:w-1/6 lg:w-[130px] lg:h-[130px] rounded-full border-2 p-2 border-gray-100" src={ifExists(user.gender) === "Male" ? male_avatar : female_avatar} alt="avatar" />
                             <span>
                                 <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
-                                <p className='text-xs lg:text-sm' >Welcome {ifExists(user.firstname)} !<br />Save your address details and phone number here for easy and fast in delivery process in the future.</p>
+                                <p className='text-sm lg:text-base' >Welcome {ifExists(user.firstname)} !<br />Save your address details and phone number here for easy and fast in delivery process in the future.</p>
                             </span>
                         </div>
                         {props.children}

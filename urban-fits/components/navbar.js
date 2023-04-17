@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from "react-use-cart";
-import jwt from 'jsonwebtoken';
 import { useRouter } from 'next/router';
+import jwt from 'jsonwebtoken';
 import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
@@ -12,7 +12,7 @@ const ListItem = (props) => {
     const router = useRouter()
     return (
         <>
-            <Link onClick={props.handleMenu} href={router.asPath === props.href ? '/' : props.href} className={`${props.classes} stroke_text hover:text-gotham-black transition-all duration-500`}>{router.asPath === props.href ? 'Home' : props.children}</Link>
+            <Link onClick={props.handleMenu} href={props.href} className={`${props.classes} ${router.asPath === props.href ? 'text-gotham-black' : 'stroke_text hover:text-gotham-black'} transition-all duration-500`}>{props.children}</Link>
         </>
     )
 }
