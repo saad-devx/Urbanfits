@@ -166,13 +166,13 @@ export default function Checkout1(props) {
                                 <div className="w-full border-b border-b-gray-300 mb-5"><button onClick={router.back}><i className="fa-solid fa-chevron-left mr-2"></i>Back</button></div>
                                 <span className=" mb-7 flex justify-between font_gotham_medium text-2xl lg:text-[28px] tracking-widest"> <h1>1. CONTACT INFORMATION</h1> <i className="fa-solid fa-circle-check"></i> </span>
                                 <span className="flex flex-col mb-6">
-                                    <label htmlFor="name">Name</label>
+                                    <label className='font_gotham_medium md:text-lg' htmlFor="name">NAME</label>
                                     <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                         <input className="w-full bg-transparent outline-none border-none" onBlur={() => { setReadOnly(true) }} onChange={handleChange} value={values.name} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button onClick={handleModify} ><i className="material-symbols-outlined" title='Edit' name="name">edit_square</i></button>
                                     </div>
                                 </span>
                                 <span className="flex flex-col">
-                                    <label htmlFor="email">Email</label>
+                                    <label className='font_gotham_medium md:text-lg' htmlFor="email">EMAIL</label>
                                     <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                         <input className="w-full bg-transparent outline-none border-none" onBlur={() => { setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="John Doe" /><button onClick={handleModify} ><i className="material-symbols-outlined" title='Edit' name="email">edit_square</i></button>
                                     </div>
@@ -253,7 +253,7 @@ export default function Checkout1(props) {
                                     </section>
                                     <div className="w-full my-7 flex flex-col">
                                         <h1 className="font_gotham_medium text-xl lg:text-2xl tracking-widest">ENTER YOU BILLING ADDRESS</h1>
-                                        <div className="my-2 flex items-center">
+                                        <div className="my-2 flex items-center font_gotham_medium md:text-lg">
                                             Use same details for Billing Address <label className="switch w-11 md:w-11 h-6 ml-5 "><input type="checkbox" name='same_details_as_shipping' checked={values.newsletter_sub_email} value={true} onChange={toggleBillingForm} /><span className="slider"></span></label>
                                         </div>
                                     </div>
@@ -316,29 +316,29 @@ export default function Checkout1(props) {
                             </form>
                         </div>
                         <div className="details w-full lg:w-[31%] m-0 space-y-3">
-                            <h3 className="text-2xl mb-5">Order Summary</h3>
-                            <div className=" hidden lg:flex relative mb-3 p-5 pt-10 bg-white card_boxshadow w-full h-64 md:h-[21.5rem] flex-col justify-between items-center rounded-xl md:rounded-3xl">
-                                <h3 className="absolute top-[6%] left-[7%] lg:text-lg text-end">Product Title Here</h3>
+                            <h3 className="text-2xl md:text-[28px] font_gotham_medium tracking-whidest mb-5">ORDER SUMMARY</h3>
+                            <div className=" hidden lg:flex relative mb-3 p-6 bg-white card_boxshadow w-full max-h-screen flex-col justify-between items-center rounded-lg md:rounded-xl">
+                                <h3 className="self-start mb-3 font_gotham_medium text-sm md:text-base tracking-wide lg:tracking-widest text-left">PRODUCT TITLE HERE</h3>
                                 <div className="flex justify-between items-center">
                                     <div className=" w-[35%] md:w-1/3">
-                                        <Image width={640} height={853} src={shirt_img} alt="Urban images" className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
+                                        <Image width={640} height={853} src={shirt_img} alt="Urban images" className="w-full h-full rounded-md md:rounded-lg object-cover object-top" ></Image>
                                     </div>
-                                    <div className="w-1/2 h-auto text-xs md:text-sm my-5 md:my-3 font_gotam_light">
-                                        <span key={1} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Color:</small> <small>{props.color}</small></span>
-                                        <span key={2} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Size:</small> <small>{props.size}</small></span>
-                                        <span key={3} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Quantity:</small> <small>{props.quantity}</small></span>
-                                        <span key={4} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Price:</small> <small>${props.price}</small></span>
-                                        <span key={5} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Discount:</small> <small>{props.discount ? props.discount : 0}</small></span>
-                                        <span key={6} className="w-full mx-auto flex justify-between"><small className='font_gotham'>Sale Price:</small> <small>${props.price + 0}</small></span>
+                                    <div className="w-1/2 h-auto text-[10px] md:text-xs my-5 md:my-3 space-y-1 md:space-y-1.5 font_gotham_light">
+                                        <div key={1} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Color:</span> <span>{props.color}</span></div>
+                                        <div key={2} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Size:</span> <span>{props.size}</span></div>
+                                        <div key={3} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Quantity:</span> <span>{props.quantity}</span></div>
+                                        <div key={4} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Price:</span> <span>${props.price}</span></div>
+                                        <div key={5} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Discount:</span> <span>{props.discount ? props.discount : 0}</span></div>
+                                        <div key={6} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Sale Price:</span> <span>${props.price + 0}</span></div>
                                     </div>
                                 </div>
-                                <div className="w-full h-auto my-5 md:my-3">
-                                    <span key={1} className="w-full mx-auto flex justify-between"><small>Color</small> <small>{props.color}</small></span>
-                                    <span key={2} className="w-full mx-auto flex justify-between"><small>Size</small> <small>{props.size}</small></span>
-                                    <span key={3} className="w-full mx-auto flex justify-between"><small>Quantity</small> <small>{props.quantity}</small></span>
-                                    <span key={4} className="w-full mx-auto flex justify-between"><small>Price</small> <small>${props.price}</small></span>
+                                <div className="w-full h-auto my-5 md:my-3 font_gotham_medium text-xs md:text-sm">
+                                    <div key={1} className="w-full mx-auto flex justify-between"><span>Subtotal</span> <span>{props.color}</span></div>
+                                    <div key={2} className="w-full mx-auto flex justify-between"><span>Size</span> <span>{props.size}</span></div>
+                                    <div key={3} className="w-full mx-auto flex justify-between"><span>Quantity</span> <span>{props.quantity}</span></div>
+                                    <div key={4} className="w-full mx-auto flex justify-between"><span>Price</span> <span>${props.price}</span></div>
                                 </div>
-                                <div className="w-full py-2 mb-4 flex justify-between border-t border-t-gray-400">
+                                <div className="w-full py-2 flex justify-between font_gotham_medium tracking-widest border-t border-t-gray-200">
                                     <h4 className="text-lg">Total</h4>
                                     <h4 className="text-lg">$89.78</h4>
                                 </div>

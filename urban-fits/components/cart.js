@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { useCart } from "react-use-cart";
 import LinkBtn from '@/components/buttons/link_btn';
 import Button from './buttons/simple_btn';
-import Shoppingcard from './cards/shoppingcard';
+import MoreToExplore from './more_to_explore';
 // Image imports
 import Image from 'next/image'
 import EmptyCartVector from "../public/cart/emptyCart.svg"
 import CartBg from '@/public/cart/cartbg.jpg'
-const image1 = 'https://images.unsplash.com/photo-1551377293-17f3c11c4768?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80'
 
 // Cart item function
 function CartItem(props) {
@@ -34,8 +33,9 @@ function CartItem(props) {
 
     return (
         <li key={props.li_key} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
-            <div className="w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
+            <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
                 <Image width={129} height={160} src={product.images[0].url} alt="Urban images" className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
+                <button onClick={() => { removeItem(product.id) }} className="md:hidden absolute top-2 left-2 fa-solid fa-xmark text-gray-200" />
             </div>
             {/* to be displayed from md breakpoint */}
             <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_gotham_medium tracking-widest">
@@ -77,17 +77,10 @@ function CartItem(props) {
 
 export default function Cart(props) {
     // Setting up the Cart functions
-    const { isEmpty, totalUniqueItems, items, cartTotal } = useCart()
+    const { isEmpty, totalUniqueItems, items, cartTotal, emptyCart } = useCart()
     // function to get rounded off number upto 3 decimal places
     const get3dpNumber = (num) => {
         return num.toFixed(3)
-    }
-
-    // temporary product data for shopping card
-    const product = {
-        name: 'Sample Product name',
-        price: '76.99',
-        variants: [1, 2, 3, 4]
     }
 
     return (
@@ -118,8 +111,9 @@ export default function Cart(props) {
                                         <span className='w-[10%] text-gray-300'>AMOUNT</span>
                                     </div>
                                     {items.map((product) => {
-                                        return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />  
+                                        return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />
                                     })}
+                                    <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                                 </div>
                                 <div className="w-full lg:w-[400px] self-center lg:self-end">
                                     <h3 className="text-center text-xs lg:text-base font_gotham_medium tracking-[0.3em] lg:tracking-expand mb-5">ORDER SUMMARY</h3>
@@ -132,21 +126,7 @@ export default function Cart(props) {
                                     <LinkBtn href="/checkout/step1" onclick={props.toggleCart} font='font_gotham_medium tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
                                 </div>
                             </div>
-
-                            <div className="hidden lg:block w-full mt-10">
-                                <h3 className="text-2xl font_gotham_medium tracking-widest">MORE TO EXPLORE</h3>
-                                <div className="w-full my-5 flex flex-wrap">
-                                    {["READY TO WEAR", "ATELIER URBAN", "ESSENTIALS", "BAGS", "SNEAKERS"].map(link => {
-                                        return <Button classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</Button>
-                                    })}
-                                </div>
-                                <section className="w-full my-6 md:my-10 flex flex-wrap overflow-hidden">
-                                    <Shoppingcard product={product} img={image1} />
-                                    <Shoppingcard product={product} img={image1} />
-                                    <Shoppingcard product={product} img={image1} />
-                                    <Shoppingcard product={product} img={image1} />
-                                </section>
-                            </div>
+                            <MoreToExplore />
                         </section>}
                 </div>
             </section>

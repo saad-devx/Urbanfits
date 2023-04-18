@@ -52,7 +52,7 @@ export default function Women() {
                             ['Hips', { CM: '85- 89', INCH: '33½- 35' }, { CM: '89- 93', INCH: '35- 36⅗' }, { CM: '93- 97', INCH: '36⅗- 38⅕' }, { CM: '97- 101', INCH: '38⅕- 39⅘' }, { CM: '101- 105', INCH: '39⅘ - 41⅓' }, { CM: '105- 110', INCH: '41⅓ - 43⅓' }, { CM: '110- 115', INCH: '43⅓- 45⅓' }, { CM: '115- 120', INCH: '45⅓ - 47⅕' }, { CM: '121- 126', INCH: '47⅗- 49⅗' }, { CM: '126- 131', INCH: '49⅗- 51⅗' }, { CM: '131- 136', INCH: '51⅗- 53½' }, { CM: '136- 141', INCH: '53½- 55½' }]
                         ]}
                 />
-                <LinkBtn href='/products/Dresses' fontSize='text-xs' classes='w-[136px]' >SHOP DRESSES</LinkBtn>
+                <LinkBtn href='/products/Dresses' fontSize='text-xs' classes='w-36' >SHOP DRESSES</LinkBtn>
             </Accordian>
             <Accordian title='SHIRTS, BLOUSES'>
                 <GuideTable heading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
@@ -136,7 +136,7 @@ export default function Women() {
                             ['CM', { CM: 22, INCH: '8⅔' }, { CM: 22.5, INCH: '8⅞' }, { CM: 23, INCH: '9⅛' }, { CM: 23, INCH: '9⅛' }, { CM: 23.5, INCH: '9⅓' }, { CM: 23.5, INCH: '9⅓' }, { CM: 24, INCH: '9⅖' }, { CM: 24.5, INCH: '9⅗' }, { CM: 25, INCH: '9⅘' }, { CM: 25, INCH: '9⅘' }, { CM: 25.5, INCH: 10 }, { CM: 25.5, INCH: 10 }, { CM: 26, INCH: '10⅕' }, { CM: 26.5, INCH: '10⅖' }, { CM: 27, INCH: '10⅗' }, { CM: 27.5, INCH: '10⅘' }]
                         ]}
                 />
-                <LinkBtn href='/products/Women-Shoes' fontSize='text-xs' classes='w-[136px]' >SHOP WOMEN SHOES</LinkBtn>
+                <LinkBtn href='/products/Women-Shoes' fontSize='text-xs' font='font_gotham_medium' classes='w-48' >SHOP WOMEN SHOES</LinkBtn>
             </Accordian>
             <Accordian title='BELTS'>
                 <GuideTable heading='Size' indexColWidth='w-24' restColsWidth='w-16' unitBtns={null}

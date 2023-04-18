@@ -21,7 +21,7 @@ import image4 from "@/public/card imgs/card img13.png";
 import image5 from "@/public/card imgs/card img14.png";
 import image6 from "@/public/card imgs/card img15.png";
 import image7 from "@/public/card imgs/card img16.png";
-import listingBg2 from '@/public/listingbg2.jpg'
+import listingBg2 from '@/public/listing banners/listingbg2.jpg'
 
 export default function Home() {
     // states and function for modals
@@ -128,14 +128,14 @@ export default function Home() {
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image3} />
                         </section>
                         {/* second carousel */}
-                        <section id="section5" className="relative bg_metal_gold w-full h-[70vh] lg:h-87vh min-h-[300px] my-5 lg:my-10 lg:px-10 lg:pr-0 flex flex-col-reverse lg:flex-row items-center justify-center font_gotham overflow-hidden">
+                        {/* <section id="section5" className="relative bg_metal_gold w-full h-[70vh] lg:h-87vh min-h-[300px] my-5 lg:my-10 lg:px-10 lg:pr-0 flex flex-col-reverse lg:flex-row items-center justify-center font_gotham overflow-hidden">
                             <div className="hidden lg:flex left-0 w-full lg:w-[35vw] lg:h-full md:pl-10 mb-3 lg:m-0 leading-7 flex-col justify-center items-start">
                                 <h2 className="text-xl md:text-3xl lg:text-[32px] word-wrap font_gotham_medium leading-tight">URBAN<br />NEW ARRIVAL</h2>
                             </div>
                             <div className="h-full w-full lg:w-[65vw] flex items-center">
                                 <HomeCarousel2 />
                             </div>
-                        </section>
+                        </section> */}
                         {/* Collection Section */}
                         <div className="w-full px-5 md:px-7 lg:px-10 flex justify-between items-center">
                             <h2 className="font_gotham_medium text-sm lg:text-[20px] tracking-expand" >NEW COLLECTION</h2>
@@ -157,7 +157,7 @@ export default function Home() {
                         </section> */}
                     </div>
                 </main>
-                <ListingShopSection classes='translate-y-5' img={listingBg2} whiteTheme />
+                <ListingShopSection classes='translate-y-5 mt-10' img={listingBg2} whiteTheme />
                 <Footer />
             </main>
         </>

@@ -11,8 +11,8 @@ import image1 from '../../public/card imgs/card img13.png'
 import image2 from '../../public/card imgs/card img14.png'
 import image3 from '../../public/card imgs/card img15.png'
 import image4 from '../../public/card imgs/card img16.png'
-import listingBg1 from '@/public/listingbg1.jpg'
-import listingBg2 from '@/public/listingbg2.jpg'
+import listingBg1 from '@/public/listing banners/listingbg1.jpg'
+import listingBg2 from '@/public/listing banners/listingbg2.jpg'
 
 export default function productlisting(props) {
     const { category } = props
@@ -47,7 +47,7 @@ export default function productlisting(props) {
                                     variants: [1, 2, 3, 4]
                                 }
                                 if (index == 4) return <>
-                                    <ListingShopSection classes='my-7 col-span-4' img={listingBg1} />
+                                    <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' img={listingBg1} />
                                     <Shoppingcard margin='0' product={product} img={productData.img} />
                                 </>
                                 return <Shoppingcard margin='0' product={product} img={productData.img} />

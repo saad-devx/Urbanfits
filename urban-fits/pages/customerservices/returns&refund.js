@@ -41,7 +41,7 @@ export default function ReturnsRefund() {
                     Refunds usually take up to 8-10 working days to appear on your statement. The length of time depends solely on your card company’s policies. You can always check your refund status on your online account or by contacting your card issuer. In order to get a full refund it’s important that we receive the goods in the same state you received them (the returned product has to be complete, unworn, unwashed and with all the product labels intact).
                 </p>
             </Accordian>
-            <Accordian title='OUT TIP'>
+            <Accordian title='OUR TIP'>
                 <p className='text-black' >
                     To make the right choice when it comes to size and fit please do check the product description, wherever possible our editors will comment if an item fits small, loose or true to the size.<br />
                     Please also have a careful look at our size charts.

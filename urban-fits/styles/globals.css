@@ -356,17 +356,6 @@ input:checked+.slider:before {
   background-size: cover;
 }
 
-/* css for splide carousel */
-.productCarousel .splide__slide {
-  opacity: 0.6;
-  transition: all 0.3s;
-}
-
-.productCarousel .splide__slide.is-active {
-  opacity: 1;
-  border: none !important;
-}
-
 /* hiding element when out of focus */
 .group:not(:focus) .minus_icon {
   display: none;
@@ -456,16 +445,3 @@ footer li {
 .bglisting_white {
   background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
 }
-
-/* CSS for section to section scrolling */
-/* #container{
-  height: 100%;
-  overflow-y: scroll;
-  white-space: nowrap;
-  scroll-snap-type: y mandatory;
-}
-
-.box_1, .box_2 {
-  display: inline-flex;
-  scroll-snap-align: start;
-} */

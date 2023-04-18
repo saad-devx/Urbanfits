@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 const MenuLink = (props) => {
     const path = useRouter().pathname
-    return <Link href={`/customerservices${props.href}`} className={`${path.includes(props.href) ? 'underline active' : ''} ${props.submenu ? 'lg:ml-7' : null} flex lg:block justify-center items-center px-4 py-1 mx-2 lg:m-0 lg:p-0 whitespace-nowrap bg-gray-200 lg:bg-transparent rounded-full lg:rounded-none text-sm 2xl:text-base hover:underline text-black`}>{props.children}</Link>
+    return <Link href={`/customerservices${props.href}`} className={`${path.includes(props.href) ? 'bg-gold-land lg:bg-none lg:underline text-white lg:text-black active' : 'bg-gray-200 lg:bg-transparent text-black'} ${props.submenu ? 'lg:ml-7' : null} flex lg:block justify-center items-center px-4 py-1 mx-2 lg:m-0 lg:p-0 whitespace-nowrap rounded-full lg:rounded-none text-sm 2xl:text-base hover:underline`}>{props.children}</Link>
 }
 
 export default function CutomerServices(props) {

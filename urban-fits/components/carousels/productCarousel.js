@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image'
-import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
 export default function ProductCarousel(props) {
@@ -17,7 +17,7 @@ export default function ProductCarousel(props) {
 
   return (
     <>
-      <div className="layout_height flex items-center gap-4">
+      <div className="layout_height flex justify-center items-center gap-4">
         <Splide className='w-[85%] h-fulloverflow-hidden bg-white' ref={slider1} options={{
           autoplay: true,
           type: 'fade',
@@ -29,38 +29,41 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full layout_height flex justify-center items-center' >
-                <Image width={500} height={720} className='w-full h-full object-contain object-center' src={img.url} alt="Urban images" />
+                <Image width={500} height={720} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
               </SplideSlide>
             )
           })}
         </Splide>
 
-        <Splide id="thumbnail-carousel" className='w-[15%] layout_height flex flex-col justify-center items-center' ref={slider2} options={{
-          autoplay: true,
-          interval: 3200,
-          fixedWidth: '100%',
-          fixedHeight: 150,
-          height: 'calc(100vh - 50px)',
-          gap: '2rem',
-          rewind: true,
-          pagination: false,
-          isNavigation: true,
-          direction: 'ttb',
-          arrows: false,
-          breakpoints: {
-            600: {
-              fixedWidth: 60,
-              fixedHeight: 44,
+        <div className="w-[15%] h-[90%] flex justify-center items-center">
+          <Splide id="thumbnail-carousel" className='w-full h-full flex flex-col items-center' ref={slider2} options={{
+            autoplay: true,
+            interval: 3000,
+            fixedWidth: '100%',
+            fixedHeight: '24.2%',
+            height: 'calc(100vh - 50px)',
+            rewind: true,
+            pagination: false,
+            isNavigation: true,
+            pauseOnHover: true,
+            gap: '0.5rem',
+            direction: 'ttb',
+            arrows: false,
+            breakpoints: {
+              600: {
+                fixedWidth: 60,
+                fixedHeight: 44,
+              }
             },
-          },
-        }} >
-          {images.map((img) => {
-            return (
-              <SplideSlide className='w-full layout_height' >
-                <Image width={1400} height={1900} className='w-full h-full object-contain object-center' src={img.url} alt="Urban images" />
-              </SplideSlide>)
-          })}
-        </Splide>
+          }} >
+            {images.map((img) => {
+              return (
+                <SplideSlide className='w-full' >
+                  <Image width={200} height={300} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+                </SplideSlide>)
+            })}
+          </Splide>
+        </div>
       </div>
     </>
   );
