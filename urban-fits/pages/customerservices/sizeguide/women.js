@@ -6,7 +6,7 @@ import SizeTableAccordian from '@/components/accordians/sizeTable-accordian'
 
 const TableButton = (props) => {
     return <>
-        <LinkBtn href={props.href} fontSize='text-xs' classes='hidden md:flex sticky left-0 w-36' >{props.children}</LinkBtn>
+        <LinkBtn href={props.href} fontSize='text-xs' classes={`hidden md:flex sticky left-0 ${props.classes?props.classes:'w-36'}`} >{props.children}</LinkBtn>
         <div className='sticky left-0 md:hidden btn_width h-[38px] p-[1px] bg-gold rounded-md' >
             <Link href={props.href} >
                 <div className='w-full h-full bg-white rounded-[5px] flex justify-center items-center font_gotham_medium text-[10px] tracking-vast' >{props.children}</div>
@@ -129,7 +129,7 @@ export default function Women() {
                     ['US Size', 5, 5.5, 6, 6, 6.5, 7, 7.5, 8, 8.5, 8.5, 9, 9, 9.5, 9.5, 10, 10],
                     ['CM', { CM: 22, INCH: '8⅔' }, { CM: 22.5, INCH: '8⅞' }, { CM: 23, INCH: '9⅛' }, { CM: 23, INCH: '9⅛' }, { CM: 23.5, INCH: '9⅓' }, { CM: 23.5, INCH: '9⅓' }, { CM: 24, INCH: '9⅖' }, { CM: 24.5, INCH: '9⅗' }, { CM: 25, INCH: '9⅘' }, { CM: 25, INCH: '9⅘' }, { CM: 25.5, INCH: 10 }, { CM: 25.5, INCH: 10 }, { CM: 26, INCH: '10⅕' }, { CM: 26.5, INCH: '10⅖' }, { CM: 27, INCH: '10⅗' }, { CM: 27.5, INCH: '10⅘' }]
                 ]}>
-                <LinkBtn href='/products/Women-Shoes' fontSize='text-xs' font='font_gotham_medium' classes='w-48' >SHOP WOMEN SHOES</LinkBtn>
+                <TableButton href='/products/Women-Shoes' classes='w-48' >SHOP WOMEN SHOES</TableButton>
             </SizeTableAccordian>
             <SizeTableAccordian title='BELTS' tableHeading='SIZE' indexColWidth='w-24' restColsWidth='w-16' unitBtns={null}
                 columnHeadings={['S-M', 'L-XL']} rowsData={[['CM', '70cm', '80cm']]}>

@@ -69,7 +69,7 @@ export default function Footer() {
                                 <Link href='/customerservices/sizeguide'>Size Guides</Link>
                             </li>
                             <li>
-                                <Link href='/'>SITE MAP</Link>
+                                <Link href='/'>Site Map</Link>
                             </li>
                             <li>
                                 <Link href='/customerservices/counterfeitproducts'>CF Products</Link>
