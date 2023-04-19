@@ -15,7 +15,7 @@ export default function ProductCarousel(props) {
     setImages(props.img_array)
   }, [props.img_array])
 
-  return (
+  if (window.matchMedia('(min-width: 1000px)').matches) return (
     <>
       <div className="layout_height flex justify-center items-center gap-4">
         <Splide className='w-[85%] h-fulloverflow-hidden bg-white' ref={slider1} options={{
@@ -35,7 +35,7 @@ export default function ProductCarousel(props) {
           })}
         </Splide>
 
-        <div className="w-[15%] h-[90%] flex justify-center items-center">
+        <div className="flex w-[15%] h-[90%] justify-center items-center">
           <Splide id="thumbnail-carousel" className='w-full h-full flex flex-col items-center' ref={slider2} options={{
             autoplay: true,
             interval: 3000,
@@ -48,13 +48,7 @@ export default function ProductCarousel(props) {
             pauseOnHover: true,
             gap: '0.5rem',
             direction: 'ttb',
-            arrows: false,
-            breakpoints: {
-              600: {
-                fixedWidth: 60,
-                fixedHeight: 44,
-              }
-            },
+            arrows: false
           }} >
             {images.map((img) => {
               return (
@@ -67,6 +61,49 @@ export default function ProductCarousel(props) {
       </div>
     </>
   );
+// This carousel will render in the mobile and tabs screens
+  if (window.matchMedia('(max-width: 1000px)').matches) return (
+    <>
+      <div className="w-full flex flex-col justify-center items-center gap-1 md:gap-2.5">
+        <Splide className='w-full h-[94vw] overflow-hidden bg-white' ref={slider1} options={{
+          autoplay: true,
+          type: 'fade',
+          speed: 1700,
+          rewind: true,
+          pagination: false,
+          arrows: false,
+        }} >
+          {images.map((img) => {
+            return (
+              <SplideSlide className='w-full h-[94vw] flex justify-center items-center' >
+                <Image width={500} height={720} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+              </SplideSlide>
+            )
+          })}
+        </Splide>
+
+        <Splide id="thumbnail-carousel" className='w-full flex justify-center items-center' ref={slider2} options={{
+          autoplay: true,
+          interval: 2600,
+          width: '100%',
+          fixedWidth: '19.5%',
+          rewind: true,
+          pagination: false,
+          isNavigation: true,
+          pauseOnHover: true,
+          gap: '0.8vw',
+          arrows: false
+        }} >
+          {images.map((img) => {
+            return (
+              <SplideSlide className='h-[20vw]' >
+                <Image width={200} height={300} className='w-full object-cover object-center' src={img.url} alt="Urban images" />
+              </SplideSlide>)
+          })}
+        </Splide>
+      </div>
+    </>
+  )
 }
 
 export async function getServerSideProps(context) {
