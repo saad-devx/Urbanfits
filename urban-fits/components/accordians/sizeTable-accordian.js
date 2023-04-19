@@ -35,10 +35,10 @@ export default function SizeTableAccordian(props) {
             </div>
             <div className={` ${open ? 'max-h-screen mt-5' : 'max-h-0'} relative max-w-full text-sm leading-5 rounded overflow-y-hidden scrollbar_x ease duration-700`}>
                 <div id='Accordian_Container' className="flex items-center mb-3">
-                    <div className='xl:w-full font_gotham_light text-sm text-black'>
+                    <div className='lg:w-full font_gotham_light text-sm text-black'>
                         <section className="max-w-[2000px] rounded-md xl:w-full flex flex-col justify-center bg-gray-50">
                             <div className="flex text-xs text-center font_gotham_bold">
-                                <span className={`${props.indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 pt-4 lg:pt-3 rounded-tl-md border-b pr-4 py-3 text-left text-black tracking-expand`}>{props.tableHeading}</span>
+                                <span className={`${props.indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 pt-4 lg:pt-3 rounded-tl-md border-b pr-4 py-3 text-left text-black ${props.headingTracking_null?'':'tracking-expand'}`}>{props.tableHeading}</span>
                                 {props.columnHeadings.map(size => {
                                     return <span className={`${props.restColsWidth} border-b pt-4 lg:pt-3 py-3 text-black font_gotham_bold`}>{size}</span>
                                 })}
