@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function ListingShopSection(props) {
     return (
-        <div className={`w-full h-60 lg:h-[430px] flex relative justify-between ${props.classes}`}>
+        <div className={`w-full h-60 lg:h-[430px] hidden lg:flex relative justify-between ${props.classes}`}>
             <div className={`lg:w-3/5 h-full z-10 ${props.whiteTheme ? 'bglisting_white' : 'bglisting_black'}`}>
                 <svg className='absolute top-12 left-44 2xl:left-60' width="582" height="102" viewBox="0 0 582 102" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.978516 1H580.621V101.5" stroke={props.whiteTheme ? 'black' : 'white'} stroke-width="2" />
