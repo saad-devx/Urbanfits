@@ -15,7 +15,7 @@ export default function SizeTableAccordian(props) {
             if (unit === 'INCH') return size.INCH
         }
         if (typeof (array[1]) === 'object') return array.map((size, index) => {
-            return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 font_gotham_medium text-left` : `${restColsWidth} font_urbanist text-[10px]`} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{index === 0 ? size : sizeVal(size)}</span>
+            return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 font_gotham_medium text-left` : `${restColsWidth} ${props.bigFontOf_nthRow && props.bigFontOf_nthRow.includes(dataIndex)?'text-xs':'text-[10px]'} font_urbanist`} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{index === 0 ? size : sizeVal(size)}</span>
         })
         else return array.map((size, index) => {
             return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 font_gotham_medium text-left` : restColsWidth} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{size}</span>

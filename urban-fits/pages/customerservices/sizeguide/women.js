@@ -207,8 +207,143 @@ export default function Women() {
                 ]}>
             </SizeTableAccordian>
             <SizeTableAccordian title='INSEAM JEANS LENGTH' tableHeading='Inseam Jeans Length' headingTracking_null indexColWidth='w-32 lg:w-[30%]' restColsWidth='w-15 lg:w-[17%]'
+                bigFontOf_nthRow={[0]}
                 columnHeadings={['28"', '30"', '32"', '34"']}
-                rowsData={[ ['Inseam', { CM: '68.5 - 73.5', INCH: '27 - 28⅞' }, { CM: '73.5 - 78.5', INCH: '28⅞ - 30⅞' }, { CM: '78.5 - 83.5', INCH: '30⅞ - 32⅞' }, { CM: '83.5 - 88.5', INCH: '32⅞ - 34⅘' }] ]}>
+                rowsData={[['Inseam', { CM: '68.5 - 73.5', INCH: '27 - 28⅞' }, { CM: '73.5 - 78.5', INCH: '28⅞ - 30⅞' }, { CM: '78.5 - 83.5', INCH: '30⅞ - 32⅞' }, { CM: '83.5 - 88.5', INCH: '32⅞ - 34⅘' }]]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='SWEATERS, T-SHIRTS, OTHER KNITS, OUTERWEAR, DRESSES' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+                bigFontOf_nthRow={[3, 4, 5, 6]}
+                columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
+                rowsData={[
+                    ['US + UK Size', 4, 6, 8, 10, 12, 14],
+                    ['IT + FR Size', 34, 36, 38, 40, 42, 44],
+                    ['EU Size', 32, 34, 36, 38, 40, 42],
+                    ['Chest', { CM: '30-32', INCH: '11⅘ - 12⅗' }, { CM: '32-34', INCH: '12⅗ - 13' }, { CM: '36-38', INCH: '13⅖ - 13⅘' }, { CM: '38-40', INCH: '14⅕ - 14⅗' }, { CM: '40-42', INCH: '15⅖ - 16⅛' }, { CM: '42-44', INCH: '16½ - 17⅓' }],
+                    ['Waist', { CM: '60', INCH: '23⅗' }, { CM: '64', INCH: '25⅕' }, { CM: '68', INCH: '26⅘' }, { CM: '72', INCH: '28⅓' }, { CM: '76', INCH: '29⅞' }, { CM: '80', INCH: '31½' }],
+                    ['Hips', { CM: '86', INCH: '33⅞' }, { CM: '90', INCH: '35⅖' }, { CM: '94', INCH: '37' }, { CM: '98', INCH: '38⅗' }, { CM: '102', INCH: '40⅕' }, { CM: '106', INCH: '41⅔' }],
+                    ['Inside Legs', { CM: '76.5', INCH: '30⅛' }, { CM: '77', INCH: '30⅓' }, { CM: '77.5', INCH: '30½' }, { CM: '78', INCH: '30⅔' }, { CM: '78', INCH: '30⅞' }, { CM: '78', INCH: '31⅛' }]
+                ]}>
+                <TableButton href='/products/Urban Jeans' classes='w-48'>SHOP URBAN JEANS</TableButton>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='SWEATERS, T-SHIRTS, OTHER KNITS, OUTERWEAR, DRESSES' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+                bigFontOf_nthRow={[3, 4, 5]}
+                columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
+                rowsData={[
+                    ['US + UK Size', 4, 6, 8, 10, 12, 14],
+                    ['IT + FR Size', 34, 36, 38, 40, 42, 44],
+                    ['EU Size', 32, 34, 36, 38, 40, 42],
+                    ['Waist', { CM: '60', INCH: '23⅗' }, { CM: '64', INCH: '25⅕' }, { CM: '68', INCH: '26⅘' }, { CM: '72', INCH: '28⅓' }, { CM: '76', INCH: '29⅞' }, { CM: '80', INCH: '31½' }],
+                    ['Hips', { CM: '86', INCH: '33⅞' }, { CM: '90', INCH: '35⅖' }, { CM: '94', INCH: '37' }, { CM: '98', INCH: '38⅗' }, { CM: '102', INCH: '40⅕' }, { CM: '106', INCH: '41⅔' }],
+                    ['Inside Legs', { CM: '76.5', INCH: '30⅛' }, { CM: '77', INCH: '30⅓' }, { CM: '77.5', INCH: '30½' }, { CM: '78', INCH: '30⅔' }, { CM: '78', INCH: '30⅞' }, { CM: '78', INCH: '31⅛' }]
+                ]}>
+            </SizeTableAccordian>
+            <h1 className="mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">UF CURVE</h1>
+            <SizeTableAccordian title='COATS, JACKETS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+                bigFontOf_nthRow={[5, 6, 7, 8]}
+                columnHeadings={['1XL', '2XL', '3XL']}
+                rowsData={[
+                    ['EU Size', 46, 48, 50],
+                    ['UK/IE Size', 18, 20, 22],
+                    ['FR Size', 48, 50, 52],
+                    ['IT Size', 52, 54, 56],
+                    ['US Size', 14, 16, 18],
+                    ['Chest', { CM: '106.5 - 112', INCH: '41⅞ - 44⅛' }, { CM: '113 - 118', INCH: '44½ - 46½' }, { CM: '118 - 123', INCH: '46½ - 48⅖' }],
+                    ['Waist', { CM: '91 - 96', INCH: '35⅘ - 37⅘' }, { CM: '97 - 102', INCH: '38⅕ - 40⅕' }, { CM: '102 - 107', INCH: '40⅕ - 42⅛' }],
+                    ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }],
+                    ['Sleeve', { CM: '81.3 - 81.8', INCH: '32 - 32⅕' }, { CM: '81.8 - 82.2', INCH: '32⅕ - 32⅖' }, { CM: '82.2 - 82.8', INCH: '32⅖ - 32⅗' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='DRESSES' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+                bigFontOf_nthRow={[5, 6, 7]}
+                columnHeadings={['1XL', '2XL', '3XL']}
+                rowsData={[
+                    ['EU Size', 46, 48, 50],
+                    ['UK/IE Size', 18, 20, 22],
+                    ['FR Size', 48, 50, 52],
+                    ['IT Size', 52, 54, 56],
+                    ['US Size', 14, 16, 18],
+                    ['Chest', { CM: '106.5 - 112', INCH: '41⅞ - 44⅛' }, { CM: '113 - 118', INCH: '44½ - 46½' }, { CM: '118 - 123', INCH: '46½ - 48⅖' }],
+                    ['Waist', { CM: '91 - 96', INCH: '35⅘ - 37⅘' }, { CM: '97 - 102', INCH: '38⅕ - 40⅕' }, { CM: '102 - 107', INCH: '40⅕ - 42⅛' }],
+                    ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='KNITWEAR, SHIRTS, BLOUSES, TOPS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+                bigFontOf_nthRow={[5, 6, 7]}
+                columnHeadings={['1XL', '2XL', '3XL']}
+                rowsData={[
+                    ['EU Size', 46, 48, 50],
+                    ['UK/IE Size', 18, 20, 22],
+                    ['FR Size', 48, 50, 52],
+                    ['IT Size', 52, 54, 56],
+                    ['US Size', 14, 16, 18],
+                    ['Chest', { CM: '106.5 - 112', INCH: '41⅞ - 44⅛' }, { CM: '113 - 118', INCH: '44½ - 46½' }, { CM: '118 - 123', INCH: '46½ - 48⅖' }],
+                    ['Waist', { CM: '91 - 96', INCH: '35⅘ - 37⅘' }, { CM: '97 - 102', INCH: '38⅕ - 40⅕' }, { CM: '102 - 107', INCH: '40⅕ - 42⅛' }],
+                    ['Sleeve', { CM: '81.3 - 81.8', INCH: '32 - 32⅕' }, { CM: '81.8 - 82.2', INCH: '32⅕ - 32⅖' }, { CM: '82.2 - 82.8', INCH: '32⅖ - 32⅗' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='PANTS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+                bigFontOf_nthRow={[5, 6]}
+                columnHeadings={['1XL', '2XL', '3XL']}
+                rowsData={[
+                    ['EU Size', 46, 48, 50],
+                    ['UK/IE Size', 18, 20, 22],
+                    ['FR Size', 48, 50, 52],
+                    ['IT Size', 52, 54, 56],
+                    ['US Size', 14, 16, 18],
+                    ['Waist', { CM: '91 - 96', INCH: '35⅘ - 37⅘' }, { CM: '97 - 102', INCH: '38⅕ - 40⅕' }, { CM: '102 - 107', INCH: '40⅕ - 42⅛' }],
+                    ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='JEANS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-1/5'
+                bigFontOf_nthRow={[0, 1]}
+                columnHeadings={[36, 38, 40, 42]}
+                rowsData={[
+                    ['Waist', { CM: '91 - 96', INCH: '35⅘ - 37⅘' }, { CM: '97 - 102', INCH: '38⅕ - 40⅕' }, { CM: '102 - 107', INCH: '40⅕ - 42⅛' }, { CM: '107 - 112', INCH: '42⅛ - 44⅛' }],
+                    ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }, { CM: '131 - 136', INCH: '51⅗ - 53½' }]
+                ]}>
+            </SizeTableAccordian>
+            <h1 className="mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN SPORT SIZES</h1>
+            <SizeTableAccordian title='UPPER BODY + LOWER BODY' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
+                bigFontOf_nthRow={[4, 5, 6, 7]}
+                columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
+                rowsData={[
+                    ['US Size', 4, 6, 8, 10, 12],
+                    ['UK Size', 6, 8, 10, 12, 14],
+                    ['IT + FR Size', 36, 38, 40, 42, 44],
+                    ['EU Size', 34, 36, 38, 30, 42],
+                    ['Shoulder', { CM: '37.5', INCH: '14⅘' }, { CM: '38', INCH: '15' }, { CM: '38.5', INCH: '15⅕' }, { CM: '40', INCH: '15⅔' }, { CM: '40.75', INCH: '16' }],
+                    ['Chest', { CM: '81 - 84', INCH: '31⅞ - 33⅛' }, { CM: '85 - 88', INCH: '33½ - 34⅗' }, { CM: '89 - 92', INCH: '35 - 36⅕' }, { CM: '93 - 96', INCH: '36⅗ - 37⅘' }, { CM: '97 - 100', INCH: '38⅕ - 39⅖' }],
+                    ['Waist', { CM: '63 - 67', INCH: '24⅘ - 26⅖' }, { CM: '67 - 70', INCH: '26⅖ - 27⅗' }, { CM: '71 - 74', INCH: '28 - 29⅛' }, { CM: '75 - 78', INCH: '29½ - 30⅔' }, { CM: '79 - 82', INCH: '31⅛ - 32⅓' }],
+                    ['Hips', { CM: '89 - 92', INCH: '35 - 36⅕' }, { CM: '93 - 96', INCH: '36⅗ - 37⅘' }, { CM: '97 - 100', INCH: '38⅕ - 39⅖' }, { CM: '101 - 104', INCH: '39⅘ - 40⅞' }, { CM: '105 - 108', INCH: '41⅓ - 42½' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='SPORT WOMEN - TOPS (INCL. T-SHIRTS, OUTERWEAR, BRAS…)' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
+                bigFontOf_nthRow={[5, 6, 7, 8]}
+                columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
+                rowsData={[
+                    ['EU Size', '32 - 34', '36 - 38', '38 - 40', '40 - 42', '42 - 44'],
+                    ['UK/IE Size', '4 - 6', '8 - 10 ', '10 - 12', '12 - 14', '14 - 16'],
+                    ['FR Size', '34 - 36', '38 - 40', '40 - 42', '42 - 44', '44 - 46'],
+                    ['IT Size', '38 - 40', '42 - 44', '44 - 46', '46 - 48', '48 - 50'],
+                    ['US Size', '0 - 2', '4 - 6', '6 - 8', '8 - 10', '10 - 12'],
+                    ['Sleeve', { CM: '78.3 - 78.8', INCH: '30⅘ - 31' }, { CM: '78.8 - 79.3', INCH: '31 - 31⅕' }, { CM: '79.3 - 79.8', INCH: '31⅕ - 31⅖' }, { CM: '79.8 - 80.3', INCH: '31⅖ - 31⅗' }, { CM: '80.3 - 80.8', INCH: '31⅗ - 31⅘' }],
+                    ['Chest', { CM: '78.5- 83.5', INCH: '30⅞ - 32⅞' }, { CM: '83.5 - 88.5', INCH: '32⅞ - 34⅘' }, { CM: '88.5 - 93.5', INCH: '34⅘ - 36⅘' }, { CM: '93.5 - 98.5', INCH: '36⅘ - 38⅘' }, { CM: '98.5 - 103.5', INCH: '38⅘ - 40⅔' }],
+                    ['Waist', { CM: '61.5 - 66.5', INCH: '24⅕ - 26⅕' }, { CM: '66.5 - 71.5', INCH: '26⅕ - 28⅛' }, { CM: '71.5 - 76.5', INCH: '28⅛ - 30⅛' }, { CM: '76.5 - 81.5', INCH: '30⅛ - 32⅛' }, { CM: '81.5 - 86.5', INCH: '32⅛ - 34⅛' }],
+                    ['Hips', { CM: '87.5 - 92.5', INCH: '34⅖ - 36⅖' }, { CM: '92.5 - 97.5', INCH: '36⅖ - 38⅖' }, { CM: '97.5 - 102.5', INCH: '38⅖ - 40⅖' }, { CM: '102.5 - 107.5', INCH: '40⅖ - 42⅓' }, { CM: '107.5 - 112.5', INCH: '42⅓ - 44⅓' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='SPORT WOMEN - BOTTOMS (INCL LEGGINGS, PANTS, SHORTS…)' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
+                bigFontOf_nthRow={[5, 6]}
+                columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
+                rowsData={[
+                    ['EU Size', '32 - 34', '36 - 38', '38 - 40', '40 - 42', '42 - 44'],
+                    ['UK/IE Size', '4 - 6', '8 - 10 ', '10 - 12', '12 - 14', '14 - 16'],
+                    ['FR Size', '34 - 36', '38 - 40', '40 - 42', '42 - 44', '44 - 46'],
+                    ['IT Size', '38 - 40', '42 - 44', '44 - 46', '46 - 48', '48 - 50'],
+                    ['US Size', '0 - 2', '4 - 6', '6 - 8', '8 - 10', '10 - 12'],
+                    ['Waist', { CM: '61.5 - 66.5', INCH: '24⅕ - 26⅕' }, { CM: '66.5 - 71.5', INCH: '26⅕ - 28⅛' }, { CM: '71.5 - 76.5', INCH: '28⅛ - 30⅛' }, { CM: '76.5 - 81.5', INCH: '30⅛ - 32⅛' }, { CM: '81.5 - 86.5', INCH: '32⅛ - 34⅛' }],
+                    ['Hips', { CM: '87.5 - 92.5', INCH: '34⅖ - 36⅖' }, { CM: '92.5 - 97.5', INCH: '36⅖ - 38⅖' }, { CM: '97.5 - 102.5', INCH: '38⅖ - 40⅖' }, { CM: '102.5 - 107.5', INCH: '40⅖ - 42⅓' }, { CM: '107.5 - 112.5', INCH: '42⅓ - 44⅓' }]
+                ]}>
             </SizeTableAccordian>
         </CutomerServices>
     )

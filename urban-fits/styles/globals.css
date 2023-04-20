@@ -359,12 +359,6 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-/*                                   background for newsletter modal */
-.bg_newsletter {
-  background: url(../public/newsletterimg.png) top no-repeat;
-  background-size: cover;
-}
-
 /* hiding element when out of focus */
 .group:not(:focus) .minus_icon {
   display: none;
@@ -417,7 +411,7 @@ input:checked+.slider:before {
 .hide_scrollbar::-webkit-scrollbar {
   display: none;
   -ms-overflow-style: none;
-  scrollbar-width: none;
+  scrollbar-width: 0;
 }
 
 .scrollbar_x::-webkit-scrollbar {
