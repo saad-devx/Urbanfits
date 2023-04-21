@@ -2,6 +2,7 @@ import React from 'react'
 import CutomerServices from '.'
 import Accordian from '@/components/accordians/accordian'
 import LinkBtn from '@/components/buttons/link_btn'
+import { HelpSection } from './sizeguide/women'
 
 export default function ReturnsRefund() {
     return (
@@ -54,10 +55,7 @@ export default function ReturnsRefund() {
                     If you would like another product, color or size, please place a new order.
                 </p>
             </Accordian>
-            <div className="w-full flex flex-col lg:flex-row justify-between items-center font_gotham text-sm">
-                <div><span className="font_gotham_medium tracking-widest">NEED HELP?</span>We are available Monday to Sunday: 9 AM 6 PM</div>
-                <LinkBtn my='0' classes='w-1/3 lg:w-1/5' href='/contact' >Contact Us</LinkBtn>
-            </div>
+            <HelpSection />
         </CutomerServices>
     )
 }

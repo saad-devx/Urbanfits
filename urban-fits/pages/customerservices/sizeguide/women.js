@@ -4,9 +4,9 @@ import LinkBtn from '@/components/buttons/link_btn'
 import Link from 'next/link'
 import SizeTableAccordian from '@/components/accordians/sizeTable-accordian'
 
-const TableButton = (props) => {
+export const TableButton = (props) => {
     return <>
-        <LinkBtn href={props.href} fontSize='text-xs' classes={`hidden md:flex sticky left-0 ${props.classes ? props.classes : 'w-36'}`} >{props.children}</LinkBtn>
+        <LinkBtn href={props.href} bg='bg-gold' font='font_gotham_medium' fontSize='text-xs' classes={`hidden md:flex sticky left-0 ${props.classes ? props.classes : 'w-36'}`} >{props.children}</LinkBtn>
         <div className='sticky left-0 md:hidden btn_width h-[38px] p-[1px] bg-gold rounded-md' >
             <Link href={props.href} >
                 <div className='w-full h-full bg-white rounded-[5px] flex justify-center items-center font_gotham_medium text-[10px] tracking-vast' >{props.children}</div>
@@ -15,9 +15,20 @@ const TableButton = (props) => {
     </>
 }
 
+export const HelpSection = () => {
+    return <div className="w-full flex flex-col md:flex-row md:justify-between sm:items-center font_gotham text-xs md:text-sm gap-3">
+        <div className='mb-2 md:mb-0 flex flex-col md:flex-row' >
+            <span className="mb-1.5 md:mb-0 mr-2 font_gotham_bold tracking-widest">NEED HELP?</span>
+            We are available Monday to Sunday: 9 AM 6 PM
+        </div>
+        <LinkBtn my='0' classes='w-36 sm:w-48' href='/contact' >Contact Us</LinkBtn>
+    </div>
+}
+
 export default function Women() {
     return (
         <CutomerServices>
+            <h1 className="mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">WOMEN' SIZE</h1>
             <SizeTableAccordian title='COATS, JACKETS, BLAZERS' tableHeading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL', '6XL', '7XL']}
                 rowsData={[
@@ -141,7 +152,7 @@ export default function Women() {
                     ['Foot Length', '21.7-24.3', '24.4-27']
                 ]}>
             </SizeTableAccordian>
-            <h1 className="mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN JEANS SIZES</h1>
+            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN JEANS SIZES</h1>
             <SizeTableAccordian title='DRESSES, JUMPSUITS' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
@@ -237,7 +248,7 @@ export default function Women() {
                     ['Inside Legs', { CM: '76.5', INCH: '30⅛' }, { CM: '77', INCH: '30⅓' }, { CM: '77.5', INCH: '30½' }, { CM: '78', INCH: '30⅔' }, { CM: '78', INCH: '30⅞' }, { CM: '78', INCH: '31⅛' }]
                 ]}>
             </SizeTableAccordian>
-            <h1 className="mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">UF CURVE</h1>
+            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">UF CURVE</h1>
             <SizeTableAccordian title='COATS, JACKETS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
                 bigFontOf_nthRow={[5, 6, 7, 8]}
                 columnHeadings={['1XL', '2XL', '3XL']}
@@ -302,7 +313,7 @@ export default function Women() {
                     ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }, { CM: '131 - 136', INCH: '51⅗ - 53½' }]
                 ]}>
             </SizeTableAccordian>
-            <h1 className="mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN SPORT SIZES</h1>
+            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN SPORT SIZES</h1>
             <SizeTableAccordian title='UPPER BODY + LOWER BODY' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
                 bigFontOf_nthRow={[4, 5, 6, 7]}
                 columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
@@ -345,6 +356,7 @@ export default function Women() {
                     ['Hips', { CM: '87.5 - 92.5', INCH: '34⅖ - 36⅖' }, { CM: '92.5 - 97.5', INCH: '36⅖ - 38⅖' }, { CM: '97.5 - 102.5', INCH: '38⅖ - 40⅖' }, { CM: '102.5 - 107.5', INCH: '40⅖ - 42⅓' }, { CM: '107.5 - 112.5', INCH: '42⅓ - 44⅓' }]
                 ]}>
             </SizeTableAccordian>
+            <HelpSection />
         </CutomerServices>
     )
 }

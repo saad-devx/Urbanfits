@@ -15,10 +15,10 @@ export default function SizeTableAccordian(props) {
             if (unit === 'INCH') return size.INCH
         }
         if (typeof (array[1]) === 'object') return array.map((size, index) => {
-            return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 font_gotham_medium text-left` : `${restColsWidth} ${props.bigFontOf_nthRow && props.bigFontOf_nthRow.includes(dataIndex)?'text-xs':'text-[10px]'} font_urbanist`} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{index === 0 ? size : sizeVal(size)}</span>
+            return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 pl-2 font_gotham_medium text-left` : `${restColsWidth} ${props.bigFontOf_nthRow && props.bigFontOf_nthRow.includes(dataIndex)?'text-xs':'text-[10px]'} font_urbanist`} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{index === 0 ? size : sizeVal(size)}</span>
         })
         else return array.map((size, index) => {
-            return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 font_gotham_medium text-left` : restColsWidth} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{size}</span>
+            return <span key={index} className={`${index == 0 ? `${indexColWidth} sticky left-0 bg-gray-50 pl-2 font_gotham_medium text-left` : restColsWidth} ${index == 0 && dataIndex === dataLength - 1 ? 'rounded-bl-md' : null} ${dataIndex === dataLength - 1 ? null : 'border-b'} py-3 text-black`}>{size}</span>
         })
     }
     return (
@@ -35,10 +35,10 @@ export default function SizeTableAccordian(props) {
             </div>
             <div className={` ${open ? 'max-h-screen mt-5' : 'max-h-0'} relative max-w-full text-sm leading-5 rounded overflow-y-hidden scrollbar_x ease duration-700`}>
                 <div id='Accordian_Container' className="flex items-center mb-3">
-                    <div className='lg:w-full font_gotham_light text-sm text-black'>
-                        <section className="max-w-[2000px] rounded-md xl:w-full flex flex-col justify-center bg-gray-50">
+                    <div className={`${props.containerWidth?props.containerWidth:'sm:w-full'} font_gotham_light text-sm text-black`}>
+                        <section className={`max-w-[2000px] rounded-md ${props.containerWidth?props.containerWidth:'sm:w-full'} flex flex-col justify-center bg-gray-50`}>
                             <div className="flex text-xs text-center font_gotham_bold">
-                                <span className={`${props.indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 pt-4 lg:pt-3 rounded-tl-md border-b pr-4 py-3 text-left text-black ${props.headingTracking_null?'':'tracking-expand'}`}>{props.tableHeading}</span>
+                                {props.tableHeading?<span className={`${props.indexColWidth} sticky left-0 bg-gray-50 xl:bg-inherit pl-2 pt-4 lg:pt-3 rounded-tl-md border-b pr-4 py-3 text-left text-black ${props.headingTracking_null?'':'tracking-expand'}`}>{props.tableHeading}</span>:null}
                                 {props.columnHeadings.map(size => {
                                     return <span className={`${props.restColsWidth} border-b pt-4 lg:pt-3 py-3 text-black font_gotham_bold`}>{size}</span>
                                 })}
