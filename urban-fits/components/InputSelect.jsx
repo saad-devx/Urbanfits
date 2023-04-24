@@ -4,7 +4,7 @@ export const InputSelect = (props) => {
   return (
     <div className='flex flex-col' >
 
-    <label className='font-[Futura LT Pro] text-[14px] leading-[17-px]  font-semibold ' >
+    <label className='font_futura text-[14px] leading-[17px]  font-semibold ' >
          {props.label || "Label" } </label>
         
     <select  className={`  ${props.width || "w-[100px]"}  mt-[12px] h-[44px] px-[10px] py-[13.5px] border-[1px] rounded-lg outline-none  `}

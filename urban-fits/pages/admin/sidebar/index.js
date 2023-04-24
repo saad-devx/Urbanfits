@@ -118,8 +118,9 @@ export default function Sidebaradmin({children}) {
         <div className={` ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}   `}>
           {sidebaritems?.map((item, index) => (
             <div>
-              <div className="flex   mt-[37.54px] justify-between  items-center ">
-                <Link href={item.navlink}>
+              <div  onClick={() => handleItemClick(index)}
+                 className="flex  cursor-pointer  mt-[37.54px] justify-between  items-center ">
+                {/* <Link href={item.navlink}> */}
                   <div className="flex gap-[10px] ">
                     <div>{item.icon}</div>
 
@@ -131,7 +132,7 @@ export default function Sidebaradmin({children}) {
                       {item.label}
                     </p>
                   </div>
-                </Link>
+                {/* </Link> */}
                 <div
                   className={` cursor-pointer ${
                     item.subrows ? "visible" : "hidden"

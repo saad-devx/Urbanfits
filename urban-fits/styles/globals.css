@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
+@font-face {
   font-family: 'Futura LT Pro';
   font-style: normal;
   font-display: swap;
@@ -14,7 +14,16 @@
   font-style: normal;
   font-display: swap;
   src: url('../public/fonts/FuturaLTPro-Light.woff') format('woff');
-} */
+}
+
+
+.font_futura{
+  font-family: 'Futura LT Pro';
+}
+
+.font_futura_light{
+  font-family: 'Futura LT Pro Light';
+}
 
 @font-face {
   font-family: 'Gotham Pro';
