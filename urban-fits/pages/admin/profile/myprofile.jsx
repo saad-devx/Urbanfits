@@ -9,10 +9,10 @@ export default function myprofile() {
     <Profile>
       <div className=" flex gap-x-[20px]  ">
         <CardAdmin
-          classes=" w-[100%]  p-[30px] rounded-[25px] "
+          classes=" w-[590px]  p-[30px] rounded-[25px] "
           round="rouded-[25px]"
         >
-          <p className="  font-[Futura LT Pro] text-[24px] font-[500] leading-[14px] ">
+          <p className=" font_futura text-[24px] font-[500] leading-[14px] ">
              
             Basic Information 
           </p>
@@ -119,10 +119,10 @@ export default function myprofile() {
         </CardAdmin>
         {/*  second card right start   */}
         <CardAdmin
-          classes=" w-[100%] p-[30px]  rounded-[25px] "
+          classes=" w-[590px] p-[30px]  rounded-[25px] "
           round="rouded-[25px]"
         >
-          <p className="  font-[Futura LT Pro] text-[24px] font-[500] leading-[14px] ">
+          <p className="font_futura text-[24px] font-[500] leading-[14px] ">
             Contact
            </p>
 
@@ -130,24 +130,24 @@ export default function myprofile() {
             <div className="grid gap-y-[20px] " >
                <InputText
                  label="Phone"
-                //  width="w-[255px]"
+                 width="w-[255px]"
                  placeholder="Name"
                /> 
 
                
                <InputText
                  label="Address Line 1 "
-                //  width="w-[255px]"
+                 width="w-[255px]"
                  placeholder="Name"
                /> 
                <InputText
                  label="City "
-                //  width="w-[255px]"
+                 width="w-[255px]"
                  placeholder="Name"
                /> 
                <InputText
                  label="Country "
-                //  width="w-[255px]"
+                 width="w-[255px]"
                  placeholder="Name"
                /> 
              
@@ -156,12 +156,12 @@ export default function myprofile() {
             <div className="   " >
             <InputText
                  label="Mobile No. "
-                //  width="w-[255px]"
+                 width="w-[255px]"
                  placeholder="Name"
                /> 
                 <InputText
                  label={`Adress Line 2 ${ "s" } `}
-                //  width="w-[255px]"
+                 width="w-[255px]"
                  placeholder="Name"
                /> 
             </div>
