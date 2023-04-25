@@ -34,9 +34,9 @@ export default function CustomTab(props) {
   return (
     <>
       <main
-        className={`    font_gotham flex overflow-hidden transition-all duration-700`}
+        className={`    font_futura flex  transition-all duration-700`}
       >
-        <section onScroll={handleScroll} className="w-full font_gotham ">
+        <section onScroll={handleScroll} className="w-full font_futura ">
           <div className=" ">
             <div className="account_menu text-sm md:text-base overflow-x-scroll hide_scroll">
               <div className=" h-full flex justify-between  border-b border-b-gray-300 ">
@@ -48,7 +48,7 @@ export default function CustomTab(props) {
                 ))}
               </div>
             </div>
-            <section className=" z-50 my-5 font_futura">
+            <section className=" z-50 my-5  font_futura">
               {props.children}
             </section>
           </div>
