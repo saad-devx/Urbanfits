@@ -115,6 +115,10 @@
     font-family: 'Gotham Pro Bold';
   }
 
+  .lg\:font_gotham_black {
+    font-family: 'Gotham Pro Black';
+  }
+
   .lg\:font_gotham_medium {
     font-family: 'Gotham Pro Meduim';
   }

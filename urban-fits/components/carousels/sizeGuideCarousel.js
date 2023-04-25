@@ -8,12 +8,7 @@ import '@splidejs/react-splide/css';
 export default function CatalogueCarousel(props) {
     const onPGMounted = () => {
         let pagination = document.querySelector('.splide__pagination')
-        if (window.matchMedia('(min-width: 1000px)').matches) {
-            pagination.style.left = `calc(25% - ((${props.slideData.length * 0.9 * 2}rem + ${props.slideData.length * 2}px) / 2))`
-        }
-        else {
-            pagination.style.width = `calc(${props.slideData.length * 0.9 * 2}rem + ${props.slideData.length * 2}px)`
-        }
+        pagination.style.width = `calc(${props.slideData.length * 0.9 * 2}rem + ${props.slideData.length * 2}px)`
         let pageItems = document.querySelectorAll('.splide__pagination__page')
         pageItems.forEach((item) => {
             item.style.width = '2px'
@@ -24,7 +19,6 @@ export default function CatalogueCarousel(props) {
             item.style.transition = 'all 0.4s'
         })
     }
-
     return (
         <Splide onPaginationMounted={onPGMounted} className="sizeGuide_carousel md:hidden w-full h-[63vh] transition-all duration-1000" hasTrack={false}
             options={{
