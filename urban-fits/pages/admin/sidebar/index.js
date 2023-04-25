@@ -256,7 +256,8 @@ export default function Sidebaradmin({ children }) {
         {/* ///////////////////////////////Children END///////////////////////////////////////////////////// */}
       </div>
       {/* footer */}
-      <div className="text-center text-[12px] mb-[40px] " >
+      <div className={`text-center text-[12px] mb-[40px] flex justify-center 
+      ${sidebaropen?  "w-[120%]": "w-[105%]"}   `} >
         <p>
           Urban Fits L.L.C., Company Reg. Number - 2447 LLC 2023, Registered
           Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM
