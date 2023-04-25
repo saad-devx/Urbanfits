@@ -112,7 +112,7 @@ export default function Sidebaradmin({ children }) {
         <div className="flex-col   h-screen  ">
           <div
             className={` overflow-y-scroll  ${
-              sidebaropen ? "h-[60%]" : "h-[100%]"
+              sidebaropen ? "h-[56%]" : "h-[100%]"
             } 
             ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}  `}
           >

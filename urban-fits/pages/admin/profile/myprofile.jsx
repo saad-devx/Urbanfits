@@ -11,7 +11,7 @@ import { Badge1 } from "@/components/buttons/badges/Badge1";
 export default function myprofile() {
   return (
     <Profile>
-      <div className=" w-[100%] flex gap-x-[20px] font_futura ">
+      <div className=" w-[100%] flex gap-x-[20px] font_futura   ">
         <CardAdmin
           classes=" w-[100%]  p-[30px] rounded-[25px] "
           round="rouded-[25px]"
@@ -121,12 +121,14 @@ export default function myprofile() {
 
           <div className="flex" style={{ marginTop: "38px" }}>
             <div>
-              <InputText label="Phone" width="w-[255px]" placeholder="phone" />
+              <InputText label="Phone"
+               width="  w-[150px] xl:w-[255px]" 
+               placeholder="phone" />
             </div>
             <div className="ml-[20px]">
               <InputText
                 label="Mobile No."
-                width="w-[255px]"
+                width="  w-[150px] xl:w-[255px]"
                 placeholder="Mobile no."
               />
             </div>
@@ -136,7 +138,7 @@ export default function myprofile() {
             <div>
               <InputText
                 label="Address Line 1"
-                width="w-[255px]"
+                width="  w-[150px] xl:w-[255px]"
                 placeholder="Address"
               />
             </div>
@@ -144,7 +146,7 @@ export default function myprofile() {
               <InputText
                 label="Address Line 2"
                 postlabel="(Optional)"
-                width="w-[255px]"
+                width="  w-[150px] xl:w-[255px]"
                 placeholder="Address"
               />
             </div>
@@ -152,10 +154,14 @@ export default function myprofile() {
 
           <div className="flex " style={{ marginTop: "20px" }}>
             <div>
-              <InputText label="City " width="w-[255px]" placeholder="Name" />
+              <InputText label="City "
+               width="  w-[150px] xl:w-[255px]"
+                placeholder="Name" />
             </div>
             <div className="ml-[20px]">
-              <InputText label="State " width="w-[255px]" placeholder="Name" />
+              <InputText label="State "
+               width="  w-[150px] xl:w-[255px]" 
+               placeholder="Name" />
             </div>
           </div>
 
@@ -163,14 +169,13 @@ export default function myprofile() {
             <div className="">
               <InputText
                 label="Country"
-                width="w-[255px]"
+                width="  w-[150px] xl:w-[255px]"
                 placeholder="&nbsp;"
               />
             </div>
           </div>
         </CardAdmin>
       </div>
-     
     </Profile>
   );
 }

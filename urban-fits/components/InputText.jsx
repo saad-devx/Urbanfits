@@ -12,7 +12,7 @@ export const InputText = (props) => {
          <span className={`font_futura_light text-[12px] leading-[17px]  text-[${props.postlabelcolor||"#E4E4E4" }] `} > {props?.postlabel} </span> 
          </label>
         
-    <input  className={` ${props.width || "w-[300px]"}  ${props.mt || "mt-[12px]" } h-[44px] px-[10px] py-[13.5px] border-[1px] rounded-lg outline-none `}
+    <input  className={` ${props.width || "w-[255px]"}  ${props.mt || "mt-[12px]" } h-[44px] px-[10px] py-[13.5px] border-[1px] rounded-lg outline-none `}
         placeholder={` ${props.placeholder || "placeholder" } `}
     type="text"   />
 
