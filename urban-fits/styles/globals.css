@@ -159,6 +159,9 @@
 .bg_btn_gold {
   background: linear-gradient(92.79deg, #FAE892 0.08%, #B3903E 100.08%);
 }
+.bg_btn_gold_2 {
+  background: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+}
 
 .bg_404 {
   background-image: url(../public/404\ Page.png);

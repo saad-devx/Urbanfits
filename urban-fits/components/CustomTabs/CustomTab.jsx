@@ -43,12 +43,12 @@ export default function CustomTab(props) {
                 {props.tabdata.map((tab, index) => (
                   <Option href={tab.navlink}>
                     {" "}
-                    <span className="font-[14px]  text-[5px] md:text-[14px] " > {tab.label} </span>{" "}
+                    <span className="font-[14px]  text-[10px] xl:text-[14px] " > {tab.label} </span>{" "}
                   </Option>
                 ))}
               </div>
             </div>
-            <section className="w-full h-screen my-5 font_futura">
+            <section className=" z-50 my-5 font_futura">
               {props.children}
             </section>
           </div>
