@@ -16,18 +16,7 @@ import { Vendoricon } from "@/public/sidebaricons/Vendoricon";
 import React from "react";
 
 export const sidebarItems = [
-  {
-    id: 1,
-    label: "Profile (temp)",
-    icon: <DaimondIcon/> ,
-    subrows: [
-      {
-        label: "Profile",
-
-        navlink: "/admin/profile",
-      },
-    ]
-  },
+ 
   {
     id: 1,
     label: "Dashboard",
@@ -199,7 +188,7 @@ export const sidebarItems = [
     ],
   },
   {
-    id: 16,
+    id: 10,
     label: "Coupon",
     icon: <CouponIcon/> ,
     navlink: "/admin",
@@ -216,7 +205,7 @@ export const sidebarItems = [
     ],
   },
   {
-    id: 10,
+    id: 11,
     label: "Shipping Settings",
     icon: <ProductIcon />,
     navlink: "/admin",
@@ -241,21 +230,21 @@ export const sidebarItems = [
     ],
   },
   {
-    id: 11,
+    id: 12,
     label: "Reviews",
     icon: <ReviewsIcon />,
     navlink: "/admin",
     expanded: false,
   },
   {
-    id: 12,
+    id: 13,
     label: "Brands",
     icon: <BrandIcon/> ,
     navlink: "/admin",
     expanded: false,
   },
   {
-    id: 13,
+    id: 14,
     label: "Authentication",
     icon: <ExitIcon/>  ,
     navlink: "/admin",
@@ -263,7 +252,7 @@ export const sidebarItems = [
     
   },
   {
-    id: 14,
+    id: 15,
     label: "Icons",
     icon: <DaimondIcon/>  ,
     navlink: "/admin",
@@ -271,13 +260,24 @@ export const sidebarItems = [
     
   },
   {
-    id: 15,
+    id: 16,
     label: "Other Pages",
     icon: <PagesIcon/>  ,
     navlink: "/admin",
     expanded: false,
     
   },
+  {
+    id: 17,
+    label: "Profile (temp)",
+    icon: <DaimondIcon/> ,
+    subrows: [
+      {
+        label: "Profile",
 
+        navlink: "/admin/profile",
+      },
+    ]
+  },
 
 ];

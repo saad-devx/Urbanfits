@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebaradmin from './sidebar'
+import Sidebaradmin from '../sidebar'
 
 const generalsetting = () => {
     return (

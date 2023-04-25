@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebaradmin from '../sidebar'
 import Button from '@/components/buttons/simple_btn'
 import CardAdmin from '@/components/cards/cardadmin'
+import { RightArrowIcon } from '@/public/sidebaricons/RightArrowIcon'
 
 
 const accountsetting = () => {
@@ -10,12 +11,12 @@ const accountsetting = () => {
             <div className='font_futura' >
                 <p className='not-italic text-[22px] mt-[15px] font-medium text-black'>Account Setting</p>
                 </div>
-                <div className=' flex item-center '>
-                    <li className=' p-[10px] not-italic text-[14px] text-center font-medium text-black list-none'>Home </li>
-                    <li className=' p-[10px] not-italic text-[14px] text-center font-medium text-black list-none'> &gt; </li>
-                    <li className=' p-[10px] not-italic text-[14px] text-center font-medium text-black list-none'>Account</li>
-                    <li className=' p-[10px] not-italic text-[14px] text-center font-medium text-black list-none'> &gt; </li>
-                    <li className=' p-[10px] not-italic text-[14px] text-center font-medium text-black list-none'>Account & Privacy</li>
+                <div className=' flex items-center mt-[15px] '>
+                    <li className='  not-italic text-[14px] text-center font-medium text-black list-none'>Home </li>
+                    <li className=' ml-[12px] not-italic text-[14px] text-center font-medium text-black list-none'> <RightArrowIcon/> </li>
+                    <li className=' ml-[12px] not-italic text-[14px] text-center font-medium text-black list-none'>Account</li>
+                    <li className=' ml-[12px] not-italic text-[14px] text-center font-medium text-black list-none'> <RightArrowIcon/> </li>
+                    <li className=' ml-[12px] not-italic text-[14px] text-center font-medium text-black list-none'>Account & Privacy</li>
                 </div>
         <CardAdmin classes="p-[40px] font_futura mt-[20px]
         " round="rounded-[25px]" > 
