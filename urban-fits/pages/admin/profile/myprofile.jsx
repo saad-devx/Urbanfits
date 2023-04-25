@@ -63,7 +63,7 @@ export default function myprofile() {
             </div>
           </div>
 
-          <div className="flex gap-[23px] " style={{ marginTop: "20px" }}>
+          <div className="flex gap-[20px] " style={{ marginTop: "20px" }}>
             <div className="">
               <InputSelect
                 label="Date of Birth "
@@ -142,7 +142,8 @@ export default function myprofile() {
             </div>
             <div className="ml-[20px]">
               <InputText
-                label="Address Line "
+                label="Address Line 2"
+                postlabel="(Optional)"
                 width="w-[255px]"
                 placeholder="Address"
               />
@@ -169,33 +170,7 @@ export default function myprofile() {
           </div>
         </CardAdmin>
       </div>
-      <CardAdmin
-        classes=" mt-[30px]  p-[40px] rounded-[25px] "
-        round="rouded-[25px]"
-      >
-        <div className="font_futura">
-          <p className="text-[22px]  "> Two-Factor Authentication </p>
-          <p className="text-[14px] mt-[9px] w-[1121px] ">
-            Two-factor authentication is a method for protection your web
-            account. When it is activated you need to enter not only your
-            password, but also a special code. You can receive this code by in
-            mobile app. Even if third person will find your password, then can't
-            access with that code.
-          </p>
-
-          <div className="flex justify-between">
-            <span className="mt-[30px]">
-              <Button2 width="w-[160px]">Enable 2FA</Button2>
-            </span>
-            <div className="flex items-center">
-              <p className="text-black text-[12px] "  >CURRENT STATUS:</p>
-              <span className="ml-[10px]" >
-                <Badge1>DISABALED</Badge1>
-              </span>
-            </div>
-          </div>
-        </div>
-      </CardAdmin>
+     
     </Profile>
   );
 }

@@ -18,6 +18,18 @@ import React from "react";
 export const sidebarItems = [
   {
     id: 1,
+    label: "Profile (temp)",
+    icon: <DaimondIcon/> ,
+    subrows: [
+      {
+        label: "Profile",
+
+        navlink: "/admin/profile",
+      },
+    ]
+  },
+  {
+    id: 1,
     label: "Dashboard",
     icon: <Dashboardicon />,
     navlink: "/admin",
@@ -161,7 +173,7 @@ export const sidebarItems = [
       },
       {
         label: "Account Settings",
-        navlink: "/admin",
+        navlink: "/admin/accounts/accountsetting",
       },
       {
         label: "Inventory Managment",
