@@ -15,11 +15,11 @@ import { profileTabData } from "@/mock/customtabData";
 export default function Profile({children}) {
   return (
     <Sidebaradmin>
-      <div className={` mt-[40px] flex items-center  `}>
+      <div className={` mt-[40px] flex items-center font_futura `}>
         <Image width="150px" height="150px" src={ProfilePic} />
 
         <div className="ml-[30px]">
-          <p className=" text-[22px] mb-0 "> Bilawal </p>
+          <p className=" text-[22px] mb-0  "> Bilawal </p>
 
           <div className="flex  items-center mt-[18px] ">
             <Button classes="mt-0 mb-0"> Change Avtar </Button>{" "}

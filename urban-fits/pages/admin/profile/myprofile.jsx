@@ -153,18 +153,8 @@ export default function myprofile() {
              
             </div>
 
-            <div className="   " >
-            <InputText
-                 label="Mobile No. "
-                 width="w-[255px]"
-                 placeholder="Name"
-               /> 
-                <InputText
-                 label={`Adress Line 2 ${ "s" } `}
-                 width="w-[255px]"
-                 placeholder="Name"
-               /> 
-            </div>
+           
+
           </div>
 
 
