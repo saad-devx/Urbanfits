@@ -10,7 +10,8 @@ export const InputSelect = (props) => {
          
  </label>
         
-    <select  className={`  ${props.width || "w-[100px]"}  mt-[16px] h-[44px] px-[10px] py-[13.5px] border-[1px] rounded-lg outline-none  bg-transparent `}
+    <select  className={`  text-[14px]
+     ${props.width || "w-[100px]"}  mt-[16px] h-[44px] px-[8px] py-[13.5px] border-[1px] rounded-lg outline-none  bg-transparent `}
         placeholder={` ${props.placeholder || "placeholder" } `}
      >
         {props.options?.map((opt, index)=>(

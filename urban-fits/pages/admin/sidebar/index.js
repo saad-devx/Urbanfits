@@ -43,7 +43,7 @@ export default function Sidebaradmin({ children }) {
   };
 
   return (
-    <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll  ">
+    <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
       <div
         className={` fixed  ${
           sidebaropen ? "w-[300px]" : "w-[80px]"
@@ -123,7 +123,7 @@ export default function Sidebaradmin({ children }) {
                   className="flex  cursor-pointer  mt-[37.54px] justify-between  items-center "
                 >
                   {/* <Link href={item.navlink}> */}
-                  <div className="flex gap-[10px] items-center ">
+                  <div className="flex gap-[10px] items-center  ">
                     <div>{item.icon}</div>
 
                     <p
