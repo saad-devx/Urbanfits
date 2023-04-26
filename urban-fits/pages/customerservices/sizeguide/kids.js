@@ -113,7 +113,51 @@ export default function Kids() {
                     ['EU', 19, 19.5, 20, 20.5, 21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25, 25, 25.5, 26, 26.5],
                     ['CM*', 11.5, 12, 12.5, 12.5, 13, 13, 13.5, 13.5, 14, 14.5, 15, 15, 15.5, 16, 16, 16.5, 17],
                     ['INCH*', 4.5, 4.5, 4.75, 4.75, 5, 5, 5.25, 5.25, 5.5, 5.5, 6, 6, 6.25, 6.25, 6.5, 6.5, 6.75]
-                    ]} />
+                ]} />
+            <SizeTableAccordian title='BABIES - SHOES' tableHeading={null} indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-1/5'
+                unitBtns={null} columnHeadings={[]}
+                rowsData={[
+                    ['US', 0.5, 1, 2, 3, 4],
+                    ['UK', 0, 0.5, 1, 2, 3],
+                    ['EU', 15, 16, 17, 18, 19],
+                    ['CM*', 9, 9.5, 10, 11, 11.5],
+                    ['INCH*', 3.5, 3.75, 4, 4.25, 4.5],
+                ]} />
+            <SizeTableAccordian title='SOCKS' tableHeading='LABEL' indexColWidth='w-32' restColsWidth='w-32' unitBtns={null}
+                columnHeadings={['31 / 34', '35 / 38', '39 / 42']}
+                rowsData={[
+                    ['Shoe Size', '31', '35', '39'],
+                    ['Foot Length', '17.9 - 21.4', '21.5 - 24.3', '24.4 - 27']
+                ]} />
+            <SizeTableAccordian title='BEANIE' headingTracking_null tableHeading='Circumference' indexColWidth='w-36' restColsWidth='w-36' unitBtns={null}
+                columnHeadings={['S - M', 'L - XL']}
+                rowsData={[
+                    ['1/2 Bottom Width', '18 cm', '21 cm'],
+                    ['Height', '16.5 cm', '19.5 cm']
+                ]} />
+            <SizeTableAccordian title='KNITTED SCARFS' headingTracking_null tableHeading='Measurement' indexColWidth='w-36' restColsWidth='w-36' unitBtns={null}
+                columnHeadings={['S - M']}
+                rowsData={[
+                    ['Length', '132.5 cm'],
+                    ['Width', '18 cm']
+                ]} />
+            <SizeTableAccordian title='KNITTED MITTENS' headingTracking_null tableHeading='Measurement' indexColWidth='w-48 ' restColsWidth='w-36' unitBtns={null}
+                columnHeadings={['S - M', 'L - XL']}
+                rowsData={[
+                    ['Length', '18 cm', '21.5 cm'],
+                    ['Width', '7.5 cm', '8.5 cm'],
+                    ['Thumbfinger Length', '5.5 cm', '6.5 cm'],
+                    ['Thumbfinger Width', '2.5 cm', '3 cm'],
+                    ['Cuff Total Length', '4.5 cm', '5 cm'],
+                    ['Cuff Width Rlaxed', '7 cm', '7.5 cm']
+                ]} />
+                <SizeTableAccordian title='KNITTED SCARFS' headingTracking_null tableHeading='Circumference' indexColWidth='w-36 sm:w-[37%]' restColsWidth='w-36  sm:w-[16%]' unitBtns={null}
+                columnHeadings={['S', 'M', 'L', 'XL']}
+                rowsData={[
+                    ['1 CM extra for not adjustable caps', '50 cm', '52 cm', '54 cm', '56 cm'],
+                    ['Heigth', '14 cm', '15 cm', '16 cm', '17 cm']
+                ]} />
+            <HelpSection />
         </CutomerServices>
     )
 }
