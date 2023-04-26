@@ -5,26 +5,22 @@ export const profileTabData = [
   },
   {
     label: "CHANGE PASSWORD",
-    navlink: "/admin/profilse",
+    navlink: "/admin/profile/changepassword",
   },
   {
     label: "AUTHENTICATION",
-    navlink: "/admin/profisssle",
+    navlink: "/admin/profile/authentication",
   },
   {
     label: "SECURITY SETTINGS",
-    navlink: "/admin/profisle",
+    navlink: "/admin/profile/securitysettings",
   },
   {
     label: "DEVICE MANAGEMENT",
-    navlink: "/admin/profsile",
-  },
-  {
-    label: "CHANGE PASSWORD",
-    navlink: "/admin/profsile",
+    navlink: "/admin/profile/devicemanagment",
   },
   {
     label: "NOTIFICATION",
-    navlink: "/admin/dd",
+    navlink: "/admin/profile/notifications",
   },
 ];

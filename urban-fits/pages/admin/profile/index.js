@@ -25,7 +25,7 @@ export default function Profile({children}) {
           <p className=" text-[22px] mb-0  "> Bilawal </p>
 
           <div className="flex  items-center mt-[18px] ">
-            <Button classes="mt-0 mb-0"> Change Avtar </Button>{" "}
+            <Button classes="mt-0 mb-0"> Change Avatar </Button>{" "}
             <span className="ml-[20px]">
               {" "}
               <BasketIcon />

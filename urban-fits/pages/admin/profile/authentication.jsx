@@ -1,0 +1,110 @@
+import React from "react";
+import Profile from ".";
+import CardAdmin from "@/components/cards/cardadmin";
+import { LockIcon } from "@/public/icons/LockIcon";
+import { Badge1 } from "@/components/buttons/badges/Badge1";
+import { CodeIcon } from "@/public/icons/CodeIcon";
+
+const authentication = () => {
+  return (
+    <Profile>
+      <div className="grid grid-cols-2 items gap-[20px] ">
+        <CardAdmin classes="px-[30px] py-[40px] ">
+          <div className=" flex items-center gap-[10px] text-[22px]  ">
+            <LockIcon /> <p> Two-factor authentication </p>
+          </div>
+          <p className="text-[14px]  ">
+            Two-factor Authentication adds an extra layer of security to your
+            account by asking for a verification code when you sign in
+          </p>
+
+          <div className="flex gap-[20px]">
+            <div
+              className="w-[210px] border-[#E2CA75]
+             
+             border-[1px] rounded-[10px] p-[10px] relative  "
+            >
+              <p className="w-[50px] text-[14px] font-medium ">
+                Google Authenticator
+              </p>
+              <span className="absolute top-[15px] right-0  ">
+                <Badge1
+                  width="w-[74px]"
+                  px="px-[5px]"
+                  py="py-[3px]"
+                  text="text-[10px]"
+                  rounded="rounded-[0px]  "
+                >
+                  Recommended
+                </Badge1>
+              </span>
+
+              <p className="text-[12px] font-light mt-[10px] mb-[60px] ">
+                Use an app to generate time-sensitive authentication codes on
+                your phone
+              </p>
+
+              <div className="w-[100%] h-[40px] p-[10px] bg-[#F4F4F4] absolute bottom-0 left-[0px] rounded-b-[10px] ">
+                <label className="switch w-[40px] h-[22.25px]  ">
+                  <input
+                    type="checkbox"
+                    //   checked={enabled}
+                    //   onChange={(e) => togglenav(e)}
+                  />
+
+                  <span className="slider"></span>
+                </label>
+              </div>
+            </div>
+            {/*  second box */}
+            <div
+              className="w-[210px] border-[#F4F4F4]
+             
+             border-[1px] rounded-[10px] p-[10px] relative  "
+            >
+              <p className="w-[80px] text-[14px] font-medium ">
+                Text message (SMS)
+              </p>
+
+              <p className="text-[12px] font-light mt-[10px] mb-[60px] ">
+                Receive time-sensitive authentication codes messaged to your
+                phone
+              </p>
+
+              <div className="w-[100%] h-[40px] p-[10px] bg-[#F4F4F4] absolute bottom-0 left-[0px] rounded-b-[5px] ">
+                <label className="switch w-[40px] h-[22.25px]  ">
+                  <input
+                    type="checkbox"
+                    //   checked={enabled}
+                    //   onChange={(e) => togglenav(e)}
+                  />
+
+                  <span className="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </CardAdmin>
+
+        <CardAdmin classes="p-[40px] h-[280px] ">
+          <div className="text-[22px] font-[400] flex items-center gap-[10px] ">
+            <CodeIcon /> <p>Anti Phishing</p>
+          </div>
+
+          <p className=" text-[14px] font-[300] " >
+            This is an identification code that users set to prevent damage
+            caused by phishing emails by manually setting an anti-phishing code
+            to distinguish official emails from phishing emails
+          </p>
+
+          <p className="px-[14px] py-[10px] text-[12px] w-[100px]   border-[#E2CA75] border-[1px] rounded-[5px] " >
+            Create Code
+          </p>
+
+        </CardAdmin>
+      </div>
+    </Profile>
+  );
+};
+
+export default authentication;

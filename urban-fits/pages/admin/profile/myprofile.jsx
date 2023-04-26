@@ -3,10 +3,7 @@ import Profile from "./index";
 import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
 import { InputSelect } from "@/components/InputSelect";
-import Button from "@/components/buttons/simple_btn";
-import LinkBtn from "@/components/buttons/link_btn";
-import { Button2 } from "@/components/buttons/Button2";
-import { Badge1 } from "@/components/buttons/badges/Badge1";
+
 
 export default function myprofile() {
   return (

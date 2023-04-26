@@ -471,3 +471,20 @@ footer li {
 .btn_width{
   width: calc(100vw - 72px);
 }
+
+
+
+/* Admin Area Start  */
+
+#input_text_2{
+  width: auto !important ;
+  width:  300%  !important  ;
+}
+
+/* Admin Area END  */
+
+.border_gradient_2{
+  border-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%) 20 ;
+  /* border-width: 1px; */
+  /* border-style: solid */
+}
