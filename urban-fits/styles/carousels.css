@@ -14,7 +14,7 @@
     bottom: 1.25rem !important;
   }
 
-  .catalogue_carousel .splide__pagination {
+  .catalogue_carousel .splide__pagination, .sizeGuide_carousel .splide__pagination {
     margin: auto !important;
   }
 }
@@ -36,7 +36,7 @@
 }
 
 /* css for catalogue carousel */
-.catalogue_carousel .splide__pagination {
+.catalogue_carousel .splide__pagination, .sizeGuide_carousel .splide__pagination {
   padding: 0 !important;
   display: flex !important;
   justify-content: flex-start !important;
@@ -49,7 +49,7 @@
   padding: 0 !important;
 }
 
-.catalogue_carousel .splide__pagination .is-active {
+.catalogue_carousel .splide__pagination .is-active, .sizeGuide_carousel .splide__pagination .is-active {
   transform: none !important;
   background: black !important;
   height: 28px !important;
@@ -72,7 +72,6 @@
   border: none !important;
 }
 
-/* css for splide carousel */
 /* .productCarousel .splide__slide {
   opacity: 0.6;
   transition: all 0.3s;

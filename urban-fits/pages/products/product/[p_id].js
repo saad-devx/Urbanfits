@@ -58,6 +58,21 @@ export default function Product(props) {
     }
     //Cart function
     const { addItem } = useCart()
+    const addToCart = () => {
+        addItem({
+            product_id: productData.id,
+            id: product._id,
+            name: productData.name,
+            price: productData.price,
+            shipping_fee: productData.shipping_detials.fees,
+            stock: product.stock,
+            size: sizevalue,
+            sizes: product.size,
+            color: product.color_name,
+            images: product.images
+        }, quantity);
+        toaster('success', 'Your items has been added to the cart')
+    }
     // temporary product data to show the  similar items cards
     const si_product = {
         name: 'Sample Product title - UF',
@@ -82,7 +97,7 @@ export default function Product(props) {
                                 <h1 className="hidden lg:block w-full mb-7 font_gotham_bold lg:text-3xl xl:text-[32px] tracking-[0.15em]">{productData.name.toUpperCase()}</h1>
                                 <h2 className="hidden lg:block font_gotham_black lg:text-3xl xl:text-[32px] tracking-[0.15em]">${productData.price}</h2>
 
-                                <div className="w-full my-8 flex flex-col lg:flex-row justify-between">
+                                <div className="w-full my-8 flex flex-col md:flex-row justify-between">
                                     <div className="w-full lg:w-48pr mb-5 lg:mb-0 flex flex-col">
                                         <h3 className="mb-1 lg:mb-3 font_gotham_medium italic text-[10px] lg:text-xs text-gray-300 tracking-[0.15em]">DESCRIPTION</h3>
                                         <p className="font_gotham text-xs 2xl:text-sm">{productData.description}</p>
@@ -96,6 +111,14 @@ export default function Product(props) {
                                 </div>
 
                                 <div className="w-full gap-2 lg:gap-4 flex flex-wrap justify-between">
+                                    <div className="flex flex-col max-w-[320px] w-48pr mx-auto">
+                                        <select type="select" defaultValue={product.size} onChange={onSizeChange} className="w-full h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
+                                            {product.size.map(size => {
+                                                return <option value={size}>{size}</option>
+                                            })}
+                                        </select>
+                                        <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
+                                    </div>
                                     <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="max-w-[320px] w-48pr h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
                                         {productData.variants.map(variant => {
                                             let { color, color_name } = variant
@@ -107,38 +130,37 @@ export default function Product(props) {
                                         <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
                                         <span onClick={(e) => { changeQuantity(e) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                                     </span>
-                                    <div className="flex flex-col max-w-[320px] w-48pr mx-auto">
-                                        <select type="select" defaultValue={product.size} onChange={onSizeChange} className="w-full h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
-                                            {product.size.map(size => {
-                                                return <option value={size}>{size}</option>
-                                            })}
-                                        </select>
-                                        <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
-                                    </div>
-                                    <button onClick={() => { addItem({ product_id: productData.id, id: product._id, name: productData.name, price: productData.price, shipping_fee: productData.shipping_detials.fees, stock: product.stock, size: sizevalue, sizes: product.size, color: product.color_name, images: product.images }, quantity); toaster('success', 'Your items has been added to the cart') }} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
-                                    <Button classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
-                                    <Button classes='w-full border lg:hidden' my='0' bg='bg-white' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='black' >CUSTOMIZATION</Button>
+                                    <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr mx-auto border text-xs text-black">
+                                        Customization
+                                    </button>
+                                    <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
+                                    <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
                                 </div>
 
                                 <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">
                                     <h1 className="font_gotham_medium text-xs text-gray-300 italic">MATCH WITH</h1>
-                                    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
+                                    <div className="hidden lg:grid w-full grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
                                         <SmallShoppingcard product={si_product} img={image3} />
                                         <SmallShoppingcard product={si_product} img={image4} />
                                         <SmallShoppingcard product={si_product} img={image1} />
-                                        <SmallShoppingcard classes='md:hidden' product={si_product} img={image1} />
+                                    </div>
+                                    <div className="lg:hidden w-full grid grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
+                                        <Shoppingcard product={si_product} img={image3} />
+                                        <Shoppingcard product={si_product} img={image4} />
+                                        <Shoppingcard product={si_product} img={image1} />
+                                        <Shoppingcard classes='md:hidden' product={si_product} img={image1} />
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="w-full mt-36">
+                        <div className="hidden md:block w-full mt-36">
                             <h3 className="text-xl lg:text-[26px] font_gotham_bold tracking-widest">SIMILAR ITEMS</h3>
                             <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
                                 <Shoppingcard product={si_product} img={image1} />
                                 <Shoppingcard product={si_product} img={image2} />
                                 <Shoppingcard product={si_product} img={image1} />
-                                <Shoppingcard product={si_product} img={image2} />
+                                <Shoppingcard classes='hidden lg:block' product={si_product} img={image2} />
                             </div>
                         </div>
                     </section>
