@@ -34,21 +34,21 @@ export default function CustomTab(props) {
   return (
     <>
       <main
-        className={`    font_gotham flex overflow-hidden transition-all duration-700`}
+        className={`    font_futura flex  transition-all duration-700`}
       >
-        <section onScroll={handleScroll} className="w-full font_gotham ">
+        <section onScroll={handleScroll} className="w-full font_futura ">
           <div className=" ">
             <div className="account_menu text-sm md:text-base overflow-x-scroll hide_scroll">
               <div className=" h-full flex justify-between  border-b border-b-gray-300 ">
                 {props.tabdata.map((tab, index) => (
                   <Option href={tab.navlink}>
                     {" "}
-                    <span className="font-[14px] text-[500] " > {tab.label} </span>{" "}
+                    <span className="font-[14px]  text-[10px] xl:text-[14px] " > {tab.label} </span>{" "}
                   </Option>
                 ))}
               </div>
             </div>
-            <section className="w-full h-screen my-5 font_gotham">
+            <section className=" z-50 my-5  font_futura">
               {props.children}
             </section>
           </div>
