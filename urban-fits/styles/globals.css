@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
+@font-face {
   font-family: 'Futura LT Pro';
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,16 @@
   font-style: normal;
   font-display: swap;
   src: url('../public/fonts/FuturaLTPro-Light.woff') format('woff');
-} */
+}
+
+/* font futura classes */
+.font_futura{
+  font-family: 'Futura LT Pro';
+}
+
+.font_futura_light{
+  font-family: 'Futura LT Pro Light';
+}
 
 @font-face {
   font-family: 'Gotham Pro';
@@ -156,6 +165,9 @@
 .bg_btn_gold {
   background: linear-gradient(92.79deg, #FAE892 0.08%, #B3903E 100.08%);
 }
+.bg_btn_gold_2 {
+  background: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+}
 
 .bg_404 {
   background-image: url(../public/404\ Page.png);
@@ -165,6 +177,14 @@
 .gradient_txt {
   font-style: normal;
   line-height: 50px;
+  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.gradient_txt_2 {
   background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -458,4 +478,21 @@ footer li {
 /* css for size giude button */
 .btn_width{
   width: calc(100vw - 72px);
+}
+
+
+
+/* Admin Area Start  */
+
+#input_text_2{
+  width: auto !important ;
+  width:  300%  !important  ;
+}
+
+/* Admin Area END  */
+
+.border_gradient_2{
+  border-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%) 20 ;
+  /* border-width: 1px; */
+  /* border-style: solid */
 }
