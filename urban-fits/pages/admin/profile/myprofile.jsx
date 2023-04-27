@@ -101,7 +101,7 @@ export default function myprofile() {
               <div className="flex items-center">
                 <input className="" type="checkbox" name="" id="" />
                 <label className=" ml-[15px] text-[14px] font_futura ">
-                  Other{" "}
+                  Other
                 </label>
               </div>
             </div>

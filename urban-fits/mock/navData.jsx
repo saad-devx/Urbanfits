@@ -166,7 +166,7 @@ export const sidebarItems = [
       },
       {
         label: "Inventory Managment",
-        navlink: "/admin",
+        navlink: "/admin/accounts/inventorymanagement",
       },
     ],
   },
