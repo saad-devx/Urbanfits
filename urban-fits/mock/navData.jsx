@@ -196,7 +196,7 @@ export const sidebarItems = [
     subrows: [
       {
         label: "All Coupon",
-        navlink: "/admin",
+        navlink: "/admin/coupon/allcoupon",
       },
       {
         label: "Add New Coupon ",
