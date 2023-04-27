@@ -158,7 +158,7 @@ export const sidebarItems = [
     subrows: [
       {
         label: "General Settings",
-        navlink: "/admin",
+        navlink: "/admin/accounts/generalsetting",
       },
       {
         label: "Account Settings",

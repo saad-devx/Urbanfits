@@ -13,7 +13,7 @@ const changepassword = () => {
           <div className=" flex flex-col gap-[19px]">
             <InputText
               label="Old Password"
-              width="  w-[%]"
+              width="  w-[100%]"
               placeholder="Old Password"
             />
             <InputText
