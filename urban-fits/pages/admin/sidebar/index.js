@@ -17,11 +17,18 @@ import Link from "next/link";
 import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import { LocationIcon } from "@/public/sidebaricons/LocationIcon";
 import { CallIcon } from "@/public/sidebaricons/CallIcon";
+import CardAdmin from "@/components/cards/cardadmin";
 
 export default function Sidebaradmin({ children }) {
   const [sidebaritems, setSidebaritems] = React.useState(sidebarItems);
   const [selected, SetSelected] = React.useState(false);
   const [subrowopen, setSubrowopen] = React.useState(false);
+  const [showmenue, setshowMenue] = React.useState(false);
+
+  const toggleshowmenue = () => {
+    setshowMenue(!showmenue)
+  }
+
   const handleSubrow = () => {
     setSubrowopen(!subrowopen);
   };
@@ -234,9 +241,18 @@ export default function Sidebaradmin({ children }) {
           </div>
 
           <div className={` flex items-center  `}>
-            <span>
+            <span onClick={toggleshowmenue} className="cursor-pointer  " >
               <AvatarIcon />
             </span>
+              <div className={` duration-200 ${showmenue? "visible": "hidden" }   absolute top-[89px] right-[154px] `} > 
+                  <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" > 
+                    <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
+                      <p className="cursor-pointer" >My Profile</p>
+                      <p className="cursor-pointer">Settings</p>
+                      <p className="cursor-pointer">Log out</p>
+                    </div>
+                   </CardAdmin>
+              </div>
             <span className={` ml-[15px] `}>
               <DownArowSmallIcon />
             </span>

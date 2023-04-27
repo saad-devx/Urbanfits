@@ -178,6 +178,14 @@
   text-fill-color: transparent;
 }
 
+.gradient_txt_2 {
+  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
 .data_field:has(input:focus) {
   border-color: rgb(161 98 7);
 }
