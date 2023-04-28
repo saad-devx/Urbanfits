@@ -24,7 +24,7 @@
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid #C3C3C3;
   }
   
   .slider:before {
@@ -38,11 +38,14 @@
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid #C3C3C3;
   }
   
   input:checked+.slider {
-    background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+
+    
+    background: linear-gradient(90deg, #fae99269 0%, #b3903e70 100%);
+    opacity: 10;
   }
   
   input:checked+.slider:before {
