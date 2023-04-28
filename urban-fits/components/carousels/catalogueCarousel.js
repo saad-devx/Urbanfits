@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 // Default theme

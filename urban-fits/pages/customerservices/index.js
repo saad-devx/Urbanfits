@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Link from 'next/link'
@@ -9,7 +9,7 @@ const MenuLink = (props) => {
     return <Link href={`/customerservices${props.href}`} className={`${path.includes(props.href) ? 'bg-gold-land lg:bg-none lg:underline text-white lg:text-black active' : 'bg-gray-200 lg:bg-transparent text-black'} ${props.submenu ? 'lg:ml-7' : null} flex lg:block justify-center items-center px-4 py-1 mx-2 lg:m-0 lg:p-0 whitespace-nowrap rounded-full lg:rounded-none text-sm 2xl:text-base hover:underline`}>{props.children}</Link>
 }
 
-export default function CutomerServices(props) {
+export default function CustomerServices(props) {
 
     useEffect(() => {
         if (window.matchMedia('(max-width: 1000px)').matches) {
@@ -39,7 +39,7 @@ export default function CutomerServices(props) {
                         <MenuLink href='/companyinfo' >Company Information</MenuLink>
                     </div>
                 </section>
-                <section className="w-full lg:w-[70%]">
+                <section className="w-full lg:w-70pr">
                     {props.children}
                 </section>
             </main>

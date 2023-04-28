@@ -1,3 +1,5 @@
+/* test */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -120,6 +122,10 @@
 @media only screen and (min-width: 1000px) {
   .lg\:font_gotham_bold {
     font-family: 'Gotham Pro Bold';
+  }
+
+  .lg\:font_gotham_black {
+    font-family: 'Gotham Pro Black';
   }
 
   .lg\:font_gotham_medium {
@@ -379,12 +385,6 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-/*                                   background for newsletter modal */
-.bg_newsletter {
-  background: url(../public/newsletterimg.png) top no-repeat;
-  background-size: cover;
-}
-
 /* hiding element when out of focus */
 .group:not(:focus) .minus_icon {
   display: none;
@@ -437,7 +437,7 @@ input:checked+.slider:before {
 .hide_scrollbar::-webkit-scrollbar {
   display: none;
   -ms-overflow-style: none;
-  scrollbar-width: none;
+  scrollbar-width: 0;
 }
 
 .scrollbar_x::-webkit-scrollbar {
