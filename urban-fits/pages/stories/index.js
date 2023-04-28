@@ -2,12 +2,17 @@ import React from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
+import StoryCarousel from '@/components/carousels/storyCarousel'
 import Image from 'next/image'
 import img1 from '@/public/stories/img9.jpg'
 import img2 from '@/public/stories/img10.jpg'
 import img3 from '@/public/stories/img11.jpg'
 import img4 from '@/public/stories/img2.jpg'
 import img5 from '@/public/stories/img12.jpg'
+// images for carousel component
+import img6 from '@/public/stories/img13.png'
+import img7 from '@/public/stories/img14.jpg'
+import img8 from '@/public/stories/img15.jpg'
 
 const StoryHeading = (props) => {
     return <>
@@ -21,10 +26,19 @@ export default function Story() {
     return (
         <>
             <Navbar />
-            <main className='w-full px-6 md:px-[15%] py-5'>
+            <main className='w-full px-6 md:px-[15%] py-10'>
                 <div className="z-10 flex flex-col justify-center items-center gap-5">
-                    <span className="font_gotham text-sm "><Link className="underline underline-offset-8" href='/' >Main Page</Link> / <Link className="underline underline-offset-8" href='/stories' >Stories</Link></span>
+                    <span className="font_gotham text-sm "><Link className="underline decoration-gray-300 underline-offset-4" href='/' >Main Page</Link> / <Link className="underline decoration-gray-300 underline-offset-4" href='/stories' >Stories</Link></span>
                     <h1 className="font_gotham_bold text-2xl md:text-[32px] tracking-[0.15em]">STORIES</h1>
+                </div>
+
+
+                <div className="relative w-full my-14 flex flex-col-reverse md:block">
+                    <StoryCarousel slideData={[img6, img7, img8]} />
+                    <div className="w-full md:w-auto md:absolute top-1/2 md:-translate-y-1/2 md:translate-x-[-80%] flex items-center justify-between text-xs md:text-[10px] lg:text-xs text-black font_gotham_medium italic tracking-widest  lg:tracking-[0.15em] gap-x-4">
+                        SELECTED
+                        <span className='w-2/5 md:w-[7vw] lg:w-[9vw] h-0.5 bg-black'></span>
+                    </div>
                 </div>
 
                 <section className="w-full my-14 pt-14 border-t">
