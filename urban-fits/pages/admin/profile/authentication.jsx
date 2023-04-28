@@ -8,7 +8,7 @@ import { InputText } from "@/components/InputText";
 import InputText2 from "@/components/InputText2";
 import { Button2 } from "@/components/buttons/Button2";
 import LanguageModal from "@/components/modals/languagemodal";
-import AuthenticatorModal from "@/components/modals/AuthenticatorModal";
+import CustomModal from "@/components/modals/CustomModal";
 import Image from "next/image";
 
 import QrCode from "@/public/QrCode.png";
@@ -77,7 +77,7 @@ const authentication = () => {
                 </div>
               </div>
 
-              <AuthenticatorModal
+              <CustomModal
                 px="px-[50px]"
                 py="py-[40px]"
                 width="w-[686.4px]"
@@ -110,7 +110,7 @@ const authentication = () => {
 
                   </div>
                 </div>
-              </AuthenticatorModal>
+              </CustomModal>
 
               {/*  second box */}
               <div

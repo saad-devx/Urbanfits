@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AuthenticatorModal = (props) => {
+const CustomModal = (props) => {
   return (
     <>
     <div className={`w-full h-full font_futura fixed inset-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500   ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
@@ -13,4 +13,4 @@ const AuthenticatorModal = (props) => {
   )
 }
 
-export default AuthenticatorModal
+export default CustomModal
