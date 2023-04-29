@@ -213,20 +213,20 @@ export const sidebarItems = [
     subrows: [
       {
         label: "All Shipping Zone",
-        navlink: "/admin",
+        navlink: "/admin/shippingsettings/shipping",
       },
       {
         label: "Add Shipping Zone",
-        navlink: "/admin",
+        navlink: "/admin/shippingsettings/addzone",
       },
-      {
-        label: "Add Shipping Method",
-        navlink: "/admin",
-      },
-      {
-        label: "Shipping Settings",
-        navlink: "/admin",
-      },
+      // {
+      //   label: "Add Shipping Method",
+      //   navlink: "/admin",
+      // },
+      // {
+      //   label: "Shipping Settings",
+      //   navlink: "/admin",
+      // },
     ],
   },
   {

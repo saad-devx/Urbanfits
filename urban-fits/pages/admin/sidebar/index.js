@@ -33,8 +33,19 @@ export default function Sidebaradmin({ children }) {
     setSubrowopen(!subrowopen);
   };
 
-  const [sidebaropen, setSidebaropen] = React.useState(true);
+  const [sidebaropen, setSidebaropen] = React.useState(false);
   const handleSidebar = () => {
+    if (sidebaropen == true) {
+      
+
+      let check = false;
+      let temp = sidebaritems;
+      temp.forEach((item) => {
+        item.expanded = false;
+      });
+      setSidebaritems([...temp]);
+    }
+
     setSidebaropen(!sidebaropen);
   };
 
@@ -52,11 +63,9 @@ export default function Sidebaradmin({ children }) {
   return (
     <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
       <div
-        className={` fixed  ${
-          sidebaropen ? "w-[300px]" : "w-[80px]"
-        }  duration-300 ${
-          sidebaropen && "rounded-r-[25px]"
-        }  bg-[#FFFFFF] h-screen    `}
+        className={` fixed  ${sidebaropen ? "w-[300px]" : "w-[80px]"
+          }  duration-300 ${sidebaropen && "rounded-r-[25px]"
+          }  bg-[#FFFFFF] h-screen    `}
       >
         <div
           id={styles.top_gradient}
@@ -76,9 +85,8 @@ export default function Sidebaradmin({ children }) {
             </div> */}
 
             <div
-              className={`absolute  flex  items-center ${
-                sidebaropen ? "pl-[40px]" : "pl-[20px]"
-              }  pt-[20px] `}
+              className={`absolute  flex  items-center ${sidebaropen ? "pl-[40px]" : "pl-[20px]"
+                }  pt-[20px] `}
             >
               <Image
                 width={37.05}
@@ -87,9 +95,8 @@ export default function Sidebaradmin({ children }) {
                 src={sidebaropen ? logo_outlined : sidebar_logo_closed}
               />
               <p
-                className={` font_futura  text-white ${
-                  !sidebaropen && "hidden"
-                }    size text-[22px] ml-[12px]`}
+                className={` font_futura  text-white ${!sidebaropen && "hidden"
+                  }    size text-[22px] ml-[12px]`}
               >
                 URBAN FITS
               </p>
@@ -118,9 +125,8 @@ export default function Sidebaradmin({ children }) {
         </TreeView> */}
         <div className="flex-col   h-screen  ">
           <div
-            className={` overflow-y-scroll  ${
-              sidebaropen ? "h-[56%]" : "h-[100%]"
-            } 
+            className={` overflow-y-scroll  ${sidebaropen ? "h-[56%]" : "h-[100%]"
+              } 
             ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}  `}
           >
             {sidebaritems?.map((item, index) => (
@@ -143,9 +149,8 @@ export default function Sidebaradmin({ children }) {
                   </div>
                   {/* </Link> */}
                   <div
-                    className={` cursor-pointer ${
-                      item.subrows ? "visible" : "hidden"
-                    } ${sidebaropen ? "visible" : "hidden"}`}
+                    className={` cursor-pointer ${item.subrows ? "visible" : "hidden"
+                      } ${sidebaropen ? "visible" : "hidden"}`}
                     onClick={() => handleItemClick(index)}
                   >
                     {!item.expanded ? <RightArrowIcon /> : <DownArrowIcon />}
@@ -154,9 +159,8 @@ export default function Sidebaradmin({ children }) {
 
                 {item.subrows?.map((subitem, index) => (
                   <div
-                    className={`flex gap-[10px] mt-[28px]  ${
-                      item.expanded ? "visible" : "hidden"
-                    }  `}
+                    className={`flex gap-[10px] mt-[28px]  ${item.expanded ? "visible" : "hidden"
+                      }  `}
                   >
                     <Link href={subitem.navlink}>
                       <p
@@ -175,9 +179,8 @@ export default function Sidebaradmin({ children }) {
 
           <div className=" absolute bottom-[40px] left-[30px] ">
             <hr
-              className={` ${
-                sidebaropen ? "visible" : "hidden"
-              } mb-[30px] mt-[38px] `}
+              className={` ${sidebaropen ? "visible" : "hidden"
+                } mb-[30px] mt-[38px] `}
             />
             <div className={` ${sidebaropen ? "visible" : "hidden"}  `}>
               <p className="font_futura text-[12px] font-[400] text-black ">
@@ -244,15 +247,15 @@ export default function Sidebaradmin({ children }) {
             <span onClick={toggleshowmenue} className="cursor-pointer  " >
               <AvatarIcon />
             </span>
-              <div className={` duration-200 ${showmenue? "visible": "hidden" }   absolute top-[89px] right-[154px] `} > 
-                  <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" > 
-                    <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
-                      <p className="cursor-pointer" >My Profile</p>
-                      <p className="cursor-pointer">Settings</p>
-                      <p className="cursor-pointer">Log out</p>
-                    </div>
-                   </CardAdmin>
-              </div>
+            <div className={` duration-200 ${showmenue ? "visible" : "hidden"}   absolute top-[89px] right-[154px] `} >
+              <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" >
+                <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
+                  <p className="cursor-pointer" >My Profile</p>
+                  <p className="cursor-pointer">Settings</p>
+                  <p className="cursor-pointer">Log out</p>
+                </div>
+              </CardAdmin>
+            </div>
             <span className={` ml-[15px] `}>
               <DownArowSmallIcon />
             </span>
@@ -273,13 +276,13 @@ export default function Sidebaradmin({ children }) {
       </div>
       {/* footer */}
       <div className={`text-center text-[12px] mb-[40px] flex justify-center 
-      ${sidebaropen?  "w-[120%]": "w-[105%]"}   `} >
+      ${sidebaropen ? "w-[120%]" : "w-[105%]"}   `} >
         <p>
           Urban Fits L.L.C., Company Reg. Number - 2447 LLC 2023, Registered
           Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM
-          87102 
+          87102
           <br />
-           Urban Fits L.L.C. © 2023-2024 All rights reserved.
+          Urban Fits L.L.C. © 2023-2024 All rights reserved.
         </p>
       </div>
     </div>
