@@ -1,5 +1,4 @@
-import CardAdmin from '@/components/cards/cardadmin'
-import Profile from '@/pages/admin/profile/userprofile'
+
 import React from 'react'
 
 const DeviceIcon = () => {
