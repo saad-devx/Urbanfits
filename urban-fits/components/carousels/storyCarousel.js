@@ -10,6 +10,7 @@ export default function StoryCarousel(props) {
                 type: 'loop',
                 autoplay: true,
                 speed: 900,
+                easing: 'cubic-bezier(0.5,0.25,0,1)',
                 fixedHeight: '11vw',
                 gap: '0.5rem',
                 arrows: false,
