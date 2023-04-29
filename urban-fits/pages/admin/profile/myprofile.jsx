@@ -4,7 +4,6 @@ import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
 import { InputSelect } from "@/components/InputSelect";
 
-
 export default function myprofile() {
   return (
     <Profile>
@@ -116,58 +115,49 @@ export default function myprofile() {
             Contact
           </p>
 
-          <div className="flex" style={{ marginTop: "38px" }}>
-            <div>
-              <InputText label="Phone"
-               width="  w-[150px] xl:w-[255px]" 
-               placeholder="phone" />
-            </div>
-            <div className="ml-[20px]">
+          <div
+            className="grid  grid-cols-2 gap-[20px] "
+            style={{ marginTop: "38px" }}
+          >
+            <div className="flex flex-col gap-[20px]">
               <InputText
-                label="Mobile No."
-                width="  w-[150px] xl:w-[255px]"
-                placeholder="Mobile no."
+                label="Phone"
+                // width="100%"
+                placeholder="phone"
               />
-            </div>
-          </div>
-
-          <div className="flex " style={{ marginTop: "20px" }}>
-            <div>
               <InputText
                 label="Address Line 1"
-                width="  w-[150px] xl:w-[255px]"
+                // width=""
                 placeholder="Address"
               />
+              <InputText
+                label="City "
+                // width=""
+                placeholder="Name"
+              />
+              <InputText
+                label="Country"
+                // width=""
+                placeholder="&nbsp;"
+              />
             </div>
-            <div className="ml-[20px]">
+
+            <div className="flex flex-col gap-[20px]">
+              <InputText
+                label="Mobile No."
+                // width=""
+                placeholder="Mobile no."
+              />
               <InputText
                 label="Address Line 2"
                 postlabel="(Optional)"
-                width="  w-[150px] xl:w-[255px]"
+                // width=""
                 placeholder="Address"
               />
-            </div>
-          </div>
-
-          <div className="flex " style={{ marginTop: "20px" }}>
-            <div>
-              <InputText label="City "
-               width="  w-[150px] xl:w-[255px]"
-                placeholder="Name" />
-            </div>
-            <div className="ml-[20px]">
-              <InputText label="State "
-               width="  w-[150px] xl:w-[255px]" 
-               placeholder="Name" />
-            </div>
-          </div>
-
-          <div className="flex gap-[23px] " style={{ marginTop: "20px" }}>
-            <div className="">
               <InputText
-                label="Country"
-                width="  w-[150px] xl:w-[255px]"
-                placeholder="&nbsp;"
+                label="State "
+                // width=""
+                placeholder="Name"
               />
             </div>
           </div>

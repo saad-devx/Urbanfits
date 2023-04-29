@@ -10,12 +10,14 @@ export const InputSelect = (props) => {
          </label>
         
     <select  className={`  text-[12px]
-     ${props.width || "w-[100px]"}  mt-[12px] h-[44px] px-[8px] py-[13.5px] border-[1px] rounded-lg outline-none  bg-transparent `}
+     ${props.width || "w-[100px]"} ${props.label? "mt-[12px]" : "mt-[0px]" }  h-[44px] px-[8px] py-[13.5px] border-[1px] rounded-lg outline-none  bg-transparent `}
         placeholder={` ${props.placeholder || "placeholder" } `}
      >
         {props.options?.map((opt, index)=>(
 
-            <option value={opt[index]} > {opt} </option>
+            <option  className=''
+            
+            value={opt[index]} > {opt} </option>
 
         ))}
      </select>
