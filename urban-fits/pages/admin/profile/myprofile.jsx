@@ -1,5 +1,5 @@
 import React from "react";
-import Profile from "./index";
+import Profile from ".";
 import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
 import { InputSelect } from "@/components/InputSelect";
