@@ -61,12 +61,12 @@ export default function Contact() {
             </Head>
             {loader}
             <Navbar />
-            <main className="w-full pb-20 bg-gray-100 flex justify-center font_gotham overflow-x-hidden">
+            <main className="w-full pb-20 bg-white flex justify-center font_gotham overflow-x-hidden">
                 <section className='w-full p-5 lg:p-0 lg:pt-9 lg:w-[75%] h-full font_gotham text-left pt-9' >
-                    <h2 className="text-3xl mb-4">Contact Us</h2>
+                    <h2 className="text-4xl lg:text-[44px]- font_gotham_medium tracking-widest mb-4">CONTACT US</h2>
                     <form className="mt-16 pb-20 font_gotham space-y-10" onReset={handleReset} onSubmit={handleSubmit}>
                         <div className="flex justify-between w-full">
-                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                                 <select value={values.title} name='title' className="w-full border-none outline-none bg-transparent border-b-gray-800" onBlur={handleBlur} onChange={handleChange} >
                                     <option id="mr" value="mr">Title</option>
@@ -75,23 +75,23 @@ export default function Contact() {
                                     <option id="other" value="other">Other</option>
                                 </select>
                             </div>
-                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="text" value={values.firstname} name="firstname" id="firstname" onBlur={handleBlur} onChange={handleChange} placeholder="First Name" />
                             </div>
                         </div>
                         <div className="flex justify-between w-full ">
-                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="text" value={values.lastname} name="lastname" id="lastname" onBlur={handleBlur} onChange={handleChange} placeholder="Last Name" />
                             </div>
-                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="email" value={values.email} name="email" id="email" onBlur={handleBlur} onChange={handleChange} placeholder="Email*" />
                             </div>
                         </div>
                         <div className="flex justify-between w-full">
-                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                                 <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                     {countryCodes.map((item) => {
@@ -100,12 +100,12 @@ export default function Contact() {
                                     })}
                                 </select>
                             </div>
-                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                 {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                             </div>
                         </div>
-                        <div className="relative w-full md:w-4/6 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                             {touched.subject && errors.subject ? <Tooltip classes="form-error" content={errors.subject} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="text" name="subject" id="subject" size="100" maxLength={100} value={values.subject} onBlur={handleBlur} onChange={handleChange} placeholder="Subject" />
                         </div>
@@ -121,14 +121,14 @@ export default function Contact() {
                             <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                         </div>
                         <div className="w-full flex justify-end space-x-4">
-                            <Button type="reset" bg="bg-gray-200" text="black" classes="w-full md:w-2/12" >Cancel</Button>
-                            <Button type="submit" classes="w-full md:w-2/12" >Send</Button>
+                            <Button type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-2/12" font='font_gotham_medium' >Cancel</Button>
+                            <Button type="submit" classes="w-full md:w-2/12" font='font_gotham_medium' >Send</Button>
                         </div>
                     </form>
                     <div className="w-full flex flex-col justify-center items-center">
-                        <InfoCard href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="See Your FAQs" />
-                        <InfoCard href="#" title="Customer Care" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." btnValue="Get In Touch" />
-                        <InfoCard href="#" title="Privacy Policy" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="Read our Policy" />
+                        <InfoCard href="#" title="CUSTOMER CARE" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." btnValue="GET IN TOUCH" />
+                        <InfoCard href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="SEE YOUR FAQs" />
+                        {/* <InfoCard href="#" title="PRIVACY POLICY" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="Read our Policy" /> */}
                     </div>
                 </section>
             </main>

@@ -5,7 +5,7 @@ export default function Orderinfo() {
     return (
         <CutomerServices>
             <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">ORDER INFORMATON</h1>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 Ordering in our online store is easy and convenient Cancellation, Availability.<br /><br />
                 <h1 className="mb-3 font_gotham_medium tracking-widest">CANCELLATION</h1>
                 If you have placed an order in error we ask you to contact our customer service team.
@@ -13,7 +13,7 @@ export default function Orderinfo() {
                 Please note! It’s important that you contact us as soon as possible. We always strive for quick deliveries, but this does mean that we may not have much time to cancel your order.
                 We cannot make any changes (address, size, color) once your order has been placed
             </div>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">PRODUCT AVAILABILITY</h1>
                 Items in our online shop have stock and are ready to send. Any sizes that are out of stock are marked as unavailable.<br />
                 On rare occasions at peak selling periods (sales and festive seasons) we may have some out of stock issues from customers ordering items at the same time.<br />

@@ -22,13 +22,13 @@ export default function LoadingModal(props) {
                     <button onClick={props.toggleModal} name="modal1" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-500">close</button>
                     <section className="w-full h-full p-7">
                         <div className="w-full space-y-5">
-                            <h2 className="text-xl md:text-2xl">Change Country</h2>
-                            <p className='text-xs md:text-base' >You are trying to access the united states sites - would you like to go to the United Arab Emirates site?</p>
+                            <h2 className="text-lg md:text-xl lg:text-[26px] font_gotham_medium tracking-widest">Change Country</h2>
+                            <p className='text-sm md:text-base' >You are trying to access the united states sites - would you like to go to the United Arab Emirates site?</p>
                         </div>
                         <div className="w-full mt-7 flex flex-col justify-center space-y-3">
-                            <LinkBtn my="my-0" value="" classes="w-full text-xs md:text-base">Yes, go to United Arab Emirates site</LinkBtn>
-                            <LinkBtn my="my-0" value="" bg="bg-white" text="black" classes="w-full text-xs md:text-base border border-black">No, stay on the United States site</LinkBtn>
-                            <Link href="#" onClick={toggleModal} name="modal3" className="w-full text-xs md:text-base text-center text-gray-500 underline " >Choose a different Country/Region</Link>
+                            <LinkBtn my="my-0" value="" classes="w-full text-sm md:text-base">Yes, go to United Arab Emirates site</LinkBtn>
+                            <LinkBtn my="my-0" value="" bg="bg-white" text="black" classes="w-full text-sm md:text-base border border-black">No, stay on the United States site</LinkBtn>
+                            <Link href="#" onClick={toggleModal} name="modal3" className="w-full text-sm md:text-base text-center text-gray-500 underline " >Choose a different Country/Region</Link>
                         </div>
                     </section>
                 </div>

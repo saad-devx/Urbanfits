@@ -1,29 +1,29 @@
-import React, {useState}  from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-const MenuLink = (props)=>{
+const MenuLink = (props) => {
     const path = useRouter().pathname
-    return <Link href={`/customerservices${props.href}`} className={`${path.includes(props.href)?'underline':''} ${props.submenu?'ml-7':null} text-sm 2xl:text-base hover:underline text-black`}>{props.children}</Link>
+    return <Link href={`/customerservices${props.href}`} className={`${path.includes(props.href) ? 'bg-gold-land lg:bg-none lg:underline text-white lg:text-black active' : 'bg-gray-200 lg:bg-transparent text-black'} ${props.submenu ? 'lg:ml-7' : null} flex lg:block justify-center items-center px-4 py-1 mx-2 lg:m-0 lg:p-0 whitespace-nowrap rounded-full lg:rounded-none text-sm 2xl:text-base hover:underline`}>{props.children}</Link>
 }
 
-export default function CutomerServices(props) {
-    const [sideMenu, setSideMenu] = useState(false)
-    const toggleMenu = ()=>{
-        console.log(sideMenu, 'yesss')
-        if(!sideMenu)return setSideMenu(true)
-        if(sideMenu)return setSideMenu(false)
-    }
+export default function CustomerServices(props) {
+
+    useEffect(() => {
+        if (window.matchMedia('(max-width: 1000px)').matches) {
+            let activeLink = document.querySelector('#menu_container .active')
+            activeLink.scrollIntoView()
+        }
+    }, [])
     return (
         <>
             <Navbar />
-            <main className='w-full p-5 lg:p-10 lg:pt-16 2xl:p-14 flex justify-between bg-white'>
-            <div onClick={toggleMenu} className={`lg:hidden ${sideMenu?'rotate-90':''} w-10 h-10 flex justify-center items-center rounded-full shadow-md fixed top-[70px] left-3 z-10 bg-gray-200 transition-all duration-500`}><i className={`fa-solid transition-all ${sideMenu?'fa-xmark':' fa-ellipsis-vertical'}`}></i></div>
-                <section className={`${sideMenu?'max-h-screen top-[130px]':'max-h-0 top-[110px]'} w-3/4 md:1/2 lg:w-1/4 lg:h-auto lg:max-h-none fixed left-5 z-10 lg:z-0 lg:static rounded-2xl lg:rounded-none shadow-lg lg:shadow-none transition-all duration-500 overflow-hidden lg:overflow-visible`}>
-                    <div className="sticky top-16 left-0 right-0 w-full py-8 2xl:py-10 px-7 gap-y-4 flex flex-col bg-gray-50 font_gotham rounded-2xl">
-                        <h1 className="mb-3 2xl:mb-5 font_gotham_bold tracking-widest">CUSTOMER SERVICES</h1>
+            <main className='w-full p-5 lg:p-10 lg:pt-16 2xl:p-14 flex flex-col lg:flex-row lg:justify-between bg-white'>
+                <section className={`max-w-[2000px] lg:w-1/4 lg:h-auto lg:max-h-none rounded-2xl lg:rounded-none transition-all duration-500 overflow-x-scroll overflow-y-hidden lg:overflow-visible hide_scrollbar`}>
+                    <div id='menu_container' className="lg:sticky lg:top-16 lg:left-0 lg:right-0 w-auto lg:w-full py-8 2xl:py-10 lg:px-7 gap-y-4 flex lg:flex-col lg:bg-gray-50 font_gotham rounded-2xl">
+                        <h1 className="hidden lg:block mb-3 2xl:mb-5 font_gotham_bold tracking-widest">CUSTOMER SERVICES</h1>
                         <MenuLink href='/returns&refund' >Returns & Refund</MenuLink>
                         <MenuLink href='/orderinfo' >Order Information</MenuLink>
                         <MenuLink href='/payment' >Payment</MenuLink>
@@ -39,7 +39,7 @@ export default function CutomerServices(props) {
                         <MenuLink href='/companyinfo' >Company Information</MenuLink>
                     </div>
                 </section>
-                <section className="w-full lg:w-[70%] pt-14 lg:p-0">
+                <section className="w-full lg:w-70pr">
                     {props.children}
                 </section>
             </main>

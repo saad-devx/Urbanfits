@@ -8,7 +8,7 @@ export default function NewSlider() {
                 <div className="hidden lg:flex left-0 w-full lg:w-[35vw] lg:h-full md:pl-10 mb-3 lg:m-0 leading-7 flex-col justify-center items-start">
                     <h2 className="text-xl md:text-3xl lg:text-[32px] word-wrap font_gotham_medium leading-tight">URBAN<br />NEW ARRIVAL</h2>
                 </div>
-                <div className="h-full w-full lg:w-[65vw] flex items-center">
+                <div className="h-full w-full lg:w-[70vw] border border-red-700 flex items-center">
                     <HomeCarousel2 />
                 </div>
             </section>

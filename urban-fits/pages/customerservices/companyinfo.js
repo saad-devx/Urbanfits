@@ -5,7 +5,7 @@ export default function CompanyInfo() {
     return (
         <CutomerServices>
             <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">MY ACCOUNT</h1>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">URBAN FITS L.L.C. (UAE)</h1>
                 500 4th St NW<br />
                 Suite 102 PMB 1958<br />

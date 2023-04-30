@@ -1,9 +1,13 @@
 import React from 'react'
+import Sidebaradmin from './sidebar/index.js'
+import profile from './profile/index.js'
+import Profile from './profile/index.js'
 
-function AdminProfile() {
+
+export default function Admin ()  {
   return (
-    <div className='text-5xl '>AdminProfile</div>
+    
+      <Profile/>
+    
   )
 }
-
-export default AdminProfile

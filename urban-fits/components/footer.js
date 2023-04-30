@@ -15,8 +15,8 @@ export default function Footer() {
     return (
         <>
             <footer className="border-t w-full pt-10 font_gotham text-gotham-black bg-white">
-                <section className="pt-10 md:p-20 lg:py-28 md:pb-7">
-                    <div className="w-full h-2/6 pb-7 px-6 md:pb-16 lg:px-[5%] border-b border-b-gray-400 flex flex-row flex-wrap justify-between items-start">
+                <section className="pt-10 md:p-5 lg:p-24 lg:pt-28 lg:pb-16 md:pb-7">
+                    <div className="w-full h-2/6 pb-7 px-6 md:pb-16 lg:px-[5%] border-b border-b-gray-200 flex flex-row flex-wrap justify-between items-start">
                         <div className="w-full lg:w-1/2 flex justify-around items-start">
                             <span className='w-1/2 md:w-48pr mx-auto lg:mx-0 mb-7 flex flex-col justify-center text-center' >
                                 <i className="fa-solid fa-wallet text-black mb-5 text-xl"></i>
@@ -46,19 +46,19 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    <div className="w-full mt-10 px-6 lg:px-0 flex flex-col lg:flex-row justify-between items-start md:items-start">
-                        <div className="w-full md:w-1/5 text-sm pb-10 md:pb-3 space-y-5 lg:space-y-4 flex flex-col items-center md:items-start">
-                            <h1 className="text-[26px] font_gotham_medium tracking-[0.4em] lg:tracking-widest"><Link href="/">URBAN FITS</Link></h1>
-                            <div className="lg:hidden space-x-10 text-lg text-black">
+                    <div className="w-full mt-10 px-6 lg:px-0 flex flex-col md:flex-row md:flex-wrap justify-between items-start md:items-start">
+                        <div className="w-full md:w-1/5 md:mr-3 md:-translate-y-1.5 lg:mr-0 text-sm pb-10 md:pb-3 space-y-5 lg:space-y-4 flex flex-col items-center md:items-start">
+                            <h1 className="text-2xl lg:text-[26px] font_gotham_medium whitespace-nowrap tracking-[0.4em] md:tracking-wide lg:tracking-widest"><Link href="/">URBAN FITS</Link></h1>
+                            <div className="lg:hidden space-x-10 md:space-x-6 text-lg text-black">
                                 <Link href='#' ><i className="fa-solid fa-paper-plane"></i></Link>
                                 <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>
                                 <Link href='#' ><i className="fa-brands fa-facebook-f"></i></Link>
                                 <Link href='#' ><i className="fa-brands fa-instagram"></i></Link>
                             </div>
-                            <p className='hidden lg:block text-xs text-start' >This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good.<br /><br />500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102<br /><br />+0123.456.8386</p>
+                            <p className='hidden lg:block text-xs text-start font_gotham_light' >This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good.<br /><br />500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102<br /><br />+0123.456.8386</p>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
-                            <h3 className=" text-sm font_gotham_medium tracking-widest">SERVICES</h3>
+                            <h3 className="text-xs font_gotham_medium tracking-vast">SERVICES</h3>
                             <li>
                                 <Link href='/'>Help</Link>
                             </li>
@@ -66,10 +66,10 @@ export default function Footer() {
                                 <Link href='/contact'>Contact Us</Link>
                             </li>
                             <li>
-                                <Link href='/customerservices/sizeguides'>Size Guides</Link>
+                                <Link href='/customerservices/sizeguide'>Size Guides</Link>
                             </li>
                             <li>
-                                <Link href='/'>SITE MAP</Link>
+                                <Link href='/'>Site Map</Link>
                             </li>
                             <li>
                                 <Link href='/customerservices/counterfeitproducts'>CF Products</Link>
@@ -79,7 +79,7 @@ export default function Footer() {
                             </li>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
-                            <h3 className=" text-sm font_gotham_medium tracking-widest">EXPLORE</h3>
+                            <h3 className="text-xs font_gotham_medium tracking-vast">EXPLORE</h3>
                             <li>
                                 <Link href='/stories'>Stories</Link>
                             </li>
@@ -89,12 +89,9 @@ export default function Footer() {
                             <li>
                                 <Link href='/sales'>Sales</Link>
                             </li>
-                            <li>
-                                <Link href='/terms&conditions'>Blog</Link>
-                            </li>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
-                            <h3 className=" text-sm font_gotham_medium tracking-widest">YOUR ORDERS</h3>
+                            <h3 className="text-xs font_gotham_medium tracking-vast">YOUR ORDERS</h3>
                             <li>
                                 <Link href='/orders/orders'>Orders</Link>
                             </li>
@@ -109,7 +106,7 @@ export default function Footer() {
                             </li>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
-                            <h3 className=" text-sm font_gotham_medium tracking-widest">ABOUT UFs</h3>
+                            <h3 className="text-xs font_gotham_medium tracking-vast">ABOUT UFs</h3>
                             <li>
                                 <Link href='/'>About Us</Link>
                             </li>
@@ -126,8 +123,8 @@ export default function Footer() {
                                 <Link href='/customerservices/companyinfo'>Company Information</Link>
                             </li>
                         </div>
-                        <div className="hidden lg:flex w-full md:w-1/5 flex-col justify-start items-start md:items-end gap-y-5">
-                            <h3 className="text-sm font_gotham_medium tracking-widest"><Link href="/contact">CONNECT</Link></h3>
+                        <div className="hidden lg:flex w-full md:w-1/5 xl:w-auto flex-col justify-start items-start md:items-end gap-y-5">
+                            <h3 className="text-xs font_gotham_medium tracking-vast"><Link href="/contact">CONNECT</Link></h3>
                             <div className="hidden lg:block space-x-5 text-base text-black">
                                 <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>
                                 <Link href='#' ><i className="fa-brands fa-instagram"></i></Link>
@@ -152,7 +149,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </section>
-                <div className="w-4/5 m-10 text-xs mx-auto text-center leading-5">
+                <div className="w-4/5 m-10 text-[10px] mx-auto text-center leading-5">
                     <p>Urban Fits L.L.C., Company Reg. Number - 2447 LLC 2023, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102 <br /> Urban Fits L.L.C. © 2023-2024 All rights reserved.</p>
                 </div>
             </footer>

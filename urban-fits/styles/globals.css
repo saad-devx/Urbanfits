@@ -1,8 +1,10 @@
+/* test */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
+@font-face {
   font-family: 'Futura LT Pro';
   font-style: normal;
   font-display: swap;
@@ -14,7 +16,16 @@
   font-style: normal;
   font-display: swap;
   src: url('../public/fonts/FuturaLTPro-Light.woff') format('woff');
-} */
+}
+
+/* font futura classes */
+.font_futura{
+  font-family: 'Futura LT Pro';
+}
+
+.font_futura_light{
+  font-family: 'Futura LT Pro Light';
+}
 
 @font-face {
   font-family: 'Gotham Pro';
@@ -76,10 +87,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Urbanist';
+  src: url('../public/fonts/Urbanist-VariableFont.ttf');
+  src: local('Urbanist VariableFont'), local('Urbanist-VariableFont'),
+    url('../public/fonts/Urbanist-VariableFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   tap-highlight-color: rgba(0, 0, 0, 0);
   color: #383838;
+  scroll-behavior: smooth;
 }
 
 .font_gotham {
@@ -98,8 +119,36 @@
   font-family: 'Gotham Pro Bold';
 }
 
+@media only screen and (min-width: 1000px) {
+  .lg\:font_gotham_bold {
+    font-family: 'Gotham Pro Bold';
+  }
+
+  .lg\:font_gotham_black {
+    font-family: 'Gotham Pro Black';
+  }
+
+  .lg\:font_gotham_medium {
+    font-family: 'Gotham Pro Meduim';
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .sm\:font_gotham_medium {
+    font-family: 'Gotham Pro Meduim';
+  }
+
+  .sm\:font_gotham {
+    font-family: 'Gotham Pro';
+  }
+}
+
 .font_gotham_medium {
   font-family: 'Gotham Pro Meduim';
+}
+
+.font_urbanist {
+  font-family: 'Urbanist';
 }
 
 .stroke_text {
@@ -116,6 +165,9 @@
 .bg_btn_gold {
   background: linear-gradient(92.79deg, #FAE892 0.08%, #B3903E 100.08%);
 }
+.bg_btn_gold_2 {
+  background: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+}
 
 .bg_404 {
   background-image: url(../public/404\ Page.png);
@@ -125,6 +177,14 @@
 .gradient_txt {
   font-style: normal;
   line-height: 50px;
+  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.gradient_txt_2 {
   background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -296,10 +356,11 @@ input[type="radio"]:checked {
 .slider:before {
   position: absolute;
   content: "";
-  height: 17px;
-  width: 17px;
-  left: 4px;
-  bottom: 4px;
+  height: 16px;
+  width: 16px;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -311,9 +372,10 @@ input:checked+.slider {
 }
 
 input:checked+.slider:before {
-  -webkit-transform: translateX(20px);
-  -ms-transform: translateX(20px);
-  transform: translateX(20px);
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+  left: 90%;
 }
 
 /* Rounded sliders */
@@ -323,23 +385,6 @@ input:checked+.slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-}
-
-/*                                   background for newsletter modal */
-.bg_newsletter {
-  background: url(../public/newsletterimg.png) top no-repeat;
-  background-size: cover;
-}
-
-/* css for splide carousel */
-.productCarousel .splide__slide {
-  opacity: 0.6;
-  transition: all 0.3s;
-}
-
-.productCarousel .splide__slide.is-active {
-  opacity: 1;
-  border: none !important;
 }
 
 /* hiding element when out of focus */
@@ -391,16 +436,17 @@ input:checked+.slider:before {
 
 /*                                     CSS to hide scroll bar */
 
-.hide_scrollbar::-webkit-scrollbar{
+.hide_scrollbar::-webkit-scrollbar {
   display: none;
   -ms-overflow-style: none;
-  scrollbar-width: none;
+  scrollbar-width: 0;
 }
 
 .scrollbar_x::-webkit-scrollbar {
   height: 5px;
 }
-.scrollbar_x::-webkit-scrollbar-thumb{
+
+.scrollbar_x::-webkit-scrollbar-thumb {
   background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
 }
 
@@ -408,6 +454,7 @@ input:checked+.slider:before {
 footer li {
   font-size: 12px;
   color: black;
+  font-family: 'Gotham Pro Light';
 }
 
 /* height css for layout accordint to the navbar height in pixels */
@@ -422,9 +469,32 @@ footer li {
 }
 
 /* CSS for product listing page image sections */
-.bglisting_black{
+.bglisting_black {
   background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 89.11%, rgba(0, 0, 0, 0) 100%);
 }
-.bglisting_white{
+
+.bglisting_white {
   background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
+}
+
+/* css for size giude button */
+.btn_width{
+  width: calc(100vw - 72px);
+}
+
+
+
+/* Admin Area Start  */
+
+#input_text_2{
+  width: auto !important ;
+  width:  300%  !important  ;
+}
+
+/* Admin Area END  */
+
+.border_gradient_2{
+  border-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%) 20 ;
+  /* border-width: 1px; */
+  /* border-style: solid */
 }

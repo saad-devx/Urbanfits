@@ -5,14 +5,14 @@ export default function ProductInfo() {
     return (
         <CutomerServices>
             <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">PRODUCT INFORMATON</h1>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">PRODUCT INFO</h1>
                 <p>
                     All our products contain labels with material content and care instructions.<br />
                     Care Instructions, Size Guides, Luggage
                 </p>
             </div>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">CARE INSTRUCTIONS</h1>
                 <p>
                     Every Tommy Hilfiger product is labelled with optimal care instructions. Please read and follow the care instructions carefully. You can also find the same instructions on our online product page. Alternatively, you can always contact our customer service if in doubt. Please either:<br />
@@ -22,7 +22,7 @@ export default function ProductInfo() {
                     Please pay particular attention to the care instructions on our denim products as they go through a unique process to create special effects, giving each item a different character.
                 </p>
             </div>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">SIZE GUIDES</h1>
                 <p>
                     Please, read the product description carefully and refer to the size charts which are located on the right hand side of the product in the detailed product description.<br />
@@ -31,7 +31,7 @@ export default function ProductInfo() {
                     Size Guide Children
                 </p>
             </div>
-            <div className="w-full p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full p-4 lg:p-7 mb-6 text-sm bg-gray-50 rounded-lg font_gotham_light">
                 <h1 className="mb-3 font_gotham_medium tracking-widest">LUGGAGE</h1>
                 <p>
                     Warranty information for luggage<br />

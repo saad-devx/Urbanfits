@@ -3,25 +3,23 @@ import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import Accordians from '@/components/accordians';
-import SuggestionCard from '@/components/cards/suggestionPicCard';
-import LinkBtn from '@/components/buttons/link_btn';
-import Button from '@/components/buttons/simple_btn';
-import Link from 'next/link';
+import Shoppingcard, { SmallShoppingcard } from '@/components/cards/shoppingcard';
 import ProductCarousel from '@/components/carousels/productCarousel';
 import Cutomization from '@/components/modals/cutomization';
 import toaster from '@/utils/toast_function';
 // image imports
-import image1 from '../../../public/card imgs/card img6.jpg'
-import image2 from '../../../public/card imgs/card img11.jpg'
-import image3 from '../../../public/card imgs/card img8.jpg'
+import image1 from '@/public/card imgs/card img14.png'
+import image2 from '@/public/card imgs/card img17.jpg'
+import image3 from '@/public/card imgs/card img2.jpg'
+import image4 from '@/public/card imgs/card img3.jpg'
+import Button from '@/components/buttons/simple_btn';
 
 export default function Product(props) {
     console.log(props.response.product)
     const productData = { ...props.response.product, id: props.response.product._id }
     const router = useRouter()
     const [product, setProduct] = useState(productData.variants[0])
-    const [sizevalue, setSizevalue] = useState(null)
+    const [sizevalue, setSizevalue] = useState(product.size[0])
 
     useEffect(() => {
         const { color } = router.query
@@ -30,7 +28,7 @@ export default function Product(props) {
             return variant.color_name === color
         })
         setProduct(newProduct[0])
-        setSizevalue(null)
+        setSizevalue(newProduct[0].size[0])
     }, [router.query.color])
     // confguring the Quantity conter of the prodcut
     const [quantity, setQuantity] = useState(1)
@@ -45,6 +43,10 @@ export default function Product(props) {
     const onSizeChange = (e) => {
         setSizevalue(e.target.value)
     }
+    const onColorChange = (e) => {
+        console.log(e.target.value)
+        router.push(`/products/product/${productData.id}?color=${e.target.value}`)
+    }
 
     // setting up teh toggle fucntion and state for the size cutomization modal 
     const [modal4, setModal4] = useState(false)
@@ -56,87 +58,115 @@ export default function Product(props) {
     }
     //Cart function
     const { addItem } = useCart()
+    const addToCart = () => {
+        addItem({
+            product_id: productData.id,
+            id: product._id,
+            name: productData.name,
+            price: productData.price,
+            shipping_fee: productData.shipping_detials.fees,
+            stock: product.stock,
+            size: sizevalue,
+            sizes: product.size,
+            color: product.color_name,
+            images: product.images
+        }, quantity);
+        toaster('success', 'Your items has been added to the cart')
+    }
+    // temporary product data to show the  similar items cards
+    const si_product = {
+        name: 'Sample Product title - UF',
+        price: '76.99',
+        variants: [1, 2, 3, 4]
+    }
     return (
         <>
             <Cutomization show={modal4} toggleModal={toggleModal} toaster={toaster} />
             <Navbar />
-            <section className={`bg-white w-full h-full font_gotham transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
+            <main className={`bg-white w-full h-full font_gotham transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
                     <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
-                        <div className="w-full flex flex-col lg:flex-row lg:justify-between lg:space-x-2">
-                            <div className="w-full lg:w-[65%] mb-3">
+                        <div className="w-full flex flex-col lg:flex-row lg:justify-between">
+                            <p className="lg:hidden text-[10px]">Main Page / Catalogue / {'T - Shirts'}</p>
+                            <div className="w-full lg:w-[55%] mb-3 mt-6 md:mt-10 lg:mt-0">
+                                <h1 className="lg:hidden w-full mb-2 font_gotham_medium text-xs md:text-lg">{productData.name.toUpperCase()}</h1>
                                 <ProductCarousel img_array={product.images} />
-                                <div className="w-full my-5">
-                                    <h3 className="text-3xl mb-4">{productData.name}</h3>
-                                    <h4 className="Slug text-xl">{productData.slug && productData.slug}</h4>
-                                    <p className="description font_gotam_light my-3">{productData.description}</p>
-                                </div>
                             </div>
-                            <div className="details border border-red-700 w-full lg:w-[30%] m-0 space-y-3">
-                                <div className="w-full h-28 p-4 rounded-2xl bg-white items-center">
-                                    <small className="w-full">Choose a Color:</small>
-                                    <span className="w-full my-3 mx-auto flex flex-wrap justify-center space-x-3">
-                                        {productData.variants.map(variant => {
-                                            let { color, color_name } = variant
-                                            return <Link style={{ background: color }} name={color} title={color_name} href={`/products/product/${productData.id}?color=${color_name}`} className={`w-6 h-6 mb-3 cursor-pointer rounded-full ${router.query.color === color_name ? `scale-105 opacity-100` : 'opacity-70 border-2'} transition-all`} ></Link>
-                                        })}
-                                    </span>
-                                </div>
 
-                                <div className="w-full h-28 p-4 rounded-2xl bg-white items-center">
-                                    <small className='w-full' >{product.stock} Pieces left in Stock</small>
-                                    <div className="flex justify-end my-5">
-                                        <span className="w-full flex justify-end">
-                                            <span onClick={(e) => { changeQuantity(e) }} name="decrement" className="fa-solid fa-circle-minus text-2xl cursor-pointer active:-translate-x-2 transition-all text-gray-300"></span>
-                                            <input type="number" readOnly className='w-1/6 h-auto text-sm text-center mx-3 border-none outline-none pointer-events-none' value={quantity} />
-                                            <span onClick={(e) => { changeQuantity(e) }} name="increment" className="fa-solid fa-circle-plus text-2xl cursor-pointer active:translate-x-2 transition-all text-gray-300"></span>
-                                        </span>
+                            <div className="details w-full lg:w-[40%]">
+                                <h1 className="hidden lg:block w-full mb-7 font_gotham_bold lg:text-3xl xl:text-[32px] tracking-[0.15em]">{productData.name.toUpperCase()}</h1>
+                                <h2 className="hidden lg:block font_gotham_black lg:text-3xl xl:text-[32px] tracking-[0.15em]">${productData.price}</h2>
+
+                                <div className="w-full my-8 flex flex-col md:flex-row justify-between">
+                                    <div className="w-full lg:w-48pr mb-5 lg:mb-0 flex flex-col">
+                                        <h3 className="mb-1 lg:mb-3 font_gotham_medium italic text-[10px] lg:text-xs text-gray-300 tracking-[0.15em]">DESCRIPTION</h3>
+                                        <p className="font_gotham text-xs 2xl:text-sm">{productData.description}</p>
+                                    </div>
+                                    <div className="w-full lg:w-48pr flex flex-col font_gotham text-xs 2xl:text-sm">
+                                        <h3 className="mb-1 lg:mb-3 font_gotham_medium italic text-[10px] lg:text-xs text-gray-300 tracking-[0.15em]">SUMMARY</h3>
+                                        <p className='capitalize'>Color: {router.query.color}</p>
+                                        <p>In Stock: {product.stock}</p>
+                                        <p>Height of model: 177 cm. / 5′ 9″</p>
                                     </div>
                                 </div>
 
-                                <div className="w-full h-32 p-4 rounded-2xl bg-white items-center">
-                                    <span className="w-full flex justify-between">
-                                        <small>Size</small>
-                                        <small><Link href="/product/sizechart" className='underline'>Size Chart</Link></small>
-                                    </span>
-                                    <span className="w-full mt-3 flex flex-wrap justify-end pill-container text-xs">
-                                        {product.size.map((value) => {
-                                            return <>
-                                                <input type="radio" id={value} onChange={onSizeChange} name="size" value={value} />
-                                                <label className="selector border border-gray-400 rounded-full w-10 mb-2 mr-1 px-1 py-1" htmlFor={value}>{value}</label>
-                                            </>
+                                <div className="w-full gap-2 lg:gap-4 flex flex-wrap justify-between">
+                                    <div className="flex flex-col max-w-[320px] w-48pr mx-auto">
+                                        <select type="select" defaultValue={product.size} onChange={onSizeChange} className="w-full h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
+                                            {product.size.map(size => {
+                                                return <option value={size}>{size}</option>
+                                            })}
+                                        </select>
+                                        <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
+                                    </div>
+                                    <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="max-w-[320px] w-48pr h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
+                                        {productData.variants.map(variant => {
+                                            let { color, color_name } = variant
+                                            return <option value={color_name}>{color_name.toUpperCase()}</option>
                                         })}
+                                    </select>
+                                    <span className="max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 font_gotham_light border flex justify-between items-center">
+                                        <span onClick={(e) => { changeQuantity(e) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
+                                        <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
+                                        <span onClick={(e) => { changeQuantity(e) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                                     </span>
+                                    <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr mx-auto border text-xs text-black">
+                                        Customization
+                                    </button>
+                                    <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
+                                    <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
                                 </div>
-                                <div className="flex justify-between p-3 text-lg">
-                                    <p>Price :</p> <p>${productData.price}</p>
+
+                                <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">
+                                    <h1 className="font_gotham_medium text-xs text-gray-300 italic">MATCH WITH</h1>
+                                    <div className="hidden lg:grid w-full grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
+                                        <SmallShoppingcard product={si_product} img={image3} />
+                                        <SmallShoppingcard product={si_product} img={image4} />
+                                        <SmallShoppingcard product={si_product} img={image1} />
+                                    </div>
+                                    <div className="lg:hidden w-full grid grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
+                                        <Shoppingcard product={si_product} img={image3} />
+                                        <Shoppingcard product={si_product} img={image4} />
+                                        <Shoppingcard product={si_product} img={image1} />
+                                        <Shoppingcard classes='md:hidden' product={si_product} img={image1} />
+                                    </div>
                                 </div>
-                                <div className="w-full">
-                                    <Button onclick={() => { addItem({ product_id: productData.id, id: product._id, name: productData.name, price: productData.price, shipping_fee: productData.shipping_detials.fees, stock: product.stock, size: sizevalue ? sizevalue : product.size[0], sizes: product.size, color: product.color_name, images: product.images }, quantity); toaster('success', 'Your items has been added to the cart') }} classes="w-full" my="my-2" >Add to Cart</Button>
-                                    <Button onclick={toggleModal} name="modal4" classes="w-full" my="my-2" >Customization</Button>
-                                </div>
-                                {/* Accordian */}
-                                <Accordians />
                             </div>
                         </div>
 
-                        <div className="w-full mt-10">
-                            <h3 className="text-2xl font_gotham_medium tracking-widest">MORE TO EXPLORE</h3>
-                            <div className="w-full my-5 flex flex-wrap">
-                                {["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"].map(link => {
-                                    return <LinkBtn href={`/products/${link}`} classes="mr-3 px-[7%] md:px-[4%] border border-gray-400" my="my-1" text="text" bg="bg-white" >{link}</LinkBtn>
-                                })}
-                            </div>
-                            <div className="flex flex-wrap justify-between md:justify-center lg:justify-between space-y-4 lg:space-y-0">
-                                <SuggestionCard href="/products/Ready to Wear" btnValue="Shope Now" title="Ready to Wear" img={image1} />
-                                <SuggestionCard href="/products/Bags" btnValue="Shope Now" title="Bags" img={image2} />
-                                <SuggestionCard href="/products/Shoes" btnValue="Shope Now" title="Shoes" img={image3} />
+                        <div className="hidden md:block w-full mt-36">
+                            <h3 className="text-xl lg:text-[26px] font_gotham_bold tracking-widest">SIMILAR ITEMS</h3>
+                            <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                                <Shoppingcard product={si_product} img={image1} />
+                                <Shoppingcard product={si_product} img={image2} />
+                                <Shoppingcard product={si_product} img={image1} />
+                                <Shoppingcard classes='hidden lg:block' product={si_product} img={image2} />
                             </div>
                         </div>
                     </section>
                 </div>
                 <Footer />
-            </section>
+            </main>
         </>
     )
 }
@@ -145,10 +175,10 @@ export async function getServerSideProps(context) {
     const { p_id } = await context.query
     // let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
     let response = {
-        product:{
+        product: {
             "seo_detials": {
                 "title": "Vintage Shirt",
-                "description": "cool and cheap affordable Vintage T-Shirt, newest item of this season. Stop staring and buy now",
+                "description": "Round neck waistcoat featuring front welt pockets, contrast trims, a pleat in the back and metal appliqué fastening in the front.",
                 "meta_keywords": [
                     "T-Shirt",
                     "Men",
@@ -165,7 +195,7 @@ export async function getServerSideProps(context) {
             "_id": "6416bff63b9101bcd0595a31",
             "name": "Vintage T-Shirt",
             "price": 78.99,
-            "description": "cool and cheap affordable Vintage T-Shirt, newest item of this season. Stop staring and buy now",
+            "description": "Round neck waistcoat featuring front welt pockets, contrast trims, a pleat in the back and metal appliqué fastening in the front.",
             "category": "T-Shirt",
             "slug": "Cool vintage Men T-shirt",
             "tags": [
@@ -183,6 +213,21 @@ export async function getServerSideProps(context) {
                     "color": "#000000",
                     "color_name": "black",
                     "images": [
+                        {
+                            "public_id": "1",
+                            "url": "https://i.etsystatic.com/36407195/r/il/fb3379/4333913052/il_1140xN.4333913052_pau8.jpg",
+                            "_id": "6416bff63b9101bcd0595a33"
+                        },
+                        {
+                            "public_id": "2",
+                            "url": "https://i.etsystatic.com/36407195/r/il/4cfe4e/4381306977/il_1140xN.4381306977_ee7f.jpg",
+                            "_id": "6416bff63b9101bcd0595a34"
+                        },
+                        {
+                            "public_id": "1",
+                            "url": "https://i.etsystatic.com/36407195/r/il/fb3379/4333913052/il_1140xN.4333913052_pau8.jpg",
+                            "_id": "6416bff63b9101bcd0595a33"
+                        },
                         {
                             "public_id": "1",
                             "url": "https://i.etsystatic.com/36407195/r/il/fb3379/4333913052/il_1140xN.4333913052_pau8.jpg",
@@ -215,7 +260,22 @@ export async function getServerSideProps(context) {
                             "public_id": "2",
                             "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg",
                             "_id": "6416bff63b9101bcd0595a37"
-                        }
+                        },
+                        {
+                            "public_id": "2",
+                            "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg",
+                            "_id": "6416bff63b9101bcd0595a37"
+                        },
+                        {
+                            "public_id": "1",
+                            "url": "https://i.etsystatic.com/6920740/r/il/574a03/3912644169/il_1140xN.3912644169_hz8i.jpg",
+                            "_id": "6416bff63b9101bcd0595a36"
+                        },
+                        {
+                            "public_id": "2",
+                            "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg",
+                            "_id": "6416bff63b9101bcd0595a37"
+                        },
                     ],
                     "size": [
                         "S",

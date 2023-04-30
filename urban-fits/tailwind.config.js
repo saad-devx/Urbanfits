@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     extend: {
       width: {
+        '15' : '60px',
         '35pr': '35%',
         '90pr': '90%',
         '70pr': '70%',
@@ -28,7 +29,8 @@ module.exports = {
         '90vh': '90vh',
       },
       letterSpacing: {
-        expand: '0.2em'
+        expand: '0.2em',
+        vast: '0.3em'
       },
       fontSize: {
         '10px': '10px',
