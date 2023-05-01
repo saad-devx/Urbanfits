@@ -6,7 +6,6 @@ import Image from "next/image";
 import Button from "@/components/buttons/simple_btn";
 import { BasketIcon } from "@/public/sidebaricons/BasketIcon";
 import Navbar from "@/components/navbar";
-import AccountMenu from "@/components/accountmenu";
 import CustomTab from "@/components/CustomTabs/CustomTab";
 
 import { profileTabData } from "@/mock/customtabData";

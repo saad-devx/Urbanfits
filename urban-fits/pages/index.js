@@ -21,7 +21,6 @@ import image4 from "@/public/card imgs/card img13.png";
 import image5 from "@/public/card imgs/card img14.png";
 import image6 from "@/public/card imgs/card img15.png";
 import image7 from "@/public/card imgs/card img16.png";
-import listingBg2 from '@/public/listing banners/listingbg2.jpg'
 
 export default function Home() {
     // states and function for modals
@@ -157,7 +156,7 @@ export default function Home() {
                         </section> */}
                     </div>
                 </main>
-                <ListingShopSection classes='translate-y-5 mt-10' img={listingBg2} whiteTheme />
+                <ListingShopSection classes='translate-y-5 mt-10' whiteTheme />
                 <Footer />
             </main>
         </>
