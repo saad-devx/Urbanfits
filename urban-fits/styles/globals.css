@@ -474,7 +474,13 @@ footer li {
 }
 
 .bglisting_white {
-  background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
+  background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74%, rgba(243, 239, 238, 0) 100%);
+}
+
+@media screen and (max-width: 1000px) {
+  .bglisting_black{
+    background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 74%, rgba(0, 0, 0, 0) 100%);
+  }
 }
 
 /* css for size giude button */
