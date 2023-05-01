@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Navbar from "../../components/navbar";
-import AccountMenu from "../../components/accountmenu";
+
 
 const Option = (props) => {
   const router = useRouter();

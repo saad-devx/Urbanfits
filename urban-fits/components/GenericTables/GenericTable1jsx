@@ -1,0 +1,170 @@
+import React from "react";
+import Pagination from "@mui/material/Pagination";
+import styled from "styled-components";
+import { useTable, useBlockLayout, useSortBy, usePagination, useExpanded } from "react-table";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import "./GenericTable2.scss";
+
+const Styles = styled.div`
+
+
+
+
+  /* padding: 1rem; */
+
+  table {
+    /* border-collapse: collapse;
+    table-layout: fixed; */
+    width: 100% !important;
+
+    tbody td div {
+      border: 1px solid black;
+      border-width: 1px 0;
+      margin-top: 10px;
+      padding: 10px;
+    }
+
+    tbody tr:hover div {
+      background-color: gainsboro;
+    }
+
+    td:first-child div {
+      border-left-width: 1px;
+    }
+    td:last-child div {
+      border-right-width: 1px;
+    }
+  }
+`;
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // Purple and green play nicely together.
+      main: '#11cb5f',
+    },
+    secondary: {
+      // This is green.A700 as hex.
+      main: '#77CBB7',
+    },
+  },
+});
+
+
+const GenericTable2 = (props) => {
+  const { columns, data } = props;
+  const [subRowIndex, setSubRowIndex] = React.useState()
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    gotoPage,
+    state: { pageIndex },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 5, expanded: true },
+    },
+    useBlockLayout,
+    useSortBy,
+    useExpanded,
+    usePagination,
+
+  );
+
+  const setGridTemplateColumns = (columns, i) => {
+
+    let frs = ["1fr", "2fr","1fr", "2fr","1fr"]
+
+    console.log("INDEX = ", i, subRowIndex)
+    let makeString = "";
+    columns.map((col, i) => {
+      makeString = makeString + " 1fr ";
+    });
+    if (props.addActionColumn) makeString = makeString + " 0.2fr";
+    if (i === subRowIndex) return { gridTemplateColumns: makeString, border: "5px solid red" }
+    return { gridTemplateColumns: makeString };
+  };
+
+  return (
+    <div {...getTableProps()} className="table-container2" id="style-1">
+      <div className="list-header">
+        {headerGroups.map((headerGroup) => (
+          <ul
+            {...headerGroup.getHeaderGroupProps()}
+            style={setGridTemplateColumns(headerGroup.headers, 0)}
+          >
+            {headerGroup.headers?.map((column, index) => (
+              <li
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+              >
+                {column.render("Header")}
+                <span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
+              </li>
+            ))}
+            {props.addActionColumn && <li style={{ color: "#171A3C" }}>...</li>}
+          </ul>
+        ))}
+      </div>
+
+      <div {...getTableBodyProps()} className="list-data">
+        {page.map((row, i) => {
+          prepareRow(row);
+          return (
+            <ul {...row.getRowProps()} style={setGridTemplateColumns(row.cells, i)}>
+              {row.cells.map((cell) => {
+                return (
+                  <li style={{ backgroundColor: 'red' }}
+                    {...cell.getCellProps()}
+
+                  >
+                    {/* {console.log("rowGap", cell.value.subrow)} */}
+                    {/* {()=>setSubRowIndex("kkk")} */}
+                    <div   >{cell.render("Cell")}</div>
+                  </li>
+                );
+              })}
+              {props.addActionColumn && <li style={{ color: "#171A3C" }}>...</li>}
+
+            </ul>
+          );
+        })}
+      </div>
+
+      {/* <div style={{ marginTop: "20px" }}>
+          <AppPagination paginationInfo={paginationInfo} onPaginationChange={setPaginationInfo} />
+        </div> */}
+
+      <div className="pagination">
+        <button className="prev_next" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"Prev"}
+        </button>{" "}
+        <ThemeProvider theme={theme} >
+          <Pagination
+            color="secondary"
+            shape="rounded"
+            count={pageCount}
+            page={pageIndex + 1}
+            onChange={(e, value) => {
+              console.log(value);
+              gotoPage(Number(value) - 1);
+            }}
+          />
+        </ThemeProvider>
+        <button className="prev_next" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {"Next"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default GenericTable2;
