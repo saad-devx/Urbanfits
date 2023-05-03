@@ -1,141 +1,164 @@
-export const stocksTransactionsColumns = [
+import Image from "next/image";
+
+import tableAvatarMan1 from "@/public/tableAvatarMan1.png"
+import tableAvatarMan2 from "@/public/tableAvatarMan2.png"
+import tableAvatarMan3 from "@/public/tableAvatarMan3.png"
+import tableAvatarGirl1 from "@/public/tableAvatarGirl1.png"
+import tableAvatarGirl2 from "@/public/tableAvatarGirl2.png"
+import ActionButton from "@/components/GenericTables/ActionButton";
+
+
+export const userListTableColumns = [
     {
-      accessor: "symbol",
-      Header: "Symbol",
-      Cell: ({ cell: { value }, row }) => <CryptoCellAssetDate row={row} value={value}  cssClass="stock_data_symbol" />
+      accessor: "profile",
+      Header: "Profile",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
   
     },
     {
-      accessor: "description",
-      Header: "Description",
-      Cell: ({ cell: { value }, row }) => <CryptoCellAll value={value} row={row} cssClass="black_bold" />
+      accessor: "name",
+      Header: "Name",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
   
   
     },
     {
-      accessor: "quantity",
-      Header: "Quantity",
-      Cell: ({ cell: { value }, row }) => <CryptoCellAll value={value} row={row} cssClass="blue_gradient" />
+      accessor: "email",
+      Header: "Email",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
   
     },
     {
-      accessor: "balance",
-      Header: "Balance",
-      Cell: ({ cell: { value }, row }) => <CryptoCellAll value={value} row={row} cssClass="blue_gradient" />
+      accessor: "phone",
+      Header: "Phone",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
   
     },
-    // {
-    //   accessor: "value",
-    //   Header: "Value",
-    //   Cell: ({ cell: { value } }) => <span  > {value} </span>
+    {
+      accessor: "totalbuy",
+      Header: "Total Buy",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
   
-    // },
+    },
+    {
+      accessor: "status",
+      Header: "Status",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
+  
+    },
+    {
+      accessor: "joinon",
+      Header: "Join On",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
+  
+    },
+    {
+      accessor: "action",
+      Header: "Action",
+      Cell: ({ cell: { value }, row }) => <span> {value} </span>
+  
+    },
   ];
   
-  export const stocksTransactionsData = [
+  export const userListTableData = [
+    
     {
-      symbol: { subrow: false, icon: <AppleIcon />, value: "3 Aug 2022" },
-      description: { subrow: false, value: "AAPL Alsthisssss" },
-      quantity: { subrow: false, value: 456 },
-      balance: { subrow: false, value: 20 },
-      subRows: [
-        {
-          symbol: { subrow: true, header: "Date", subvalue: "3 Aug 2022" },
-          description: { subrow: true, subvalue: "AAPL Alsthisssss", header: "Time" },
-          quantity: { subrow: true, subvalue: 456, header: "Quantity" },
-          balance: { subrow: true, subvalue: 20, header: "Balance" },
-        }
-      ]
-    },
-    {
-      symbol: { subrow: false, icon: <JPMIcon />, value: "4 Aug 2022" },
-      description: { subrow: false, value: "AAPL Alsthisssss" },
-      quantity: { subrow: false, value: 456 },
-      balance: { subrow: false, value: 20 },
-      subRows: [
-        {
-          symbol: { subrow: true, header: "Date", subvalue: "3 Aug 2022" },
-          description: { subrow: true, subvalue: "AAPL Alsthisssss", header: "Time" },
-          quantity: { subrow: true, subvalue: 456, header: "Quantity" },
-          balance: { subrow: true, subvalue: 20, header: "Balance" },
-        }
-      ]
-    },
-    {
-      symbol: { subrow: false, icon: <MSFIcon />, value: "8 Aug 2022" },
-      description: { subrow: false, value: "AAPL Alsthisssss" },
-      quantity: { subrow: false, value: 456 },
-      balance: { subrow: false, value: 20 },
-      subRows: [
-        {
-          symbol: { subrow: true, header: "Date", subvalue: "3 Aug 2022" },
-          description: { subrow: true, subvalue: "AAPL Alsthisssss", header: "Time" },
-          quantity: { subrow: true, subvalue: 456, header: "Quantity" },
-          balance: { subrow: true, subvalue: 20, header: "Balance" },
-        }
-      ]
-    },
-    {
-      symbol: { subrow: false, icon: <VIcon />, value: "2 Aug 2022" },
-      description: { subrow: false, value: "AAPL Alsthisssss" },
-      quantity: { subrow: false, value: 456 },
-      balance: { subrow: false, value: 20 },
-      subRows: [
-        {
-          symbol: { subrow: true, header: "Date", subvalue: "3 Aug 2022" },
-          description: { subrow: true, subvalue: "AAPL Alsthisssss", header: "Time" },
-          quantity: { subrow: true, subvalue: 456, header: "Quantity" },
-          balance: { subrow: true, subvalue: 20, header: "Balance" },
-        }
-      ]
-    },
-    {
-      symbol: { subrow: false, icon: <TeslaIcon />, value: "9 Aug 2022" },
-      description: { subrow: false, value: "AAPL Alsthisssss" },
-      quantity: { subrow: false, value: 456 },
-      balance: { subrow: false, value: 20 },
-      subRows: [
-        {
-          symbol: { subrow: true, header: "Date", subvalue: "3 Aug 2022" },
-          description: { subrow: true, subvalue: "AAPL Alsthisssss", header: "Time" },
-          quantity: { subrow: true, subvalue: 456, header: "Quantity" },
-          balance: { subrow: true, subvalue: 20, header: "Balance" },
-        }
-      ]
-    },
-    {
-      symbol: "6 Aug 2022",
-      description: "AAPL F",
-      quantity: 934,
-      balance: 20,
+      profile: <Image src={tableAvatarMan1} /> ,
+      name: "John",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/> ,
   
     },
     {
-      symbol: "1 Aug 2022",
-      description: "AAPL G",
-      quantity: 765,
-      balance: 20,
+      profile: <Image src={tableAvatarGirl1} /> ,
+      name: "Artur",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
   
     },
     {
-      symbol: "3 Aug 2022",
-      description: "AAPL H",
-      quantity: 353,
-      balance: 20,
+      profile: <Image src={tableAvatarGirl2} /> ,
+      name: "Arthur",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
   
     },
     {
-      symbol: "7 Aug 2022",
-      description: "AAPL J",
-      quantity: 867,
-      balance: 20,
+      profile: <Image src={tableAvatarMan2} /> ,
+      name: "Doe John",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
   
     },
     {
-      symbol: "4 Aug 2022",
-      description: "AAPL K",
-      quantity: 276,
-      balance: 20,
+      profile: <Image src={tableAvatarMan3} /> ,
+      name: "Willson",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
+  
+    },
+    {
+      profile: <Image src={tableAvatarMan1} /> ,
+      name: "Dikra Willson",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
+  
+    },
+    {
+      profile: <Image src={tableAvatarGirl1} /> ,
+      name: "Sara Khan",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
+  
+    },
+    {
+      profile: <Image src={tableAvatarGirl2} /> ,
+      name: "Natellie",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
+  
+    },
+    {
+      profile: <Image src={tableAvatarMan2} /> ,
+      name: "Mark Gomis",
+      email: "Bilawalashraf@gmail.com",
+      phone: "+91-989-325-8652",
+      totalbuy: "1845",
+      status: "Active",
+      joinon: "Active",
+      action: <ActionButton/>,
   
     },
   ];

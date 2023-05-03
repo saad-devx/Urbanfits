@@ -9,8 +9,9 @@ export const InputSelect = (props) => {
          <span className={`font_futura_light text-[12px] leading-[17px]  text-[${props.postlabelcolor||"#E4E4E4" }]  ml-[5px] `} > {props?.postlabel} </span> 
          </label>
         
-    <select  className={`  text-[12px]
-     ${props.width || "w-[100px]"} ${props.label? "mt-[12px]" : "mt-[0px]" }  h-[44px] px-[8px] py-[13.5px] border-[1px] rounded-lg outline-none  bg-transparent `}
+    <select  className={`  
+     ${props.width || "w-[100px]"} ${props.label? "mt-[12px]" : "mt-[0px]" } ${props.height || "h-[44px]" }  px-[8px]  border-[1px] ${props.rounded || "rounded-lg" }  outline-none 
+     ${props.bg || "bg-transparent" }  `}
         placeholder={` ${props.placeholder || "placeholder" } `}
      >
         {props.options?.map((opt, index)=>(

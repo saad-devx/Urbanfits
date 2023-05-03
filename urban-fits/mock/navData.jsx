@@ -118,11 +118,11 @@ export const sidebarItems = [
     subrows: [
       {
         label: "All users",
-        navlink: "/admin/user/userprofile",
+        navlink: "/admin/user/userlist",
       },
       {
         label: "Add New User",
-        navlink: "/admin",
+        navlink: "/admin/user/userprofile",
       },
       {
         label: "Change Password",
