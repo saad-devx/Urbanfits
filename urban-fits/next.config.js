@@ -18,8 +18,8 @@ const nextConfig = {
     SMTP_PASSWORD: "",
     SMTP_SENDER_EMAIL: "",
     //Stripe keys
-    STRIPE_PUBLISHABLE_KEY: "pk_test_51MkU2DHF1bkFLgckS5AUrOHFjoJAPxAW1RxkHDfriM4uDbVAM3MeVu3XOVfy7BqUGx9kiu9CMQxqbdRxoWSXMO8c003NMTN2AT",
-    STRIPE_SECRET_KEY: "sk_test_51MkU2DHF1bkFLgck4aQNuqKxTOrWh2uSlx8AxKJucUFGPl4cDSpjLhhn4ynhISjShrTqGhl2U4A1UZJFe0RRclyo00hWAfnqeB"
+    STRIPE_PUBLISHABLE_KEY: "",
+    STRIPE_SECRET_KEY: ""
   },
   async headers() {
     return [
