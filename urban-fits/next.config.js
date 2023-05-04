@@ -8,7 +8,7 @@ const nextConfig = {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     HOST: "http://localhost:3000",
     // HOST: "https://urbanfits.vercel.app",
-    SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFisBrand",
+    SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
     GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
     GOOGLE_CLIENT_SECRET: "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",
@@ -17,6 +17,9 @@ const nextConfig = {
     SMTP_USER: "",
     SMTP_PASSWORD: "",
     SMTP_SENDER_EMAIL: "",
+    //Stripe keys
+    STRIPE_PUBLISHABLE_KEY: "pk_test_51MkU2DHF1bkFLgckS5AUrOHFjoJAPxAW1RxkHDfriM4uDbVAM3MeVu3XOVfy7BqUGx9kiu9CMQxqbdRxoWSXMO8c003NMTN2AT",
+    STRIPE_SECRET_KEY: "sk_test_51MkU2DHF1bkFLgck4aQNuqKxTOrWh2uSlx8AxKJucUFGPl4cDSpjLhhn4ynhISjShrTqGhl2U4A1UZJFe0RRclyo00hWAfnqeB"
   },
   async headers() {
     return [
