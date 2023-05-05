@@ -16,14 +16,11 @@ export default function CheckoutForm() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (!stripe) return toaster('error', 'Error occurred while making payment session, Please try again later if issue persists.');
-
+        if (!stripe) return;
         const clientSecret = new URLSearchParams(window.location.search).get(
             "payment_intent_client_secret"
         );
-
-        if (!clientSecret) return toaster('error', 'Error occurred while making payment session, Please try again later if issue persists.');
-
+        if (!clientSecret) return;
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
             switch (paymentIntent.status) {
                 case "succeeded":

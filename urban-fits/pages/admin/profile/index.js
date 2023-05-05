@@ -18,7 +18,7 @@ export default function Profile({children}) {
   return (
     <Sidebaradmin>
       <div className={` mt-[40px] flex items-center font_futura `}>
-        <Image width="150px" height="150px" src={ProfilePic} />
+        <Image width="150px" height="150px" alt="profile picture" src={ProfilePic} />
 
         <div className="ml-[30px]">
           <p className=" text-[22px] mb-0  "> Bilawal </p>

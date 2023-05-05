@@ -98,7 +98,7 @@ const authentication = () => {
                   </p>
 
                   <div className="flex items-center gap-[17px] " >
-                    <Image width="150px" height="150px" src={QrCode} />
+                    <Image width="150px" height="150px" alt="qr code" src={QrCode} />
 
                     <div className="grid grid-cols-1 gap-[15px]" >
                       <p className="text-[14px] font-[500] " >Enter Google Authenticator Code</p>

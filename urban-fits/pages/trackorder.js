@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
-import Button from '@/components/buttons/simple_btn'
+import dynamic from 'next/dynamic'
+const Navbar = dynamic(()=> import ('@/components/navbar'))
+const Footer = dynamic(()=> import ('@/components/footer'))
+const Button = dynamic(()=> import ('@/components/buttons/simple_btn'))
 
 // imports for the schema and validation
 import { useFormik } from 'formik';
