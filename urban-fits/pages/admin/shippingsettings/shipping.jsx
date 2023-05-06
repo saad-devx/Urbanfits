@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Sidebaradmin from "../sidebar";
 import CardAdmin from "@/components/cards/cardadmin";
-import QuestionIcon from "@/public/icons/QuestionIcon";
-import WebIcon from "@/public/icons/WebIcon";
-import MenueIcon from "@/public/icons/MenueIcon";
+import {QuestionIcon} from "@/public/icons/QuestionIcon";
+import {WebIcon} from "@/public/icons/WebIcon";
+import {MenueIcon} from "@/public/icons/MenueIcon";
 // import QuestionIcon from '@/public/icons/QuestionIcon'
 import Button from "@/components/buttons/simple_btn";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
