@@ -5,8 +5,6 @@ import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
 import GenericTable1 from "@/components/GenericTables/GenericTable1";
 import {
-  stocksTransactionsColumns,
-  stocksTransactionsData,
   userListTableColumns,
   userListTableData,
 } from "@/mock/tablesdata";

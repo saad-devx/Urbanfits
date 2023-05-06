@@ -16,72 +16,67 @@ export default function myprofile() {
             Basic Information
           </p>
 
-          <div className="flex" style={{ marginTop: "38px" }}>
-            <div>
-              <InputText label="Name" width="w-[255px]" placeholder="Name" />
-            </div>
-            <div className="ml-[20px]">
-              <InputSelect
-                label="Role"
-                width="w-[150px]"
-                options={["Staff", "Other"]}
-              />
-            </div>
-          </div>
+          <div className="grid grid-cols-2 gap-[20px] " style={{ marginTop: "38px" }}>
+            <div className="flex flex-col gap-[20px]" >
+              <InputText label="Name"
+              //  width="w-[255px]" 
+               placeholder="Name" />
 
-          <div className="flex " style={{ marginTop: "20px" }}>
-            <div>
               <InputText
                 label="User Name"
-                width="w-[255px]"
+                // width="w-[255px]"
                 placeholder="username"
               />
+              <InputText label="Email "
+              //  width="w-[255px]"
+                placeholder="email" />
+                <div className=" grid grid-cols-3 gap-[22.5px] " style={{ marginTop: "20px" }}>
+              
+                <InputSelect
+                  label="Date of Birth "
+                  // width="w-[70px]"
+                  options={["20", "19"]}
+                />
+           
+             
+                <InputSelect
+                  label="&nbsp;"
+                  // width="w-[70px]"
+                  options={["Jan", "Other"]}
+                />
+             
+              
+                <InputSelect
+                  label="&nbsp;"
+                  // width="w-[70px]"
+                  options={["1998", "Other"]}
+                />
+            
+                </div>
+
             </div>
-            <div className="ml-[20px]">
+            <div className="flex flex-col gap-[20px]" >
+              <InputSelect
+                label="Role"
+                // width="w-[150px]"
+                options={["Staff", "Other"]}
+              />
               <InputSelect
                 label="Status"
-                width="w-[150px]"
+                // width="w-[150px]"
                 options={["Active", "Other"]}
               />
-            </div>
-          </div>
-
-          <div className="flex " style={{ marginTop: "20px" }}>
-            <div>
-              <InputText label="Email " width="w-[255px]" placeholder="email" />
-            </div>
-            <div className="ml-[20px]">
-              <InputSelect
+               <InputSelect
                 label="Department"
-                width="w-[150px]"
+                // width="w-[150px]"
                 options={["Development", "Other"]}
               />
             </div>
           </div>
 
-          <div className="flex gap-[20px] " style={{ marginTop: "20px" }}>
-            <div className="">
-              <InputSelect
-                label="Date of Birth "
-                width="w-[70px]"
-                options={["20", "19"]}
-              />
-            </div>
-            <div className="">
-              <InputSelect
-                label="&nbsp;"
-                width="w-[70px]"
-                options={["Jan", "Other"]}
-              />
-            </div>
-            <div className="">
-              <InputSelect
-                label="&nbsp;"
-                width="w-[70px]"
-                options={["1998", "Other"]}
-              />
-            </div>
-          </div>
+         
+
+        
           <div style={{ marginTop: "20px" }}>
             <p className="font_futura font-semibold  text-[14px] ">Gender</p>
             <div className="flex gap-[28px] " style={{ marginTop: "20px" }}>

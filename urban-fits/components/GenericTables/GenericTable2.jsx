@@ -43,7 +43,15 @@ const Styled = styled.div`
     border-spacing: 0;
     text-align: left;
 
+    tbody{
+        tr{
+            :nth-child(odd){
+                background-color: #f2f2f2;
+              }
+        }
+    }
     tr {
+        
       :last-child {
 
         td {
@@ -59,7 +67,7 @@ const Styled = styled.div`
       // align-items: center;
       margin: 0;
       padding: 0.5rem 13px 0.5rem 13px ;
-      // border-bottom: 1px solid black;
+    //   border-bottom: 1px solid black;
       // border-right: 1px solid black;
 
       /* The secret sauce */
@@ -69,7 +77,7 @@ const Styled = styled.div`
       &.collapse {
         width: 0.0000000001%;
       }
-
+      
       :last-child {
         border-right: 0;
       }
@@ -82,9 +90,8 @@ const Styled = styled.div`
 
 
 
-const GenericTable1 = (props) => {
+const GenericTable2 = (props) => {
   const { columns, data } = props;
-  const [subRowIndex, setSubRowIndex] = React.useState();
 
   const {
     getTableProps,
@@ -130,61 +137,14 @@ const GenericTable1 = (props) => {
 
   return (
     <>
-      <div className="flex justify-between">
-        <div className="flex gap-[15px] items-center ">
-          <p className="text-[16px] font-[400] "> Show</p>
-          <select
-            className={`  
-      w-[60px]   mt-[0px]  h-[34px] px-[8px]  border-[1px] rounded-lg outline-none  bg-transparent `}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <p className="text-[16px] font-[400] "> Entries</p>
-        </div>
-
-        <div className="flex items-center gap-[13px] " >
-          {props.options ? 
-          <InputSelect
-          height="h-[40px]"
-            width="w-[175px]"
-            bg="bg-[#FAFAFA]"
-            rounded="rounded-[25px]"
-            options={props.options}
-          />
-          :""
-          }
-          <div id={styles.searchdiv} >
-            <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
-            {/* <i className="material-symbols-outlined absolute">search</i> */}
-            <span className="absolute">
-              <SearchIcon />
-            </span>
-
-            <input
-              type="text"
-              id="search"
-              onChange={onchange}
-              className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
-              placeholder="Search (Keyword, etc)"
-            />
-          </div>
-        </div>
-      </div>
+     
 
   <Styled>
       <div className="tableWrap">
         <table {...getTableProps()}>
           <thead  >
             {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr {...headerGroup.getHeaderGroupProps()} className="border-b-[1px] border-[#DADADA] " >
                 {headerGroup.headers.map(column => (
                   <th 
                     {...column.getHeaderProps(
@@ -195,7 +155,7 @@ const GenericTable1 = (props) => {
                   >
                     <span className="flex items-center gap-[5px] text-[15px] font-[400] text-[#0000004a] ">
                     {column.render("Header")}
-                    <span>
+                    {/* <span>
                       {column.isSorted ? (
                         column.isSortedDesc ? (
                           <SortUpIcon />
@@ -207,7 +167,7 @@ const GenericTable1 = (props) => {
                           <SortUpIcon /> <SortDownIcon />
                         </span>
                       )}
-                    </span>
+                    </span> */}
                   </span>
                   </th>
                 ))}
@@ -219,7 +179,7 @@ const GenericTable1 = (props) => {
             {page.map((row, i) => {
               prepareRow(row)
               return (
-                <tr className={` ${i==0 ?"" : "border-t-[1px]" }  `}
+                <tr className={`  border-b-[1px] border-[#DADADA]  `}
                 {...row.getRowProps()}  >
                   {row.cells.map(cell => {
                     return (
@@ -243,7 +203,7 @@ const GenericTable1 = (props) => {
       */}
       </div>
    
-      <div className="flex justify-between items-center" >
+      {/* <div className="flex justify-between items-center" >
           <span className="flex text-[14px] font-[400] " >
             <p> Showing &nbsp; </p> 
             <p>
@@ -259,10 +219,10 @@ const GenericTable1 = (props) => {
                     nextPage={nextPage}
                     previousPage={previousPage}
         />
-      </div>
+      </div> */}
       </Styled>
     </>
   );
 };
 
-export default GenericTable1;
+export default GenericTable2;
