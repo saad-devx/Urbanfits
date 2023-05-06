@@ -112,19 +112,25 @@ export default function Product(props) {
 
                                 <div className="w-full gap-2 lg:gap-4 flex flex-wrap justify-between">
                                     <div className="flex flex-col max-w-[320px] w-48pr mx-auto">
-                                        <select type="select" defaultValue={product.size} onChange={onSizeChange} className="w-full h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
-                                            {product.size.map(size => {
-                                                return <option value={size}>{size}</option>
-                                            })}
-                                        </select>
+                                        <div className='relative w-full h-9 lg:h-[52px] border'>
+                                            <span className="select_container after:right-[10%]"></span>
+                                            <select type="select" defaultValue={product.size} onChange={onSizeChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
+                                                {product.size.map(size => {
+                                                    return <option value={size}>{size}</option>
+                                                })}
+                                            </select>
+                                        </div>
                                         <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
                                     </div>
-                                    <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="max-w-[320px] w-48pr h-9 lg:h-[52px] font_gotham_medium tracking-widest text-xs px-5 border outline-none">
-                                        {productData.variants.map(variant => {
-                                            let { color, color_name } = variant
-                                            return <option value={color_name}>{color_name.toUpperCase()}</option>
-                                        })}
-                                    </select>
+                                    <div className='relative max-w-[320px] w-48pr h-9 lg:h-[52px] border'>
+                                        <span className="select_container after:right-[10%]"></span>
+                                        <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
+                                            {productData.variants.map(variant => {
+                                                let { color, color_name } = variant
+                                                return <option value={color_name}>{color_name.toUpperCase()}</option>
+                                            })}
+                                        </select>
+                                    </div>
                                     <span className="max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 font_gotham_light border flex justify-between items-center">
                                         <span onClick={(e) => { changeQuantity(e) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                                         <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />

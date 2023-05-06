@@ -8,6 +8,16 @@ import Image from 'next/image'
 import EmptyCartVector from "../public/cart/emptyCart.svg"
 import CartBg from '@/public/cart/cartbg.jpg'
 
+const Select = () => {
+    return <>
+        <select className='select_element' id="mySelect" name="mySelect">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select>
+    </>
+}
+
 // Cart item function
 function CartItem(props) {
     const { product } = props
@@ -41,11 +51,15 @@ function CartItem(props) {
             <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_gotham_medium tracking-widest">
                 <h3 className="w-[145px] font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()}</h3>
                 <h3 className="w-[100px]">NAVY BLUE</h3>
-                <select type="select" defaultValue={product.size} className="w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
-                    {product.sizes.map(size => {
-                        return <option value={size}>{size}</option>
-                    })}
-                </select>
+                {/* <Select /> */}
+                <div className='relative'>
+                    <span className="select_container after:right-[20%]"></span>
+                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
+                        {product.sizes.map(size => {
+                            return <option value={size}>{size}</option>
+                        })}
+                    </select>
+                </div>
                 <span className="w-24 h-11 px-5 font_gotham_light border flex justify-between items-center">
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                     <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
@@ -85,7 +99,7 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-white w-full fixed ${props.top_0?'h-screen top-0':'layout_height top-[50px]'} right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
+            <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'layout_height top-[50px]'} right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ?
                         <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >

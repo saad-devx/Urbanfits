@@ -20,7 +20,7 @@ export default function MoreToExplore() {
         }, 800);
     }
     return (
-        <div className="w-full mt-10">
+        <div className="w-full mt-12 lg:mt-20 xl:mt-28">
             <h3 className="text-[10px] md:text-base text-center md:text-left font_gotham_medium tracking-vast">MORE TO EXPLORE</h3>
             <div className="w-full mt-5 flex flex-wrap">
                 {exploreItems.map(query => {
@@ -28,12 +28,12 @@ export default function MoreToExplore() {
                 })}
             </div>
             <section className="w-full">
-                {loading ? <span className="self-center w-full h-[225px] md:h-[290px] lg:h-[430px] flex justify-center items-center font_gotham_medium text-gray-500 text-[10px] md:text-base tracking-vast">LOADING...</span> :
+                {loading ? <span className="self-center w-full h-[225px] md:h-[290px] lg:h-[430px] flex justify-center items-center font_gotham_medium text-gray-500 text-[10px] md:text-base tracking-vast">Loading...</span> :
                     <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
-                        <Shoppingcard product={product} img={image} />
-                        <Shoppingcard product={product} img={image} />
-                        <Shoppingcard product={product} img={image} />
-                        <Shoppingcard product={product} img={image} />
+                        {[1, 2, 3, 4].map((items, i) => {
+                            if (window.matchMedia('(min-width: 640px) and (max-width: 967px)').matches && i >= 3) return
+                            else return <Shoppingcard key={i} product={product} img={image} />
+                        })}
                     </div>}
             </section>
         </div>

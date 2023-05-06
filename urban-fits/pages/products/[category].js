@@ -34,7 +34,7 @@ export default function productlisting(props) {
                 <section className='' >
                     <CatalogueCarousel />
                     <div className='w-full p-5 md:p-7 lg:p-10 lg:pt-9 h-full font_gotham text-left pt-9' >
-                        <div className="w-full my-6 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                        <div className="w-full my-6 md:my-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
                             {/* <div className="w-full flex my-4 items-center">
                                 <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
                             </div> */}
@@ -51,7 +51,7 @@ export default function productlisting(props) {
                                 return <Shoppingcard margin='0' product={product} img={productData.img} />
                             })}
                         </div>
-                        <button className="group flex items-center w-auto mx-auto font_gotham_bold text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300">
+                        <button className="lg:mt-20 group flex items-center w-auto mx-auto font_gotham_bold text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300">
                             <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
                             <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
                             &nbsp;MORE

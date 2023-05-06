@@ -126,8 +126,8 @@ export default function Contact() {
                         </div>
                     </form>
                     <div className="w-full flex flex-col justify-center items-center">
-                        <InfoCard href="#" title="CUSTOMER CARE" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." btnValue="GET IN TOUCH" />
-                        <InfoCard href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="SEE YOUR FAQs" />
+                        {/* <InfoCard href="#" title="CUSTOMER CARE" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." btnValue="GET IN TOUCH" />
+                        <InfoCard href="/faq" title="FAQ" value="Find all the answers to the frequently asked questions below." btnValue="SEE YOUR FAQs" /> */}
                         {/* <InfoCard href="#" title="PRIVACY POLICY" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="Read our Policy" /> */}
                     </div>
                 </section>

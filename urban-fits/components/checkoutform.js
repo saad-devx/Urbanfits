@@ -70,7 +70,7 @@ export default function CheckoutForm() {
     };
 
     return (
-        <form id="payment-form" className={`${styles.Stripe_form} w-full lg:w-[30vw] my-5 p-5 xl:p-10 font_gotham space-y-5`} onSubmit={handleSubmit}>
+        <form id="payment-form" className={`${styles.Stripe_form} w-full my-5 p-5 xl:p-10 font_gotham space-y-5`} onSubmit={handleSubmit}>
             <LinkAuthenticationElement
                 id="link-authentication-element" value={email}
                 onChange={(e) => setEmail(e.target.value)}

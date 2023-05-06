@@ -118,10 +118,10 @@ export default function Personalinfo() {
             </Head>
             {loader}
             <User>
-                <form className="mt-10 font_gotham space-y-5" onReset={handleReset} onSubmit={handleSubmit} >
+                <form className="mt-10 font_gotham gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                     <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >PERSONAL INFORMATION</h1>
-                    <div className="flex justify-between w-full ">
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="flex flex-col md:flex-row justify-between w-full ">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
                             {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                             <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 <option >Title</option>
@@ -129,17 +129,17 @@ export default function Personalinfo() {
                                 <option id="Mrs" value="Mrs.">Ms</option>
                             </select>
                         </div>
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                         </div>
                     </div>
-                    <div className="flex justify-between w-full">
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="flex flex-col md:flex-row justify-between w-full">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
                         </div>
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                             <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 <option disabled >Gender</option>
@@ -153,8 +153,8 @@ export default function Personalinfo() {
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="gender" id="gender" value={values.gender} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div> */}
                     </div>
-                    <div className="flex justify-between w-full">
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="flex flex-col md:flex-row justify-between w-full">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                             <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 {countryCodes.map((item) => {
@@ -163,7 +163,7 @@ export default function Personalinfo() {
                                 })}
                             </select>
                         </div>
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                         </div>
@@ -206,11 +206,11 @@ export default function Personalinfo() {
                             <AddressContainer tag="billing" />
                         </div>
                     </div>
-                    <div className="w-full flex flex-col justify-center items-center">
+                    {/* <div className="w-full flex flex-col justify-center items-center">
                         <InfoCard title="FAQ" value="Find all the answers to the frequently asked questions below." href='/faq' btnValue="Get In Touch" />
                         <InfoCard title="CUSTOMER CARE" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." href='/customerservices/returns&refund' btnValue="See Your FAQs" />
                         <InfoCard title="PRIVACY POLICY" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="See Your FAQs" />
-                    </div>
+                    </div> */}
                 </div>
             </User>
         </>

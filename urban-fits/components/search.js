@@ -10,7 +10,7 @@ export default function Search(props) {
     const [query, setQuery] = useState("")
     const [results, setResults] = useState([])
     const onchange = async (e) => {
-        setLoader(<h5 className="text-base lg:text-3xl text-gray-300 w-full text-center tracking-expand my-10">LOADING...</h5>)
+        setLoader(<h5 className="text-base lg:text-3xl text-gray-300 w-full text-center tracking-expand my-10">Loading...</h5>)
         try {
             setQuery(e.target.value)
             let results = await (await fetch(`${process.env.HOST}/api/search?q=${query}`)).json()
@@ -37,7 +37,7 @@ export default function Search(props) {
                             <input onChange={onchange} value={query} type="text" className={`w-full outline-none text-center ${query !== "" ? "lg:pb-6 lg:text-[32px]" : "lg:pb-10 lg:text-7xl"} text-lg pb-6 font_gotham_light placeholder:text-gray-300 transition-all duration-700`} placeholder='What are you looking for?' />
                         </div>
                     </section>
-                    {results.length == 0 && query!=='' ? <h5 className="text-base lg:text-3xl text-gray-300 w-full text-center tracking-expand my-10">NO SEARCH RESULTS FOUND!</h5>:null}
+                    {results.length == 0 && query!=='' ? <h5 className="text-base lg:text-3xl text-gray-300 w-full text-center tracking-expand my-10">No Search Results Found!</h5>:null}
                     {loader}
                     <section className={`${query === "" ? "h-0" : "h-full"} w-full justify-self-end self-center transition-all duration-1000 overflow-y-scroll lg:overflow-y-hidden lg:overflow-x-scroll scroll-smooth scrollbar_x`}>
                         <div className={`w-full lg:w-[280vw] flex flex-col items-center md:flex-row md:items-start md:justify-start md:flex-wrap lg:flex-nowrap px-5 gap-5 lg:px-10 lg:space-x-5`}>

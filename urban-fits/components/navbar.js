@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
 import Image from 'next/image';
+import ToTopBtn from './buttons/toTopBtn';
 import Logo from '@/public/logos/logo_black.svg'
 
 const ListItem = (props) => {
@@ -19,7 +20,7 @@ const ListItem = (props) => {
 
 const SocialIcons = ({ classes }) => {
     return (
-        <div className={`${classes} w-full lg:w-auto flex justify-between space-x-20 text-base text-black`}>
+        <div className={`${classes} w-full md:w-3/5 lg:w-auto md:mx-auto lg:m-0 flex justify-between space-x-20 text-base text-black`}>
             <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>
             <Link href='#' ><i className="fa-brands fa-facebook-f"></i></Link>
             <Link href='#' ><i className="fa-solid fa-paper-plane"></i></Link>
@@ -31,7 +32,7 @@ const SocialIcons = ({ classes }) => {
 export default function Navbar(props) {
 
     const [bars, setBars] = useState('')
-    const [menu, setMenu] = useState('-translate-y-[100vh]')
+    const [menu, setMenu] = useState('-translate-y-[140vh]')
     const [search, setSearch] = useState(false)
     const [cart, setCart] = useState(false)
     const [navBg, setNavBg] = useState('bg-white')
@@ -86,6 +87,7 @@ export default function Navbar(props) {
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
+            <ToTopBtn />
             <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
             <nav id='navbar' className={`${navBg} h-[50px] fixed z-40 top-0 left-0 w-full  p-7 lg:px-14 shadow-sm font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
                 <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
@@ -108,29 +110,29 @@ export default function Navbar(props) {
             <div className={`${menu} w-full layout_height fixed left-0 bottom-0 z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
                 <ul className='w-90pr h-auto list-none flex flex-col gap-[6vh] lg:gap-[10vh] leading-[0.7] lg:leading-[0.74em] font_gotham_bold text-5xl lg:text-8xl'>
                     <li className='w-full border-b flex' >
-                        <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/Women'>Women</ListItem>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[10%] md:px-[15%] lg:px-0' href='/products/Women'>Women</ListItem>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[27%] hidden lg:block' href='/'>Home</ListItem>
                     </li>
-                    <li className='w-full border-b flex lg:hidden' >
+                    <li className='w-full md:px-[15%] lg:px-0 border-b flex justify-end lg:hidden' >
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[27%]' href='/'>Home</ListItem>
                     </li>
                     <li className='w-full border-b flex'>
-                        <ListItem handleMenu={handleMenu} classes='lg:ml-[30%]' href='/products/Men'>Men</ListItem>
+                        <ListItem handleMenu={handleMenu} classes='lg:ml-[30%] md:px-[15%] lg:px-0' href='/products/Men'>Men</ListItem>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%] hidden lg:block' href='/products/Kids'>Kids</ListItem>
                     </li>
-                    <li className='w-full border-b flex lg:hidden'>
+                    <li className='w-full md:px-[15%] lg:px-0 border-b flex justify-end lg:hidden'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/Kids'>Kids</ListItem>
                     </li>
-                    <li className='w-full border-b flex justify-start lg:justify-between lg:px-14' >
-                        <ListItem handleMenu={handleMenu} href='/stories'>Stories</ListItem>
+                    <li className='w-full border-b flex justify-start md:pl-[15%]  lg:justify-between lg:px-14' >
+                        <ListItem handleMenu={handleMenu} className="" href='/stories'>Stories</ListItem>
                         <ListItem handleMenu={handleMenu} classes='hidden lg:block' href='/sales'>Sale</ListItem>
                     </li>
-                    <li className='w-full border-b flex lg:hidden'>
+                    <li className='w-full md:px-[15%] lg:px-0 border-b flex justify-end lg:hidden'>
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%]' href='/products/sale'>Sale</ListItem>
                     </li>
                     <div className="w-full h-[20vh] lg:h-20 2xl:h-28 mt-0 flex flex-col lg:flex-row justify-between lg:items-end z-40">
-                        <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
-                        {user && user.email ? <Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link> : <Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>}
+                        <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full md:w-[40vw] group-focus:w-0 h-[2px] bg-black transition-all"></span></button>
+                        {user && user.email ? <Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full md:w-[40vw] group-focus:w-0 h-[2px] bg-black transition-all"></span></Link> : <Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>}
                         <div className="hidden w-full lg:flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
                             <div className='hidden group lg:flex justify-center items-center tracking-[1.5em] text-base'>
                                 {user && user.email ? <Link href='/user/personalinfo' >MY ACCOUNT</Link>
