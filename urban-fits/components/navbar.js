@@ -89,7 +89,7 @@ export default function Navbar(props) {
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <ToTopBtn />
             <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
-            <nav id='navbar' className={`${navBg} h-[50px] fixed z-40 top-0 left-0 w-full  p-7 lg:px-14 shadow-sm font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
+            <nav id='navbar' className={`${navBg} h-[50px] fixed z-40 top-0 left-0 w-full p-7 lg:px-14 2xl:px-16 shadow-sm font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
                 <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
                     <div className={`${bars} menu btn3`}>
                         <div className="icon"></div>

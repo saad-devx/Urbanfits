@@ -29,7 +29,7 @@ export default function MoreToExplore() {
             </div>
             <section className="w-full">
                 {loading ? <span className="self-center w-full h-[225px] md:h-[290px] lg:h-[430px] flex justify-center items-center font_gotham_medium text-gray-500 text-[10px] md:text-base tracking-vast">Loading...</span> :
-                    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                    <div className="w-full h-[225px] md:h-[290px] lg:h-[380px] xl:h-[430px] 2xl:h-[470px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-9 2xl:gap-14">
                         {[1, 2, 3, 4].map((items, i) => {
                             if (window.matchMedia('(min-width: 640px) and (max-width: 967px)').matches && i >= 3) return
                             else return <Shoppingcard key={i} product={product} img={image} />

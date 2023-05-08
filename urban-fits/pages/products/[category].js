@@ -33,8 +33,8 @@ export default function productlisting(props) {
             <main className="w-full pb-20 bg-white flex justify-center font_gotham overflow-hidden">
                 <section className='' >
                     <CatalogueCarousel />
-                    <div className='w-full p-5 md:p-7 lg:p-10 lg:pt-9 h-full font_gotham text-left pt-9' >
-                        <div className="w-full my-6 md:my-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                    <div className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_gotham text-left' >
+                        <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-9 2xl:gap-14">
                             {/* <div className="w-full flex my-4 items-center">
                                 <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
                             </div> */}

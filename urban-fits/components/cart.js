@@ -109,7 +109,7 @@ export default function Cart(props) {
                             <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                         </section>
                         :
-                        <section className='w-full h-full pt-0 lg:p-10 lg:pt-0 text-left' >
+                        <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
                             <div className="relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
                                 <Image src={CartBg} className='h-full lg:w-full lg:h-auto object-cover object-center' />
                                 <h1 className="w-full text-center absolute top-1/2 -translate-y-1/2 font_gotham_bold text-white text-2xl md:text-[32px] tracking-[0.15em] lg:tracking-expand my-10">SHOPPING CART</h1>
