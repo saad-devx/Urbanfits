@@ -46,6 +46,7 @@ const neworder = () => {
       <div className="grid grid-cols-1">
         {/* <div className="flex flex-col  "> */}
           <GenericTable1
+          border={true}
             columns={newOrderTableColumns}
             data={newOrderTableData}
             options={["All Orders", "others"]}

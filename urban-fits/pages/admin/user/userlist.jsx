@@ -47,6 +47,7 @@ const userlist = () => {
         <div className="grid grid-cols-1">
           {/* <div className="flex flex-col  "> */}
             <GenericTable1
+            border={true}
               columns={userListTableColumns}
               data={userListTableData}
             />

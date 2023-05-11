@@ -33,7 +33,7 @@ export default function Sidebaradmin({ children }) {
     setSubrowopen(!subrowopen);
   };
 
-  const [sidebaropen, setSidebaropen] = React.useState(false);
+  const [sidebaropen, setSidebaropen] = React.useState(true);
   const handleSidebar = () => {
     if (sidebaropen == true) {
       
@@ -223,7 +223,7 @@ export default function Sidebaradmin({ children }) {
         <div className={` flex justify-between  items-center `}>
           <div className={`flex items-center `}>
             <label className={`${styles.switch2} w-[40px] h-[22.25px] `}>
-              <input onClick={handleSidebar} type="checkbox" />
+              <input onClick={handleSidebar} type="checkbox" defaultChecked={true} />
               <span className={styles.slider}></span>
             </label>
             <div id={styles.searchdiv} className={` ml-[29.53px] `}>

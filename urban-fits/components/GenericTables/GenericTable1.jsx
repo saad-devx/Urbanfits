@@ -43,35 +43,37 @@ const Styled = styled.div`
     border-spacing: 0;
     text-align: left;
 
-    tr {
-      :last-child {
-
-        td {
-          border-bottom: 0;
+    thead { 
+      tr{ 
+        th {
+          padding: 17px 0 24px 0 ;
+          }
         }
       }
-    }
 
 
-    th,
-    td {
-      // text-align: center;
-      // align-items: center;
-      margin: 0;
-      padding: 0.5rem 13px 0.5rem 13px ;
-      // border-bottom: 1px solid black;
-      // border-right: 1px solid black;
+    tbody { 
+      tr{ 
+        td {
+          // text-align: center;
+          // align-items: center;
+          margin: 0;
+          padding: 18px 0 18px 0 ;
+          // border-bottom: 1px solid black;
+          // border-right: 1px solid black;
 
-      /* The secret sauce */
-      /* Each cell should grow equally */
-      // width: 1%;
-      /* But "collapsed" cells should be as small as possible */
-      &.collapse {
-        width: 0.0000000001%;
-      }
+          /* The secret sauce */
+          /* Each cell should grow equally */
+          // width: 1%;
+          /* But "collapsed" cells should be as small as possible */
+          &.collapse {
+            width: 0.0000000001%;
+          }
 
-      :last-child {
-        border-right: 0;
+          :last-child {
+            border-right: 0;
+          }
+        }
       }
     }
   }
@@ -219,7 +221,7 @@ const GenericTable1 = (props) => {
             {page.map((row, i) => {
               prepareRow(row)
               return (
-                <tr className={` ${i==0 ?"" : "border-t-[1px]" }  `}
+                <tr className={` ${i==0 ?"" : props.border? "border-t-[1px]": "" }  `}
                 {...row.getRowProps()}  >
                   {row.cells.map(cell => {
                     return (

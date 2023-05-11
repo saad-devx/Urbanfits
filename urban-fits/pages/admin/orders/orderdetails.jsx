@@ -7,6 +7,14 @@ import Button from "@/components/buttons/simple_btn";
 import GenericTable1 from "@/components/GenericTables/GenericTable1";
 import GenericTable2 from "@/components/GenericTables/GenericTable2";
 import { orderProductDetailTableColumns, orderProductDetailTableData } from "@/mock/tablesdata";
+import { DaimondIcon } from "@/public/sidebaricons/DaimondIcon";
+import { CartIcon } from "@/public/sidebaricons/CartIcon";
+import { CartLIcon } from "@/public/sidebaricons/CartLIcon";
+import { ReplaceLIcon } from "@/public/icons/ReplaceLIcon";
+import { TruckIcon } from "@/public/sidebaricons/TruckIcon";
+import { GiftLIcon } from "@/public/icons/GiftLIcon";
+import { TruckLIcon } from "@/public/icons/TruckLIcon";
+import { PassengerLIcon } from "@/public/icons/PassengerLIcon";
 
 const orderdetails = () => {
   return (
@@ -157,7 +165,54 @@ const orderdetails = () => {
           <p>Status: Checking Quality </p>
           <p>Expected Date: Dec 09, 2021</p>
         </div>
+
+        <div className="grid grid-cols-9 gap-[13.55px] mt-[20px] " >
+          <div className="flex flex-col items-center gap-[15px] " >
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg_btn_gold_2 
+               rounded-[10px] ">
+                          <CartLIcon  /> 
+                </div>
+                <p className="text-center text-[14px] font-[300] " > Confirm Order</p>
+          </div>
+          <span  className="mt-[25px] gradient_background h-[1px] "  />
+          <div className="flex flex-col items-center gap-[15px] " >
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg_btn_gold_2 
+               rounded-[10px] ">
+                          <ReplaceLIcon/>
+                </div>
+                <p className="text-center text-[14px] font-[300] " > Confirm Order</p>
+          </div>
+          <span  className="mt-[25px] gradient_background h-[1px] "  />
+          <div className="flex flex-col items-center gap-[15px] " >
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg_btn_gold_2 
+               rounded-[10px] ">
+                          <GiftLIcon/>
+                </div>
+                <p className="text-center text-[14px] font-[300] " > Confirm Order</p>
+          </div>
+          <span  className="mt-[25px] gradient_background h-[1px] "  />
+          <div className="flex flex-col items-center gap-[15px] " >
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg-[#DADADA]
+               rounded-[10px] ">
+                          <TruckLIcon/>
+                </div>
+                <p className="text-center text-[14px] font-[300] " > Confirm Order</p>
+          </div>
+          <span  className="mt-[25px] bg-[black] h-[1px] "  />
+          <div className="flex flex-col items-center gap-[15px] " >
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg-[#DADADA]
+               rounded-[10px] ">
+                          <PassengerLIcon/>
+                </div>
+                <p className="text-center text-[14px] font-[300] " > Confirm Order</p>
+          </div>
+
+
+
+        </div>
+
       </div>
+
 
 
       </div>
@@ -168,3 +223,4 @@ const orderdetails = () => {
 };
 
 export default orderdetails;
+

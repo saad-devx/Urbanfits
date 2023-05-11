@@ -81,12 +81,12 @@ export const sidebarItems = [
       {
         label: "All Orders",
 
-        navlink: "/admin",
+        navlink: "/admin/orders/neworder",
       },
       {
-        label: "Addnew",
+        label: "orderhistory",
 
-        navlink: "/admin",
+        navlink: "/admin/orders/orderhistory",
       },
     ],
   },

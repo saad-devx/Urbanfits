@@ -46,6 +46,7 @@ const orderhistory = () => {
       <div className="grid grid-cols-1">
         {/* <div className="flex flex-col  "> */}
           <GenericTable1
+          border={true}
             columns={orderHistoryTableColumns}
             data={orderHistoryTableData}
           />

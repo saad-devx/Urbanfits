@@ -10,6 +10,9 @@ import sneakers from "@/public/sneakers.png";
 
 import ActionButton from "@/components/GenericTables/ActionButton";
 import StatusBadge from "@/components/GenericTables/StatusBadge";
+import { VisaIcon } from "@/public/icons/VisaIcon";
+import { AmexIcon } from "@/public/icons/AmexIcon";
+import { MastercardIcon } from "@/public/icons/MastercardIcon";
 
 export const userListTableColumns = [
   {
@@ -671,3 +674,241 @@ export const orderProductDetailTableData = [
   },
 
 ];
+
+
+
+export const transactionTableColumns = [
+  {
+    accessor: "transid",
+    Header: "Trans-ID",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "paid",
+    Header: "Paid",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "method",
+    Header: "Method",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "date",
+    Header: "Date",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "date2",
+    Header: "Date",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+]
+
+export const transactionTableData = [
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <AmexIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <MastercardIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  {
+    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
+    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
+    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
+    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+     flex justify-center items-center cursor-pointer " >
+    <p className="text-[14px] font-[400]"> Details </p>
+    </span>
+  },
+  
+]
+
+
+
+export const invoiceTableColumns = [
+  {
+    accessor: "id",
+    Header: "#",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "image",
+    Header: "Image",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "item",
+    Header: "Item",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "description",
+    Header: "Description",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "quantity",
+    Header: "Quantity",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "unicost",
+    Header: "Uni-Const",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "total",
+    Header: "Total",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+]
+
+export const invoiceTableData = [
+  {
+    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
+    image:  <Image src={smartWatch} /> , 
+    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
+    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
+    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
+    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
+    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
+   
+  },
+  {
+    id:  <p className="text-[14px] font-[400]"> 2</p>, 
+    image:  <Image src={smartWatch} /> , 
+    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
+    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
+    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
+    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
+    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
+   
+  },
+  {
+    id:  <p className="text-[14px] font-[400]"> 3 </p>, 
+    image:  <Image src={smartWatch} /> , 
+    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
+    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
+    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
+    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
+    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
+   
+  },
+  {
+    id:  <p className="text-[14px] font-[400]"> 4 </p>, 
+    image:  <Image src={smartWatch} /> , 
+    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
+    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
+    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
+    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
+    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
+   
+  },
+  {
+    id:  <p className="text-[14px] font-[400]"> 5 </p>, 
+    image:  <Image src={smartWatch} /> , 
+    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
+    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
+    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
+    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
+    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
+   
+  },
+  
+]

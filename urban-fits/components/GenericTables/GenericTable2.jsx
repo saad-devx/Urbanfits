@@ -19,7 +19,13 @@ import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import Pagination from "./Pagination";
 
 
-
+// tbody{
+//   tr{
+//       :nth-child(odd){
+//           background-color: #f2f2f2;
+//         }
+//   }
+// }
 
 
 const Styled = styled.div`
@@ -43,43 +49,40 @@ const Styled = styled.div`
     border-spacing: 0;
     text-align: left;
 
-    tbody{
-        tr{
-            :nth-child(odd){
-                background-color: #f2f2f2;
-              }
+    thead { 
+      tr{ 
+        th {
+          padding: 17px 10px 24px 10px ;
+          }
         }
-    }
-    tr {
-        
-      :last-child {
+      }
 
+
+    tbody { 
+      tr{ 
+        :nth-child(odd){
+          background-color: #f2f2f2;
+        }
         td {
-          border-bottom: 0;
+          // text-align: center;
+          // align-items: center;
+          margin: 0;
+          padding: 18px 10px 18px 10px ;
+          // border-bottom: 1px solid black;
+          // border-right: 1px solid black;
+
+          /* The secret sauce */
+          /* Each cell should grow equally */
+          // width: 1%;
+          /* But "collapsed" cells should be as small as possible */
+          &.collapse {
+            width: 0.0000000001%;
+          }
+
+          :last-child {
+            border-right: 0;
+          }
         }
-      }
-    }
-
-
-    th,
-    td {
-      // text-align: center;
-      // align-items: center;
-      margin: 0;
-      padding: 0.5rem 13px 0.5rem 13px ;
-    //   border-bottom: 1px solid black;
-      // border-right: 1px solid black;
-
-      /* The secret sauce */
-      /* Each cell should grow equally */
-      // width: 1%;
-      /* But "collapsed" cells should be as small as possible */
-      &.collapse {
-        width: 0.0000000001%;
-      }
-      
-      :last-child {
-        border-right: 0;
       }
     }
   }
