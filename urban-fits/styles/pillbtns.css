@@ -45,5 +45,5 @@
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    z-index: 50;
+    z-index: 5
 }

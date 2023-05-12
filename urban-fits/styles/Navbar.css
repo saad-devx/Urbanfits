@@ -65,3 +65,7 @@
 .btn3:hover {
     cursor: pointer;
 }
+
+.open_nav{
+    transform: translateY(calc(100vh + 50px));
+}

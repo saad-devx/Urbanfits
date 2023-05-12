@@ -1,19 +1,18 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Newsletter from './modals/newsletter'
 import Image from 'next/image'
 import truck from '../public/truck.svg'
 
 export default function Footer() {
     const [modal2, setModal2] = useState(false)
-
-    const toggleModal = (e) => {
-        if (e.target.name === "modal2") {
-            if (modal2 === false) return setModal2(true)
-            if (modal2 === true) return setModal2(false)
-        }
+    const toggleModal = () => {
+        if (modal2 === false) return setModal2(true)
+        if (modal2 === true) return setModal2(false)
     }
     return (
         <>
+            <Newsletter show={modal2} toggleModal={toggleModal} />
             <footer className="border-t w-full pt-10 font_gotham text-gotham-black bg-white">
                 <section className="pt-10 md:p-5 lg:p-24 lg:pt-28 lg:pb-16 md:pb-7">
                     <div className="w-full h-2/6 pb-7 px-6 md:pb-16 lg:px-[5%] border-b border-b-gray-200 flex flex-row flex-wrap justify-between items-start">
@@ -88,6 +87,12 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link href='/sales'>Sales</Link>
+                            </li>
+                            <li>
+                                <button onClick={toggleModal} name="modal2" className='cursor-pointer' >Newsletter</button>
+                            </li>
+                            <li>
+                                <Link href='/user/personalinfo'>My Account</Link>
                             </li>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">

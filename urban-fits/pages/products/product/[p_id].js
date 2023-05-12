@@ -50,15 +50,16 @@ export default function Product(props) {
 
     // setting up teh toggle fucntion and state for the size cutomization modal 
     const [modal4, setModal4] = useState(false)
-    const toggleModal = (e) => {
-        if (e.target.name === "modal4") {
+    const toggleModal = (e, name) => {
+        if (e?.target?.name === "modal4" || name === "modal4") {
             if (modal4 === false) return setModal4(true)
             if (modal4 === true) return setModal4(false)
         }
     }
     //Cart function
-    const { addItem } = useCart()
+    const { addItem, inCart } = useCart()
     const addToCart = () => {
+        if(inCart(product._id)) return toaster('info', 'This item is already in the cart!')
         addItem({
             product_id: productData.id,
             id: product._id,
@@ -111,7 +112,7 @@ export default function Product(props) {
                                 </div>
 
                                 <div className="w-full gap-2 lg:gap-4 flex flex-wrap justify-between">
-                                    <div className="flex flex-col max-w-[320px] w-48pr mx-auto">
+                                    <div className="flex flex-col max-w-[320px] w-48pr">
                                         <div className='relative w-full h-9 lg:h-[52px] border'>
                                             <span className="select_container after:right-[10%]"></span>
                                             <select type="select" defaultValue={product.size} onChange={onSizeChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
@@ -136,11 +137,11 @@ export default function Product(props) {
                                         <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
                                         <span onClick={(e) => { changeQuantity(e) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                                     </span>
-                                    <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr mx-auto border text-xs text-black">
+                                    <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr border text-xs text-black">
                                         Customization
                                     </button>
                                     <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
-                                    <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
+                                    <Button onclick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
                                 </div>
 
                                 <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">

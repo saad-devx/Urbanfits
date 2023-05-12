@@ -32,7 +32,7 @@ const SocialIcons = ({ classes }) => {
 export default function Navbar(props) {
 
     const [bars, setBars] = useState('')
-    const [menu, setMenu] = useState('-translate-y-[140vh]')
+    const [menu, setMenu] = useState('')
     const [search, setSearch] = useState(false)
     const [cart, setCart] = useState(false)
     const [navBg, setNavBg] = useState('bg-white')
@@ -40,28 +40,27 @@ export default function Navbar(props) {
     const handleMenu = () => {
         if (bars === '') {
             setBars('open')
-            setMenu('')
+            setMenu('open_nav')
             setSearch(false)
             setCart(false)
         }
         if (bars === 'open') {
             setBars('')
-            setMenu('-translate-y-[100vh]')
+            setMenu('')
         }
     }
     const toggleSearch = () => {
         if (search === false) {
             setCart(false)
-            setMenu()
             setBars('')
-            setMenu('-translate-y-[100vh]')
+            setMenu('')
             return setSearch(true)
         }
         if (search === true) return setSearch(false)
     }
     const toggleCart = () => {
         if (cart === false) {
-            setMenu('-translate-y-[100vh]')
+            setMenu('')
             setBars('')
             setSearch(false)
             return setCart(true)
@@ -86,7 +85,7 @@ export default function Navbar(props) {
         <>
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
-            <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
+            <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} hidden lg:block right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <ToTopBtn />
             <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
             <nav id='navbar' className={`${navBg} h-[50px] fixed z-40 top-0 left-0 w-full p-7 lg:px-14 2xl:px-16 shadow-sm font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
@@ -97,7 +96,7 @@ export default function Navbar(props) {
                     <span className='hidden lg:block tracking-[1.5em]'>MENU</span>
                 </button>
                 <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex justify-center items-center text-center tracking-[1.5em]' ><span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span>&nbsp;SRCH<span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span></button>
-                <button onClick={toggleCart} className='group flex justify-center items-center gap-5 lg:gap-10' >
+                <button onClick={toggleCart} id='cart-btn' className='group flex justify-center items-center gap-5 lg:gap-10' >
                     <div className="flex">
                         <span className=" w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
                         <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
@@ -107,7 +106,7 @@ export default function Navbar(props) {
                 </button>
             </nav>
 
-            <div className={`${menu} w-full layout_height fixed left-0 bottom-0 z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-700'} bg-white shadow-lg`}>
+            <div className={`${menu} w-full layout_height fixed left-0 top-[-100vh] z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-1000'} ease-[cubic-bezier(1,0.35,0.15,1)] bg-white shadow-lg`}>
                 <ul className='w-90pr h-auto list-none flex flex-col gap-[6vh] lg:gap-[10vh] leading-[0.7] lg:leading-[0.74em] font_gotham_bold text-5xl lg:text-8xl'>
                     <li className='w-full border-b flex' >
                         <ListItem handleMenu={handleMenu} classes='lg:ml-[10%] md:px-[15%] lg:px-0' href='/products/Women'>Women</ListItem>

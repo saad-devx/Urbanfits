@@ -102,48 +102,48 @@ export default function Home() {
                             </div>
                         </section>
                         {/* Collection Section */}
-                        <div className="w-full px-5 md:px-7 lg:px-10 flex justify-between items-center">
+                        <div className="w-full px-5 md:px-7 lg:px-14 flex justify-between items-center">
                             <h2 className="font_gotham_medium text-sm lg:text-[20px] tracking-expand" >NEW COLLECTION</h2>
                             <Link href="products/New In" className="flex items-center group">
                                 <span className="w-10 h-[2px] group-hover:w-16 mr-4 bg-black transition-all" ></span>
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
-                        <section id="section2" className="box_2 w-full px-5 md:px-7 lg:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                        <section id="section2" className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                             <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image5} />
                             <Shoppingcard margin='0' product={product} img={image6} />
                             <Shoppingcard margin='0' product={product} img={image7} />
                         </section>
                         {/* Shopping Card Section */}
-                        <div className="box_1 w-full mt-10 lg:mt-20 px-5 md:px-7 lg:px-10 flex items-center mb-3 text-sm lg:text-[20px] leading-3 font_gotham_medium tracking-expand"><h3>URBAN FITS COLLECTION&nbsp;</h3><span className="w-14 md:w-20 h-[2px] mx-1 bg-black transition-all"></span></div>
-                        <section id="section3" className="w-full h-screen md:h-auto lg:h-[85vh] px-5 md:px-7 lg:px-10 flex flex-col lg:flex-row justify-between gap-y-5 font_gotham">
+                        <div className="box_1 w-full mt-10 lg:mt-20 px-5 md:px-7 lg:px-14 flex items-center mb-3 text-sm lg:text-[20px] leading-3 font_gotham_medium tracking-expand"><h3>URBAN FITS COLLECTION&nbsp;</h3><span className="w-14 md:w-20 h-[2px] mx-1 bg-black transition-all"></span></div>
+                        <section id="section3" className="w-full h-screen md:h-auto lg:h-[85vh] px-5 md:px-7 lg:px-14 flex flex-col lg:flex-row justify-between gap-y-5 font_gotham">
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image0} />
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image1} />
                         </section>
                         {/* Shopping Card Section */}
-                        <section id="section4" className="box_2 w-full h-screen md:h-auto lg:h-[85vh] px-5 md:px-7 lg:px-10 my-5 flex flex-col lg:flex-row justify-between gap-y-5 font_gotham">
+                        <section id="section4" className="box_2 w-full h-screen md:h-auto lg:h-[85vh] px-5 md:px-7 lg:px-14 my-5 flex flex-col lg:flex-row justify-between gap-y-5 font_gotham">
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP WOMEN" img={image2} />
                             <PicCard h1="NEW IN" h2="READY TO WEAR" btnValue="SHOP MEN" img={image3} />
                         </section>
                         {/* second carousel */}
-                        {/* <section id="section5" className="relative bg_metal_gold w-full h-[70vh] lg:h-87vh min-h-[300px] my-5 lg:my-10 lg:px-10 lg:pr-0 flex flex-col-reverse lg:flex-row items-center justify-center font_gotham overflow-hidden">
+                        {/* <section id="section5" className="relative bg_metal_gold w-full h-[70vh] lg:h-87vh min-h-[300px] my-5 lg:my-10 lg:px-14 lg:pr-0 flex flex-col-reverse lg:flex-row items-center justify-center font_gotham overflow-hidden">
                             <div className="hidden lg:flex left-0 w-full lg:w-[35vw] lg:h-full md:pl-10 mb-3 lg:m-0 leading-7 flex-col justify-center items-start">
                                 <h2 className="text-xl md:text-3xl lg:text-[32px] word-wrap font_gotham_medium leading-tight">URBAN<br />NEW ARRIVAL</h2>
                             </div>
-                            <div className="h-full w-full lg:w-[65vw] flex items-center">
+                            <div className="h-full w-full lg:w-[65vw] flex items-center"> */}
                                 <HomeCarousel2 />
-                            </div>
+                            {/* </div>
                         </section> */}
                         {/* Collection Section */}
-                        <div className="w-full px-5 md:px-7 lg:px-10 flex justify-between items-center">
+                        <div className="w-full px-5 md:px-7 lg:px-14 flex justify-between items-center">
                             <h2 className="font_gotham_medium text-sm lg:text-[20px] tracking-expand" >NEW COLLECTION</h2>
                             <Link href="products/New In" className="flex items-center group">
                                 <span className="w-10 h-[2px] group-hover:w-16 mr-4 bg-black transition-all" ></span>
                                 <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
-                        <section id="section6" className="w-full my-5 px-5 md:px-7 lg:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                        <section id="section6" className="w-full my-5 px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                             <Shoppingcard margin='0' product={product} img={image4} />
                             <Shoppingcard margin='0' product={product} img={image5} />
                             <Shoppingcard margin='0' product={product} img={image6} />

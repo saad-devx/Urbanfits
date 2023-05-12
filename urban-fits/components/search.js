@@ -28,7 +28,7 @@ export default function Search(props) {
     const { addItem } = useCart()
     return (
         <>
-            <main className={`bg-white w-screen layout_height fixed top-[50px] right-0 z-40 transition-all duration-500 overflow-hidden ${props.search === true ? "" : "-translate-y-full opacity-0"} font_gotham`}>
+            <main className={`bg-white w-screen layout_height fixed top-[50px] right-0 z-40 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-hidden ${props.search === true ? "" : "-translate-y-full opacity-0"} font_gotham`}>
                 <div className="w-full h-full flex flex-col">
                     <button onClick={props.toggleSearch} className="absolute left-8 top-5 lg:top-11 cursor-pointer"><i className="fa-solid fa-arrow-left mr-2"></i>Back</button>
 

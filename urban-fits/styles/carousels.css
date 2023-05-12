@@ -1,3 +1,65 @@
+.hero-slide-pagi li button{
+  background-color: #c5c5c5;
+  height:8px;
+  width:2px;
+  font-size:0px;
+}
+.hero-slide-pagi li.slick-active button{
+  background-color: #000;
+  height:26px;
+}
+.hero-slider .hero-slider-img-inner{
+  opacity: 0;
+  
+}
+.info-dots{
+  display: none;
+}
+.hero-slider .slick-current.slick-active .hero-slider-img-inner:hover .info-dots{
+  display: block;
+}
+.hero-slider .slick-active .hero-slider-img-inner{
+  height: 100%;
+  opacity: 1;
+  transition: .3s ease-out;
+}
+.hero-slider .slick-active + .slick-active .hero-slider-img-inner{
+  height: 80%;
+  padding-right: 2rem;
+}
+
+.hero-slider .slick-active + .slick-active + .slick-active .hero-slider-img-inner{
+  height: 60%;
+  padding-right: 1rem;
+}
+.hero-slider .slick-active + .slick-active + .slick-active + .slick-active .hero-slider-img-inner{
+  height: 50%;
+  padding-right: 0rem;
+  padding-left: 3rem;
+}
+.hero-slider .slick-active + .slick-active + .slick-active + .slick-active + .slick-active .hero-slider-img-inner{
+  height: 35%;
+  margin-left: auto;
+  padding-right: 0rem;
+  transform: translateX(23px);
+}
+.hero-slider-img-inner img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media (max-width:767px) {
+  .hero-slider .slick-active + .slick-active .hero-slider-img-inner{
+      padding-right: 1.5rem;
+  }
+}
+@media (max-width:350px) {
+  .hero-slider .slick-active + .slick-active .hero-slider-img-inner{
+      padding-right: 0rem;
+  }
+}
+
+
 .homeCarousel2 .splide__pagination {
   margin-left: 0rem !important;
   padding-left: 4.2rem !important;

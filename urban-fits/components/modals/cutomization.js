@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
 import Button from '../buttons/simple_btn'
-import Cart from '../cart'
-
 import Image from 'next/image'
 import image from "@/public/card imgs/card img9.jpg"
 
 export default function Cutomization(props) {
-    // state for cart componenet
-    const [cart, setCart] = useState(false)
+    const [cartBtn, setCartBtn] = useState("hidden")
     const toggleCart = () => {
-        if (cart === false) return setCart(true)
-        if (cart === true) return setCart(false)
+        props.toggleModal(null, 'modal4')
+        const cartBtn = document.querySelector("#cart-btn")
+        cartBtn.click()
+        setCartBtn("hidden")
+    }
+    const handleSubmit = ()=>{
+        setCartBtn("flex")
     }
 
     return (
         <div className={`w-full h-full py-8 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
-            <Cart cart={cart} top_0 toggleCart={toggleCart} />
             <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-[10px] md:text-xs flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
-                <div className="w-full h-[355px] lg:w-1/2 lg:h-auto">
+                <div className="w-full hidden md:block h-[355px] lg:w-1/2 lg:h-auto">
                     <Image src={image} className="w-full h-full object-cover object-top" alt="Urban images" ></Image>
                 </div>
                 <section className="w-full h-full p-5 md:p-7 pt-8 md:pt-7">
@@ -103,8 +104,8 @@ export default function Cutomization(props) {
                                 </span>
                             </div>
                         </div>
-                        <Button type="submit" onclick={() => { props.toaster('success', 'Your items has been added to the cart') }} classes="w-11/12 mx-auto" >Add to Cart</Button>
-                        <span className="w-11/12 flex justify-end">
+                        <Button type="submit" onclick={() => {handleSubmit(); props.toaster('success', 'Your items has been added to the cart') }} classes="w-11/12 mx-auto" >Add to Cart</Button>
+                        <span className={`${cartBtn} w-11/12 justify-end`}>
                             <button onClick={toggleCart} className='underline'>View Cart</button>
                         </span>
                     </form>
