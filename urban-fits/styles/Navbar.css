@@ -69,3 +69,15 @@
 .open_nav{
     transform: translateY(calc(100vh + 50px));
 }
+
+.group_whole_nav:hover .group_whole_nav_hover_appear{
+    opacity: 1;
+    transform: translate(0, 100%);
+    pointer-events: all;
+}
+.group_whole_nav:hover .down_bar{
+    transform: translate(0);
+}
+.group_whole_nav:not(:hover) .group_whole_nav_hover_appear, .group_whole_nav:not(:hover) .down_bar {
+    transition-delay: 2.5s;
+}

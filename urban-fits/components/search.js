@@ -28,9 +28,9 @@ export default function Search(props) {
     const { addItem } = useCart()
     return (
         <>
-            <main className={`bg-white w-screen layout_height fixed top-[50px] right-0 z-40 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-hidden ${props.search === true ? "" : "-translate-y-full opacity-0"} font_gotham`}>
+            <main className={`bg-white w-screen layout_height fixed top-[50px] right-0 z-40 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-hidden ${props.search === true ? "" : "-translate-y-[100vh]"} font_gotham`}>
                 <div className="w-full h-full flex flex-col">
-                    <button onClick={props.toggleSearch} className="absolute left-8 top-5 lg:top-11 cursor-pointer"><i className="fa-solid fa-arrow-left mr-2"></i>Back</button>
+                    <button onClick={props.toggleSearch} className="group absolute left-8 top-5 lg:top-11 font_gotham_medium tracking-widest cursor-pointer"><i className="fa-solid fa-chevron-left group-hover:-translate-x-2 mr-2 transition-all"></i>BACK</button>
 
                     <section className={`${query !== "" ? "h-1/5" : "h-1/2"} w-full justify-self-start mx-auto mb-3 flex justify-center items-end transition-all duration-700`}>
                         <div className="w-4/5 border-b border-b-gray-200 text-center">

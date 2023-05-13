@@ -5,9 +5,12 @@ import jwt from 'jsonwebtoken';
 import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
-import Image from 'next/image';
 import ToTopBtn from './buttons/toTopBtn';
 import Logo from '@/public/logos/logo_black.svg'
+// image imports
+import Image from 'next/image';
+import female_avatar from '@/public/avatars/female.svg'
+import male_avatar from '@/public/avatars/male.svg'
 
 const ListItem = (props) => {
     const router = useRouter()
@@ -68,6 +71,15 @@ export default function Navbar(props) {
         if (cart === true) return setCart(false)
     }
 
+    const getPfp = () => {
+        let pfp = localStorage.getItem("pfp")
+        if (pfp) return pfp
+        if (!pfp) {
+            if (user.gender === "Male") return male_avatar
+            else return female_avatar
+        }
+    }
+    // const [pfp, setPfp] = useState(getPfp)
     useEffect(() => {
         if (bars == 'open' || search || cart || !props.hideNav) return setNavBg('bg-white')
         if (props.hideNav && props.hideNav === true) return setNavBg('bg-transparent')
@@ -88,22 +100,40 @@ export default function Navbar(props) {
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} hidden lg:block right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <ToTopBtn />
             <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
-            <nav id='navbar' className={`${navBg} h-[50px] fixed z-40 top-0 left-0 w-full p-7 lg:px-14 2xl:px-16 shadow-sm font_gotham_medium text-sm flex justify-between items-center overflow-hidden transition-all duration-[1.2s] ease-linear`}>
-                <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
-                    <div className={`${bars} menu btn3`}>
-                        <div className="icon"></div>
-                    </div>
-                    <span className='hidden lg:block tracking-[1.5em]'>MENU</span>
-                </button>
-                <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex justify-center items-center text-center tracking-[1.5em]' ><span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span>&nbsp;SRCH<span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span></button>
-                <button onClick={toggleCart} id='cart-btn' className='group flex justify-center items-center gap-5 lg:gap-10' >
-                    <div className="flex">
-                        <span className=" w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
-                        <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
-                    </div>
-                    <span className="tracking-[0.7em] lg:tracking-[1.5em]">CART</span>
-                    <span>{totalUniqueItems}</span>
-                </button>
+            <nav id='navbar' className="group_whole_nav w-full fixed z-40 top-0 left-0 font_gotham_medium text-sm overflow-hidden">
+                <section className={`${navBg} z-40 w-full h-[50px] flex justify-between items-center p-7 lg:px-14 2xl:px-16 ${navBg === "bg-white" ? "border-b" : null} transition-all duration-300`}>
+                    <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
+                        <div className={`${bars} menu btn3`}>
+                            <div className="icon"></div>
+                        </div>
+                        <span className='hidden lg:block tracking-[1.5em]'>MENU</span>
+                    </button>
+                    <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex justify-center items-center text-center tracking-[1.5em]' ><span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span>&nbsp;SRCH<span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span></button>
+                    <button onClick={toggleCart} id='cart-btn' className='group flex justify-center items-center gap-5 lg:gap-10' >
+                        <div className="flex">
+                            <span className=" w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
+                            <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                        </div>
+                        <span className="tracking-[0.7em] lg:tracking-[1.5em]">CART</span>
+                        <span>{totalUniqueItems}</span>
+                    </button>
+                </section>
+
+                <section id='sub_nav' className={`${navBg === "bg-white" ? "bg-white" : "bg-gradient-to-b from-transparent to-white"} relative -top-10 -z-10 w-4/5 h-10 mx-auto px-10 ${navBg === "bg-white" ? "border-b border-t-white" : null} opacity-0 group_whole_nav_hover_appear rounded-b-[26px] rounded-t-[-24px] justify-self-center flex justify-between items-center transition-all duration-300 font_gotham_medium text-xs tracking-expand`}>
+                    <span className={`${navBg} absolute -z-10 -left-1 top-0 w-10 h-full ${navBg === "bg-white" ? "border-l" : null} rounded-b-2xl skew-x-[30deg] transition-all duration-300`}></span>
+                    <Link href="/products/women" className='hover:tracking-[0.5em] transition-all duration-500' >WOMEN</Link>
+                    <Link href="/products/men" className='hover:tracking-[0.5em] transition-all duration-500' >MEN</Link>
+                    <Link href="/products/kids" className='hover:tracking-[0.5em] transition-all duration-500' >KIDS</Link>
+                    <Link href="/products/accessories" className='hover:tracking-[0.5em] transition-all duration-500' >ACCESSORIES</Link>
+                    <Link href="/user/personalinfo" className="group w-1/4 flex justify-end items-center gap-x-3">
+                        <div className="relative w-3/5 md:w-8 aspect-square rounded-full border border-gray-300 overflow-hidden">
+                            <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="profile picture" />
+                        </div>
+                        <h3 className='group-hover:tracking-[0.5em] transition-all duration-500'>MY ACCOUNT</h3>
+                    </Link>
+                    <span className={`${navBg} absolute -z-10 -right-1 top-0 w-10 h-full ${navBg === "bg-white" ? "border-r" : null} rounded-b-2xl skew-x-[-30deg] transition-all duration-300`}></span>
+                </section>
+                <div className="down_bar -translate-y-9 bg-gray-400 z-40 w-10 h-1 rounded-full mx-auto transition-all duration-300"></div>
             </nav>
 
             <div className={`${menu} w-full layout_height fixed left-0 top-[-100vh] z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-1000'} ease-[cubic-bezier(1,0.35,0.15,1)] bg-white shadow-lg`}>

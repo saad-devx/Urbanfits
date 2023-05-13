@@ -3,7 +3,8 @@ import Button from '../buttons/simple_btn'
 import Image from 'next/image'
 import image from '@/public/card imgs/card img3.jpg'
 import html2canvas from 'html2canvas';
-import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+// import { saveAs } from 'file-saver';
 
 const OrderItem = (props) => {
     return (
@@ -25,16 +26,25 @@ const OrderItem = (props) => {
 
 export default function Invoice(props) {
 
-    const downloadInvoice = () => {
-        const element = document.getElementById('invoice');
-        html2canvas(element, {
-            scale: 6,
-            useCORS: true
-        }).then((canvas) => {
-            canvas.toBlob(function (blob) {
-                saveAs(blob, 'invoice#36.png');
-            });
-        });
+    // const downloadInvoice = () => {
+    //     const element = document.getElementById('invoice');
+    //     html2canvas(element, {
+    //         scale: 6,
+    //         useCORS: true
+    //     }).then((canvas) => {
+    //         canvas.toBlob(function (blob) {
+    //             saveAs(blob, 'invoice#36.png');
+    //         });
+    //     });
+    // }
+
+    const downloadInvoice = async (name) => {
+        const invoice = document.getElementById('invoice');
+        const canvas = await html2canvas(invoice, { scale: 6 });
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF('landscape', 'pt', 'letter');
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdf.internal.pageSize.width, 0, null, 'FAST');
+        pdf.save(`${name}.pdf`);
     }
 
     const shareInvoice = () => {
@@ -56,16 +66,14 @@ export default function Invoice(props) {
         });
     }
 
-
-
-    if (props.show) return (
+     return (
         <main className={`w-full h-screen overflow-y-scroll py-5 px-3 md:px-[5%] fixed left-0 top-0 z-50 bg-gray-200/40 backdrop-blur transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
             <div className="w-full h-full">
-                <section className="w-full flex flex-col md:flex-row justify-between items-center">
+                <section className="w-full my-5 flex flex-row justify-between items-center">
                     <h1 className="font_gotham_medium text-lg md:text-3xl self-start tracking-expand">INVOICE</h1>
-                    <div className="my-5 flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                         <Button onclick={props.toggleInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-white' text='black border' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-chevron-left mr-2" />BACK</Button>
-                        <Button onclick={downloadInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-download text-white mr-2" />DOWNLOAD</Button>
+                        <Button onclick={() => { downloadInvoice('invoice#36') }} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-download text-white mr-2" />DOWNLOAD</Button>
                         <Button onclick={() => { window.print() }} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-print text-white mr-2" />PRINT</Button>
                         <Button onclick={shareInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-share-nodes text-white mr-2" />SHARE</Button>
                     </div>
@@ -109,8 +117,8 @@ export default function Invoice(props) {
                             })}
                         </div>
 
-                        <div className="w-full pt-10 flex flex-col items-start lg:items-end">
-                            <div className="w-1/5 flex justify-between font_gotham text-[10px] md:text-xs gap-y-3">
+                        <div className="w-full pt-10 flex flex-col items-end">
+                            <div className="w-1/5 flex justify-between font_gotham text-xs gap-y-3">
                                 <div className="flex flex-col gap-y-3">
                                     <span>Subtotal</span>
                                     <span>Vat</span>
@@ -123,7 +131,7 @@ export default function Invoice(props) {
                                     <span>${1034.58}</span>
                                 </div>
                             </div>
-                            <Button onclick={downloadInvoice} fontSize='text-[10px] md:text-xs' classes='w-1/5' font='font_gotham tracking-widest'>DOWNLOAD</Button>
+                            <Button onclick={() => { downloadInvoice('invoice#36') }} fontSize='text-xs' classes='w-1/5' font='font_gotham tracking-widest'>DOWNLOAD</Button>
                         </div>
                     </section>
                 </section>

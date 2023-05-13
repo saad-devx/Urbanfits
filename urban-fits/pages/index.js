@@ -42,7 +42,6 @@ export default function Home() {
         const setSizefunc = (e) => {
             let position = window.pageYOffset;
             if (position >> 0) {
-                // window.location.assign('#blabla')
                 setCarouselContainer('layout_height')
                 setCarouselClasses('w-11/12 lg:w-11/12 h-80vh lg:h-86vh rounded-2rem')
                 setTextContainer('bottom-[26.4%] left-[4%] lg:bottom-[26.4%] lg:left-[4%]')
@@ -52,19 +51,6 @@ export default function Home() {
         }
         window.addEventListener('scroll', setSizefunc);
     }, []);
-
-    // useEffect(() => {
-    //     const sections = document.querySelectorAll('section');
-    //     window.addEventListener('scroll', () => {
-    //         sections.forEach(section => {
-    //             const sectionTop = section.offsetTop;
-    //             const sectionBottom = sectionTop + section.offsetHeight;
-    //             if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
-    //                 section.scrollIntoView({ behavior: 'smooth' });
-    //             }
-    //         });
-    //     });
-    // })
 
     const toggleModal = (e) => {
         if (e.target.name === "modal1") {
@@ -106,7 +92,7 @@ export default function Home() {
                             <h2 className="font_gotham_medium text-sm lg:text-[20px] tracking-expand" >NEW COLLECTION</h2>
                             <Link href="products/New In" className="flex items-center group">
                                 <span className="w-10 h-[2px] group-hover:w-16 mr-4 bg-black transition-all" ></span>
-                                <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
+                                <h3 className="font_gotham_medium tracking-[0.5em] lg:tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
                         <section id="section2" className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
@@ -132,7 +118,7 @@ export default function Home() {
                                 <h2 className="text-xl md:text-3xl lg:text-[32px] word-wrap font_gotham_medium leading-tight">URBAN<br />NEW ARRIVAL</h2>
                             </div>
                             <div className="h-full w-full lg:w-[65vw] flex items-center"> */}
-                                <HomeCarousel2 />
+                                {/* <HomeCarousel2 /> */}
                             {/* </div>
                         </section> */}
                         {/* Collection Section */}
@@ -140,7 +126,7 @@ export default function Home() {
                             <h2 className="font_gotham_medium text-sm lg:text-[20px] tracking-expand" >NEW COLLECTION</h2>
                             <Link href="products/New In" className="flex items-center group">
                                 <span className="w-10 h-[2px] group-hover:w-16 mr-4 bg-black transition-all" ></span>
-                                <h3 className="font_gotham_medium tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
+                                <h3 className="font_gotham_medium tracking-[0.5em] lg:tracking-[1.5em] text-xs lg:text-sm">MORE</h3>
                             </Link>
                         </div>
                         <section id="section6" className="w-full my-5 px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">

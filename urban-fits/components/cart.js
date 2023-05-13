@@ -93,7 +93,7 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'layout_height top-[50px]'} right-0 z-50 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
+            <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'layout_height top-[50px]'} right-0 z-30 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ?
                         <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
