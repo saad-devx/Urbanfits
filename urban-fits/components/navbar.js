@@ -75,8 +75,8 @@ export default function Navbar(props) {
         let pfp = localStorage.getItem("pfp")
         if (pfp) return pfp
         if (!pfp) {
-            if (user.gender === "Male") return male_avatar
-            else return female_avatar
+            // if (user.gender === "Male") return male_avatar
+             return male_avatar
         }
     }
     // const [pfp, setPfp] = useState(getPfp)
