@@ -8,9 +8,9 @@ const index = () => {
     <Sidebaradmin>
 
             <CardAdmin>
-                <div>
+                <div className='gird grid-cols-1' >
 
-                    {/* <LineChart/> */}
+                    <LineChart/>
 
                 </div>
             </CardAdmin>
