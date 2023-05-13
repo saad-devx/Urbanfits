@@ -6,8 +6,8 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
-    HOST: "http://localhost:3000",
-    // HOST: "https://urbanfits.vercel.app",
+    // HOST: "http://localhost:3000",
+    HOST: "https://urbanfits.vercel.app",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
     GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
@@ -26,7 +26,7 @@ const nextConfig = {
     return [
       {
         // matching all API routes
-        source : "/api/(.*)",
+        source: "/api/(.*)",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" },

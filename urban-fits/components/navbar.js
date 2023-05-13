@@ -110,9 +110,13 @@ export default function Navbar(props) {
                     </button>
                     <button onClick={toggleSearch} className='hidden absolute left-1/2 -translate-x-1/2 group lg:flex justify-center items-center text-center tracking-[1.5em]' ><span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span>&nbsp;SRCH<span className="w-0 group-hover:w-14 h-[2px] bg-black transition-all"></span></button>
                     <button onClick={toggleCart} id='cart-btn' className='group flex justify-center items-center gap-5 lg:gap-10' >
-                        <div className="flex">
+                        <div className={`${cart?"opacity-0":null} flex transition-all duration-300`}>
                             <span className=" w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
                             <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
+                        </div>
+                        <div className={`${!cart?"hidden":null} relative mr-7 transition-all duration-300`}>
+                            <span className="absolute rotate-[26deg] w-[30px] h-0.5 bg-black"></span>
+                            <span className="absolute rotate-[-26deg] w-[30px] h-0.5 bg-black"></span>
                         </div>
                         <span className="tracking-[0.7em] lg:tracking-[1.5em]">CART</span>
                         <span>{totalUniqueItems}</span>
