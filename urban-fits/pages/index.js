@@ -118,7 +118,7 @@ export default function Home() {
                                 <h2 className="text-xl md:text-3xl lg:text-[32px] word-wrap font_gotham_medium leading-tight">URBAN<br />NEW ARRIVAL</h2>
                             </div>
                             <div className="h-full w-full lg:w-[65vw] flex items-center"> */}
-                                {/* <HomeCarousel2 /> */}
+                                <HomeCarousel2 />
                             {/* </div>
                         </section> */}
                         {/* Collection Section */}
