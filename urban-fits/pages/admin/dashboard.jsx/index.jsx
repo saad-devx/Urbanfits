@@ -10,7 +10,7 @@ const index = () => {
             <CardAdmin>
                 <div>
 
-                    <LineChart/>
+                    {/* <LineChart/> */}
 
                 </div>
             </CardAdmin>

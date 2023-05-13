@@ -99,12 +99,14 @@ export const sidebarItems = [
     subrows: [
       {
         label: "All Transactions",
-
-        navlink: "/admin",
+        navlink: "/admin/transactions/transaction",
+      },
+      {
+        label: "Invoice",
+        navlink: "/admin/transactions/invoice",
       },
       {
         label: "Addnew",
-
         navlink: "/admin",
       },
     ],
