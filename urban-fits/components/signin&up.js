@@ -111,7 +111,7 @@ export default function Signing(props) {
                         <p className="font_gotham_light text-xl md:text-2xl">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</p>
                     </div>
 
-                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 max-w-[400px] mx-auto py-7 pt-16 font_gotham bg-white">
+                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 max-w-[400px] mx-auto py-16 pb-20 font_gotham bg-white">
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className='w-[100px] h-[100px] mx-auto mb-8' />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
@@ -179,7 +179,7 @@ export default function Signing(props) {
                     </div>
                 </section>
 
-                <div className="w-full max-w-[400px] mx-auto lg:max-w-none my-5 px-10 font_gotham flex flex-col lg:flex-row justify-between lg:space-x-3">
+                <div className="w-full max-w-[400px] mx-auto lg:max-w-none my-5 px-10 font_gotham hidden lg:flex justify-between lg:space-x-3">
                     <LinkBtn href='/' classes='w-full'>HOME</LinkBtn>
                     <LinkBtn href='/catelog' classes='w-full'>CATALOG</LinkBtn>
                     <LinkBtn href='/contact' classes='w-full'>CONTACT US</LinkBtn>

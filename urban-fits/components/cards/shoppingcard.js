@@ -10,7 +10,7 @@ export default function Shoppingcard(props) {
     const { addItem } = useCart()
 
     return (
-        <div key={props.li_key} className={`relative bg-[#eaeaea] border ${props.classes} w-full min-h-[212px] h-[225px] md:h-[290px] lg:h-[370px] xl:h-[400px] 2xl:h-[440px] ${props.margin ? props.margin : 'mr-auto my-3 md:my-5'} rounded-2xl lg:rounded-3xl hover:scale-[1.01] hover:rounded-xl font_gotham transition-all duration-500 overflow-hidden`} >
+        <div key={props.li_key} className={`relative bg-[#eaeaea] border ${props.classes? props.classes: "w-full min-h-[212px] h-[225px] md:h-[290px] lg:h-[370px] xl:h-[400px] 2xl:h-[440px]"} ${props.margin ? props.margin : 'mr-auto my-3 md:my-5'} rounded-2xl lg:rounded-3xl hover:scale-[1.01] hover:rounded-xl font_gotham transition-all duration-500 overflow-hidden`} >
             <button onClick={() => { addItem({ product_id: product._id, id: product.variants[0]._id, name: product.name, price: product.price, shipping_fee: product.shipping_detials.fees, stock: product.variants[0].stock, size: product.variants[0].size[0], sizes: product.variants[0].size, color: product.variants[0].color_name, images: product.variants[0].images }, 1); toaster('success', "Your item is added to the Cart") }} className="group w-10 h-10 absolute top-1 right-1 md:top-4 md:right-5 z-10 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60">
                 <Image src={bag} className='w-4 md:w-5' />
             </button>
