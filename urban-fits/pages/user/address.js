@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
 import User from '.';
 import Head from 'next/head';
 import storeAddress from '@/utils/get_address';
@@ -122,7 +123,7 @@ const AddressForm = (props) => {
 }
 
 export default function Address() {
-    const router = useRouter()
+    const {user} = useUser()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
     const onsubmit = async (values) => {
@@ -141,17 +142,6 @@ export default function Address() {
             setLoader(null)
         } catch (e) { setLoader(null) }
     }
-    // user data state
-    const [user, setUser] = useState({})
-    useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) {
-            let user = userData._doc
-            storeAddress(user._id)
-            setUser(user)
-        }
-        else return router.push('/access denied')
-    }, [])
 
     return (
         <>

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
 import User from '.';
 import Link from 'next/link'
-import jwt from 'jsonwebtoken';
-import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
 import Head from 'next/head';
 import Loader from '@/components/loader';
@@ -16,10 +15,9 @@ import Tooltip from '../../components/tooltip';
 
 export default function EmailPassword() {
     const router = useRouter()
+    const {user, updateUser} = useUser()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    // user data state
-    const [user, setUser] = useState({})
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         email: Yup.string().email().required("Please enter your email address"),
@@ -27,7 +25,7 @@ export default function EmailPassword() {
         password: Yup.string().min(8).max(30).required("Please enter your password")
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { email: '', password: '', confirm_email: '' },
+        initialValues: { email: user.email, password: '', confirm_email: '' },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
@@ -40,22 +38,13 @@ export default function EmailPassword() {
             if (!res.success) toaster("error", res.msg)
             if (res.success) toaster("success", res.msg)
             if (!res.payload) return setLoader(null)
-            localStorage.setItem("authToken", res.payload)
+            updateUser(res.payload)
             handleReset()
             setLoader(null)
             setValues({ confirm_email: '', password: '' })
         }
     })
-    // getting user payload form jwt token in localstorage
-    useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) {
-            let user = userData._doc
-            setUser(user)
-            setValues({ email: ifExists(user.email) })
-        }
-        else return router.push('/access denied')
-    }, [])
+    
     return (
         <>
             <Head>

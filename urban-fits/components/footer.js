@@ -154,7 +154,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </section>
-                <div className="w-4/5 m-10 text-[10px] mx-auto text-center leading-5">
+                <div className="w-4/5 m-10 pb-20 lg:pb-0 text-[10px] mx-auto text-center leading-5">
                     <p>Urban Fits L.L.C., Company Reg. Number - 2447 LLC 2023, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102 <br /> Urban Fits L.L.C. © 2023-2024 All rights reserved.</p>
                 </div>
             </footer>

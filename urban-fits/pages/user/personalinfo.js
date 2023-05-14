@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
 import Link from 'next/link'
+import User from '.';
 import jwt from 'jsonwebtoken';
 import toaster from '@/utils/toast_function';
 import ifExists from '@/utils/if_exists';
@@ -9,13 +11,6 @@ import Loader from '@/components/loader';
 import Card from '../../components/cards/card'
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
-// image imports
-import Image from 'next/image';
-import female_avatar from '../../public/avatars/female.svg'
-import male_avatar from '../../public/avatars/male.svg'
-
-import User from '.';
-
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -24,11 +19,6 @@ import Tooltip from '../../components/tooltip';
 // little function to use inside right this component to avoid mess
 const InfoCard = (props) => {
     return <Card title={props.title} value={props.value} btnValue={props.btnValue} classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
-}
-
-// User Avatar based on the gender
-export function Avatar({ user }) {
-    return <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.gender) === "Male" ? male_avatar : female_avatar} alt="avatar" />
 }
 
 // Function to show addresses of the user in a container
@@ -60,10 +50,9 @@ const AddressContainer = (props) => {
 
 export default function Personalinfo() {
     const router = useRouter()
+    const { user, updateUser } = useUser()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    // user data state
-    const [user, setUser] = useState({})
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
@@ -86,28 +75,22 @@ export default function Personalinfo() {
                 body: JSON.stringify(values)
             })
             let res = await response.json()
-            localStorage.setItem("authToken", res.payload)
+            updateUser(res.payload)
             toaster(res.success === true ? "success" : "error", res.msg)
             setLoader(null)
         }
     })
     useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) {
-            let user = userData._doc
-            setUser(user)
-            setValues({
-                title: ifExists(user.title),
-                firstname: ifExists(user.firstname),
-                lastname: ifExists(user.lastname),
-                gender: ifExists(user.gender),
-                phone_prefix: ifExists(user.phone_prefix),
-                phone_number: ifExists(user.phone_number),
-                newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
-                newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
-            })
-        }
-        else return router.push('/access denied')
+        setValues({
+            title: ifExists(user.title),
+            firstname: ifExists(user.firstname),
+            lastname: ifExists(user.lastname),
+            gender: ifExists(user.gender),
+            phone_prefix: ifExists(user.phone_prefix),
+            phone_number: ifExists(user.phone_number),
+            newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
+            newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
+        })
     }, [])
     return (
         <>
@@ -120,7 +103,7 @@ export default function Personalinfo() {
             <User>
                 <form className="mt-10 font_gotham gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                     <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >PERSONAL INFORMATION</h1>
-                    <div className="flex flex-col md:flex-row justify-between w-full ">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between w-full ">
                         <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
                             {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                             <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>

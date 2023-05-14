@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import toaster from '@/utils/toast_function'
@@ -7,7 +8,6 @@ import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
 import ifExists from '@/utils/if_exists'
-import jwt from 'jsonwebtoken';
 // image imports
 import Image from 'next/image';
 import female_avatar from '../../public/avatars/female.svg'
@@ -33,6 +33,7 @@ const Option_sm = (props) => {
 export default function User(props) {
     const router = useRouter()
     const route = router.pathname
+    const {user} = useUser()
 
     const menuRef = useRef(null)
     useEffect(() => {
@@ -57,20 +58,12 @@ export default function User(props) {
             if (modal5 === true) return setModal5(false)
         }
     }
-    const [user, setUser] = useState({})
-    useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) {
-            let user = userData._doc
-            setUser(user)
-        }
-    }, [])
     //state and function for the file selection
-    const getPfp = ()=>{
+    const getPfp = () => {
         let pfp = localStorage.getItem("pfp")
-        if(pfp) return pfp
-        if(!pfp){
-            if(user.gender === "Male") return male_avatar
+        if (pfp) return pfp
+        if (!pfp) {
+            if (user.gender === "Male") return male_avatar
             else return female_avatar
         }
     }
@@ -113,12 +106,15 @@ export default function User(props) {
                 <section className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflow-x-hidden overflow-y-scroll' >
                     <div className="w-full lg:w-5/6">
                         <div className={`${props.profileNull ? 'hidden' : null} flex flex-row-reverse md:flex-row items-center gap-3`}>
-                            <div className="group relative w-3/5 md:w-[150px] aspect-square rounded-full border-2 border-gray-300 overflow-hidden">
-                                <div className="opacity-0 group-hover:opacity-100 bg-black/50 absolute left-0 top-0 w-full h-full transition-all duration-300">
-                                    <label htmlFor="pfp" className="text-white font_gotham_medium text-xs cursor-pointer tracking-epxand flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><i className="fa-solid fa-camera text-lg text-white"/> UPLOAD</label>
-                                    <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 absolute" />
+                            <div className="w-3/5 md:w-auto flex flex-col items-center">
+                                <div className="group relative md:w-[150px] aspect-square rounded-full border-2 border-gray-300 overflow-hidden">
+                                    <div className="opacity-0 group-hover:opacity-100 bg-black/50 absolute left-0 top-0 w-full h-full transition-all duration-300">
+                                        <label htmlFor="pfp" className="text-white font_gotham_medium text-xs cursor-pointer tracking-epxand flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><i className="fa-solid fa-camera text-lg text-white" /> UPLOAD</label>
+                                        <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 absolute" />
+                                    </div>
+                                    <Image className="w-full h-full object-cover object-center" width={150} height={150} src={photo} alt="avatar" />
                                 </div>
-                                <Image className="w-full h-full object-cover object-center" width={150} height={150} src={photo} alt="avatar" />
+                                <label htmlFor='pfp' className="lg:hidden mt-1.5 flex items-center font_gotham_medium text-[10px] tracking-widest ">EDIT<i class="fa-sharp fa-regular fa-pen-to-square mx-1 -translate-y-[1px]" /></label>
                             </div>
                             <span>
                                 <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>
