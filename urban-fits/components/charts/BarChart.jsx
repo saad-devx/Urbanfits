@@ -24,30 +24,57 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top' ,
+      // position: 'top' ,
+      display: false
     },
     title: {
-      display: true,
+      display: false,
       text: 'Chart.js Bar Chart',
+    },
+  },
+  scales: {
+    // to remove the labels
+    x: {
+      ticks: {
+        display: false,
+      },
+  
+      // to remove the x-axis grid
+      grid: {
+        drawBorder: false,
+        display: false,
+        offset: true
+      },
+    },
+    // to remove the y-axis labels
+    y: {
+      ticks: {
+        display: true,
+        beginAtZero: true,
+      },
+      // to remove the y-axis grid
+      grid: {
+        drawBorder: true,
+        display: true,
+      },
     },
   },
 };
 
-const labels = ['Jan', 'Feb', 'Mar'];
+const labels = ['1','2','3', '4', '5', '6'];
 
 export const data = {
   labels,
   datasets: [
     {
       label: 'Dataset 1',
-      data: [500, 1000, 400],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      data: [ 3, 30, 10, 20, 55, 50 ],
+      barThickness: 9,
+      backgroundColor: '#88AAF3',
     },
-    {
-      label: 'Dataset 2',
-      data: [200],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
+    
+    
+    
   ],
 };
 
@@ -55,7 +82,9 @@ export const data = {
 
 const BarChart = () => {
     return (
-        <Bar options={options} data={data} /> 
+        <Bar width={40}
+              height={50}
+         options={options} data={data} /> 
         
          )
 }

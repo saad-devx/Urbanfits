@@ -19,12 +19,12 @@ export const data = {
       // label: '# of Votes',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
-        'rgba(255, 99, 132, 6)',
-        'rgba(54, 162, 235, 6)',
-        'rgba(255, 206, 86, 6)',
-        'rgba(75, 192, 192, 6)',
-        'rgba(153, 102, 255, 6)',
-        'rgba(255, 159, 64, 6)',
+        '#50D7AB',
+        '#88AAF3',
+        '#9586CD',
+        '#A4D9E5',
+        '#F3D676',
+        '#ED9090',
       ],
       // borderColor: [
       //   'rgba(255, 99, 132, 1)',
@@ -41,7 +41,8 @@ export const data = {
 
 
 const DoughnutChart = () => {
-    return <Doughnut data={data} options={options} />;
+    return <Doughnut
+     data={data} options={options} />;
 }
 
 export default DoughnutChart

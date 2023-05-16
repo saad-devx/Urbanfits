@@ -7,6 +7,7 @@ import DoughnutChart from '@/components/charts/DoughnutChart'
 import DownloadIcon from '@/public/icons/DownloadIcon'
 import LineChart2 from '@/components/charts/LineChart2'
 import BarChart from '@/components/charts/BarChart'
+import { GeoChart } from '@/components/charts/GeoChart'
 
 const index = () => {
   return (
@@ -205,7 +206,7 @@ const index = () => {
               <p className='text-[22px] font-[500] mb-[34px] ' >Sale Report</p>
               <LineChart2/>
 
-              <BarChart/>
+              {/* <BarChart/> */}
              
 
               </div>
@@ -214,12 +215,35 @@ const index = () => {
           <div className='col-span-2' >
             <CardAdmin>
               <div className='px-[30px] py-[33.5px] ' >
+              <p className='text-[22px] font-[500] mb-[14px] ' >Current User</p>
                 <BarChart/>
               </div>  
             </CardAdmin>
           </div>
         </section>
 
+        <section className='grid grid-cols-6 gap-[27px] mt-[30px] ' >
+          <div className='col-span-4' >
+            <CardAdmin>
+              <div className='px-[30px] py-[33.5px] ' >  
+              <p className='text-[22px] font-[500] mb-[10px] ' >Purchased By Country</p>
+             <GeoChart/>
+
+              {/* <BarChart/> */}
+             
+
+              </div>
+            </CardAdmin>
+          </div>
+          <div className='col-span-2' >
+            <CardAdmin>
+              <div className='px-[30px] py-[33.5px] ' >
+              {/* <p className='text-[22px] font-[500] mb-[14px] ' >Current User</p>
+                <BarChart/> */}
+              </div>  
+            </CardAdmin>
+          </div>
+        </section>
 
 
             {/* <CardAdmin>
