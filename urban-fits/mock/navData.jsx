@@ -27,7 +27,7 @@ export const sidebarItems = [
     id: 2,
     label: "Products",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -56,7 +56,7 @@ export const sidebarItems = [
     id: 3,
     label: "Categories",
     icon: <CategoriesIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -75,7 +75,7 @@ export const sidebarItems = [
     id: 4,
     label: "Orders",
     icon: <CartIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -94,7 +94,7 @@ export const sidebarItems = [
     id: 5,
     label: "Transactions",
     icon: <DollarIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -115,7 +115,7 @@ export const sidebarItems = [
     id: 6,
     label: "Users",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -148,14 +148,14 @@ export const sidebarItems = [
     id: 7,
     label: "Vendors",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 8,
     label: "Account",
     icon: <AccountIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -176,7 +176,7 @@ export const sidebarItems = [
     id: 9,
     label: "Payment Methods",
     icon: <PaymentIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -193,7 +193,7 @@ export const sidebarItems = [
     id: 10,
     label: "Coupon",
     icon: <CouponIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -210,7 +210,7 @@ export const sidebarItems = [
     id: 11,
     label: "Shipping Settings",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -235,21 +235,21 @@ export const sidebarItems = [
     id: 12,
     label: "Reviews",
     icon: <ReviewsIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 13,
     label: "Brands",
     icon: <BrandIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 14,
     label: "Authentication",
     icon: <ExitIcon/>  ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     
   },
@@ -257,7 +257,7 @@ export const sidebarItems = [
     id: 15,
     label: "Icons",
     icon: <DaimondIcon/>  ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     
   },
@@ -265,7 +265,7 @@ export const sidebarItems = [
     id: 16,
     label: "Other Pages",
     icon: <PagesIcon/>  ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     
   },

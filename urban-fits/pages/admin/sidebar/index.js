@@ -135,7 +135,7 @@ export default function Sidebaradmin({ children }) {
                   onClick={() => handleItemClick(index)}
                   className="flex  cursor-pointer  mt-[37.54px] justify-between  items-center "
                 >
-                  {/* <Link href={item.navlink || " " }> */}
+                  <Link href={item.navlink || "#" }>
                   <div className="flex gap-[10px] items-center  ">
                     <div>{item.icon}</div>
 
@@ -147,7 +147,7 @@ export default function Sidebaradmin({ children }) {
                       {item.label}
                     </p>
                   </div>
-                  {/* </Link> */}
+                  </Link>
                   <div
                     className={` cursor-pointer ${item.subrows ? "visible" : "hidden"
                       } ${sidebaropen ? "visible" : "hidden"}`}
