@@ -5,9 +5,10 @@ const nextConfig = {
     domains: ['images.unsplash.com', "pbs.twimg.com", "i.etsystatic.com"]
   },
   env: {
-    MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
+    HOST: "https://st.urbanfits.ae",
     // HOST: "http://localhost:3000",
-    HOST: "https://urbanfits.vercel.app",
+    // HOST: "https://urbanfits.vercel.app",
+    MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
     GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",

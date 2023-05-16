@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import toaster from '@/utils/toast_function'
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
@@ -33,7 +32,7 @@ const Option_sm = (props) => {
 export default function User(props) {
     const router = useRouter()
     const route = router.pathname
-    const {user} = useUser()
+    const {user, logOut} = useUser()
 
     const menuRef = useRef(null)
     useEffect(() => {
@@ -43,12 +42,6 @@ export default function User(props) {
         if (route === "/user/paymentmethods") return menuRef.current.scroll((screen / 0.8), 0)
         if (route === "/user/orders/orders") return menuRef.current.scroll((screen * 1.5), 0)
     }, [])
-    // function to lohgout the user
-    const logOut = () => {
-        localStorage.clear()
-        router.push('/')
-        toaster("success", "You have been logged out successfully!")
-    }
 
     // states and function for modals
     const [modal5, setModal5] = useState(false)
