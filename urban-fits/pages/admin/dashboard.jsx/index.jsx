@@ -3,6 +3,10 @@ import Sidebaradmin from '../sidebar'
 import CardAdmin from '@/components/cards/cardadmin'
 import LineChart from '@/components/charts/LineChart'
 import { AvatarIcon } from '@/public/sidebaricons/AvatarIcon'
+import DoughnutChart from '@/components/charts/DoughnutChart'
+import DownloadIcon from '@/public/icons/DownloadIcon'
+import LineChart2 from '@/components/charts/LineChart2'
+import BarChart from '@/components/charts/BarChart'
 
 const index = () => {
   return (
@@ -121,24 +125,100 @@ const index = () => {
           </div>
         </section>
 
-        <section className='grid grid-cols-6 mt-[30px] ' >
+        <section className='grid grid-cols-6 gap-[27px] mt-[30px] ' >
           <div className='col-span-4' >
             <CardAdmin>
               <div className='px-[30px] py-[33.5px] ' >  
+              <p className='text-[22px] font-[500] mb-[34px] ' >Sale Report</p>
               <LineChart/>
+
+              <div className='flex gap-[70px] items-center text-[14px] font-[400] mt-[30px] ' >
+
+                <span className='flex gap-[10px] items-center ' >
+                  <div className='w-[15px] h-[15px] rounded-[50px] bg-[#88B5E2]' />
+                  <p>Via Referral</p>
+                </span>
+                <span className='flex gap-[10px] items-center ' >
+                  <div className='w-[15px] h-[15px] rounded-[50px] bg-[#C7FCDF]' />
+                  <p>Direct</p>
+                </span>
+                <span className='flex gap-[10px] items-center ' >
+                  <div className='w-[15px] h-[15px] rounded-[50px] bg-[#FEDDE1]' />
+                  <p>Via Social</p>
+                </span>
+
+              </div>
 
               </div>
             </CardAdmin>
           </div>
           <div className='col-span-2' >
             <CardAdmin>
+              <div className='px-[30px] py-[33.5px] ' >
+                <p className='text-[22px] font-[500] mb-[20px] ' >Order Review</p>
+                  <DoughnutChart/>
 
+                  <p className='text-[14px]  font-[400] ' >
+                    <DownloadIcon/>
+                  Download Overall Report
+                  </p>
+                  <hr />
+                  <div className='grid grid-cols-2 gap-[44px] text-[13px] font-[400] ' >
+                      <div className='flex flex-col gap-[20px] ' >
+                        <span className='flex gap-[10px] items-center ' >
+                          <div className='w-[15px] h-[15px] rounded-[50px] bg-[#50D7AB]' />
+                          <p>Via Referral</p>
+                        </span>
+                        <span className='flex gap-[10px] items-center ' >
+                          <div className='w-[15px] h-[15px] rounded-[50px] bg-[#88AAF3]' />
+                          <p>Via Referral</p>
+                        </span>
+                        <span className='flex gap-[10px] items-center ' >
+                          <div className='w-[15px] h-[15px] rounded-[50px] bg-[#9586CD]' />
+                          <p>Via Referral</p>
+                        </span>
+                      </div>
+                      <div className='flex flex-col gap-[20px] ' >
+                        <span className='flex gap-[10px] items-center ' >
+                          <div className='w-[15px] h-[15px] rounded-[50px] bg-[#A4D9E5]' />
+                          <p>Via Referral</p>
+                        </span>
+                        <span className='flex gap-[10px] items-center ' >
+                          <div className='w-[15px] h-[15px] rounded-[50px] bg-[#F3D676]' />
+                          <p>Via Referral</p>
+                        </span>
+                        <span className='flex gap-[10px] items-center ' >
+                          <div className='w-[15px] h-[15px] rounded-[50px] bg-[#ED9090]' />
+                          <p>Via Referral</p>
+                        </span>
+                      </div>
+                  </div>
+              </div>  
             </CardAdmin>
           </div>
         </section>
 
+        <section className='grid grid-cols-6 gap-[27px] mt-[30px] ' >
+          <div className='col-span-4' >
+            <CardAdmin>
+              <div className='px-[30px] py-[33.5px] ' >  
+              <p className='text-[22px] font-[500] mb-[34px] ' >Sale Report</p>
+              <LineChart2/>
 
+              <BarChart/>
+             
 
+              </div>
+            </CardAdmin>
+          </div>
+          <div className='col-span-2' >
+            <CardAdmin>
+              <div className='px-[30px] py-[33.5px] ' >
+                <BarChart/>
+              </div>  
+            </CardAdmin>
+          </div>
+        </section>
 
 
 
@@ -147,6 +227,7 @@ const index = () => {
                     <LineChart/>
                 </div>
             </CardAdmin> */}
+
 
     </Sidebaradmin>
   )

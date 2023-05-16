@@ -21,7 +21,7 @@ export const sidebarItems = [
     id: 1,
     label: "Dashboard",
     icon: <Dashboardicon />,
-    navlink: "/admin",
+    navlink: "/admin/dashboard",
   },
   {
     id: 2,
