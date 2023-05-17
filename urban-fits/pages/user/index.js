@@ -53,12 +53,13 @@ export default function User(props) {
     }
     //state and function for the file selection
     const getPfp = () => {
+        if(!user) return
         let pfp = localStorage.getItem("pfp")
-        if (pfp) return pfp
         if (!pfp) {
             if (user.gender === "Male") return male_avatar
             else return female_avatar
         }
+        if (pfp) return pfp
     }
 
     const [photo, setPhoto] = useState(getPfp)
@@ -70,6 +71,7 @@ export default function User(props) {
         }
         reader.readAsDataURL(e.target.files[0]);
     }
+    if(!user) return <h1>Sorry you dont have access to this page</h1>
     return (
         <>
             <Navbar lowerLogo />

@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
 import { loadStripe } from '@stripe/stripe-js';
+import useUser from '@/hooks/useUser';
+import useAddress from '@/hooks/useAddress';
 import axios from 'axios';
 import ErrorPage from '@/components/alertPage'
 import CheckoutCalcSection from '@/components/checkoutCalcSection';
-import jwt from 'jsonwebtoken';
 import Head from 'next/head';
 import Navbar from '@/components/navbar';
 import Loader from '@/components/loader';
@@ -20,12 +21,12 @@ import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 import Button from '@/components/buttons/simple_btn';
 
-loadStripe(
-    process.env.STRIPE_PUBLISHABLE_KEY
-);
+loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export default function Checkout1(props) {
     const router = useRouter()
+    const { address, getAddress } = useAddress()
+    const { user } = useUser()
     // loader and billing form state
     const [loader, setLoader] = useState(null)
     const [billingForm, setBillingForm] = useState(null)
@@ -90,9 +91,16 @@ export default function Checkout1(props) {
             billing_address: Yup.object().shape(addressFieldsValidation)
         }),
         onSubmit: async (values) => {
-            console.log(items)
-            let response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, {shipping_info: values, items: items})
-            window.location.href = response.data
+            setLoader(<Loader />)
+            try {
+                const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
+                window.location.href = response.data
+            }
+            catch (e) {
+                console.log(e)
+                toaster("error", "Some uexpected error occured, We're sorry, we will fix it soon.")
+            }
+            setLoader(null)
         }
     })
 
@@ -109,38 +117,29 @@ export default function Checkout1(props) {
             phone_number: !obj ? '' : obj.phone_number
         }
     }
-    const getAddressToken = async (user_id) => {
-        let response = await (await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user_id}`)).json()
-        localStorage.setItem('addressToken', response.payload)
-        return jwt.decode(response.payload)
-    }
 
     useEffect(() => {
         return async () => {
+            setLoader(<Loader />)
             try {
-                setLoader(<Loader />)
-                const userData = jwt.decode(localStorage.getItem("authToken"))
-                if (!userData) return
-                let userAddress = jwt.decode(localStorage.getItem("addressToken"))
-                if (!userAddress) userAddress = await getAddressToken(userData._doc._id)
+                if (!user) return
+                if (!address) await getAddress()
+                if (!address) return
 
-                let shippingAddress = userAddress._doc.addresses.filter(address => { return address.tag === 'shipping' })[0]
-                let billingAddress = userAddress._doc.addresses.filter(address => { return address.tag === 'billing' })[0]
+                let shippingAddress = address.addresses.filter(address => { return address.tag === 'shipping' })[0]
+                let billingAddress = address.addresses.filter(address => { return address.tag === 'billing' })[0]
                 setValues({
-                    name: ifExists(userData._doc.firstname) + ' ' + ifExists(userData._doc.lastname),
-                    email: ifExists(userData._doc.email),
+                    name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
+                    email: ifExists(user.email),
                     delivery_option: 'express',
                     shipping_address: getValuesToBeSet(shippingAddress),
                     billing_address: getValuesToBeSet(billingAddress)
                 })
-                setLoader(null)
             }
-            catch (error) {
-                console.error(error)
-                setLoader(null)
-            }
+            catch (error) { console.error(error) }
+            setLoader(null)
         }
-    }, [])
+    }, [user, address])
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
         const query = new URLSearchParams(window.location.search);

@@ -76,7 +76,7 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
                 <Image src={search_logo} alt='search' className='my-1 w-5' />
                 <span className="font_gotham_medium text-[8px] tracking-widest">SEARCH</span>
             </button>
-            <Link href='/user/personalinfo' className='h-4/5 justify-center flex flex-col items-center'>
+            <Link href={user && user.email? '/user/personalinfo': '/login'} className='h-4/5 justify-center flex flex-col items-center'>
                 {user && user.email ? <div className="relative w-7 aspect-square rounded-full border border-gray-300 overflow-hidden">
                     <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="profile picture" />
                 </div> :

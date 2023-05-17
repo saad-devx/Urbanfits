@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Shoppingcard, { SmallShoppingcard } from '@/components/cards/shoppingcard';
@@ -82,6 +83,9 @@ export default function Product(props) {
     }
     return (
         <>
+            <Head>
+                <title className='capitalize' >{`${productData.name} - UF`}</title>
+            </Head>
             <Cutomization show={modal4} toggleModal={toggleModal} toaster={toaster} />
             <Navbar />
             <main className={`bg-white w-full h-full font_gotham transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>

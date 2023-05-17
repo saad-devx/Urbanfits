@@ -81,6 +81,7 @@ export default function Personalinfo() {
         }
     })
     useEffect(() => {
+        if(!user) return
         setValues({
             title: ifExists(user.title),
             firstname: ifExists(user.firstname),
@@ -92,6 +93,7 @@ export default function Personalinfo() {
             newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
         })
     }, [])
+    if(!user) return <h1>Sorry you dont have access to this page</h1>
     return (
         <>
             <Head>

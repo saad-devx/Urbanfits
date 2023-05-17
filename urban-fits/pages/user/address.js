@@ -3,9 +3,7 @@ import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import User from '.';
 import Head from 'next/head';
-import storeAddress from '@/utils/get_address';
-import toaster from '@/utils/toast_function';
-import jwt from 'jsonwebtoken';
+import useAddress from '@/hooks/useAddress';
 import countryCodes from '@/static data/countryCodes';
 import Button from '../../components/buttons/simple_btn';
 import Loader from '@/components/loader';
@@ -17,6 +15,7 @@ import Tooltip from '../../components/tooltip';
 const AddressForm = (props) => {
     const router = useRouter()
     const { tag } = props
+    const { address, updateAddress } = useAddress()
     // getting data from input fields andrelative  applying validation
     const { values, errors, touched, handleChange, handleReset, handleBlur, handleSubmit, setValues } = useFormik({
         initialValues: {
@@ -46,17 +45,12 @@ const AddressForm = (props) => {
         onSubmit: props.onsubmit
     })
     useEffect(() => {
-        let userAddress = jwt.decode(localStorage.getItem("addressToken"))
-        if (userAddress) {
-            let addressObj = userAddress._doc
-            if (addressObj.addresses.length === 0) return
-            let address = addressObj.addresses.filter((address) => {
-                return address.tag === tag
-            })
-            if (address.length === 0) return
-            setValues(address[0])
-        }
-        else return router.push('/access denied')
+        if (address.addresses.length === 0) return
+        let userAddress = address.addresses.filter((address) => {
+            return address.tag === tag
+        })
+        if (userAddress.length === 0) return
+        setValues(userAddress[0])
     }, [])
 
     return (
@@ -123,24 +117,14 @@ const AddressForm = (props) => {
 }
 
 export default function Address() {
-    const {user} = useUser()
+    const { user } = useUser()
+    const { updateAddress } = useAddress()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
     const onsubmit = async (values) => {
         setLoader(<Loader />)
-        try {
-            let response = await fetch(`${process.env.HOST}/api/user/addresses/update?user_id=${user._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values)
-            })
-            let res = await response.json()
-            if (!res.success) toaster("error", res.msg)
-            if (res.success) toaster("success", res.msg)
-            if (!res.payload) return setLoader(null)
-            localStorage.setItem("addressToken", res.payload)
-            setLoader(null)
-        } catch (e) { setLoader(null) }
+        await updateAddress(values)
+        setLoader(null)
     }
 
     return (

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
 import useUser from '@/hooks/useUser';
+import useAddress from '@/hooks/useAddress';
 import countryCodes from '@/static data/countryCodes';
 import toaster from '../utils/toast_function';
-import initiateAddress from '@/utils/init_address';
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -30,6 +30,7 @@ export default function Signing(props) {
     //state to handle loader component
     const [loader, setLoader] = useState(false)
     const {updateUser} = useUser()
+    const {initiateAddress} = useAddress()
     //                                      Submit function
 
     // setting request method according to the pathname
@@ -51,7 +52,7 @@ export default function Signing(props) {
             if (res.success && res.payload) {
                 updateUser(res.payload)
                 // localStorage.setItem("authToken", res.payload)
-                await initiateAddress(res.payload, router)
+                await initiateAddress(router)
                 toaster("success", res.msg)
             }
             else if (res.resetPassToken && res.success) {
