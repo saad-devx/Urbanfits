@@ -8,6 +8,19 @@ import DownloadIcon from '@/public/icons/DownloadIcon'
 import LineChart2 from '@/components/charts/LineChart2'
 import BarChart from '@/components/charts/BarChart'
 import { GeoChart } from '@/components/charts/GeoChart'
+import BarChartHor from '@/components/charts/BarChartHor'
+import { RefreshIcon } from '@/public/icons/RefreshIcon'
+import { Dots3Icon } from '@/public/icons/Dots3Icon'
+import { DownArowSmallIcon } from '@/public/sidebaricons/DownArowSmallIcon'
+import DownStickArrowIcon from '@/public/icons/DownStickArrowIcon'
+import GenericTable2 from '@/components/GenericTables/GenericTable2'
+import { recentOrdersTableColumns, recentOrdersTableData } from '@/mock/tablesdata'
+import GenericTable1 from '@/components/GenericTables/GenericTable1'
+import GenericTable3 from '@/components/GenericTables/GenericTable3'
+
+import avatarYellow from '@/public/avatarYellow.png'
+import pinkShoesAvatar from '@/public/pinkShoesAvatar.png'
+import Image from 'next/image'
 
 const index = () => {
   return (
@@ -231,16 +244,134 @@ const index = () => {
 
               {/* <BarChart/> */}
              
-
+                <div className='grid grid-cols-2 gap-[30px]' >
+                  <div>
+                    <BarChartHor 
+                      country={['USA','Turkey', 'India']}
+                      dataArr={[5, 15, 20 ]}
+                    />
+                  </div>
+                  <div>
+                    <BarChartHor
+                      country={['Florida','Poland', 'UK']}
+                      dataArr={[5, 15, 20 ]}
+                      
+                    
+                    />
+                  </div>
+                </div>
               </div>
             </CardAdmin>
           </div>
           <div className='col-span-2' >
             <CardAdmin>
               <div className='px-[30px] py-[33.5px] ' >
-              {/* <p className='text-[22px] font-[500] mb-[14px] ' >Current User</p>
-                <BarChart/> */}
+                <div className='flex items-center justify-between  mb-[10px]' >
+                  <p className='text-[22px] font-[500]  ' >Sold By Items</p>
+                  <div className=' flex items-center gap-[24px]' > <RefreshIcon/> <Dots3Icon/>  </div>
+                </div>
+
+                {[...Array(10)].map((e,i) => (
+                  <>
+                   {i==0 ? '' : <hr/>} 
+                  
+                <div className={`flex items-center justify-between text-[14px]
+                  ${i==0 && "mt-[20px]" }
+                 my-[15px] font-[400] `} >
+                  <p>Backpack</p>
+                  <p>9</p>
+                  <p className='flex items-center gap-[5px]'  > <p> 33%</p> <DownStickArrowIcon/>  </p>
+                </div>
+
+                </>
+                )) }
+
               </div>  
+            </CardAdmin>
+          </div>
+        </section>
+
+        <section>
+          <CardAdmin classes="mt-[30px] " >
+            <div className='p-[30px]  ' >
+              <div className='mb-[10px]' >
+                <p className='text-[22px] font-[500] mb-[10px] ' >Recent Orders</p>
+              </div>
+                <div className='px-[20px] ' >
+                <GenericTable3
+                  data={recentOrdersTableData}
+                  columns={recentOrdersTableColumns}
+                />
+                </div>
+
+            </div>
+          </CardAdmin>
+        </section>
+
+        <section className='grid grid-cols-6 gap-[27px] mt-[30px] ' >
+          <div className='col-span-2' >
+            <CardAdmin>
+            <div className='px-[30px] py-[33.5px] ' >
+                <div className='flex items-center justify-between  mb-[10px]' >
+                  <p className='text-[22px] font-[500]  ' >New Customers</p>
+                  <div className=' flex items-center gap-[24px]' > <RefreshIcon/> <Dots3Icon/>  </div>
+                </div>
+
+                {[...Array(10)].map((e,i) => (
+                  <>
+                   
+                  
+                <div className={`flex items-center justify-between text-[14px]
+                  ${i==0 && "mt-[20px]" }
+                 my-[15px] font-[400] `} >
+                  <div className='flex gap-[15px] items-center ' >
+                  <Image src={avatarYellow} />
+                    <div>
+                        <p className='font-[400] ' >Selena Wagner</p>
+                        <p className='font-[300] ' >@salina.io</p>
+                    </div>
+                  </div>
+                  <p className='font-[400] '>2 orders</p>
+                  <p className='font-[400] '>$150</p>
+                </div>
+
+                </>
+                )) }
+
+              </div>  
+            </CardAdmin>
+          </div>
+          <div className='col-span-4' >
+            <CardAdmin>
+            <div className='px-[30px] py-[33.5px] ' >
+                <div className='flex items-center justify-between  mb-[10px]' >
+                  <p className='text-[22px] font-[500]  ' >New Customers</p>
+                  <div className=' flex items-center gap-[24px]' > <RefreshIcon/> <Dots3Icon/>  </div>
+                </div>
+
+                {[...Array(6)].map((e,i) => (
+                  <>
+                   
+                  
+                <div className={`flex items-center justify-between text-[14px]
+                  ${i==0 && "mt-[20px]" }
+                 my-[15px] font-[400] `} >
+                  <div className='flex gap-[15px] items-center ' >
+                  <Image src={pinkShoesAvatar} />
+                    <div>
+                        <p className='font-[500] ' >Selena Wagner</p>
+                        <p className='font-[400] ' >Statement belting with double turn lock hardware add swaggers to a simple</p>
+                        <p className='font-[400] ' >$520 <strike>$500</strike> </p>
+                    </div>
+                  </div>
+                  <p className='font-[400] '>2 orders</p>
+                  <p className='font-[400] '>$150</p>
+                </div>
+
+                </>
+                )) }
+
+              </div>
             </CardAdmin>
           </div>
         </section>

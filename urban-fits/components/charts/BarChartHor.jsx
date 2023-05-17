@@ -19,10 +19,12 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+const BarChartHor = ({country, dataArr}) => {
 
-export const options = {
+
+ const options = {
   responsive: true,
-  //  indexAxis: 'y' ,
+   indexAxis: 'y' ,
   plugins: {
     legend: {
       // position: 'top' ,
@@ -37,13 +39,13 @@ export const options = {
     // to remove the labels
     x: {
       ticks: {
-        display: false,
+        display: true,
       },
   
       // to remove the x-axis grid
       grid: {
-        drawBorder: false,
-        display: false,
+        drawBorder: true,
+        display: true,
         offset: true
       },
     },
@@ -55,21 +57,21 @@ export const options = {
       },
       // to remove the y-axis grid
       grid: {
-        drawBorder: true,
-        display: true,
+        drawBorder: false,
+        display: false,
       },
     },
   },
 };
 
-const labels = ['1','2','3', '4', '5', '6'];
+const labels = country;
 
-export const data = {
+ const data = {
   labels,
   datasets: [
     {
       label: 'Dataset 1',
-      data: [ 3, 30, 10, 20, 55, 50 ],
+      data: [  5, 15, 20 ],
       barThickness: 9,
       backgroundColor: '#88AAF3',
     },
@@ -81,13 +83,14 @@ export const data = {
 
 
 
-const BarChart = () => {
+
+
     return (
-        <Bar width={40}
-              height={50}
+        <Bar width={50}
+              height={20}
          options={options} data={data} /> 
         
          )
 }
 
-export default BarChart
+export default BarChartHor

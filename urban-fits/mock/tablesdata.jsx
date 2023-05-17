@@ -13,6 +13,7 @@ import StatusBadge from "@/components/GenericTables/StatusBadge";
 import { VisaIcon } from "@/public/icons/VisaIcon";
 import { AmexIcon } from "@/public/icons/AmexIcon";
 import { MastercardIcon } from "@/public/icons/MastercardIcon";
+import { Dots3Icon } from "@/public/icons/Dots3Icon";
 
 export const userListTableColumns = [
   {
@@ -911,4 +912,107 @@ export const invoiceTableData = [
    
   },
   
+]
+
+export const recentOrdersTableColumns = [
+  {
+    accessor: "orderid",
+    Header: "Order Id",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "productname",
+    Header: "Product Name",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "units",
+    Header: "Units",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "orderdate",
+    Header: "Order Date",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "ordercost",
+    Header: "Order Cost",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "status",
+    Header: "Status",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "action",
+    Header: "Action",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+]
+
+export const recentOrdersTableData = [
+
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
+    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
+    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
+    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
+    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
+    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
+    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+    
 ]
