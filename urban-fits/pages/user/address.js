@@ -4,6 +4,7 @@ import useUser from '@/hooks/useUser';
 import User from '.';
 import Head from 'next/head';
 import useAddress from '@/hooks/useAddress';
+import Error403 from '../403';
 import countryCodes from '@/static data/countryCodes';
 import Button from '../../components/buttons/simple_btn';
 import Loader from '@/components/loader';
@@ -13,7 +14,6 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 const AddressForm = (props) => {
-    const router = useRouter()
     const { tag } = props
     const { address, updateAddress } = useAddress()
     // getting data from input fields andrelative  applying validation
@@ -117,6 +117,7 @@ const AddressForm = (props) => {
 }
 
 export default function Address() {
+    const router = useRouter()
     const { user } = useUser()
     const { updateAddress } = useAddress()
     //state to handle loader component
@@ -127,6 +128,7 @@ export default function Address() {
         setLoader(null)
     }
 
+    if(!user) return <Error403 />
     return (
         <>
             <Head>

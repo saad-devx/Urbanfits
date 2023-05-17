@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import Link from 'next/link'
 import User from '.';
@@ -8,6 +7,7 @@ import toaster from '@/utils/toast_function';
 import ifExists from '@/utils/if_exists';
 import Head from 'next/head';
 import Loader from '@/components/loader';
+import Error403 from '../403';
 import Card from '../../components/cards/card'
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
@@ -17,9 +17,9 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 // little function to use inside right this component to avoid mess
-const InfoCard = (props) => {
-    return <Card title={props.title} value={props.value} btnValue={props.btnValue} classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
-}
+// const InfoCard = (props) => {
+//     return <Card title={props.title} value={props.value} btnValue={props.btnValue} classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
+// }
 
 // Function to show addresses of the user in a container
 const AddressContainer = (props) => {
@@ -49,7 +49,6 @@ const AddressContainer = (props) => {
 }
 
 export default function Personalinfo() {
-    const router = useRouter()
     const { user, updateUser } = useUser()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
@@ -93,7 +92,7 @@ export default function Personalinfo() {
             newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
         })
     }, [])
-    if(!user) return <h1>Sorry you dont have access to this page</h1>
+    if(!user) return <Error403/>
     return (
         <>
             <Head>

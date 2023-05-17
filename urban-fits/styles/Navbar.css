@@ -79,5 +79,5 @@
     transform: translate(0);
 }
 .group_whole_nav:not(:hover) .group_whole_nav_hover_appear, .group_whole_nav:not(:hover) .down_bar {
-    transition-delay: 2.5s;
+    transition-delay: 1.5s;
 }

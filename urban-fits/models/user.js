@@ -8,6 +8,7 @@ const UserSchema = mongoose.Schema({
         minLength: [4, "Username should have more than 4 characters"],
         unique: [true, "This username is already in use"]
     },
+    profile_picture: { type: String },
     phone_prefix: {
         type: String
     },

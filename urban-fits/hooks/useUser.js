@@ -15,6 +15,7 @@ export default function useUser() {
     const updateUser = (token) => {
         localStorage.setItem("authToken", token)
         const userData = jwt.decode(token)?._doc
+        // localStorage.setItem("pfp", userData.profile_picture)
         setUser(userData)
     }
     const logOut = () => {

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
+import Error403 from '@/pages/403';
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
@@ -61,7 +62,7 @@ export default function User(props) {
         }
         if (pfp) return pfp
     }
-
+    
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = (e) => {
         const reader = new FileReader();
@@ -71,7 +72,7 @@ export default function User(props) {
         }
         reader.readAsDataURL(e.target.files[0]);
     }
-    if(!user) return <h1>Sorry you dont have access to this page</h1>
+    if(!user) return <Error403 />
     return (
         <>
             <Navbar lowerLogo />

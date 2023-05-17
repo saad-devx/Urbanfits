@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import OrdersPage from './index'
+import Error403 from '@/pages/403';
+import useUser from '@/hooks/useUser';
 import Invoice from '@/components/modals/invoice'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -61,6 +63,8 @@ const OrderCard = (props) => {
 }
 
 export default function orders() {
+    const {user} = useUser()
+    if(!user) return <Error403 />
     return (
         <>
             <OrdersPage>

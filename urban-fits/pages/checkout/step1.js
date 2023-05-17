@@ -75,7 +75,7 @@ export default function Checkout1(props) {
         phone_prefix: 'Select Country Code',
         phone_number: ''
     }
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues, getFieldMeta } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
         initialValues: {
             name: '',
             email: '',
@@ -104,17 +104,17 @@ export default function Checkout1(props) {
         }
     })
 
-    const getValuesToBeSet = (obj) => {
+    const getValuesToBeSet = async (obj) => {
         return {
-            address_title: !obj ? '' : obj.address_title,
-            firstname: !obj ? '' : obj.firstname,
-            lastname: !obj ? '' : obj.lastname,
-            address: !obj ? '' : obj.address,
-            apt_suite: !obj ? '' : obj.apt_suite,
-            city: !obj ? '' : obj.city,
-            country: !obj ? 'Country' : obj.country,
-            phone_prefix: !obj ? 'Select Country Code' : obj.phone_prefix,
-            phone_number: !obj ? '' : obj.phone_number
+            address_title: obj?.address_title,
+            firstname: obj?.firstname,
+            lastname: obj?.lastname,
+            address: obj?.address,
+            apt_suite: obj?.apt_suite,
+            city: obj?.city,
+            country: obj?.country,
+            phone_prefix: obj?.phone_prefix,
+            phone_number: obj?.phone_number
         }
     }
 
@@ -128,12 +128,13 @@ export default function Checkout1(props) {
 
                 let shippingAddress = address.addresses.filter(address => { return address.tag === 'shipping' })[0]
                 let billingAddress = address.addresses.filter(address => { return address.tag === 'billing' })[0]
+                console.log(shippingAddress, billingAddress)
                 setValues({
                     name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
                     email: ifExists(user.email),
                     delivery_option: 'express',
-                    shipping_address: getValuesToBeSet(shippingAddress),
-                    billing_address: getValuesToBeSet(billingAddress)
+                    shipping_address: await getValuesToBeSet(shippingAddress),
+                    billing_address: await getValuesToBeSet(billingAddress)
                 })
             }
             catch (error) { console.error(error) }

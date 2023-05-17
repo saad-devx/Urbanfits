@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/router';
+import Error403 from '../403';
 import useUser from '@/hooks/useUser';
 import User from '.';
 import Link from 'next/link'
@@ -14,7 +14,6 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 export default function EmailPassword() {
-    const router = useRouter()
     const {user, updateUser} = useUser()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
@@ -25,7 +24,7 @@ export default function EmailPassword() {
         password: Yup.string().min(8).max(30).required("Please enter your password")
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { email: user.email, password: '', confirm_email: '' },
+        initialValues: { email: user?.email, password: '', confirm_email: '' },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
@@ -44,7 +43,7 @@ export default function EmailPassword() {
             setValues({ confirm_email: '', password: '' })
         }
     })
-    
+    if(!user) return <Error403 />
     return (
         <>
             <Head>
