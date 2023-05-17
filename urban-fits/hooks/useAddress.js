@@ -21,11 +21,6 @@ export default function useAddress() {
         return decodedAddress._doc
     }
 
-    useEffect(() => {
-        if (address) return
-        if (!address) getAddress()
-    }, [])
-
     const updateAddress = async (values) => {
         try {
             let response = await fetch(`${process.env.HOST}/api/user/addresses/update?user_id=${user._id}`, {
