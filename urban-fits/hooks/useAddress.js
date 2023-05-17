@@ -42,8 +42,8 @@ export default function useAddress() {
         }
     }
 
-    const initiateAddress = async (router) => {
-        let user_id = user._id
+    const initiateAddress = async (payload, router) => {
+        let user_id = jwt.decode(payload)._doc._id
         if (router.pathname === "/signup") {
             let address = await fetch(`${process.env.HOST}/api/user/addresses/create?user_id=${user_id}`, {
                 method: "POST",

@@ -29,8 +29,8 @@ export default function Signing(props) {
     const router = useRouter()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    const {updateUser} = useUser()
-    const {initiateAddress} = useAddress()
+    const { updateUser } = useUser()
+    const { initiateAddress } = useAddress()
     //                                      Submit function
 
     // setting request method according to the pathname
@@ -51,8 +51,7 @@ export default function Signing(props) {
             let res = await response.json()
             if (res.success && res.payload) {
                 updateUser(res.payload)
-                // localStorage.setItem("authToken", res.payload)
-                await initiateAddress(router)
+                await initiateAddress(res.payload, router)
                 toaster("success", res.msg)
             }
             else if (res.resetPassToken && res.success) {
