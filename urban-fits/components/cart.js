@@ -40,7 +40,7 @@ function CartItem(props) {
             </div>
             {/* to be displayed from md breakpoint */}
             <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_gotham_medium tracking-widest">
-                <Link href={`/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()}</Link>
+                <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()}</Link>
                 <h3 className="w-[100px]">{product?.color.toUpperCase()}</h3>
                 {/* <Select /> */}
                 <div className='relative'>
@@ -61,7 +61,7 @@ function CartItem(props) {
             </div>
             {/* to be displayed in mobile */}
             <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_gotham_medium tracking-widest">
-                <h3 className="w-full font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()} </h3>
+                <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()} </Link>
                 <h3 className="font_gotham_black self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
                 <div className="w-full flex self-end gap-3">
                     <div className='relative'>
@@ -119,7 +119,7 @@ export default function Cart(props) {
                                         <span className='w-[10%] text-gray-300'>AMOUNT</span>
                                     </div>
                                     {items.map((product) => {
-                                        return <CartItem li_key={product.id} product={product} get3dpNumber={get3dpNumber} />
+                                        return <CartItem li_key={product.id} toggleCart={props.toggleCart} product={product} get3dpNumber={get3dpNumber} />
                                     })}
                                     <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                                 </div>

@@ -7,8 +7,8 @@ import Image from 'next/image';
 export default function CheckoutCalcSection() {
     const { totalUniqueItems, items, cartTotal, emptyCart } = useCart()
     return (
-        <div className="details w-full lg:w-[31%] max-w-[600px] m-0 space-y-3">
-            <h3 className="text-2xl md:text-[28px] font_gotham_medium tracking-whidest mb-5">ORDER SUMMARY ({totalUniqueItems})</h3>
+        <div className="details w-full lg:w-[30%] max-w-[600px] m-0 space-y-3">
+            <h3 className="text-xl md:text-2xl font_gotham_medium tracking-whidest mb-5">Order Summary ({totalUniqueItems})</h3>
             <div className="flex relative mb-3 p-6 bg-white card_boxshadow w-full max-h-screen flex-col justify-between items-center rounded-lg md:rounded-xl">
                 {items.map((item, i) => {
                     return <>
