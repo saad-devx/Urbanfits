@@ -355,7 +355,7 @@ export default function Checkout1(props) {
                                             </div>
                                         </div>
                                     </section>
-                                    <span className="flex justify-end"> <Button onclick={() => { onFormSubmit(errors) }} disabled={errors} type="submit" classes="px-8" >Continue to Payment</Button> </span>
+                                    <span className="flex justify-end"> <Button disabled={errors} type="submit" classes="px-8" >Continue to Payment</Button> </span>
                                 </div>
                             </form>
                         </div>
