@@ -11,8 +11,8 @@ const nextConfig = {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
-    GOOGLE_CLIENT_ID: "829021307807-g882f28vb65s9nn40gs4rk4kptga7jqq.apps.googleusercontent.com",
-    GOOGLE_CLIENT_SECRET: "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",
+    GOOGLE_CLIENT_ID: "1090637042326-jp571pnicbocv80911mkkmd94pvuhbk0.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "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",
     // Email SMTP credentials
     SMTP_HOST: "",
     SMTP_USER: "",

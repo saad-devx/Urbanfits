@@ -33,7 +33,10 @@ export default function Checkout1(props) {
     // state and funciton to handle modify input fields
     const name = useRef(null)
     const email = useRef(null)
-    const [readOnly, setReadOnly] = useState(true)
+    const [readOnly, setReadOnly] = useState(() => {
+        if (user) return true
+        if (!user) return false
+    })
     const handleModify = (e) => {
         setReadOnly(false)
         let elemName = e.target.getAttribute("name")
@@ -65,23 +68,23 @@ export default function Checkout1(props) {
         phone_number: Yup.string().min(9).required("Please enter your phone number")
     }
     const addressFieldsValues = (tag) => {
-        const Address = address.addresses.filter(address => { return address.tag === tag })[0]
+        const Address = address?.addresses.filter(address => { return address.tag === tag })[0]
         return {
-            address_title: Address.address_title,
-            firstname: Address.firstname,
-            lastname: Address.lastname,
-            address: Address.address,
-            apt_suite: Address.apt_suite,
-            city: Address.city,
-            country: Address.country,
-            phone_prefix: Address.phone_prefix,
-            phone_number: Address.phone_number
+            address_title: Address?.address_title,
+            firstname: Address?.firstname,
+            lastname: Address?.lastname,
+            address: Address?.address,
+            apt_suite: Address?.apt_suite,
+            city: Address?.city,
+            country: Address ? Address.country : "Country",
+            phone_prefix: Address ? Address.phone_prefix : "Select Country Code",
+            phone_number: Address?.phone_number
         }
     }
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
         initialValues: {
-            name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
-            email: user.email,
+            name: user ? (user?.firstname + ' ' + user?.lastname) : "",
+            email: user?.email,
             delivery_option: 'express',
             shipping_address: addressFieldsValues("shipping"),
             billing_address: addressFieldsValues("billing")
@@ -96,6 +99,7 @@ export default function Checkout1(props) {
         onSubmit: async (values) => {
             setLoader(<Loader />)
             try {
+                console.log("and here i am running too :D")
                 const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
                 window.location.href = response.data
             }
@@ -107,39 +111,35 @@ export default function Checkout1(props) {
         }
     })
 
-    const getValuesToBeSet = async (obj) => {
+    const getValuesToBeSet = (obj) => {
         return {
-            address_title: obj?.address_title,
-            firstname: obj?.firstname,
-            lastname: obj?.lastname,
-            address: obj?.address,
-            apt_suite: obj?.apt_suite,
-            city: obj?.city,
-            country: obj?.country,
-            phone_prefix: obj?.phone_prefix,
-            phone_number: obj?.phone_number
+            address_title: obj ? obj.address_title : '',
+            firstname: obj ? obj.firstname : '',
+            lastname: obj ? obj.lastname : '',
+            address: obj ? obj.address : '',
+            apt_suite: obj ? obj.apt_suite : '',
+            city: obj ? obj.city : '',
+            country: obj ? obj.country : 'Country',
+            phone_prefix: obj ? obj.phone_prefix : 'Select Country Code',
+            phone_number: obj ? obj.phone_number : ''
         }
     }
 
     useEffect(() => {
         return async () => {
-            console.log("i (the useEffecct ) started running lets see what happend ahead")
-            setLoader(<Loader />)
             try {
                 if (!user) return
-                console.log(user)
+                setLoader(<Loader />)
                 if (!address) await getAddress()
                 if (!address) return
-
                 let shippingAddress = address.addresses.filter(address => { return address.tag === 'shipping' })[0]
                 let billingAddress = address.addresses.filter(address => { return address.tag === 'billing' })[0]
-                console.log(shippingAddress, billingAddress)
                 setValues({
                     name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
                     email: ifExists(user.email),
                     delivery_option: 'express',
-                    shipping_address: await getValuesToBeSet(shippingAddress),
-                    billing_address: await getValuesToBeSet(billingAddress)
+                    shipping_address: getValuesToBeSet(shippingAddress),
+                    billing_address: getValuesToBeSet(billingAddress)
                 })
             }
             catch (error) { console.error(error) }
@@ -149,6 +149,7 @@ export default function Checkout1(props) {
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
         const query = new URLSearchParams(window.location.search);
+        console.log(query)
         if (query.get('success')) {
             console.log('Order placed! You will receive an email confirmation.');
         }
@@ -159,6 +160,7 @@ export default function Checkout1(props) {
     }, []);
 
     const toggleBillingForm = (e) => {
+        if(errors.shipping_address) return console.log("complete shipping details first")
         let state = e.target.checked
         if (state) {
             setBillingForm('h-0')
@@ -174,8 +176,17 @@ export default function Checkout1(props) {
         }
     }
     const onFormSubmit = (errors) => {
-        if (errors.shipping_address || errors.billingAddress || errors === {}) return toaster('error', 'Please fill up all your details')
+        if (errors) return toaster('error', 'Please fill up all your details')
         else return
+    }
+    
+    const handleSwitchBtn = ()=>{
+        const classes = "pointer-events-none opacity-50"
+        if(!user){
+            if(!touched.shipping_address || (touched.shipping_address && errors.shipping_address)) return classes
+        }
+        else if(user && errors.shipping_address) return classes
+        else return null
     }
 
     if (isEmpty) return <ErrorPage type="error" heading="Oh! There's nothing Checkout" message="You currently have nothing to checkout in your cart, please visit our store and select something to purchase" />
@@ -194,17 +205,19 @@ export default function Checkout1(props) {
                     <section className='w-full lg:w-[85%] h-full flex flex-col lg:flex-row p-5 md:p-7 lg:p-0 lg:pt-16 font_gotham text-left pt-5' >
                         <div className="w-full lg:w-[65%] mb-3 mr-auto">
                             <form className="w-full text-sm" onSubmit={handleSubmit} onReset={handleReset} >
-                                <div className="w-full border-b border-b-gray-200 mb-5"><button type='button' onClick={router.back}><i className="fa-solid fa-chevron-left mr-2"></i>Back</button></div>
+                                <div className="w-full border-b border-b-gray-200 mb-5"><span onClick={router.back}><i className="fa-solid fa-chevron-left mr-2"></i>Back</span></div>
                                 <span className=" mb-7 flex justify-between font_gotham_medium text-xl lg:text-2xl tracking-widest"> <h1>1. Contact Information</h1> <i className="fa-solid fa-circle-check"></i> </span>
                                 <span className="flex flex-col mb-6">
                                     <label className='font_gotham_medium md:text-lg' htmlFor="name">NAME</label>
                                     <div className=" w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                    {/* {touched.name && errors.name ? <Tooltip classes="form-error" content={errors.name} /> : null} */}
                                         <input className="w-full bg-transparent outline-none border-none" onBlur={() => { setReadOnly(true) }} onChange={handleChange} value={values.name} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button onClick={handleModify} ><i className="material-symbols-outlined" title='Edit' name="name">edit_square</i></button>
                                     </div>
                                 </span>
                                 <span className="flex flex-col">
                                     <label className='font_gotham_medium md:text-lg' htmlFor="email">EMAIL</label>
                                     <div className=" w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                    {/* {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null} */}
                                         <input className="w-full bg-transparent outline-none border-none" onBlur={() => { setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="John Doe" /><button onClick={handleModify} ><i className="material-symbols-outlined" title='Edit' name="email">edit_square</i></button>
                                     </div>
                                 </span>
@@ -285,7 +298,7 @@ export default function Checkout1(props) {
                                     <div className="w-full my-7 flex flex-col">
                                         <h1 className="font_gotham_medium text-lg lg:text-xl tracking-widest">Enter You Billing Address</h1>
                                         <div className="my-2 flex items-center font_gotham_medium md:text-lg">
-                                            Use same details for Billing Address <label className="switch w-11 md:w-11 h-6 ml-5 "><input type="checkbox" name='same_details_as_shipping' checked={values.newsletter_sub_email} value={true} onChange={toggleBillingForm} /><span className="slider"></span></label>
+                                            Use same details for Billing Address <label className={`${handleSwitchBtn()} switch w-11 md:w-11 h-6 ml-5 `}><input type="checkbox" name='same_details_as_shipping' value={true} onChange={toggleBillingForm} /><span className="slider"></span></label>
                                         </div>
                                     </div>
                                     <section className={`w-full ${billingForm} overflow-hidden space-y-10`}>

@@ -44,7 +44,7 @@ export default async function handler(req, res) {
         }),
         mode: 'payment',
         success_url: `${process.env.HOST}/checkout/thanks?success=true`,
-        cancel_url: `${process.env.HOST}/checkout/thanks?success=false`,
+        cancel_url: `${process.env.HOST}/checkout/step1?payment=false`,
       });
       res.send(session.url);
     } catch (err) {

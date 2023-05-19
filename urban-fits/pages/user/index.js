@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import useLocation from '@/hooks/useLocation'
 import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
@@ -15,6 +16,8 @@ import male_avatar from '../../public/avatars/male.svg'
 
 
 const Option = (props) => {
+    const {location} = useLocation()
+    console.log(location)
     const router = useRouter()
     const route = router.pathname
     return (
@@ -33,7 +36,7 @@ const Option_sm = (props) => {
 export default function User(props) {
     const router = useRouter()
     const route = router.pathname
-    const {user, logOut} = useUser()
+    const { user, logOut } = useUser()
 
     const menuRef = useRef(null)
     useEffect(() => {
@@ -54,7 +57,7 @@ export default function User(props) {
     }
     //state and function for the file selection
     const getPfp = () => {
-        if(!user) return
+        if (!user) return
         let pfp = localStorage.getItem("pfp")
         if (!pfp) {
             if (user.gender === "Male") return male_avatar
@@ -62,7 +65,7 @@ export default function User(props) {
         }
         if (pfp) return pfp
     }
-    
+
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = (e) => {
         const reader = new FileReader();
@@ -72,7 +75,7 @@ export default function User(props) {
         }
         reader.readAsDataURL(e.target.files[0]);
     }
-    if(!user) return <Error403 />
+    if (!user) return <Error403 />
     return (
         <>
             <Navbar lowerLogo />
@@ -104,13 +107,13 @@ export default function User(props) {
                         <div className={`${props.profileNull ? 'hidden' : null} flex flex-row-reverse md:flex-row items-center gap-3`}>
                             <div className="w-3/5 md:w-auto flex flex-col items-center">
                                 <div className="group relative md:w-[150px] aspect-square rounded-full border-2 border-gray-300 overflow-hidden">
-                                    <div className="opacity-0 group-hover:opacity-100 bg-black/50 absolute left-0 top-0 w-full h-full transition-all duration-300">
-                                        <label htmlFor="pfp" className="text-white font_gotham_medium text-xs cursor-pointer tracking-epxand flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><i className="fa-solid fa-camera text-lg text-white" /> UPLOAD</label>
+                                    <div className="opacity-0 group-hover:opacity-100 bg-transparent lg:bg-black/50 absolute left-0 top-0 w-full h-full transition-all duration-300">
+                                        <label htmlFor="pfp" className="opacity-0 lg:opacity-100 text-white font_gotham_medium text-xs cursor-pointer tracking-epxand flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><i className="fa-solid fa-camera text-lg text-white" /> UPLOAD</label>
                                         <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 absolute" />
                                     </div>
                                     <Image className="w-full h-full object-cover object-center" width={150} height={150} src={photo} alt="avatar" />
                                 </div>
-                                <label htmlFor='pfp' className="lg:hidden mt-1.5 flex items-center font_gotham_medium text-[10px] tracking-widest ">EDIT<i class="fa-sharp fa-regular fa-pen-to-square mx-1 -translate-y-[1px]" /></label>
+                                <label htmlFor='pfp' className="lg:hidden mt-1.5 flex items-center font_gotham_medium text-[10px] tracking-widest ">EDIT<i className="fa-sharp fa-regular fa-pen-to-square mx-1 -translate-y-[1px]" /></label>
                             </div>
                             <span>
                                 <h2 className="text-2xl lg:text-[30px] font_gotham_medium tracking-widest mb-4">MY ACCOUNT</h2>

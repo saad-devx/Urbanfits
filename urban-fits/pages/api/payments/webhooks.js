@@ -37,7 +37,7 @@ const webhookHandler = async (req, res) => {
     }
 
     // Successfully constructed event.
-    console.log('✅ Success:', event.id);
+    console.log('The event of checkout construction was successfull ✅ Success:', event.id);
 
     switch (event.type) {
       case 'payment_intent.succeeded': {

@@ -5,12 +5,14 @@ import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'
 import { SessionProvider } from "next-auth/react"
 import dynamic from 'next/dynamic';
+import useLocation from '@/hooks/useLocation'
 import { ToastContainer } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
 import LoadingBar from 'react-top-loading-bar'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
+  const {getLocation} = useLocation()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   useEffect(() => {
@@ -25,6 +27,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 // }, [])
 
   useEffect(() => {
+    getLocation()
     router.events.on("routeChangeStart", () => {
       setProgress(77)
     })
