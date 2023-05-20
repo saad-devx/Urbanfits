@@ -12,8 +12,8 @@ export default function CheckoutCalcSection() {
             <div className="flex relative mb-3 p-6 bg-white card_boxshadow w-full max-h-screen flex-col justify-between items-center rounded-lg md:rounded-xl">
                 {items.map((item, i) => {
                     return <>
-                        <h3 key={-i-1} className="self-start mb-3 font_gotham_medium text-sm md:text-base tracking-wide lg:tracking-widest text-left">{item?.name.toUpperCase()}</h3>
-                        <div key={i} className="w-full mb-4 flex justify-between items-center">
+                        <h3 key={-i-1} className="self-start font_gotham_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
+                        <div key={i} className="w-full mb-2 flex justify-between items-center">
                             <div className="w-[125px] h-[125px] rounded-md md:rounded-lg overflow-hidden">
                                 <Image width={640} height={640} src={item.images[0].url} alt="Urban images" className="w-full h-full object-cover object-top" />
                             </div>

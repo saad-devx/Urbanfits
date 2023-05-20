@@ -42,7 +42,7 @@ const AddressContainer = (props) => {
                 <span>{field.city}, {field.country}</span><br />
                 <span>{field.phone_prefix} {field.phone_number}</span>
             </div>
-            <Link href='/user/address' className='text-sm' >Modify<i class="fa-regular fa-pen-to-square mx-2"></i></Link>
+            <Link href='/user/address' className='text-sm' >Modify<i className="fa-regular fa-pen-to-square mx-2"></i></Link>
         </div>
     }
     else return addressLink
@@ -68,19 +68,12 @@ export default function Personalinfo() {
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
-            let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values)
-            })
-            let res = await response.json()
-            updateUser(res.payload)
-            toaster(res.success === true ? "success" : "error", res.msg)
+            await updateUser(values)
             setLoader(null)
         }
     })
     useEffect(() => {
-        if(!user) return
+        if (!user) return
         setValues({
             title: ifExists(user.title),
             firstname: ifExists(user.firstname),
@@ -92,7 +85,7 @@ export default function Personalinfo() {
             newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
         })
     }, [])
-    if(!user) return <Error403/>
+    if (!user) return <Error403 />
     return (
         <>
             <Head>

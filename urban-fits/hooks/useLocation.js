@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function useLocation() {
-    
+
     const [location, setLocation] = useState(() => {
         const location = localStorage.getItem("location")
         if (location) return location
@@ -14,7 +14,10 @@ export default function useLocation() {
         if (navigator.geolocation) {
             try {
                 const position = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 5000
+                    });
                 });
                 const { latitude, longitude } = await position.coords
                 const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
@@ -29,7 +32,7 @@ export default function useLocation() {
         }
     }
 
-    console.log(location)
+    // console.log(location)
 
-    return {location, getLocation}
+    return { location, getLocation }
 }

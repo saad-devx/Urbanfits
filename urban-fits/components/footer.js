@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import useUser from '@/hooks/useUser'
 import Link from 'next/link'
 import Newsletter from './modals/newsletter'
 import Image from 'next/image'
 import truck from '../public/truck.svg'
 
 export default function Footer() {
+    const { user } = useUser()
     const [modal2, setModal2] = useState(false)
     const toggleModal = () => {
         if (modal2 === false) return setModal2(true)
@@ -91,9 +93,10 @@ export default function Footer() {
                             <li>
                                 <button onClick={toggleModal} name="modal2" className='cursor-pointer' >Newsletter</button>
                             </li>
-                            <li>
-                                <Link href='/user/personalinfo'>My Account</Link>
-                            </li>
+                            {user && user.email ?
+                                <li>
+                                    <Link href='/user/personalinfo'>My Account</Link>
+                                </li> : null}
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
                             <h3 className="text-xs font_gotham_medium tracking-vast">YOUR ORDERS</h3>

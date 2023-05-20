@@ -99,8 +99,8 @@ export default function Product(props) {
                             </div>
 
                             <div className="details w-full lg:w-[40%]">
-                                <h1 className="hidden lg:block w-full mb-4 font_gotham_bold lg:text-[28px] tracking-[0.15em] capitalize">{productData.name}</h1>
-                                <h2 className="hidden lg:block font_gotham_black lg:text-[28px] tracking-[0.15em]">${productData.price}</h2>
+                                <h1 className="hidden lg:block w-full mb-4 font_gotham_bold lg:text-2xl capitalize">{productData.name}</h1>
+                                <h2 className="hidden lg:block font_gotham_medium lg:text-2xl">${productData.price}</h2>
 
                                 <div className="w-full my-8 flex flex-col md:flex-row justify-between">
                                     <div className="w-full lg:w-48pr mb-5 lg:mb-0 flex flex-col">

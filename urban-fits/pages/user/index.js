@@ -5,8 +5,11 @@ import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Error403 from '@/pages/403';
+import Loader from '@/components/loader'
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
+import toaster from '@/utils/toast_function'
+import axios from 'axios'
 import Button from '@/components/buttons/simple_btn'
 import ifExists from '@/utils/if_exists'
 // image imports
@@ -16,8 +19,6 @@ import male_avatar from '../../public/avatars/male.svg'
 
 
 const Option = (props) => {
-    const {location} = useLocation()
-    console.log(location)
     const router = useRouter()
     const route = router.pathname
     return (
@@ -36,7 +37,8 @@ const Option_sm = (props) => {
 export default function User(props) {
     const router = useRouter()
     const route = router.pathname
-    const { user, logOut } = useUser()
+    const { user, logOut, updateUser } = useUser()
+    const [loader, setLoader] = useState(null)
 
     const menuRef = useRef(null)
     useEffect(() => {
@@ -58,7 +60,7 @@ export default function User(props) {
     //state and function for the file selection
     const getPfp = () => {
         if (!user) return
-        let pfp = localStorage.getItem("pfp")
+        let pfp = user.image
         if (!pfp) {
             if (user.gender === "Male") return male_avatar
             else return female_avatar
@@ -67,17 +69,25 @@ export default function User(props) {
     }
 
     const [photo, setPhoto] = useState(getPfp)
-    const onFileChange = (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            setPhoto(reader.result);
-            localStorage.setItem("pfp", reader.result)
+    const onFileChange = async (e) => {
+        const file = e.target.files[0]
+        try {
+            setLoader(<Loader />)
+            const { data } = await axios.get(`${process.env.HOST}/api/S3/signedurl?folder=user-profiles/`)
+            await axios.put(data.uploadUrl, file)
+            const imageUrl = data?.uploadUrl.split("?")[0]
+            setPhoto(imageUrl)
+            updateUser({ image: imageUrl })
         }
-        reader.readAsDataURL(e.target.files[0]);
+        catch (error) {
+            toaster('error', error)
+        }
+        setLoader(null)
     }
     if (!user) return <Error403 />
     return (
         <>
+            {loader}
             <Navbar lowerLogo />
             <main className={`bg-white w-full flex font_gotham transition-all duration-700`}>
                 <Logout logOut={logOut} modal5={modal5} toggleModal={toggleModal} />

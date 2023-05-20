@@ -35,7 +35,7 @@ const SocialIcons = ({ classes }) => {
 
 const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
     const getPfp = () => {
-        let pfp = localStorage.getItem("pfp")
+        let pfp = user.image
         if (pfp) return pfp
         if (!pfp) {
             if (user.gender === "Male") return male_avatar

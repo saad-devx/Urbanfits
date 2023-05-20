@@ -40,7 +40,6 @@ export default function Signing(props) {
     }
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
-            console.log(oAuthQuery)
             setLoader(<Loader />)
             let path = router.pathname
             let response = await fetch(`${process.env.HOST}/api/user${path}${oAuthQuery ? oAuthQuery : ''}`, {
@@ -50,7 +49,7 @@ export default function Signing(props) {
             })
             let res = await response.json()
             if (res.success && res.payload) {
-                updateUser(res.payload)
+                updateUser(res.payload, true)
                 await initiateAddress(res.payload, router)
                 toaster("success", res.msg)
             }
@@ -92,7 +91,7 @@ export default function Signing(props) {
             let firstname = name[0]
             name.shift()
             let lastname = name.join(' ')
-            const loginDetails = { email: session.user.email, username, firstname, lastname }
+            const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image }
             onsubmit(loginDetails, null, '?auth=OAuth')
             return localStorage.setItem('oauth', false)
         }
@@ -118,8 +117,8 @@ export default function Signing(props) {
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className='w-[100px] h-[100px] mx-auto mb-8' />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></a></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
+                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></span></button>
                         </div>
                         <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
