@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Line, Filler } from 'react-chartjs-2';
 // import faker from 'faker';
 
 ChartJS.register(
@@ -25,13 +25,16 @@ ChartJS.register(
 export const options = {
   responsive: true,
   plugins: {
-    legend: {
-      position: 'top' ,
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
+    // legend: {
+    //   position: 'top' ,
+    // },
+    // title: {
+    //   display: true,
+    //   text: 'Chart.js Line Chart',
+    // },
+  //   filler: {
+  //     propagate: true
+  // }
   },
 };
 
@@ -43,7 +46,11 @@ export const data = {
     {
         label: 'My First Dataset',
         data: [65, 59, 80, 10, 56, 55, 5],
-        fill: true,
+        fill: {
+          target: 'origin',
+          above: 'rgb(255, 0, 0)',   // Area will be red above the origin
+          below: 'rgb(0, 0, 255)'    // And blue below the origin
+        },
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'red',
         tension: 0.3,
@@ -54,7 +61,7 @@ export const data = {
       data: [35, 60, 18],
       fill: true,
       borderColor: 'rgb(53, 162, 235)',
-      tension: 0.3,
+      tension: 0.4,
 
     },
     {
@@ -63,7 +70,7 @@ export const data = {
       data: [0, 35, 60, 18, 0],
       fill: true,
       borderColor: 'rgb(53, 162, 235)',
-      tension: 0.3,
+      tension: 0.4,
 
     },
   ],
