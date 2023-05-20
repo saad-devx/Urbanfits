@@ -63,7 +63,7 @@ export default function Sidebaradmin({ children }) {
   return (
     <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
       <div
-        className={` fixed  ${sidebaropen ? "w-[300px]" : "w-[80px]"
+        className={` fixed  ${sidebaropen ? "w-[250px]" : "w-[80px]"
           }  duration-300 ${sidebaropen && "rounded-r-[25px]"
           }  bg-[#FFFFFF] h-screen    `}
       >
@@ -135,7 +135,7 @@ export default function Sidebaradmin({ children }) {
                   onClick={() => handleItemClick(index)}
                   className="flex  cursor-pointer  mt-[37.54px] justify-between  items-center "
                 >
-                  {/* <Link href={item.navlink}> */}
+                  <Link href={item.navlink || "#" }>
                   <div className="flex gap-[10px] items-center  ">
                     <div>{item.icon}</div>
 
@@ -147,7 +147,7 @@ export default function Sidebaradmin({ children }) {
                       {item.label}
                     </p>
                   </div>
-                  {/* </Link> */}
+                  </Link>
                   <div
                     className={` cursor-pointer ${item.subrows ? "visible" : "hidden"
                       } ${sidebaropen ? "visible" : "hidden"}`}
@@ -216,7 +216,7 @@ export default function Sidebaradmin({ children }) {
 
       <div
         className={`px-[30px] py-[44px] bg-[#F4F4F4]    overflow-y-scroll
-        ${sidebaropen ? "ml-[300px]" : "ml-[80px]"}  duration-300
+        ${sidebaropen ? "ml-[250px]" : "ml-[80px]"}  duration-300
        `}
       >
         {/* /////////////////////////////////////////////////// */}

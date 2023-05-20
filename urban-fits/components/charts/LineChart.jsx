@@ -25,16 +25,13 @@ ChartJS.register(
 export const options = {
   responsive: true,
   plugins: {
-    // legend: {
-    //   position: 'top' ,
-    // },
-    // title: {
-    //   display: true,
-    //   text: 'Chart.js Line Chart',
-    // },
-  //   filler: {
-  //     propagate: true
-  // }
+    legend: {
+      position: 'top' ,
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Line Chart',
+    },
   },
 };
 
@@ -46,11 +43,7 @@ export const data = {
     {
         label: 'My First Dataset',
         data: [65, 59, 80, 10, 56, 55, 5],
-        fill: {
-          target: 'origin',
-          above: 'rgb(255, 0, 0)',   // Area will be red above the origin
-          below: 'rgb(0, 0, 255)'    // And blue below the origin
-        },
+        fill: true,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'red',
         tension: 0.3,

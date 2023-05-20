@@ -162,7 +162,7 @@ const shipping = () => {
                             </p>
                             </div>
                           ) : (
-                            <p className="text-[14px] ml-[15.33px] font-normal not-itapc max-w-[250px] my-[23.5px]">
+                            <p className="text-[14px] ml-[15.33px] font-normal not-itapc max-w-[250px] ">
                               United States (US)
                             </p>
                           )}

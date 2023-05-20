@@ -9,7 +9,6 @@ import {
   useSortBy,
   usePagination,
   useExpanded,
-  useGlobalFilter
 } from "react-table";
 
 import Styles from "@/styles/generictables.module.css";
@@ -48,6 +47,12 @@ const Styled = styled.div`
       tr{ 
         th {
           padding: 17px 0 24px 0 ;
+
+          :last-child {
+            border-right: 0;
+            float: right;
+          }
+
           }
         }
       }
@@ -73,6 +78,7 @@ const Styled = styled.div`
 
           :last-child {
             border-right: 0;
+            float: right;
           }
         }
       }
@@ -85,7 +91,7 @@ const Styled = styled.div`
 
 
 
-const GenericTable1 = (props) => {
+const GenericTable3 = (props) => {
   const { columns, data } = props;
   const [subRowIndex, setSubRowIndex] = React.useState();
 
@@ -107,20 +113,15 @@ const GenericTable1 = (props) => {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-    state,
-    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
     },
-    useGlobalFilter,
     useSortBy,
-    usePagination,
+    usePagination
   )
-
-  const {globalFilter} = state;
 
   // const setGridTemplateColumns = (columns, i) => {
   //   let frs = ["1fr", "2fr", "1fr", "2fr", "1fr"];
@@ -138,55 +139,7 @@ const GenericTable1 = (props) => {
 
   return (
     <>
-      <div className="flex justify-between">
-        <div className="flex gap-[15px] items-center ">
-          <p className="text-[16px] font-[400] "> Show</p>
-          <select
-            className={`  
-      w-[60px]   mt-[0px]  h-[34px] px-[8px]  border-[1px] rounded-lg outline-none  bg-transparent `}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <p className="text-[16px] font-[400] "> Entries</p>
-        </div>
-
-        <div className="flex items-center gap-[13px] " >
-          {props.options ? 
-          <InputSelect
-          height="h-[40px]"
-            width="w-[175px]"
-            bg="bg-[#FAFAFA]"
-            rounded="rounded-[25px]"
-            options={props.options}
-          />
-          :""
-          }
-          <div id={styles.searchdiv} >
-            <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
-            {/* <i className="material-symbols-outlined absolute">search</i> */}
-            <span className="absolute">
-              <SearchIcon />
-            </span>
-
-            <input
-              type="text"
-              id="search"
-              value={globalFilter || ''}
-              onChange={(e) =>  setGlobalFilter(e.target.value)}
-              className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
-              placeholder="Search (Keyword, etc)"
-            />
-          </div>
-        </div>
-      </div>
+    
 
   <Styled>
       <div className="tableWrap">
@@ -204,7 +157,7 @@ const GenericTable1 = (props) => {
                   >
                     <span className="flex items-center gap-[5px] text-[15px] font-[400] text-[#0000004a] ">
                     {column.render("Header")}
-                    <span>
+                    {/* <span>
                       {column.isSorted ? (
                         column.isSortedDesc ? (
                           <SortUpIcon />
@@ -216,7 +169,7 @@ const GenericTable1 = (props) => {
                           <SortUpIcon /> <SortDownIcon />
                         </span>
                       )}
-                    </span>
+                    </span> */}
                   </span>
                   </th>
                 ))}
@@ -252,26 +205,10 @@ const GenericTable1 = (props) => {
       */}
       </div>
       
-      <div className="flex justify-between items-center" >
-          <span className="flex text-[14px] font-[400] " >
-            <p> Showing &nbsp; </p> 
-            <p>
-              {pageIndex + 1} to {pageSize + pageIndex} of {pageOptions.length }
-
-            </p>
-            <p> &nbsp; Entries </p> 
-          </span>
-          <Pagination canNextPage={canNextPage}
-                    canPreviousPage={canPreviousPage}
-                    gotoPage={gotoPage}
-                    pageCount={pageCount}
-                    nextPage={nextPage}
-                    previousPage={previousPage}
-        />
-      </div>
+  
       </Styled>
     </>
   );
 };
 
-export default GenericTable1;
+export default GenericTable3;
