@@ -9,6 +9,7 @@ import {
   useSortBy,
   usePagination,
   useExpanded,
+  useGlobalFilter
 } from "react-table";
 
 import Styles from "@/styles/generictables.module.css";
@@ -106,15 +107,20 @@ const GenericTable1 = (props) => {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
+    state,
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
     },
+    useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   )
+
+  const {globalFilter} = state;
 
   // const setGridTemplateColumns = (columns, i) => {
   //   let frs = ["1fr", "2fr", "1fr", "2fr", "1fr"];
@@ -173,7 +179,8 @@ const GenericTable1 = (props) => {
             <input
               type="text"
               id="search"
-              onChange={onchange}
+              value={globalFilter || ''}
+              onChange={(e) =>  setGlobalFilter(e.target.value)}
               className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
               placeholder="Search (Keyword, etc)"
             />

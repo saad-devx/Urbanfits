@@ -21,6 +21,12 @@ import GenericTable3 from '@/components/GenericTables/GenericTable3'
 import avatarYellow from '@/public/avatarYellow.png'
 import pinkShoesAvatar from '@/public/pinkShoesAvatar.png'
 import Image from 'next/image'
+import AvatarIconV from '@/public/icons/AvatarIconV'
+import PurseIcon from '@/public/icons/PurseIcon'
+import VisitorsIcon from '@/public/icons/VisitorsIcon'
+import WalletIcon from '@/public/icons/WalletIcon'
+import { TruckLIcon } from '@/public/icons/TruckLIcon'
+import DollarCardIcon from '@/public/icons/DollarCardIcon'
 
 const index = () => {
   return (
@@ -35,8 +41,9 @@ const index = () => {
                   <p className=' text-[14px] font-[400] ' >Daily Signup</p>
                   <p className=' text-[22px] font-[500] ' >1,503</p>
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  {/* <AvatarIcon fill="#F5F5F5" stroke="black" /> */}
+                  <AvatarIconV/>
                 </div>
               </div>
             </CardAdmin>
@@ -47,8 +54,8 @@ const index = () => {
                   <p className=' text-[22px] font-[500] ' >1,255</p>
                   <p className=' text-[12px] font-[300] ' >In 20 Categories</p>
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <PurseIcon/>
                 </div>
               </div>
             </CardAdmin>
@@ -62,8 +69,8 @@ const index = () => {
                   <p className=' text-[14px] font-[400] ' >Daily Visitors</p>
                   <p className=' text-[22px] font-[500] ' >7,903</p>
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <VisitorsIcon/>
                 </div>
               </div>
             </CardAdmin>
@@ -74,8 +81,8 @@ const index = () => {
                   <p className=' text-[22px] font-[500] ' >$37,903</p>
                   <p className=' text-[12px] font-[300] ' >Based in your local time</p>
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <WalletIcon/>
                 </div>
               </div>
             </CardAdmin>
@@ -91,8 +98,8 @@ const index = () => {
                   <p className=' text-[22px] font-[500] ' >7,903</p>
                   <p className=' text-[12px] font-[300] ' >Excluding orders in transit</p>
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <TruckLIcon/>
                 </div>
               </div>
             </CardAdmin>
@@ -102,8 +109,8 @@ const index = () => {
                   <p className=' text-[14px] font-[400] ' >Monthly Sales</p>
                   <p className='text-[22px] font-[500]' >400 <span className='text-[12px] font-[300]' >Units</span> </p>  
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <AvatarIconV/>
                 </div>
               </div>
             </CardAdmin>
@@ -118,8 +125,8 @@ const index = () => {
                   <p className=' text-[22px] font-[500] ' >7,903</p>
                   <p className=' text-[12px] font-[300] ' >Based in your local time</p>
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <DollarCardIcon/>
                 </div>
               </div>
             </CardAdmin>
@@ -129,8 +136,8 @@ const index = () => {
                   <p className=' text-[14px] font-[400] ' >Cancelled Orders</p>
                   <p className='text-[22px] font-[500]' > 300 <span className='text-[12px] font-[300]' >Units</span> </p>  
                 </div>
-                <div className='' >
-                  <AvatarIcon fill="#F5F5F5" stroke="black" />
+                <div className=' bg-[#F5F5F5] rounded-[50px] w-[50px] h-[50px]  flex items-center justify-center ' >
+                  <VisitorsIcon/>
                 </div>
               </div>
             </CardAdmin>
@@ -170,7 +177,9 @@ const index = () => {
             <CardAdmin>
               <div className='px-[30px] py-[33.5px] ' >
                 <p className='text-[22px] font-[500] mb-[20px] ' >Order Review</p>
-                  <DoughnutChart/>
+                  <div className='w-[248px]' >
+                    <DoughnutChart/>
+                  </div>
 
                   <p className='text-[14px]  font-[400] ' >
                     <DownloadIcon/>

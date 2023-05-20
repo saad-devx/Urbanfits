@@ -204,7 +204,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -225,14 +225,14 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Ali </p>{" "}
         <p> </p>
       </span>
     ),
     customer: (
       <span className="text-[14px] ">
-        <p className="font-[400] "> Bilawal Ashraf </p>
-        <p className="font-[300]"> Bilawalashraf@gmail.com</p>
+        <p className="font-[400] "> Ali </p>
+        <p className="font-[300]"> Ali@gmail.com</p>
       </span>
     ),
     quantity: <p className="text-[14px] "> 0 </p>,
@@ -246,7 +246,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -267,7 +267,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -288,7 +288,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -309,7 +309,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -330,7 +330,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -351,7 +351,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -372,7 +372,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -393,7 +393,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className="w-[500px] ">Smart Watch </p>{" "}
+        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -464,7 +464,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -475,7 +475,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -486,7 +486,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -497,7 +497,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -508,7 +508,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -519,18 +519,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
-    item: <p className="text-[14px] "> 0 </p>,
-    price: <p className="text-[14px] "> $845 </p>,
-    payment: <p className="text-[14px] font-[400] ">PAID</p>,
-    status: <StatusBadge status="return" />,
-    date: <p className="text-[14px] "> 2021-10-30</p>,
-    action: <ActionButton />,
-  },
-  {
-    id: <p className="text-[14px] "> 354 </p>,
-    customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -541,29 +530,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
-    item: <p className="text-[14px] "> 0 </p>,
-    price: <p className="text-[14px] "> $845 </p>,
-    payment: <p className="text-[14px] font-[400] ">PAID</p>,
-    status: <StatusBadge status="return" />,
-    date: <p className="text-[14px] "> 2021-10-30</p>,
-    action: <ActionButton />,
-  },
-  {
-    id: <p className="text-[14px] "> 354 </p>,
-    customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
-    item: <p className="text-[14px] "> 0 </p>,
-    price: <p className="text-[14px] "> $845 </p>,
-    payment: <p className="text-[14px] font-[400] ">PAID</p>,
-    status: <StatusBadge status="return" />,
-    date: <p className="text-[14px] "> 2021-10-30</p>,
-    action: <ActionButton />,
-  },
-  {
-    id: <p className="text-[14px] "> 354 </p>,
-    customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -574,7 +541,7 @@ export const orderHistoryTableData = [
   {
     id: <p className="text-[14px] "> 354 </p>,
     customer: <p className="font-[400] "> Bilawal Ashraf </p>,
-    email: <p className="w-[500px] ">Bilawalashraf@gmail.com</p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
     item: <p className="text-[14px] "> 0 </p>,
     price: <p className="text-[14px] "> $845 </p>,
     payment: <p className="text-[14px] font-[400] ">PAID</p>,
@@ -582,6 +549,29 @@ export const orderHistoryTableData = [
     date: <p className="text-[14px] "> 2021-10-30</p>,
     action: <ActionButton />,
   },
+  {
+    id: <p className="text-[14px] "> 354 </p>,
+    customer: <p className="font-[400] "> Bilawal Ashraf </p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
+    item: <p className="text-[14px] "> 0 </p>,
+    price: <p className="text-[14px] "> $845 </p>,
+    payment: <p className="text-[14px] font-[400] ">PAID</p>,
+    status: <StatusBadge status="delivered" />,
+    date: <p className="text-[14px] "> 2021-10-30</p>,
+    action: <ActionButton />,
+  },
+  {
+    id: <p className="text-[14px] "> 354 </p>,
+    customer: <p className="font-[400] "> Bilawal Ashraf </p>,
+    email: <p className=" ">Bilawalashraf@gmail.com</p>,
+    item: <p className="text-[14px] "> 0 </p>,
+    price: <p className="text-[14px] "> $845 </p>,
+    payment: <p className="text-[14px] font-[400] ">PAID</p>,
+    status: <StatusBadge status="delivered" />,
+    date: <p className="text-[14px] "> 2021-10-30</p>,
+    action: <ActionButton />,
+  },
+  
 ];
 
 export const orderProductDetailTableColumns = [

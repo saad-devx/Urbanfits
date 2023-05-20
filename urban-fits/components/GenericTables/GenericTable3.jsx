@@ -47,6 +47,12 @@ const Styled = styled.div`
       tr{ 
         th {
           padding: 17px 0 24px 0 ;
+
+          :last-child {
+            border-right: 0;
+            float: right;
+          }
+
           }
         }
       }
@@ -72,6 +78,7 @@ const Styled = styled.div`
 
           :last-child {
             border-right: 0;
+            float: right;
           }
         }
       }
