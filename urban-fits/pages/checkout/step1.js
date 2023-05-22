@@ -100,6 +100,7 @@ export default function Checkout1(props) {
             setLoader(<Loader />)
             try {
                 const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
+                console.log(response)
                 window.location.href = response.data
             }
             catch (e) {
