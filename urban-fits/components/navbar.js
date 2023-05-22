@@ -35,6 +35,7 @@ const SocialIcons = ({ classes }) => {
 
 const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
     const getPfp = () => {
+        if (!user || !user.image) return
         let pfp = user.image
         if (pfp) return pfp
         if (!pfp) {
@@ -42,13 +43,6 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
             return female_avatar
         }
     }
-    const [photo, setPhoto] = useState(getPfp)
-
-    useEffect(()=>{
-        if(!user || !user.image) return
-        setPhoto(user.image)
-        
-    }, [user.image])
 
     if (window.matchMedia('(min-width: 1024px)').matches && user?.email) return <>
         <section id='sub_nav' className={`${navBg === "bg-white" ? "bg-white" : "bg-gradient-to-b from-transparent to-white"} relative -top-10 -z-10 w-4/5 h-10 mx-auto px-10 ${navBg === "bg-white" ? "border-b border-t-white" : null} opacity-0 group_whole_nav_hover_appear rounded-b-[26px] rounded-t-[-24px] justify-self-center flex justify-between items-center transition-all duration-300 font_gotham_medium text-xs tracking-expand`}>
@@ -59,7 +53,7 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
             <Link href="/products/accessories" className='hover:tracking-[0.5em] transition-all duration-500' >ACCESSORIES</Link>
             <Link href="/user/personalinfo" className="group w-1/4 flex justify-end items-center gap-x-3">
                 <div className="relative w-3/5 md:w-8 aspect-square rounded-full border border-gray-300 overflow-hidden">
-                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={photo} alt="profile picture" />
+                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="profile picture" />
                 </div>
                 <h3 className='group-hover:tracking-[0.5em] transition-all duration-500'>MY ACCOUNT</h3>
             </Link>
@@ -69,7 +63,7 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
     </>
 
     else if (window.matchMedia('(max-width: 1024px)').matches) return <>
-        <section className={`${navBg==="bg-white"?null:"opacity-0 pointer-events-none"} fixed bottom-7 left-1/2 -translate-x-1/2 bg-white border shadow-lg w-4/5 h-[60px] rounded-full px-7 flex justify-between items-center transition-all duration-300`}>
+        <section className={`${navBg === "bg-white" ? null : "opacity-0 pointer-events-none"} fixed bottom-7 left-1/2 -translate-x-1/2 bg-white border shadow-lg w-4/5 h-[60px] rounded-full px-7 flex justify-between items-center transition-all duration-300`}>
             <button onClick={handleMenu} className='menu_parent h-4/5 justify-center flex flex-col items-center cursor-pointer' >
                 <div className={`${bars} menu btn3 my-2`}>
                     <div className="icon"></div>
@@ -84,9 +78,9 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
                 <Image src={search_logo} alt='search' className='my-1 w-5' />
                 <span className="font_gotham_medium text-[8px] tracking-widest">SEARCH</span>
             </button>
-            <Link href={user && user.email? '/user/personalinfo': '/login'} className='h-4/5 justify-center flex flex-col items-center'>
+            <Link href={user && user.email ? '/user/personalinfo' : '/login'} className='h-4/5 justify-center flex flex-col items-center'>
                 {user && user.email ? <div className="relative w-7 aspect-square rounded-full border border-gray-300 overflow-hidden">
-                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={photo} alt="profile picture" />
+                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="profile picture" />
                 </div> :
                     <span class="material-symbols-outlined text-xl">hdr_strong</span>}
                 <span className="font_gotham_medium text-[8px] tracking-widest"> {user && user.email ? "PROFILE" : 'LOGIN'}</span>
@@ -96,7 +90,7 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
 }
 
 export default function Navbar(props) {
-    const {user} = useUser()
+    const { user } = useUser()
     const { totalUniqueItems } = useCart()
 
     const [bars, setBars] = useState('')
