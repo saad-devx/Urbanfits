@@ -3,7 +3,6 @@ import useUser from '@/hooks/useUser';
 import Link from 'next/link'
 import User from '.';
 import jwt from 'jsonwebtoken';
-import toaster from '@/utils/toast_function';
 import ifExists from '@/utils/if_exists';
 import Head from 'next/head';
 import Loader from '@/components/loader';

@@ -14,11 +14,10 @@ export default function useUser() {
     }
     const [user, setUser] = useState(getInitialToken)
 
-    const updateUser = async (valuesObj, initUser) => {
+    const updateUser = async (valuesObj, initUser=false) => {
         if (initUser) {
             localStorage.setItem("authToken", valuesObj)
             const userData = jwt.decode(valuesObj)?._doc
-            console.log(userData)
             setUser(userData)
         }
         else {

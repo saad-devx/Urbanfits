@@ -84,7 +84,6 @@ export default function Signing(props) {
     })
     const oauth = localStorage.getItem('oauth')
     useEffect(() => {
-        console.log(session)
         if (oauth && session) {
             let username = session.user.email.split('@')[0]
             let name = session.user.name.split(' ')
@@ -97,6 +96,13 @@ export default function Signing(props) {
         }
         else return
     }, [session])
+
+    const sessionValidity = (e) => {
+        if (page === 'login') {
+            const checked = e.target.checked
+            localStorage.setItem('remember_me', checked)
+        }
+    }
     return (
         <>
             <Head>
@@ -158,7 +164,7 @@ export default function Signing(props) {
                             <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-5 flex items-center`}>
                                 {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
                                 <div className='mr-2' >
-                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
+                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={(e) => { handleChange(e); sessionValidity(e) }} />
                                 </div>
                                 <div className=" w-full flex justify-between text-sm text-left">
                                     <span className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>By creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</span>

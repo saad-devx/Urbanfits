@@ -37,7 +37,7 @@ export function SmallShoppingcard(props) {
             <button title='Add to Cart' onClick={() => { addItem({ product_id: product._id, id: product.variants[0]._id, name: product.name, price: product.price, shipping_fee: product.shipping_detials.fees, stock: product.variants[0].stock, size: product.variants[0].size[0], sizes: product.variants[0].size, color: product.variants[0].color_name, images: product.variants[0].images }, 1); toaster('success', "Your item is added to the Cart") }} className="group w-8 h-8 absolute top-1 right-2 z-20 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60">
                 <Image src={bag} className='w-4' />
             </button>
-            <Link href={`/products/product/${props.id}`}>
+            <Link href={`/products/product/6416bff63b9101bcd0595a31`}>
                 <div className="relative w-full h-4/5 pt-3">
                     <Image src={props.img} width={640} height={853} className="h-full object-contain object-center" alt='Urban Fits' />
                 </div>

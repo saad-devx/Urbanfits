@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 // images imports
 import Image from "next/image";
 import image1 from "../../public/carousel2 imgs/img1.png";
@@ -66,10 +67,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>
@@ -78,10 +79,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>
@@ -90,10 +91,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>
@@ -102,10 +103,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>
@@ -114,10 +115,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex -space-x-2 justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>
@@ -126,10 +127,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>
@@ -138,10 +139,10 @@ export default function HomeCarousel2() {
                                 <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
                                     <div className="hero-slider-img-inner relative">
                                         <Image width={500} height={900} src={image1} alt="" />
-                                        <div className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[2rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[10rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20rem] right-[5rem]" />
-                                        <div className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[40rem] right-[5rem]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
                                     </div>
                                 </div>
                             </div>

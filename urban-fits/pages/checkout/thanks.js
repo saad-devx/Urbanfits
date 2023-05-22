@@ -24,29 +24,29 @@ export default function Thanks(props) {
             <main className='bg-white w-full layout_height transition-all duration-700 overflow-x-hidden overflow-y-scroll'>
                 <div className="w-full pb-20 flex justify-center">
                     <section className='w-full lg:w-90pr h-full p-5 md:px-[7%] lg:pt-9 gap-y-7 font_gotham text-left pt-5' >
-                        <h1 className="text-2xl font_gotham_medium tracking-widest">THANKS</h1>
+                        <h1 className="text-2xl font_gotham_medium">Thanks</h1>
                         <span className="font_gotam_light">Thank you for doing business with us. We have emailed you the purchases <br /> receipt for the transaction.</span>
-                        <h4 className='mt-5 font_gotham_medium tracking-widest'>BY ADMIN</h4>
+                        <h4 className='mt-5 font_gotham_medium'>By Admin</h4>
                         <span className="w-4/5 font_gotam_light">Payment to be made upon delivery. <br /> Order status changed from Pending payment to processing. 03-12-2021 05:35 PM </span>
                         <div className="w-full py-8 my-7 text-sm border-y border-y-gray-400 flex flex-col justify-start">
-                            <h3 className="text-xl font_gotham_medium tracking-widest mb-4">SHIPPING DETIALS</h3>
+                            <h3 className="text-xl font_gotham_medium mb-4">Shipping Details</h3>
                             <span>Muhammad Bilawal Ashraf</span>
                             <span>Dubai Creek Club Street</span>
                             <span>Port Saeed</span>
                             <span>+1 (559) 5540082</span>
                         </div>
                         <div>
-                            <h4 className="text-base md:text-xl font_gotham_medium tracking-widest mb-5">ITESM(S) ON THIS ORDER</h4>
+                            <h4 className="text-base md:text-xl font_gotham_medium mb-5">Itmes(s) On This Order</h4>
                             <div className="w-full flex justify-between items-center">
                                 <div className="w-1/5 md:w-[15%]">
                                     <Image width={560} height={590} src={shirt_img} alt="Urban images" className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
                                 </div>
                                 <span className="flex flex-col items-end">
-                                    <h1 className="tex-base lg:text-2xl font_gotham_medium tracking-widest">{'Product Title Here'.toUpperCase()}</h1>
+                                    <h1 className="tex-base lg:text-2xl font_gotham_medium">{'Product Title Here'}</h1>
                                     <span className="font_gotam_light space-x-5"> <small>Qty:1</small> <small>$30</small> </span>
                                 </span>
                             </div>
-                            <h4 className="text-base md:text-xl font_gotham_medium tracking-widest my-5">PRICE DETIALS</h4>
+                            <h4 className="text-base md:text-xl font_gotham_medium my-5">Price Details</h4>
                             <div className="w-full h-auto my-5 md:my-3">
                                 <span key={1} className="w-full mx-auto flex justify-between"><small>Price</small> <small>null</small></span>
                                 <span key={2} className="w-full mx-auto flex justify-between"><small>Discount</small> <small>null</small></span>
@@ -55,7 +55,7 @@ export default function Thanks(props) {
                             </div>
                             <div className="flex flex-col md:flex-row md:items-end border-t border-t-gray-400">
                                 <div className="relative w-full pt-2 flex flex-col">
-                                    <h4 className="text-xl font_gotham_medium my-4">TRACKING DETAILS</h4>
+                                    <h4 className="text-xl font_gotham_medium my-4">Tracking Details</h4>
                                     <span><small className=''>Order No:</small> #656755832</span>
                                     <span><small className=''>Tracking No:</small> #6332253454234266</span>
                                 </div>

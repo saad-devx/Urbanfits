@@ -8,14 +8,14 @@ import Error403 from '@/pages/403';
 import Loader from '@/components/loader'
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
-import toaster from '@/utils/toast_function'
-import axios from 'axios'
+import uploadImage from '@/utils/uploadImage'
 import Button from '@/components/buttons/simple_btn'
 import ifExists from '@/utils/if_exists'
 // image imports
 import Image from 'next/image';
 import female_avatar from '../../public/avatars/female.svg'
 import male_avatar from '../../public/avatars/male.svg'
+import ImgSpinner from '@/components/img_spinner'
 
 
 const Option = (props) => {
@@ -38,7 +38,7 @@ export default function User(props) {
     const router = useRouter()
     const route = router.pathname
     const { user, logOut, updateUser } = useUser()
-    const [loader, setLoader] = useState(null)
+    const [imgSpinner, SetImgSpinner] = useState(null)
 
     const menuRef = useRef(null)
     useEffect(() => {
@@ -71,23 +71,15 @@ export default function User(props) {
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = async (e) => {
         const file = e.target.files[0]
-        try {
-            setLoader(<Loader />)
-            const { data } = await axios.get(`${process.env.HOST}/api/S3/signedurl?folder=user-profiles/`)
-            await axios.put(data.uploadUrl, file)
-            const imageUrl = data?.uploadUrl.split("?")[0]
-            setPhoto(imageUrl)
-            updateUser({ image: imageUrl })
-        }
-        catch (error) {
-            toaster('error', error)
-        }
-        setLoader(null)
+        SetImgSpinner(<ImgSpinner />)
+        const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
+        setPhoto(imgUrl)
+        await updateUser({ image: imgUrl })
+        SetImgSpinner(null)
     }
     if (!user) return <Error403 />
     return (
         <>
-            {loader}
             <Navbar lowerLogo />
             <main className={`bg-white w-full flex font_gotham transition-all duration-700`}>
                 <Logout logOut={logOut} modal5={modal5} toggleModal={toggleModal} />
@@ -121,6 +113,7 @@ export default function User(props) {
                                         <label htmlFor="pfp" className="opacity-0 lg:opacity-100 text-white font_gotham_medium text-xs cursor-pointer tracking-epxand flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><i className="fa-solid fa-camera text-lg text-white" /> UPLOAD</label>
                                         <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 absolute" />
                                     </div>
+                                    {imgSpinner}
                                     <Image className="w-full h-full object-cover object-center" width={150} height={150} src={photo} alt="avatar" />
                                 </div>
                                 <label htmlFor='pfp' className="lg:hidden mt-1.5 flex items-center font_gotham_medium text-[10px] tracking-widest ">EDIT<i className="fa-sharp fa-regular fa-pen-to-square mx-1 -translate-y-[1px]" /></label>
@@ -133,7 +126,7 @@ export default function User(props) {
                         {props.children}
                     </div>
                 </section>
-            </main>
+            </main >
             <Footer />
         </>
     )
