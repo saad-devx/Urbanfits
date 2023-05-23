@@ -62,7 +62,7 @@ export const sidebarItems = [
       {
         label: "All Categories",
 
-        navlink: "/admin",
+        navlink: "/admin/products/productcategories"
       },
       {
         label: "Addnew",
