@@ -11,13 +11,13 @@ const nextConfig = {
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
-    GOOGLE_CLIENT_ID: "1090637042326-jp571pnicbocv80911mkkmd94pvuhbk0.apps.googleusercontent.com",
-    GOOGLE_CLIENT_SECRET: "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",
+    GOOGLE_CLIENT_ID: "567262921949-o9cl41umvrffd2omfdi58bhnmi3g719p.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "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",
     // Email SMTP credentials
     SMTP_HOST: "mail.urbanfits.ae",
     SMTP_USER: "support@urbanfits.ae",
     SMTP_PASSWORD: "Support@2023",
-    SMTP_SENDER_EMAIL: "",
+    SMTP_SENDER_EMAIL: "Support@urbanfits.ae",
     //Stripe keys
     STRIPE_PUBLISHABLE_KEY: "pk_test_51MkU2DHF1bkFLgckS5AUrOHFjoJAPxAW1RxkHDfriM4uDbVAM3MeVu3XOVfy7BqUGx9kiu9CMQxqbdRxoWSXMO8c003NMTN2AT",
     STRIPE_SECRET_KEY: "sk_test_51MkU2DHF1bkFLgck4aQNuqKxTOrWh2uSlx8AxKJucUFGPl4cDSpjLhhn4ynhISjShrTqGhl2U4A1UZJFe0RRclyo00hWAfnqeB",
