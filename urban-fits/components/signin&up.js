@@ -40,6 +40,7 @@ export default function Signing(props) {
     }
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
+            console.log(oAuthQuery)
             setLoader(<Loader />)
             let path = router.pathname
             let response = await fetch(`${process.env.HOST}/api/user${path}${oAuthQuery ? oAuthQuery : ''}`, {
@@ -84,25 +85,19 @@ export default function Signing(props) {
     })
     const oauth = localStorage.getItem('oauth')
     useEffect(() => {
+        console.log(session)
         if (oauth && session) {
             let username = session.user.email.split('@')[0]
             let name = session.user.name.split(' ')
             let firstname = name[0]
             name.shift()
             let lastname = name.join(' ')
-            const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image }
+            const loginDetails = { email: session.user.email, username, firstname, lastname }
             onsubmit(loginDetails, null, '?auth=OAuth')
             return localStorage.setItem('oauth', false)
         }
         else return
     }, [session])
-
-    const sessionValidity = (e) => {
-        if (page === 'login') {
-            const checked = e.target.checked
-            localStorage.setItem('remember_me', checked)
-        }
-    }
     return (
         <>
             <Head>
@@ -123,8 +118,8 @@ export default function Signing(props) {
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className='w-[100px] h-[100px] mx-auto mb-8' />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <span onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition cursor-pointer"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></span>
-                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></span></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
+                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></a></button>
                         </div>
                         <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
@@ -164,7 +159,7 @@ export default function Signing(props) {
                             <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-5 flex items-center`}>
                                 {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
                                 <div className='mr-2' >
-                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={(e) => { handleChange(e); sessionValidity(e) }} />
+                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                                 </div>
                                 <div className=" w-full flex justify-between text-sm text-left">
                                     <span className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>By creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</span>
@@ -181,7 +176,7 @@ export default function Signing(props) {
                         </form>
                         {/* These buttons of Google and Apple will show on the bottom only in Sign Up page */}
                         <div className={`${page === 'login' ? 'hidden' : ''} font_gotham w-full mt-5 flex justify-center space-x-6`}>
-                            <span onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition cursor-pointer"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></span>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
                             <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
                         </div>
                     </div>

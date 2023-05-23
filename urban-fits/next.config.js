@@ -6,13 +6,13 @@ const nextConfig = {
   },
   env: {
     HOST: "https://st.urbanfits.ae",
-    NEXTAUTH_URL : "https://st.urbanfits.ae",
     // HOST: "http://localhost:3000",
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
+    NEXTAUTH_SECRET: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
-    GOOGLE_CLIENT_ID: "567262921949-o9cl41umvrffd2omfdi58bhnmi3g719p.apps.googleusercontent.com",
-    GOOGLE_CLIENT_SECRET: "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",
+    GOOGLE_CLIENT_ID: "1090637042326-jp571pnicbocv80911mkkmd94pvuhbk0.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "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",
     // Email SMTP credentials
     SMTP_HOST: "mail.urbanfits.ae",
     SMTP_USER: "support@urbanfits.ae",
