@@ -7,7 +7,6 @@ const nextConfig = {
   env: {
     HOST: "https://st.urbanfits.ae",
     // HOST: "http://localhost:3000",
-    // HOST: "https://urbanfits.vercel.app",
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
