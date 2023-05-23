@@ -9,7 +9,6 @@ const nextConfig = {
     // HOST: "http://localhost:3000",
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
-    NEXTAUTH_SECRET: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     // Google client credentials
     GOOGLE_CLIENT_ID: "1090637042326-jp571pnicbocv80911mkkmd94pvuhbk0.apps.googleusercontent.com",
     GOOGLE_CLIENT_SECRET: "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",
