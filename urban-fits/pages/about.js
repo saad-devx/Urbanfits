@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 
 const About = () => {
   return (
-    <div>
-      YOOOOO
+    <div className='text-7xl font_gotham_medium'>
+      ABOUT US
     </div>
   );
 };
