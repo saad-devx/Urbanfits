@@ -99,9 +99,9 @@ export default function Checkout1(props) {
         onSubmit: async (values) => {
             setLoader(<Loader />)
             try {
-                // const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
+                const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
                 sessionStorage.setItem("this_order_data", JSON.stringify({ shipping_info: values, items: items, cartTotal }))
-                // window.location.href = response.data
+                window.location.href = response.data
                 emptyCart()
             }
             catch (e) {
