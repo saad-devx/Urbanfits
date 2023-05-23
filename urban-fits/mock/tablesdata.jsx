@@ -219,7 +219,7 @@ export const newOrderTableData = [
     payment: <p className="text-[14px] ">PAID</p>,
     status: <StatusBadge status="ready" />,
     date: <p className="text-[14px] "> 2021-10-30</p>,
-    action: <ActionButton />,
+    action: <ActionButton infoLink="orderdetails" />,
   },
   {
     id: <p className="text-[14px] "> 354 </p>,
@@ -692,13 +692,13 @@ export const transactionTableColumns = [
   {
     accessor: "date2",
     Header: "Date",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Cell: ({ cell: { value }, row }) => <span  > {value} </span>,
   },
 ]
 
 export const transactionTableData = [
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:   "#1" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -708,7 +708,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:   "#2" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <AmexIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -718,7 +718,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:   "#3" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <MastercardIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -728,7 +728,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:  "#4" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -738,7 +738,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:  " #5" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -748,7 +748,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:  " #6" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -758,7 +758,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:   "#7" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -768,7 +768,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:  "#8", 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -778,7 +778,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:  "#9" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -788,7 +788,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:  "#10" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -798,7 +798,7 @@ export const transactionTableData = [
     </span>
   },
   {
-    transid:  <p className="text-[14px] font-[400]"> #354 </p>, 
+    transid:   "#11" , 
     paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
     method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
     date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
@@ -809,6 +809,7 @@ export const transactionTableData = [
   },
   
 ]
+
 
 
 

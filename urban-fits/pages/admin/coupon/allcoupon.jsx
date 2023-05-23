@@ -63,8 +63,8 @@ const allcoupon = () => {
       </CardAdmin>
       <CardAdmin classes="p-[40px] mt-[30px] ">
 
-        <p className="text-[16px] font-[500] bg-[#DADADA] p-[10px] flex justify-between items-center ">
-          <p> Coupon Data </p> <div className={`flex gap-[5px] ${checked==3 ? "visible": "hidden"} `} > <DownArrowIcon2/> <UpArrowIcon/> <TriangleIcon/> </div>
+        <p className="text-[16px] font-[500] bg-[#DADADA] p-[10px]  ">
+          <p> Coupon Data </p> 
         </p>
 
         <div className="text-[14px] font-[500] flex gap-[30px]">

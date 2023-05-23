@@ -6,7 +6,8 @@ import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
 import GenericTable1 from "@/components/GenericTables/GenericTable1";
 
-import { newOrderTableColumns, newOrderTableData, productListTableColumns, productListTableData } from '@/mock/tablesdata';
+import {  productListTableColumns, productListTableData } from '@/mock/tablesdata';
+import Link from 'next/link';
 
 
 const allproducts = () => {
@@ -39,9 +40,9 @@ const allproducts = () => {
       </div>
       {/*  */}
       <div>
-        <span>
-          <Button my="my-[0px]"> Add Product</Button>
-        </span>
+        <Link href="/admin/products/addproduct" >
+          <Button  my="my-[0px]"> Add Product</Button>
+          </Link>
       </div>
       {/*  */}
     </div>

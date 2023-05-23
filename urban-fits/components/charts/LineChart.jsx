@@ -75,10 +75,10 @@ export const data = {
   datasets: [
     {
         // label: 'My First Dataset',
-        data: [65, 59, 10, 56, 55, 5, 0],
+        data: [10, 59, 30, 56, 55, 5, 0],
         fill: true,
-        backgroundColor: 'rgba(20, 160, 120,0.3)',
-        borderColor: 'rgba(75, 192, 192)',
+        backgroundColor: 'rgba(113, 157, 225, 0.3)',
+        borderColor: 'rgb(113, 157, 225)',
         tension: 0.3,
     },
     {
@@ -86,8 +86,8 @@ export const data = {
     //   data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
       data: [35, 60, 18,0],
       fill: true,
-      backgroundColor: 'rgba(120, 190, 50,0.3)',
-      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(255, 213, 221,0.3)',
+      borderColor: 'rgb(255, 213, 221)',
       tension: 0.3,
 
     },
@@ -96,7 +96,8 @@ export const data = {
     //   data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
       data: [0, 35, 60, 18, 0],
       fill: true,
-      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(200, 252, 224, 0.3)',
+      borderColor: 'rgb(200, 252, 224)',
       tension: 0.3,
 
     },

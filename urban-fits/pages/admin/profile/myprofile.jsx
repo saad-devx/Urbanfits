@@ -30,7 +30,7 @@ export default function myprofile() {
               <InputText label="Email "
               //  width="w-[255px]"
                 placeholder="email" />
-                <div className=" grid grid-cols-3 gap-[22.5px] " style={{ marginTop: "20px" }}>
+                <div className=" grid grid-cols-3 gap-[5px] " style={{ marginTop: "20px" }}>
               
                 <InputSelect
                   label="Date of Birth "

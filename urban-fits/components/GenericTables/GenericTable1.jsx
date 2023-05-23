@@ -92,8 +92,13 @@ const Styled = styled.div`
 
 
 const GenericTable1 = (props) => {
-  const { columns, data } = props;
+  const { columns, data, handlerowclick } = props;
   const [subRowIndex, setSubRowIndex] = React.useState();
+
+  // const [selectedrow, setSelectedrow] = React.useState();
+  // const handlerowclick = (rowindex) =>{
+  //   setSelectedrow(rowindex)
+  // }
 
   const {
     getTableProps,
@@ -233,10 +238,14 @@ const GenericTable1 = (props) => {
            {...getTableBodyProps()}>
             {page.map((row, i) => {
               prepareRow(row)
+              // console.log("row print == ",row)
               return (
-                <tr className={` ${i==0 ?"" : props.border? "border-t-[1px]": "" }  `}
+                <tr onClick={() => handlerowclick(row.original?.transid)}
+                 className={` ${i==0 ?"" : props.border? "border-t-[1px]": "" } cursor-pointer `}
                 {...row.getRowProps()}  >
                   {row.cells.map(cell => {
+              // console.log("Cell print == ",cell)
+                    
                     return (
                       <td
                         {...cell.getCellProps({

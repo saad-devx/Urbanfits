@@ -9,6 +9,26 @@ import {transactionTableColumns, transactionTableData } from '@/mock/tablesdata'
 import { RedirectIcon } from '@/public/icons/RedirectIcon';
 
 const transaction = () => {
+
+    const [selectedrowindex, setSelectedrowindex] = React.useState();
+    const handlerowclick = (rowindex) =>{
+      setSelectedrowindex(rowindex);
+      setrow();
+    }
+    const [selectedrow, setSelectedrow] = React.useState();
+
+
+    const setrow = () => {
+        transactionTableData.forEach(element => {
+            if(element.transid == selectedrowindex){
+                setSelectedrow(element)
+            }
+        });
+    }
+
+    
+
+
   return (
     <Sidebaradmin>
         <p className='text-[22px] font-[500] mt-[20px] ' > 
@@ -17,7 +37,9 @@ const transaction = () => {
         <CardAdmin >
             <div className='grid grid-cols-4' >
                 <div className='p-[40px] col-span-3 ' >
-                    <GenericTable1  columns={transactionTableColumns}  data={transactionTableData} />
+                    <GenericTable1  columns={transactionTableColumns}  data={transactionTableData} 
+                        handlerowclick={handlerowclick}
+                    />
                 </div>
 
                 <div className='col-span-1 px-[20px] py-[40px] 
@@ -40,7 +62,7 @@ const transaction = () => {
                     </div >
                     <div className='flex flex-col gap-[8px] mt-[29px] ' >
                         <p className='text-[16px] font-[500] ' >VAT ID : </p>
-                        <p className='text-[12px] font-[400] ' > 54741654160 </p>  
+                        <p className='text-[12px] font-[400] ' > {selectedrow?.transid} </p>  
                     </div >
                     <div className='flex flex-col gap-[8px] mt-[29px] ' >
                         <p className='text-[16px] font-[500] ' >Email : </p>
@@ -54,7 +76,7 @@ const transaction = () => {
                     </div >
                     <div className='flex flex-col gap-[8px] mt-[29px] ' >
                         <p className='text-[16px] font-[500] ' >Payment : Paypal </p>
-                        <p className='text-[12px] font-[400] ' > $457.14 </p>  
+                        <p className='text-[12px] font-[400] ' > {selectedrow?.paid} </p>  
                     </div >
                     <Button my="my-[0px]" classes="mt-[38px]" > Download Receipet </Button>
                 </div>
