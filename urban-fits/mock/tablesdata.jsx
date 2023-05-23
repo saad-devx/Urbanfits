@@ -946,7 +946,7 @@ export const recentOrdersTableData = [
 
   {
     orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    productname: " Coach Swagger ", 
     units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
     orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
     ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
@@ -956,7 +956,7 @@ export const recentOrdersTableData = [
   },
   {
     orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    productname: " Coach Swagger ", 
     units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
     orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
     ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
@@ -966,7 +966,7 @@ export const recentOrdersTableData = [
   },
   {
     orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    productname: " Coach Swagger ", 
     units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
     orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
     ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
@@ -976,7 +976,17 @@ export const recentOrdersTableData = [
   },
   {
     orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    productname: " Coach Swagger ", 
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    status: <StatusBadge status="delivered" />,
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+
+  },
+  {
+    orderid:  <p className="text-[14px] font-[400]"> 22 </p>, 
+    productname: "  kali swagger  ", 
     units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
     orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
     ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
@@ -986,17 +996,7 @@ export const recentOrdersTableData = [
   },
   {
     orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
-    status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
-
-  },
-  {
-    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: <p className="text-[14px] font-[400]"> Coach Swagger </p>, 
+    productname: " Coach Swagger ", 
     units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
     orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
     ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
@@ -1005,4 +1005,287 @@ export const recentOrdersTableData = [
 
   },
     
+]
+
+
+
+export const productListTableColumns = [
+  {
+    accessor: "product",
+    Header: "Product",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "name",
+    Header: "Name",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "price",
+    Header: "Price",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "offer",
+    Header: "Offer",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "purchased",
+    Header: "Purchased",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "stock",
+    Header: "Stock",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "status",
+    Header: "Status",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "date",
+    Header: "Date",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "action",
+    Header: "Action",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+]
+
+
+
+export const productListTableData = [
+
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " smart watch", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  {
+    product: <Image src={smartWatch} /> , 
+    name: " Baby shoes Bayhdahakd", 
+    price:  "$ 20",
+    offer:  "25% off", 
+    purchased: "16", 
+    stock: "1845",
+    status: "Active", 
+    date: "2021-10-30", 
+    action: <ActionButton/> , 
+
+  },
+  
+ ]
+
+
+ export const productCategoriesTableColumns = [
+  {
+    accessor: "id",
+    Header: "ID",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "name",
+    Header: "Name",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "description",
+    Header: "Description",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "slug",
+    Header: "Slug",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "order",
+    Header: "Order",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+  {
+    accessor: "action",
+    Header: "ID",
+    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+  },
+]
+
+export const productCategoriesTableData = [
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  {
+    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
+    name: "Men Cloth" ,
+    description: "Men Cloth",
+    slug: "/men",
+    order: "1",
+    action: <Dots3Icon/> 
+  },
+  
 ]

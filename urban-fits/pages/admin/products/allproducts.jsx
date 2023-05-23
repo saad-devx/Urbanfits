@@ -6,7 +6,7 @@ import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
 import GenericTable1 from "@/components/GenericTables/GenericTable1";
 
-import { newOrderTableColumns, newOrderTableData } from '@/mock/tablesdata';
+import { newOrderTableColumns, newOrderTableData, productListTableColumns, productListTableData } from '@/mock/tablesdata';
 
 
 const allproducts = () => {
@@ -51,9 +51,9 @@ const allproducts = () => {
         {/* <div className="flex flex-col  "> */}
           <GenericTable1
           border={true}
-            columns={newOrderTableColumns}
-            data={newOrderTableData}
-            options={["All Orders", "others"]}
+            columns={productListTableColumns}
+            data={productListTableData}
+            options={["All Products", "others"]}
           />
         </div>
       {/* </div> */}

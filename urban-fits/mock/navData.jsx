@@ -33,12 +33,12 @@ export const sidebarItems = [
       {
         label: "All Products",
 
-        navlink: "/admin",
+        navlink: "/admin/products/allproducts",
       },
       {
         label: "Addnew",
 
-        navlink: "/admin",
+        navlink: "/admin/products/addproduct",
       },
       {
         label: "Tags",

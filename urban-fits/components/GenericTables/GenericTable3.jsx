@@ -1,22 +1,16 @@
-import { SortDownIcon } from "@/public/icons/SortDownIcon";
-import { SortUpIcon } from "@/public/icons/SortUpIcon";
+
 import React from "react";
 // import Pagination from "@mui/material/Pagination";
 import styled from "styled-components";
 import {
   useTable,
-  useBlockLayout,
   useSortBy,
   usePagination,
-  useExpanded,
+  useGlobalFilter
+
 } from "react-table";
 
-import Styles from "@/styles/generictables.module.css";
-import styles from "@/styles/sidebar.module.css";
 
-import { InputSelect } from "../InputSelect";
-import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
-import Pagination from "./Pagination";
 
 
 
@@ -93,7 +87,6 @@ const Styled = styled.div`
 
 const GenericTable3 = (props) => {
   const { columns, data } = props;
-  const [subRowIndex, setSubRowIndex] = React.useState();
 
   const {
     getTableProps,
@@ -104,24 +97,20 @@ const GenericTable3 = (props) => {
     // which has only the rows for the active page
 
     // The rest of these things are super handy, too ;)
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    state,
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
     },
+    useGlobalFilter,
     useSortBy,
     usePagination
   )
+  const {globalFilter} = state;
+
 
   // const setGridTemplateColumns = (columns, i) => {
   //   let frs = ["1fr", "2fr", "1fr", "2fr", "1fr"];
@@ -142,6 +131,14 @@ const GenericTable3 = (props) => {
     
 
   <Styled>
+  {/* <input
+              type="text"
+              id="search"
+              value={globalFilter || ''}
+              onChange={(e) =>  setGlobalFilter(e.target.value)}
+              className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
+              placeholder="Search (Keyword, etc)"
+            /> */}
       <div className="tableWrap">
         <table {...getTableProps()}>
           <thead  >
@@ -185,7 +182,7 @@ const GenericTable3 = (props) => {
                 {...row.getRowProps()}  >
                   {row.cells.map(cell => {
                     return (
-                      <td
+                      <td className="text-[14px] font-[400]"
                         {...cell.getCellProps({
                           className: cell.column.collapse ? 'collapse' : '',
                         })}
