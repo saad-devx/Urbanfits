@@ -7,6 +7,7 @@ import MoreToExplore from './more_to_explore';
 import Image from 'next/image'
 import EmptyCartVector from "../public/cart/emptyCart.svg"
 import CartBg from '@/public/cart/cartbg.jpg'
+import Link from 'next/link';
 
 // Cart item function
 function CartItem(props) {
@@ -39,31 +40,38 @@ function CartItem(props) {
             </div>
             {/* to be displayed from md breakpoint */}
             <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_gotham_medium tracking-widest">
-                <h3 className="w-[145px] font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()}</h3>
-                <h3 className="w-[100px]">NAVY BLUE</h3>
-                <select type="select" defaultValue={product.size} className="w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
-                    {product.sizes.map(size => {
-                        return <option value={size}>{size}</option>
-                    })}
-                </select>
+                <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()}</Link>
+                <h3 className="w-[100px]">{product?.color.toUpperCase()}</h3>
+                {/* <Select /> */}
+                <div className='relative'>
+                    <span className="select_container after:right-[20%]"></span>
+                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
+                        {product.sizes.map(size => {
+                            return <option value={size}>{size}</option>
+                        })}
+                    </select>
+                </div>
                 <span className="w-24 h-11 px-5 font_gotham_light border flex justify-between items-center">
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                     <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                 </span>
-                <h3 className="font_gotham_bold self-center text-xs">${product.price}</h3>
+                <h3 className="font_gotham_bold self-center text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
                 <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_gotham_medium text-xs tracking-widest"></button>
             </div>
             {/* to be displayed in mobile */}
             <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_gotham_medium tracking-widest">
-                <h3 className="w-full font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()} </h3>
-                <h3 className="font_gotham_black self-start text-xs">${product.price}</h3>
+                <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()} </Link>
+                <h3 className="font_gotham_black self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
                 <div className="w-full flex self-end gap-3">
-                    <select type="select" defaultValue={product.size} className="w-[100px] h-[30px] font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
-                        {product.sizes.map(size => {
-                            return <option value={size}>{size}</option>
-                        })}
-                    </select>
+                    <div className='relative'>
+                        <span className="select_container after:right-[20%]"></span>
+                        <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
+                            {product.sizes.map(size => {
+                                return <option value={size}>{size}</option>
+                            })}
+                        </select>
+                    </div>
                     <span className="w-[100px] h-[30px] px-5 font_gotham_light border flex justify-between items-center">
                         <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                         <input type="number" readOnly className='w-2/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
@@ -85,7 +93,7 @@ export default function Cart(props) {
 
     return (
         <>
-            <section className={`bg-white w-full fixed ${props.top_0?'h-screen top-0':'layout_height top-[50px]'} right-0 z-50 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
+            <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'layout_height top-[50px]'} right-0 z-30 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-x-hidden overflow-y-scroll ${props.cart === true ? "" : "-translate-y-[130%] opacity-0"} font_gotham`}>
                 <div className="w-full flex justify-center">
                     {isEmpty ?
                         <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
@@ -95,7 +103,7 @@ export default function Cart(props) {
                             <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                         </section>
                         :
-                        <section className='w-full h-full pt-0 lg:p-10 lg:pt-0 text-left' >
+                        <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
                             <div className="relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
                                 <Image src={CartBg} className='h-full lg:w-full lg:h-auto object-cover object-center' />
                                 <h1 className="w-full text-center absolute top-1/2 -translate-y-1/2 font_gotham_bold text-white text-2xl md:text-[32px] tracking-[0.15em] lg:tracking-expand my-10">SHOPPING CART</h1>
@@ -111,7 +119,7 @@ export default function Cart(props) {
                                         <span className='w-[10%] text-gray-300'>AMOUNT</span>
                                     </div>
                                     {items.map((product) => {
-                                        return <CartItem li_key={product.id} product={product} size={product.size[0]} toggleCart={props.toggleCart} get3dpNumber={get3dpNumber} />
+                                        return <CartItem li_key={product.id} toggleCart={props.toggleCart} product={product} get3dpNumber={get3dpNumber} />
                                     })}
                                     <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                                 </div>
@@ -126,7 +134,9 @@ export default function Cart(props) {
                                     <LinkBtn href="/checkout/step1" onclick={props.toggleCart} font='font_gotham_medium tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
                                 </div>
                             </div>
-                            <MoreToExplore />
+                            <div className="w-full px-4 lg:px-14">
+                                <MoreToExplore />
+                            </div>
                         </section>}
                 </div>
             </section>

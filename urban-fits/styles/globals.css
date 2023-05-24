@@ -103,6 +103,20 @@
   scroll-behavior: smooth;
 }
 
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #invoice, #invoice * {
+    visibility: visible;
+  }
+  #invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
 .font_gotham {
   font-family: 'Gotham Pro';
 }
@@ -360,10 +374,11 @@ input[type="radio"]:checked {
 .slider:before {
   position: absolute;
   content: "";
-  height: 17px;
-  width: 17px;
-  left: 4px;
-  bottom: 4px;
+  height: 16px;
+  width: 16px;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -375,9 +390,12 @@ input:checked+.slider {
 }
 
 input:checked+.slider:before {
-  -webkit-transform: translateX(15px);
-  -ms-transform: translateX(15px);
-  transform: translateX(15px);
+
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+  left: 90%;
+
 }
 
 /* Rounded sliders */
@@ -476,7 +494,13 @@ footer li {
 }
 
 .bglisting_white {
-  background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0) 100%);
+  background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74%, rgba(243, 239, 238, 0) 100%);
+}
+
+@media screen and (max-width: 1000px) {
+  .bglisting_black{
+    background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 74%, rgba(0, 0, 0, 0) 100%);
+  }
 }
 
 /* css for size giude button */

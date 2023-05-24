@@ -9,12 +9,12 @@ export default function Logout(props) {
                     <button onClick={props.toggleModal} name="modal5" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
                     <section className="w-full h-full p-6">
                         <div className="w-full space-y-5">
-                            <h2 className="text-xl md:text-2xl">Logout</h2>
-                            <p className='text-xs md:text-base' >Are you sure you want to log out from your account?</p>
+                        <h2 className="text-black font_gotham_medium text-sm md:text-base tracking-widest">LOGOUT</h2>
+                            <p className='text-xs' >Are you sure you want to log out from your account?</p>
                         </div>
                         <div className="w-full mt-7 flex  justify-around">
                             <Button onclick={props.toggleModal} name="modal5" my="my-2" bg="bg-gray-200" text="black" classes="w-48pr" >Cancel</Button>
-                            <Button onclick={props.logOut} my="my-2" classes="w-48pr text-sm md:text-base text-center" >Yes, Sign me out</Button>
+                            <Button onclick={props.logOut} my="my-2" classes="w-48pr text-sm md:text-base text-center" >Sign Out</Button>
                         </div>
                     </section>
                 </div>

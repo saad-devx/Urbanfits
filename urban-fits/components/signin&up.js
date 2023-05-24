@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
+import useUser from '@/hooks/useUser';
+import useAddress from '@/hooks/useAddress';
 import countryCodes from '@/static data/countryCodes';
 import toaster from '../utils/toast_function';
-import initiateAddress from '@/utils/init_address';
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -28,6 +29,8 @@ export default function Signing(props) {
     const router = useRouter()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
+    const { updateUser } = useUser()
+    const { initiateAddress } = useAddress()
     //                                      Submit function
 
     // setting request method according to the pathname
@@ -37,7 +40,6 @@ export default function Signing(props) {
     }
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
-            console.log(oAuthQuery)
             setLoader(<Loader />)
             let path = router.pathname
             let response = await fetch(`${process.env.HOST}/api/user${path}${oAuthQuery ? oAuthQuery : ''}`, {
@@ -47,7 +49,7 @@ export default function Signing(props) {
             })
             let res = await response.json()
             if (res.success && res.payload) {
-                localStorage.setItem("authToken", res.payload)
+                updateUser(res.payload, true)
                 await initiateAddress(res.payload, router)
                 toaster("success", res.msg)
             }
@@ -82,19 +84,25 @@ export default function Signing(props) {
     })
     const oauth = localStorage.getItem('oauth')
     useEffect(() => {
-        console.log(session)
         if (oauth && session) {
             let username = session.user.email.split('@')[0]
             let name = session.user.name.split(' ')
             let firstname = name[0]
             name.shift()
             let lastname = name.join(' ')
-            const loginDetails = { email: session.user.email, username, firstname, lastname }
+            const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image }
             onsubmit(loginDetails, null, '?auth=OAuth')
             return localStorage.setItem('oauth', false)
         }
         else return
     }, [session])
+
+    const sessionValidity = (e) => {
+        if (page === 'login') {
+            const checked = e.target.checked
+            localStorage.setItem('remember_me', checked)
+        }
+    }
     return (
         <>
             <Head>
@@ -111,12 +119,12 @@ export default function Signing(props) {
                         <p className="font_gotham_light text-xl md:text-2xl">Urban Members get Exclusive <br /> access to products, events, <br /> and offers. Just provide a <br /> few details. It’s free to join and <br /> open to all.</p>
                     </div>
 
-                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 max-w-[400px] mx-auto py-7 pt-16 font_gotham bg-white">
+                    <div className=" w-[95%] md:w-3/5 lg:w-1/3 max-w-[400px] mx-auto py-16 pb-20 font_gotham bg-white">
                         <Image src={Urbanfit_logo} alt="Urbanfits Logo" className='w-[100px] h-[100px] mx-auto mb-8' />
                         {/* These buttons of Google and Apple will show on the top in Loin page */}
                         <div className={`${router.pathname === '/login' ? '' : 'hidden'} w-full mt-3 mb-5 flex justify-center space-x-6`}>
-                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></a></button>
-                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><a href="#" title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></a></button>
+                            <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
+                            <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className=' text-white' >Apple</p></span></button>
                         </div>
                         <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className={`relative data_field ${page === 'login' ? 'hidden' : ''} flex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
@@ -156,7 +164,7 @@ export default function Signing(props) {
                             <div className={`relative ${props.type === 'forgotpass' ? 'hidden' : ''} w-full h-14 mb-5 flex items-center`}>
                                 {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
                                 <div className='mr-2' >
-                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
+                                    <input className='rounded' type="checkbox" id="todo" name="accept_policies" value={values.accept_policies} onChange={(e) => { handleChange(e); sessionValidity(e) }} />
                                 </div>
                                 <div className=" w-full flex justify-between text-sm text-left">
                                     <span className="ml-1 text-gray-400">{page === 'login' ? 'Remember me' : <p>By creating an account, I agree to the <Link href="/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>}</span>
@@ -179,7 +187,7 @@ export default function Signing(props) {
                     </div>
                 </section>
 
-                <div className="w-full max-w-[400px] mx-auto lg:max-w-none my-5 px-10 font_gotham flex flex-col lg:flex-row justify-between lg:space-x-3">
+                <div className="w-full max-w-[400px] mx-auto lg:max-w-none my-5 px-10 font_gotham hidden lg:flex justify-between lg:space-x-3">
                     <LinkBtn href='/' classes='w-full'>HOME</LinkBtn>
                     <LinkBtn href='/catelog' classes='w-full'>CATALOG</LinkBtn>
                     <LinkBtn href='/contact' classes='w-full'>CONTACT US</LinkBtn>

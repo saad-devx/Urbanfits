@@ -11,8 +11,6 @@ import image1 from '../../public/card imgs/card img13.png'
 import image2 from '../../public/card imgs/card img14.png'
 import image3 from '../../public/card imgs/card img15.png'
 import image4 from '../../public/card imgs/card img16.png'
-import listingBg1 from '@/public/listing banners/listingbg1.jpg'
-import listingBg2 from '@/public/listing banners/listingbg2.jpg'
 
 export default function productlisting(props) {
     const { category } = props
@@ -35,8 +33,8 @@ export default function productlisting(props) {
             <main className="w-full pb-20 bg-white flex justify-center font_gotham overflow-hidden">
                 <section className='' >
                     <CatalogueCarousel />
-                    <div className='w-full p-5 md:p-7 lg:p-10 lg:pt-9 h-full font_gotham text-left pt-9' >
-                        <div className="w-full my-6 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
+                    <div className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_gotham text-left' >
+                        <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                             {/* <div className="w-full flex my-4 items-center">
                                 <span className="text-xl cursor-pointer">Filters <i className="material-symbols-outlined translate-y-1">sort</i> </span>
                             </div> */}
@@ -47,13 +45,13 @@ export default function productlisting(props) {
                                     variants: [1, 2, 3, 4]
                                 }
                                 if (index == 4) return <>
-                                    <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' img={listingBg1} />
+                                    <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' />
                                     <Shoppingcard margin='0' product={product} img={productData.img} />
                                 </>
                                 return <Shoppingcard margin='0' product={product} img={productData.img} />
                             })}
                         </div>
-                        <button className="group flex items-center w-auto mx-auto font_gotham_bold text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300">
+                        <button className="py-10 lg:mt-20 group flex items-center w-auto mx-auto font_gotham_bold text-xs md:text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300">
                             <span className="w-16 group-hover:w-28 h-[2px] mx-1 bg-black transition-all"></span>
                             <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
                             &nbsp;MORE
@@ -64,7 +62,7 @@ export default function productlisting(props) {
                     </div>
                 </section>
             </main>
-            <ListingShopSection whiteTheme img={listingBg2} />
+            <ListingShopSection whiteTheme />
             <Footer />
         </>
     )

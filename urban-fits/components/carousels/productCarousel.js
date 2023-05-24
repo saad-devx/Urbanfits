@@ -29,7 +29,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full layout_height flex justify-center items-center' >
-                <Image width={500} height={720} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+                <Image fill={true} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
               </SplideSlide>
             )
           })}
