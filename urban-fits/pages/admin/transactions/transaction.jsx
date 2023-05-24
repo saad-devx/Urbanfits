@@ -39,6 +39,7 @@ const transaction = () => {
                 <div className='p-[40px] col-span-3 ' >
                     <GenericTable1  columns={transactionTableColumns}  data={transactionTableData} 
                         handlerowclick={handlerowclick}
+                        isrowclick={true}
                     />
                 </div>
 

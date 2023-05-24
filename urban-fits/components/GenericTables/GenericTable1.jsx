@@ -91,14 +91,18 @@ const Styled = styled.div`
 
 
 
-const GenericTable1 = (props) => {
-  const { columns, data, handlerowclick } = props;
+
+
+
+const GenericTable1 = ( props) => {
+  const {columns, data, handlerowclick, isrowclick } = props
   const [subRowIndex, setSubRowIndex] = React.useState();
 
-  // const [selectedrow, setSelectedrow] = React.useState();
-  // const handlerowclick = (rowindex) =>{
-  //   setSelectedrow(rowindex)
-  // }
+
+  const [scolumns, setScolumns] = React.useState(columns);
+  const [sdata, setSdata] = React.useState(data);
+
+
 
   const {
     getTableProps,
@@ -147,6 +151,19 @@ const GenericTable1 = (props) => {
   //   return { gridTemplateColumns: makeString };
   // };
 
+
+
+  // const [filter, setFilter]=React.useState()
+  // const  handleFilterChange = (e) =>{
+  //   setFilter(e.target.value)
+
+  //   const filteredItems =  sdata.filter(dat=>{
+      
+  //     return dat?.status == filter
+      
+  // })
+
+
   return (
     <>
       <div className="flex justify-between">
@@ -177,6 +194,7 @@ const GenericTable1 = (props) => {
             bg="bg-[#FAFAFA]"
             rounded="rounded-[25px]"
             options={props.options}
+            // onChange={handleFilterChange}
           />
           :""
           }
@@ -240,7 +258,7 @@ const GenericTable1 = (props) => {
               prepareRow(row)
               // console.log("row print == ",row)
               return (
-                <tr onClick={() => handlerowclick(row.original?.transid)}
+                <tr onClick={isrowclick && (  () => handlerowclick(row.original?.transid))}
                  className={` ${i==0 ?"" : props.border? "border-t-[1px]": "" } cursor-pointer `}
                 {...row.getRowProps()}  >
                   {row.cells.map(cell => {

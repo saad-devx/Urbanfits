@@ -68,8 +68,8 @@ const authentication = () => {
                   <label className="switch w-[40px] h-[22.25px]  ">
                     <input
                       type="checkbox"
-                      checked={authmodal}
-                      onChange={toggleauthmodal}
+                      // checked={authmodal}
+                      // onChange={toggleauthmodal}
                     />
 
                     <span className="slider"></span>
@@ -77,40 +77,7 @@ const authentication = () => {
                 </div>
               </div>
 
-              <CustomModal
-                px="px-[50px]"
-                py="py-[40px]"
-                width="w-[686.4px]"
-                show={authmodal}
-                toggleModal={toggleauthmodal}
-              >
-                <div className="grid grid-cols-1 gap-[20px] ">
-                  <p className="text-[22px]">Enable 2FA Authentication</p>
-                  <p className="text-[14px] font-[400]  ">
-                    Step 1: install this app from{" "}
-                    <span className="gradient_txt_2"> Google Play </span>or{" "}
-                    <span className="gradient_txt_2"> App Store </span>{" "}
-                  </p>
-
-                  <p className="text-[14px] font-[400] ">
-                    Step 2: Scan the QR Code by your Google Authenticator app,
-                    or you can add account manually.
-                  </p>
-
-                  <div className="flex items-center gap-[17px] " >
-                    <Image width="150px" height="150px" src={QrCode} />
-
-                    <div className="grid grid-cols-1 gap-[15px]" >
-                      <p className="text-[14px] font-[500] " >Enter Google Authenticator Code</p>
-                      <InputText mt="mt-[0px]" placeholder="Enter the code to verify" width="w-[409.4px]"/>
-                      <Button2 width="w-[170px]" >
-                        Confirm 2FA
-                      </Button2>
-                    </div>
-
-                  </div>
-                </div>
-              </CustomModal>
+             
 
               {/*  second box */}
               <div

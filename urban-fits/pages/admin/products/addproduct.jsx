@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Sidebaradmin from '../sidebar'
 import { RightArrowIcon } from '@/public/sidebaricons/RightArrowIcon'
 import Button from '@/components/buttons/simple_btn'
@@ -7,8 +7,53 @@ import EditIcon from '@/public/icons/EditIcon'
 import { InputText } from '@/components/InputText'
 import { InputSelect } from '@/components/InputSelect'
 import InputTextArea from '@/components/InputTextArea'
+import Image from 'next/image'
+
+import productcoverimage from '@/public/productcoverimage.png'
+import productsmallimage from '@/public/productsmallimage.png'
 
 const addproduct = () => {
+
+    const colors = ["#EA3838", "#4B9C19", "#3532AA", "#BC26B6", "#E1A822", "#000000", "#D97133"]
+
+    const [newtag, setNewtag] = useState();
+
+    const [selectedColor, setSelectedcolor] = useState();
+    const handlecolorclick = (color) =>{
+        setSelectedcolor(color)
+    }
+
+    const [tags, setTags] = useState(["T-Shirt", "Mobile Phone", "T-Shirt"]);
+
+    const addnewtag = () =>{
+            if(tags.length <= 4 ){ 
+            setTags([...tags, newtag]);
+        }
+        setNewtag("");
+    }
+
+    const handletagdelete = (tag) =>{
+        setTags(tags.filter((e) => {
+            return e !== tag
+          }))
+    }
+    
+    const [picurlcover, setpicurlcover] = React.useState(productcoverimage);
+    const [picurl1, setPicurl1] = React.useState( productsmallimage);
+    const [picurl2, setPicurl2] = React.useState( productsmallimage);
+    const [picurl3, setPicurl3] = React.useState( productsmallimage);
+    const [picurl4, setPicurl4] = React.useState( productsmallimage);
+    const [picurl5, setPicurl5] = React.useState( productsmallimage);
+    const [picurl6, setPicurl6] = React.useState( productsmallimage);
+
+    const handleprofilepiccover = (e) =>{
+      
+      if( e.target.files){
+        setpicurlcover(URL.createObjectURL(e.target.files[0]))
+      } 
+  
+    }
+
   return (
    <Sidebaradmin>
      <div className="flex mt-[15px] justify-between items-center ">
@@ -56,8 +101,8 @@ const addproduct = () => {
             <div className='px-[50px] grid grid-cols-2 gap-[20px] ' >
                 <section>
                     <div className=' w-[413px] h-[377px] border-[1px] flex items-center justify-center 
-                     border-[#DADADA] rounded-[15px] ' >
-                        <div className='p-[22px] w-[393px] h-[357px] bg-[#F4F4F4] rounded-[15px]  ' >
+                     border-[#DADADA] rounded-[15px] relative ' >
+                        {/* <div className='p-[22px] w-[393px] h-[357px] bg-[#F4F4F4] rounded-[15px]  ' >
                             <div className=' float-right '  >
                                 <EditIcon/>
                             </div>
@@ -66,89 +111,131 @@ const addproduct = () => {
                             Please choose image according to the expected ratio</p>
 
 
+                        </div> */}
+                        <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn" ><EditIcon/></label>
+                            <input  onChange={handleprofilepiccover}
+                            type="file" id="filebtn" className='w-[0px]'  />
+                             
+                        </div>
+                        <div className='w-[393px] h-[357.42px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={393} height={357.42} src={picurlcover} />
                         </div>
                     </div>
                     <div className=' flex gap-[26px] mt-[10px]' >
                         <div className=' flex flex-col gap-[10px]' >
                             <div className=' w-[120px] h-[112px] border-[1px] flex items-center justify-center 
-                        border-[#DADADA] rounded-[15px] ' >
-                            <div className='p-[22px] w-[100px] h-[92px] bg-[#F4F4F4] rounded-[15px]  ' >
-                                <div className=' float-right '  >
-                                    <EditIcon/>
-                                </div>
-                                <p className='text-[12px] font-[500] text-center mt-[20px] ' >765 X 850</p>
+                        border-[#DADADA] rounded-[15px]  relative ' >
                             
-
-
+                            <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn1" ><EditIcon/></label>
+                            <input  onChange={(e) =>{
+                                 if( e.target.files){
+                                    setPicurl1(  URL.createObjectURL(e.target.files[0]))
+                                  } 
+                            } 
+                        }
+                            type="file" id="filebtn1" className='w-[0px]'  />
+                        </div>
+                            <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={100} height={92} src={picurl1} />
+                        </div>
                             </div>
-                            </div>
+
                             <div className=' w-[120px] h-[112px] border-[1px] flex items-center justify-center 
-                        border-[#DADADA] rounded-[15px] ' >
-                            <div className='p-[22px] w-[100px] h-[92px] bg-[#F4F4F4] rounded-[15px]  ' >
-                                <div className=' float-right '  >
-                                    <EditIcon/>
-                                </div>
-                                <p className='text-[12px] font-[500] text-center mt-[20px] ' >765 X 850</p>
+                        border-[#DADADA] rounded-[15px]  relative ' >
                             
-
-
-                            </div>
+                            <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn2" ><EditIcon/></label>
+                            <input  onChange={(e) =>{
+                                 if( e.target.files){
+                                    setPicurl2(  URL.createObjectURL(e.target.files[0]))
+                                  } 
+                            } 
+                        }
+                            type="file" id="filebtn1" className='w-[0px]'  />
+                        </div>
+                            <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={100} height={92} src={picurl2} />
+                        </div>
                             </div>
                           
                         </div>
                         <div className=' flex flex-col gap-[10px]' >
                             <div className=' w-[120px] h-[112px] border-[1px] flex items-center justify-center 
-                        border-[#DADADA] rounded-[15px] ' >
-                            <div className='p-[22px] w-[100px] h-[92px] bg-[#F4F4F4] rounded-[15px]  ' >
-                                <div className=' float-right '  >
-                                    <EditIcon/>
-                                </div>
-                                <p className='text-[12px] font-[500] text-center mt-[20px] ' >765 X 850</p>
+                        border-[#DADADA] rounded-[15px]  relative ' >
                             
-
-
+                            <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn3" ><EditIcon/></label>
+                            <input  onChange={(e) =>{
+                                 if( e.target.files){
+                                    setPicurl3(  URL.createObjectURL(e.target.files[0]))
+                                  } 
+                            } 
+                        }
+                            type="file" id="filebtn3" className='w-[0px]'  />
+                        </div>
+                            <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={100} height={92} src={picurl3} />
+                        </div>
                             </div>
-                            </div>
+
                             <div className=' w-[120px] h-[112px] border-[1px] flex items-center justify-center 
-                        border-[#DADADA] rounded-[15px] ' >
-                            <div className='p-[22px] w-[100px] h-[92px] bg-[#F4F4F4] rounded-[15px]  ' >
-                                <div className=' float-right '  >
-                                    <EditIcon/>
-                                </div>
-                                <p className='text-[12px] font-[500] text-center mt-[20px] ' >765 X 850</p>
+                        border-[#DADADA] rounded-[15px]  relative ' >
                             
-
-
+                            <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn4" ><EditIcon/></label>
+                            <input  onChange={(e) =>{
+                                 if( e.target.files){
+                                    setPicurl4(  URL.createObjectURL(e.target.files[0]))
+                                  } 
+                            } 
+                        }
+                            type="file" id="filebtn4" className='w-[0px]'  />
+                        </div>
+                            <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={100} height={92} src={picurl4} />
+                        </div>
                             </div>
-                            </div>
-                        
+                          
                         </div>
                         <div className=' flex flex-col gap-[10px]' >
                             <div className=' w-[120px] h-[112px] border-[1px] flex items-center justify-center 
-                        border-[#DADADA] rounded-[15px] ' >
-                            <div className='p-[22px] w-[100px] h-[92px] bg-[#F4F4F4] rounded-[15px]  ' >
-                                <div className=' float-right '  >
-                                    <EditIcon/>
-                                </div>
-                                <p className='text-[12px] font-[500] text-center mt-[20px] ' >765 X 850</p>
+                        border-[#DADADA] rounded-[15px]  relative ' >
                             
-
-
+                            <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn5" ><EditIcon/></label>
+                            <input  onChange={(e) =>{
+                                 if( e.target.files){
+                                    setPicurl5(  URL.createObjectURL(e.target.files[0]))
+                                  } 
+                            } 
+                        }
+                            type="file" id="filebtn5" className='w-[0px]'  />
+                        </div>
+                            <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={100} height={92} src={picurl5} />
+                        </div>
                             </div>
-                            </div>
+
                             <div className=' w-[120px] h-[112px] border-[1px] flex items-center justify-center 
-                        border-[#DADADA] rounded-[15px] ' >
-                            <div className='p-[22px] w-[100px] h-[92px] bg-[#F4F4F4] rounded-[15px]  ' >
-                                <div className=' float-right '  >
-                                    <EditIcon/>
-                                </div>
-                                <p className='text-[12px] font-[500] text-center mt-[20px] ' >765 X 850</p>
+                        border-[#DADADA] rounded-[15px]  relative ' >
                             
-
-
+                            <div className='absolute top-[29px] right-[28px] ' > 
+                        <label className='cursor-pointer  '  for="filebtn6" ><EditIcon/></label>
+                            <input  onChange={(e) =>{
+                                 if( e.target.files){
+                                    setPicurl6(  URL.createObjectURL(e.target.files[0]))
+                                  } 
+                            } 
+                        }
+                            type="file" id="filebtn6" className='w-[0px]'  />
+                        </div>
+                            <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
+                        <Image  width={100} height={92} src={picurl6} />
+                        </div>
                             </div>
-                            </div>
-                            
+                          
                         </div>
                        
                     </div>
@@ -180,14 +267,24 @@ const addproduct = () => {
                             type="color" name="" id="" /> */}
                             <p  className='text-[16px] font-[400] ' >Color</p>
                             <div className='flex gap-[5px] items-center ' >
-                                <div className=' w-[20px] h-[20px] bg-[#EA3838] rounded-[50px] '/>
-                                <div className=' w-[20px] h-[20px] bg-[#4B9C19] rounded-[50px] '/>
-                                <div className=' w-[20px] h-[20px] bg-[#3532AA] rounded-[50px] '/>
-                                <div className=' w-[20px] h-[20px] bg-[#BC26B6] rounded-[50px] '/>
-                                <div className=' w-[20px] h-[20px] bg-[#E1A822] rounded-[50px] '/>
-                                <div className=' w-[20px] h-[20px] bg-[#000000] rounded-[50px] '/>
-                                <div className=' w-[20px] h-[20px] bg-[#D97133] rounded-[50px] '/>
-                                <p className='text-[10px] font-[400]' >Custom</p>
+                                {colors.map((color,i)=> (
+
+                                <div onClick={()=> handlecolorclick(color)} className={` cursor-pointer
+                                 w-[20px] h-[20px] bg-[${color}] rounded-[50px]
+                                  ${selectedColor==color && " border-[2px] border-[black] " }
+                                  `}/>
+                                ))}
+                               
+                                <p className='text-[10px] font-[400] relative  ' >
+                                    <input type="color" className='absolute opacity-0 top-[-6px] left-[-3px]
+                                    cursor-pointer
+                                    ' 
+                                    value={selectedColor}
+                                    onChange={(e) => setSelectedcolor(e.target.value) }
+                                    />
+                                    Custom</p>
+
+                                {/* <input type="color" name="" id="" /> */}
                             </div>
                             <InputText
                             label="Price (In USD)"
@@ -213,7 +310,25 @@ const addproduct = () => {
                         label="Product Tag"
                         postlabel="( Type and make comma to separate Tag )"
                         placeholder="&nbsp;"
+                        onChange={(e)=> setNewtag(e.target.value)}
+                        value={newtag}
+                        onKeyUp={(event) => {
+                            if (event.key === 'Enter') {
+                              addnewtag()
+                            }}}
+                        
                     />
+                    <div className='' >
+                    <div className=' flex gap-[30px]  ' >
+                        {tags.map((tag, i)=> (
+                        <span className='ml-[10px] flex  items-center gap-[5px] ' >
+                            <p  className='text-[13px] font-[300] cursor-pointer ' onClick={() => handletagdelete(tag)} > x</p> 
+                            <p className='text-[14px] font-[400] ' > {tag}</p> 
+                        </span>
+
+                        ))}
+                    </div>
+                    </div>
 
                 </section>
             </div>
