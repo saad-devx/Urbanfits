@@ -153,7 +153,7 @@ const addproduct = () => {
                                   } 
                             } 
                         }
-                            type="file" id="filebtn1" className='w-[0px]'  />
+                            type="file" id="filebtn2" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
                         <Image  width={100} height={92} src={picurl2} />
@@ -248,7 +248,7 @@ const addproduct = () => {
                         />
                         <InputSelect
                         label="Select Categories"
-                        options={[1,2,3]}
+                        options={["men/t-shirt","men/pant","women/longdress"]}
                         />
                     </div>
                     <InputText
