@@ -273,8 +273,9 @@ const addproduct = () => {
                                   `}  />
                                 {colors.map((color,i)=> (
 
-                                <div onClick={()=> handlecolorclick(color)} className={` cursor-pointer
-                                 w-[20px] h-[20px] bg-[${color}] rounded-[50px]
+                                <div  style={{backgroundColor:color}}
+                                 onClick={()=> handlecolorclick(color)} className={` cursor-pointer
+                                 w-[20px] h-[20px]  rounded-[50px]
                                   ${selectedColor==color && " border-[2px] border-[black] " }
                                   `}  />
                                 ))}
