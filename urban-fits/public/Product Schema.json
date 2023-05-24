@@ -1,0 +1,78 @@
+[{
+  "_id": {
+    "$oid": "6416bff63b9101bcd0595a31"
+  },
+  "name": "Vintage T-Shirt",
+  "price": 78.99,
+  "description": "cool and cheap affordable Vintage T-Shirt, newest item of this season. Stop staring and buy now",
+  "category": "men/t-shirt",
+  "slug": "Cool vintage Men T-shirt",
+  "cover_image": {
+    "public_id": "123",
+    "url": "https://example.unique.resource.locator/img1"
+  },
+  "tags": [
+    "T-Shirt",
+    "Men",
+    "vintage",
+    "summer"
+  ],
+  "ratings": 0,
+  "seo_detials": {
+    "title": "Vintage Shirt",
+    "description": "cool and cheap affordable Vintage T-Shirt, newest item of this season. Stop staring and buy now",
+    "meta_keywords": [
+      "T-Shirt",
+      "Men",
+      "vintage",
+      "summer"
+    ]
+  },
+  "shipping_detials": {
+    "width": "18",
+    "height": "30",
+    "weight": "250",
+    "fees": 3.24
+  },
+  "variants": [
+    {
+      "color": "#000000",
+      "color_name": "black",
+      "images": [
+        {
+          "public_id": "1",
+          "url": "https://i.etsystatic.com/36407195/r/il/fb3379/4333913052/il_1140xN.4333913052_pau8.jpg"
+        },
+        {
+          "public_id": "2",
+          "url": "https://i.etsystatic.com/36407195/r/il/4cfe4e/4381306977/il_1140xN.4381306977_ee7f.jpg"
+        }
+      ],
+      "size": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "stock": 28
+    },
+    {
+      "color": "#ff0000",
+      "color_name": "red",
+      "images": [
+        {
+          "public_id": "1",
+          "url": "https://i.etsystatic.com/6920740/r/il/574a03/3912644169/il_1140xN.3912644169_hz8i.jpg"
+        },
+        {
+          "public_id": "2",
+          "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg"
+        }
+      ],
+      "size": [
+        "S",
+        "L"
+      ],
+      "stock": 32
+    }
+  ]
+}]

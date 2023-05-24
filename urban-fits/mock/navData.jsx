@@ -21,24 +21,24 @@ export const sidebarItems = [
     id: 1,
     label: "Dashboard",
     icon: <Dashboardicon />,
-    navlink: "/admin",
+    navlink: "/admin/dashboard",
   },
   {
     id: 2,
     label: "Products",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
         label: "All Products",
 
-        navlink: "/admin",
+        navlink: "/admin/products/allproducts",
       },
       {
         label: "Addnew",
 
-        navlink: "/admin",
+        navlink: "/admin/products/addproduct",
       },
       {
         label: "Tags",
@@ -56,13 +56,13 @@ export const sidebarItems = [
     id: 3,
     label: "Categories",
     icon: <CategoriesIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
         label: "All Categories",
 
-        navlink: "/admin",
+        navlink: "/admin/products/productcategories"
       },
       {
         label: "Addnew",
@@ -75,18 +75,18 @@ export const sidebarItems = [
     id: 4,
     label: "Orders",
     icon: <CartIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
         label: "All Orders",
 
-        navlink: "/admin",
+        navlink: "/admin/orders/neworder",
       },
       {
-        label: "Addnew",
+        label: "orderhistory",
 
-        navlink: "/admin",
+        navlink: "/admin/orders/orderhistory",
       },
     ],
   },
@@ -94,17 +94,19 @@ export const sidebarItems = [
     id: 5,
     label: "Transactions",
     icon: <DollarIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
         label: "All Transactions",
-
-        navlink: "/admin",
+        navlink: "/admin/transactions/transaction",
+      },
+      {
+        label: "Invoice",
+        navlink: "/admin/transactions/invoice",
       },
       {
         label: "Addnew",
-
         navlink: "/admin",
       },
     ],
@@ -113,16 +115,16 @@ export const sidebarItems = [
     id: 6,
     label: "Users",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
         label: "All users",
-        navlink: "/admin",
+        navlink: "/admin/user/userlist",
       },
       {
         label: "Add New User",
-        navlink: "/admin",
+        navlink: "/admin/user/userprofile",
       },
       {
         label: "Change Password",
@@ -146,14 +148,14 @@ export const sidebarItems = [
     id: 7,
     label: "Vendors",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 8,
     label: "Account",
     icon: <AccountIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -174,7 +176,7 @@ export const sidebarItems = [
     id: 9,
     label: "Payment Methods",
     icon: <PaymentIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -191,7 +193,7 @@ export const sidebarItems = [
     id: 10,
     label: "Coupon",
     icon: <CouponIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -208,7 +210,7 @@ export const sidebarItems = [
     id: 11,
     label: "Shipping Settings",
     icon: <ProductIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -233,21 +235,21 @@ export const sidebarItems = [
     id: 12,
     label: "Reviews",
     icon: <ReviewsIcon />,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 13,
     label: "Brands",
     icon: <BrandIcon/> ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 14,
     label: "Authentication",
     icon: <ExitIcon/>  ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     
   },
@@ -255,7 +257,7 @@ export const sidebarItems = [
     id: 15,
     label: "Icons",
     icon: <DaimondIcon/>  ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     
   },
@@ -263,7 +265,7 @@ export const sidebarItems = [
     id: 16,
     label: "Other Pages",
     icon: <PagesIcon/>  ,
-    navlink: "/admin",
+    // navlink: "/admin",
     expanded: false,
     
   },
