@@ -268,9 +268,7 @@ const addproduct = () => {
                             type="color" name="" id="" /> */}
                             <p  className='text-[16px] font-[400] ' >Color</p>
                             <div className='flex gap-[5px] items-center ' >
-                            <div  className={` cursor-pointer
-                                 w-[20px] h-[20px] bg-[${colors[0]}] rounded-[50px]
-                                  `}  />
+                           
                                 {colors.map((color,i)=> (
 
                                 <div  style={{backgroundColor:color}}
