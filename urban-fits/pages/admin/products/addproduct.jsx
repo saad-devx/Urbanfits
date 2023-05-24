@@ -11,6 +11,7 @@ import Image from 'next/image'
 
 import productcoverimage from '@/public/productcoverimage.png'
 import productsmallimage from '@/public/productsmallimage.png'
+import Link from 'next/link'
 
 const addproduct = () => {
 
@@ -83,9 +84,9 @@ const addproduct = () => {
       </div>
       {/*  */}
       <div>
-        <span> 
+        <Link href="/admin/products/allproducts" > 
           <Button my="my-[0px]"> View All</Button>
-        </span>
+          </Link>
       </div>
       {/*  */}
     </div>
@@ -267,12 +268,15 @@ const addproduct = () => {
                             type="color" name="" id="" /> */}
                             <p  className='text-[16px] font-[400] ' >Color</p>
                             <div className='flex gap-[5px] items-center ' >
+                            <div  className={` cursor-pointer
+                                 w-[20px] h-[20px] bg-[${colors[0]}] rounded-[50px]
+                                  `}  />
                                 {colors.map((color,i)=> (
 
                                 <div onClick={()=> handlecolorclick(color)} className={` cursor-pointer
                                  w-[20px] h-[20px] bg-[${color}] rounded-[50px]
                                   ${selectedColor==color && " border-[2px] border-[black] " }
-                                  `}/>
+                                  `}  />
                                 ))}
                                
                                 <p className='text-[10px] font-[400] relative  ' >
