@@ -3,12 +3,10 @@ import Sidebaradmin from "../sidebar";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
-import InputText2 from "@/components/InputText2";
 import InputTextArea from "@/components/InputTextArea";
 import Button from "@/components/buttons/simple_btn";
 import { QuestionIcon } from "@/public/icons/QuestionIcon";
 import { InputSelect } from "@/components/InputSelect";
-import { DownArrowIcon } from "@/public/sidebaricons/DownArrowIcon";
 import { UpArrowIcon } from "@/public/icons/UpArrowIcon";
 import { TriangleIcon } from "@/public/icons/TriangleIcon";
 import { DownArrowIcon2 } from "@/public/icons/DownArrowIcon2";
@@ -65,8 +63,8 @@ const allcoupon = () => {
       </CardAdmin>
       <CardAdmin classes="p-[40px] mt-[30px] ">
 
-        <p className="text-[16px] font-[500] bg-[#DADADA] p-[10px] flex justify-between items-center ">
-          <p> Coupon Data </p> <div className={`flex gap-[5px] ${checked==3 ? "visible": "hidden"} `} > <DownArrowIcon2/> <UpArrowIcon/> <TriangleIcon/> </div>
+        <p className="text-[16px] font-[500] bg-[#DADADA] p-[10px]  ">
+          <p> Coupon Data </p> 
         </p>
 
         <div className="text-[14px] font-[500] flex gap-[30px]">
@@ -213,6 +211,9 @@ const allcoupon = () => {
             }
         </main>
       </CardAdmin>
+      <div className="flex justify-end" >
+        <Button> Save Changes </Button>
+      </div>
     </Sidebaradmin>
   );
 };

@@ -68,14 +68,15 @@ const authentication = () => {
                   <label className="switch w-[40px] h-[22.25px]  ">
                     <input
                       type="checkbox"
-                      checked={authmodal}
-                      onChange={toggleauthmodal}
+                      // checked={authmodal}
+                      // onChange={toggleauthmodal}
                     />
 
                     <span className="slider"></span>
                   </label>
                 </div>
               </div>
+
 
               <CustomModal
                 px="px-[50px]"
@@ -111,6 +112,7 @@ const authentication = () => {
                   </div>
                 </div>
               </CustomModal>
+
 
               {/*  second box */}
               <div
