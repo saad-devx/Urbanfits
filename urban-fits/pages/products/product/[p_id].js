@@ -90,7 +90,7 @@ export default function Product(props) {
             <Navbar />
             <main className={`bg-white w-full h-full font_gotham transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
-                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-9 lg:w-[90%] h-full font_gotham text-left pt-5' >
+                    <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-20 lg:w-[90%] h-full font_gotham text-left pt-8' >
                         <div className="w-full flex flex-col lg:flex-row lg:justify-between">
                             <p className="lg:hidden text-[10px]">Main Page / Catalogue / {'T - Shirts'}</p>
                             <div className="w-full lg:w-[55%] mb-3 mt-6 md:mt-10 lg:mt-0">

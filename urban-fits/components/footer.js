@@ -116,7 +116,7 @@ export default function Footer() {
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
                             <h3 className="text-xs font_gotham_medium tracking-vast">ABOUT UFs</h3>
                             <li>
-                                <Link href='/'>About Us</Link>
+                                <Link href='/about'>About Us</Link>
                             </li>
                             <li>
                                 <Link href='/'>Terms & Conditions</Link>
