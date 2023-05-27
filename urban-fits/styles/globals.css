@@ -557,10 +557,23 @@ footer li {
 /* About Page animation */
 @keyframes animateHeading {
   100%{
-    transform: translateX(-130%);
+    transform: translateX(-150%);
+  }
+}
+@keyframes animBlackBoxHeading {
+  100%{
+    transform: translateX(-200%);
   }
 }
 
 .animate_loop{
   animation: animateHeading 10s infinite linear;
+}
+.animate_heading{
+  transform-origin: right;
+  animation: animateHeading 8s infinite linear;
+}
+.animate_white_heading{
+  transform-origin: left;
+  animation: animateHeading 8s infinite linear reverse;
 }
