@@ -12,6 +12,8 @@ import Image from 'next/image'
 import productcoverimage from '@/public/productcoverimage.png'
 import productsmallimage from '@/public/productsmallimage.png'
 import Link from 'next/link'
+import { useFormik } from 'formik'
+import { addProductSchema } from '@/mock/yupSchemas'
 
 const addproduct = () => {
 
@@ -19,7 +21,7 @@ const addproduct = () => {
 
     const [newtag, setNewtag] = useState();
 
-    const [selectedColor, setSelectedcolor] = useState();
+    const [selectedColor, setSelectedcolor] = useState("");
     const handlecolorclick = (color) =>{
         setSelectedcolor(color)
     }
@@ -54,6 +56,29 @@ const addproduct = () => {
       } 
   
     }
+
+const initialValues = {
+    productname: "",
+    category: "",
+    slug: "",
+    description: "",
+    color: selectedColor,
+    price: "",
+    quantity: "", 
+    seotitle: "",
+    seodescription: "",
+    width: "",
+    weight:"",
+    shippingfees:"",
+    seometakeyword:""
+    }
+       
+const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
+    initialValues:initialValues  , 
+    validationSchema: addProductSchema
+})
+    
+
 
   return (
    <Sidebaradmin>
@@ -246,21 +271,52 @@ const addproduct = () => {
                         <InputText
                         label="Product Name"
                         placeholder="&nbsp;"
+                        name="productname"
+                        value={values.productname}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.productname && touched.productname?
+                            (errors.productname): null
+                        }
+
                         />
                         <InputSelect
                         label="Select Categories"
                         options={["men/t-shirt","men/pant","women/longdress"]}
+                        name="category"
+                        value={values.category}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.category && touched.category?
+                            (errors.category): null
+                        }
                         />
                     </div>
                     <InputText
                         label="Slug"
                         placeholder="&nbsp;"
+                        name="slug"
+                        value={values.slug}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.slug && touched.slug?
+                            (errors.slug): null
+                        }
 
                     />
                     <InputText
                         label="Description"
                         h="h-[84px]"
                         placeholder="&nbsp;"
+                        name="description"
+                        value={values.description}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.description && touched.description?
+                            (errors.description): null
+                        }
+
+
                     />
                     <div className='grid grid-cols-2 gap-[17px]' >
                         <div className='flex flex-col gap-[20px] ' >
@@ -294,6 +350,15 @@ const addproduct = () => {
                             <InputText
                             label="Price (In USD)"
                             placeholder="&nbsp;"
+                            type="number"
+                            name="price"
+                            value={values.pirce}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={errors.price && touched.price?
+                                (errors.price): null
+                            }
+    
                             />
                         </div>
                         <div className='flex flex-col gap-[20px] ' >
@@ -307,7 +372,11 @@ const addproduct = () => {
                             </div>
                         <InputSelect
                         label="Quantity"
-                        options={["Quantity", "others"]}
+                        options={["1", "2", "3"]}
+                        name="quantity"
+                        value={values.quantity}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         />
                         </div>
                     </div>
@@ -343,14 +412,35 @@ const addproduct = () => {
                     <InputText 
                     label="SEO Title"
                     placeholder=" "
+                    name="seotitle"
+                    value={values.seotitle}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.seotitle && touched.seotitle?
+                        (errors.seotitle): null
+                    }
                     />
                      <InputText 
                     label="SEO Description"
                     placeholder=" "
+                    name="seodescription"
+                    value={values.seodescription}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.seodescription && touched.seodescription?
+                        (errors.seodescription): null
+                    }
                     />
                      <InputText 
                     label="SEO Meta Keywords"
                     placeholder=" "
+                    name="seometakeyword"
+                    value={values.seometakeyword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.seometakeyword && touched.seometakeyword?
+                        (errors.seometakeyword): null
+                    }
                     />
                 </div>
                 <div className='flex flex-col gap-[20px]' >
@@ -358,17 +448,42 @@ const addproduct = () => {
                     <InputText 
                     label="Width"
                     placeholder="Inch"
+                    type="number"
+                    name="width"
+                    value={values.width}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.width && touched.width?
+                        (errors.width): null
+                    }
                     />           
                     <InputText 
                     label="Weight"
+                    type="number"
                     placeholder="gam"
+                    name="weight"
+                    value={values.weight}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.weight && touched.weight?
+                        (errors.weight): null
+                    }
+
                     />           
                     <InputText 
                     label="Shipping Fees"
                     placeholder="$"
+                    type="number"
+                    name="shippingfees"
+                    value={values.shippingfees}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.shippingfees && touched.shippingfees?
+                        (errors.shippingfees): null
+                    }
                     />      
                     <div className='flex justify-end' >
-                            <Button classes=" my-[0px] " >
+                            <Button type="submit" classes=" my-[0px] " >
                                 Publish
                             </Button>
                     </div>     

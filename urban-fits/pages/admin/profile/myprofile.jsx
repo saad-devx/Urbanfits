@@ -3,8 +3,31 @@ import Profile from ".";
 import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
 import { InputSelect } from "@/components/InputSelect";
+import { useFormik } from "formik";
+import { myProfileSchema } from "@/mock/yupSchemas";
 
 export default function myprofile() {
+
+  const initialValues = {
+    name: "",
+    username: "",
+    email: "",
+    description: "",
+    phone: "",
+    mobileno: "",
+    addressline1: "", 
+    addressline2: "",
+    city: "",
+    state: "",
+    country:"",
+    }
+     
+
+const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
+    initialValues:initialValues  , 
+    validationSchema: myProfileSchema
+})
+
   return (
     <Profile>
       <div className=" w-[100%] flex gap-x-[20px] font_futura   ">
@@ -20,16 +43,40 @@ export default function myprofile() {
             <div className="flex flex-col gap-[20px]" >
               <InputText label="Name"
               //  width="w-[255px]" 
-               placeholder="Name" />
+               placeholder="Name"
+               name="name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.name && touched.name?
+                    (errors.name): null
+                }
+               />
 
               <InputText
                 label="User Name"
                 // width="w-[255px]"
                 placeholder="username"
+                name="username"
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.username && touched.username?
+                    (errors.username): null
+                }
               />
               <InputText label="Email "
               //  width="w-[255px]"
-                placeholder="email" />
+                placeholder="email"
+                type="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.email && touched.email?
+                    (errors.email): null
+                }
+                />
                 <div className=" grid grid-cols-3 gap-[5px] " style={{ marginTop: "20px" }}>
               
                 <InputSelect
@@ -119,21 +166,49 @@ export default function myprofile() {
                 label="Phone"
                 // width="100%"
                 placeholder="phone"
+                name="phone"
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.phone && touched.phone?
+                    (errors.phone): null
+                }
               />
               <InputText
                 label="Address Line 1"
                 // width=""
                 placeholder="Address"
+                name="addressline1"
+                value={values.addressline1}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.addressline1 && touched.addressline1?
+                    (errors.addressline1): null
+                }
               />
               <InputText
                 label="City "
                 // width=""
-                placeholder="Name"
+                placeholder="City"
+                name="city"
+                value={values.city}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.city && touched.city?
+                    (errors.city): null
+                }
               />
               <InputText
                 label="Country"
                 // width=""
                 placeholder="&nbsp;"
+                name="country"
+                value={values.country}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.country && touched.country?
+                    (errors.country): null
+                }
               />
             </div>
 
@@ -142,17 +217,38 @@ export default function myprofile() {
                 label="Mobile No."
                 // width=""
                 placeholder="Mobile no."
+                name="mobileno"
+                value={values.mobileno}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.mobileno && touched.mobileno?
+                    (errors.mobileno): null
+                }
               />
               <InputText
                 label="Address Line 2"
                 postlabel="(Optional)"
                 // width=""
                 placeholder="Address"
+                name="addressline2"
+                value={values.addressline2}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.addressline2 && touched.addressline2?
+                    (errors.addressline2): null
+                }
               />
               <InputText
                 label="State "
                 // width=""
                 placeholder="Name"
+                name="state"
+                value={values.state}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.state && touched.state?
+                    (errors.state): null
+                }
               />
             </div>
           </div>
