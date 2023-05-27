@@ -324,9 +324,13 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
                             type="color" name="" id="" /> */}
                             <p  className='text-[16px] font-[400] ' >Color</p>
                             <div className='flex gap-[5px] items-center ' >
+<<<<<<< HEAD
                             {/* <div  className={` cursor-pointer
                                  w-[20px] h-[20px] bg-[${colors[0]}] rounded-[50px]
                                   `}  /> */}
+=======
+                           
+>>>>>>> 6647800496f6d00beba2c9201e338e39480b2e89
                                 {colors.map((color,i)=> (
 
                                 <div  style={{backgroundColor:color}}

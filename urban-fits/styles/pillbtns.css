@@ -2,6 +2,7 @@
     opacity: 0;
     width: 0;
 }
+
 .pill-container input[type=radio] {
     opacity: 0;
     width: 0;
@@ -28,4 +29,21 @@
     background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
     border: 1px solid white;
     color: white;
+}
+
+/* Select button css here */
+
+.select_element {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select_container::after {
+    content: url('../public/drop-down.svg');
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 5
 }

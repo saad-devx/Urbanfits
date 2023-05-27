@@ -6,7 +6,6 @@ import Image from "next/image";
 import Button from "@/components/buttons/simple_btn";
 import { BasketIcon } from "@/public/sidebaricons/BasketIcon";
 import Navbar from "@/components/navbar";
-import AccountMenu from "@/components/accountmenu";
 import CustomTab from "@/components/CustomTabs/CustomTab";
 
 import { profileTabData } from "@/mock/customtabData";
@@ -49,7 +48,9 @@ export default function Profile({children}) {
   return (
     <Sidebaradmin>
       <div className={` mt-[40px] flex items-center font_futura `}>
+
         <Image width={150} height={150} className="rounded-[15px]" src={picurl} />
+
 
         <div className="ml-[30px]">
           <p className=" text-[22px] mb-0  "> Bilawal </p>

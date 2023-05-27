@@ -1,28 +1,26 @@
 const mongoose = require('mongoose')
 
+const addressObject = {
+    tag: { type: String, required: true },
+    address_title: { type: String, required: true },
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
+    address: { type: String, required: true },
+    apt_suite: { type: String },
+    city: { type: String, required: true },
+    country: { type: String, required: true },
+    phone_prefix: { type: String, required: true },
+    phone_number: { type: String, required: true },
+}
+
 const OrderSchema = new mongoose.Schema({
 
-    shippingInfo: {
-        address: {
-            type: String,
-            required: true,
-        },
-        city: {
-            type: String,
-            required: true,
-        },
-
-        country: {
-            type: String,
-            required: true,
-        },
-        apt_or_suite: {
-            type: String,
-        },
-        phoneNo: {
-            type: Number,
-            required: true,
-        },
+    shippingAddress: addressObject,
+    billingAddress: addressObject,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,   
+        ref: "User",
+        required: true,
     },
     orderItems: [
         {
@@ -49,11 +47,6 @@ const OrderSchema = new mongoose.Schema({
             },
         },
     ],
-    user: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        required: true,
-    },
     paymentInfo: {
         id: {
             type: String,
@@ -100,4 +93,4 @@ const OrderSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Order", OrderSchema);

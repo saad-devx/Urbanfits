@@ -16,7 +16,7 @@ const Signup = async (req, res) => {
         if (req.method === 'POST') {
 
             await ConnectDB()
-            if (req.query.auth === 'OAuth') {
+            if (req.query.auth && req.query.auth === 'OAuth') {
                 let user = await User.findOne({ "email": req.body.email })
                 if (user) return res.status(400).json({ success: false, msg: "A user with this Email already exists" })
                 user = await User.create(req.body)
