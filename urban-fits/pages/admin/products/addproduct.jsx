@@ -27,13 +27,14 @@ const addproduct = () => {
     }
 
     const [tags, setTags] = useState(["T-Shirt", "Mobile Phone", "T-Shirt"]);
-
     const addnewtag = () =>{
             if(tags.length <= 4 ){ 
             setTags([...tags, newtag]);
         }
         setNewtag("");
     }
+
+    const [sizes, setSizes] = useState([]);
 
     const handletagdelete = (tag) =>{
         setTags(tags.filter((e) => {
@@ -57,6 +58,9 @@ const addproduct = () => {
   
     }
 
+    
+
+
 const initialValues = {
     productname: "",
     category: "",
@@ -73,11 +77,82 @@ const initialValues = {
     seometakeyword:""
     }
        
+
+
 const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
     initialValues:initialValues  , 
-    validationSchema: addProductSchema
+    validationSchema: addProductSchema,
+
 })
+
+
+const [variants, setVariants] = useState([]);
+
+const finalProduct={
+    "name": values.productname,
+    "price": values.price,
+    "description": values.description ,
+    "category": values.category,
+    "slug": values.slug,
+    "cover_image": {
+      "public_id": "1",
+      "url": picurlcover
+    },
+    "tags": tags,
+    "ratings": 0,
+    "seo_detials": {
+      "title": values.seotitle,
+      "description": values.seodescription ,
+      "meta_keywords": [
+        "T-Shirt",
+        "Men",
+        "vintage",
+        "summer"
+      ]
+    },
+    "shipping_detials": {
+      "width": String(values.width),
+    //   "height": String(values.),
+      "weight": "250",
+      "fees": values.shippingfees
+    },
+    "variants": variants
+  }
+ 
     
+const addVariant = () =>{
+    console.log(values)
+    const newvariant =   
+    {
+          "color": selectedColor,
+          "color_name": "red",
+          "images": [
+            {
+              "public_id": "1",
+              "url": "https://i.etsystatic.com/6920740/r/il/574a03/3912644169/il_1140xN.3912644169_hz8i.jpg"
+            },
+            {
+              "public_id": "2",
+              "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg"
+            }
+          ],
+          "size": [
+            "S",
+            "L"
+          ],
+          "stock": values.quantity
+        }
+
+        setVariants([...variants,newvariant ])
+        
+        // values
+
+}
+
+const onSubmit = () =>{
+    console.log(finalProduct)
+}
+
 
 
   return (
@@ -117,6 +192,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
     </div>
 
     <CardAdmin classes="mt-[20px] " >
+
         <div  >
             <p className='px-[60px]  pt-[30px] mb-[12px] text-[24px] font-[400] ' >
                 Add Product
@@ -124,6 +200,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
             <div className='px-[30px] mb-[30px]' >
                 <hr  />
             </div>
+            
             <div className='px-[50px] grid grid-cols-2 gap-[20px] ' >
                 <section>
                     <div className=' w-[413px] h-[377px] border-[1px] flex items-center justify-center 
@@ -324,13 +401,9 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
                             type="color" name="" id="" /> */}
                             <p  className='text-[16px] font-[400] ' >Color</p>
                             <div className='flex gap-[5px] items-center ' >
-<<<<<<< HEAD
                             {/* <div  className={` cursor-pointer
                                  w-[20px] h-[20px] bg-[${colors[0]}] rounded-[50px]
                                   `}  /> */}
-=======
-                           
->>>>>>> 6647800496f6d00beba2c9201e338e39480b2e89
                                 {colors.map((color,i)=> (
 
                                 <div  style={{backgroundColor:color}}
@@ -486,15 +559,18 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
                         (errors.shippingfees): null
                     }
                     />      
-                    <div className='flex justify-end' >
-                            <Button type="submit" classes=" my-[0px] " >
+                    <div className='flex justify-end gap-[10px] ' >
+                            <Button onClick={addVariant} classes=" my-[0px] " >
+                                Add Variant
+                            </Button>
+                            <Button  onClick={  onSubmit} classes=" my-[0px] " >
                                 Publish
                             </Button>
                     </div>     
                 </div>
 
             </div>
-    
+            
         </div>
     </CardAdmin>
 

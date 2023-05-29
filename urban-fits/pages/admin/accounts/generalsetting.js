@@ -5,8 +5,30 @@ import { InputText } from "@/components/InputText";
 import { QuestionIcon } from "@/public/icons/QuestionIcon";
 import { InputSelect } from "@/components/InputSelect";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
+import { useFormik } from "formik";
+import { generalSettingSchema } from "@/mock/yupSchemas";
 
 const generalsetting = () => {
+
+  const initialValues = {
+   
+    addressline1: "", 
+    addressline2: "",
+    city: "",
+    state: "",
+    country:"",
+    postalcode:"",
+
+    }
+
+
+const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
+    initialValues:initialValues  , 
+    validationSchema: generalSettingSchema
+})
+
+
+
   return (
     <Sidebaradmin>
       <div className="font_futura">
@@ -49,18 +71,40 @@ const generalsetting = () => {
                 width="  w-[100%]"
                 placeholder=" "
                 postlabel={<QuestionIcon />}
+                name="addressline1"
+                value={values.addressline1}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.addressline1 && touched.addressline1?
+                    (errors.addressline1): null
+                }
               />
               <InputText
                 label="City"
                 width="  w-[100%]"
                 placeholder=" "
                 postlabel={<QuestionIcon />}
+                name="city"
+                value={values.city}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.city && touched.city?
+                    (errors.city): null
+                }
               />
               <InputText
                 label="Postal Code / ZIP"
                 width="  w-[100%]"
                 placeholder=" "
                 postlabel={<QuestionIcon />}
+                type="number"
+                name="postalcode"
+                value={values.postalcode}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.postalcode && touched.postalcode?
+                    (errors.postalcode): null
+                }
               />
             </div>
             <div>
@@ -70,6 +114,13 @@ const generalsetting = () => {
                   width="  w-[100%]"
                   placeholder=" "
                   postlabel={<QuestionIcon />}
+                  name="addressline2"
+                value={values.addressline2}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.addressline2 && touched.addressline2?
+                    (errors.addressline2): null
+                }
                 />
 
                 <InputSelect
@@ -187,7 +238,7 @@ const generalsetting = () => {
                 width="  w-[100%]"
                 placeholder=" "
                 postlabel={<QuestionIcon />}
-                options={["", "United States Dollars ($)", "pkr"]}
+                options={["ADE", "United States Dollars ($)", "pkr"]}
               />
               <div className="flex gap-[22.5px] ">
                 <InputText
@@ -197,7 +248,7 @@ const generalsetting = () => {
                   postlabel={<QuestionIcon />}
                 />
                 <InputText
-                  label="Decimal Separator"
+                  label="Decimal Separator &nbsp;"
                   width="  w-[100%]"
                   placeholder=" "
                   postlabel={<QuestionIcon />}
@@ -229,14 +280,14 @@ const generalsetting = () => {
                 width="  w-[100%]"
                 placeholder=" "
                 postlabel={<QuestionIcon />}
-                options={["kg", "pkr"]}
+                options={["kg", "grm"]}
               />
               <InputSelect
                 label="Dimension unit"
                 width="  w-[100%]"
                 placeholder=" "
                 postlabel={<QuestionIcon />}
-                options={["cm", "pkr"]}
+                options={["cm", "m"]}
               />
             </div>
           </section>

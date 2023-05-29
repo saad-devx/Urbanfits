@@ -37,3 +37,20 @@ export const changePasswordSchema = Yup.object({
     .oneOf([Yup.ref("newpassword"), null], "password must match" )
  
 })
+export const generalSettingSchema = Yup.object({
+    addressline1: Yup.string().min(2).required("Please Enter addressline1"),
+    addressline2: Yup.string().required("Please Enter addressline2"),
+    city: Yup.string().required("Please Enter city"),
+    state: Yup.string().required("Please Enter state"),
+    country: Yup.string().required("Please Enter country"),
+    postalcode: Yup.string().required("Please Enter postalcode"),
+
+})
+    
+export const inventeryManagementSchema = Yup.object({
+    holdstock: Yup.string().min(2).required("Fill this field"),
+    notificationrecipients: Yup.string().required("Fill this field"),
+    lowstockthreshold: Yup.string().required("Fill this field"),
+    outofstockthreshold: Yup.string().required("Fill this field"),
+
+})
