@@ -5,7 +5,7 @@ import User from '.';
 import jwt from 'jsonwebtoken';
 import ifExists from '@/utils/if_exists';
 import Head from 'next/head';
-import Loader from '@/components/loader';
+import Loader from '@/components/loaders/loader';
 import Error403 from '../403';
 import Card from '../../components/cards/card'
 import Button from '../../components/buttons/simple_btn';

@@ -5,7 +5,7 @@ import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Error403 from '@/pages/403';
-import Loader from '@/components/loader'
+import Loader from '@/components/loaders/loader'
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import uploadImage from '@/utils/uploadImage'

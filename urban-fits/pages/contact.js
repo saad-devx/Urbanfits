@@ -5,7 +5,7 @@ import Navbar from '../components/navbar';
 import Button from '../components/buttons/simple_btn';
 import Head from 'next/head';
 import Footer from '../components/footer'
-import Loader from '@/components/loader';
+import Loader from '@/components/loaders/loader';
 import countryCodes from '@/static data/countryCodes';
 
 // imports for the schema and validation

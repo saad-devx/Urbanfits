@@ -36,13 +36,13 @@ const AboutComponent = () => {
     const ufH1 = useRef()
     const ufH2 = useRef()
     const ufH3 = useRef()
+    // const endingHeading = useRef()
     const blackBox = useRef()
     const blackBox_whiteSec = useRef()
     const blackBox_blackSec1 = useRef()
     const blackBox_blackSec2 = useRef()
 
     useLayoutEffect(() => {
-
         let ctx = gsap.context(() => {
             const tl = gsap.timeline()
             tl.to(wraperRef.current, {
@@ -94,39 +94,23 @@ const AboutComponent = () => {
                         scrub: 1.5
                     }
                 })
-                .to(blackBox.current, {
-                    yPercent: -100,
-                    onComplete: () => {
-                        gsap.to(blackBox_whiteSec.current, { height: "33.3%" })
-                    },
-                    onReverseComplete: () => {
-                        gsap.to(blackBox_whiteSec.current, { height: 0 })
-                    },
+                .to(Col3.current, {
+                    y: "50vh",
                     scrollTrigger: {
-                        trigger: section_2.current,
-                        start: "bottom top",
-                        scrub: 1.5,
-                    }
-                })
-                .to(blackBox.current, {
-                    yPercent: 0,
-                    scrollTrigger: {
-                        trigger: section_3.current,
+                        trigger: Col3.current,
                         start: "top top",
+                        // markers: true,
                         scrub: 1.5
                     }
                 })
-                // .fromTo(blackBox_whiteSec.current, { height: 0 }, {
-                //     // height: "33.3%",
-                //     scrollTrigger: {
-                //         trigger: section_3.current,
-                //         start: "top top",
-                //         end: "top top",
-                //         // markers: true,
-                //         pin: true,
-                //         scrub: 1.5
-                //     }
-                // })
+                .to(blackBox.current, {
+                    transform: "translateY(0)",
+                    scrollTrigger: {
+                        trigger: section_2.current,
+                        start: "bottom top-=10",
+                        scrub: 1.5,
+                    }
+                })
                 .fromTo(ufH1.current, { opacity: 0, transform: "translateY(100%)" }, {
                     yPercent: -100,
                     opacity: 1,
@@ -166,7 +150,7 @@ const AboutComponent = () => {
                         scrub: 1.5
                     }
                 })
-                .to([blackBox_blackSec1.current, blackBox_blackSec2.current], {
+                .to(blackBox_blackSec1.current, {
                     height: 0,
                     scrollTrigger: {
                         trigger: section_3.current,
@@ -174,7 +158,7 @@ const AboutComponent = () => {
                         scrub: 1.5
                     }
                 })
-                .to(section_3.current, {
+                .to([section_3.current, blackBox.current,], {
                     opacity: 0,
                     scrollTrigger: {
                         trigger: section_3.current,
@@ -182,6 +166,18 @@ const AboutComponent = () => {
                         scrub: 1.5
                     }
                 })
+                // .to(endingHeading.current, {
+                //     opacity: 1,
+                //     scale: 1,
+                //     duration: 2000,
+                //     pointerEvents: "auto",
+                //     scrollTrigger: {
+                //         trigger: section_4.current,
+                //         start: "top bottom",
+                //         markers: true,
+                //         scrub: 1.5
+                //     }
+                // })
         }, wraperRef.current)
         return () => { ctx.revert() }
     }, [])
@@ -197,7 +193,7 @@ const AboutComponent = () => {
                 <section ref={wraperRef} className='relative w-[300vw] h-[100vh] flex justify-start overflow-y-hidden overflow-hidden'>
 
                     <section className="brand w-[58vw] h-screen flex justify-center items-center">
-                        <div ref={brand} className="flex flex-col justify-end items-end">
+                        <div ref={brand} className="flex flex-col justify-end items-end select-none">
                             <h1 className="text-[134px] leading-[1] text-right font_copper_gothic tracking-wide">URBAN <br /> FITS</h1>
                             <h3 ref={brand_subhead} className="text-[34px] font-medium font_cinzel text-yellow-700">FASHION BRAND</h3>
                         </div>
@@ -205,25 +201,25 @@ const AboutComponent = () => {
 
                     <section ref={imgCols} className="w-[62vw] h-screen flex gap-x-3">
                         <div key={1} ref={Col1} className="w-1/3 h-[150vh] relative top-[-50vh] border-x-[16px] bg-black border-black flex flex-col">
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 1" src={colImg1} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 2" src={colImg2} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 3" src={colImg3} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 1" src={colImg1} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 2" src={colImg2} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 3" src={colImg3} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
                         </div>
 
                         <div key={2} ref={Col2} className="w-1/3 h-[150vh] relative top-[-10vh] border-x-[16px] bg-black border-black flex flex-col">
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 1" src={colImg4} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 2" src={colImg5} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 3" src={colImg6} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 1" src={colImg4} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 2" src={colImg5} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 3" src={colImg6} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
                         </div>
 
                         <div key={3} ref={Col3} className="w-1/3 h-[150vh] relative top-[-50vh] border-x-[16px] bg-black border-black flex flex-col">
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 1" src={colImg7} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 2" src={colImg9} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
-                            <div className="w-full h-[50vh]"> <Image alt="col Image 3" src={colImg8} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 1" src={colImg7} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 2" src={colImg9} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
+                            <div className="w-full h-[50vh]"> <Image priority={true} alt="col Image 3" src={colImg8} width={2000} height={3000} className='w-full h-full object-cover border-t-[2vh] border-black' /> </div>
                         </div>
                     </section>
 
-                    <section ref={section_2} className="w-screen h-screen flex">
+                    <section ref={section_2} className="relative w-screen h-screen flex">
                         <div className="w-[7%] h-full flex justify-center items-center border-x-2 border-black">
                             <h2 className="font_copper_gothic text-5xl 2xl:text-7xl -rotate-90 whitespace-nowrap">Urban Fits</h2>
                         </div>
@@ -246,8 +242,8 @@ const AboutComponent = () => {
                         </div>
                     </section>
 
-                </section>
-                <section ref={blackBox} className="fixed top-0 translate-y-full text-white w-full h-full bg-black flex flex-col justify-center">
+                    <section ref={blackBox} className="absolute top-0 translate-y-full text-white w-full h-full bg-black flex flex-col justify-center">
+                    </section>
                 </section>
                 <section ref={section_3} className="w-screen h-screen bg-black text-white flex flex-col justify-between overflow-hidden">
                     <div ref={blackBox_blackSec1} className="w-full h-1/3 justify-self-start self-start bg-black flex justify-center items-center text-white overflow-hidden">
@@ -271,8 +267,9 @@ const AboutComponent = () => {
                             <Link href="/products/Kids" className='font_gotham_medium text-base' >Kids</Link>
                         </div>
                     </nav>
-                    <h1 className="font_copper_gothic text-9xl text-center hover:tracking-expand transition-all duration-700"><Link href='/' >URBAN FITS</Link></h1>
-                    <div className="w-full h-20 flex justify-center items-start font_gotham text-center">Urban Fits LLC, State ID: 7053037, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87 102 <br />Urban Fits LLC &copy; 2023-2024 all rights reserved</div>
+                    {/* <h1 ref={endingHeading} className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full font_copper_gothic text-9xl text-center opacity-0 scale-[3] pointer-events-none"><Link href='/' >URBAN FITS</Link></h1> */}
+                    <h1 className="font_copper_gothic text-9xl text-center pointer-events-none hover:tracking-expand transition-all duration-700"><Link href='/' >URBAN FITS</Link></h1>
+                    <div className="w-full h-20 flex justify-center items-start font_gotham text-xs text-center">Urban Fits LLC, State ID: 7053037, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87 102 <br />Urban Fits LLC &copy; 2023-2024 all rights reserved</div>
                 </section>
             </main>
         </>

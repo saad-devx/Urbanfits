@@ -7,7 +7,7 @@ import useAddress from '@/hooks/useAddress';
 import Error403 from '../403';
 import countryCodes from '@/static data/countryCodes';
 import Button from '../../components/buttons/simple_btn';
-import Loader from '@/components/loader';
+import Loader from '@/components/loaders/loader';
 // imports for the schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'

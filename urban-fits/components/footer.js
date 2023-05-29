@@ -76,7 +76,7 @@ export default function Footer() {
                                 <Link href='/customerservices/counterfeitproducts'>CF Products</Link>
                             </li>
                             <li>
-                                <Link href='/faq'>FAQ</Link>
+                                <Link href='/faqs'>FAQ</Link>
                             </li>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
@@ -101,7 +101,7 @@ export default function Footer() {
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
                             <h3 className="text-xs font_gotham_medium tracking-vast">YOUR ORDERS</h3>
                             <li>
-                                <Link href='/orders/orders'>Orders</Link>
+                                <Link href='/user/orders/orders'>Orders</Link>
                             </li>
                             <li>
                                 <Link href='/trackorder'>Track Orders</Link>
@@ -119,13 +119,13 @@ export default function Footer() {
                                 <Link href='/about'>About Us</Link>
                             </li>
                             <li>
-                                <Link href='/'>Terms & Conditions</Link>
+                                <Link href='/policies/'>Terms & Conditions</Link>
                             </li>
                             <li>
-                                <Link href='/'>Privacy Policy</Link>
+                                <Link href='/policies/privacypolicy'>Privacy Policy</Link>
                             </li>
                             <li>
-                                <Link href='/'>Cookies Policy</Link>
+                                <Link href='/policies/cookiespolicy'>Cookies Policy</Link>
                             </li>
                             <li>
                                 <Link href='/customerservices/companyinfo'>Company Information</Link>

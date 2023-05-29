@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useCart } from "react-use-cart";
 import 'react-toastify/dist/ReactToastify.css';
 import LinkBtn from '@/components/buttons/link_btn';
-import Loader from './loader';
+import Loader from './loaders/loader';
 import Shoppingcard from '@/components/cards/shoppingcard';
 
 export default function Search(props) {
