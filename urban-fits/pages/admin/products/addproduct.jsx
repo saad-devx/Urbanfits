@@ -42,18 +42,27 @@ const addproduct = () => {
 
     const [sizes, setSizes] = useState([]);
 
-    const handleSizes = (setsize, size) =>{
-        setsize(!size);
+    const handleSizes = (setsizep, sizep, sip) =>{
+        // setsizep({checked:!sizep, vlaue:sip});
+        if(sip == "S"){
+            setsizeS({checked:true, value:"S"})
+        }else if(sip == "M"){
+            setsizeS({checked:true, value:"M"})
+        }else if(sip == "L"){
+            setsizeS({checked:true, value:"L"})
+        }else if(sip == "XL"){
+            setsizeS({checked:true, value:"XL"})
+        }
 
-        let sizes=[sizeS, sizeM, sizeL, sizeM, sizeXL, sizeXXL];
+        let sizesArr=[sizeS, sizeM, sizeL, sizeM, sizeXL, sizeXXL];
         let  temp = [];
-        sizes.forEach(size => {
+        sizesArr.forEach(size => {
             if(size.checked == true){
-                temp = [...temp, size.value];
+                temp.push(size.value)
             }
         });
         setSizes(temp);
-        console.log(temp,"--<sizes")
+        console.log(sizes,"--<sizes")
 
     }
 
@@ -455,11 +464,11 @@ const onSubmit = () =>{
                         <div className='flex flex-col gap-[20px] ' >
                         <p  className='text-[16px] font-[400] ' >Size</p>
                             <div className='flex items-center ' >
-                                <input onClick={ () =>handleSizes(setsizeS, sizeS)} type="checkbox"  /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px] ' >S</p>
-                                <input onClick={() =>handleSizes(setsizeM, sizeM)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >M</p>
-                                <input onClick={() =>handleSizes(setsizeL, sizeL)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >L</p>
-                                <input onClick={() =>handleSizes(setsizeXL, sizeXL)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >XL</p>
-                                <input onClick={() =>handleSizes(setsizeXXL, sizeXXL)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] ' >XXL</p>
+                                <input onClick={() =>handleSizes(setsizeS, sizeS, "S")} type="checkbox"  /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px] ' >S</p>
+                                <input onClick={() =>handleSizes(setsizeM, sizeM, "M")} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >M</p>
+                                <input onClick={() =>handleSizes(setsizeL, sizeL, "L")} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >L</p>
+                                <input onClick={() =>handleSizes(setsizeXL, sizeXL, "XL")} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >XL</p>
+                                <input onClick={() =>handleSizes(setsizeXXL, sizeXXL, "XXL")} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] ' >XXL</p>
                             </div>
                         <InputSelect
                         label="Quantity"
