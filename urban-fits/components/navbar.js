@@ -6,7 +6,6 @@ import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
 import ToTopBtn from './buttons/toTopBtn';
-import CustomCursor from './customCursor';
 import Logo from '@/public/logos/logo_black.svg'
 // image imports
 import Image from 'next/image';
@@ -139,7 +138,6 @@ export default function Navbar(props) {
 
     return (
         <>
-            <CustomCursor optimize={true} />
             <Search search={search} toggleSearch={toggleSearch} />
             <Cart cart={cart} toggleCart={toggleCart} />
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} hidden lg:block right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>

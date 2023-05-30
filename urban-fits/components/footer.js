@@ -76,7 +76,7 @@ export default function Footer() {
                                 <Link href='/customerservices/counterfeitproducts'>CF Products</Link>
                             </li>
                             <li>
-                                <Link href='/faqs'>FAQ</Link>
+                                <Link href='/faq'>FAQ</Link>
                             </li>
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
@@ -119,13 +119,13 @@ export default function Footer() {
                                 <Link href='/about'>About Us</Link>
                             </li>
                             <li>
-                                <Link href='/policies/'>Terms & Conditions</Link>
+                                <Link href='/policies/terms&conditions'>Terms & Conditions</Link>
                             </li>
                             <li>
                                 <Link href='/policies/privacypolicy'>Privacy Policy</Link>
                             </li>
                             <li>
-                                <Link href='/policies/'>Cookies Policy</Link>
+                                <Link href='/policies/cookiespolicy'>Cookies Policy</Link>
                             </li>
                             <li>
                                 <Link href='/customerservices/companyinfo'>Company Information</Link>

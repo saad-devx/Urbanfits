@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import CustomCursor from "@/components/customCursor";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import MusicBars from "@/components/musicBars";
@@ -187,7 +186,6 @@ const AboutComponent = () => {
                 <title>About Us - UF</title>
             </Head>
             <MusicBars />
-            <CustomCursor optimize={true} />
             <main className='overflow-hidden'>
 
                 <section ref={wraperRef} className='relative w-[300vw] h-[100vh] flex justify-start overflow-y-hidden overflow-hidden'>
@@ -268,7 +266,7 @@ const AboutComponent = () => {
                         </div>
                     </nav>
                     {/* <h1 ref={endingHeading} className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full font_copper_gothic text-9xl text-center opacity-0 scale-[3] pointer-events-none"><Link href='/' >URBAN FITS</Link></h1> */}
-                    <h1 className="font_copper_gothic text-9xl text-center pointer-events-none hover:tracking-expand transition-all duration-700"><Link href='/' >URBAN FITS</Link></h1>
+                    <h1 className="font_copper_gothic text-9xl text-center hover:tracking-expand transition-all duration-700"><Link href='/' >URBAN FITS</Link></h1>
                     <div className="w-full h-20 flex justify-center items-start font_gotham text-xs text-center">Urban Fits LLC, State ID: 7053037, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87 102 <br />Urban Fits LLC &copy; 2023-2024 all rights reserved</div>
                 </section>
             </main>
