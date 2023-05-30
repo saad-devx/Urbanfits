@@ -6,8 +6,27 @@ import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import { InputText } from "@/components/InputText";
 import { InputSelect } from "@/components/InputSelect";
 import Sidebaradmin from "../sidebar";
+import { useFormik } from "formik";
+import { inventeryManagementSchema } from "@/mock/yupSchemas";
+
 
 const inventorymanagement = () => {
+
+
+  const initialValues = {
+   
+    holdstock: "", 
+    notificationrecipients: "",
+    lowstockthreshold: "",
+    outofstockthreshold: "",
+    }
+
+const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
+    initialValues:initialValues  , 
+    validationSchema: inventeryManagementSchema
+})
+
+
   return (
     <Sidebaradmin>
       <section>
@@ -59,12 +78,27 @@ const inventorymanagement = () => {
                     width="  w-[100%]"
                     placeholder=" "
                     postlabel={<QuestionIcon />}
+                    type="number"
+                    name="holdstock"
+                    value={values.holdstock}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.holdstock && touched.holdstock?
+                    (errors.holdstock): null
+                }
                   />
                   <InputText
                     label="Low Stock threshold"
                     width="  w-[100%]"
                     placeholder=" "
                     postlabel={<QuestionIcon />}
+                    name="lowstockthreshold"
+                    value={values.lowstockthreshold}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.lowstockthreshold && touched.lowstockthreshold?
+                    (errors.lowstockthreshold): null
+                }
                   />
                   <InputSelect
                   label="Stock display format"
@@ -73,6 +107,7 @@ const inventorymanagement = () => {
                   postlabel={<QuestionIcon />}
                   options={["Always show quantity remaining in stock e.g. “12 in stock”", "pkr"]}
                 />
+                
               </div>
               <div className="flex flex-col gap-[30px]" >
                 <InputText
@@ -80,12 +115,26 @@ const inventorymanagement = () => {
                     width="  w-[100%]"
                     placeholder=" "
                     postlabel={<QuestionIcon />}
+                    name="notificationrecipients"
+                    value={values.notificationrecipients}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.notificationrecipients && touched.notificationrecipients?
+                    (errors.notificationrecipients): null
+                }
                   />
                   <InputText
                     label="Out of stock threshold"
                     width="  w-[100%]"
                     placeholder=" "
                     postlabel={<QuestionIcon />}
+                    name="outofstockthreshold"
+                    value={values.outofstockthreshold}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.outofstockthreshold && touched.outofstockthreshold?
+                    (errors.outofstockthreshold): null
+                }
                   />
                   
               </div>

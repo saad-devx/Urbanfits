@@ -121,10 +121,12 @@ const allcoupon = () => {
                     label="Coupon Amount"
                     postlabel={<QuestionIcon/>}
                     placeholder="0"
+                    type="number"
                 />
                 <InputText
                     label="Coupon expire date"
                     postlabel={<QuestionIcon/>}
+                    type="date"
                     placeholder="YYYY-MM-DD"
                 />
               </div>
@@ -137,6 +139,8 @@ const allcoupon = () => {
                         label="Minimum spend"
                         postlabel={<QuestionIcon/>}
                         placeholder="No minimum"
+                    type="number"
+
                     />
                     <div className="" >
                         <p className="flex items-center text-[14px] font-[500] gap-[30px] " > <p> Individual use only</p> <QuestionIcon/> </p>
@@ -170,6 +174,8 @@ const allcoupon = () => {
                         label="Maximum spend"
                         postlabel={<QuestionIcon/>}
                         placeholder="No maximum"
+                    type="number"
+
                     />
                     <div className="" >
                         <p className="flex items-center text-[14px] font-[500] gap-[30px] " > <p> Exclude sale item</p> <QuestionIcon/> </p>
@@ -200,11 +206,15 @@ const allcoupon = () => {
                     label="Usage limit coupon"
                     postlabel={<QuestionIcon/>}
                     placeholder="Unlimited usage"
+                    type="number"
+
                 />
                 <InputText
                     label="Usage limit per user"
                     postlabel={<QuestionIcon/>}
                     placeholder="Unlimited usage"
+                    type="number"
+
                 />
 
             </section>
