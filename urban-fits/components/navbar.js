@@ -35,13 +35,13 @@ const SocialIcons = ({ classes }) => {
 
 const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
     const getPfp = () => {
-        if (!user || !user.image) return
+        if (!user) return
         let pfp = user.image
-        if (pfp) return pfp
         if (!pfp) {
             if (user.gender === "Male") return male_avatar
-            return female_avatar
+            else return female_avatar
         }
+        if (pfp) return pfp
     }
 
     if (window.matchMedia('(min-width: 1024px)').matches && user?.email) return <>
@@ -53,7 +53,7 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
             <Link href="/products/accessories" className='hover:tracking-[0.5em] transition-all duration-500' >ACCESSORIES</Link>
             <Link href="/user/personalinfo" className="group w-1/4 flex justify-end items-center gap-x-3">
                 <div className="relative w-3/5 md:w-8 aspect-square rounded-full border border-gray-300 overflow-hidden">
-                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="profile picture" />
+                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="" />
                 </div>
                 <h3 className='group-hover:tracking-[0.5em] transition-all duration-500'>MY ACCOUNT</h3>
             </Link>
@@ -80,7 +80,7 @@ const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
             </button>
             <Link href={user && user.email ? '/user/personalinfo' : '/login'} className='h-4/5 justify-center flex flex-col items-center'>
                 {user && user.email ? <div className="relative w-7 aspect-square rounded-full border border-gray-300 overflow-hidden">
-                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="profile picture" />
+                    <Image className="w-full h-full object-cover object-center" width={50} height={50} src={getPfp()} alt="" />
                 </div> :
                     <span class="material-symbols-outlined text-xl">hdr_strong</span>}
                 <span className="font_gotham_medium text-[8px] tracking-widest"> {user && user.email ? "PROFILE" : 'LOGIN'}</span>

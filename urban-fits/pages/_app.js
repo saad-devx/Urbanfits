@@ -8,14 +8,21 @@ import CustomCursor from '@/components/customCursor'
 import dynamic from 'next/dynamic';
 import useLocation from '@/hooks/useLocation'
 import { ToastContainer } from 'react-toastify'
+import useUser from '@/hooks/useUser'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
 import LoadingBar from 'react-top-loading-bar'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getLocation } = useLocation()
+  const { user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
+
+  // if (router.pathname.startsWith("/admin")) {
+  //   if (!user || user.role !== "admin") return <div className="w-full h-screen flex justify-center items-center font_gotham_medium text-2xl tracking-expand">ACCESS DENIED</div>
+  // }
+
   useEffect(() => {
     window.addEventListener("beforeunload", () => {
       const sessionValid = localStorage.getItem('remember_me')

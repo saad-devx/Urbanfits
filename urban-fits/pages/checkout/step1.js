@@ -83,7 +83,7 @@ export default function Checkout1(props) {
     }
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
         initialValues: {
-            name: user ? (user?.firstname + ' ' + user?.lastname) : "",
+            name: user && user.firstname ? (user?.firstname + ' ' + user?.lastname) : "",
             email: user?.email,
             delivery_option: 'express',
             shipping_address: addressFieldsValues("shipping"),

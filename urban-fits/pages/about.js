@@ -4,7 +4,6 @@ import OneTimeLoader from '@/components/loaders/onetimeLoader';
 const AboutComponent = dynamic(() => import('@/components/aboutComponent'), {
     loading: () => <OneTimeLoader />,
 });
-// import AboutComponent from '@/components/aobutComponent';
 
 const About = () => {
     if (window.matchMedia('(max-width: 1000px)').matches) return <div className="w-full h-screen flex justify-center items-center font_gotham_medium text-2xl tracking-expand">ABOUT US</div>
