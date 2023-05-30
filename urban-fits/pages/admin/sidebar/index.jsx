@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Image from "next/image";
 
 import styles from "@/styles/sidebar.module.css";
@@ -18,19 +18,44 @@ import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import { LocationIcon } from "@/public/sidebaricons/LocationIcon";
 import { CallIcon } from "@/public/sidebaricons/CallIcon";
 import CardAdmin from "@/components/cards/cardadmin";
+import AvatarIconV from "@/public/icons/AvatarIconV";
+import { ClockIcon } from "@/public/icons/ClockIcon";
+import Button from "@/components/buttons/simple_btn";
+import { Button2 } from "@/components/buttons/Button2";
 
 export default function Sidebaradmin({ children }) {
   const [sidebaritems, setSidebaritems] = React.useState(sidebarItems);
   const [selected, SetSelected] = React.useState(false);
   const [subrowopen, setSubrowopen] = React.useState(false);
   const [showmenue, setshowMenue] = React.useState(false);
+  const [shownotification, setShownotification] = React.useState(false);
+  const [arrowmenue, setArrowmenu] = React.useState(false);
 
-  const toggleshowmenue = () => {
-    setshowMenue(!showmenue)
+  const handlemenuclick = (menu)=>{
+    if(menu == "avatar"){
+      setshowMenue(!showmenue);
+      setArrowmenu(false);
+      setShownotification(false);
+    }
+    else if(menu == "arrow")
+    {
+      setArrowmenu(!arrowmenue);
+      setshowMenue(false);
+      setShownotification(false);
+    } 
+    else
+    {
+      setShownotification(!shownotification);
+      setArrowmenu(false);
+      setshowMenue(false);
+    }
+
   }
 
-  const handleSubrow = () => {
-    setSubrowopen(!subrowopen);
+  const [notchecked, setNotchecked] = useState(1);
+
+  const handlenotmenuclick = (id) => {
+    setNotchecked(id);
   };
 
   const [sidebaropen, setSidebaropen] = React.useState(true);
@@ -244,7 +269,7 @@ export default function Sidebaradmin({ children }) {
           </div>
 
           <div className={` flex items-center  `}>
-            <span onClick={toggleshowmenue} className="cursor-pointer  " >
+            <span onClick={()=> handlemenuclick("avatar")} className="cursor-pointer  " >
               <AvatarIcon />
             </span>
             <div className={` duration-200 ${showmenue ? "visible" : "hidden"}   absolute top-[89px] right-[154px] `} >
@@ -256,12 +281,124 @@ export default function Sidebaradmin({ children }) {
                 </div>
               </CardAdmin>
             </div>
-            <span className={` ml-[15px] `}>
+            
+            <span onClick={()=> handlemenuclick("arrow")}  className={` cursor-pointer ml-[15px] `}>
               <DownArowSmallIcon />
             </span>
-            <span className={` ml-[20px] `}>
+            <div className={` duration-200 ${arrowmenue ? "visible" : "hidden"}   absolute top-[89px] right-[35px] `} >
+              <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" >
+                <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
+                  <p className="cursor-pointer" >My Account</p>
+                  <p className="cursor-pointer">Security</p>
+                  <p className="cursor-pointer">2FA Authentication</p>
+                </div>
+              </CardAdmin>
+            </div>
+
+            <span  onClick={()=> handlemenuclick("bell")}   className={` cursor-pointer ml-[20px] `}>
               <BellIcon />
             </span>
+            <div className={` z-[999] duration-200 ${shownotification ? "visible" : "hidden"}   absolute top-[89px] right-[92px] `} >
+              <CardAdmin classes=" w-[320px] p-[20px] z-50 " round="rounded-[15px]" >
+                <div  >
+                  <p className=" text-[14px] font-[500] " > Notification </p>
+                  <div>
+                  <div className="flex gap-[50px]  text-[16px] mt-[15px] ">
+                    <p
+                      className={`${
+                        notchecked == 1
+                          ? "  border-b-2 gradient_txt_2 border-b-[#ccb849] "
+                          : null
+                      }  text-[11px] font-[500] uppercase z-50  pb-[10px] cursor-pointer `}
+                      onClick={() => handlenotmenuclick(1)}
+                    >
+                      Activities
+                    </p>
+                    <p
+                      className={`${
+                        notchecked == 2
+                          ? " border-b-2 gradient_txt_2 border-b-[#ccb849]"
+                          : "font-[300] "
+                      } text-[11px] font-[500] uppercase z-50 px-[16px] pb-[10px] cursor-pointer`}
+                      onClick={() => handlenotmenuclick(2)}
+                    >
+                      Notes
+                    </p>
+                    <p
+                      className={`${
+                        notchecked == 3
+                          ? " border-b-2 gradient_txt_2 border-b-[#ccb849]"
+                          : "font-[300] "
+                      } text-[11px] font-[500] uppercase  px-[16px] pb-[10px] cursor-pointer`}
+                      onClick={() => handlenotmenuclick(3)}
+                    >
+                      Alerts
+                    </p>
+                </div>
+                  <hr className=" border-none h-[1px] bg-[#CCCCCC] translate-y-[-1px]  " />
+                  </div>
+                  {notchecked == 1 && 
+                    <>
+                      {[...Array(5)].map(()=>( 
+
+                      <div  className="flex items-center gap-[15px] my-[9px] " >
+                        <div className="bg-[#B9BBC1] w-[25px] h-[25px] flex items-center justify-center rounded-[50px] " >
+                          <AvatarIconV fill="white" stroke="white" w="8" h="10" />
+                        </div>
+                        <div  >
+                              <p className=" text-[12px] font-[500] " >You Joined a Group</p>
+                              <p className=" text-[10px] font-[300] flex gap-[5px] items-center "> <ClockIcon w="8" h="8" /> <p>Today</p></p>
+                        </div>
+                      </div>
+
+                       )) }
+
+                    </>
+                  }
+                  {notchecked == 2 && 
+                    <>
+                      {[...Array(5)].map(()=>( 
+
+                      <div  className="flex items-center gap-[15px] my-[9px] " >
+                        <div className="bg-[#B9BBC1] w-[25px] h-[25px] flex items-center justify-center rounded-[50px] " >
+                          <AvatarIconV fill="white" stroke="white" w="8" h="10" />
+                        </div>
+                        <div  >
+                              <p className=" text-[12px] font-[500] " >You Joined a Group</p>
+                              <p className=" text-[10px] font-[300] flex gap-[5px] items-center "> <ClockIcon w="8" h="8" /> <p>Today</p></p>
+                        </div>
+                      </div>
+
+                       )) }
+
+                    </>
+                  }
+                  {notchecked == 3 && 
+                    <>
+                      {[...Array(5)].map(()=>( 
+
+                      <div  className="flex items-center gap-[15px] my-[9px] " >
+                        <div className="bg-[#B9BBC1] w-[25px] h-[25px] flex items-center justify-center rounded-[50px] " >
+                          <AvatarIconV fill="white" stroke="white" w="8" h="10" />
+                        </div>
+                        <div  >
+                              <p className=" text-[12px] font-[500] " >You Joined a Group</p>
+                              <p className=" text-[10px] font-[300] flex gap-[5px] items-center "> <ClockIcon w="8" h="8" /> <p>Today</p></p>
+                        </div>
+                      </div>
+
+                       )) }
+
+                    </>
+                  }
+
+                    <div className="flex gap-[20px] mt-[20px] " >
+                  <Button2 width="w-[130px]" > Mark All Read </Button2>
+                  <Button2 width="w-[130px]" > Delete All </Button2>
+                  </div>
+                </div>
+              </CardAdmin>
+            </div>
             <span>
               <SettingIcon />
             </span>

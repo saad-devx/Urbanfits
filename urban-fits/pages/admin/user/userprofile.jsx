@@ -125,9 +125,9 @@ const userprofile = () => {
          </section>
         }
         {/*  */}
-        <section className="col-span-4 p-[40px]" style={{ marginTop: "0px" }}>
-          <div>
-            <div className="flex gap-[62px]  text-[16px] ">
+        <section className="col-span-4 p-[40px]  " style={{ marginTop: "0px" }}>
+          <div className="" >
+            <div className="flex gap-[62px] z-[-1] text-[16px] ">
               <p
                 className={`${
                   checked == 1
@@ -149,7 +149,7 @@ const userprofile = () => {
                 Setting
               </p>
             </div>
-            <hr className=" border-none h-[1px] bg-[#CCCCCC] translate-y-[-1px]  " />
+            <hr className=" border-none h-[1px] bg-[#CCCCCC] translate-y-[-1px]   " />
           </div>
 
           {/*  */}
