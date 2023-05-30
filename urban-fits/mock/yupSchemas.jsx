@@ -11,6 +11,7 @@ export const addProductSchema = Yup.object({
     seotitle: Yup.string().min(2).required("Please Enter seo title"),
     seodescription: Yup.string().required("Please Enter seo description"),
     width: Yup.number().required("Please Enter width"),
+    height: Yup.number().required("Please Enter height"),
     weight: Yup.number().required("Please Enter weight"),
     shippingfees: Yup.number().required("Please Enter shipping fees"),
     seometakeyword:Yup.string().required("Please Enter meta keywords"),

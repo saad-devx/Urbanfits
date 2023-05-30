@@ -34,7 +34,28 @@ const addproduct = () => {
         setNewtag("");
     }
 
+    const  [sizeS, setsizeS] = useState({checked:false, value:"S"});
+    const  [sizeM, setsizeM] = useState({checked:false, value:"M"});
+    const  [sizeL, setsizeL] = useState({checked:false, value:"L"});
+    const  [sizeXL, setsizeXL] = useState({checked:false, value:"XL"});
+    const  [sizeXXL, setsizeXXL] = useState({checked:false, value:"XXL"});
+
     const [sizes, setSizes] = useState([]);
+
+    const handleSizes = (setsize, size) =>{
+        setsize(!size);
+
+        let sizes=[sizeS, sizeM, sizeL, sizeM, sizeXL, sizeXXL];
+        let  temp = [];
+        sizes.forEach(size => {
+            if(size.checked == true){
+                temp = [...temp, size.value];
+            }
+        });
+        setSizes(temp);
+        console.log(temp,"--<sizes")
+
+    }
 
     const handletagdelete = (tag) =>{
         setTags(tags.filter((e) => {
@@ -58,7 +79,7 @@ const addproduct = () => {
   
     }
 
-    
+
 
 
 const initialValues = {
@@ -72,6 +93,7 @@ const initialValues = {
     seotitle: "",
     seodescription: "",
     width: "",
+    height:"",
     weight:"",
     shippingfees:"",
     seometakeyword:""
@@ -103,17 +125,12 @@ const finalProduct={
     "seo_detials": {
       "title": values.seotitle,
       "description": values.seodescription ,
-      "meta_keywords": [
-        "T-Shirt",
-        "Men",
-        "vintage",
-        "summer"
-      ]
+      "meta_keywords": values.seometakeyword
     },
     "shipping_detials": {
       "width": String(values.width),
     //   "height": String(values.),
-      "weight": "250",
+      "weight": String(values.height),
       "fees": values.shippingfees
     },
     "variants": variants
@@ -136,10 +153,7 @@ const addVariant = () =>{
               "url": "https://i.etsystatic.com/6920740/r/il/6d3dde/3912644185/il_1140xN.3912644185_7ya6.jpg"
             }
           ],
-          "size": [
-            "S",
-            "L"
-          ],
+          "size": sizes,
           "stock": values.quantity
         }
 
@@ -441,11 +455,11 @@ const onSubmit = () =>{
                         <div className='flex flex-col gap-[20px] ' >
                         <p  className='text-[16px] font-[400] ' >Size</p>
                             <div className='flex items-center ' >
-                                <input type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px] ' >S</p>
-                                <input type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >M</p>
-                                <input type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >L</p>
-                                <input type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >XL</p>
-                                <input type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] ' >XXL</p>
+                                <input onClick={ () =>handleSizes(setsizeS, sizeS)} type="checkbox"  /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px] ' >S</p>
+                                <input onClick={() =>handleSizes(setsizeM, sizeM)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >M</p>
+                                <input onClick={() =>handleSizes(setsizeL, sizeL)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >L</p>
+                                <input onClick={() =>handleSizes(setsizeXL, sizeXL)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >XL</p>
+                                <input onClick={() =>handleSizes(setsizeXXL, sizeXXL)} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] ' >XXL</p>
                             </div>
                         <InputSelect
                         label="Quantity"
@@ -522,18 +536,32 @@ const onSubmit = () =>{
                 </div>
                 <div className='flex flex-col gap-[20px]' >
                 <p className='text-[20px] font-[400] ' >Shipping Details</p>
-                    <InputText 
-                    label="Width"
-                    placeholder="Inch"
-                    type="number"
-                    name="width"
-                    value={values.width}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={errors.width && touched.width?
-                        (errors.width): null
-                    }
-                    />           
+                    <div  className='grid grid-cols-2 gap-[48px] ' >
+                        <InputText 
+                        label="Width"
+                        placeholder="Inch"
+                        type="number"
+                        name="width"
+                        value={values.width}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.width && touched.width?
+                            (errors.width): null
+                        }
+                        />   
+                        <InputText 
+                        label="Height"
+                        placeholder="Inch"
+                        type="number"
+                        name="height"
+                        value={values.height}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.height && touched.height?
+                            (errors.height): null
+                        }
+                        />          
+                    </div>
                     <InputText 
                     label="Weight"
                     type="number"

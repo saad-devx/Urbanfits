@@ -29,16 +29,28 @@ export default function Sidebaradmin({ children }) {
   const [subrowopen, setSubrowopen] = React.useState(false);
   const [showmenue, setshowMenue] = React.useState(false);
   const [shownotification, setShownotification] = React.useState(false);
+  const [arrowmenue, setArrowmenu] = React.useState(false);
 
-  const toggleshowmenue = () => {
-    setshowMenue(!showmenue)
+  const handlemenuclick = (menu)=>{
+    if(menu == "avatar"){
+      setshowMenue(!showmenue);
+      setArrowmenu(false);
+      setShownotification(false);
+    }
+    else if(menu == "arrow")
+    {
+      setArrowmenu(!arrowmenue);
+      setshowMenue(false);
+      setShownotification(false);
+    } 
+    else
+    {
+      setShownotification(!shownotification);
+      setArrowmenu(false);
+      setshowMenue(false);
+    }
+
   }
-  const toggleshownotificaion = () => {
-    setShownotification(!shownotification)
-  }
-  const handleSubrow = () => {
-    setSubrowopen(!subrowopen);
-  };
 
   const [notchecked, setNotchecked] = useState(1);
 
@@ -257,7 +269,7 @@ export default function Sidebaradmin({ children }) {
           </div>
 
           <div className={` flex items-center  `}>
-            <span onClick={toggleshowmenue} className="cursor-pointer  " >
+            <span onClick={()=> handlemenuclick("avatar")} className="cursor-pointer  " >
               <AvatarIcon />
             </span>
             <div className={` duration-200 ${showmenue ? "visible" : "hidden"}   absolute top-[89px] right-[154px] `} >
@@ -270,10 +282,20 @@ export default function Sidebaradmin({ children }) {
               </CardAdmin>
             </div>
             
-            <span className={` ml-[15px] `}>
+            <span onClick={()=> handlemenuclick("arrow")}  className={` cursor-pointer ml-[15px] `}>
               <DownArowSmallIcon />
             </span>
-            <span  onClick={toggleshownotificaion}   className={` cursor-pointer ml-[20px] `}>
+            <div className={` duration-200 ${arrowmenue ? "visible" : "hidden"}   absolute top-[89px] right-[35px] `} >
+              <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" >
+                <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
+                  <p className="cursor-pointer" >My Account</p>
+                  <p className="cursor-pointer">Security</p>
+                  <p className="cursor-pointer">2FA Authentication</p>
+                </div>
+              </CardAdmin>
+            </div>
+
+            <span  onClick={()=> handlemenuclick("bell")}   className={` cursor-pointer ml-[20px] `}>
               <BellIcon />
             </span>
             <div className={` z-[999] duration-200 ${shownotification ? "visible" : "hidden"}   absolute top-[89px] right-[92px] `} >
