@@ -6,6 +6,7 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a name for your product"],
         trim: true
     },
+    cover_image: {type: String},
     price: {
         type: Number,
         required: [true, "Please enter a price for your product"],
@@ -36,11 +37,10 @@ const ProductSchema = mongoose.Schema({
             color: {
                 type: String,
             },
-            color_name: {type: String},
-            images: [{
-                public_id: { type: String, required: true },
-                url: { type: String, required: true },
-            }],
+            color_name: { type: String },
+            images: {
+                type: Array
+            },
             size: {
                 type: Array,
                 default: ["M", "L"]

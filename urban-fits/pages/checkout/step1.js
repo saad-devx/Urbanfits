@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
 import { loadStripe } from '@stripe/stripe-js';
+import generatePassword from '@/utils/generatePassword';
 import useUser from '@/hooks/useUser';
 import useAddress from '@/hooks/useAddress';
 import axios from 'axios';
@@ -24,6 +25,7 @@ import Button from '@/components/buttons/simple_btn';
 loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export default function Checkout1(props) {
+console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
     const router = useRouter()
     const { address, getAddress } = useAddress()
     const { user } = useUser()

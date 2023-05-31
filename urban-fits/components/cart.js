@@ -12,6 +12,7 @@ import Link from 'next/link';
 // Cart item function
 function CartItem(props) {
     const { product } = props
+    console.log(product)
     //Setting up the cart functions
     const { updateItemQuantity, removeItem } = useCart()
     // confguring the Quantity conter of the prodcut
@@ -35,7 +36,7 @@ function CartItem(props) {
     return (
         <li key={props.li_key} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
             <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
-                <Image width={129} height={160} src={product.images[0].url} alt="Urban images" className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
+                <Image width={129} height={160} src={product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
                 <button onClick={() => { removeItem(product.id) }} className="md:hidden absolute top-2 left-2 fa-solid fa-xmark text-gray-200" />
             </div>
             {/* to be displayed from md breakpoint */}

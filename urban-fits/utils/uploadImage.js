@@ -14,5 +14,4 @@ const uploadImage = async (file, fileName, folder) => {
         toaster('error', error)
     }
 }
-
 export default uploadImage
