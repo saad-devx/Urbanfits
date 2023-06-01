@@ -17,7 +17,7 @@ const AddressSchema = mongoose.Schema({
             city: { type: String, required: true },
             country: { type: String, required: true },
             phone_prefix: { type: String, required: true },
-            phone_number: { type: String, required: true },
+            phone_number: { type: String, required: true }
         }
     ]
 }, { timestamps: true })

@@ -1,35 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
 import Link from 'next/link'
+import User from '.';
 import jwt from 'jsonwebtoken';
-import toaster from '@/utils/toast_function';
 import ifExists from '@/utils/if_exists';
 import Head from 'next/head';
 import Loader from '@/components/loader';
+import Error403 from '../403';
 import Card from '../../components/cards/card'
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
-// image imports
-import Image from 'next/image';
-import female_avatar from '../../public/avatars/female.svg'
-import male_avatar from '../../public/avatars/male.svg'
-
-import User from '.';
-
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 // little function to use inside right this component to avoid mess
-const InfoCard = (props) => {
-    return <Card title={props.title} value={props.value} btnValue={props.btnValue} classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
-}
-
-// User Avatar based on the gender
-export function Avatar({ user }) {
-    return <Image className="w-1/3 md:w-1/6 rounded-full border-2 p-2 border-white" src={ifExists(user.gender) === "Male" ? male_avatar : female_avatar} alt="avatar" />
-}
+// const InfoCard = (props) => {
+//     return <Card title={props.title} value={props.value} btnValue={props.btnValue} classes='w-full h-1/5 mb-7 p-9 justify-center items-center md:items-start' />
+// }
 
 // Function to show addresses of the user in a container
 const AddressContainer = (props) => {
@@ -52,18 +41,16 @@ const AddressContainer = (props) => {
                 <span>{field.city}, {field.country}</span><br />
                 <span>{field.phone_prefix} {field.phone_number}</span>
             </div>
-            <Link href='/user/address' className='text-sm' >Modify<i class="fa-regular fa-pen-to-square mx-2"></i></Link>
+            <Link href='/user/address' className='text-sm' >Modify<i className="fa-regular fa-pen-to-square mx-2"></i></Link>
         </div>
     }
     else return addressLink
 }
 
 export default function Personalinfo() {
-    const router = useRouter()
+    const { user, updateUser } = useUser()
     //state to handle loader component
     const [loader, setLoader] = useState(false)
-    // user data state
-    const [user, setUser] = useState({})
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
@@ -80,35 +67,24 @@ export default function Personalinfo() {
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
-            let response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values)
-            })
-            let res = await response.json()
-            localStorage.setItem("authToken", res.payload)
-            toaster(res.success === true ? "success" : "error", res.msg)
+            await updateUser(values)
             setLoader(null)
         }
     })
     useEffect(() => {
-        const userData = jwt.decode(localStorage.getItem("authToken"))
-        if (userData) {
-            let user = userData._doc
-            setUser(user)
-            setValues({
-                title: ifExists(user.title),
-                firstname: ifExists(user.firstname),
-                lastname: ifExists(user.lastname),
-                gender: ifExists(user.gender),
-                phone_prefix: ifExists(user.phone_prefix),
-                phone_number: ifExists(user.phone_number),
-                newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
-                newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
-            })
-        }
-        else return router.push('/access denied')
+        if (!user) return
+        setValues({
+            title: ifExists(user.title),
+            firstname: ifExists(user.firstname),
+            lastname: ifExists(user.lastname),
+            gender: ifExists(user.gender),
+            phone_prefix: ifExists(user.phone_prefix),
+            phone_number: ifExists(user.phone_number),
+            newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
+            newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
+        })
     }, [])
+    if (!user) return <Error403 />
     return (
         <>
             <Head>
@@ -118,10 +94,10 @@ export default function Personalinfo() {
             </Head>
             {loader}
             <User>
-                <form className="mt-10 font_gotham space-y-5" onReset={handleReset} onSubmit={handleSubmit} >
+                <form className="mt-10 font_gotham gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                     <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >PERSONAL INFORMATION</h1>
-                    <div className="flex justify-between w-full ">
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between w-full ">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
                             {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                             <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 <option >Title</option>
@@ -129,17 +105,17 @@ export default function Personalinfo() {
                                 <option id="Mrs" value="Mrs.">Ms</option>
                             </select>
                         </div>
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                         </div>
                     </div>
-                    <div className="flex justify-between w-full">
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="flex flex-col md:flex-row justify-between w-full">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
                         </div>
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                             <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 <option disabled >Gender</option>
@@ -153,8 +129,8 @@ export default function Personalinfo() {
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="gender" id="gender" value={values.gender} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div> */}
                     </div>
-                    <div className="flex justify-between w-full">
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="flex flex-col md:flex-row justify-between w-full">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                             <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 {countryCodes.map((item) => {
@@ -163,7 +139,7 @@ export default function Personalinfo() {
                                 })}
                             </select>
                         </div>
-                        <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                             {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                         </div>
@@ -206,11 +182,11 @@ export default function Personalinfo() {
                             <AddressContainer tag="billing" />
                         </div>
                     </div>
-                    <div className="w-full flex flex-col justify-center items-center">
+                    {/* <div className="w-full flex flex-col justify-center items-center">
                         <InfoCard title="FAQ" value="Find all the answers to the frequently asked questions below." href='/faq' btnValue="Get In Touch" />
                         <InfoCard title="CUSTOMER CARE" value="Do you have any questions ? We are here to help you. You can contact our customer care team by email or over the phone." href='/customerservices/returns&refund' btnValue="See Your FAQs" />
                         <InfoCard title="PRIVACY POLICY" value="Do you have any questions on how we process your data ? Please consult our privacy policy." btnValue="See Your FAQs" />
-                    </div>
+                    </div> */}
                 </div>
             </User>
         </>

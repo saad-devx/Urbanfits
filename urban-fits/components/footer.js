@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
+import useUser from '@/hooks/useUser'
 import Link from 'next/link'
+import Newsletter from './modals/newsletter'
 import Image from 'next/image'
 import truck from '../public/truck.svg'
 
 export default function Footer() {
+    const { user } = useUser()
     const [modal2, setModal2] = useState(false)
-
-    const toggleModal = (e) => {
-        if (e.target.name === "modal2") {
-            if (modal2 === false) return setModal2(true)
-            if (modal2 === true) return setModal2(false)
-        }
+    const toggleModal = () => {
+        if (modal2 === false) return setModal2(true)
+        if (modal2 === true) return setModal2(false)
     }
     return (
         <>
+            <Newsletter show={modal2} toggleModal={toggleModal} />
             <footer className="border-t w-full pt-10 font_gotham text-gotham-black bg-white">
                 <section className="pt-10 md:p-5 lg:p-24 lg:pt-28 lg:pb-16 md:pb-7">
                     <div className="w-full h-2/6 pb-7 px-6 md:pb-16 lg:px-[5%] border-b border-b-gray-200 flex flex-row flex-wrap justify-between items-start">
@@ -89,6 +90,13 @@ export default function Footer() {
                             <li>
                                 <Link href='/sales'>Sales</Link>
                             </li>
+                            <li>
+                                <button onClick={toggleModal} name="modal2" className='cursor-pointer' >Newsletter</button>
+                            </li>
+                            {user && user.email ?
+                                <li>
+                                    <Link href='/user/personalinfo'>My Account</Link>
+                                </li> : null}
                         </div>
                         <div className="list-none pb-7 md:pb-3 space-y-4 flex flex-col items-start">
                             <h3 className="text-xs font_gotham_medium tracking-vast">YOUR ORDERS</h3>
@@ -149,7 +157,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </section>
-                <div className="w-4/5 m-10 text-[10px] mx-auto text-center leading-5">
+                <div className="w-4/5 m-10 pb-20 lg:pb-0 text-[10px] mx-auto text-center leading-5">
                     <p>Urban Fits L.L.C., Company Reg. Number - 2447 LLC 2023, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102 <br /> Urban Fits L.L.C. © 2023-2024 All rights reserved.</p>
                 </div>
             </footer>

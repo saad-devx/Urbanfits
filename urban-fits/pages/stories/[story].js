@@ -31,7 +31,7 @@ export default function Storeis() {
     }
 
     const StoryImage = (props) => {
-        return <Image onClick={toggleStoryCarousel} width={1400} height={500} data-aos-duration='1000' data-aos-once={props.once} data-aos-delay={props.data_aos_delay ? props.data_aos_delay : null} data-aos={props.data_aos} src={props.src} className="w-full h-full object-cover cursor-pointer" />
+        return <Image onClick={toggleStoryCarousel} width={1400} height={500} alt="story image" data-aos-duration='1000' data-aos-once={props.once} data-aos-delay={props.data_aos_delay ? props.data_aos_delay : null} data-aos={props.data_aos} src={props.src} className="w-full h-full object-cover cursor-pointer" />
     }
 
     useEffect(() => {

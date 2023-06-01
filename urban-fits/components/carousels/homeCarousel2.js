@@ -1,107 +1,160 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
-// Default theme
-import '@splidejs/react-splide/css';
+import React, { useEffect } from "react";
+import Link from "next/link";
 // images imports
-import Image from 'next/image'
-import image1 from '../../public/carousel2 imgs/img1.png'
-import image2 from '../../public/carousel2 imgs/img2.png'
-
+import Image from "next/image";
+import image1 from "../../public/carousel2 imgs/img1.png";
 export default function HomeCarousel2() {
-  const [isMobile, setIsMobile] = useState(3)
-  useEffect(() => {
-    const media = window.matchMedia('(max-width: 967px)')
-    media.matches ? setIsMobile(3) : setIsMobile(5)
-  }, [])
-
-  // const setSlider = (splide, newIndex) => {
-  //   const slides = splide.Components.Slides.get()
-  //   slides.forEach((slide, index) => {
-  //     const distance = Math.abs(index - newIndex) * 10
-  //     const scale = Math.abs(1 - (distance / 70)).toFixed(2)
-  //     if (scale > 0.4 && scale < 0.5) return slide.slide.style.transform = `translateX(14vw) scale(${scale})`
-  //     if (scale > 0.5 && scale < 0.6) return slide.slide.style.transform = `translateX(8vw) scale(${scale})`
-  //     if (scale > 0.6 && scale < 0.78) return slide.slide.style.transform = `translateX(4vw) scale(${scale})`
-  //     if (scale > 1) return slide.slide.style.transform = `translateX(10vw) scale(${scale})`
-  //     slide.slide.style.transform = `scale(${scale})`
-  //   });
-  // }
-
-  // this function works in mobile
-  // const onmove = (splide, newIndex) => {
-  //   const slides = splide.Components.Slides.get()
-  //   slides.forEach((slide, index) => {
-  //     const distance = Math.abs(index - newIndex) * 10
-  //     const scale = Math.abs(1 - (distance / 40)).toFixed(2)
-
-  //     const s_width = screen.width
-  //     let fraction_center = s_width / 3 * scale / 2
-  //     let n_percent = (percent) => {
-  //       return s_width / 100 * percent
-  //     }
-  //     if (scale < 0.6) return slide.slide.style.transform = `translateX(-${fraction_center + n_percent(7)}px) scale(${scale})`
-  //     if (scale < 0.9) return slide.slide.style.transform = `translateX(-${fraction_center + n_percent(10)}px) scale(${scale})`
-  //     if (scale == 1) return slide.slide.style.transform = `translateX(-${fraction_center + n_percent(7)}px) scale(${scale})`
-  //   });
-  // }
-
-  const onPGMounted = () => {
-    let carouselWidth = document.querySelector('.homeCarousel2').offsetWidth
-    let pagination = document.querySelector('.splide__pagination')
-    if (window.matchMedia('(max-width: 967px)').matches) {
-      pagination.style.left = `0rem`
-    }
-    else {
-      pagination.style.left = `calc(${carouselWidth}px - 100vw)`
-    }
-    let pageItems = document.querySelectorAll('.splide__pagination__page')
-    pageItems.forEach((item) => {
-      item.style.width = '2px'
-      item.style.height = '10px'
-      item.style.borderRadius = '0'
-      item.style.background = 'gray'
-      item.style.margin = '0.9rem'
-      item.style.transition = 'all 0.4s'
-    })
-  }
-
-  return (
-    <>
-      <Splide
-        //  onMove={window.matchMedia('(max-width: 967px)').matches?onmove:setSlider}
-        // onMove={handleMove}
-        // onPaginationMounted={onPGMounted}
-        className="homeCarousel2 relative w-full h-full" hasTrack={false}
-        options={{
-          // fixedWidth: '13vw',
-          type: 'loop',
-          autoplay: true,
-          speed: 500,
-          interval: 2200,
-          rewind: true,
-          drag: false,
-          arrows: false,
-          perMove: 1,
-          direction: 'rtl',
-          // gap: '1rem',
-          perPage: 5,
-          pauseOnHover: true,
-          pauseOnFocus: false,
-          focus: 'right'
-        }}
-      >
-        <SplideTrack className='lg:translate-x-[4vw]- w-full h-full flex justify-center items-center'>
-          {[image1, image1, image1, image1, image1].map((img, index) => {
-            return <SplideSlide key={index} className={`group relative md:p-3 transition-all duration-500`}>
-              <div className="w-full h-full flex justify-center items-center border border-green-700">
-                <Image src={img} width={152} height={600} className='w-full object-contain object-center' alt="Urban images" />
-              </div>
-            </SplideSlide>
-          })}
-        </SplideTrack>
-
-        <h2 className="lg:hidden absolute left-5 bottom-20 font_gotham_medium tracking-widest text-xl md:text-3xl lg:text-5xl word-wrap leading-tight">URBAN<br />NEW ARRIVAL</h2>
-      </Splide>
-    </>
-  )
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.innerHTML = `
+    $('.hero-slider').slick({
+      dots: true,
+      arrows:false,
+      infinite: true,
+      rtl: true,
+      speed: 700,
+      centerMode: false,
+      autoplay: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      appendDots: $('.slider-pagi-wrapper'),
+      dotsClass: 'hero-slide-pagi',
+     
+      responsive: [
+    
+        {
+          breakpoint: 1280,
+          settings: {
+            slidesToShow: 5
+          }
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 4
+          }
+        },
+        {
+          breakpoint: 350,
+          settings: {
+            slidesToShow: 3
+          }
+        }
+      ]
+    });
+        $('.hero-slide-pagi').css({
+            'display': 'flex',
+            'align-items': 'flex-end',
+        });
+    `;
+        document.body.appendChild(script);
+    }, []);
+    return (
+        <>
+            <div className="w-full h-[40vh] lg_layout_height my-14 bg_metal_gold px-5 lg:px-14">
+                <div className="w-full h-full flex flex-col-reverse justify-center lg:flex-row items-center -mx-4">
+                    <div className="lg:w-1/3 w-full px-4 md:flex md:flex-row lg:block">
+                        <div className="content-wrapper md:mb-12 mb-3">
+                            <h2 className="text-lg lg:text-[32px] font_gotham_medium md:mb-5 tracking-widest">URBAN <br /> NEW ARRIVAL</h2>
+                        </div>
+                        {/*.pagination-wrapper*/}
+                        <div className="slider-pagi-wrapper"></div>
+                    </div>
+                    {/*.col-grid*/}
+                    <div className="md:w-2/3 w-full px-4" dir="rtl">
+                        <div className="hero-slider">
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex -space-x-2 justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                            <div className="2xl:h-[44rem] xl:h-[36rem] lg:h-[34rem] md:h-[24rem] sm:h-[16rem] h-[10rem] ">
+                                <div className="hero-slider-img-wrapper flex justify-center items-center h-full">
+                                    <div className="hero-slider-img-inner relative">
+                                        <Image width={500} height={900} src={image1} alt="" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-one bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[20%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-two bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[33%] right-[25%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-three bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute top-[57%] right-[37%]" />
+                                        <Link href={`/products/product/6416bff63b9101bcd0595a31`} className="info-dots info-dot-four bg-white hover:outline-8 hover:outline outline-white/25 w-7 h-7 rounded-full absolute bottom-[12%] right-[32%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/*.slider-item*/}
+                        </div>
+                        {/*.hero-slider*/}
+                    </div>
+                    {/*.col-grid*/}
+                </div>
+                {/*.row*/}
+            </div>
+            {/*.container*/}
+        </>
+    );
 }

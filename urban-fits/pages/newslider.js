@@ -1,5 +1,5 @@
 import React from 'react'
-import HomeCarousel2 from '@/components/carousels/homeCarousel2'
+import HomeCarousel2 from '@/components/carousels/OLDhomeCarousel2'
 
 export default function NewSlider() {
     return (

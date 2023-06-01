@@ -1,0 +1,173 @@
+import React from 'react'
+
+
+
+
+
+
+import { SortDownIcon } from "@/public/icons/SortDownIcon";
+import { SortUpIcon } from "@/public/icons/SortUpIcon";
+import React from "react";
+// import Pagination from "@mui/material/Pagination";
+// import styled from "styled-components";
+import {
+  useTable,
+  useBlockLayout,
+  useSortBy,
+  usePagination,
+  useExpanded,
+} from "react-table";
+
+// import Styles from "@/styles/generictables.module.css";
+import styles from "@/styles/sidebar.module.css";
+
+import { InputSelect } from "../InputSelect";
+import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
+import Pagination from "./Pagination";
+
+const GenericTable1 = (props) => {
+  const { columns, data } = props;
+  const [subRowIndex, setSubRowIndex] = React.useState();
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    pageOptions,
+    canPreviousPage,
+    canNextPage,
+    nextPage,
+    previousPage,
+    pageCount,
+    gotoPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 5, expanded: true },
+    },
+    useBlockLayout,
+    useSortBy,
+    useExpanded,
+    usePagination
+  );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const dummy = () => {
+  return (
+    <div>
+        
+        <div className="flex justify-between">
+        <div className="flex gap-[15px] items-center ">
+          <p className="text-[16px] font-[400] "> Show</p>
+          <select
+            className={`  
+      w-[60px]   mt-[0px]  h-[34px] px-[8px]  border-[1px] rounded-lg outline-none  bg-transparent `}
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize}
+              </option>
+            ))}
+          </select>
+          <p className="text-[16px] font-[400] "> Entries</p>
+        </div>
+
+        <div className="flex items-center gap-[13px] " >
+          <InputSelect
+          height="h-[40px]"
+            width="w-[175px]"
+            bg="bg-[#FAFAFA]"
+            rounded="rounded-[25px]"
+            options={["All Users", "others"]}
+          />
+          <div id={styles.searchdiv} >
+            <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
+            {/* <i className="material-symbols-outlined absolute">search</i> */}
+            <span className="absolute">
+              <SearchIcon />
+            </span>
+
+            <input
+              type="text"
+              id="search"
+              onChange={onchange}
+              className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
+              placeholder="Search (Keyword, etc)"
+            />
+          </div>
+        </div>
+      </div>
+
+
+         {/* pagination */}
+         <div className="flex justify-between" >
+          <span className="flex text-[14px] font-[400] " >
+            <p> Showing &nbsp; </p> 
+            <p>
+              {pageIndex + 1} to {pageSize + pageIndex} of {pageOptions.length }
+
+            </p>
+            <p> &nbsp; Entries </p> 
+          </span>
+{/* 
+          <div className="pagination">
+            <button
+              className="p-[5px] cursor-pointer"
+              onClick={() => gotoPage(0)}
+              disabled={!canPreviousPage}
+            >
+              {"<<"}
+            </button>
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              {"<"}
+            </button>{" "}
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              {">"}
+            </button>{" "}
+            <button
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+            >
+              {">>"}
+            </button>{" "}
+       
+          </div> */}
+          
+        <Pagination canNextPage={canNextPage}
+                    canPreviousPage={canPreviousPage}
+                    gotoPage={gotoPage}
+                    pageCount={pageCount}
+                    nextPage={nextPage}
+                    previousPage={previousPage}
+        />
+        </div>
+
+        {/* pagintaion end */}
+    </div>
+  )
+}

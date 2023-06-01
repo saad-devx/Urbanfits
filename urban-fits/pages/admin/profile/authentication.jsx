@@ -68,14 +68,15 @@ const authentication = () => {
                   <label className="switch w-[40px] h-[22.25px]  ">
                     <input
                       type="checkbox"
-                      checked={authmodal}
-                      onChange={toggleauthmodal}
+                      // checked={authmodal}
+                      // onChange={toggleauthmodal}
                     />
 
                     <span className="slider"></span>
                   </label>
                 </div>
               </div>
+
 
               <CustomModal
                 px="px-[50px]"
@@ -98,7 +99,7 @@ const authentication = () => {
                   </p>
 
                   <div className="flex items-center gap-[17px] " >
-                    <Image width="150px" height="150px" src={QrCode} />
+                    <Image width="150px" height="150px" alt="qr code" src={QrCode} />
 
                     <div className="grid grid-cols-1 gap-[15px]" >
                       <p className="text-[14px] font-[500] " >Enter Google Authenticator Code</p>
@@ -111,6 +112,7 @@ const authentication = () => {
                   </div>
                 </div>
               </CustomModal>
+
 
               {/*  second box */}
               <div

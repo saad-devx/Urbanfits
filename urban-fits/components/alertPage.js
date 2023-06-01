@@ -7,15 +7,15 @@ import Button from './buttons/simple_btn'
 
 export default function ErrorPage(props) {
     const router = useRouter()
-    const pushBack = ()=>{
+    const pushBack = () => {
         router.back()
     }
     return (
         <section className='w-full h-screen p-4 flex flex-col justify-center items-center' >
-            <Image src={props.type==='error'?errorIcon: successIcon} alt="error icon" />
-            <h3 className="text-2xl font_gotham">{props.heading}</h3>
+            <Image src={props.type === 'error' ? errorIcon : successIcon} alt="error icon" />
+            <h3 className="text-2xl text-center font_gotham">{props.heading}</h3>
             <span className="text-lg font_gotam_light text-center">{props.message}</span>
-            {props.type==='error'?<Button onclick={pushBack} classes="w-1/2 lg:w-56" >Try Again</Button>: <Button onclick={pushBack} classes="w-1/2 lg:w-56" >Back</Button>}
+            {props.type === 'error' ? <Button onclick={pushBack} classes="w-1/2 lg:w-56" >Try Again</Button> : <Button onclick={pushBack} classes="w-1/2 lg:w-56" >Back</Button>}
         </section>
     )
 }

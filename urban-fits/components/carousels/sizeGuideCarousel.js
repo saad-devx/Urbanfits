@@ -20,7 +20,7 @@ export default function CatalogueCarousel(props) {
         })
     }
     return (
-        <Splide onPaginationMounted={onPGMounted} className="sizeGuide_carousel md:hidden w-full h-[63vh] transition-all duration-1000" hasTrack={false}
+        <Splide onPaginationMounted={onPGMounted} className="sizeGuide_carousel md:hidden w-full min-h-[480px] h-[63vh] transition-all duration-1000" hasTrack={false}
             options={{
                 type: 'loop',
                 rewind: true,

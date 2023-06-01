@@ -103,6 +103,20 @@
   scroll-behavior: smooth;
 }
 
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #invoice, #invoice * {
+    visibility: visible;
+  }
+  #invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
 .font_gotham {
   font-family: 'Gotham Pro';
 }
@@ -172,6 +186,10 @@
 .bg_404 {
   background-image: url(../public/404\ Page.png);
 
+}
+
+.gradient_background{
+   background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
 }
 
 .gradient_txt {
@@ -343,10 +361,10 @@ input[type="radio"]:checked {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
+  top: -3px;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 1px;
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
@@ -372,10 +390,12 @@ input:checked+.slider {
 }
 
 input:checked+.slider:before {
+
   -webkit-transform: translate(-100%, -50%);
   -ms-transform: translate(-100%, -50%);
   transform: translate(-100%, -50%);
   left: 90%;
+
 }
 
 /* Rounded sliders */

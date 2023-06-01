@@ -4,7 +4,7 @@ export default function Error403() {
     <HttpErrorPage
       error={403}
       heading="OH SNAP! ACCESS FORBIDDEN"
-      message="You are unauthorized to access the content of this page."
+      message="You are unauthorized to access the content of this page. Please register on Urban Fits first."
     />
   )
 }

@@ -61,31 +61,32 @@ export default function Newsletter(props) {
         }
     }
 
-    return (
+    if (!props.show) return
+    if (props.show) return (
         <>
-            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
+            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 delay-75 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
                 <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
-                    <div className="w-full h-[300px] lg:w-1/2 lg:h-auto">
-                        <Image src={bg_newsletter} className="w-full h-full object-cover object-top" alt="Urban images"/>
+                    <div className="w-full hidden md:block lg:w-1/2 lg:h-auto">
+                        <Image src={bg_newsletter} className="w-full h-full object-cover object-top" alt="Urban images" />
                     </div>
                     <section className="w-full h-full p-5 pt-8 md:pt-5">
                         <div className="w-full space-y-5">
                             <div className="w-full flex justify-between items-center">
-                                <h3 className="text-black font_gotham_medium text-sm md:text-base tracking-widest">MOVE TO THE URBAN FITS</h3>
-                                <button onClick={props.toggleModal} name="modal4" className="material-symbols-rounded text-2xl">close</button>
+                                <h3 className="text-black font_gotham_medium text-sm md:text-base">Move To The Urban Fits</h3>
+                                <button onClick={props.toggleModal} className="material-symbols-rounded text-2xl">close</button>
                             </div>
                             <p className='font_gotham_light text-xs md:text-base' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
                         </div>
                         <form className="mt-7 font_gotham space-y-5 md:space-y-7" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className='space-y-3' >
-                                <h3 className='text-black font_gotham_medium text-xs md:text-base tracking-widest' >EMAIL SIGN UP*</h3>
+                                <h3 className='text-black font_gotham_medium text-xs md:text-base' >Email Sign Up*</h3>
                                 <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="email" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email*" />
                                 </div>
                             </div>
                             <div className='relative space-y-4' >
-                                <h3 className='text-black font_gotham_medium text-xs md:text-base tracking-widest' >GENDER*</h3>
+                                <h3 className='text-black font_gotham_medium text-xs md:text-base' >Gender*</h3>
                                 {errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                 <div className="font_gotham_light w-full md:w-3/5 flex justify-between items-center ">
                                     <div className='mr-2' >
@@ -100,7 +101,7 @@ export default function Newsletter(props) {
                                 </div>
                             </div>
                             <div className="relative space-y-4">
-                                <h3 className="text-black font_gotham_medium text-xs md:text-base tracking-widest">FAVOURITE SUBJECTS*</h3>
+                                <h3 className="text-black font_gotham_medium text-xs md:text-base">Favourite Subjects*</h3>
                                 <div className="pill-container w-full flex flex-wrap text-xs md:text-sm space-y-2 md:space-y-0 space-x-1">
                                     {touched.interests && errors.interests ? <Tooltip classes="form-error" content={errors.interests} /> : null}
                                     {['Bags', 'Sneakers', 'Jackets', 'Dresses', 'Fashion Shows'].map((name, index) => {
