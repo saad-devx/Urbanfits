@@ -110,10 +110,12 @@ const initialValues = {
        
 
 
-const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFormik({
+const {values, errors, handleBlur, handleChange, handleSubmit, touched,  } = useFormik({
     initialValues:initialValues  , 
     validationSchema: addProductSchema,
+    onSubmit: ()=>{
 
+    },
 })
 
 
@@ -147,7 +149,6 @@ const finalProduct={
  
     
 const addVariant = () =>{
-    console.log(values)
     const newvariant =   
     {
           "color": selectedColor,
@@ -166,15 +167,18 @@ const addVariant = () =>{
           "stock": values.quantity
         }
 
+        if(values?.quantity){
         setVariants([...variants,newvariant ])
-        
+        console.log(values)
+
+        }
         // values
 
 }
 
-const onSubmit = () =>{
-    console.log(finalProduct)
-}
+// const onSubmit = () =>{
+//     console.log(finalProduct)
+// }
 
 
 
@@ -245,7 +249,7 @@ const onSubmit = () =>{
                              
                         </div>
                         <div className='w-[393px] h-[357.42px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={393} height={357.42} src={picurlcover} />
+                        <Image alt='image' width={393} height={357.42} src={picurlcover} />
                         </div>
                     </div>
                     <div className=' flex gap-[26px] mt-[10px]' >
@@ -264,7 +268,7 @@ const onSubmit = () =>{
                             type="file" id="filebtn1" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={100} height={92} src={picurl1} />
+                        <Image alt='image' width={100} height={92} src={picurl1} />
                         </div>
                             </div>
 
@@ -282,7 +286,7 @@ const onSubmit = () =>{
                             type="file" id="filebtn2" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={100} height={92} src={picurl2} />
+                        <Image alt='image' width={100} height={92} src={picurl2} />
                         </div>
                             </div>
                           
@@ -302,7 +306,7 @@ const onSubmit = () =>{
                             type="file" id="filebtn3" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={100} height={92} src={picurl3} />
+                        <Image alt='image' width={100} height={92} src={picurl3} />
                         </div>
                             </div>
 
@@ -320,7 +324,7 @@ const onSubmit = () =>{
                             type="file" id="filebtn4" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={100} height={92} src={picurl4} />
+                        <Image alt='image' width={100} height={92} src={picurl4} />
                         </div>
                             </div>
                           
@@ -340,7 +344,7 @@ const onSubmit = () =>{
                             type="file" id="filebtn5" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={100} height={92} src={picurl5} />
+                        <Image alt='image' width={100} height={92} src={picurl5} />
                         </div>
                             </div>
 
@@ -358,7 +362,7 @@ const onSubmit = () =>{
                             type="file" id="filebtn6" className='w-[0px]'  />
                         </div>
                             <div className='w-[100px] h-[92px]  overflow-hidden rounded-[15px]  ' >
-                        <Image  width={100} height={92} src={picurl6} />
+                        <Image alt='image' width={100} height={92} src={picurl6} />
                         </div>
                             </div>
                           
@@ -435,6 +439,8 @@ const onSubmit = () =>{
                                   ${selectedColor==color && " border-[2px] border-[black] " }
                                   `}  />
                                 ))}
+                              
+
                                
                                 <p className='text-[10px] font-[400] relative  ' >
                                     <input type="color" className='absolute opacity-0 top-[-6px] left-[-3px]
@@ -444,6 +450,11 @@ const onSubmit = () =>{
                                     onChange={(e) => setSelectedcolor(e.target.value) }
                                     />
                                     Custom</p>
+
+                                    <div style={{backgroundColor:selectedColor}} 
+                                    className='cursor-pointer 
+                                    w-[20px] h-[20px]  rounded-[6px]'
+                                    />
 
                                 {/* <input type="color" name="" id="" /> */}
                             </div>
@@ -470,8 +481,10 @@ const onSubmit = () =>{
                                 <input onClick={() =>handleSizes(setsizeXL, sizeXL, "XL")} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] mr-[10px]' >XL</p>
                                 <input onClick={() =>handleSizes(setsizeXXL, sizeXXL, "XXL")} type="checkbox" /> <p className='text-[14px] font-[400] ml-[5px] ' >XXL</p>
                             </div>
-                        <InputSelect
+                        <InputText
                         label="Quantity"
+                        placeholder=" "
+                        type="number"
                         options={["1", "2", "3"]}
                         name="quantity"
                         value={values.quantity}
@@ -600,7 +613,7 @@ const onSubmit = () =>{
                             <Button onClick={addVariant} classes=" my-[0px] " >
                                 Add Variant
                             </Button>
-                            <Button  onClick={  onSubmit} classes=" my-[0px] " >
+                            <Button  disabled={variants.length == 0 ? true: false  }  onClick={  handleSubmit} classes=" my-[0px] " >
                                 Publish
                             </Button>
                     </div>     
