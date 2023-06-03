@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '../buttons/simple_btn'
-import { toast, Slide } from 'react-toastify';
+import useUser from '@/hooks/useUser';
+import toaster from '@/utils/toast_function';
 import Image from 'next/image';
 import bg_newsletter from '@/public/newsletterimg.png'
 // imports for validation
@@ -9,21 +10,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
 export default function Newsletter(props) {
-    // function to show toast
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
+    const {user} = useUser()
 
     // schema and validation with yup and fromik
     const newsLetterSchema = Yup.object({
@@ -32,16 +19,18 @@ export default function Newsletter(props) {
         "interests": Yup.array().min(1, "Please select at least one interest")
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue } = useFormik({
-        initialValues: { "email": '', "gender": '', "interests": [] },
+        initialValues: { "email": user?user.email: "", "gender": '', "interests": [] },
         validationSchema: newsLetterSchema,
         onSubmit: async () => {
-            let id = "63f0eacb88ecc61447b648d3"
+            console.log(values)
+            let id = user._id
             let res = await fetch(`${process.env.HOST}/api/newsletter?id=${id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ ...values, user: id })
             })
             let response = await res.json()
+            console.log(response)
             toaster(response.success ? "success" : "error", response.message)
             response.success === true ? props.setModal2(false) : null
         }
@@ -64,7 +53,7 @@ export default function Newsletter(props) {
     if (!props.show) return
     if (props.show) return (
         <>
-            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 delay-75 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
+            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 delay-75 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
                 <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
                     <div className="w-full hidden md:block lg:w-1/2 lg:h-auto">
                         <Image src={bg_newsletter} className="w-full h-full object-cover object-top" alt="Urban images" />

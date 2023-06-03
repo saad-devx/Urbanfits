@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react'
 
+export function throttle(func, delay) {
+    let timeoutId;
+    let shouldExecute = true;
+
+    return function (...args) {
+        if (!shouldExecute) return;
+
+        shouldExecute = false;
+
+        func.apply(this, args);
+
+        timeoutId = setTimeout(() => {
+            shouldExecute = true;
+        }, delay);
+    };
+}
 export default function CustomCursor() {
     if (window.matchMedia('(max-width: 1024px)').matches) return
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    function throttle(func, delay) {
-        let timeoutId;
-        let shouldExecute = true;
-
-        return function (...args) {
-            if (!shouldExecute) return;
-
-            shouldExecute = false;
-
-            func.apply(this, args);
-
-            timeoutId = setTimeout(() => {
-                shouldExecute = true;
-            }, delay);
-        };
-    }
     useEffect(() => {
         const handleMouseMove = throttle((e) => {
             setPosition({ x: e.clientX, y: e.clientY });

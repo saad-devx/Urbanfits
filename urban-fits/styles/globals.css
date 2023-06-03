@@ -19,6 +19,13 @@
   src: url('../public/fonts/FuturaLTPro-Light.woff') format('woff');
 }
 
+@font-face {
+  font-family: 'Futura LT Pro Bold';
+  font-style: 700;
+  font-display: swap;
+  src: url('../public/fonts/FuturaLT-Bold.woff') format('woff');
+}
+
 /* font futura classes */
 .font_futura {
   font-family: 'Futura LT Pro';
@@ -26,6 +33,10 @@
 
 .font_futura_light {
   font-family: 'Futura LT Pro Light';
+}
+
+.font_futura_bold {
+  font-family: 'Futura LT Pro Bold';
 }
 
 @font-face {
