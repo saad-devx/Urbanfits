@@ -12,10 +12,10 @@ export default function CheckoutCalcSection() {
             <div className="flex relative mb-3 p-6 bg-white card_boxshadow w-full max-h-screen flex-col justify-between items-center rounded-lg md:rounded-xl">
                 {items.map((item, i) => {
                     return <>
-                        <h3 key={-i-1} className="self-start font_gotham_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
+                        <h3 key={-i-1} className="self-start font_gotham_medium text-sm md:text-base text-left capitalize">{item?.name} ({item.color})</h3>
                         <div key={i} className="w-full mb-2 flex justify-between items-center">
                             <div className="w-[125px] h-[125px] rounded-md md:rounded-lg overflow-hidden">
-                                <Image width={640} height={640} src={item.images[0].url} alt="Urban images" className="w-full h-full object-cover object-top" />
+                                <Image width={640} height={640} src={item.images[0]} alt={item.name} className="w-full h-full object-cover object-top" />
                             </div>
                             <div className="w-1/2 h-auto text-[10px] md:text-xs my-5 md:my-3 space-y-1 md:space-y-1.5 font_gotham_light">
                                 <div key={1} className="w-full mx-auto flex justify-between"><span className='font_gotham_medium'>Color:</span> <span>{item.color}</span></div>

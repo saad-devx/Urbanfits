@@ -8,7 +8,7 @@ import toaster from '../utils/toast_function';
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import Loader from './loader';
+import Loader from './loaders/loader';
 import Button from './buttons/simple_btn'
 import LinkBtn from './buttons/link_btn'
 // imports for images

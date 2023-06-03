@@ -18,11 +18,12 @@ const CreateNewsletter = async (req, res) => {
             })
         }
         else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
+            res.status(405).json({ success: false, msg: "method not allowed, you are using wrong request method!" })
         }
     }
     catch (error) {
-        res.status(400).json({ success: false, msg: "Internal server error, please try again later" })
+        console.log(error)
+        res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
     }
 }
 

@@ -5,7 +5,7 @@ import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Error403 from '@/pages/403';
-import Loader from '@/components/loader'
+import Loader from '@/components/loaders/loader'
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import uploadImage from '@/utils/uploadImage'
@@ -105,7 +105,7 @@ export default function User(props) {
                     </div>
                 </div>
                 <section className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflow-x-hidden overflow-y-scroll' >
-                    <div className="w-full lg:w-5/6">
+                    <div className="w-full lg:w-5/6 lg:pt-6">
                         <div className={`${props.profileNull ? 'hidden' : null} flex flex-row-reverse md:flex-row items-center gap-3`}>
                             <div className="w-3/5 md:w-auto flex flex-col items-center">
                                 <div className="group relative md:w-[150px] aspect-square rounded-full border-2 border-gray-300 overflow-hidden">

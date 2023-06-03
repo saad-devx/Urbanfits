@@ -5,7 +5,7 @@ import User from '.';
 import Link from 'next/link'
 import toaster from '@/utils/toast_function';
 import Head from 'next/head';
-import Loader from '@/components/loader';
+import Loader from '@/components/loaders/loader';
 import Button from '../../components/buttons/simple_btn';
 
 // imports for the schema and validation
