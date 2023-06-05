@@ -15,7 +15,7 @@ import ifExists from '@/utils/if_exists'
 import Image from 'next/image';
 import female_avatar from '../../public/avatars/female.svg'
 import male_avatar from '../../public/avatars/male.svg'
-import ImgSpinner from '@/components/img_spinner'
+import Spinner from '@/components/loaders/spinner'
 
 
 const Option = (props) => {
@@ -71,7 +71,7 @@ export default function User(props) {
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = async (e) => {
         const file = e.target.files[0]
-        SetImgSpinner(<ImgSpinner />)
+        SetImgSpinner(<Spinner />)
         const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
         setPhoto(imgUrl)
         await updateUser({ image: imgUrl })
