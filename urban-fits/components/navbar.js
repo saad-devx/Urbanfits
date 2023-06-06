@@ -18,7 +18,7 @@ const ListItem = (props) => {
     const router = useRouter()
     return (
         <>
-            <Link onClick={props.handleMenu} href={props.href} className={`${props.classes} ${router.asPath === props.href ? 'text-gotham-black' : 'stroke_text hover:text-gotham-black'} transition-all duration-500`}>{props.children}</Link>
+            <Link onClick={props.handleMenu} href={props.href? props.href:'#'} className={`${props.classes} ${router.asPath === props.href ? 'text-gotham-black' : 'stroke_text hover:text-gotham-black'} transition-all duration-500`}>{props.children}</Link>
         </>
     )
 }

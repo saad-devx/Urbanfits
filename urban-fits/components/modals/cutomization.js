@@ -110,7 +110,7 @@ export default function Cutomization(props) {
                                 </div>
                             </div>
                         </div>
-                        <Link href='/customerservices/sizeguides' className="group inline flex items-center gap-x-2 text-xs md:text-sm font_gotham_medium">Size Guide <i className="fa-solid fa-chevron-right group-hover:translate-x-2 mr-2 transition-all"></i></Link>
+                        <Link href='/customerservices/sizeguides' className="group flex items-center gap-x-2 text-xs md:text-sm font_gotham_medium">Size Guide <i className="fa-solid fa-chevron-right group-hover:translate-x-2 mr-2 transition-all"></i></Link>
                         <Button type="submit" classes="w-11/12 mx-auto" >Add to Cart</Button>
                         <span className={`${cartBtn} w-11/12 justify-end`}>
                             <button onClick={toggleCart} className='underline'>View Cart</button>

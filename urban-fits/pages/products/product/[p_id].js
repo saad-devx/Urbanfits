@@ -145,7 +145,7 @@ export default function Product(props) {
                                         Customization
                                     </button>
                                     <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
-                                    <Button onclick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
+                                    <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
                                 </div>
 
                                 <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">

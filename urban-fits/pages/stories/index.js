@@ -17,7 +17,7 @@ import img8 from '@/public/stories/img15.jpg'
 const StoryHeading = (props) => {
     return <>
         <div className="md:hidden w-full h-full flex justify-center items-center">
-            <h2 className="font_gotham_bold text-lg text-black whitespace-normal tracking-[0.15em] group-hover:tracking-vast transition-all duration-[1.6s]"> <Link href={props.href} >{props.children}</Link></h2>
+            <h2 className="font_gotham_bold text-lg text-black whitespace-normal tracking-[0.15em] group-hover:tracking-vast transition-all duration-[1.6s]"> <Link href={props.href || "#"} >{props.children}</Link></h2>
         </div>
     </>
 }

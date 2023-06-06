@@ -195,7 +195,7 @@ export default function Sidebaradmin({ children }) {
                     className={`flex gap-[10px] mt-[28px]  ${item.expanded ? "visible" : "hidden"
                       }  `}
                   >
-                    <Link href={subitem.navlink}>
+                    <Link href={subitem.navlink || '#'}>
                       <p
                         className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro] 
                     ${sidebaropen ? "visible" : "hidden"}
