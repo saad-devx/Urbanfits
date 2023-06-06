@@ -72,7 +72,7 @@ export default function index() {
                 {/*                                         pill buttons */}
                 <div className="my-8 w-full flex flex-wrap space-x-2">
                     {faqs.map(faq => {
-                        return <Button name={faq} onclick={getFaqs} fontSize='text-xs md:text-sm' classes="mr-3 px-3 md:px-5 whitespace-nowrap" height='h-8 md:h-[37px]' my="my-1" text={faqHeading == faq ? 'white' : 'black'} bg={faqHeading == faq ? 'bg-black' : 'bg-gray-50 border border-gray-300'}>{faq}</Button>
+                        return <Button name={faq} onClick={getFaqs} fontSize='text-xs md:text-sm' classes="mr-3 px-3 md:px-5 whitespace-nowrap" height='h-8 md:h-[37px]' my="my-1" text={faqHeading == faq ? 'white' : 'black'} bg={faqHeading == faq ? 'bg-black' : 'bg-gray-50 border border-gray-300'}>{faq}</Button>
                     })}
                 </div>
 

@@ -22,7 +22,7 @@ const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
     return (
-        <Link className={`${route === props.href ? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all overflow-hidden`} href={props.href}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+        <Link className={`${route === props.href ? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all overflow-hidden`} href={props.href || '#'}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
     )
 }
 // Menu for mobile devices
@@ -30,7 +30,7 @@ const Option_sm = (props) => {
     const router = useRouter()
     const route = router.pathname
     return (
-        <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href={props.href}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
+        <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href={props.href || '#'}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
     )
 }
 
@@ -52,6 +52,7 @@ export default function User(props) {
     // states and function for modals
     const [modal5, setModal5] = useState(false)
     const toggleModal = (e, name) => {
+        console.log(e.target.name)
         if (name || e.target.name === "modal5") {
             if (modal5 === false) return setModal5(true)
             if (modal5 === true) return setModal5(false)
@@ -90,7 +91,7 @@ export default function User(props) {
                         <Option href='/user/address'>My Address</Option>
                         <Option href='/user/paymentmethods'>My Payment Methods</Option>
                         <Link className={`${route === '/user/orders/orders' ? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
-                        <Button onclick={toggleModal} name="modal5" classes="w-full">Logout</Button>
+                        <Button onClick={toggleModal} name="modal5" classes="w-full">Logout</Button>
                     </div>
                 </div>
                 {/* To be displayed on the mobile devices */}

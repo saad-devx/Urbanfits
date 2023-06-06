@@ -11,7 +11,7 @@ const Option = (props) => {
   return (
     <Link
       className={`h-full group flex flex-col justify-between items-center transition-all `}
-      href={props.href}
+      href={props.href || '#'}
     >
       {props.children}
       <span

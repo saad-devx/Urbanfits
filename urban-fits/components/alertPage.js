@@ -15,7 +15,7 @@ export default function ErrorPage(props) {
             <Image src={props.type === 'error' ? errorIcon : successIcon} alt="error icon" />
             <h3 className="text-2xl text-center font_gotham">{props.heading}</h3>
             <span className="text-lg font_gotam_light text-center">{props.message}</span>
-            {props.type === 'error' ? <Button onclick={pushBack} classes="w-1/2 lg:w-56" >Try Again</Button> : <Button onclick={pushBack} classes="w-1/2 lg:w-56" >Back</Button>}
+            {props.type === 'error' ? <Button onClick={pushBack} classes="w-1/2 lg:w-56" >Try Again</Button> : <Button onClick={pushBack} classes="w-1/2 lg:w-56" >Back</Button>}
         </section>
     )
 }

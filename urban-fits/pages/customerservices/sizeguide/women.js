@@ -8,7 +8,7 @@ export const TableButton = (props) => {
     return <>
         <LinkBtn href={props.href} bg='bg-gold' font='font_gotham_medium' fontSize='text-xs' classes={`hidden md:flex sticky left-0 ${props.classes ? props.classes : 'w-36'}`} >{props.children}</LinkBtn>
         <div className='sticky left-0 md:hidden btn_width h-[38px] p-[1px] bg-gold rounded-md' >
-            <Link href={props.href} >
+            <Link href={props.href || "#"} >
                 <div className='w-full h-full bg-white rounded-[5px] flex justify-center items-center font_gotham_medium text-[10px] tracking-vast' >{props.children}</div>
             </Link>
         </div>

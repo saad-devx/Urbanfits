@@ -100,7 +100,7 @@ export default function Cart(props) {
                             <Image src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                             <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
                             <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
-                            <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
+                            <Button onClick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                         </section>
                         :
                         <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
