@@ -12,7 +12,6 @@ import Link from 'next/link';
 // Cart item function
 function CartItem(props) {
     const { product } = props
-    console.log(product)
     //Setting up the cart functions
     const { updateItemQuantity, removeItem } = useCart()
     // confguring the Quantity conter of the prodcut

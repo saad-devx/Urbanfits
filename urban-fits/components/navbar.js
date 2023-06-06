@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
 import ToTopBtn from './buttons/toTopBtn';
+import CursorToggleBtn from './buttons/cursor-toggle-btn';
 import Logo from '@/public/logos/logo_black.svg'
 // image imports
 import Image from 'next/image';
@@ -197,7 +198,7 @@ export default function Navbar(props) {
                     <div className="w-full h-[20vh] lg:h-20 2xl:h-28 mt-0 flex flex-col lg:flex-row justify-between lg:items-end z-40">
                         {/* <button onClick={toggleSearch} className='lg:hidden group font_gotham_medium flex justify-center items-center text-base tracking-[1.5em]'>SRCH<span className="w-full md:w-[40vw] group-focus:w-0 h-[2px] bg-black transition-all"></span></button> */}
                         {/* {user && user.email ? <Link href='/user/personalinfo' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-center text-base tracking-[1.5em]'>ACCOUNT<span className="w-full md:w-[40vw] group-focus:w-0 h-[2px] bg-black transition-all"></span></Link> : <Link href='/login' className='lg:hidden group font_gotham_medium w-full flex justify-center items-center text-base tracking-[1.5em]'>LOGIN<span className="w-full group-focus:w-0 h-[2px] bg-black transition-all"></span></Link>} */}
-                        <div className="hidden w-full lg:flex flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
+                        <div className="hidden w-full lg:flex lg:items-center flex-col items-start lg:flex-row lg:justify-between font_gotham_medium">
                             <div className='hidden group lg:flex justify-center items-center tracking-[1.5em] text-base'>
                                 {user && user.email ? <Link href='/user/personalinfo' >MY ACCOUNT</Link>
                                     : <span className='flex' >
@@ -209,6 +210,7 @@ export default function Navbar(props) {
                                     <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
                                 </span>
                             </div>
+                            <CursorToggleBtn />
                             <SocialIcons classes='hidden lg:block' />
                         </div>
                         <SocialIcons classes='mt-10 lg:hidden' />

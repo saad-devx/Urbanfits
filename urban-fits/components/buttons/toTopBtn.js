@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import toTopBtn from '@/styles/scroll-top-btn.module.css'
+import toTopBtn from '@/styles/scroll-top&cursor-btn.module.css'
 
 export default function ToTopBtn() {
     const [upBtn, setUpBtn] = useState(false)

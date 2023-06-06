@@ -15,8 +15,8 @@ const NewsletterSchema = mongoose.Schema({
         required: true
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        type: String,
+        default: 'guest'
     }
 }, { timestamps: true })
 
