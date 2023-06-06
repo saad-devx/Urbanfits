@@ -60,11 +60,12 @@ export default function Newsletter(props) {
     if (!props.show) return
     if (props.show) {
         if (user?.newsletter_sub_email) return <>
-            <section className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500`}>
-                <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex justify-center items-center bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
+            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500`}>
+                <div className={` relative w-11/12 md:w-3/4 lg:w-[60rem] h-60 lg:h-96 text-sm flex justify-center items-center bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
+                    <button onClick={props.toggleModal} className="material-symbols-rounded text-2xl absolute right-5 top-5">close</button>
                     <h1 className="font_gotham_medium text-3xl">You've already subscribed the Newsletter</h1>
                 </div>
-            </section>
+            </div>
         </>
 
         return <>

@@ -8,7 +8,7 @@ export default function CursorToggleBtn() {
     return (
         <div className="h-10 flex justify-center items-center">
             <span className="text-sm font_gotham_medium tracking-vast">CURSOR</span>
-            <input id="toggle" onChange={toggleCursor} type="checkbox" defaultChecked={true} className={styles.cursor_toggle} />
+            <input id="toggle" onChange={toggleCursor} type="checkbox" defaultChecked={cursor} className={styles.cursor_toggle} />
             <label for="toggle" className={`${styles.toggleWrapper} mx-2`}>
                 <div className={styles.cursor_toggle_circle}></div>
             </label>
