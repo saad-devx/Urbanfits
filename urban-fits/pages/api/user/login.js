@@ -4,12 +4,6 @@ const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 
 const Login = async (req, res) => {
-    // await NextCors(req, res, {
-    //     // Options
-    //     methods: ['POST'],
-    //     origin: '*',
-    //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    // })
     try {
         if (req.method === 'POST') {
             await ConnectDB()

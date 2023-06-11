@@ -15,7 +15,6 @@ const UpdateProducts = async (req, res) => {
                 })
             }
             else if (req.query.id) {
-
                 let product = await Product.findById(req.query.id)
                 if (!product) return res.status(404).json({ msg: "Product not found" })
                 if (product) {
@@ -29,7 +28,7 @@ const UpdateProducts = async (req, res) => {
             }
         }
         else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
+            res.status(405).json({ success: false, msg: "Method not Allowed, you are using wrong request method!" })
         }
     }
     catch (err) {

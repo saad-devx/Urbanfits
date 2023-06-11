@@ -16,11 +16,12 @@ import image4 from '@/public/card imgs/card img3.jpg'
 import Button from '@/components/buttons/simple_btn';
 
 export default function Product(props) {
-    console.log(props.response.product)
+    // console.log(props.response.product)
     const productData = { ...props.response.product, id: props.response.product._id }
     const router = useRouter()
     const [product, setProduct] = useState(productData.variants[0])
-    const [sizevalue, setSizevalue] = useState(product.size[0])
+    const [sizevalue, setSizevalue] = useState(product.sizes[0].size)
+    const [quantity, setQuantity] = useState(1)
 
     useEffect(() => {
         const { color } = router.query
@@ -28,25 +29,33 @@ export default function Product(props) {
         let newProduct = productData.variants.filter((variant) => {
             return variant.color_name === color
         })
+        if (!newProduct[0]) return () => { router.push('/404') }
         setProduct(newProduct[0])
-        setSizevalue(newProduct[0].size[0])
+        setSizevalue(newProduct[0].sizes[0].size)
     }, [router.query.color])
-    // confguring the Quantity conter of the prodcut
-    const [quantity, setQuantity] = useState(1)
-    const changeQuantity = (e) => {
-        let name = e.target.getAttribute("name")
-        if (name === "decrement" && quantity === 1) return
-        if (name === "increment" && quantity === product.stock) return
-        if (name === "decrement") return setQuantity(quantity - 1)
-        if (name === "increment") return setQuantity(quantity + 1)
-    }
-    // size vaue channge funciton
+
+    // size value channge funciton
     const onSizeChange = (e) => {
+        setQuantity(1)
         setSizevalue(e.target.value)
     }
     const onColorChange = (e) => {
-        console.log(e.target.value)
+        setQuantity(1)
         router.push(`/products/product/${productData.id}?color=${e.target.value}`)
+    }
+    const getFilteredQuantity = () => {
+        let selectedSizeObj = product.sizes.filter((obj) => {
+            return obj.size == sizevalue
+        })[0];
+        return selectedSizeObj.quantity
+    }
+    // confguring the Quantity conter of the prodcut
+    const changeQuantity = (e) => {
+        let name = e.target.getAttribute("name")
+        if (name === "decrement" && quantity === 1) return
+        if (name === "increment" && quantity === getFilteredQuantity()) return
+        if (name === "decrement") return setQuantity(quantity - 1)
+        if (name === "increment") return setQuantity(quantity + 1)
     }
 
     // setting up teh toggle fucntion and state for the size cutomization modal 
@@ -60,16 +69,16 @@ export default function Product(props) {
     //Cart function
     const { addItem, inCart } = useCart()
     const addToCart = () => {
-        if (inCart(product._id)) return toaster('info', 'This item is already in the cart!')
+        if (inCart(`${product._id}${sizevalue}`)) return toaster('info', 'This item is already in the cart!')
         addItem({
             product_id: productData.id,
-            id: product._id,
+            id: `${product._id}${sizevalue}`,
             name: productData.name,
             price: productData.price,
             shipping_fee: productData.shipping_detials.fees,
             stock: product.stock,
             size: sizevalue,
-            sizes: product.size,
+            sizes: product.sizes,
             color: product.color_name,
             images: product.images
         }, quantity);
@@ -112,6 +121,7 @@ export default function Product(props) {
                                         <p className='capitalize'>Color: {router.query.color}</p>
                                         <p>In Stock: {product.stock}</p>
                                         <p>Height of model: 177 cm. / 5′ 9″</p>
+                                        <span style={{ color: getFilteredQuantity() <= 10 ? 'rgb(207, 55, 55)' : 'rgb(99, 194, 123)' }}>{getFilteredQuantity()} pieces left in {sizevalue} size</span>
                                     </div>
                                 </div>
 
@@ -120,13 +130,15 @@ export default function Product(props) {
                                         <div className='relative w-full h-9 lg:h-[52px] border'>
                                             <span className="select_container after:right-[10%]"></span>
                                             <select type="select" defaultValue={product.size} onChange={onSizeChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
-                                                {product.size.map(size => {
+                                                {product.sizes.map(obj => {
+                                                    const { size } = obj
                                                     return <option value={size}>{size}</option>
                                                 })}
                                             </select>
                                         </div>
                                         <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
                                     </div>
+                                    {/* <div className="relative"></div> */}
                                     <div className='relative max-w-[320px] w-48pr h-9 lg:h-[52px] border'>
                                         <span className="select_container after:right-[10%]"></span>
                                         <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
@@ -188,6 +200,25 @@ export default function Product(props) {
 
 export async function getServerSideProps(context) {
     const { p_id } = await context.query
-    let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
-    return { props: { response, p_id } }
+    try {
+        let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
+        if (!response.success) {
+            return {
+                redirect: {
+                    destination: '/404',
+                    permanent: false,
+                },
+            };
+        }
+        return { props: { response, p_id } }
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+        return {
+            redirect: {
+                destination: '/404',
+                permanent: false,
+            },
+        };
+    }
 }

@@ -4,7 +4,6 @@ import Product from "@/models/product"
 // Only accessable by Admin 
 const CreateProducts = async (req, res) => {
     try {
-
         if (req.method === 'POST') {
             await ConnectDB()
             let product = await Product.create(req.body)
@@ -14,7 +13,7 @@ const CreateProducts = async (req, res) => {
             })
         }
         else {
-            res.status(400).json({ error: "bad request, you are using wrong request method!" })
+            res.status(405).json({ error: "Method not Allowed, you are using wrong request method!" })
         }
     }
     catch (error) {

@@ -29,7 +29,8 @@ const UserSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        default: "user"
+        enum: ['guest', 'subscriber', 'customer', 'administrator', 'editor', 'author'],
+        default: "customer"
     },
     firstname: {
         type: String
@@ -45,16 +46,6 @@ const UserSchema = mongoose.Schema({
     },
     date_of_birth: {
         type: String
-    },
-    newsletter_sub_email: {
-        type: Boolean,
-        default: false,
-        required: true
-    },
-    newsletter_sub_phone: {
-        type: Boolean,
-        default: false,
-        required: true
     }
 }, { timestamps: true })
 

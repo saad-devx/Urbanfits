@@ -1,18 +1,12 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
+import Newsletter from "@/models/newsletter"
 const CryptoJS = require("crypto-js")
-import NextCors from 'nextjs-cors';
 const jwt = require("jsonwebtoken")
 
 // Only accessable by Admin 
 const Signup = async (req, res) => {
     try {
-        // await NextCors(req, res, {
-        //     // Options
-        //     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-        //     origin: '*',
-        //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        // });
         if (req.method === 'POST') {
 
             await ConnectDB()
@@ -39,6 +33,8 @@ const Signup = async (req, res) => {
                     msg: "You're Resgistered successfully !",
                     payload
                 })
+                const userLetter = await Newsletter.findOne({ email: req.body.email, user: "guest" })
+                if (userLetter) return userLetter.update({ active: true, user: user._id })
             }
         }
         else {

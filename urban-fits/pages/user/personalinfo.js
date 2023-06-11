@@ -8,6 +8,8 @@ import Head from 'next/head';
 import Loader from '@/components/loaders/loader';
 import Error403 from '../403';
 import Card from '../../components/cards/card'
+import Newsletter from '@/components/modals/newsletter';
+import useNewsletter from '@/hooks/useNewsletter';
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
 // imports for Schema and validation
@@ -49,8 +51,13 @@ const AddressContainer = (props) => {
 
 export default function Personalinfo() {
     const { user, updateUser } = useUser()
-    //state to handle loader component
+    const { newsletterData } = useNewsletter()
     const [loader, setLoader] = useState(false)
+    const [letterModal, setLetterModal] = useState(false)
+    const toggleLetterModal = () => {
+        if (letterModal === false) return setLetterModal(true)
+        if (letterModal === true) return setLetterModal(false)
+    }
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
@@ -63,7 +70,11 @@ export default function Personalinfo() {
         newsletter_sub_phone: Yup.bool()
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '', newsletter_sub_email: false, newsletter_sub_phone: false },
+        initialValues: {
+            title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '',
+            newsletter_sub_email: newsletterData && newsletterData.active_by_email ? newsletterData.active_by_email : false,
+            newsletter_sub_phone: newsletterData && newsletterData.active_by_number ? newsletterData.active_by_number : false
+        },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
@@ -84,6 +95,20 @@ export default function Personalinfo() {
             newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
         })
     }, [])
+
+    const newsletterSubToggle = (e)=>{
+        let name = e.target.name
+        console.log(name)
+        if(name=="newsletter_sub_email"){
+            if(!newsletterData || !newsletterData.email) setValues({...values, newsletter_sub_email: false})
+            return toggleLetterModal()
+        }
+        if(name=="newsletter_sub_phone"){
+            if(!newsletterData || !newsletterData.phone) setValues({...values, newsletter_sub_phone: false})
+            return toggleLetterModal()
+        }
+        handleChange(e)
+    }
     if (!user) return <Error403 />
     return (
         <>
@@ -93,6 +118,7 @@ export default function Personalinfo() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             {loader}
+            <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
             <User>
                 <form className="mt-10 font_gotham gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                     <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >PERSONAL INFORMATION</h1>
@@ -148,10 +174,10 @@ export default function Personalinfo() {
                         <h1 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mt-5">NEWSLETTER SUBSCRIPTION</h1>
                         <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='newsletter_sub_email' checked={values.newsletter_sub_email} value={values.newsletter_sub_email} onChange={handleChange} /><span className="slider"></span></label>
+                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='newsletter_sub_email' checked={values.newsletter_sub_email} value={values.newsletter_sub_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='newsletter_sub_phone' checked={values.newsletter_sub_phone} value={values.newsletter_sub_phone} onChange={handleChange} /><span className="slider"></span></label>
+                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='newsletter_sub_phone' checked={values.newsletter_sub_phone} value={values.newsletter_sub_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                         </div>
                         <div className=" w-full space-y-5 font_gotham_light">

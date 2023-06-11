@@ -11,13 +11,15 @@ import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
+import useNewsletter from '@/hooks/useNewsletter'
 import { useCursor } from '@/hooks/useCursor'
 import LoadingBar from 'react-top-loading-bar'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getLocation } = useLocation()
-  const {cursor} = useCursor()
+  const { cursor } = useCursor()
   const { user } = useUser()
+  const { newsletterData, letterLoading } = useNewsletter()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
@@ -35,6 +37,9 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 
   useEffect(() => {
     getLocation()
+  }, [])
+
+  useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)
     })

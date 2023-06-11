@@ -89,6 +89,9 @@ const newsletter_confirm_template = (username, interests) => {
         li {
             text-align: left;
         }
+        .footer-text{
+            font-size: 12px;
+        }
 
         @media screen and (max-width: 480px) {
 
@@ -122,7 +125,7 @@ const newsletter_confirm_template = (username, interests) => {
         <p>You will receive every update about our latest new coming exciting stocks and sales</p>
         <div class="footer">
             <p>Urban Fits L.L.C. &copy; 2023-2024 All rights reserved</p>
-            <p>
+            <p class="footer-text" >
                 You received this email because you subscribed to our newsletter.
                 If you no longer wish to receive our emails, you can
                 <a class="unsubscribe-btn" href="#">unsubscribe</a>.
