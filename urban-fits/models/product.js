@@ -41,14 +41,14 @@ const ProductSchema = mongoose.Schema({
             images: {
                 type: Array
             },
-            size: {
-                type: Array,
-                default: ["M", "L"]
-            },
+            sizes: [{
+                size: String,
+                quantity: Number
+              }],
             stock: {
                 type: Number,
                 required: [true, "Please enter stock of the product"],
-                default: 1
+                default: 0
             }
         }
     ],
@@ -65,5 +65,13 @@ const ProductSchema = mongoose.Schema({
     }
 
 }, { timestamps: true })
+
+ProductSchema.pre('save', function(next) {
+    this.variants.forEach((variant) => {
+      const totalQuantity = variant.sizes.reduce((total, size) => total + size.quantity, 0);
+      variant.stock = totalQuantity;
+    });
+    next();
+  });
 
 module.exports = mongoose.models.Product || mongoose.model("Product", ProductSchema)

@@ -17,7 +17,7 @@ const DeleteProducts = async (req, res) => {
             })
         }
         else {
-            res.status(400).json({success: false, msg: "bad request, you are using wrong request method!" })
+            res.status(405).json({success: false, msg: "Method not Allowed, you are using wrong request method!" })
         }
     }
     catch (err) {

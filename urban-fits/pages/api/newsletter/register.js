@@ -9,7 +9,7 @@ const CreateNewsletter = async (req, res) => {
         if (req.method === 'POST') {
             console.log(req.body)
             await ConnectDB()
-            const { id } = req.query
+            const id = req.body.user
             const returnIfSubscribed = async (email) => {
                 let letter = await Newsletter.findOne({ email: email })
                 if (letter) return res.status(400).json({ success: false, msg: "This email has already subscribed our Newsletter" })
@@ -22,20 +22,23 @@ const CreateNewsletter = async (req, res) => {
                     msg: "You have successfully subscribed to our newsletter!"
                 })
             }
+            const sendSubConfirmation = async (name, interests) => {
+                const template = newsletter_confirm_template(name, interests)
+                await sendEmail({ to: req.body.email, subject: "Newsletter Subscription Confirmation" }, template)
+            }
+
             if (!id) {
                 await returnIfSubscribed(req.body.email)
-                const template = newsletter_confirm_template(null, req.body.interests)
-                await sendEmail({ to: req.body.email, subject: "Newsletter Subscription Confirmation" }, template)
-                return await createLetter(req.body)
+                await createLetter(req.body)
+                return await sendSubConfirmation(null, req.body.interests)
             }
 
             if (id) {
-                let user = await User.findById(req.query.id)
+                let user = await User.findById(req.body.user)
                 if (!user) return res.status(404).json({ success: false, msg: "User not found" })
                 await returnIfSubscribed(req.body.email)
-                const template = newsletter_confirm_template(user.firstname, req.body.interests)
-                await sendEmail({ to: req.body.email, subject: "Newsletter Subscription Confirmation" }, template)
-                return await createLetter(req.body)
+                await createLetter(req.body)
+                return await sendSubConfirmation(user.firstname, req.body.interests)
                 // letter = await ( await Newsletter.create(req.body)).populate("user")
             }
         }
