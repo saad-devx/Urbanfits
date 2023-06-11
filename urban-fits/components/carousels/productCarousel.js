@@ -29,7 +29,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full layout_height flex justify-center items-center' >
-                <Image fill={true} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+                <Image className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>
             )
           })}
@@ -53,7 +53,7 @@ export default function ProductCarousel(props) {
             {images.map((img) => {
               return (
                 <SplideSlide className='w-full' >
-                  <Image width={200} height={300} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+                  <Image width={200} height={300} className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
                 </SplideSlide>)
             })}
           </Splide>
@@ -76,7 +76,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full h-[94vw] flex justify-center items-center' >
-                <Image width={500} height={720} className='w-full h-full object-cover object-center' src={img.url} alt="Urban images" />
+                <Image width={500} height={720} className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>
             )
           })}
@@ -97,7 +97,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='h-[20vw]' >
-                <Image width={200} height={300} className='w-full object-cover object-center' src={img.url} alt="Urban images" />
+                <Image width={200} height={300} className='w-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>)
           })}
         </Splide>

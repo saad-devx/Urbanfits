@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useUser from "./useUser";
 import jwt from 'jsonwebtoken'
 import toaster from "@/utils/toast_function";

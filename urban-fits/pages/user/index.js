@@ -5,7 +5,7 @@ import useUser from '@/hooks/useUser'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import Error403 from '@/pages/403';
-import Loader from '@/components/loader'
+import Loader from '@/components/loaders/loader'
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import uploadImage from '@/utils/uploadImage'
@@ -15,14 +15,14 @@ import ifExists from '@/utils/if_exists'
 import Image from 'next/image';
 import female_avatar from '../../public/avatars/female.svg'
 import male_avatar from '../../public/avatars/male.svg'
-import ImgSpinner from '@/components/img_spinner'
+import Spinner from '@/components/loaders/spinner'
 
 
 const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
     return (
-        <Link className={`${route === props.href ? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all overflow-hidden`} href={props.href}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
+        <Link className={`${route === props.href ? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all overflow-hidden`} href={props.href || '#'}><span className={`bg-gold w-2 group-hover:h-full ${route === props.href ? 'h-full' : 'h-0'} transition-all duration-300`}></span>{props.children}<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
     )
 }
 // Menu for mobile devices
@@ -30,7 +30,7 @@ const Option_sm = (props) => {
     const router = useRouter()
     const route = router.pathname
     return (
-        <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href={props.href}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
+        <Link className={`h-full group flex flex-col justify-between items-center transition-all `} href={props.href || '#'}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
     )
 }
 
@@ -52,6 +52,7 @@ export default function User(props) {
     // states and function for modals
     const [modal5, setModal5] = useState(false)
     const toggleModal = (e, name) => {
+        console.log(e.target.name)
         if (name || e.target.name === "modal5") {
             if (modal5 === false) return setModal5(true)
             if (modal5 === true) return setModal5(false)
@@ -71,7 +72,7 @@ export default function User(props) {
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = async (e) => {
         const file = e.target.files[0]
-        SetImgSpinner(<ImgSpinner />)
+        SetImgSpinner(<Spinner />)
         const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
         setPhoto(imgUrl)
         await updateUser({ image: imgUrl })
@@ -90,7 +91,7 @@ export default function User(props) {
                         <Option href='/user/address'>My Address</Option>
                         <Option href='/user/paymentmethods'>My Payment Methods</Option>
                         <Link className={`${route === '/user/orders/orders' ? 'font_gotham_medium' : null} group w-full h-[67px] flex justify-between items-center mb-[2px] pr-3 text-sm rounded-sm bg-white shadow-md transition-all `} href='/user/orders/orders'><span className={`bg-gold w-2 group-hover:h-full ${route.startsWith('/user/orders') ? 'h-full' : 'h-0'} transition-all duration-300`}></span>My Orders<i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i></Link>
-                        <Button onclick={toggleModal} name="modal5" classes="w-full">Logout</Button>
+                        <Button onClick={toggleModal} name="modal5" classes="w-full">Logout</Button>
                     </div>
                 </div>
                 {/* To be displayed on the mobile devices */}
@@ -105,7 +106,7 @@ export default function User(props) {
                     </div>
                 </div>
                 <section className='w-full lg:w-[67%] px-4 pt-24 pb-20 lg:pl-7 lg:pt-9 font_gotham text-left overflow-x-hidden overflow-y-scroll' >
-                    <div className="w-full lg:w-5/6">
+                    <div className="w-full lg:w-5/6 lg:pt-6">
                         <div className={`${props.profileNull ? 'hidden' : null} flex flex-row-reverse md:flex-row items-center gap-3`}>
                             <div className="w-3/5 md:w-auto flex flex-col items-center">
                                 <div className="group relative md:w-[150px] aspect-square rounded-full border-2 border-gray-300 overflow-hidden">

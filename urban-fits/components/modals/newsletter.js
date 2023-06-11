@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '../buttons/simple_btn'
-import { toast, Slide } from 'react-toastify';
+import useUser from '@/hooks/useUser';
+import toaster from '@/utils/toast_function';
 import Image from 'next/image';
 import bg_newsletter from '@/public/newsletterimg.png'
 // imports for validation
@@ -9,41 +10,49 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
 export default function Newsletter(props) {
-    // function to show toast
-    const toaster = (type, msg) => {
-        toast(msg, {
-            position: "top-left",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: type,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide
-        })
-    }
+    const { user, updateUser } = useUser()
+    const [loading, setLoading] = useState(false)
 
     // schema and validation with yup and fromik
     const newsLetterSchema = Yup.object({
-        "email": Yup.string().email().required("Please enter your email address"),
+        "contact": Yup.string()
+            .required('Email or phone number is required')
+            .test('contact', 'Invalid email or phone number', function (value) {
+                // Validation logic
+                const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                const phoneRegex = /^\+\d{1,3}( )?\d{8,16}$/;
+                const postalCodeRegex = /^\+?[0-9]{5,}$/i;
+
+                if (emailRegex.test(value) || (phoneRegex.test(value))) {
+                    return true;
+                }
+
+                return false;
+            }),
         "gender": Yup.string().required("Please select your gender"),
         "interests": Yup.array().min(1, "Please select at least one interest")
     })
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue } = useFormik({
-        initialValues: { "email": '', "gender": '', "interests": [] },
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue, setFieldError } = useFormik({
+        initialValues: { "email": user ? user.email : "", "gender": '', "interests": [] },
         validationSchema: newsLetterSchema,
         onSubmit: async () => {
-            let id = "63f0eacb88ecc61447b648d3"
-            let res = await fetch(`${process.env.HOST}/api/newsletter?id=${id}`, {
+            setLoading(true);
+            console.log(values)
+            let id = user?._id
+            let payload = user ? { ...values, user: id } : values
+            let res = await fetch(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...values, user: id })
+                body: JSON.stringify(payload)
             })
             let response = await res.json()
-            toaster(response.success ? "success" : "error", response.message)
-            response.success === true ? props.setModal2(false) : null
+            console.log(response)
+            if (response.success && user) {
+                await updateUser({ newsletter_sub_email: response.success })
+            }
+            setLoading(false);
+            toaster(response.success ? "success" : "error", response.msg)
+            response.success === true ? props.toggleModal(false) : null
         }
     })
     // function to get input from pill buttons in an array
@@ -62,9 +71,18 @@ export default function Newsletter(props) {
     }
 
     if (!props.show) return
-    if (props.show) return (
-        <>
-            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 delay-75 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
+    if (props.show) {
+        if (user?.newsletter_sub_email) return <>
+            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500`}>
+                <div className={` relative w-11/12 md:w-3/4 lg:w-[60rem] h-60 lg:h-96 text-sm flex justify-center items-center bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
+                    <button onClick={props.toggleModal} className="material-symbols-rounded text-2xl absolute right-5 top-5">close</button>
+                    <h1 className="font_gotham_medium text-3xl">You've already subscribed the Newsletter</h1>
+                </div>
+            </div>
+        </>
+
+        return <>
+            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
                 <div className={` ${props.show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
                     <div className="w-full hidden md:block lg:w-1/2 lg:h-auto">
                         <Image src={bg_newsletter} className="w-full h-full object-cover object-top" alt="Urban images" />
@@ -73,21 +91,26 @@ export default function Newsletter(props) {
                         <div className="w-full space-y-5">
                             <div className="w-full flex justify-between items-center">
                                 <h3 className="text-black font_gotham_medium text-sm md:text-base">Move To The Urban Fits</h3>
-                                <button onClick={props.toggleModal} className="material-symbols-rounded text-2xl">close</button>
+                                <button onClick={() => { handleReset(); props.toggleModal() }} className="material-symbols-rounded text-2xl">close</button>
                             </div>
-                            <p className='font_gotham_light text-xs md:text-base' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
+                            <p className='font_gotham_light text-xs md:text-sm' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
                         </div>
                         <form className="mt-7 font_gotham space-y-5 md:space-y-7" onReset={handleReset} onSubmit={handleSubmit} >
                             <div className='space-y-3' >
-                                <h3 className='text-black font_gotham_medium text-xs md:text-base' >Email Sign Up*</h3>
+                                <h3 className='text-black font_gotham_medium text-xs md:text-base' >Email or Phone Sign Up*</h3>
                                 <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                                    {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                                    <input className="w-full bg-transparent outline-none border-none" type="email" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder="Email*" />
+                                    {touched.contact && errors.contact ? <Tooltip classes="form-error" content={errors.contact} /> : null}
+                                    <input className="w-full bg-transparent outline-none border-none" type="text" name="contact" id="contact" value={values.contact} onBlur={handleBlur} onChange={(e) => {
+                                        if (errors.contact) {
+                                            setFieldError('contact', '');
+                                        }
+                                        handleChange(e);
+                                    }} placeholder="email eg. example@gmail.com or phone eg. +971 00000000000" />
                                 </div>
                             </div>
                             <div className='relative space-y-4' >
                                 <h3 className='text-black font_gotham_medium text-xs md:text-base' >Gender*</h3>
-                                {errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
+                                {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                 <div className="font_gotham_light w-full md:w-3/5 flex justify-between items-center ">
                                     <div className='mr-2' >
                                         <input key={1} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='male'>Male</label>
@@ -115,11 +138,11 @@ export default function Newsletter(props) {
                                 </div>
                             </div>
                             <p className='font_gotam_light text-[10px] md:text-sm' >Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
-                            <Button type="submit" classes="w-11/12 mx-auto" >Subscribe</Button>
+                            <Button type="submit" loading={loading} classes="w-11/12 mx-auto" >Subscribe</Button>
                         </form>
                     </section>
                 </div>
             </div>
         </>
-    )
+    }
 }

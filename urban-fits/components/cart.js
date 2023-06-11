@@ -12,16 +12,25 @@ import Link from 'next/link';
 // Cart item function
 function CartItem(props) {
     const { product } = props
-    //Setting up the cart functions
     const { updateItemQuantity, removeItem } = useCart()
-    // confguring the Quantity conter of the prodcut
     const [quantity, setQuantity] = useState(product.quantity)
-    // updateItemQuantity(product.id, product.quantity)
+    const [sizevalue, setSizevalue] = useState(product.size)
+
+    const onSizeChange = (e) => {
+        setQuantity(1)
+        setSizevalue(e.target.value)
+    }
+    const getFilteredQuantity = () => {
+        let selectedSizeObj = product.sizes.filter((obj) => {
+            return obj.size == sizevalue
+        })[0];
+        return selectedSizeObj.quantity
+    }
     const changeQuantity = (e, id) => {
         // updateItemQuantity(product.id, product.quantity)
         let name = e.target.getAttribute("name")
         if (name === "decrement" && quantity === 1) return
-        if (name === "increment" && quantity === product.stock) return
+        if (name === "increment" && quantity === getFilteredQuantity()) return
         if (name === "decrement") {
             setQuantity(quantity - 1)
             updateItemQuantity(id, quantity - 1)
@@ -33,9 +42,9 @@ function CartItem(props) {
     }
 
     return (
-        <li key={props.li_key} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
+        <li {...props} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
             <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
-                <Image width={129} height={160} src={product.images[0].url} alt="Urban images" className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
+                <Image width={129} height={160} src={product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
                 <button onClick={() => { removeItem(product.id) }} className="md:hidden absolute top-2 left-2 fa-solid fa-xmark text-gray-200" />
             </div>
             {/* to be displayed from md breakpoint */}
@@ -45,8 +54,9 @@ function CartItem(props) {
                 {/* <Select /> */}
                 <div className='relative'>
                     <span className="select_container after:right-[20%]"></span>
-                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
-                        {product.sizes.map(size => {
+                    <select type="select" onChange={onSizeChange} value={sizevalue} className="select_element relative cursor-pointer w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
+                        {product.sizes.map(obj => {
+                            const { size } = obj
                             return <option value={size}>{size}</option>
                         })}
                     </select>
@@ -67,7 +77,8 @@ function CartItem(props) {
                     <div className='relative'>
                         <span className="select_container after:right-[20%]"></span>
                         <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
-                            {product.sizes.map(size => {
+                            {product.sizes.map(obj => {
+                                const { size } = obj
                                 return <option value={size}>{size}</option>
                             })}
                         </select>
@@ -100,7 +111,7 @@ export default function Cart(props) {
                             <Image src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                             <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
                             <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
-                            <Button onclick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
+                            <Button onClick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                         </section>
                         :
                         <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
@@ -119,7 +130,7 @@ export default function Cart(props) {
                                         <span className='w-[10%] text-gray-300'>AMOUNT</span>
                                     </div>
                                     {items.map((product) => {
-                                        return <CartItem li_key={product.id} toggleCart={props.toggleCart} product={product} get3dpNumber={get3dpNumber} />
+                                        return <CartItem key={product.id} toggleCart={props.toggleCart} product={product} get3dpNumber={get3dpNumber} />
                                     })}
                                     <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                                 </div>

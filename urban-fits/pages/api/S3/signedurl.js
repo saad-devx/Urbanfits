@@ -3,7 +3,7 @@ import { S3 } from "aws-sdk";
 const GetSignedS3Url = async (req, res) => {
     if (req.method === "GET") {
         try {
-            const { folder } = req.query
+            const { folder, fileName } = req.query
             const s3 = new S3({
                 region: "eu-north-1",
                 credentials: {
@@ -14,7 +14,7 @@ const GetSignedS3Url = async (req, res) => {
             })
             const params = {
                 Bucket: "urban-fits",
-                Key: folder + `file-at-${req.query.fileName? req.query.fileName: Date.now()}`
+                Key: folder + `file-at-${fileName? fileName: Date.now()}`
             }
             const uploadUrl = await s3.getSignedUrlPromise("putObject", params)
             return res.status(200).json({

@@ -24,7 +24,7 @@ export default function MoreToExplore() {
             <h3 className="text-[10px] md:text-base text-center md:text-left font_gotham_medium tracking-vast">MORE TO EXPLORE</h3>
             <div className="w-full mt-5 flex flex-wrap">
                 {exploreItems.map(query => {
-                    return <Button name={query} onclick={getExploreItems} fontSize='text-[8px] md:text-[10px]' classes="mr-3 px-3 md:px-5 whitespace-nowrap" height='h-[34px]' font='font_gotham_medium tracking-widest' my="my-1" text={exploreItem == query ? 'white' : 'black'} bg={exploreItem == query ? 'bg-gold-land' : 'bg-gray-50'}>{query.toUpperCase()}</Button>
+                    return <Button name={query} onClick={getExploreItems} fontSize='text-[8px] md:text-[10px]' classes="mr-3 px-3 md:px-5 whitespace-nowrap" height='h-[34px]' font='font_gotham_medium tracking-widest' my="my-1" text={exploreItem == query ? 'white' : 'black'} bg={exploreItem == query ? 'bg-gold-land' : 'bg-gray-50'}>{query.toUpperCase()}</Button>
                 })}
             </div>
             <section className="w-full">

@@ -6,6 +6,7 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a name for your product"],
         trim: true
     },
+    cover_image: {type: String},
     price: {
         type: Number,
         required: [true, "Please enter a price for your product"],
@@ -36,19 +37,18 @@ const ProductSchema = mongoose.Schema({
             color: {
                 type: String,
             },
-            color_name: {type: String},
-            images: [{
-                public_id: { type: String, required: true },
-                url: { type: String, required: true },
-            }],
-            size: {
-                type: Array,
-                default: ["M", "L"]
+            color_name: { type: String },
+            images: {
+                type: Array
             },
+            sizes: [{
+                size: String,
+                quantity: Number
+              }],
             stock: {
                 type: Number,
                 required: [true, "Please enter stock of the product"],
-                default: 1
+                default: 0
             }
         }
     ],
@@ -65,5 +65,13 @@ const ProductSchema = mongoose.Schema({
     }
 
 }, { timestamps: true })
+
+ProductSchema.pre('save', function(next) {
+    this.variants.forEach((variant) => {
+      const totalQuantity = variant.sizes.reduce((total, size) => total + size.quantity, 0);
+      variant.stock = totalQuantity;
+    });
+    next();
+  });
 
 module.exports = mongoose.models.Product || mongoose.model("Product", ProductSchema)

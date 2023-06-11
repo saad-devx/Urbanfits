@@ -9,7 +9,7 @@ import img2 from '@/public/card imgs/card img5.jpg'
 import img3 from '@/public/card imgs/card img12.jpg'
 
 const GuideCard = (props) => {
-    return <Link href={props.href} className='group w-[200px]'>
+    return <Link href={props.href || "#"} className='group w-[200px]'>
         <div className='w-full h-[300px] overflow-hidden'>
             <Image src={props.img} alt='cover image' className='w-full h-full object-cover group-hover:scale-105 transition-all duration-700' />
         </div>

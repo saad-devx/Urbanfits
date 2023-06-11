@@ -21,6 +21,7 @@ import CardAdmin from "@/components/cards/cardadmin";
 import AvatarIconV from "@/public/icons/AvatarIconV";
 import { ClockIcon } from "@/public/icons/ClockIcon";
 import Button from "@/components/buttons/simple_btn";
+import CursorToggleBtn from "@/components/buttons/cursor-toggle-btn";
 import { Button2 } from "@/components/buttons/Button2";
 
 export default function Sidebaradmin({ children }) {
@@ -84,6 +85,13 @@ export default function Sidebaradmin({ children }) {
     });
     setSidebaritems([...temp]);
   };
+
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+  const onSearch = (e)=>{
+    const term = e.target.value
+    setQuery(term)
+  }
 
   return (
     <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
@@ -187,7 +195,7 @@ export default function Sidebaradmin({ children }) {
                     className={`flex gap-[10px] mt-[28px]  ${item.expanded ? "visible" : "hidden"
                       }  `}
                   >
-                    <Link href={subitem.navlink}>
+                    <Link href={subitem.navlink || '#'}>
                       <p
                         className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro] 
                     ${sidebaropen ? "visible" : "hidden"}
@@ -240,7 +248,7 @@ export default function Sidebaradmin({ children }) {
       {/* /////////66666666666666666666666666666666666//////////// */}
 
       <div
-        className={`px-[30px] py-[44px] bg-[#F4F4F4]    overflow-y-scroll
+        className={`min-h-[100vh] px-[30px] py-[44px] bg-[#F4F4F4]    overflow-y-scroll
         ${sidebaropen ? "ml-[250px]" : "ml-[80px]"}  duration-300
        `}
       >
@@ -251,7 +259,7 @@ export default function Sidebaradmin({ children }) {
               <input onClick={handleSidebar} type="checkbox" defaultChecked={true} />
               <span className={styles.slider}></span>
             </label>
-            <div id={styles.searchdiv} className={` ml-[29.53px] `}>
+            <div id={styles.searchdiv} className={` ml-[29.53px] mr-4`}>
               <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
               {/* <i className="material-symbols-outlined absolute">search</i> */}
               <span className="absolute">
@@ -261,11 +269,13 @@ export default function Sidebaradmin({ children }) {
               <input
                 type="text"
                 id="search"
-                onChange={onchange}
+                value={query}
+                onChange={onSearch}
                 className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
                 placeholder="Search (Keyword, etc)"
               />
             </div>
+            <CursorToggleBtn />
           </div>
 
           <div className={` flex items-center  `}>
@@ -407,7 +417,7 @@ export default function Sidebaradmin({ children }) {
         <hr className={`mt-[20px]`} />
         {/* ////////////////////////////Children START //////////////////////////////////////////////////////// */}
 
-        {children}
+        {query==''?children: results}
 
         {/* ///////////////////////////////Children END///////////////////////////////////////////////////// */}
       </div>

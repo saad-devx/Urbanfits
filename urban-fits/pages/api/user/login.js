@@ -1,19 +1,11 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 const CryptoJS = require("crypto-js")
-import NextCors from 'nextjs-cors';
 const jwt = require("jsonwebtoken")
 
 const Login = async (req, res) => {
-    // await NextCors(req, res, {
-    //     // Options
-    //     methods: ['POST'],
-    //     origin: '*',
-    //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    // })
     try {
         if (req.method === 'POST') {
-            console.log(req.body)
             await ConnectDB()
             console.log(req.query)
             if (req.query.auth === 'OAuth') {
