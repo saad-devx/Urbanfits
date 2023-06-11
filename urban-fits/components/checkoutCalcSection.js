@@ -9,7 +9,7 @@ export default function CheckoutCalcSection() {
     return (
         <div className="details w-full lg:w-[30%] max-w-[600px] m-0 space-y-3">
             <h3 className="text-xl md:text-2xl font_gotham_medium tracking-whidest mb-5">Order Summary ({totalUniqueItems})</h3>
-            <div className="flex relative mb-3 p-6 bg-white card_boxshadow w-full max-h-screen flex-col justify-between items-center rounded-lg md:rounded-xl">
+            <div className="flex relative mb-3 p-6 bg-white card_boxshadow w-full flex-col justify-between items-center rounded-lg md:rounded-xl">
                 {items.map((item, i) => {
                     return <>
                         <h3 key={-i-1} className="self-start font_gotham_medium text-sm md:text-base text-left capitalize">{item?.name} ({item.color})</h3>

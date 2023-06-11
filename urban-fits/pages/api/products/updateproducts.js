@@ -16,7 +16,7 @@ const UpdateProducts = async (req, res) => {
             }
             else if (req.query.id) {
                 let product = await Product.findById(req.query.id)
-                if (!product) return res.status(404).json({ msg: "Product not found" })
+                if (!product) return res.status(404).json({ success: false, msg: "Product not found" })
                 if (product) {
                     product = await Product.findByIdAndUpdate(req.query.id, req.body)
                 }

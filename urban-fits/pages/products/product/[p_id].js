@@ -32,6 +32,7 @@ export default function Product(props) {
         if (!newProduct[0]) return () => { router.push('/404') }
         setProduct(newProduct[0])
         setSizevalue(newProduct[0].sizes[0].size)
+        console.log(newProduct[0].sizes[0].size)
     }, [router.query.color])
 
     // size value channge funciton
@@ -69,6 +70,7 @@ export default function Product(props) {
     //Cart function
     const { addItem, inCart } = useCart()
     const addToCart = () => {
+        if(getFilteredQuantity() < 1) return toaster('info', 'This item is out of stock right now')
         if (inCart(`${product._id}${sizevalue}`)) return toaster('info', 'This item is already in the cart!')
         addItem({
             product_id: productData.id,
@@ -129,7 +131,7 @@ export default function Product(props) {
                                     <div className="flex flex-col max-w-[320px] w-48pr">
                                         <div className='relative w-full h-9 lg:h-[52px] border'>
                                             <span className="select_container after:right-[10%]"></span>
-                                            <select type="select" defaultValue={product.size} onChange={onSizeChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
+                                            <select type="select" value={sizevalue} onChange={onSizeChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
                                                 {product.sizes.map(obj => {
                                                     const { size } = obj
                                                     return <option value={size}>{size}</option>
@@ -138,7 +140,6 @@ export default function Product(props) {
                                         </div>
                                         <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
                                     </div>
-                                    {/* <div className="relative"></div> */}
                                     <div className='relative max-w-[320px] w-48pr h-9 lg:h-[52px] border'>
                                         <span className="select_container after:right-[10%]"></span>
                                         <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="select_element relative cursor-pointer w-full h-full px-5 font_gotham_medium tracking-widest text-xs outline-none">
@@ -156,8 +157,13 @@ export default function Product(props) {
                                     <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr border text-xs text-black">
                                         Customization
                                     </button>
-                                    <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
-                                    <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
+                                    {
+                                        getFilteredQuantity() < 1 ? <span className="lg:max-w-[320px] w-full lg:w-48pr h-9 lg:h-[52px] my-2 flex justify-center items-center font_gotham_medium italic text-center text-xs text-gray-300 tracking-[0.15em]">OUT OF STOCK</span>
+                                            : <>
+                                                <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_gotham_medium text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
+                                                <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' font='font_gotham_medium tracking-vast' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
+                                            </>
+                                    }
                                 </div>
 
                                 <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">
