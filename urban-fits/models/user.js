@@ -8,6 +8,11 @@ const UserSchema = mongoose.Schema({
         minLength: [4, "Username should have more than 4 characters"],
         unique: [true, "This username is already in use"]
     },
+    register_provider: {
+        type: String,
+        enum: ["urbanfits", "google", "apple"],
+        default: "urbanfits"
+    },
     image: {
         type: String,
         default: ""

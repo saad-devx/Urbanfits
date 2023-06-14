@@ -8,11 +8,10 @@ const jwt = require("jsonwebtoken")
 const Signup = async (req, res) => {
     try {
         if (req.method === 'POST') {
-
             await ConnectDB()
             if (req.query.auth && req.query.auth === 'OAuth') {
-                let user = await User.findOne({ "email": req.body.email })
-                if (user) return res.status(400).json({ success: false, msg: "A user with this Email already exists" })
+                let user = await User.findOne().or([{email: req.body.email}, {username: req.body.username}] )
+                if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create(req.body)
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 return res.status(200).json({
@@ -22,10 +21,8 @@ const Signup = async (req, res) => {
                 })
             }
             else {
-                let user = await User.findOne({ "email": req.body.email })
-                if (user) return res.status(400).json({ success: false, msg: "A user with this Email already exists" })
-                user = await User.findOne({ "username": req.body.username })
-                if (user) return res.status(400).json({ success: false, msg: "A user with this Username already exists" })
+                let user = await User.findOne().or([{email: req.body.email}, {username: req.body.username}] )
+                if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create({ ...req.body, password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString() })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 res.status(200).json({
