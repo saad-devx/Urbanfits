@@ -34,7 +34,7 @@ section{
     <h1>Reset Password</h1>
     <h4>Hi ${username}!</h4>
     <p>We received a request from your email to change the password of your Urban Fits uesr account. Click the button below to reset your password</p>
-    <span><a href="${process.env.HOST}/resetpassword?token=${token}" >Reset Password</a></span>
+    <span><a href="${process.env.HOST}/auth/resetpassword?token=${token}" >Reset Password</a></span>
     <p>This session will expire in 5 minutes. And don't expose this email to anyone</p>
     <p>If you did not make this request, you can ignore this email and your password will remain unchanged.</p>
     </br><small>~Urban Fits</small>

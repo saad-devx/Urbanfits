@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '@/components/navbar';
-import ErrorPage from '@/components/alertPage';
+import AlertPage from '@/components/alertPage';
 import Footer from '@/components/footer';
 import LinkBtn from '@/components/buttons/link_btn';
 // imports for images
@@ -16,11 +16,11 @@ export default function Thanks(props) {
         if (success == "false") return false
     }
     const order = sessionStorage.getItem("this_order_data")
-    if (!getBool(success) || !order) return <ErrorPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
+    if (!getBool(success) || !order) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
     const orderData = JSON.parse(order)
     // if (Date.now() >= orderData.expires_at) {
     //     sessionStorage.removeItem("this_order_data")
-    //     return <ErrorPage type="error" heading="Oh Snap! Order Session Expired" message="Your order session is expired, keep shopping and checkout when you're ready." />
+    //     return <AlertPage type="error" heading="Oh Snap! Order Session Expired" message="Your order session is expired, keep shopping and checkout when you're ready." />
     // }
     const date = new Date()
     useEffect(() => {
