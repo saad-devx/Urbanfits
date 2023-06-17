@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
-import Newsletter from "@/models/newsletter"
-const CryptoJS = require("crypto-js")
+import verifyEmail from "@/email templates/verify_email"
+import sendEmail from "@/utils/sendEmail"
 const jwt = require("jsonwebtoken")
 
 // Only accessable by Admin 
@@ -10,7 +10,7 @@ const Signup = async (req, res) => {
         if (req.method === 'POST') {
             await ConnectDB()
             if (req.query.auth && req.query.auth === 'OAuth') {
-                let user = await User.findOne().or([{email: req.body.email}, {username: req.body.username}] )
+                let user = await User.findOne().or([{ email: req.body.email }, { username: req.body.username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create(req.body)
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
@@ -21,17 +21,18 @@ const Signup = async (req, res) => {
                 })
             }
             else {
-                let user = await User.findOne().or([{email: req.body.email}, {username: req.body.username}] )
+                let user = await User.findOne().or([{ email: req.body.email }, { username: req.body.username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
-                user = await User.create({ ...req.body, password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString() })
-                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                if (!req.body.accept_policies) return res.status(400).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })
+                const token = jwt.sign({ ...req.body }, process.env.SECRET_KEY, { expiresIn: '10m' })
+                const template = verifyEmail(req.body.email, token)
+                let info = await sendEmail({ to: req.body.email, subject: "Email Verification" }, template)
+                console.log(info)
                 res.status(200).json({
                     success: true,
-                    msg: "You're Resgistered successfully !",
-                    payload
+                    msg: `Verification Email sent to ${req.body.email}`,
+                    payload: info
                 })
-                const userLetter = await Newsletter.findOne({ email: req.body.email, user: "guest" })
-                if (userLetter) return userLetter.update({ active: true, user: user._id })
             }
         }
         else {

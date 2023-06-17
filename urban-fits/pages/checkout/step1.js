@@ -6,7 +6,7 @@ import generatePassword from '@/utils/generatePassword';
 import useUser from '@/hooks/useUser';
 import useAddress from '@/hooks/useAddress';
 import axios from 'axios';
-import ErrorPage from '@/components/alertPage'
+import AlertPage from '@/components/alertPage'
 import CheckoutCalcSection from '@/components/checkoutCalcSection';
 import Head from 'next/head';
 import Navbar from '@/components/navbar';
@@ -188,7 +188,7 @@ console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"))
         else return null
     }
 
-    if (isEmpty) return <ErrorPage type="error" heading="Oh! There's nothing Checkout" message="You currently have nothing to checkout in your cart, please visit our store and select something to purchase" />
+    if (isEmpty) return <AlertPage type="error" heading="Oh! There's nothing Checkout" message="You currently have nothing to checkout in your cart, please visit our store and select something to purchase" />
     if (!isEmpty) return (
         <>
             <Head>

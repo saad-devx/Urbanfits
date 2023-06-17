@@ -6,7 +6,7 @@ import Link from 'next/link';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import toaster from '@/utils/toast_function';
-import ErrorPage from '@/components/alertPage';
+import AlertPage from '@/components/alertPage';
 import Tooltip from '@/components/tooltip';
 import * as Yup from 'yup'
 import { useFormik } from 'formik';
@@ -59,7 +59,7 @@ export default function ResetPassword() {
     }, [router.query])
 
     const unixTime = Math.floor(Date.now() / 1000)
-    if (!payload || payload.exp <= unixTime) return <ErrorPage type="error" heading="Oh Snap! Session Expired" message="The content your are trying to access either invalid or expired. Please try again." />
+    if (!payload || payload.exp <= unixTime) return <AlertPage type="error" heading="Oh Snap! Session Expired" message="The content your are trying to access either invalid or expired. Please try again." />
 
     return (
         <>

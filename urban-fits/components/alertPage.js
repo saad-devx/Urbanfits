@@ -5,7 +5,7 @@ import errorIcon from '@/public/error.svg'
 import successIcon from '@/public/success.svg'
 import Button from './buttons/simple_btn'
 
-export default function ErrorPage(props) {
+export default function AlertPage(props) {
     const router = useRouter()
     const pushBack = () => {
         router.back()
