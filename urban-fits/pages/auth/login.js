@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import AuthPage from '.'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
+import Head from 'next/head'
 import Tooltip from '@/components/tooltip'
 import toaster from '@/utils/toast_function'
+import AlertPage from '@/components/alertPage'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -16,12 +18,17 @@ import Image from 'next/image'
 import google_logo from '@/public/logos/google-logo.svg'
 import apple_logo from '@/public/logos/apple-logo.svg';
 
+export const metadata = {
+    title: "Urban Fits - Login"
+}
 export default function Login() {
     const { data: session } = useSession()
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-    const { updateUser } = useUser()
+    const { user, updateUser } = useUser()
     const { initiateAddress } = useAddress()
+
+    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
 
     const onsubmit = async (values, x, oAuthQuery) => {
         console.log(values)
@@ -58,22 +65,31 @@ export default function Login() {
         password: Yup.string().min(8).max(30).required('Please enter your password'),
         remember_me: Yup.boolean()
     })
-    const initialSignupValues = { email: '', password: '', remember_me: false }
+    const initialSignupValues = { email: '', password: '', remember_me: false, register_provider: 'urbanfits' }
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: initialSignupValues,
         validationSchema: loginSchema,
         onSubmit: onsubmit
     })
 
-    const oauth = localStorage.getItem('oauth')
+    const providerSignIn = (e) => {
+        const { name } = e.target
+        sessionStorage.setItem('oauth', true);
+        sessionStorage.setItem('register_provider', name);
+        signIn(name)
+    }
+
     useEffect(() => {
+        if (user && user.email) return
+        const oauth = sessionStorage.getItem('oauth')
+        const register_provider = sessionStorage.getItem('register_provider')
         if (oauth && session) {
             let username = session.user.email.split('@')[0]
             let name = session.user.name.split(' ')
             let firstname = name[0]
             name.shift()
             let lastname = name.join(' ')
-            const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider: "google" }
+            const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
             onsubmit(loginDetails, null, '?auth=OAuth')
             return localStorage.setItem('oauth', false)
         }
@@ -87,10 +103,13 @@ export default function Login() {
 
     return (
         <>
+            <Head>
+                <title>Urban Fits - Login</title>
+            </Head>
             <AuthPage loading={loading} >
                 <div className="font_gotham w-full my-5 flex justify-center space-x-6">
-                    <button onClick={() => { localStorage.setItem('oauth', true); signIn("google") }} className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
-                    <button className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
+                    <button onClick={providerSignIn} name='google' className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
+                    <button onClick={providerSignIn} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
                 </div>
                 <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                     <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
@@ -113,7 +132,7 @@ export default function Login() {
                             <p className="ml-1 text-gray-400">Remember me</p>
                         </label>
                     </div>
-                    <Button loading={loading} classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN IN</Button>
+                    <Button loading={loading} classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</Button>
                     <Link href='/auth/signup' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Create a New Account</h1></Link>
                 </form>
             </AuthPage>

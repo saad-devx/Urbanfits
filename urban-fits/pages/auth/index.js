@@ -13,9 +13,9 @@ export default function AuthPage(props) {
                 <meta name="description" content="User Authentication endpoints" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            {props.loading? <Loader />: null}
-            <main className={`bg-white lg:overflow-x-hidden`}>
-                <section className='lg:flex lg:items-center text-center lg:justify-center min-w-screen min-h-screen' >
+            {props.loading ? <Loader /> : null}
+            <main className="bg-white lg:overflow-x-hidden">
+                <section className='lg:flex lg:items-center text-center lg:justify-center min-h-screen' >
                     <div className=" w-[95%] md:w-full lg:w-[470px] mt-16 lg:mt-0 mx-auto ">
                         <h2 className="w-full lg:w-[470px]- font_gotham_medium text-2xl lg:text-[38px] lg:leading-[47px]">Join Our Urban Program <br /> and get free Shipping <br /> & free returns on <br /> every order</h2>
                         <br />
