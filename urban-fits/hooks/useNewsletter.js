@@ -18,7 +18,7 @@ export default function useNewsletter() {
 
     useEffect(() => {
         const token = jwt.decode(localStorage.getItem("user_newsletter_token"))
-        if (token && token._doc && token.user) return setNewsletterData(token._doc)
+        if (token && token._doc && token._doc.user) return setNewsletterData(token._doc)
         return async () => {
             if (!user) return setNewsletterData(null);
             setLetterLoading(true)
@@ -31,7 +31,8 @@ export default function useNewsletter() {
                     return localStorage.setItem("user_newsletter_token", payload)
                 } catch (error) {
                     console.log(error.response.data.success)
-                    return setNewsletterData(null)
+                    setNewsletterData(null)
+                    return localStorage.setItem("user_newsletter_token", null)
                 }
             }
             setLetterLoading(false)

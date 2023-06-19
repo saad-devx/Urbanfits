@@ -16,7 +16,6 @@ import image4 from '@/public/card imgs/card img3.jpg'
 import Button from '@/components/buttons/simple_btn';
 
 export default function Product(props) {
-    // console.log(props.response.product)
     const productData = { ...props.response.product, id: props.response.product._id }
     const router = useRouter()
     const [product, setProduct] = useState(productData.variants[0])
@@ -32,7 +31,6 @@ export default function Product(props) {
         if (!newProduct[0]) return () => { router.push('/404') }
         setProduct(newProduct[0])
         setSizevalue(newProduct[0].sizes[0].size)
-        console.log(newProduct[0].sizes[0].size)
     }, [router.query.color])
 
     // size value channge funciton

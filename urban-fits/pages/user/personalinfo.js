@@ -66,14 +66,14 @@ export default function Personalinfo() {
         gender: Yup.string().required('Gender is required field'),
         phone_prefix: Yup.string().required('Phone prefix is required to save'),
         phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save'),
-        newsletter_sub_email: Yup.bool(),
-        newsletter_sub_phone: Yup.bool()
+        active_by_email: Yup.bool(),
+        active_by_phone: Yup.bool()
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
         initialValues: {
             title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '',
-            newsletter_sub_email: newsletterData && newsletterData.active_by_email ? newsletterData.active_by_email : false,
-            newsletter_sub_phone: newsletterData && newsletterData.active_by_number ? newsletterData.active_by_number : false
+            active_by_email: newsletterData && newsletterData.active_by_email ? newsletterData.active_by_email : false,
+            active_by_phone: newsletterData && newsletterData.active_by_number ? newsletterData.active_by_number : false
         },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
@@ -91,20 +91,20 @@ export default function Personalinfo() {
             gender: ifExists(user.gender),
             phone_prefix: ifExists(user.phone_prefix),
             phone_number: ifExists(user.phone_number),
-            newsletter_sub_email: ifExists(user.newsletter_sub_email, false),
-            newsletter_sub_phone: ifExists(user.newsletter_sub_phone, false)
+            active_by_email: ifExists(user.newsletter_sub_email, false),
+            active_by_phone: ifExists(user.newsletter_sub_phone, false)
         })
     }, [])
 
-    const newsletterSubToggle = (e)=>{
+    const newsletterSubToggle = (e) => {
         let name = e.target.name
         console.log(name)
-        if(name=="newsletter_sub_email"){
-            if(!newsletterData || !newsletterData.email) setValues({...values, newsletter_sub_email: false})
+        if (name == "active_by_email") {
+            if (!newsletterData || !newsletterData.email) setValues({ ...values, active_by_email: false })
             return toggleLetterModal()
         }
-        if(name=="newsletter_sub_phone"){
-            if(!newsletterData || !newsletterData.phone) setValues({...values, newsletter_sub_phone: false})
+        if (name == "active_by_phone") {
+            if (!newsletterData || !newsletterData.phone) setValues({ ...values, active_by_phone: false })
             return toggleLetterModal()
         }
         handleChange(e)
@@ -174,10 +174,10 @@ export default function Personalinfo() {
                         <h1 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mt-5">NEWSLETTER SUBSCRIPTION</h1>
                         <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='newsletter_sub_email' checked={values.newsletter_sub_email} value={values.newsletter_sub_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={values.active_by_email} value={values.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='newsletter_sub_phone' checked={values.newsletter_sub_phone} value={values.newsletter_sub_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={values.active_by_phone} value={values.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                         </div>
                         <div className=" w-full space-y-5 font_gotham_light">

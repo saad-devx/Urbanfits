@@ -25,7 +25,7 @@ import Button from '@/components/buttons/simple_btn';
 loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export default function Checkout1(props) {
-console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
+    console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
     const router = useRouter()
     const { address, getAddress } = useAddress()
     const { user } = useUser()
@@ -104,7 +104,6 @@ console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"))
                 const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
                 sessionStorage.setItem("this_order_data", JSON.stringify({ shipping_info: values, items: items, cartTotal }))
                 window.location.href = response.data
-                emptyCart()
             }
             catch (e) {
                 console.log(e)
@@ -129,6 +128,12 @@ console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"))
     }
 
     useEffect(() => {
+        const { payment } = router.query
+        if (!payment) return toaster("error", "Payment failed, keep shoping and checkout when you're ready.")
+        return
+    }, [router.query.payment])
+
+    useEffect(() => {
         return async () => {
             try {
                 if (!user) return
@@ -149,18 +154,6 @@ console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"))
             setLoader(null)
         }
     }, [user, address])
-    useEffect(() => {
-        // Check to see if this is a redirect back from Checkout
-        const query = new URLSearchParams(window.location.search);
-        console.log(query)
-        if (query.get('success')) {
-            console.log('Order placed! You will receive an email confirmation.');
-        }
-
-        if (query.get('canceled')) {
-            console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
-        }
-    }, []);
 
     const toggleBillingForm = (e) => {
         if (errors.shipping_address) return console.log("complete shipping details first")
@@ -354,7 +347,7 @@ console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"))
                                             </div>
                                         </div>
                                     </section>
-                                    <span className="flex justify-end"> <Button disabled={errors} type="submit" classes="px-8" >Continue to Payment</Button> </span>
+                                    <span className="flex justify-end"> <Button type="submit" classes="px-8" >Continue to Payment</Button> </span>
                                 </div>
                             </form>
                         </div>

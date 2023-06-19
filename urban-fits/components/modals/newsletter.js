@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../buttons/simple_btn'
 import useUser from '@/hooks/useUser';
+import useNewsletter from '@/hooks/useNewsletter';
 import toaster from '@/utils/toast_function';
 import Image from 'next/image';
 import bg_newsletter from '@/public/newsletterimg.png'
@@ -11,6 +12,7 @@ import * as Yup from 'yup'
 
 export default function Newsletter(props) {
     const { user, updateUser } = useUser()
+    const { newsletterData, updateNewsletterData } = useNewsletter()
     const [loading, setLoading] = useState(false)
 
     // schema and validation with yup and fromik
