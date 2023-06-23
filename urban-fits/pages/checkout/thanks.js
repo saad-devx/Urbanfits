@@ -16,6 +16,7 @@ export default function Thanks() {
     const order = sessionStorage.getItem("this_order_data")
     if (!order) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
     const orderData = JSON.parse(order)
+    if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
     const date = new Date()
 
     useEffect(() => {
@@ -24,13 +25,8 @@ export default function Thanks() {
             emptyCart()
             return toaster("success", "Payment successful")
         }
+        sessionStorage.setItem("this_order_data", JSON.stringify({ ...orderData, used: true }))
     }, [router.query.payment])
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         sessionStorage.removeItem("this_order_data")
-    //     }, 60000 * 1.5)
-    // }, []);
 
     return (
         <>

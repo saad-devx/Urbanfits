@@ -10,7 +10,6 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
 import useUser from '@/hooks/useUser'
-import useAddress from '@/hooks/useAddress'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 //Image imports
@@ -26,7 +25,6 @@ export default function Login() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const { user, updateUser } = useUser()
-    const { initiateAddress } = useAddress()
 
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
 
@@ -39,7 +37,6 @@ export default function Login() {
             if (res.data.success && res.data.payload) {
                 const { data } = res
                 await updateUser(data.payload, true)
-                await initiateAddress(data.payload, router)
                 toaster("success", data.msg)
                 router.push('/user/personalinfo')
             }

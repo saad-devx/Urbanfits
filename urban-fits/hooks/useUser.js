@@ -30,7 +30,6 @@ export default function useUser() {
             toaster(res.success ? "success" : "error", res.msg)
             localStorage.setItem("authToken", res.payload)
             const userData = jwt.decode(res.payload)?._doc
-            console.log(userData)
             setUser(userData)
         }
     }

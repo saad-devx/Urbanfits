@@ -24,7 +24,7 @@ import Button from '@/components/buttons/simple_btn';
 
 loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
-export default function Checkout1(props) {
+export default function Checkout1() {
     console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
     const router = useRouter()
     const { address, getAddress } = useAddress()
@@ -102,7 +102,7 @@ export default function Checkout1(props) {
             setLoader(<Loader />)
             try {
                 const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
-                sessionStorage.setItem("this_order_data", JSON.stringify({ shipping_info: values, items: items, cartTotal }))
+                sessionStorage.setItem("this_order_data", JSON.stringify({ shipping_info: values, items: items, cartTotal, used: false }))
                 window.location.href = response.data
             }
             catch (e) {
@@ -129,15 +129,14 @@ export default function Checkout1(props) {
 
     useEffect(() => {
         const { payment } = router.query
-        if (!payment) return toaster("error", "Payment failed, keep shoping and checkout when you're ready.")
+        if (payment == 'false' || payment == false) return toaster("error", "Payment failed, keep shoping and checkout when you're ready.")
         return
     }, [router.query.payment])
 
     useEffect(() => {
         return async () => {
-            try {
-                if (!user) return
-                setLoader(<Loader />)
+            setLoader(<Loader />)
+            if (user) {
                 if (!address) await getAddress()
                 if (!address) return
                 let shippingAddress = address.addresses.filter(address => { return address.tag === 'shipping' })[0]
@@ -150,7 +149,18 @@ export default function Checkout1(props) {
                     billing_address: getValuesToBeSet(billingAddress)
                 })
             }
-            catch (error) { console.error(error) }
+            const filledAddressInfo = sessionStorage.getItem("this_order_data")
+            if (filledAddressInfo) {
+                const { shipping_info } = JSON.parse(filledAddressInfo)
+                console.log("This is the retrieved information", shipping_info)
+                setValues({
+                    name: shipping_info.name,
+                    email: ifExists(shipping_info.email),
+                    delivery_option: 'express',
+                    shipping_address: getValuesToBeSet(shipping_info.shipping_address),
+                    billing_address: getValuesToBeSet(shipping_info.billing_address)
+                })
+            }
             setLoader(null)
         }
     }, [user, address])
@@ -347,7 +357,7 @@ export default function Checkout1(props) {
                                             </div>
                                         </div>
                                     </section>
-                                    <span className="flex justify-end"> <Button type="submit" classes="px-8" >Continue to Payment</Button> </span>
+                                    <span className="flex justify-end"> <Button loading={!loader ? false : true} type="submit" classes="px-8" >Continue to Payment</Button> </span>
                                 </div>
                             </form>
                         </div>

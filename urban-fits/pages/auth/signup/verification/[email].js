@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import useUser from '@/hooks/useUser'
-import useAddress from '@/hooks/useAddress'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
@@ -11,7 +10,7 @@ import AlertPage from '@/components/alertPage'
 import Image from 'next/image'
 import successIcon from '@/public/success.svg'
 
-const BigSpinner = ()=>{
+const BigSpinner = () => {
     return <span className="h-7 w-7 md:w-10 md:h-10 animate-spin rounded-full border-2 md:border-4 border-solid border-black border-r-transparent" role="status"></span>
 }
 
@@ -19,13 +18,12 @@ export default function Verification(props) {
     const { email, token } = props
     const { user, updateUser } = useUser()
     const router = useRouter()
-    const { initiateAddress } = useAddress()
     const [content, setContent] = useState(
         <><BigSpinner />
             <p className="w-4/5 my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">CREATING YOUR ACCOUNT, PLEASE WAIT !</p></>
     )
 
-    if(user && user.email ) return <AlertPage type="success" heading="You are already signed in !" />
+    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
 
     useEffect(() => {
         const decodedToken = jwt.decode(token)
@@ -41,7 +39,6 @@ export default function Verification(props) {
                 if (res.data.success && res.data.payload) {
                     const { data } = res
                     await updateUser(data.payload, true)
-                    await initiateAddress(data.payload, router)
                     toaster("success", data.msg)
                     setContent(
                         <> <Image src={successIcon} alt="Success" />
@@ -88,12 +85,12 @@ export default function Verification(props) {
     else {
         return (
             <>
-            <Head>
-                <title>Urban Fits - Verify Eamil</title>
-            </Head>
-            <main className='w-full h-screen flex flex-col justify-center items-center'>
-                {content}
-            </main>
+                <Head>
+                    <title>Urban Fits - Verify Eamil</title>
+                </Head>
+                <main className='w-full h-screen flex flex-col justify-center items-center'>
+                    {content}
+                </main>
             </>
         )
     }

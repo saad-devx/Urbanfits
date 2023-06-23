@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../buttons/simple_btn'
 import useUser from '@/hooks/useUser';
 import useNewsletter from '@/hooks/useNewsletter';
 import toaster from '@/utils/toast_function';
+import axios from 'axios';
 import Image from 'next/image';
 import bg_newsletter from '@/public/newsletterimg.png'
 // imports for validation
@@ -11,9 +12,16 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 
 export default function Newsletter(props) {
-    const { user, updateUser } = useUser()
-    const { newsletterData, updateNewsletterData } = useNewsletter()
+    const { user } = useUser()
+    const { newsletterData, updateNewsletterData, getNewsletterData } = useNewsletter()
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        return async () => {
+            if (!newsletterData) await getNewsletterData()
+            if (!newsletterData) return
+        }
+    }, [])
 
     // schema and validation with yup and fromik
     const newsLetterSchema = Yup.object({
@@ -34,27 +42,40 @@ export default function Newsletter(props) {
         "gender": Yup.string().required("Please select your gender"),
         "interests": Yup.array().min(1, "Please select at least one interest")
     })
+    const getContact = () => {
+        if (user && newsletterData) {
+            const { email, phone } = newsletterData
+            if (!email) return user.email
+            if (!phone) return `${user.phone_prefix} ${user.phone_number}`
+        }
+        else return ""
+    }
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue, setFieldError } = useFormik({
-        initialValues: { "email": user ? user.email : "", "gender": '', "interests": [] },
+        initialValues: {
+            "contact": getContact(),
+            "gender": user && user.gender ? user.gender : '', "interests": []
+        },
         validationSchema: newsLetterSchema,
-        onSubmit: async () => {
-            setLoading(true);
-            console.log(values)
+        onSubmit: async (values0) => {
+            const values = (() => {
+                if (values0.contact.includes('@')) return { email: values0.contact, gender: values0.gender, interests: values0.interests }
+                else return { phone: values0.contact, gender: values0.gender, interests: values0.interests }
+            })()
             let id = user?._id
             let payload = user ? { ...values, user: id } : values
-            let res = await fetch(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            })
-            let response = await res.json()
-            console.log(response)
-            if (response.success && user) {
-                await updateUser({ newsletter_sub_email: response.success })
+            console.log(payload)
+            setLoading(true);
+            try {
+                let { data } = await axios.post(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, payload)
+                await updateNewsletterData(data.payload, false)
+                toaster("success", data.msg)
+                props.toggleModal(false)
+            } catch (e) {
+                const { msg } = e.response.data
+                console.log(msg)
+                toaster('error', msg)
             }
-            setLoading(false);
-            toaster(response.success ? "success" : "error", response.msg)
-            response.success === true ? props.toggleModal(false) : null
+            return setLoading(false);
         }
     })
     // function to get input from pill buttons in an array
@@ -74,14 +95,14 @@ export default function Newsletter(props) {
 
     if (!props.show) return
     if (props.show) {
-        if (user?.newsletter_sub_email) return <>
-            <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500`}>
-                <div className={` relative w-11/12 md:w-3/4 lg:w-[60rem] h-60 lg:h-96 text-sm flex justify-center items-center bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
-                    <button onClick={props.toggleModal} className="material-symbols-rounded text-2xl absolute right-5 top-5">close</button>
-                    <h1 className="font_gotham_medium text-3xl">You've already subscribed the Newsletter</h1>
-                </div>
-            </div>
-        </>
+        //     if (user?.newsletter_sub_email) return <>
+        //         <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-40 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500`}>
+        //             <div className={` relative w-11/12 md:w-3/4 lg:w-[60rem] h-60 lg:h-96 text-sm flex justify-center items-center bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
+        //                 <button onClick={props.toggleModal} className="material-symbols-rounded text-2xl absolute right-5 top-5">close</button>
+        //                 <h1 className="font_gotham_medium text-3xl">You've already subscribed the Newsletter</h1>
+        //             </div>
+        //         </div>
+        //     </>
 
         return <>
             <div className={`w-full min-h-screen py-10 md:py-0 font_gotham fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
@@ -115,13 +136,13 @@ export default function Newsletter(props) {
                                 {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                 <div className="font_gotham_light w-full md:w-3/5 flex justify-between items-center ">
                                     <div className='mr-2' >
-                                        <input key={1} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='male'>Male</label>
+                                        <input key={1} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="male" name="gender" value="male" defaultChecked={user && user.gender && user.gender.toLowerCase() == "male"} onBlur={handleBlur} onChange={handleChange} /><label htmlFor='male'>Male</label>
                                     </div>
                                     <div className='mr-2' >
-                                        <input key={2} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="female" name="gender" value="female" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='female'>Female</label>
+                                        <input key={2} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="female" name="gender" value="female" defaultChecked={user && user.gender && user.gender.toLowerCase() == "female"} onBlur={handleBlur} onChange={handleChange} /><label htmlFor='female'>Female</label>
                                     </div>
                                     <div className='mr-2' >
-                                        <input key={3} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="fluid" name="gender" value="fluid" onBlur={handleBlur} onChange={handleChange} /><label htmlFor='fluid'>Fluid</label>
+                                        <input key={3} className='custom_checkbox rounded-full mx-3 translate-y-[1px]' type="radio" id="fluid" name="gender" value="fluid" defaultChecked={user && user.gender && user.gender.toLowerCase() == "fluid"} onBlur={handleBlur} onChange={handleChange} /><label htmlFor='fluid'>Fluid</label>
                                     </div>
                                 </div>
                             </div>

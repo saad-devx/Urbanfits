@@ -46,7 +46,6 @@ export default async function handler(req, res) {
                 success_url: `${process.env.HOST}/checkout/thanks?payment=true`,
                 cancel_url: `${process.env.HOST}/checkout/step1?payment=false`
             });
-            console.log(session)
             const { url } = session
             res.send(url)
 
