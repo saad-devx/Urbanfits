@@ -52,7 +52,6 @@ export default function User(props) {
     // states and function for modals
     const [modal5, setModal5] = useState(false)
     const toggleModal = (e, name) => {
-        console.log(e.target.name)
         if (name || e.target.name === "modal5") {
             if (modal5 === false) return setModal5(true)
             if (modal5 === true) return setModal5(false)

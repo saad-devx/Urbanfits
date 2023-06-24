@@ -10,6 +10,7 @@ import Error403 from '../403';
 import Card from '../../components/cards/card'
 import Newsletter from '@/components/modals/newsletter';
 import useNewsletter from '@/hooks/useNewsletter';
+import useAddress from '@/hooks/useAddress';
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
 // imports for Schema and validation
@@ -51,6 +52,7 @@ const AddressContainer = (props) => {
 export default function Personalinfo() {
     const { user, updateUser } = useUser()
     const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
+    const { address, getAddress } = useAddress()
     const [loader, setLoader] = useState(false)
     const [letterModal, setLetterModal] = useState(false)
     const [letterBools, setLetterBools] = useState({
@@ -68,16 +70,10 @@ export default function Personalinfo() {
         lastname: Yup.string().min(2).required("Please enter your Last name"),
         gender: Yup.string().required('Gender is required field'),
         phone_prefix: Yup.string().required('Phone prefix is required to save'),
-        phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save'),
-        active_by_email: Yup.bool(),
-        active_by_phone: Yup.bool()
+        phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save')
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: {
-            title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '',
-            active_by_email: newsletterData && newsletterData.active_by_email ? newsletterData.active_by_email : false,
-            active_by_phone: newsletterData && newsletterData.active_by_number ? newsletterData.active_by_number : false
-        },
+        initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '' },
         validationSchema: validatedSchema,
         onSubmit: async (values) => {
             setLoader(<Loader />)
@@ -93,9 +89,7 @@ export default function Personalinfo() {
             lastname: ifExists(user.lastname),
             gender: ifExists(user.gender),
             phone_prefix: ifExists(user.phone_prefix),
-            phone_number: ifExists(user.phone_number),
-            active_by_email: ifExists(user.newsletter_sub_email, false),
-            active_by_phone: ifExists(user.newsletter_sub_phone, false)
+            phone_number: ifExists(user.phone_number)
         })
         return async () => {
             if (!newsletterData) await getNewsletterData()
@@ -106,6 +100,17 @@ export default function Personalinfo() {
             })
         }
     }, [])
+
+    useEffect(() => {
+        return async () => {
+            if (!address) {
+                setLoader(<Loader />)
+                await getAddress()
+                return setLoader(false)
+            }
+            if (!address) return
+        }
+    }, [address])
 
     const newsletterSubToggle = async (e) => {
         const { name } = e.target
@@ -201,10 +206,10 @@ export default function Personalinfo() {
                         <h1 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mt-5">NEWSLETTER SUBSCRIPTION</h1>
                         <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData.active_by_email} value={letterBools.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email} value={letterBools.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData.active_by_phone} value={letterBools.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone} value={letterBools.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                         </div>
                         <div className=" w-full space-y-5 font_gotham_light">
@@ -213,8 +218,8 @@ export default function Personalinfo() {
                         </div>
                     </div>
                     <div className="w-full flex justify-end">
-                        <Button type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3 mx-2" font='font_gotham_medium' >CANCEL</Button>
-                        <Button type="submit" classes="w-full md:w-1/3 ml-2" font='font_gotham_medium' >SAVE</Button>
+                        <Button disabled={!loader ? false : true} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3 mx-2" font='font_gotham_medium' >CANCEL</Button>
+                        <Button loading={!loader ? false : true} type="submit" classes="w-full md:w-1/3 ml-2" font='font_gotham_medium' >SAVE</Button>
                     </div>
                 </form>
                 <div className='w-full' >

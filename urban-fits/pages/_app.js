@@ -18,7 +18,6 @@ import LoadingBar from 'react-top-loading-bar'
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getLocation } = useLocation()
   const { cursor } = useCursor()
-  const { user } = useUser()
   const { newsletterData, letterLoading } = useNewsletter()
   const [progress, setProgress] = useState(0)
   const router = useRouter()

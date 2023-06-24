@@ -8,7 +8,7 @@ import toaster from '@/utils/toast_function'
 import AlertPage from '@/components/alertPage'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import useUser from '@/hooks/useUser'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
@@ -25,15 +25,14 @@ export default function Login() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const { user, updateUser } = useUser()
+    const [showPass, setShowPass] = useState(false)
 
-    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
+    // if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
 
     const onsubmit = async (values, x, oAuthQuery) => {
-        console.log(values)
         try {
             setLoading(true)
             const res = await axios.post(`${process.env.HOST}/api/user/login${oAuthQuery ? oAuthQuery : ''}`, values)
-            console.log(res)
             if (res.data.success && res.data.payload) {
                 const { data } = res
                 await updateUser(data.payload, true)
@@ -69,18 +68,18 @@ export default function Login() {
         onSubmit: onsubmit
     })
 
-    const providerSignIn = (e) => {
-        const { name } = e.target
+    const providerSignIn = (name) => {
+        console.log(name)
         sessionStorage.setItem('oauth', true);
         sessionStorage.setItem('register_provider', name);
-        signIn(name)
+        return signIn(`${name}`)
     }
 
     useEffect(() => {
         if (user && user.email) return
         const oauth = sessionStorage.getItem('oauth')
         const register_provider = sessionStorage.getItem('register_provider')
-        if (oauth && session) {
+        if (oauth && session && session.user) {
             let username = session.user.email.split('@')[0]
             let name = session.user.name.split(' ')
             let firstname = name[0]
@@ -88,7 +87,7 @@ export default function Login() {
             let lastname = name.join(' ')
             const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
             onsubmit(loginDetails, null, '?auth=OAuth')
-            return localStorage.setItem('oauth', false)
+            return sessionStorage.removeItem('oauth')
         }
         else return
     }, [session])
@@ -98,6 +97,7 @@ export default function Login() {
         localStorage.setItem('remember_me', checked)
     }
 
+    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     return (
         <>
             <Head>
@@ -105,17 +105,18 @@ export default function Login() {
             </Head>
             <AuthPage loading={loading} >
                 <div className="font_gotham w-full my-5 flex justify-center space-x-6">
-                    <button onClick={providerSignIn} name='google' className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
-                    <button onClick={providerSignIn} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
+                    <button onClick={() => providerSignIn("google")} name='google' className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
+                    <button onClick={() => providerSignIn("apple")} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
                 </div>
                 <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                     <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                         {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                         <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Username or Email' />
                     </div>
-                    <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                    <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <input className="w-full outline-none border-none" type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <span onClick={() => { if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
                     </div>
                     <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
                         Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.

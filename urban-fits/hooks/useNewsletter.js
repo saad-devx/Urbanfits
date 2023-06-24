@@ -9,7 +9,7 @@ export default function useNewsletter() {
 
     const getInitialToken = () => {
         const token = jwt.decode(localStorage.getItem("user_newsletter_token"))
-        if (token && token._doc && token._doc.user) {console.log(token._doc); return token._doc}
+        if (token && token._doc && token._doc.user) { console.log(token._doc); return token._doc }
         else return null
     }
 
@@ -26,7 +26,6 @@ export default function useNewsletter() {
                 setNewsletterData(decodedPayload)
                 return localStorage.setItem("user_newsletter_token", payload)
             } catch (error) {
-                console.log(error.response.data.success)
                 setNewsletterData(null)
                 localStorage.setItem("user_newsletter_token", null)
             }
@@ -43,7 +42,6 @@ export default function useNewsletter() {
                 toaster("success", res.data.msg)
                 localStorage.setItem("user_newsletter_token", payload)
                 const decodedPayload = jwt.decode(payload)?._doc
-                console.log(decodedPayload)
                 setNewsletterData(decodedPayload)
             } catch (error) {
                 console.log(error)
@@ -54,7 +52,6 @@ export default function useNewsletter() {
         else if (!sendRequest) {
             localStorage.setItem("user_newsletter_token", valuesObj)
             const decodedPayload = jwt.decode(valuesObj)?._doc
-            console.log(decodedPayload)
             return setNewsletterData(decodedPayload)
         }
     }

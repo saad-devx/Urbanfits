@@ -124,6 +124,10 @@
   color: #383838;
   scroll-behavior: smooth;
 }
+*::selection{
+  background-color: rgb(216, 213, 49);
+  color: #ffff;
+}
 
 @media print {
   body * {
