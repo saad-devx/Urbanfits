@@ -1,6 +1,7 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 import Newsletter from "@/models/newsletter"
+import Addresses from "@/models/addresses"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 
@@ -13,12 +14,24 @@ const SignupCallback = async (req, res) => {
                 success: false,
                 msg: "Invalid confirmation token."
             })
-
             await ConnectDB()
+            const createAddressSchema = async (userId) => {
+                let user = await User.findById(userId)
+                if (!user) return console.log("User with corresponding id not found")
+                let addresses = await Addresses.findOne({ user_id: userId })
+                if (addresses) return console.log("This address schema already exists")
+                addresses = await Addresses.create({
+                    "user_id": userId,
+                    "addresses": []
+                })
+                console.log("Address schema created successfully")
+                return addresses
+            }
+
             let credentials = null;
-            try{
+            try {
                 credentials = jwt.verify(token, process.env.SECRET_KEY)
-            }catch(e){
+            } catch (e) {
                 return res.status(400).json({
                     success: false,
                     msg: "Invalid or expired web token provided.",
@@ -35,6 +48,7 @@ const SignupCallback = async (req, res) => {
                     msg: "You're Resgistered successfully !",
                     payload
                 })
+                createAddressSchema(user._id)
                 const userLetter = await Newsletter.findOne({ email: credentials.email, user: "guest" })
                 if (userLetter) return userLetter.update({ active: true, user: user._id })
             }
