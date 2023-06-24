@@ -5,29 +5,28 @@ import Navbar from '@/components/navbar';
 import AlertPage from '@/components/alertPage';
 import Footer from '@/components/footer';
 import LinkBtn from '@/components/buttons/link_btn';
+import toaster from '@/utils/toast_function';
+import { useCart } from 'react-use-cart';
 // imports for images
 import Image from 'next/image';
 
-export default function Thanks(props) {
+export default function Thanks() {
     const router = useRouter()
-    const { success } = router.query
-    const getBool = (success) => {
-        if (success == "true") return true
-        if (success == "false") return false
-    }
+    const { emptyCart } = useCart()
     const order = sessionStorage.getItem("this_order_data")
-    if (!getBool(success) || !order) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
+    if (!order) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
     const orderData = JSON.parse(order)
-    // if (Date.now() >= orderData.expires_at) {
-    //     sessionStorage.removeItem("this_order_data")
-    //     return <AlertPage type="error" heading="Oh Snap! Order Session Expired" message="Your order session is expired, keep shopping and checkout when you're ready." />
-    // }
+    if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
     const date = new Date()
+
     useEffect(() => {
-        setTimeout(() => {
-            sessionStorage.removeItem("this_order_data")
-        }, 60000 * 1.5)
-    }, []);
+        const { payment } = router.query
+        if (payment) {
+            emptyCart()
+            return toaster("success", "Payment successful")
+        }
+        sessionStorage.setItem("this_order_data", JSON.stringify({ ...orderData, used: true }))
+    }, [router.query.payment])
 
     return (
         <>
@@ -55,7 +54,7 @@ export default function Thanks(props) {
                             {orderData.items?.map((item) => {
                                 return <div className="w-full my-5 flex justify-between items-center">
                                     <div className="w-1/5 md:w-[15%] aspect-square">
-                                        <Image width={560} height={590} src={item.images[0].url} alt="Urban images" className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
+                                        <Image width={560} height={590} src={item.images[0]} alt={item.name} className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
                                     </div>
                                     <span className="flex flex-col items-end">
                                         <h1 className="tex-base lg:text-2xl font_gotham_medium">{item.name}</h1>

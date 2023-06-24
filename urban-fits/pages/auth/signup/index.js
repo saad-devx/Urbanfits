@@ -9,9 +9,8 @@ import AlertPage from '@/components/alertPage'
 import countryCodes from '@/static data/countryCodes'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import useUser from '@/hooks/useUser'
-import useAddress from '@/hooks/useAddress'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 //Image imports
@@ -24,7 +23,7 @@ export default function Signup() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const { user, updateUser } = useUser()
-    const { initiateAddress } = useAddress()
+    const [showPass, setShowPass] = useState(false)
 
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
 
@@ -36,7 +35,6 @@ export default function Signup() {
             if (res.data.success && res.data.payload && oAuthQuery) {
                 const { data } = res
                 await updateUser(data.payload, true)
-                await initiateAddress(data.payload, router)
                 toaster("success", data.msg)
                 router.push('/user/personalinfo')
             }
@@ -67,8 +65,7 @@ export default function Signup() {
         onSubmit: onsubmit
     })
 
-    const providerSignIn = (e) => {
-        const { name } = e.target
+    const providerSignIn = (name) => {
         sessionStorage.setItem('oauth', true);
         sessionStorage.setItem('register_provider', name);
         signIn(name)
@@ -86,7 +83,7 @@ export default function Signup() {
             let lastname = name.join(' ')
             const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
             onsubmit(loginDetails, null, '?auth=OAuth')
-            return localStorage.setItem('oauth', false)
+            return sessionStorage.removeItem('oauth')
         }
         else return
     }, [session])
@@ -120,9 +117,10 @@ export default function Signup() {
                         {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                     </div>
-                    <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                    <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <input className="w-full outline-none border-none" type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <span onClick={() => { if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
                     </div>
                     <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
                         Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.
@@ -140,8 +138,8 @@ export default function Signup() {
                     <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
                 </form>
                 <div className="font_gotham w-full mt-5 flex justify-center space-x-6">
-                    <button onClick={providerSignIn} name='google' className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
-                    <button onClick={providerSignIn} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
+                    <button onClick={()=>providerSignIn("google")} name='google' className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
+                    <button onClick={()=>providerSignIn("apple")} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
                 </div>
             </AuthPage>
         </>

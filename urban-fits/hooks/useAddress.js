@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useUser from "./useUser";
 import jwt from 'jsonwebtoken'
+import axios from "axios";
 import toaster from "@/utils/toast_function";
 
 export default function useAddress() {
@@ -13,12 +14,19 @@ export default function useAddress() {
     }
     const [address, setAddress] = useState(getAddressFromLS)
     const getAddress = async () => {
-        const res = await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user._id}`)
-        let address = await res.json()
-        localStorage.setItem("addressToken", address.payload)
-        const decodedAddress = jwt.decode(address.payload)
-        setAddress(decodedAddress._doc)
-        return decodedAddress._doc
+        if (!user) return
+        try {
+            const res = await axios.get(`${process.env.HOST}/api/user/addresses/get?user_id=${user._id}`)
+            const { payload } = res.data
+            localStorage.setItem("addressToken", payload)
+            const { _doc } = jwt.decode(payload)
+            if (!_doc) return null
+            setAddress(_doc)
+            return _doc
+        } catch (err) {
+            console.log(err.response.data.msg)
+            return null
+        }
     }
 
     const updateAddress = async (values) => {
@@ -42,23 +50,5 @@ export default function useAddress() {
         }
     }
 
-    const initiateAddress = async (payload, router) => {
-        let user_id = jwt.decode(payload)._doc._id
-        if (router.pathname === "/signup") {
-            let address = await fetch(`${process.env.HOST}/api/user/addresses/create?user_id=${user_id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
-            })
-            let parsedAddress = await address.json()
-            localStorage.setItem("addressToken", parsedAddress.payload)
-        }
-        else if (router.pathname === "/login") {
-            let address = await fetch(`${process.env.HOST}/api/user/addresses/get?user_id=${user_id}`)
-            let parsedAddress = await address.json()
-            localStorage.setItem("addressToken", parsedAddress.payload)
-        }
-        else return
-    }
-
-    return { address, initiateAddress, updateAddress, getAddress }
+    return { address, updateAddress, getAddress }
 }

@@ -3,6 +3,8 @@ import User from "@/models/user"
 import Newsletter from "@/models/newsletter"
 import newsletter_confirm_template from "@/email templates/newsletter_confirm"
 import sendEmail from "@/utils/sendEmail"
+import jwt from 'jsonwebtoken'
+const mongoose = require('mongoose')
 
 const CreateNewsletter = async (req, res) => {
     try {
@@ -10,16 +12,17 @@ const CreateNewsletter = async (req, res) => {
             console.log(req.body)
             await ConnectDB()
             const id = req.body.user
+
             const returnIfSubscribed = async (email) => {
                 let letter = await Newsletter.findOne({ email: email })
                 if (letter) return res.status(400).json({ success: false, msg: "This email has already subscribed our Newsletter" })
             }
-            const createLetter = async (values) => {
-                const letter = await Newsletter.create(values)
+            const sendTokenRes = async (letter) => {
+                const payload = jwt.sign({ ...letter }, process.env.SECRET_KEY)
                 return res.status(200).json({
                     success: true,
-                    data: letter,
-                    msg: "You have successfully subscribed to our newsletter!"
+                    msg: "You have successfully subscribed to our newsletter!",
+                    payload
                 })
             }
             const sendSubConfirmation = async (name, interests) => {
@@ -29,7 +32,8 @@ const CreateNewsletter = async (req, res) => {
 
             if (!id) {
                 await returnIfSubscribed(req.body.email)
-                await createLetter(req.body)
+                const letter = await Newsletter.create(req.body)
+                await sendTokenRes(letter)
                 return await sendSubConfirmation(null, req.body.interests)
             }
 
@@ -37,7 +41,16 @@ const CreateNewsletter = async (req, res) => {
                 let user = await User.findById(req.body.user)
                 if (!user) return res.status(404).json({ success: false, msg: "User not found" })
                 await returnIfSubscribed(req.body.email)
-                await createLetter(req.body)
+
+                let letter = await Newsletter.findOne({ user: mongoose.Types.ObjectId(id) })
+                if (letter) {
+                    const { email, phone } = req.body
+                    if (email) letter = await Newsletter.findByIdAndUpdate(letter._id, { ...req.body, active_by_email: true })
+                    if (phone) letter = await Newsletter.findByIdAndUpdate(letter._id, { ...req.body, active_by_phone: true })
+                }
+                else letter = await Newsletter.create(req.body)
+
+                await sendTokenRes(letter)
                 return await sendSubConfirmation(user.firstname, req.body.interests)
                 // letter = await ( await Newsletter.create(req.body)).populate("user")
             }

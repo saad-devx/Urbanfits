@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useCart } from "react-use-cart";
 import 'react-toastify/dist/ReactToastify.css';
 import LinkBtn from '@/components/buttons/link_btn';
 import Loader from './loaders/loader';
@@ -14,7 +13,6 @@ export default function Search(props) {
         try {
             setQuery(e.target.value)
             let results = await (await fetch(`${process.env.HOST}/api/search?q=${query}`)).json()
-            console.log(results)
             if (results) setResults(results)
             return setLoader(null)
         }
@@ -23,8 +21,6 @@ export default function Search(props) {
             return setLoader(null)
         }
     }
-    // destructuring Cart function
-    const { addItem } = useCart()
     return (
         <>
             <main className={`bg-white w-screen layout_height fixed top-[50px] right-0 z-40 transition-all duration-1000 ease-[cubic-bezier(1,0.35,0.15,1)] overflow-hidden ${props.search === true ? "" : "-translate-y-[100vh]"} font_gotham`}>
