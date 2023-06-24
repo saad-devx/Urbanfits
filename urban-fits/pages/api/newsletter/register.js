@@ -26,7 +26,6 @@ const CreateNewsletter = async (req, res) => {
                 })
             }
             const sendSubConfirmation = async (name, interests) => {
-                return
                 const template = newsletter_confirm_template(name, interests)
                 await sendEmail({ to: req.body.email, subject: "Newsletter Subscription Confirmation" }, template)
             }
