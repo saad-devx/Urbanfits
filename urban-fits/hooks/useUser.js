@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useCart } from "react-use-cart";
+import useNewsletter from "./useNewsletter";
 import { signOut } from "next-auth/react"
 import toaster from "@/utils/toast_function";
 import jwt from 'jsonwebtoken';
@@ -8,6 +9,7 @@ import jwt from 'jsonwebtoken';
 export default function useUser() {
     const router = useRouter()
     const { emptyCart } = useCart()
+    const { clearNewsletterData } = useNewsletter()
     const getInitialToken = () => {
         const token = jwt.decode(localStorage.getItem("authToken"))
         if (token && token._doc && token._doc.email) return token._doc
@@ -38,6 +40,8 @@ export default function useUser() {
         router.push('/')
         if (user.register_provider !== "urbanfits") signOut()
         localStorage.clear()
+        clearNewsletterData()
+        sessionStorage.clear()
         setUser(null)
         emptyCart()
         toaster("success", "You are signed out !")

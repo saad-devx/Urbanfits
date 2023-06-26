@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import AuthPage from '.'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
@@ -27,7 +27,7 @@ export default function Login() {
     const { user, updateUser } = useUser()
     const [showPass, setShowPass] = useState(false)
 
-    // if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
+    const passRef = useRef()
 
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
@@ -116,7 +116,7 @@ export default function Login() {
                     <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
                         <input className="w-full outline-none border-none" type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
-                        <span onClick={() => { if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
+                        <span onClick={() => {passRef.current.focus(); if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
                     </div>
                     <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
                         Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.

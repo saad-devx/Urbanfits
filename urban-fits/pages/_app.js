@@ -4,21 +4,18 @@ import '@/styles/pillbtns.css'
 import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'
 import { SessionProvider } from "next-auth/react"
-import CustomCursor from '@/components/customCursor'
+// import CustomCursor from '@/components/customCursor'
 import dynamic from 'next/dynamic';
 import useLocation from '@/hooks/useLocation'
 import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
-import useNewsletter from '@/hooks/useNewsletter'
-import { useCursor } from '@/hooks/useCursor'
 import LoadingBar from 'react-top-loading-bar'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getLocation } = useLocation()
-  const { cursor } = useCursor()
-  const { newsletterData, letterLoading } = useNewsletter()
+  // const { cursor } = useCursor()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
@@ -49,7 +46,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 
   return (
     <>
-      {cursor ? <CustomCursor /> : null}
+      {/* {cursor ? <CustomCursor /> : null} */}
       <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={400} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
       <ToastContainer className="toast" />
       <SessionProvider session={session}>

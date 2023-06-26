@@ -31,7 +31,7 @@ const CreateNewsletter = async (req, res) => {
             }
 
             if (!id) {
-                await returnIfSubscribed(req.body.email)
+                await returnIfSubscribed(req.body.email || req.body.phone)
                 const letter = await Newsletter.create(req.body)
                 await sendTokenRes(letter)
                 return await sendSubConfirmation(null, req.body.interests)
@@ -40,7 +40,7 @@ const CreateNewsletter = async (req, res) => {
             if (id) {
                 let user = await User.findById(req.body.user)
                 if (!user) return res.status(404).json({ success: false, msg: "User not found" })
-                await returnIfSubscribed(req.body.email)
+                await returnIfSubscribed(req.body.email || req.body.phone)
 
                 let letter = await Newsletter.findOne({ user: mongoose.Types.ObjectId(id) })
                 if (letter) {

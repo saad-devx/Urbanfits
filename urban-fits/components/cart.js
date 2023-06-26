@@ -29,8 +29,8 @@ function CartItem(props) {
     const changeQuantity = (e, id) => {
         // updateItemQuantity(product.id, product.quantity)
         let name = e.target.getAttribute("name")
-        if (name === "decrement" && quantity === 1) return
-        if (name === "increment" && quantity === getFilteredQuantity()) return
+        if (name === "decrement" && quantity <= 1) return setQuantity(1)
+        if (name === "increment" && quantity >= getFilteredQuantity()) return setQuantity(getFilteredQuantity())
         if (name === "decrement") {
             setQuantity(quantity - 1)
             updateItemQuantity(id, quantity - 1)
@@ -57,7 +57,7 @@ function CartItem(props) {
                     <select type="select" onChange={onSizeChange} value={sizevalue} className="select_element relative cursor-pointer w-24 h-11 font_gotham_medium tracking-widest text-xs px-5 border outline-none">
                         {product.sizes.map(obj => {
                             const { size } = obj
-                            return <option value={size}>{size}</option>
+                            return <option disabled={obj.quantity < 1? true: false} value={size}>{size}</option>
                         })}
                     </select>
                 </div>
@@ -142,7 +142,7 @@ export default function Cart(props) {
                                         <br />
                                         <span className="w-full my-3 mx-auto flex justify-between"><small>TOTAL</small> <small>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</small></span>
                                     </div>
-                                    <LinkBtn href="/checkout/step1" onclick={props.toggleCart} font='font_gotham_medium tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
+                                    <LinkBtn href="/checkout/step1" onClick={props.toggleCart} font='font_gotham_medium tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
                                 </div>
                             </div>
                             <div className="w-full px-4 lg:px-14">

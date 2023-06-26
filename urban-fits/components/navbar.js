@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
 import ToTopBtn from './buttons/toTopBtn';
-import CursorToggleBtn from './buttons/cursor-toggle-btn';
+// import CursorToggleBtn from './buttons/cursor-toggle-btn';
 import Logo from '@/public/logos/logo_black.svg'
 // image imports
 import Image from 'next/image';
@@ -210,7 +210,7 @@ export default function Navbar(props) {
                                     <span className="w-5 group-hover:w-0 h-[2px] mx-1 bg-black transition-all"></span>
                                 </span>
                             </div>
-                            <CursorToggleBtn />
+                            {/* <CursorToggleBtn /> */}
                             <SocialIcons classes='hidden lg:block' />
                         </div>
                         <SocialIcons classes='mt-10 lg:hidden' />

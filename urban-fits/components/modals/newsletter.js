@@ -21,7 +21,7 @@ export default function Newsletter(props) {
             if (!newsletterData) await getNewsletterData()
             if (!newsletterData) return
         }
-    }, [])
+    }, [newsletterData])
 
     // schema and validation with yup and fromik
     const newsLetterSchema = Yup.object({
@@ -43,14 +43,13 @@ export default function Newsletter(props) {
         "interests": Yup.array().min(1, "Please select at least one interest")
     })
     const getContact = () => {
-        if (user && newsletterData) {
-            const { email, phone } = newsletterData
-            if (!email) return user.email
-            if (!phone) return `${user.phone_prefix} ${user.phone_number}`
+        if (user) {
+            if (!newsletterData || !newsletterData.email) return user.email
+            if (!newsletterData || !newsletterData.phone) return `${user.phone_prefix} ${user.phone_number}`
         }
         else return ""
     }
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue, setFieldError } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue, setFieldError, setValues } = useFormik({
         initialValues: {
             "contact": getContact(),
             "gender": user && user.gender ? user.gender : '', "interests": []
@@ -63,16 +62,16 @@ export default function Newsletter(props) {
             })()
             let id = user?._id
             let payload = user ? { ...values, user: id } : values
-            console.log(payload)
             setLoading(true);
             try {
                 let { data } = await axios.post(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, payload)
                 await updateNewsletterData(data.payload, false)
                 toaster("success", data.msg)
                 props.toggleModal(false)
+                handleReset()
             } catch (e) {
-                const { msg } = e.response.data
-                console.log(msg)
+                console.log(e)
+                const { msg } = e.response?.data
                 toaster('error', msg)
             }
             return setLoading(false);

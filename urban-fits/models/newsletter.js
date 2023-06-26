@@ -3,14 +3,17 @@ const mongoose = require('mongoose')
 const NewsletterSchema = mongoose.Schema({
     email: {
         type: String,
-        unique: [true, "This email address is already in use"]
+        unique: true,
+        sparse: true
     },
     phone: {
         type: String,
-        unique: [true, "This email address is already in use"]
+        unique: true,
+        sparse: true
     },
     gender: {
         type: String,
+        enum: ["male", "female", "fluid"],
         required: [true, "Please enter a valid gender"]
     },
     interests: {
