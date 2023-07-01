@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import Error403 from '@/pages/403';
@@ -18,6 +19,10 @@ export default function OrdersPage(props) {
     if (!user) return <Error403 />
     return (
         <>
+            <Head>
+                <title>Orders</title>
+                <meta name="description" content="Urban Fits user order information" />
+            </Head>
             <User profileNull >
                 <h1 className='my-5 text-2xl lg:text-3xl font_gotham_medium tracking-wide lg:tracking-widest'>MY ORDERS</h1>
                 <div className="w-full text-sm md:text-base overflow-x-scroll hide_scrollbar">

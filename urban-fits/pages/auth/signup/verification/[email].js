@@ -23,8 +23,6 @@ export default function Verification(props) {
             <p className="w-4/5 my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">CREATING YOUR ACCOUNT, PLEASE WAIT !</p></>
     )
 
-    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
-
     useEffect(() => {
         const decodedToken = jwt.decode(token)
         const unixTime = Math.floor(Date.now() / 1000)
@@ -59,6 +57,7 @@ export default function Verification(props) {
         }
     }, [token])
 
+    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     if (email && !token) return (
         <>
             <Head><title>Email Verification</title></Head>

@@ -107,7 +107,7 @@ const AddressForm = (props) => {
                 </div>
             </div>
             <div className="w-full flex justify-end space-x-4">
-                <Button disabled={loading} type="reset" bg="bg-gray-200" text="black" classes="w-full md:w-1/3" >Cancel</Button>
+                <Button disabled={loading} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3" >Cancel</Button>
                 <Button loading={loading} type="submit" classes="w-full md:w-1/3" >Save</Button>
             </div>
         </form>)
