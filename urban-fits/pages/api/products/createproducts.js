@@ -13,12 +13,12 @@ const CreateProducts = async (req, res) => {
             })
         }
         else {
-            res.status(405).json({ error: "Method not Allowed, you are using wrong request method!" })
+            res.status(405).json({ success: false, error: "Method not Allowed, you are using wrong request method!" })
         }
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ error: "Internal server error ocurred, please try later." })
+        res.status(500).json({ success: false, error: "Internal server error ocurred, please try later." })
     }
 }
 

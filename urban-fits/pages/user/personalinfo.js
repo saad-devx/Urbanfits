@@ -167,9 +167,9 @@ export default function Personalinfo() {
                             {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                             <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 <option disabled >Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Fluid</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="fluid">Fluid</option>
                             </select>
                         </div>
                         {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">

@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import toaster from "@/utils/toast_function";
+import getUser_LS from '@/utils/getUserfromLS';
 import axios from "axios";
 import jwt from 'jsonwebtoken';
 
@@ -18,7 +19,6 @@ const useNewsletter = create((set, get) => ({
         if (!user) return
 
         const token = jwt.decode(localStorage.getItem("user_newsletter_token"))
-        console.log(token)
         if (token && token._doc && token._doc.user) return set((state) =>
             ({ newsletterData: token._doc })
         )

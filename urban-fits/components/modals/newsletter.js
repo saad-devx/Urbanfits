@@ -57,8 +57,8 @@ export default function Newsletter(props) {
         validationSchema: newsLetterSchema,
         onSubmit: async (values0) => {
             const values = (() => {
-                if (values0.contact.includes('@')) return { email: values0.contact, gender: values0.gender, interests: values0.interests }
-                else return { phone: values0.contact, gender: values0.gender, interests: values0.interests }
+                if (values0.contact.includes('@')) return { email: values0.contact, gender: values0.gender.toLowerCase(), interests: values0.interests }
+                else return { phone: values0.contact, gender: values0.gender.toLowerCase(), interests: values0.interests }
             })()
             let id = user?._id
             let payload = user ? { ...values, user: id } : values
@@ -113,7 +113,7 @@ export default function Newsletter(props) {
                         <div className="w-full space-y-5">
                             <div className="w-full flex justify-between items-center">
                                 <h3 className="text-black font_gotham_medium text-sm md:text-base">Move To The Urban Fits</h3>
-                                <button onClick={() => { handleReset(); props.toggleModal() }} className="material-symbols-rounded text-2xl">close</button>
+                                <button onClick={() => { handleReset(); setLoading(false); props.toggleModal() }} className="material-symbols-rounded text-2xl">close</button>
                             </div>
                             <p className='font_gotham_light text-xs md:text-sm' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
                         </div>

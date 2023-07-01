@@ -13,8 +13,15 @@ const CreateNewsletter = async (req, res) => {
             await ConnectDB()
             const id = req.body.user
 
-            const returnIfSubscribed = async (email) => {
-                let letter = await Newsletter.findOne({ email: email })
+            const returnIfSubscribed = async (body) => {
+                console.log(body)
+                const toFindObj = () => {
+                    const { email, phone } = body
+                    if (email) return { email }
+                    if (phone) return { phone }
+                }
+                console.log(toFindObj())
+                let letter = await Newsletter.findOne(toFindObj())
                 if (letter) return res.status(400).json({ success: false, msg: "This email has already subscribed our Newsletter" })
             }
             const sendTokenRes = async (letter) => {
@@ -26,21 +33,26 @@ const CreateNewsletter = async (req, res) => {
                 })
             }
             const sendSubConfirmation = async (name, interests) => {
+                if (!req.body.email) return
                 const template = newsletter_confirm_template(name, interests)
                 await sendEmail({ to: req.body.email, subject: "Newsletter Subscription Confirmation" }, template)
             }
 
             if (!id) {
-                await returnIfSubscribed(req.body.email || req.body.phone)
-                const letter = await Newsletter.create(req.body)
-                await sendTokenRes(letter)
-                return await sendSubConfirmation(null, req.body.interests)
+                const { email, phone } = req.body
+                await returnIfSubscribed(req.body)
+
+                let letter;
+                if (email) letter = await Newsletter.create({ ...req.body, active_by_email: true })
+                if (phone) letter = await Newsletter.create({ ...req.body, active_by_phone: true })
+                sendSubConfirmation(null, req.body.interests)
+                return await sendTokenRes(letter)
             }
 
             if (id) {
                 let user = await User.findById(req.body.user)
                 if (!user) return res.status(404).json({ success: false, msg: "User not found" })
-                await returnIfSubscribed(req.body.email || req.body.phone)
+                await returnIfSubscribed(req.body)
 
                 let letter = await Newsletter.findOne({ user: mongoose.Types.ObjectId(id) })
                 if (letter) {
@@ -50,8 +62,8 @@ const CreateNewsletter = async (req, res) => {
                 }
                 else letter = await Newsletter.create(req.body)
 
-                await sendTokenRes(letter)
-                return await sendSubConfirmation(user.firstname, req.body.interests)
+                sendSubConfirmation(user.firstname, req.body.interests)
+                return await sendTokenRes(letter)
                 // letter = await ( await Newsletter.create(req.body)).populate("user")
             }
         }

@@ -152,7 +152,7 @@ const GenericTable3 = (props) => {
                       className: column.collapse ? 'collapse' : '',
                     })}
                   >
-                    <span className="flex items-center gap-[5px] text-[15px] font-[400] text-[#0000004a] ">
+                    <span className="flex items-center gap-[5px] text-[15px] font-[400] text-black ">
                     {column.render("Header")}
                     {/* <span>
                       {column.isSorted ? (

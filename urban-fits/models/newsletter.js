@@ -3,13 +3,13 @@ const mongoose = require('mongoose')
 const NewsletterSchema = mongoose.Schema({
     email: {
         type: String,
-        unique: true,
-        sparse: true
+        // unique: true,
+        // sparse: true
     },
     phone: {
         type: String,
-        unique: true,
-        sparse: true
+        // unique: true,
+        // sparse: true
     },
     gender: {
         type: String,
@@ -22,7 +22,7 @@ const NewsletterSchema = mongoose.Schema({
     },
     active_by_email: {
         type: Boolean,
-        default: true
+        default: false
     },
     active_by_phone: {
         type: Boolean,

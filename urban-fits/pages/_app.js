@@ -15,13 +15,14 @@ import LoadingBar from 'react-top-loading-bar'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getLocation } = useLocation()
+  const { user } = useUser()
   // const { cursor } = useCursor()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
-  // if (router.pathname.startsWith("/admin")) {
-  //   if (!user || user.role !== "admin") return <div className="w-full h-screen flex justify-center items-center font_gotham_medium text-2xl tracking-expand">ACCESS DENIED</div>
-  // }
+  if (router.pathname.startsWith("/admin")) {
+    if (!user || user.role == "customer") return <div className="w-full h-screen flex justify-center items-center font_gotham_medium text-2xl tracking-expand">ACCESS DENIED</div>
+  }
 
   useEffect(() => {
     window.addEventListener("beforeunload", () => {

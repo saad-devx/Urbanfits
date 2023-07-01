@@ -10,16 +10,18 @@ const categorySchema = mongoose.Schema({
         type: 'string',
         unique: true
     },
+    path: {
+        type: String,
+        unique: true
+    },
     parent: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },
-    children: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Category'
-        }
-    ],
+    children: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    }],
     description: {
         type: 'string'
     }
