@@ -1,7 +1,9 @@
 import React from 'react'
+import { useRouter } from 'next/router';
 import Button from '../buttons/simple_btn';
 
 export default function Logout(props) {
+    const router = useRouter()
     return (
         <>
             <div className={`w-full h-full font_gotham fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.modal5 === false ? "opacity-0 pointer-events-none" : ''}`}>
@@ -14,7 +16,7 @@ export default function Logout(props) {
                         </div>
                         <div className="w-full mt-7 flex  justify-around">
                             <Button onClick={props.toggleModal} name="modal5" my="my-2" bg="bg-gray-200" text="black" classes="w-48pr" >Cancel</Button>
-                            <Button onClick={props.logOut} my="my-2" classes="w-48pr text-sm md:text-base text-center" >Sign Out</Button>
+                            <Button onClick={()=>props.logOut(router)} my="my-2" classes="w-48pr text-sm md:text-base text-center" >Sign Out</Button>
                         </div>
                     </section>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '@/components/navbar';
@@ -13,11 +13,8 @@ import Image from 'next/image';
 export default function Thanks() {
     const router = useRouter()
     const { emptyCart } = useCart()
-    const order = sessionStorage.getItem("this_order_data")
-    if (!order) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
-    const orderData = JSON.parse(order)
-    if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
-    const date = new Date()
+    const [orderAvailable, setOrderAvailable] = useState(true)
+    const [orderData, setOrderData] = useState(null)
 
     useEffect(() => {
         const { payment } = router.query
@@ -25,9 +22,21 @@ export default function Thanks() {
             emptyCart()
             return toaster("success", "Payment successful")
         }
-        sessionStorage.setItem("this_order_data", JSON.stringify({ ...orderData, used: true }))
     }, [router.query.payment])
 
+    useEffect(() => {
+        const orderSession = sessionStorage.getItem("this_order_data")
+        if (orderSession) setOrderAvailable(true)
+
+        const parsedOrder = JSON.parse(orderSession)
+        if (parsedOrder) setOrderData(parsedOrder)
+    }, [])
+
+    if (!orderAvailable || !orderData) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
+    console.log(orderData, orderData.used)
+    if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
+    sessionStorage.setItem("this_order_data", JSON.stringify({ ...orderData, used: true }))
+    const date = new Date()
     return (
         <>
             <Head>

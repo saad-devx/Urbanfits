@@ -51,14 +51,11 @@ const AddressContainer = (props) => {
 
 export default function Personalinfo() {
     const { user, updateUser } = useUser()
-    const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
+    const { newsletterData, getNewsletterData, updateNewsletterData, clearNewsletterData } = useNewsletter()
     const { address, getAddress } = useAddress()
     const [loader, setLoader] = useState(false)
     const [letterModal, setLetterModal] = useState(false)
-    const [letterBools, setLetterBools] = useState({
-        active_by_email: newsletterData?.active_by_email,
-        active_by_phone: newsletterData?.active_by_phone
-    })
+
     const toggleLetterModal = () => {
         if (letterModal === false) return setLetterModal(true)
         if (letterModal === true) return setLetterModal(false)
@@ -94,10 +91,6 @@ export default function Personalinfo() {
         return async () => {
             if (!newsletterData) await getNewsletterData()
             if (!newsletterData) return
-            return setLetterBools({
-                active_by_email: newsletterData?.active_by_email,
-                active_by_phone: newsletterData?.active_by_phone
-            })
         }
     }, [])
 
@@ -114,29 +107,26 @@ export default function Personalinfo() {
 
     const newsletterSubToggle = async (e) => {
         const { name } = e.target
-        console.log(name)
         if (name == "active_by_email") {
             if (!newsletterData || !newsletterData.email) {
-                setLetterBools({ ...letterBools, active_by_email: false })
+                clearNewsletterData()
                 return toggleLetterModal()
             }
             else {
                 setLoader(<Loader />)
                 await updateNewsletterData({ active_by_email: newsletterData.active_by_email ? false : true })
                 setLoader(false)
-                setLetterBools({ ...letterBools, active_by_email: newsletterData.active_by_email })
             }
         }
         if (name == "active_by_phone") {
             if (!newsletterData || !newsletterData.phone) {
-                setLetterBools({ ...letterBools, active_by_phone: false })
+                clearNewsletterData()
                 return toggleLetterModal()
             }
             else {
                 setLoader(<Loader />)
                 await updateNewsletterData({ active_by_phone: newsletterData.active_by_phone ? false : true })
                 setLoader(false)
-                setLetterBools({ ...letterBools, active_by_phone: newsletterData.active_by_phone })
             }
         }
 
@@ -177,9 +167,9 @@ export default function Personalinfo() {
                             {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                             <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                 <option disabled >Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Fluid</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="fluid">Fluid</option>
                             </select>
                         </div>
                         {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -206,10 +196,10 @@ export default function Personalinfo() {
                         <h1 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mt-5">NEWSLETTER SUBSCRIPTION</h1>
                         <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email} value={letterBools.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                             <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone} value={letterBools.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
                         </div>
                         <div className=" w-full space-y-5 font_gotham_light">

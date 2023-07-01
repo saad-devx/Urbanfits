@@ -60,7 +60,7 @@ export const userListTableColumns = [
 
 export const userListTableData = [
   {
-    profile: <Image src={tableAvatarMan1} />,
+    profile: <Image alt="product image" src={tableAvatarMan1} />,
     name: "John",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -70,7 +70,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarGirl1} />,
+    profile: <Image alt="product image" src={tableAvatarGirl1} />,
     name: "Artur",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -80,7 +80,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarGirl2} />,
+    profile: <Image alt="product image" src={tableAvatarGirl2} />,
     name: "Arthur",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -90,7 +90,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarMan2} />,
+    profile: <Image alt="product image" src={tableAvatarMan2} />,
     name: "Doe John",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -100,7 +100,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarMan3} />,
+    profile: <Image alt="product image" src={tableAvatarMan3} />,
     name: "Willson",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -110,7 +110,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarMan1} />,
+    profile: <Image alt="product image" src={tableAvatarMan1} />,
     name: "Dikra Willson",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -120,7 +120,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarGirl1} />,
+    profile: <Image alt="product image" src={tableAvatarGirl1} />,
     name: "Sara Khan",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -130,7 +130,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarGirl2} />,
+    profile: <Image alt="product image" src={tableAvatarGirl2} />,
     name: "Natellie",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -140,7 +140,7 @@ export const userListTableData = [
     action: <ActionButton />,
   },
   {
-    profile: <Image src={tableAvatarMan2} />,
+    profile: <Image alt="product image" src={tableAvatarMan2} />,
     name: "Mark Gomis",
     email: "Bilawalashraf@gmail.com",
     phone: "+91-989-325-8652",
@@ -204,7 +204,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -225,7 +225,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Ali </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Ali </p>{" "}
         <p> </p>
       </span>
     ),
@@ -246,7 +246,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -267,7 +267,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -288,7 +288,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -309,7 +309,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -330,7 +330,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -351,7 +351,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -372,7 +372,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -393,7 +393,7 @@ export const newOrderTableData = [
     id: <p className="text-[14px] "> 354 </p>,
     item: (
       <span className="flex gap-[10px] items-center text-[14px] font-[400] ">
-        <Image src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
+        <Image alt="product image" src={smartWatch} /> <p className=" ">Smart Watch </p>{" "}
         <p> </p>
       </span>
     ),
@@ -610,7 +610,7 @@ export const orderProductDetailTableColumns = [
 export const orderProductDetailTableData = [
   {
     id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image src={sneakers} /> ,
+    image:  <Image alt="product image" src={sneakers} /> ,
     product:  <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
@@ -621,7 +621,7 @@ export const orderProductDetailTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image src={sneakers} /> ,
+    image:  <Image alt="product image" src={sneakers} /> ,
     product:  <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
@@ -632,7 +632,7 @@ export const orderProductDetailTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image src={sneakers} /> ,
+    image:  <Image alt="product image" src={sneakers} /> ,
     product:  <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
@@ -643,7 +643,7 @@ export const orderProductDetailTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image src={sneakers} /> ,
+    image:  <Image alt="product image" src={sneakers} /> ,
     product:  <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
@@ -654,7 +654,7 @@ export const orderProductDetailTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image src={sneakers} /> ,
+    image:  <Image alt="product image" src={sneakers} /> ,
     product:  <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
@@ -854,7 +854,7 @@ export const invoiceTableColumns = [
 export const invoiceTableData = [
   {
     id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image src={smartWatch} /> , 
+    image:  <Image alt="product image" src={smartWatch} /> , 
     item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
     description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
     quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
@@ -864,7 +864,7 @@ export const invoiceTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 2</p>, 
-    image:  <Image src={smartWatch} /> , 
+    image:  <Image alt="product image" src={smartWatch} /> , 
     item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
     description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
     quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
@@ -874,7 +874,7 @@ export const invoiceTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 3 </p>, 
-    image:  <Image src={smartWatch} /> , 
+    image:  <Image alt="product image" src={smartWatch} /> , 
     item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
     description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
     quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
@@ -884,7 +884,7 @@ export const invoiceTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    image:  <Image src={smartWatch} /> , 
+    image:  <Image alt="product image" src={smartWatch} /> , 
     item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
     description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
     quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
@@ -894,7 +894,7 @@ export const invoiceTableData = [
   },
   {
     id:  <p className="text-[14px] font-[400]"> 5 </p>, 
-    image:  <Image src={smartWatch} /> , 
+    image:  <Image alt="product image" src={smartWatch} /> , 
     item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
     description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
     quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
@@ -1063,7 +1063,7 @@ export const productListTableColumns = [
 export const productListTableData = [
 
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1075,7 +1075,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " smart watch", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1087,7 +1087,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1099,7 +1099,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1111,7 +1111,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1123,7 +1123,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1135,7 +1135,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1147,7 +1147,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1159,7 +1159,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1171,7 +1171,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1183,7 +1183,7 @@ export const productListTableData = [
 
   },
   {
-    product: <Image src={smartWatch} /> , 
+    product: <Image alt="product image" src={smartWatch} /> , 
     name: " Baby shoes Bayhdahakd", 
     price:  "$ 20",
     offer:  "25% off", 
@@ -1242,7 +1242,7 @@ export const productCategoriesTableData = [
   },
   {
     id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    name: "Men ClothClothClothClothCloth" ,
     description: "Men Cloth",
     slug: "/men",
     order: "1",

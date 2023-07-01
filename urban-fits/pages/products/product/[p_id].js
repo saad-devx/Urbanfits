@@ -68,7 +68,7 @@ export default function Product(props) {
     //Cart function
     const { addItem, inCart } = useCart()
     const addToCart = () => {
-        if(getFilteredQuantity() < 1) return toaster('info', 'This item is out of stock right now')
+        if (getFilteredQuantity() < 1) return toaster('info', 'This item is out of stock right now')
         if (inCart(`${product._id}${sizevalue}`)) return toaster('info', 'This item is already in the cart!')
         addItem({
             product_id: productData.id,
@@ -205,7 +205,7 @@ export default function Product(props) {
 export async function getServerSideProps(context) {
     const { p_id } = await context.query
     try {
-        let response = await (await fetch(`${process.env.HOST}/api/products/getsingleproduct?id=${p_id}`)).json()
+        let response = await (await fetch(`${process.env.HOST}/api/products/get/one?id=${p_id}`)).json()
         if (!response.success) {
             return {
                 redirect: {
