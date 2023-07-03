@@ -2,29 +2,28 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 const mongoose = require('mongoose')
 
-// Only Accessable by Admin
 const GetProductByCategory = async (req, res) => {
+    console.log("\nhello this api is working\n")
     try {
         if (req.method === 'GET') {
-            await ConnectDB()
             const { id } = req.query
-
-            if (!mongoose.Types.ObjectId.isValid(id)) {
-                return res.status(400).json({
-                    success: false,
-                    msg: "invalid product id."
-                })
-            }
-
-            let product = await Product.findById(id)
-            if (!product) return res.status(404).json({
+            console.log(id)
+            if (!id || !mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({
                 success: false,
-                msg: "Product not found with corresponding id",
+                msg: "A valid category id is required"
+            })
+            await ConnectDB()
+
+            let products = await Product.find({ 'category.id': mongoose.Types.ObjectId(id) })
+            if (!products) return res.status(404).json({
+                success: false,
+                msg: "No products found with corresponding category",
             })
             res.status(200).json({
                 success: true,
-                msg: `Product found with the id ${id}`,
-                product
+                length: products.length,
+                msg: `Product found with the category of id ${id}`,
+                products
             })
         }
         else {

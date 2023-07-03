@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 
 const categorySchema = mongoose.Schema({
     name: {
-        type: 'string',
+        type: String,
         required: true,
         unique: true
     },
     slug: {
-        type: 'string',
+        type: String,
         unique: true
     },
     path: {
@@ -23,7 +23,7 @@ const categorySchema = mongoose.Schema({
         ref: 'Category'
     }],
     description: {
-        type: 'string'
+        type: String
     }
 }, { timestamps: true })
 

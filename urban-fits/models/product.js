@@ -17,11 +17,13 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a description for your product"],
         trim: true
     },
-    category: {
-        id: mongoose.Schema.Types.ObjectId,
-        path: { type: String },
-        ref: "Category",
-        required: true
+    p_category: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Category",
+            required: true
+        },
+        path: String
     },
     slug: {
         type: String,
