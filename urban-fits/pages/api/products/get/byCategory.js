@@ -14,7 +14,7 @@ const GetProductByCategory = async (req, res) => {
             })
             await ConnectDB()
 
-            let products = await Product.find({ 'category.id': mongoose.Types.ObjectId(id) })
+            let products = await Product.find({ 'p_category.id': mongoose.Types.ObjectId(id) })
             if (!products) return res.status(404).json({
                 success: false,
                 msg: "No products found with corresponding category",

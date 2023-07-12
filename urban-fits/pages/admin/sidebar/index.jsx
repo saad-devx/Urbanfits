@@ -21,13 +21,14 @@ import CardAdmin from "@/components/cards/cardadmin";
 import AvatarIconV from "@/public/icons/AvatarIconV";
 import { ClockIcon } from "@/public/icons/ClockIcon";
 import Button from "@/components/buttons/simple_btn";
-// import CursorToggleBtn from "@/components/buttons/cursor-toggle-btn";
 import { Button2 } from "@/components/buttons/Button2";
+import useUser from "@/hooks/useUser";
 
 export default function Sidebaradmin({ children }) {
     const [sidebaritems, setSidebaritems] = React.useState(sidebarItems);
-    const [selected, SetSelected] = React.useState(false);
-    const [subrowopen, setSubrowopen] = React.useState(false);
+    const {user} = useUser()
+    // const [selected, SetSelected] = React.useState(false);
+    // const [subrowopen, setSubrowopen] = React.useState(false);
     const [showmenue, setshowMenue] = React.useState(false);
     const [shownotification, setShownotification] = React.useState(false);
     const [arrowmenue, setArrowmenu] = React.useState(false);
@@ -133,7 +134,6 @@ export default function Sidebaradmin({ children }) {
                     </div>
 
                     <div className="w-full h-[27%] pl-[30px] flex flex-col justify-center hide_scrollbar border-t border-gray-300">
-                        {/* <div className={`h-full ${sidebaropen ? "visible" : "hidden"}  `}> */}
                             <p className="font_futura text-[12px] font-[400] text-black ">
                                 Language: English
                             </p>
@@ -158,11 +158,9 @@ export default function Sidebaradmin({ children }) {
                                     +971 52 700 1997
                                 </p>
                             </div>
-                        {/* </div> */}
                     </div>
                 </div>
             </div>
-            {/* /////////66666666666666666666666666666666666//////////// */}
 
             <div className={`min-h-[100vh] px-[30px] py-[44px] bg-[#F4F4F4] overflow-y-scroll ${sidebaropen ? "ml-[250px]" : "ml-[80px]"}  duration-300 `} >
                 <div className={` flex justify-between  items-center `}>
@@ -191,8 +189,8 @@ export default function Sidebaradmin({ children }) {
                     </div>
 
                     <div className={` flex items-center  `}>
-                        <span onClick={() => handlemenuclick("avatar")} className="cursor-pointer  " >
-                            <AvatarIcon />
+                        <span onClick={() => handlemenuclick("avatar")} className="w-10 border border-gray-400 aspect-square rounded-full overflow-hidden cursor-pointer" >
+                            <Image src={user.image} width={50} height={50} />
                         </span>
                         <div className={` duration-200 ${showmenue ? "visible" : "hidden"}   absolute top-[89px] right-[154px] `} >
                             <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" >

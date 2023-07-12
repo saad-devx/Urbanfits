@@ -144,8 +144,6 @@ export default function addproduct() {
     //     console.log(finalProduct)
     // }
 
-
-
     return (
         <Sidebaradmin>
             <div className="flex mt-[15px] justify-between items-center ">
@@ -154,18 +152,16 @@ export default function addproduct() {
                         Add Product
                     </div>
                     <div className="flex items-center mt-4 font_futura text-sm gap-x-3">
-                        Home <i className="fa-solid fa-chevron-right" />
-                        Products <i className="fa-solid fa-chevron-right" />
-                        Add Products
+                        <Link href="/admin" >Home</Link> <i className="fa-solid fa-chevron-right" />
+                        <Link href="/admin/products/allproducts" >Products</Link> <i className="fa-solid fa-chevron-right" />
+                        <Link href="/admin/addproduct" >Add Product</Link>
                     </div>
                 </div>
-                {/*  */}
                 <div>
                     <Link href="/admin/products/allproducts" >
                         <Button my="my-[0px]">View All</Button>
                     </Link>
                 </div>
-                {/*  */}
             </div>
 
             <CardAdmin classes="mt-[20px] " >

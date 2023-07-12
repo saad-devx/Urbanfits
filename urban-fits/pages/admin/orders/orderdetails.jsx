@@ -4,7 +4,6 @@ import Sidebaradmin from "../sidebar";
 import CardAdmin from "@/components/cards/cardadmin";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
-import GenericTable1 from "@/components/GenericTables/GenericTable1";
 import GenericTable2 from "@/components/GenericTables/GenericTable2";
 import { orderProductDetailTableColumns, orderProductDetailTableData } from "@/mock/tablesdata";
 import { DaimondIcon } from "@/public/sidebaricons/DaimondIcon";

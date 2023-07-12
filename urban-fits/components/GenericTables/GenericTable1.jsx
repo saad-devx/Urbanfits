@@ -1,6 +1,6 @@
 import { SortDownIcon } from "@/public/icons/SortDownIcon";
 import { SortUpIcon } from "@/public/icons/SortUpIcon";
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import Pagination from "@mui/material/Pagination";
 import styled from "styled-components";
 import {
@@ -11,17 +11,9 @@ import {
   useExpanded,
   useGlobalFilter
 } from "react-table";
-
-import Styles from "@/styles/generictables.module.css";
 import styles from "@/styles/sidebar.module.css";
-
-import { InputSelect } from "../InputSelect";
 import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import Pagination from "./Pagination";
-
-
-
-
 
 const Styled = styled.div`
   /* This is required to make the table full-width */
@@ -56,7 +48,6 @@ const Styled = styled.div`
         }
       }
 
-
     tbody { 
       tr{ 
         td {
@@ -83,36 +74,24 @@ const Styled = styled.div`
         }
       }
     }
-  }
-
- 
+  } 
 `
 
-
-
-
-
-
-
-const GenericTable1 = ( props) => {
-  const {columns, data, handlerowclick, isrowclick } = props
-  const [subRowIndex, setSubRowIndex] = React.useState();
-
-
-  const [scolumns, setScolumns] = React.useState(columns);
-  const [sdata, setSdata] = React.useState(data);
-
-
+const GenericTable1 = (props) => {
+  const { columns, data, handlerowclick, isrowclick, categoryOption } = props
+  // const [subRowIndex, setSubRowIndex] = React.useState();
+  // const [scolumns, setScolumns] = React.useState(columns);
+  const [tableData, setTableData] = useState([]);
+  useEffect(() => {
+    return setTableData(data)
+  }, [tableData])
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -127,7 +106,7 @@ const GenericTable1 = ( props) => {
   } = useTable(
     {
       columns,
-      data,
+      data: tableData,
       initialState: { pageIndex: 0 },
     },
     useGlobalFilter,
@@ -135,7 +114,7 @@ const GenericTable1 = ( props) => {
     usePagination,
   )
 
-  const {globalFilter} = state;
+  const { globalFilter } = state;
 
   // const setGridTemplateColumns = (columns, i) => {
   //   let frs = ["1fr", "2fr", "1fr", "2fr", "1fr"];
@@ -151,18 +130,15 @@ const GenericTable1 = ( props) => {
   //   return { gridTemplateColumns: makeString };
   // };
 
-
-
   // const [filter, setFilter]=React.useState()
   // const  handleFilterChange = (e) =>{
   //   setFilter(e.target.value)
 
   //   const filteredItems =  sdata.filter(dat=>{
-      
-  //     return dat?.status == filter
-      
-  // })
 
+  //     return dat?.status == filter
+
+  // })
 
   return (
     <>
@@ -170,37 +146,32 @@ const GenericTable1 = ( props) => {
         <div className="flex gap-[15px] items-center ">
           <p className="text-[16px] font-[400] "> Show</p>
           <select
-            className={`  
-      w-[60px]   mt-[0px]  h-[34px] px-[8px]  border-[1px] rounded-lg outline-none  bg-transparent `}
+            className={`w-[60px] mt-[0px] h-[34px] px-[8px] border-[1px] rounded-lg outline-none bg-transparent `}
             value={pageSize}
             onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
+              setPageSize(Number(e.target.value))
+            }}>
             {[10, 20, 30, 40, 50].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 {pageSize}
               </option>
             ))}
           </select>
-          <p className="text-[16px] font-[400] "> Entries</p>
+          <p className="text-[16px] font-[400]">Entries</p>
         </div>
 
         <div className="flex items-center gap-[13px] " >
-          {props.options ? 
-          <InputSelect
-          height="h-[40px]"
-            width="w-[175px]"
-            bg="bg-[#FAFAFA]"
-            rounded="rounded-[25px]"
-            options={props.options}
-            // onChange={handleFilterChange}
-          />
-          :""
+          {props.options ?
+            <div className='flex flex-col'>
+              <select onChange={props.onCategoryChange} value={categoryOption} name="category" className="w-44 h-10 px-[8px] border rounded-full outline-none bg-gray-50 text-black cursor-pointer" placeholder="Category">
+                {props.options?.map((obj, index) => (
+                  <option key={index} value={obj.value}> {obj.name} </option>
+                ))}
+              </select>
+            </div> : null
           }
           <div id={styles.searchdiv} >
             <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
-            {/* <i className="material-symbols-outlined absolute">search</i> */}
             <span className="absolute">
               <SearchIcon />
             </span>
@@ -209,99 +180,76 @@ const GenericTable1 = ( props) => {
               type="text"
               id="search"
               value={globalFilter || ''}
-              onChange={(e) =>  setGlobalFilter(e.target.value)}
-              className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none"
               placeholder="Search (Keyword, etc)"
             />
           </div>
         </div>
       </div>
 
-  <Styled>
-      <div className="tableWrap">
-        <table {...getTableProps()}>
-          <thead  >
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th 
-                    {...column.getHeaderProps(
-                      column.getSortByToggleProps(),
-                      {
-                      className: column.collapse ? 'collapse' : '',
-                    })}
-                  >
-                    <span className="flex items-center gap-[5px] text-[15px] font-[400] text-[#0000004a] ">
-                    {column.render("Header")}
-                    <span>
-                      {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <SortUpIcon />
-                        ) : (
-                          <SortDownIcon />
-                        )
-                      ) : (
-                        <span className="flex items-center">
-                          <SortUpIcon /> <SortDownIcon />
+      <Styled>
+        <div className="tableWrap pb-20">
+          <table {...getTableProps()}>
+            <thead  >
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps(),
+                      { className: column.collapse ? 'collapse' : '', }
+                    )}>
+                      <span className="flex items-center gap-[5px] text-[15px] font-[400] text-black">
+                        {column.render("Header")}
+                        <span>
+                          {
+                            column.isSorted ? (column.isSortedDesc ? <SortUpIcon /> : <SortDownIcon />)
+                              : <span className="flex items-center">
+                                <SortUpIcon /> <SortDownIcon />
+                              </span>
+                          }
                         </span>
-                      )}
-                    </span>
-                  </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody 
-           {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row)
-              // console.log("row print == ",row)
-              return (
-                <tr onClick={isrowclick && (  () => handlerowclick(row.original?.transid))}
-                 className={` ${i==0 ?"" : props.border? "border-t-[1px]": "" } cursor-pointer `}
-                {...row.getRowProps()}  >
-                  {row.cells.map(cell => {
-              // console.log("Cell print == ",cell)
-                    
-                    return (
-                      <td
-                        {...cell.getCellProps({
-                          className: cell.column.collapse ? 'collapse' : '',
-                        })}
-                      >
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row, i) => {
+                prepareRow(row)
+                return (
+                  <tr onClick={isrowclick && (() => handlerowclick(row.original?.transid))}
+                    className={` ${i == 0 ? "" : props.border ? "border-t" : ""} cursor-pointer text-sm `}
+                    {...row.getRowProps()}  >
+                    {row.cells.map(cell => {
+                      return <td {...cell.getCellProps({
+                        className: cell.column.collapse ? 'collapse' : '',
+                      })}>
                         {cell.render('Cell')}
                       </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        {/* 
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
-      */}
-      </div>
-      
-      <div className="flex justify-between items-center" >
-          <span className="flex text-[14px] font-[400] " >
-            <p> Showing &nbsp; </p> 
-            <p>
-              {pageIndex + 1} to {pageSize + pageIndex} of {pageOptions.length }
-
-            </p>
-            <p> &nbsp; Entries </p> 
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        {/* Pagination can be built however you'd like. 
+        This is just a very basic UI implementation:*/}
+        <div className="flex justify-between items-center" >
+          <span className="flex text-sm" >
+            <p> Showing &nbsp; </p>
+            <p>{pageIndex + 1} to {pageSize + pageIndex} of {pageOptions.length}</p>
+            <p> &nbsp; Entries </p>
           </span>
           <Pagination canNextPage={canNextPage}
-                    canPreviousPage={canPreviousPage}
-                    gotoPage={gotoPage}
-                    pageCount={pageCount}
-                    nextPage={nextPage}
-                    previousPage={previousPage}
-        />
-      </div>
+            canPreviousPage={canPreviousPage}
+            gotoPage={gotoPage}
+            pageCount={pageCount}
+            nextPage={nextPage}
+            previousPage={previousPage}
+          />
+        </div>
       </Styled>
     </>
   );

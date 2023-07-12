@@ -8,8 +8,9 @@ import tableAvatarGirl2 from "@/public/tableAvatarGirl2.png";
 import smartWatch from "@/public/smartWatch.png";
 import sneakers from "@/public/sneakers.png";
 
-import ActionButton from "@/components/GenericTables/ActionButton";
+import ActionButton from "@/components/buttons/ActionButton";
 import StatusBadge from "@/components/GenericTables/StatusBadge";
+import Infotip from '@/components/tooltips/infotip'
 import { VisaIcon } from "@/public/icons/VisaIcon";
 import { AmexIcon } from "@/public/icons/AmexIcon";
 import { MastercardIcon } from "@/public/icons/MastercardIcon";
@@ -18,42 +19,42 @@ import { Dots3Icon } from "@/public/icons/Dots3Icon";
 export const userListTableColumns = [
   {
     accessor: "profile",
-    Header: "Profile",
+    Header: <span className="select-none " >Profile</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "name",
-    Header: "Name",
+    Header: <span className="select-none " >Name</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "email",
-    Header: "Email",
+    Header: <span className="select-none " >Email</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "phone",
-    Header: "Phone",
+    Header: <span className="select-none " >Phone</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "totalbuy",
-    Header: "Total Buy",
+    Header: <span className="select-none " >Total Buy</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "status",
-    Header: "Status",
+    Header: <span className="select-none " >Status</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "joinon",
-    Header: "Join On",
+    Header: <span className="select-none " >Join On</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "action",
-    Header: "Action",
+    Header: <span className="select-none " >Action</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
 ];
@@ -154,47 +155,47 @@ export const userListTableData = [
 export const newOrderTableColumns = [
   {
     accessor: "id",
-    Header: "ID",
+    Header: <span className="select-none " >ID</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "item",
-    Header: "Item",
+    Header: <span className="select-none " >Item</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "customer",
-    Header: "Customer",
+    Header: <span className="select-none " >Customer</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "quantity",
-    Header: "Quantity",
+    Header: <span className="select-none " >Quantity</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "price",
-    Header: "Price",
+    Header: <span className="select-none " >Price</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "payment",
-    Header: "Payment",
+    Header: <span className="select-none " >Payment</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "status",
-    Header: "Status",
+    Header: <span className="select-none " >Status</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "date",
-    Header: "Date",
+    Header: <span className="select-none " >Date</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "action",
-    Header: "Action",
+    Header: <span className="select-none " >Action</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
 ];
@@ -415,47 +416,47 @@ export const newOrderTableData = [
 export const orderHistoryTableColumns = [
   {
     accessor: "id",
-    Header: "ID",
+    Header: <span className="select-none " >ID</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "customer",
-    Header: "Customer",
+    Header: <span className="select-none " >Customer</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "email",
-    Header: "Email",
+    Header: <span className="select-none " >Email</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "item",
-    Header: "Item",
+    Header: <span className="select-none " >Item</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "price",
-    Header: "Price",
+    Header: <span className="select-none " >Price</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "payment",
-    Header: "Payment",
+    Header: <span className="select-none " >Payment</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "status",
-    Header: "Status",
+    Header: <span className="select-none " >Status</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "date",
-    Header: "Date",
+    Header: <span className="select-none " >Date</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "action",
-    Header: "Action",
+    Header: <span className="select-none " >Action</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
 ];
@@ -571,97 +572,97 @@ export const orderHistoryTableData = [
     date: <p className="text-[14px] "> 2021-10-30</p>,
     action: <ActionButton />,
   },
-  
+
 ];
 
 export const orderProductDetailTableColumns = [
   {
     accessor: "id",
-    Header: "#",
+    Header: <span className="select-none " >#</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "image",
-    Header: "Image",
+    Header: <span className="select-none " >Image</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "product",
-    Header: "Product",
+    Header: <span className="select-none " >Product</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "quantity",
-    Header: "Quantity",
+    Header: <span className="select-none " >Quantity</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "price",
-    Header: "Price/Unit",
+    Header: <span className="select-none " >Price/Unit</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "subtotal",
-    Header: "Subtotal",
+    Header: <span className="select-none " >Subtotal</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
 ];
 
 export const orderProductDetailTableData = [
   {
-    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image alt="product image" src={sneakers} /> ,
-    product:  <span className="flex flex-col text-[14px] " >
+    id: <p className="text-[14px] font-[400]"> 1 </p>,
+    image: <Image alt="product image" src={sneakers} />,
+    product: <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
-    </span> ,
-    quantity: <p className="text-[14px] font-[400]"> 4 </p>   ,
-    price:  <p className="text-[14px] font-[400]">$50.00 </p>  ,
-    subtotal: <p className="text-[14px] font-[400]"> $200.00</p> 
+    </span>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    price: <p className="text-[14px] font-[400]">$50.00 </p>,
+    subtotal: <p className="text-[14px] font-[400]"> $200.00</p>
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image alt="product image" src={sneakers} /> ,
-    product:  <span className="flex flex-col text-[14px] " >
+    id: <p className="text-[14px] font-[400]"> 1 </p>,
+    image: <Image alt="product image" src={sneakers} />,
+    product: <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
-    </span> ,
-    quantity: <p className="text-[14px] font-[400]"> 4 </p>   ,
-    price:  <p className="text-[14px] font-[400]">$50.00 </p>  ,
-    subtotal: <p className="text-[14px] font-[400]"> $200.00</p> 
+    </span>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    price: <p className="text-[14px] font-[400]">$50.00 </p>,
+    subtotal: <p className="text-[14px] font-[400]"> $200.00</p>
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image alt="product image" src={sneakers} /> ,
-    product:  <span className="flex flex-col text-[14px] " >
+    id: <p className="text-[14px] font-[400]"> 1 </p>,
+    image: <Image alt="product image" src={sneakers} />,
+    product: <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
-    </span> ,
-    quantity: <p className="text-[14px] font-[400]"> 4 </p>   ,
-    price:  <p className="text-[14px] font-[400]">$50.00 </p>  ,
-    subtotal: <p className="text-[14px] font-[400]"> $200.00</p> 
+    </span>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    price: <p className="text-[14px] font-[400]">$50.00 </p>,
+    subtotal: <p className="text-[14px] font-[400]"> $200.00</p>
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image alt="product image" src={sneakers} /> ,
-    product:  <span className="flex flex-col text-[14px] " >
+    id: <p className="text-[14px] font-[400]"> 1 </p>,
+    image: <Image alt="product image" src={sneakers} />,
+    product: <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
-    </span> ,
-    quantity: <p className="text-[14px] font-[400]"> 4 </p>   ,
-    price:  <p className="text-[14px] font-[400]">$50.00 </p>  ,
-    subtotal: <p className="text-[14px] font-[400]"> $200.00</p> 
+    </span>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    price: <p className="text-[14px] font-[400]">$50.00 </p>,
+    subtotal: <p className="text-[14px] font-[400]"> $200.00</p>
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image alt="product image" src={sneakers} /> ,
-    product:  <span className="flex flex-col text-[14px] " >
+    id: <p className="text-[14px] font-[400]"> 1 </p>,
+    image: <Image alt="product image" src={sneakers} />,
+    product: <span className="flex flex-col text-[14px] " >
       <p className="font-[400] " >  Baby Pink Shoes</p>
       <p className="font-[300]"> A very smooth and comfort shoes ever for baby </p>
-    </span> ,
-    quantity: <p className="text-[14px] font-[400]"> 4 </p>   ,
-    price:  <p className="text-[14px] font-[400]">$50.00 </p>  ,
-    subtotal: <p className="text-[14px] font-[400]"> $200.00</p> 
+    </span>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    price: <p className="text-[14px] font-[400]">$50.00 </p>,
+    subtotal: <p className="text-[14px] font-[400]"> $200.00</p>
   },
 
 ];
@@ -671,143 +672,143 @@ export const orderProductDetailTableData = [
 export const transactionTableColumns = [
   {
     accessor: "transid",
-    Header: "Trans-ID",
+    Header: <span className="select-none " >Trans-ID</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "paid",
-    Header: "Paid",
+    Header: <span className="select-none " >Paid</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "method",
-    Header: "Method",
+    Header: <span className="select-none " >Method</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "date",
-    Header: "Date",
+    Header: <span className="select-none " >Date</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "date2",
-    Header: "Date",
+    Header: <span className="select-none " >Date</span>,
     Cell: ({ cell: { value }, row }) => <span  > {value} </span>,
   },
 ]
 
 export const transactionTableData = [
   {
-    transid:   "#1" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#1",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:   "#2" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <AmexIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#2",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <AmexIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:   "#3" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <MastercardIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#3",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <MastercardIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:  "#4" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#4",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:  " #5" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: " #5",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:  " #6" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: " #6",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:   "#7" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#7",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:  "#8", 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#8",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:  "#9" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#9",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:  "#10" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#10",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
   {
-    transid:   "#11" , 
-    paid:  <p className="text-[14px] font-[400]"> $354.00 </p>, 
-    method:  <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon/> <p> Visa </p></p>, 
-    date:  <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>, 
-    date2:  <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
+    transid: "#11",
+    paid: <p className="text-[14px] font-[400]"> $354.00 </p>,
+    method: <p className="text-[14px] font-[400] flex items-center gap-[7px]"> <VisaIcon /> <p> Visa </p></p>,
+    date: <p className="text-[14px] font-[400]"> 16.12.2018, 14:21 </p>,
+    date2: <span className="w-[80px] h-[25px] rounded-[5px] border-[1px]
      flex justify-center items-center cursor-pointer " >
-    <p className="text-[14px] font-[400]"> Details </p>
+      <p className="text-[14px] font-[400]"> Details </p>
     </span>
   },
-  
+
 ]
 
 
@@ -816,129 +817,129 @@ export const transactionTableData = [
 export const invoiceTableColumns = [
   {
     accessor: "id",
-    Header: "#",
+    Header: <span className="select-none " >#</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "image",
-    Header: "Image",
+    Header: <span className="select-none " >Image</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "item",
-    Header: "Item",
+    Header: <span className="select-none " >Item</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "description",
-    Header: "Description",
+    Header: <span className="select-none " >Description</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "quantity",
-    Header: "Quantity",
+    Header: <span className="select-none " >Quantity</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "unicost",
-    Header: "Uni-Const",
+    Header: <span className="select-none " >Uni-Const</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "total",
-    Header: "Total",
+    Header: <span className="select-none " >Total</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
 ]
 
 export const invoiceTableData = [
   {
-    id:  <p className="text-[14px] font-[400]"> 1 </p>, 
-    image:  <Image alt="product image" src={smartWatch} /> , 
-    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
-    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
-    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
-    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
-   
+    id: <p className="text-[14px] font-[400]"> 1 </p>,
+    image: <Image alt="product image" src={smartWatch} />,
+    item: <p className="text-[14px] font-[400]"> Digital Watch </p>,
+    description: <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    unicost: <p className="text-[14px] font-[400]"> $50.00 </p>,
+    total: <p className="text-[14px] font-[400]"> $200.00 </p>,
+
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 2</p>, 
-    image:  <Image alt="product image" src={smartWatch} /> , 
-    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
-    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
-    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
-    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
-   
+    id: <p className="text-[14px] font-[400]"> 2</p>,
+    image: <Image alt="product image" src={smartWatch} />,
+    item: <p className="text-[14px] font-[400]"> Digital Watch </p>,
+    description: <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    unicost: <p className="text-[14px] font-[400]"> $50.00 </p>,
+    total: <p className="text-[14px] font-[400]"> $200.00 </p>,
+
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 3 </p>, 
-    image:  <Image alt="product image" src={smartWatch} /> , 
-    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
-    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
-    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
-    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
-   
+    id: <p className="text-[14px] font-[400]"> 3 </p>,
+    image: <Image alt="product image" src={smartWatch} />,
+    item: <p className="text-[14px] font-[400]"> Digital Watch </p>,
+    description: <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    unicost: <p className="text-[14px] font-[400]"> $50.00 </p>,
+    total: <p className="text-[14px] font-[400]"> $200.00 </p>,
+
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    image:  <Image alt="product image" src={smartWatch} /> , 
-    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
-    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
-    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
-    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
-   
+    id: <p className="text-[14px] font-[400]"> 4 </p>,
+    image: <Image alt="product image" src={smartWatch} />,
+    item: <p className="text-[14px] font-[400]"> Digital Watch </p>,
+    description: <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    unicost: <p className="text-[14px] font-[400]"> $50.00 </p>,
+    total: <p className="text-[14px] font-[400]"> $200.00 </p>,
+
   },
   {
-    id:  <p className="text-[14px] font-[400]"> 5 </p>, 
-    image:  <Image alt="product image" src={smartWatch} /> , 
-    item:  <p className="text-[14px] font-[400]"> Digital Watch </p>, 
-    description:  <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>, 
-    quantity:  <p className="text-[14px] font-[400]"> 4 </p>, 
-    unicost:  <p className="text-[14px] font-[400]"> $50.00 </p>, 
-    total:  <p className="text-[14px] font-[400]"> $200.00 </p>, 
-   
+    id: <p className="text-[14px] font-[400]"> 5 </p>,
+    image: <Image alt="product image" src={smartWatch} />,
+    item: <p className="text-[14px] font-[400]"> Digital Watch </p>,
+    description: <p className="text-[14px] font-[400]"> Amazing Watch with 10 days replacement warranty </p>,
+    quantity: <p className="text-[14px] font-[400]"> 4 </p>,
+    unicost: <p className="text-[14px] font-[400]"> $50.00 </p>,
+    total: <p className="text-[14px] font-[400]"> $200.00 </p>,
+
   },
-  
+
 ]
 
 export const recentOrdersTableColumns = [
   {
     accessor: "orderid",
-    Header: "Order Id",
+    Header: <span className="select-none " >Order Id</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "productname",
-    Header: "Product Name",
+    Header: <span className="select-none " >Product Name</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "units",
-    Header: "Units",
+    Header: <span className="select-none " >Units</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "orderdate",
-    Header: "Order Date",
+    Header: <span className="select-none " >Order Date</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "ordercost",
-    Header: "Order Cost",
+    Header: <span className="select-none " >Order Cost</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "status",
-    Header: "Status",
+    Header: <span className="select-none " >Status</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
   {
     accessor: "action",
-    Header: "Action",
+    Header: <span className="select-none " >Action</span>,
     Cell: ({ cell: { value }, row }) => <span> {value} </span>,
   },
 ]
@@ -946,66 +947,66 @@ export const recentOrdersTableColumns = [
 export const recentOrdersTableData = [
 
   {
-    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: " Coach Swagger ", 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    orderid: <p className="text-[14px] font-[400]"> 24541 </p>,
+    productname: " Coach Swagger ",
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>,
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>,
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>,
     status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon /> </p>,
 
   },
   {
-    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: " Coach Swagger ", 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    orderid: <p className="text-[14px] font-[400]"> 24541 </p>,
+    productname: " Coach Swagger ",
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>,
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>,
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>,
     status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon /> </p>,
 
   },
   {
-    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: " Coach Swagger ", 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    orderid: <p className="text-[14px] font-[400]"> 24541 </p>,
+    productname: " Coach Swagger ",
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>,
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>,
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>,
     status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon /> </p>,
 
   },
   {
-    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: " Coach Swagger ", 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    orderid: <p className="text-[14px] font-[400]"> 24541 </p>,
+    productname: " Coach Swagger ",
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>,
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>,
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>,
     status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon /> </p>,
 
   },
   {
-    orderid:  <p className="text-[14px] font-[400]"> 22 </p>, 
-    productname: "  kali swagger  ", 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    orderid: <p className="text-[14px] font-[400]"> 22 </p>,
+    productname: "  kali swagger  ",
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>,
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>,
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>,
     status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon /> </p>,
 
   },
   {
-    orderid:  <p className="text-[14px] font-[400]"> 24541 </p>, 
-    productname: " Coach Swagger ", 
-    units: <p className="text-[14px] font-[400]"> 1 Units </p>, 
-    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>, 
-    ordercost: <p className="text-[14px] font-[400]"> $230 </p>, 
+    orderid: <p className="text-[14px] font-[400]"> 24541 </p>,
+    productname: " Coach Swagger ",
+    units: <p className="text-[14px] font-[400]"> 1 Units </p>,
+    orderdate: <p className="text-[14px] font-[400]"> Oct 20, 2018 </p>,
+    ordercost: <p className="text-[14px] font-[400]"> $230 </p>,
     status: <StatusBadge status="delivered" />,
-    action: <p className="text-[14px] font-[400]"> <Dots3Icon/> </p>, 
+    action: <p className="text-[14px] font-[400]"> <Dots3Icon /> </p>,
 
   },
-    
+
 ]
 
 
@@ -1013,48 +1014,48 @@ export const recentOrdersTableData = [
 export const productListTableColumns = [
   {
     accessor: "product",
-    Header: "Product",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Product</span>,
+    Cell: ({ cell: { value }, row }) => value,
   },
   {
     accessor: "name",
-    Header: "Name",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Name</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[100px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "price",
-    Header: "Price",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Price</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "offer",
-    Header: "Offer",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Offer</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "purchased",
-    Header: "Purchased",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Purchased</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "stock",
-    Header: "Stock",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Stock</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "status",
-    Header: "Status",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Status</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "date",
-    Header: "Date",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Date</span>,
+    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "action",
-    Header: "Action",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Action</span>,
+    Cell: ({ cell: { value }, row }) => value,
   },
 ]
 
@@ -1063,230 +1064,239 @@ export const productListTableColumns = [
 export const productListTableData = [
 
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " smart watch", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " smart watch",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
   {
-    product: <Image alt="product image" src={smartWatch} /> , 
-    name: " Baby shoes Bayhdahakd", 
-    price:  "$ 20",
-    offer:  "25% off", 
-    purchased: "16", 
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
     stock: "1845",
-    status: "Active", 
-    date: "2021-10-30", 
-    action: <ActionButton/> , 
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
 
   },
-  
- ]
+
+]
 
 
- export const productCategoriesTableColumns = [
-  {
-    accessor: "id",
-    Header: "ID",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
-  },
+export const productCategoriesTableColumns = [
+  // {
+  //   accessor: "id",
+  //   Header: ({ getToggleAllRowsSelectedProps }) => (
+  //     <>
+  //       <input id="selectall" type="checkbox" {...getToggleAllRowsSelectedProps()} />
+  //       <label htmlFor="selectall" className="select-none">ID</label>
+  //     </>
+  //   ),
+  //   Cell: ({ cell: { value }, row }) => <div className="group relative z-30 flex justify-start gap-x-2" > <input value={value} id={value} type="checkbox" {...row.getToggleRowSelectedProps()} /> <label htmlFor={value} className='w-10 truncate cursor-pointer'>
+  //     {value}
+  //     <Infotip>{value}</Infotip>
+  //   </label> </div>,
+  //   disableSortBy: true,
+  // },
   {
     accessor: "name",
-    Header: "Name",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Name</span>,
+    Cell: ({ cell: { value } }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "description",
-    Header: "Description",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Description</span>,
+    Cell: ({ cell: { value }, r }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "slug",
-    Header: "Slug",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Slug</span>,
+    Cell: ({ cell: { value } }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
   },
   {
     accessor: "order",
-    Header: "Order",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
+    Header: <span className="select-none " >Order</span>,
+    Cell: ({ cell: { value } }) => <span>{value}</span>,
   },
   {
     accessor: "action",
-    Header: "ID",
-    Cell: ({ cell: { value }, row }) => <span> {value} </span>,
-  },
+    Header: <span className="select-none " >Action</span>,
+    Cell: ({ cell: { value } }) => value,
+  }
 ]
 
 export const productCategoriesTableData = [
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men Cloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men ClothClothClothClothCloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men ClothClothClothClothCloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men Cloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men Cloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men Cloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men Cloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
   {
-    id: <div className="flex gap-[10px]" > <input type="checkbox"  /> <p>12</p> </div> ,
-    name: "Men Cloth" ,
+    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
+    name: "Men Cloth",
     description: "Men Cloth",
     slug: "/men",
     order: "1",
-    action: <Dots3Icon/> 
+    action: <Dots3Icon />
   },
-  
+
 ]
