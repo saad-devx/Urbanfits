@@ -11,7 +11,10 @@ const getCategories = async (req, res) => {
             await ConnectDB()
             let user = await User.findById(id)
             if (!user || user.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })
-            let category = await Category.findByIdAndUpdate(req.body._id, req.body)
+            let category = await Category.findByIdAndUpdate(req.body._id, {...req.body, parent: {
+                id: mongoose.Types.ObjectId(req.body.parent.id),
+                path: req.body.parent.path
+            }})
             res.status(200).json({
                 success: true,
                 msg: `category with id '${req.body._id} updated succesfully!'`,

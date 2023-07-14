@@ -7,10 +7,10 @@ export default function MenuButton(props) {
     }
 
     return <div className='w-10 relative font_futura '>
-        <button onClick={toggleMenu} className="fa-solid fa-ellipsis-vertical"></button>
-        <div onBlur={() => { console.log("clicked somewhere else") }} className={`absolute z-50 -left-full -bottom-full translate-y-3/4 flex flex-col items-start p-2 shadow-md gap-y-3 ${menu ? null : "opacity-0 pointer-events-none"} border rounded-xl font_futura bg-white transition-all`} >
+        <button onClick={toggleMenu} className="w-6 fa-solid fa-ellipsis-vertical"></button>
+        <div className={`absolute z-[999] -left-1/2 -bottom-full translate-y-[90%] flex flex-col items-start p-2 shadow-md gap-y-3 ${menu ? null : "opacity-0 pointer-events-none"} border rounded-md font_futura bg-white transition-all`} >
             {props.options?.map((option, i) => {
-                return <button key={i} onClick={() => { option.onClick(); toggleMenu() }} name={option.name} className="cursor-pointer text-xs">{option.name}</button>
+                return <button key={i} onClick={() => { option.onClick(); toggleMenu() }} name={option.name} className="group flex flex-col justify-between items-center cursor-pointer text-[10px]">{option.name}<i className='h-px w-0 group-hover:w-full bg-black transition-all' /></button>
             })}
         </div>
     </div>

@@ -129,6 +129,11 @@
   color: #ffff;
 }
 
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 @media print {
   body * {
     visibility: hidden;

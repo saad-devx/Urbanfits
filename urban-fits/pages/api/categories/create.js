@@ -22,7 +22,13 @@ const CreateProducts = async (req, res) => {
                 let parent = await Category.findById(req.body.parent)
                 console.log("here is the parent", parent)
                 if (!parent) return res.status(400).json({ success: false, msg: "Invalid parent id" })
-                category = await Category.create({ ...req.body, path: `${parent.path}${req.body.slug}` })
+                category = await Category.create({
+                    ...req.body, parent: {
+                        id: parent._id,
+                        path: parent.path
+                    },
+                    path: `${parent.path}${req.body.slug}`
+                })
 
                 parent = await Category.findByIdAndUpdate(
                     req.body.parent,

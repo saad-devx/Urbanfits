@@ -8,6 +8,7 @@ import tableAvatarGirl2 from "@/public/tableAvatarGirl2.png";
 import smartWatch from "@/public/smartWatch.png";
 import sneakers from "@/public/sneakers.png";
 
+import MenuButton from "@/components/buttons/menuButton";
 import ActionButton from "@/components/buttons/ActionButton";
 import StatusBadge from "@/components/GenericTables/StatusBadge";
 import Infotip from '@/components/tooltips/infotip'
@@ -1199,21 +1200,21 @@ export const productListTableData = [
 ]
 
 
-export const productCategoriesTableColumns = [
-  // {
-  //   accessor: "id",
-  //   Header: ({ getToggleAllRowsSelectedProps }) => (
-  //     <>
-  //       <input id="selectall" type="checkbox" {...getToggleAllRowsSelectedProps()} />
-  //       <label htmlFor="selectall" className="select-none">ID</label>
-  //     </>
-  //   ),
-  //   Cell: ({ cell: { value }, row }) => <div className="group relative z-30 flex justify-start gap-x-2" > <input value={value} id={value} type="checkbox" {...row.getToggleRowSelectedProps()} /> <label htmlFor={value} className='w-10 truncate cursor-pointer'>
-  //     {value}
-  //     <Infotip>{value}</Infotip>
-  //   </label> </div>,
-  //   disableSortBy: true,
-  // },
+export const productCategoriesTableColumns00 = [
+  {
+    accessor: "id",
+    Header: ({ getToggleAllRowsSelectedProps }) => (
+      <>
+        <input id="selectall" type="checkbox" {...getToggleAllRowsSelectedProps()} />
+        <label htmlFor="selectall" className="select-none">ID</label>
+      </>
+    ),
+    Cell: ({ cell: { value }, row }) => <div className="group relative z-30 flex justify-start gap-x-2" > <input value={value} id={value} type="checkbox" {...row.getToggleRowSelectedProps()} /> <label htmlFor={value} className='w-10 truncate cursor-pointer'>
+      {value}
+      <Infotip>{value}</Infotip>
+    </label> </div>,
+    disableSortBy: true,
+  },
   {
     accessor: "name",
     Header: <span className="select-none " >Name</span>,
@@ -1238,6 +1239,58 @@ export const productCategoriesTableColumns = [
     accessor: "action",
     Header: <span className="select-none " >Action</span>,
     Cell: ({ cell: { value } }) => value,
+  }
+]
+export const productCategoriesTableColumns = [
+  {
+    selector: row => row.id,
+    name: <span className="text-[15px]" >ID</span>,
+    cell: (row) => {
+      const value = row.id
+      return <div className="w-full group relative flex justify-start">
+        <span htmlFor={value} className='w-full whitespace-nowrap truncate overflow-hidden cursor-default'>
+          {value}
+          <Infotip>{value}</Infotip>
+        </span>
+      </div>
+    },
+    sortable: true,
+    width: "16%"
+  },
+  {
+    selector: row => row.name,
+    name: <span className="select-none text-[15px]">Name</span>,
+    // Cell: ({ cell: { value } }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    sortable: true,
+    width: "16%"
+  },
+  {
+    selector: row => row.description,
+    name: <span className="select-none text-[15px]" >Description</span>,
+    // Cell: ({ cell: { value }, r }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    sortable: true,
+    width: "16%"
+  },
+  {
+    selector: row => row.slug,
+    name: <span className="select-none text-[15px]" >Slug</span>,
+    // Cell: ({ cell: { value } }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    sortable: true,
+    width: "16%"
+  },
+  {
+    selector: row => row.order,
+    name: <span className="select-none text-[15px]" >Order</span>,
+    // Cell: ({ cell: { value } }) => <span>{value}</span>,
+    sortable: true,
+    width: "16%"
+  },
+  {
+    selector: row => row.action,
+    name: <span className="select-none text-[15px]" >Action</span>,
+    cell: (row) => <MenuButton options={row.actions} />,
+    sortable: true,
+    width: "16%"
   }
 ]
 

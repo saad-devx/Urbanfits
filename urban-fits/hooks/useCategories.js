@@ -5,7 +5,7 @@ import getUser_LS from '@/utils/getUserfromLS';
 
 const useCategories = create((set, get) => ({
 
-    categories: null,
+    categories: [],
     categLoading: false,
 
     getCategories: async () => {
