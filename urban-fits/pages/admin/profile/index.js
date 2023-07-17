@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebaradmin from "../sidebar";
 
 import ProfilePic from "../../../public/ProfilePic.png";
 import Image from "next/image";
 import Button from "@/components/buttons/simple_btn";
 import { BasketIcon } from "@/public/sidebaricons/BasketIcon";
-import Navbar from "@/components/navbar";
 import useUser from "@/hooks/useUser";
 import CustomTab from "@/components/CustomTabs/CustomTab";
+import uploadImage from '@/utils/uploadImage'
+import Spinner from '@/components/loaders/spinner'
 
 import { profileTabData } from "@/mock/customtabData";
 import { Button2 } from "@/components/buttons/Button2";
@@ -19,52 +20,38 @@ import { InputText } from "@/components/InputText";
 
 
 export default function Profile({ children }) {
-
-  const { user } = useUser()
-  const [authmodal, setAuthmodal] = React.useState(false);
+  const { user, updateUser } = useUser()
+  const [authmodal, setAuthmodal] = useState(false);
+  const [imgSpinner, setImgSpinner] = useState(null);
+  const [pfp, setPfp] = useState(user.image && user.image !== '' ? user.image : ProfilePic);
 
   const toggleauthmodal = () => {
     setAuthmodal(!authmodal);
   };
 
-
-  const [picurl, setPicurl] = React.useState(user.image && user.image !== '' ? user.image : ProfilePic);
-
-  const handleProfilePic = (e) => {
-
-    if (e.target.files) {
-      setPicurl(URL.createObjectURL(e.target.files[0]))
-    }
-
+  const onFileChange = async (e) => {
+    const file = e.target.files[0]
+    setImgSpinner(<Spinner />)
+    const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
+    setPfp(imgUrl)
+    await updateUser({ image: imgUrl })
+    setImgSpinner(null)
   }
-
-  // const imgInp = document.getElementById("imgInp")
-  // imgInp?.onchange = e =>{
-  //  const [file] = imgInp.files
-  //  if (file) {
-  //    blah.src = URL.createObjectURL(file)
-  //  }
-  // }
-
 
   return (
     <Sidebaradmin>
       <div className={` mt-[40px] flex items-center font_futura `}>
         <div className="w-36 h-36 rounded-2xl p-1 bg-gold border border-white flex justify-center items-center overflow-hidden">
-          <Image width={150} height={150} className="w-full h-full rounded-xl object-cover" src={picurl} />
+          {imgSpinner}
+          <Image width={150} height={150} className="w-full h-full rounded-xl object-cover" src={pfp} />
         </div>
         <div className="ml-[30px]">
           <p className=" text-[22px] mb-0  ">{user?.firstname}&nbsp;{user?.lastname}</p>
 
-          <div className="flex  items-center mt-[18px] ">
-            <span className="cursor-pointer"  >
-              <Button type="file" classes="mt-0 mb-0 relative  ">
-                <input id="imgInp"
-                  onChange={handleProfilePic}
-                  type="file" className="opacity-0   absolute  w-[150px] left-0 " /> Change Avatar </Button>
-            </span>
+          <div className="flex items-center mt-4 ">
+            <label htmlFor="pfp" className="px-5 py-2 rounded-full bg-gold-land cursor-pointer text-white">Change Avatar</label>
+            <input onChange={onFileChange} type="file" id='pfp' name='pfp' accept="image/*" className="opacity-0 appearance-none w-0 h-0 pointer-events-none " />
             <span className="ml-[20px]">
-              {" "}
               <BasketIcon />
             </span>
           </div>

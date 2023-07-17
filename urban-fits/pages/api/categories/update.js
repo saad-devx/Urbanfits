@@ -8,17 +8,33 @@ const getCategories = async (req, res) => {
         if (req.method === 'PUT') {
             const { id } = req.query
             if (!id || !mongoose.Types.ObjectId(id)) return res.status(400).json({ success: false, msg: "A valid user id required." })
+
             await ConnectDB()
             let user = await User.findById(id)
             if (!user || user.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })
-            let category = await Category.findByIdAndUpdate(req.body._id, {...req.body, parent: {
-                id: mongoose.Types.ObjectId(req.body.parent.id),
-                path: req.body.parent.path
-            }})
+
+            const getObjToUpdate = async () => {
+                if (req.body.parent) {
+                    let parent = await Category.findByIdAndUpdate(req.body.parent,
+                        { $push: { children: mongoose.Types.ObjectId(req.body._id) } }
+                    )
+                    return {
+                        ...req.body, parent: mongoose.Types.ObjectId(req.body.parent),
+                        path: `${parent.path}${req.body.slug}`
+                    }
+                }
+                else return req.body
+            }
+            const objToUpdate = await getObjToUpdate()
+            console.log(objToUpdate)
+
+            const category = await Category.findByIdAndUpdate(req.body._id, objToUpdate, { new: true })
+            const restCategories = await Category.find().populate('parent')
             res.status(200).json({
                 success: true,
                 msg: `category with id '${req.body._id} updated succesfully!'`,
-                category
+                category,
+                categories: restCategories
             })
         }
         else {

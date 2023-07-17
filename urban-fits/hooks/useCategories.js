@@ -31,7 +31,7 @@ const useCategories = create((set, get) => ({
 
     createCategory: async (category) => {
         const user = getUser_LS()
-        if (!user) return
+        if (!user || user.role === "customer") return
 
         set(() => ({
             categLoading: true
@@ -41,6 +41,51 @@ const useCategories = create((set, get) => ({
             set(() => (
                 { categories: data.categories }
             ))
+            toaster("success", data.msg)
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({
+            categLoading: false
+        }))
+    },
+
+    updateCategory: async (update) => {
+        const user = getUser_LS()
+        if (!user || user.role === "customer") return
+
+        set(() => ({
+            categLoading: true
+        }))
+        try {
+            const { data } = await axios.put(`${process.env.HOST}/api/categories/update?id=${user._id}`, update)
+            set(() => (
+                { categories: data.categories }
+            ))
+            toaster("success", data.msg)
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({
+            categLoading: false
+        }))
+    },
+
+    deleteCategories: async (categoriesToDelete) => {
+        const user = getUser_LS()
+        if (!user || user.role === "customer") return
+
+        set(() => ({
+            categLoading: true
+        }))
+        try {
+            const { data } = await axios.put(`${process.env.HOST}/api/categories/delete?id=${user._id}`, { categories: categoriesToDelete })
+            set(() => (
+                { categories: data.categories }
+            ))
+            toaster(data.deletedCount < 1 ? "info" : "success", data.msg)
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)

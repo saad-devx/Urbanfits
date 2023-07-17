@@ -11,7 +11,7 @@ const getCategories = async (req, res) => {
             await ConnectDB()
             let user = await User.findById(id)
             if (!user || user.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })
-            let categories = await Category.find()
+            let categories = await Category.find().populate('parent')
             res.status(200).json({
                 success: true,
                 msg: "",
