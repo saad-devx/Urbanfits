@@ -21,13 +21,14 @@ import CardAdmin from "@/components/cards/cardadmin";
 import AvatarIconV from "@/public/icons/AvatarIconV";
 import { ClockIcon } from "@/public/icons/ClockIcon";
 import Button from "@/components/buttons/simple_btn";
-// import CursorToggleBtn from "@/components/buttons/cursor-toggle-btn";
 import { Button2 } from "@/components/buttons/Button2";
+import useUser from "@/hooks/useUser";
 
 export default function Sidebaradmin({ children }) {
     const [sidebaritems, setSidebaritems] = React.useState(sidebarItems);
-    const [selected, SetSelected] = React.useState(false);
-    const [subrowopen, setSubrowopen] = React.useState(false);
+    const { user } = useUser()
+    // const [selected, SetSelected] = React.useState(false);
+    // const [subrowopen, setSubrowopen] = React.useState(false);
     const [showmenue, setshowMenue] = React.useState(false);
     const [shownotification, setShownotification] = React.useState(false);
     const [arrowmenue, setArrowmenu] = React.useState(false);
@@ -104,7 +105,7 @@ export default function Sidebaradmin({ children }) {
                     <div className={`overflow-x-hidden overflow-y-scroll  ${sidebaropen ? "h-3/5" : "h-full"} ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}`} >
                         {sidebaritems?.map((item, index) => (
                             <div>
-                                <div onClick={() => handleItemClick(index)} style={{margin: sidebaritems.length == index + 1? "36px 0": "36px 0 0 0"}} className="flex cursor-pointer justify-between items-center " >
+                                <div onClick={() => handleItemClick(index)} style={{ margin: sidebaritems.length == index + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center " >
                                     <Link href={item.navlink || "#"}>
                                         <div className="flex gap-[10px] items-center  ">
                                             <div>{item.icon}</div>
@@ -133,36 +134,33 @@ export default function Sidebaradmin({ children }) {
                     </div>
 
                     <div className="w-full h-[27%] pl-[30px] flex flex-col justify-center hide_scrollbar border-t border-gray-300">
-                        {/* <div className={`h-full ${sidebaropen ? "visible" : "hidden"}  `}> */}
-                            <p className="font_futura text-[12px] font-[400] text-black ">
-                                Language: English
+                        <p className="font_futura text-[12px] font-[400] text-black ">
+                            Language: English
+                        </p>
+                        <p className="font_futura text-[12px] font-[400] text-black mt-[10px]">
+                            Shipping to: United Arab Emirates
+                        </p>
+                        <div className="flex items-center mt-[10px]">
+                            {" "}
+                            <span>
+                                <LocationIcon />
+                            </span>
+                            <p className="font_futura text-[12px] font-[400] text-black  ml-[15.88px] ">
+                                Urban Fits (UAE)
                             </p>
-                            <p className="font_futura text-[12px] font-[400] text-black mt-[10px]">
-                                Shipping to: United Arab Emirates
+                        </div>
+                        <div className="flex items-center mt-[10px]">
+                            {" "}
+                            <span>
+                                {" "}<CallIcon />{" "}
+                            </span>
+                            <p className="font_futura text-[12px] font-[400] text-black  ml-[15.88px] ">
+                                +971 52 700 1997
                             </p>
-                            <div className="flex items-center mt-[10px]">
-                                {" "}
-                                <span>
-                                    <LocationIcon />
-                                </span>
-                                <p className="font_futura text-[12px] font-[400] text-black  ml-[15.88px] ">
-                                    Urban Fits (UAE)
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-[10px]">
-                                {" "}
-                                <span>
-                                    {" "}<CallIcon />{" "}
-                                </span>
-                                <p className="font_futura text-[12px] font-[400] text-black  ml-[15.88px] ">
-                                    +971 52 700 1997
-                                </p>
-                            </div>
-                        {/* </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
-            {/* /////////66666666666666666666666666666666666//////////// */}
 
             <div className={`min-h-[100vh] px-[30px] py-[44px] bg-[#F4F4F4] overflow-y-scroll ${sidebaropen ? "ml-[250px]" : "ml-[80px]"}  duration-300 `} >
                 <div className={` flex justify-between  items-center `}>
@@ -187,19 +185,18 @@ export default function Sidebaradmin({ children }) {
                                 placeholder="Search (Keyword, etc)"
                             />
                         </div>
-                        {/* <CursorToggleBtn /> */}
                     </div>
 
                     <div className={` flex items-center  `}>
-                        <span onClick={() => handlemenuclick("avatar")} className="cursor-pointer  " >
-                            <AvatarIcon />
+                        <span onClick={() => handlemenuclick("avatar")} className="w-10 border border-gray-400 aspect-square rounded-full overflow-hidden cursor-pointer" >
+                            <Image src={user.image} className="w-full h-full object-cover" width={80} height={80} />
                         </span>
-                        <div className={` duration-200 ${showmenue ? "visible" : "hidden"}   absolute top-[89px] right-[154px] `} >
-                            <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" >
-                                <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
-                                    <p className="cursor-pointer" >My Profile</p>
-                                    <p className="cursor-pointer">Settings</p>
-                                    <p className="cursor-pointer">Log out</p>
+                        <div className={`duration-200 ${showmenue ? "visible" : "hidden"} absolute top-[89px] right-[154px] `} >
+                            <CardAdmin classes="w-[150px] p-5" round="rounded-[15px]" >
+                                <div className="flex flex-col gap-3 text-sm" >
+                                    <Link href="/admin/profile/myprofile" className="group w-full flex flex-col" >My Profile<i className='h-0.5 w-0 group-hover:w-full bg-gold-land transition-all' /></Link>
+                                    <Link href="/admin/profile/authentication" className="group w-full flex flex-col">Settings<i className='h-0.5 w-0 group-hover:w-full bg-gold-land transition-all' /></Link>
+                                    <button className="group flex flex-col text-left">Log out<i className='h-0.5 w-0 group-hover:w-full bg-gold-land transition-all' /></button>
                                 </div>
                             </CardAdmin>
                         </div>
@@ -209,10 +206,10 @@ export default function Sidebaradmin({ children }) {
                         </span>
                         <div className={` duration-200 ${arrowmenue ? "visible" : "hidden"}   absolute top-[89px] right-[35px] `} >
                             <CardAdmin classes=" w-[150px] p-[20px] " round="rounded-[15px]" >
-                                <div className="grid grid-cols-1 gap-[15px] text-[12px] font-[400]  " >
-                                    <p className="cursor-pointer" >My Account</p>
-                                    <p className="cursor-pointer">Security</p>
-                                    <p className="cursor-pointer">2FA Authentication</p>
+                                <div className="flex flex-col gap-y-3 text-xs" >
+                                    <Link href='/admin' className="group w-full flex flex-col">My Account<i className='h-0.5 w-0 group-hover:w-full bg-gold-land transition-all' /></Link>
+                                    <Link href='/admin/profile/securitysettings' className="group w-full flex flex-col">Security<i className='h-0.5 w-0 group-hover:w-full bg-gold-land transition-all' /></Link>
+                                    <Link href='/admin/profile/authentication' className="group w-full flex flex-col">2FA Authentication<i className='h-0.5 w-0 group-hover:w-full bg-gold-land transition-all' /></Link>
                                 </div>
                             </CardAdmin>
                         </div>
