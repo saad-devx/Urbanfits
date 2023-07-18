@@ -9,12 +9,16 @@ const useCategories = create((set, get) => ({
     categLoading: false,
 
     getCategories: async () => {
+        console.log("entry point 2")
         const user = getUser_LS()
         if (!user) return
+        console.log("entry point 3")
 
         set(() => ({
             categLoading: true
         }))
+        console.log("entry point 4")
+        console.log("host is", process.env.HOST)
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/categories/get?id=${user._id}`)
             set(() => (

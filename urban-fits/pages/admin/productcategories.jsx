@@ -22,7 +22,10 @@ export default function productcategories() {
     const { categories, getCategories, createCategory, updateCategory, deleteCategories, categLoading } = useCategories()
     useEffect(() => {
         return async () => {
+            console.log("entry point 1")
+            console.log("length check 1", categories.length < 1)
             if (categories.length < 1) await getCategories()
+            console.log("length check 2", categories.length < 1)
         }
     }, [categories])
     const [selectedCategories, setSelectedCategories] = useState([])
