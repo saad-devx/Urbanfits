@@ -13,7 +13,7 @@ import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import { productListTableColumns, productListTableData } from '@/mock/tablesdata';
 
 
-const allproducts = () => {
+export default function allproducts () {
   const { categories, getCategories, categLoading } = useCategories()
   const { products, getProducts, productLoading } = useProduct()
   const [categoryOption, setCategoryOption] = useState(false)
@@ -95,5 +95,3 @@ const allproducts = () => {
     </Sidebaradmin>
   )
 }
-
-export default allproducts

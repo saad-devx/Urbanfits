@@ -20,12 +20,6 @@ import Tooltip from '@/components/tooltip'
 
 export default function productcategories() {
     const { categories, getCategories, createCategory, updateCategory, deleteCategories, categLoading } = useCategories()
-    useEffect(() => {
-        return async () => {
-            console.log("entry point 1")
-            if (categories.length < 1) await getCategories()
-        }
-    }, [])
     const [selectedCategories, setSelectedCategories] = useState([])
     const [query, setQuery] = useState('')
     const [deleteModal, setDeleteModal] = useState(null)
@@ -73,6 +67,14 @@ export default function productcategories() {
             return setFieldValue('parent', null)
         }
     })
+
+    useEffect(() => {
+        console.log("entry point 1")
+        return async () => {
+            console.log("entry point 2")
+            if (categories.length < 1) await getCategories()
+        }
+    }, [])
 
     return (
         <Sidebaradmin>
