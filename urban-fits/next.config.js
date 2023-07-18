@@ -5,6 +5,7 @@ const nextConfig = {
     domains: ['images.unsplash.com', "pbs.twimg.com", "i.etsystatic.com", "urban-fits.s3.eu-north-1.amazonaws.com", "lh3.googleusercontent.com"]
   },
   env: {
+    // HOST: "http://localhost:3000",
     HOST: "https://st.urbanfits.ae",
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",

@@ -23,11 +23,9 @@ export default function productcategories() {
     useEffect(() => {
         return async () => {
             console.log("entry point 1")
-            console.log("length check 1", categories.length < 1)
             if (categories.length < 1) await getCategories()
-            console.log("length check 2", categories.length < 1)
         }
-    }, [categories])
+    }, [])
     const [selectedCategories, setSelectedCategories] = useState([])
     const [query, setQuery] = useState('')
     const [deleteModal, setDeleteModal] = useState(null)
@@ -65,11 +63,10 @@ export default function productcategories() {
     })
 
     const { values, touched, handleBlur, handleChange, handleSubmit, handleReset, errors, setFieldValue, setValues } = useFormik({
-        initialValues: { id: null, name: '', slug: '', parent: 'Select Parent', description: '' },
+        initialValues: { id: null, name: '', slug: '', parent: null, description: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
-            const { id } = values
-            console.log(values)
+            const { id } = valuesconsole.log(values)
             if (id) updateCategory(values)
             if (!id) createCategory(values)
             handleReset()
@@ -88,9 +85,8 @@ export default function productcategories() {
                         <Link href="/admin/categories" >Categories</Link>
                     </div>
                 </div>
-                <div className='flex' >
-                    <button onClick={async ()=>{ await getCategories()}} className="text-black">Refetch Data</button>
-                    <div className='w-64 h-10 mr-4 py-2 px-5 gap-2 flex items-center bg-gray-50 border border-gray-300 rounded-full' >
+                <div className='flex gap-x-2' >
+                    <div className='w-64 h-10 py-2 px-5 gap-2 flex items-center bg-gray-50 border border-gray-300 rounded-full' >
                         <SearchIcon />
                         <input
                             type="text"
@@ -102,7 +98,15 @@ export default function productcategories() {
                         />
                     </div>
                     <Button
-                        my="my-0"
+                        className="text-black"
+                        my="my-0" fontSize="text-sm"
+                        loading={categLoading}
+                        disabled={categLoading}
+                        onClick={async () => { await getCategories() }}>
+                        Refetch Data
+                    </Button>
+                    <Button
+                        my="my-0" fontSize="text-sm"
                         disabled={!selectedCategories || selectedCategories.length == 0}
                         onClick={onClickDelete}
                     >Delete</Button>

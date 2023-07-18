@@ -20,12 +20,13 @@ const allproducts = () => {
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     return async () => {
+      if (categories.length !== 0 && products.length !== 0) return
       setLoading(true)
       if (categories.length === 0) await getCategories()
       if (products.length === 0) await getProducts()
       return setLoading(false)
     }
-  }, [categories, products])
+  }, [])
 
   const onCategoryChange = async (e) => {
     const { value } = e.target
