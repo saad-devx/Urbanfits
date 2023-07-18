@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import toaster from '@/utils/toast_function'
 import slugify from 'slugify';
 import useCategories from '@/hooks/useCategories'
 import DataTable from 'react-data-table-component';
-
 import Sidebaradmin from './sidebar'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
@@ -11,7 +9,7 @@ import Spinner from '@/components/loaders/spinner'
 import DeleteAction from '@/components/modals/deleteAction';
 import { InputText } from '@/components/InputText'
 import { InputSelect } from '@/components/InputSelect'
-import { productCategoriesTableColumns, productCategoriesTableData } from '@/mock/tablesdata'
+import { productCategoriesTableColumns } from '@/mock/tablesdata'
 import { SearchIcon } from '@/public/sidebaricons/SearchIcon'
 // imports for Schema and validation
 import { useFormik } from 'formik';
@@ -70,10 +68,7 @@ export default function productcategories() {
 
     useEffect(() => {
         console.log("entry point 1")
-        return async () => {
-            console.log("entry point 2")
-            if (categories.length < 1) await getCategories()
-        }
+        if (categories.length < 1) getCategories()
     }, [])
 
     return (

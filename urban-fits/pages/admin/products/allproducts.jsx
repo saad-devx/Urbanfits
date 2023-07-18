@@ -9,23 +9,19 @@ import ActionButton from '@/components/buttons/ActionButton';
 import Link from 'next/link';
 import useCategories from '@/hooks/useCategories';
 import useProduct from '@/hooks/useProduct';
-import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import { productListTableColumns, productListTableData } from '@/mock/tablesdata';
 
-
-export default function allproducts () {
+export default function allproducts() {
   const { categories, getCategories, categLoading } = useCategories()
   const { products, getProducts, productLoading } = useProduct()
   const [categoryOption, setCategoryOption] = useState(false)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-    return async () => {
-      if (categories.length !== 0 && products.length !== 0) return
-      setLoading(true)
-      if (categories.length === 0) await getCategories()
-      if (products.length === 0) await getProducts()
-      return setLoading(false)
-    }
+    if (categories.length !== 0 && products.length !== 0) return
+    setLoading(true)
+    if (categories.length === 0) getCategories()
+    if (products.length === 0) getProducts()
+    return setLoading(false)
   }, [])
 
   const onCategoryChange = async (e) => {
