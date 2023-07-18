@@ -21,8 +21,8 @@ const allproducts = () => {
   useEffect(() => {
     return async () => {
       setLoading(true)
-      if (!categories) await getCategories()
-      if (!products) await getProducts()
+      if (categories.length === 0) await getCategories()
+      if (products.length === 0) await getProducts()
       return setLoading(false)
     }
   }, [categories, products])

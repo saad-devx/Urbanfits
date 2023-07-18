@@ -5,7 +5,7 @@ import getUser_LS from '@/utils/getUserfromLS';
 
 const useProduct = create((set, get) => ({
 
-    products: null,
+    products: [],
     productLoading: false,
 
     getProducts: async (category_id = null) => {

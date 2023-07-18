@@ -89,6 +89,7 @@ export default function productcategories() {
                     </div>
                 </div>
                 <div className='flex' >
+                    <button onClick={async ()=>{ await getCategories()}} className="text-black">Refetch Data</button>
                     <div className='w-64 h-10 mr-4 py-2 px-5 gap-2 flex items-center bg-gray-50 border border-gray-300 rounded-full' >
                         <SearchIcon />
                         <input
