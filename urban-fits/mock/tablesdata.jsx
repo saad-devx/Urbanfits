@@ -1014,50 +1014,68 @@ export const recentOrdersTableData = [
 
 export const productListTableColumns = [
   {
-    accessor: "product",
-    Header: <span className="select-none " >Product</span>,
-    Cell: ({ cell: { value }, row }) => value,
+    selector: row => row.product,
+    name: "Product",
+    cell: (row) => <span className='w-12 aspect-square rounded-lg overflow-hidden' >
+      <Image className='w-full h-full object-cover' width={50} height={50} alt={row.name} src={row.product} />
+    </span>,
+    sortable: true,
+    width: '10%'
   },
   {
-    accessor: "name",
-    Header: <span className="select-none " >Name</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[100px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.name,
+    cell: row => <div className="w-full group relative flex justify-start">
+      <span className='w-full whitespace-nowrap truncate cursor-default'>
+        {row.name}
+        <Infotip>{row.name}</Infotip>
+      </span>
+    </div>,
+    name: "Name",
+    sortable: true,
   },
   {
-    accessor: "price",
-    Header: <span className="select-none " >Price</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.price,
+    name: "Price",
+    cell: (row) => `$ ${row.price}`,
+    sortable: true,
   },
   {
-    accessor: "offer",
-    Header: <span className="select-none " >Offer</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.offer,
+    name: "Offer",
+    cell: (row) => `${row.offer}% off`,
+    sortable: true,
   },
   {
-    accessor: "purchased",
-    Header: <span className="select-none " >Purchased</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.purchased,
+    name: "Purchased",
+    sortable: true,
   },
   {
-    accessor: "stock",
-    Header: <span className="select-none " >Stock</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.stock,
+    name: "Stock",
+    sortable: true,
   },
   {
-    accessor: "status",
-    Header: <span className="select-none " >Status</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.status,
+    name: "Status",
+    sortable: true,
   },
   {
-    accessor: "date",
-    Header: <span className="select-none " >Date</span>,
-    Cell: ({ cell: { value }, row }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
+    selector: row => row.date,
+    cell: row => <div className="w-full group relative flex justify-start">
+      <span className='w-full whitespace-nowrap truncate cursor-default'>
+        {row.date}
+      </span>
+      <Infotip positions="w-auto whitespace-nowrap right-5 -bottom-full">Created At: {row.date} <br /> Updated At: {row.updatedAt}</Infotip>
+    </div>,
+    name: "Date",
+    sortable: true,
   },
   {
-    accessor: "action",
-    Header: <span className="select-none " >Action</span>,
-    Cell: ({ cell: { value }, row }) => value,
-  },
+    selector: row => row.actions,
+    name: "Action",
+    cell: (row) => <ActionButton options={row.actions} />
+  }
 ]
 
 
@@ -1079,6 +1097,294 @@ export const productListTableData = [
   {
     product: <Image alt="product image" src={smartWatch} />,
     name: " smart watch",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
+    price: "$ 20",
+    offer: "25% off",
+    purchased: "16",
+    stock: "1845",
+    status: "Active",
+    date: "2021-10-30",
+    action: <ActionButton />,
+
+  },
+  {
+    product: <Image alt="product image" src={smartWatch} />,
+    name: " Baby shoes Bayhdahakd",
     price: "$ 20",
     offer: "25% off",
     purchased: "16",
@@ -1248,7 +1554,7 @@ export const productCategoriesTableColumns = [
     cell: (row) => {
       const value = row.id
       return <div className="w-full group relative flex justify-start">
-        <span htmlFor={value} className='w-full whitespace-nowrap truncate overflow-hidden cursor-default'>
+        <span className='w-full whitespace-nowrap truncate overflow-hidden cursor-default'>
           {value}
           <Infotip>{value}</Infotip>
         </span>
@@ -1260,28 +1566,24 @@ export const productCategoriesTableColumns = [
   {
     selector: row => row.name,
     name: <span className="select-none text-[15px]">Name</span>,
-    // Cell: ({ cell: { value } }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
     sortable: true,
     width: "16%"
   },
   {
     selector: row => row.description,
     name: <span className="select-none text-[15px]" >Description</span>,
-    // Cell: ({ cell: { value }, r }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
     sortable: true,
     width: "16%"
   },
   {
     selector: row => row.slug,
     name: <span className="select-none text-[15px]" >Slug</span>,
-    // Cell: ({ cell: { value } }) => <span className='max-w-[80px] truncate cursor-pointer'>{value}</span>,
     sortable: true,
     width: "16%"
   },
   {
     selector: row => row.order,
     name: <span className="select-none text-[15px]" >Order</span>,
-    // Cell: ({ cell: { value } }) => <span>{value}</span>,
     sortable: true,
     width: "16%"
   },
@@ -1292,64 +1594,4 @@ export const productCategoriesTableColumns = [
     sortable: true,
     width: "16%"
   }
-]
-
-export const productCategoriesTableData = [
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men Cloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men ClothClothClothClothCloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men Cloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men Cloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men Cloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men Cloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-  {
-    id: <div className="flex gap-[10px]" > <input type="checkbox" /> <p>12</p> </div>,
-    name: "Men Cloth",
-    description: "Men Cloth",
-    slug: "/men",
-    order: "1",
-    action: <Dots3Icon />
-  },
-
 ]

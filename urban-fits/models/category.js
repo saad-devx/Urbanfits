@@ -7,8 +7,7 @@ const categorySchema = mongoose.Schema({
         unique: true
     },
     slug: {
-        type: String,
-        unique: true
+        type: String
     },
     path: {
         type: String,

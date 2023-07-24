@@ -58,7 +58,8 @@ export default function productcategories() {
         initialValues: { id: null, name: '', slug: '', parent: null, description: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
-            const { id } = valuesconsole.log(values)
+            const { id } = values;
+            console.log(values)
             if (id) updateCategory(values)
             if (!id) createCategory(values)
             handleReset()
@@ -67,7 +68,6 @@ export default function productcategories() {
     })
 
     useEffect(() => {
-        console.log("entry point 1")
         if (categories.length < 1) getCategories()
     }, [])
 
@@ -111,10 +111,10 @@ export default function productcategories() {
             </div>
 
             <section className='w-full mt-5 min-h-[30vh] bg-white rounded-2xl card_boxshadow'>
-                {!categories || categLoading ? <div className='w-full h-[30vh] flex justify-center items-center' >
+                {/* {!categories || categLoading ? <div className='w-full h-[30vh] flex justify-center items-center' >
                     <Spinner forBtn={true} variant="border-black" />
                 </div>
-                    :
+                    : */}
                     <div className='w-full p-8 flex gap-12'>
                         <form onSubmit={handleSubmit} onReset={(e) => { handleReset(e); setFieldValue('parent', null) }} className='w-1/5 flex flex-col gap-8'>
                             {values.id ? <div className='flex flex-col' >
@@ -176,6 +176,8 @@ export default function productcategories() {
                                 }}
                                 columns={productCategoriesTableColumns}
                                 pagination
+                                progressPending={categLoading}
+                                progressComponent={<Spinner forBtn={true} variant="border-black" />}
                                 highlightOnHover
                                 selectableRows
                                 onSelectedRowsChange={(state) => setSelectedCategories(state.selectedRows)}
@@ -210,7 +212,7 @@ export default function productcategories() {
                                 })}
                             />
                         </div>
-                    </div>}
+                    </div>
             </section>
         </Sidebaradmin>
     )

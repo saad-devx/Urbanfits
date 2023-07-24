@@ -17,7 +17,7 @@ export default function Shoppingcard(props) {
             }} className="group w-10 h-10 absolute top-1 right-1 md:top-4 md:right-5 z-10 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60">
                 <Image src={bag} className='w-4 md:w-5' />
             </button>
-            <Link href={`/products/product/64806298f7cd24b01e205f3f`}>
+            <Link href={props.link || `/products/product/64806298f7cd24b01e205f3f`}>
                 <div className="relative w-full h-4/5 md:h-4/5 lg:h-4/5 pt-3 lg:pt-5">
                     <Image src={props.img} width={640} height={853} className={`h-full object-contain ${!props.object_fit ? props.object_fit : "object-center"}`} alt='Urban Fits' />
                 </div>

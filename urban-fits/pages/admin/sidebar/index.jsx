@@ -171,7 +171,6 @@ export default function Sidebaradmin({ children }) {
                         </label>
                         <div id={styles.searchdiv} className={` ml-[29.53px] mr-4`}>
                             <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
-                            {/* <i className="material-symbols-outlined absolute">search</i> */}
                             <span className="absolute">
                                 <SearchIcon />
                             </span>
