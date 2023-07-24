@@ -66,8 +66,8 @@ const GetProductByCategory = async (req, res) => {
             });
         }
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ success: false, msg: 'Internal Server Error occurred. Please retry' });
+        console.log(err)
+        res.status(500).json({success: false, error: err, msg:"Internal Server Error occurred. Please retry"})
     }
 }
 

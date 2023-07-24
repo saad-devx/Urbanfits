@@ -126,7 +126,7 @@ export default function allproducts() {
                             }
                         },
                         head: { style: { fontSize: '13px' } },
-                        rows: { style: { minHeight: "60px" } }
+                        rows: { style: { minHeight: "70px" } }
                     }}
                     pagination
                     paginationServer
