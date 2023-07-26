@@ -43,12 +43,12 @@ const SignupCallback = async (req, res) => {
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create({ ...credentials, password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString() })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                await createAddressSchema(user._id)
                 res.status(200).json({
                     success: true,
                     msg: "You're Resgistered successfully !",
                     payload
                 })
-                createAddressSchema(user._id)
                 const userLetter = await Newsletter.findOne({ email: credentials.email, user: "guest" })
                 if (userLetter) return userLetter.update({ active: true, user: user._id })
             }

@@ -29,24 +29,17 @@ export default function Verification(props) {
         if (!token || token.length < 80 || decodedToken.exp <= unixTime) return setContent(<AlertPage type="error" heading="Oh Snap! Session Expired" message="The session your are trying to access either invalid or expired. Please try again." />)
         const makeAccount = async () => {
             try {
-                const res = await axios.post(`${process.env.HOST}/api/user/signup/callback?token=${token}`)
+                const { data } = await axios.post(`${process.env.HOST}/api/user/signup/callback?token=${token}`)
+                setContent(<>
+                    <BigSpinner />
+                    <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">Almost there !</p>
+                </>)
+                await updateUser(data.payload, true)
+                toaster("success", data.msg)
                 setContent(
-                    <><BigSpinner />
-                        <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">Almost there !</p></>
-                )
-                if (res.data.success && res.data.payload) {
-                    const { data } = res
-                    await updateUser(data.payload, true)
-                    toaster("success", data.msg)
-                    setContent(
-                        <> <Image src={successIcon} alt="Success" />
-                            <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">You'r ready to go !</p></>)
-                    router.push('/user/personalinfo')
-                }
-                else {
-                    const { data } = res.response
-                    toaster("error", data.msg)
-                }
+                    <> <Image src={successIcon} alt="Success" />
+                        <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">You'r ready to go !</p></>)
+                router.push('/user/personalinfo')
             } catch (error) {
                 setContent(
                     <AlertPage type="error" heading="Oh Snap! Some Error Occured" message={error.response.data.msg} />
