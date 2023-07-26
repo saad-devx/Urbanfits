@@ -49,6 +49,25 @@ const useProduct = create((set, get) => ({
         }))
     },
 
+    getOneProduct: async (product_id) => {
+        set(() => ({
+            productLoading: true
+        }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/products/get/one?id=${product_id}`)
+            set(() => ({
+                productLoading: false
+            }))
+            return data.product
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({
+            productLoading: false
+        }))
+    },
+
     createProduct: async (category) => {
         const user = getUser_LS()
         if (!user) return
@@ -69,7 +88,7 @@ const useProduct = create((set, get) => ({
             productLoading: false
         }))
     },
-    
+
     createProduct: async (productsToDelete) => {
         const user = getUser_LS()
         if (!user) return

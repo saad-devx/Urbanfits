@@ -105,27 +105,22 @@ export default function Sidebaradmin({ children }) {
                     <div className={`overflow-x-hidden overflow-y-scroll  ${sidebaropen ? "h-3/5" : "h-full"} ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}`} >
                         {sidebaritems?.map((item, index) => (
                             <div>
-                                <div onClick={() => handleItemClick(index)} style={{ margin: sidebaritems.length == index + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center " >
+                                <div onClick={() => handleItemClick(index)} style={{ margin: sidebaritems.length == index + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center select-none" >
                                     <Link href={item.navlink || "#"}>
-                                        <div className="flex gap-[10px] items-center  ">
+                                        <div className={`flex gap-[10px] items-center font_futura uppercase text-black text-[12px] ${sidebaropen ? "visible" : "hidden"}`}>
                                             <div>{item.icon}</div>
-
-                                            <p className={` font_futura uppercase text-black text-[12px] ${sidebaropen ? "visible" : "hidden"}`}>
-                                                {item.label}
-                                            </p>
+                                            {item.label}
                                         </div>
                                     </Link>
-                                    <div className={` cursor-pointer ${item.subrows ? "visible" : "hidden"} ${sidebaropen ? "visible" : "hidden"}`} onClick={() => handleItemClick(index)} >
-                                        {!item.expanded ? <RightArrowIcon /> : <DownArrowIcon />}
+                                    <div className={` cursor-pointer ${item.subrows ? "visible" : "hidden"}  ${sidebaropen ? "visible" : "hidden"}`} onClick={() => handleItemClick(index)} >
+                                        <RightArrowIcon className={`${item.expanded ? 'rotate-90' : null} transition-all duration-300`} />
                                     </div>
                                 </div>
 
                                 {item.subrows?.map((subitem, index) => (
-                                    <div className={`flex gap-[10px] mt-[28px]  ${item.expanded ? "visible" : "hidden"}  `} >
-                                        <Link href={subitem.navlink || '#'}>
-                                            <p className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro]  ${sidebaropen ? "visible" : "hidden"} `}>
-                                                {subitem.label}
-                                            </p>
+                                    <div className={`flex items-center gap-2 mt-6 pl-6  ${item.expanded ? "visible" : "hidden"} select-none`} >
+                                        <Link key={index} href={subitem.navlink || '#'} className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro]  ${sidebaropen ? "visible" : "hidden"} `}>
+                                            {subitem.label}
                                         </Link>
                                     </div>
                                 ))}
@@ -176,6 +171,7 @@ export default function Sidebaradmin({ children }) {
                             </span>
 
                             <input
+                                autoComplete="off"
                                 type="text"
                                 id="search"
                                 value={query}

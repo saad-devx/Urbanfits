@@ -35,6 +35,8 @@ export default function productcategories() {
         setDeleteModal(
             <DeleteAction
                 show={true}
+                heading="Delete Category(s)"
+                msg={`This is an irreversible action and it may alter the realtions between associated child or parent categories, be sure and careful about deleting categories. All the products associated with the selected categories will be back to the "default" category.`}
                 setDeleteModal={setDeleteModal}
                 onTakeAction={() => deleteCategories(selectedCategories.map(c => c.id))}
             />
@@ -201,6 +203,8 @@ export default function productcategories() {
                                                     setDeleteModal(
                                                         <DeleteAction
                                                             show={true}
+                                                            heading="Delete Category(s)"
+                                                            msg={`This is an irreversible action and it may alter the realtions between associated child or parent categories, be sure and careful about deleting categories. All the products associated with the selected categories will be back to the "default" category.`}
                                                             setDeleteModal={setDeleteModal}
                                                             onTakeAction={() => deleteCategories([cat._id])}
                                                         />

@@ -104,10 +104,15 @@ export default function Login() {
                 <title>Urban Fits - Login</title>
             </Head>
             <AuthPage loading={loading} >
-                <div className="font_gotham w-full my-5 flex justify-center space-x-6">
+                <button onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
+                    <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
+                    <span className='w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:w-32'>Sign Up with</span>
+                    Google
+                </button>
+                {/* <div className="font_gotham w-full my-5 flex justify-center space-x-6">
                     <button onClick={() => providerSignIn("google")} name='google' className="w-[190px] h-12 py-2 px-9 bg-gray-100 border border-gray-400 rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={google_logo} className='w-1/4 mr-3' alt="google" /><p>Google</p></span></button>
                     <button onClick={() => providerSignIn("apple")} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Apple" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
-                </div>
+                </div> */}
                 <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
                     <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                         {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
@@ -116,7 +121,7 @@ export default function Login() {
                     <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
                         <input ref={passRef} className="w-full outline-none border-none" type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
-                        <span onClick={() => {passRef.current.focus(); if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
+                        <span onClick={() => { passRef.current.focus(); if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
                     </div>
                     <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
                         Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.
@@ -130,7 +135,7 @@ export default function Login() {
                             <p className="ml-1 text-gray-400">Remember me</p>
                         </label>
                     </div>
-                    <Button loading={loading} classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >LOGIN</Button>
+                    <Button loading={loading} classes='w-full' font='font_gotham_medium' fontSize='text-sm' type="submit" >Login</Button>
                     <Link href='/auth/signup' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Create a New Account</h1></Link>
                 </form>
             </AuthPage>

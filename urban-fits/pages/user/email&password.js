@@ -54,7 +54,7 @@ export default function EmailPassword() {
             {loader}
             <User>
                 <form className="w-full mt-10 font_gotham space-y-10 overflow-x-hidden" onReset={handleReset} onSubmit={handleSubmit} >
-                    <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >CHANGE EMAIL</h1>
+                    <h1 className='text-xl lg:text-[22px] font_gotham_medium' >Change Email</h1>
                     <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                         {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" name="email" id="email" value={values.email} onChange={handleChange} onBlur={handleBlur} placeholder="Email*" />
@@ -68,8 +68,8 @@ export default function EmailPassword() {
                         <input className="w-full bg-transparent outline-none border-none" type="password" name="password" id="password" value={values.password} onChange={handleChange} onBlur={handleBlur} placeholder="Password*" /><Link href='/resetpassword' ><i className="material-symbols-outlined">edit_square</i></Link>
                     </div>
                     <div className="w-full flex justify-end space-x-4">
-                        <Button type="reset" bg="bg-gray-100" text="black" font='font_gotham_medium' classes="w-full md:w-1/3" >CANCEL</Button>
-                        <Button type="submit" classes="w-full md:w-1/3" font='font_gotham_medium' >SAVE NEW EMAIL</Button>
+                        <Button type="reset" bg="bg-gray-100" text="black" font='font_gotham_medium' classes="w-full md:w-1/3" >Cancel</Button>
+                        <Button type="submit" classes="w-full md:w-1/3" font='font_gotham_medium' >Save New Email</Button>
                     </div>
                 </form>
             </User>

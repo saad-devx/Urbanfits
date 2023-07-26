@@ -49,7 +49,7 @@ const OrderCard = (props) => {
                             <Image alt="Urban images" src={props.img} className="w-full object-cover" />
                         </span>
                         <div className="flex flex-col space-y-2">
-                            <h3 className="font_gotham_medium text-sm md:text-base tracking-wide lg:tracking-widest">{props.product_title.toUpperCase()}</h3>
+                            <h3 className="font_gotham_medium text-sm md:text-base">{props.product_title}</h3>
                             <p className="font_gotham_light text-[10px] md:text-xs">Return Window Closed on June 23</p>
                         </div>
                     </div>

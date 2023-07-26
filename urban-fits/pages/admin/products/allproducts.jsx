@@ -6,6 +6,7 @@ import CardAdmin from "@/components/cards/cardadmin";
 import { SearchIcon } from '@/public/sidebaricons/SearchIcon';
 import Spinner from '@/components/loaders/spinner';
 import Button from "@/components/buttons/simple_btn";
+import LinkBtn from '@/components/buttons/link_btn';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import useCategories from '@/hooks/useCategories';
@@ -46,6 +47,8 @@ export default function allproducts() {
         setDeleteModal(
             <DeleteAction
                 show={true}
+                heading="Delete Product(s)"
+                msg={`This is an irreversible action, the specified product will be deleted permanently. If it is included in a bundle, only this product will be removed from the bundle and rest of the bundle will remain intact.`}
                 setDeleteModal={setDeleteModal}
                 onTakeAction={() => DeleteProducts(setSelectedProducts.map(c => c.id))}
             />
@@ -65,8 +68,8 @@ export default function allproducts() {
                     </div>
                 </div>
                 <div className='flex gap-x-2'>
-                    <Link href="/admin/products/addbundle" ><Button my="my-0">Create Bundle</Button></Link>
-                    <Link href="/admin/products/addproduct" ><Button my="my-0">Add Product</Button></Link>
+                    <LinkBtn href="/admin/products/addbundle" my="my-0">Create Bundle</LinkBtn>
+                    <LinkBtn href="/admin/products/addproduct" my="my-0">Add Product</LinkBtn>
                 </div>
             </div>
 
@@ -101,11 +104,11 @@ export default function allproducts() {
                             }}
                             classes={selectable ? "shadow-lg shadow-[#c3992c]" : null}
                         >Select Products</Button>
-                        <Button
+                        <LinkBtn
                             my="my-0" fontSize="text-sm"
                             disabled={!selectedProducts || selectedProducts.length <= 1}
-                            onClick={() => { return }}
-                        >Add to Bundle</Button>
+                            href="/admin/products/addbundle"
+                        >Add to Bundle</LinkBtn>
                         <Button
                             my="my-0" fontSize="text-sm"
                             disabled={!selectedProducts || selectedProducts.length == 0}

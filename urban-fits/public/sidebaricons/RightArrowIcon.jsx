@@ -1,8 +1,9 @@
 import React from "react";
 
-export const RightArrowIcon = () => {
+export const RightArrowIcon = (props) => {
   return (
     <svg
+    {...props}
       width="7"
       height="13"
       viewBox="0 0 7 13"

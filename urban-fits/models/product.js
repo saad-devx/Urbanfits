@@ -12,6 +12,11 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a price for your product"],
         maxlength: [10, "Price can't be more than 10 figures"]
     },
+    sale_price: {
+        type: Number,
+        required: [true, "Please enter a price for your product"],
+        maxlength: [10, "Price can't be more than 10 figures"]
+    },
     description: {
         type: String,
         required: [true, "Please enter a description for your product"],
@@ -29,6 +34,11 @@ const ProductSchema = mongoose.Schema({
     },
     tags: {
         type: Array
+    },
+    active: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     ratings: {
         type: Number,
@@ -52,6 +62,12 @@ const ProductSchema = mongoose.Schema({
                 required: [true, "Please enter stock of the product"],
                 default: 0
             }
+        }
+    ],
+    bundle_items: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
         }
     ],
     seo_detials: {

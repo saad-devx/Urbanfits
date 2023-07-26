@@ -33,7 +33,6 @@ export default function Thanks() {
     }, [])
 
     if (!orderAvailable || !orderData) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
-    console.log(orderData, orderData.used)
     if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
     sessionStorage.setItem("this_order_data", JSON.stringify({ ...orderData, used: true }))
     const date = new Date()
@@ -60,17 +59,20 @@ export default function Thanks() {
                         </div>
                         <div>
                             <h4 className="text-base md:text-xl font_gotham_medium mb-5">Itmes(s) On This Order</h4>
-                            {orderData.items?.map((item) => {
-                                return <div className="w-full my-5 flex justify-between items-center">
-                                    <div className="w-1/5 md:w-[15%] aspect-square">
-                                        <Image width={560} height={590} src={item.images[0]} alt={item.name} className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" ></Image>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-x-7 justify-items-stretch">
+                                {orderData.items?.map((item) => {
+                                    return <div className="w-full my-5 flex justify-between items-center">
+                                        <div className="w-1/4 md:w-1/4 aspect-square">
+                                            <Image width={560} height={590} src={item.images[0]} alt={item.name} className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" />
+                                        </div>
+                                        <span className="flex flex-col items-end">
+                                            <h1 className="text-base lg:text-xl font_gotham_medium">{item.name}</h1>
+                                            <h2 className="text-sm md:text-base font_gotham_medium capitalize">{item.color}</h2>
+                                            <span className="font_gotam_light space-x-5"> <small>Qty:{item.quantity}</small> <small>${item.price}</small> </span>
+                                        </span>
                                     </div>
-                                    <span className="flex flex-col items-end">
-                                        <h1 className="tex-base lg:text-2xl font_gotham_medium">{item.name}</h1>
-                                        <span className="font_gotam_light space-x-5"> <small>Qty:{item.quantity}</small> <small>${item.price}</small> </span>
-                                    </span>
-                                </div>
-                            })}
+                                })}
+                            </div>
                             <h4 className="text-base md:text-xl font_gotham_medium my-5">Price Details</h4>
                             <div className="w-full h-auto my-5 md:my-3">
                                 <span key={1} className="w-full mx-auto flex justify-between"><small>Price</small> <small>{orderData.cartTotal}</small></span>
@@ -84,7 +86,7 @@ export default function Thanks() {
                                     <span><small className=''>Order No:</small> #656755832</span>
                                     <span><small className=''>Tracking No:</small> #6332253454234266</span>
                                 </div>
-                                <LinkBtn href="/trackorder" my="my-6 md:my-0" font="font_gotham_medium" fontSize="text-xs md:text-sm" classes="px-5 w-full md:w-80 tracking-widest" >TRACK YOUR ORDER</LinkBtn>
+                                <LinkBtn href="/trackorder" my="my-6 md:my-0" font="font_gotham_medium" fontSize="text-xs md:text-sm" classes="px-5 w-full md:w-80" >Track You Order</LinkBtn>
                             </div>
                         </div>
                     </section>
