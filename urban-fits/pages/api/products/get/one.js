@@ -31,7 +31,8 @@ const GetSingleProduct = async (req, res) => {
         }
     }
     catch (err) {
-        res.status(500).send("Internal Server Error occurred. Please retry")
+        console.log(err)
+        res.status(500).send({ success: false, msg: "Internal Server Error occurred. Please retry" })
     }
 }
 

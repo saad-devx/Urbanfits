@@ -16,8 +16,8 @@ export default function DeleteAction(props) {
                         <><button onClick={() => { props.setDeleteModal(null); setActionValue('') }} name="deleteModal" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
                             <section className="w-full h-full p-6">
                                 <div className="w-full space-y-3">
-                                    <h2 className="text-black font_futura_medium text-base md:text-lg lg:text-xl">Delete Category(s)</h2>
-                                    <p className='text-sm text-red-500'>This is an irreversible action and it may alter the realtions between associated child or parent categories, be sure and careful about deleting categories. All the products associated with the selected categories will be back to the "default" category.</p>
+                                    <h2 className="text-black font_futura_medium text-base md:text-lg lg:text-xl">{props.heading}</h2>
+                                    <p className='text-sm text-red-500'>{props.msg}</p>
                                     <p className='text-sm '>Please type <span className='text-red-600' >"delete"</span> here to proceed.</p>
                                 </div>
                                 <InputText

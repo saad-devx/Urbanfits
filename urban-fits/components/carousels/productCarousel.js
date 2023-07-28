@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image'
+import Spinner from '../loaders/spinner';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
@@ -29,7 +30,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full layout_height flex justify-center items-center' >
-                <Image className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
+                <Image className='w-full h-full object-cover object-center' priority={true} width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>
             )
           })}
@@ -53,7 +54,7 @@ export default function ProductCarousel(props) {
             {images.map((img) => {
               return (
                 <SplideSlide className='w-full' >
-                  <Image width={200} height={300} className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
+                  <Image className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
                 </SplideSlide>)
             })}
           </Splide>
@@ -61,7 +62,7 @@ export default function ProductCarousel(props) {
       </div>
     </>
   );
-// This carousel will render in the mobile and tabs screens
+  // This carousel will render in the mobile and tabs screens
   if (window.matchMedia('(max-width: 1000px)').matches) return (
     <>
       <div className="w-full flex flex-col justify-center items-center gap-1 md:gap-2.5">
@@ -76,7 +77,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full h-[94vw] flex justify-center items-center' >
-                <Image width={500} height={720} className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
+                <Image className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>
             )
           })}
@@ -97,7 +98,7 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='h-[20vw]' >
-                <Image width={200} height={300} className='w-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
+                <Image className='w-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>)
           })}
         </Splide>

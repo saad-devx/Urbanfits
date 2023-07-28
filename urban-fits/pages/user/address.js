@@ -53,7 +53,7 @@ const AddressForm = (props) => {
 
     return (
         <form className="mt-10 font_gotham space-y-10 overflow-hidden" onReset={handleReset} onSubmit={handleSubmit} >
-            <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >{props.heading}</h1>
+            <h1 className='text-xl lg:text-[22px] font_gotham_medium' >{props.heading}</h1>
             <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                 {touched.address_title && errors.address_title ? <Tooltip classes="form-error" content={errors.address_title} /> : null}
                 <input className="w-full bg-transparent outline-none border-none" type="text" name="address_title" id="address_title" value={values.address_title} onBlur={handleBlur} onChange={handleChange} placeholder="Address Title*" />
@@ -147,8 +147,8 @@ export default function Address() {
             <User>
                 {loading ? <div className="w-full h-screen flex justify-center items-center text-base md:text-xl font_gotham_medium tracking-widest">LOADING...</div> :
                     <>
-                        <AddressForm loading={updatelLoad} address={address} tag="shipping" heading="ADD OR CHANGE THE SHIPPING ADDRESS" onsubmit={onsubmit} />
-                        <AddressForm loading={updatelLoad} address={address} tag="billing" heading="ADD OR CHANGE THE BILLING ADDRESS" onsubmit={onsubmit} />
+                        <AddressForm loading={updatelLoad} address={address} tag="shipping" heading="Add or change the Shipping Address" onsubmit={onsubmit} />
+                        <AddressForm loading={updatelLoad} address={address} tag="billing" heading="Add or change the Billing Address" onsubmit={onsubmit} />
                     </>}
             </User>
         </>

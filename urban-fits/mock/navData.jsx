@@ -16,7 +16,7 @@ import { Vendoricon } from "@/public/sidebaricons/Vendoricon";
 import React from "react";
 
 export const sidebarItems = [
- 
+
   {
     id: 1,
     label: "Dashboard",
@@ -27,7 +27,6 @@ export const sidebarItems = [
     id: 2,
     label: "Products",
     icon: <ProductIcon />,
-    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -36,14 +35,14 @@ export const sidebarItems = [
         navlink: "/admin/products/allproducts",
       },
       {
-        label: "Addnew",
+        label: "Add New",
 
         navlink: "/admin/products/addproduct",
       },
       {
-        label: "Tags",
+        label: "Add Bundle",
 
-        navlink: "/admin",
+        navlink: "/admin/products/addbundle",
       },
       {
         label: "Attributes",
@@ -56,7 +55,6 @@ export const sidebarItems = [
     id: 3,
     label: "Categories",
     icon: <CategoriesIcon />,
-    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -65,7 +63,7 @@ export const sidebarItems = [
         navlink: "/admin/productcategories"
       },
       {
-        label: "Addnew",
+        label: "Add New",
 
         navlink: "/admin",
       },
@@ -75,7 +73,6 @@ export const sidebarItems = [
     id: 4,
     label: "Orders",
     icon: <CartIcon />,
-    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -94,7 +91,6 @@ export const sidebarItems = [
     id: 5,
     label: "Transactions",
     icon: <DollarIcon />,
-    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -106,7 +102,7 @@ export const sidebarItems = [
         navlink: "/admin/transactions/invoice",
       },
       {
-        label: "Addnew",
+        label: "Add New",
         navlink: "/admin",
       },
     ],
@@ -115,7 +111,6 @@ export const sidebarItems = [
     id: 6,
     label: "Users",
     icon: <ProductIcon />,
-    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -148,14 +143,12 @@ export const sidebarItems = [
     id: 7,
     label: "Vendors",
     icon: <ProductIcon />,
-    // navlink: "/admin",
     expanded: false,
   },
   {
     id: 8,
     label: "Account",
-    icon: <AccountIcon/> ,
-    // navlink: "/admin",
+    icon: <AccountIcon />,
     expanded: false,
     subrows: [
       {
@@ -175,8 +168,7 @@ export const sidebarItems = [
   {
     id: 9,
     label: "Payment Methods",
-    icon: <PaymentIcon/> ,
-    // navlink: "/admin",
+    icon: <PaymentIcon />,
     expanded: false,
     subrows: [
       {
@@ -192,8 +184,7 @@ export const sidebarItems = [
   {
     id: 10,
     label: "Coupon",
-    icon: <CouponIcon/> ,
-    // navlink: "/admin",
+    icon: <CouponIcon />,
     expanded: false,
     subrows: [
       {
@@ -210,7 +201,6 @@ export const sidebarItems = [
     id: 11,
     label: "Shipping Settings",
     icon: <ProductIcon />,
-    // navlink: "/admin",
     expanded: false,
     subrows: [
       {
@@ -220,15 +210,7 @@ export const sidebarItems = [
       {
         label: "Add Shipping Zone",
         navlink: "/admin/shippingsettings/addzone",
-      },
-      // {
-      //   label: "Add Shipping Method",
-      //   navlink: "/admin",
-      // },
-      // {
-      //   label: "Shipping Settings",
-      //   navlink: "/admin",
-      // },
+      }
     ],
   },
   {
@@ -241,38 +223,38 @@ export const sidebarItems = [
   {
     id: 13,
     label: "Brands",
-    icon: <BrandIcon/> ,
+    icon: <BrandIcon />,
     // navlink: "/admin",
     expanded: false,
   },
   {
     id: 14,
     label: "Authentication",
-    icon: <ExitIcon/>  ,
+    icon: <ExitIcon />,
     // navlink: "/admin",
     expanded: false,
-    
+
   },
   {
     id: 15,
     label: "Icons",
-    icon: <DaimondIcon/>  ,
+    icon: <DaimondIcon />,
     // navlink: "/admin",
     expanded: false,
-    
+
   },
   {
     id: 16,
     label: "Other Pages",
-    icon: <PagesIcon/>  ,
+    icon: <PagesIcon />,
     // navlink: "/admin",
     expanded: false,
-    
+
   },
   {
     id: 17,
     label: "Profile (temp)",
-    icon: <DaimondIcon/> ,
+    icon: <DaimondIcon />,
     subrows: [
       {
         label: "Profile",
@@ -282,4 +264,143 @@ export const sidebarItems = [
     ]
   },
 
+];
+
+export const SearchQueryData = [
+  {
+    label: "Dashboard",
+    navlink: "/admin/dashboard",
+  },
+  {
+    label: "Profile",
+    navlink: "/admin/profile",
+  },
+  {
+    label: "All Products",
+    navlink: "/admin/products/allproducts",
+  },
+  {
+    label: "Add New",
+    navlink: "/admin/products/addproduct",
+  },
+  {
+    label: "Add Bundle",
+    navlink: "/admin/products/addbundle",
+  },
+  {
+    label: "Attributes",
+    navlink: "/admin",
+  },
+  {
+    label: "All Categories",
+    navlink: "/admin/productcategories"
+  },
+  {
+    label: "Addnew",
+    navlink: "/admin",
+  },
+  {
+    label: "All Orders",
+    navlink: "/admin/orders/neworder",
+  },
+  {
+    label: "orderhistory",
+    navlink: "/admin/orders/orderhistory",
+  },
+  {
+    label: "All Transactions",
+    navlink: "/admin/transactions/transaction",
+  },
+  {
+    label: "Invoice",
+    navlink: "/admin/transactions/invoice",
+  },
+  {
+    label: "Addnew",
+    navlink: "/admin",
+  },
+  {
+    label: "All users",
+    navlink: "/admin/user/userlist",
+  },
+  {
+    label: "Add New User",
+    navlink: "/admin/user/userprofile",
+  },
+  {
+    label: "Change Password",
+    navlink: "/admin",
+  },
+  {
+    label: "Authentication",
+    navlink: "/admin",
+  },
+  {
+    label: "Security Settings",
+    navlink: "/admin",
+  },
+  {
+    label: "Notifications",
+    navlink: "/admin",
+  },
+  {
+    label: "Vendors",
+    navlink: "",
+  },
+  {
+    label: "General Settings",
+    navlink: "/admin/accounts/generalsetting",
+  },
+  {
+    label: "Account Settings",
+    navlink: "/admin/accounts/accountsetting",
+  },
+  {
+    label: "Inventory Managment",
+    navlink: "/admin/accounts/inventorymanagement",
+  },
+  {
+    label: "All Payment Methods",
+    navlink: "/admin",
+  },
+  {
+    label: "Add New",
+    navlink: "/admin",
+  },
+  {
+    label: "All Coupon",
+    navlink: "/admin/coupon/allcoupon",
+  },
+  {
+    label: "Add New Coupon ",
+    navlink: "/admin",
+  },
+  {
+    label: "All Shipping Zone",
+    navlink: "/admin/shippingsettings/shipping",
+  },
+  {
+    label: "Add Shipping Zone",
+    navlink: "/admin/shippingsettings/addzone",
+  },
+  {
+    label: "Reviews",
+    navlink: "",
+  },
+  {
+    label: "Brands",
+    navlink: "",
+  },
+  {
+    label: "Authentication",
+    navlink: "",
+  },
+  {
+    label: "Icons",
+    navlink: "",
+  },
+  {
+    label: "Other Pages",
+    navlink: "",
+  }
 ];

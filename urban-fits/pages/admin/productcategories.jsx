@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import toaster from '@/utils/toast_function'
 import slugify from 'slugify';
 import useCategories from '@/hooks/useCategories'
 import DataTable from 'react-data-table-component';
-
 import Sidebaradmin from './sidebar'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
@@ -11,7 +9,7 @@ import Spinner from '@/components/loaders/spinner'
 import DeleteAction from '@/components/modals/deleteAction';
 import { InputText } from '@/components/InputText'
 import { InputSelect } from '@/components/InputSelect'
-import { productCategoriesTableColumns, productCategoriesTableData } from '@/mock/tablesdata'
+import { productCategoriesTableColumns } from '@/mock/tablesdata'
 import { SearchIcon } from '@/public/sidebaricons/SearchIcon'
 // imports for Schema and validation
 import { useFormik } from 'formik';
@@ -20,11 +18,6 @@ import Tooltip from '@/components/tooltip'
 
 export default function productcategories() {
     const { categories, getCategories, createCategory, updateCategory, deleteCategories, categLoading } = useCategories()
-    useEffect(() => {
-        return async () => {
-            if (categories.length < 1) await getCategories()
-        }
-    }, [categories])
     const [selectedCategories, setSelectedCategories] = useState([])
     const [query, setQuery] = useState('')
     const [deleteModal, setDeleteModal] = useState(null)
@@ -42,6 +35,8 @@ export default function productcategories() {
         setDeleteModal(
             <DeleteAction
                 show={true}
+                heading="Delete Category(s)"
+                msg={`This is an irreversible action and it may alter the realtions between associated child or parent categories, be sure and careful about deleting categories. All the products associated with the selected categories will be back to the "default" category.`}
                 setDeleteModal={setDeleteModal}
                 onTakeAction={() => deleteCategories(selectedCategories.map(c => c.id))}
             />
@@ -62,10 +57,10 @@ export default function productcategories() {
     })
 
     const { values, touched, handleBlur, handleChange, handleSubmit, handleReset, errors, setFieldValue, setValues } = useFormik({
-        initialValues: { id: null, name: '', slug: '', parent: 'Select Parent', description: '' },
+        initialValues: { id: null, name: '', slug: '', parent: null, description: '' },
         validationSchema: validatedSchema,
         onSubmit: (values) => {
-            const { id } = values
+            const { id } = values;
             console.log(values)
             if (id) updateCategory(values)
             if (!id) createCategory(values)
@@ -73,6 +68,10 @@ export default function productcategories() {
             return setFieldValue('parent', null)
         }
     })
+
+    useEffect(() => {
+        if (categories.length < 1) getCategories()
+    }, [])
 
     return (
         <Sidebaradmin>
@@ -85,8 +84,8 @@ export default function productcategories() {
                         <Link href="/admin/categories" >Categories</Link>
                     </div>
                 </div>
-                <div className='flex' >
-                    <div className='w-64 h-10 mr-4 py-2 px-5 gap-2 flex items-center bg-gray-50 border border-gray-300 rounded-full' >
+                <div className='flex gap-x-2' >
+                    <div className='w-64 h-10 py-2 px-5 gap-2 flex items-center bg-gray-50 border border-gray-300 rounded-full' >
                         <SearchIcon />
                         <input
                             type="text"
@@ -98,7 +97,15 @@ export default function productcategories() {
                         />
                     </div>
                     <Button
-                        my="my-0"
+                        className="text-black"
+                        my="my-0" fontSize="text-sm"
+                        loading={categLoading}
+                        disabled={categLoading}
+                        onClick={async () => { await getCategories() }}>
+                        Refetch Data
+                    </Button>
+                    <Button
+                        my="my-0" fontSize="text-sm"
                         disabled={!selectedCategories || selectedCategories.length == 0}
                         onClick={onClickDelete}
                     >Delete</Button>
@@ -106,10 +113,10 @@ export default function productcategories() {
             </div>
 
             <section className='w-full mt-5 min-h-[30vh] bg-white rounded-2xl card_boxshadow'>
-                {!categories || categLoading ? <div className='w-full h-[30vh] flex justify-center items-center' >
+                {/* {!categories || categLoading ? <div className='w-full h-[30vh] flex justify-center items-center' >
                     <Spinner forBtn={true} variant="border-black" />
                 </div>
-                    :
+                    : */}
                     <div className='w-full p-8 flex gap-12'>
                         <form onSubmit={handleSubmit} onReset={(e) => { handleReset(e); setFieldValue('parent', null) }} className='w-1/5 flex flex-col gap-8'>
                             {values.id ? <div className='flex flex-col' >
@@ -171,6 +178,8 @@ export default function productcategories() {
                                 }}
                                 columns={productCategoriesTableColumns}
                                 pagination
+                                progressPending={categLoading}
+                                progressComponent={<Spinner forBtn={true} variant="border-black" />}
                                 highlightOnHover
                                 selectableRows
                                 onSelectedRowsChange={(state) => setSelectedCategories(state.selectedRows)}
@@ -194,6 +203,8 @@ export default function productcategories() {
                                                     setDeleteModal(
                                                         <DeleteAction
                                                             show={true}
+                                                            heading="Delete Category(s)"
+                                                            msg={`This is an irreversible action and it may alter the realtions between associated child or parent categories, be sure and careful about deleting categories. All the products associated with the selected categories will be back to the "default" category.`}
                                                             setDeleteModal={setDeleteModal}
                                                             onTakeAction={() => deleteCategories([cat._id])}
                                                         />
@@ -205,7 +216,7 @@ export default function productcategories() {
                                 })}
                             />
                         </div>
-                    </div>}
+                    </div>
             </section>
         </Sidebaradmin>
     )

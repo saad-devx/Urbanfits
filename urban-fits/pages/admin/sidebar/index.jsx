@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
-
 import styles from "@/styles/sidebar.module.css";
 import logo_outlined from "../../../public/icons/logo_outlined.svg";
 import sidebar_logo_closed from "../../../public/icons/sidebar_logo_closed.svg";
-
-import { sidebarItems } from "@/mock/navData";
+import { sidebarItems, SearchQueryData } from "@/mock/navData";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
-import Search from "@/components/search";
 import { AvatarIcon } from "@/public/sidebaricons/AvatarIcon";
 import { DownArowSmallIcon } from "@/public/sidebaricons/DownArowSmallIcon";
 import { SettingIcon } from "@/public/sidebaricons/SettingIcon";
 import { BellIcon } from "@/public/sidebaricons/BellIcon";
-import { DownArrowIcon } from "@/public/sidebaricons/DownArrowIcon";
 import Link from "next/link";
 import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import { LocationIcon } from "@/public/sidebaricons/LocationIcon";
@@ -20,15 +16,12 @@ import { CallIcon } from "@/public/sidebaricons/CallIcon";
 import CardAdmin from "@/components/cards/cardadmin";
 import AvatarIconV from "@/public/icons/AvatarIconV";
 import { ClockIcon } from "@/public/icons/ClockIcon";
-import Button from "@/components/buttons/simple_btn";
 import { Button2 } from "@/components/buttons/Button2";
 import useUser from "@/hooks/useUser";
 
 export default function Sidebaradmin({ children }) {
     const [sidebaritems, setSidebaritems] = React.useState(sidebarItems);
     const { user } = useUser()
-    // const [selected, SetSelected] = React.useState(false);
-    // const [subrowopen, setSubrowopen] = React.useState(false);
     const [showmenue, setshowMenue] = React.useState(false);
     const [shownotification, setShownotification] = React.useState(false);
     const [arrowmenue, setArrowmenu] = React.useState(false);
@@ -61,20 +54,17 @@ export default function Sidebaradmin({ children }) {
     const [sidebaropen, setSidebaropen] = React.useState(true);
     const handleSidebar = () => {
         if (sidebaropen == true) {
-
             let temp = sidebaritems;
             temp.forEach((item) => {
                 item.expanded = false;
             });
             setSidebaritems([...temp]);
         }
-
         setSidebaropen(!sidebaropen);
     };
 
     const handleItemClick = (index) => {
         index += 1;
-
         let temp = sidebaritems;
         temp.forEach((item) => {
             if (item.id == index) item.expanded = !item.expanded;
@@ -85,8 +75,14 @@ export default function Sidebaradmin({ children }) {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
     const onSearch = (e) => {
-        const term = e.target.value
+        const term = e.target.value.toLowerCase()
         setQuery(term)
+        const filteredResults = SearchQueryData.filter((link) => {
+            const { label, navlink } = link
+            console.log(label, navlink)
+            return label.toLowerCase().includes(term) || navlink.toLowerCase().includes(term)
+        })
+        setResults(filteredResults)
     }
 
     return (
@@ -105,27 +101,22 @@ export default function Sidebaradmin({ children }) {
                     <div className={`overflow-x-hidden overflow-y-scroll  ${sidebaropen ? "h-3/5" : "h-full"} ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}`} >
                         {sidebaritems?.map((item, index) => (
                             <div>
-                                <div onClick={() => handleItemClick(index)} style={{ margin: sidebaritems.length == index + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center " >
+                                <div onClick={() => handleItemClick(index)} style={{ margin: sidebaritems.length == index + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center select-none" >
                                     <Link href={item.navlink || "#"}>
-                                        <div className="flex gap-[10px] items-center  ">
+                                        <div className={`flex gap-[10px] items-center font_futura uppercase text-black text-[12px] ${sidebaropen ? "visible" : "hidden"}`}>
                                             <div>{item.icon}</div>
-
-                                            <p className={` font_futura uppercase text-black text-[12px] ${sidebaropen ? "visible" : "hidden"}`}>
-                                                {item.label}
-                                            </p>
+                                            {item.label}
                                         </div>
                                     </Link>
-                                    <div className={` cursor-pointer ${item.subrows ? "visible" : "hidden"} ${sidebaropen ? "visible" : "hidden"}`} onClick={() => handleItemClick(index)} >
-                                        {!item.expanded ? <RightArrowIcon /> : <DownArrowIcon />}
+                                    <div className={` cursor-pointer ${item.subrows ? "visible" : "hidden"}  ${sidebaropen ? "visible" : "hidden"}`} onClick={() => handleItemClick(index)} >
+                                        <RightArrowIcon className={`${item.expanded ? 'rotate-90' : null} transition-all duration-300`} />
                                     </div>
                                 </div>
 
                                 {item.subrows?.map((subitem, index) => (
-                                    <div className={`flex gap-[10px] mt-[28px]  ${item.expanded ? "visible" : "hidden"}  `} >
-                                        <Link href={subitem.navlink || '#'}>
-                                            <p className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro]  ${sidebaropen ? "visible" : "hidden"} `}>
-                                                {subitem.label}
-                                            </p>
+                                    <div className={`flex items-center gap-2 mt-6 pl-6  ${item.expanded ? "visible" : "hidden"} select-none`} >
+                                        <Link key={index} href={subitem.navlink || '#'} className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro]  ${sidebaropen ? "visible" : "hidden"} `}>
+                                            {subitem.label}
                                         </Link>
                                     </div>
                                 ))}
@@ -169,14 +160,10 @@ export default function Sidebaradmin({ children }) {
                             <input onClick={handleSidebar} type="checkbox" defaultChecked={true} />
                             <span className={styles.slider}></span>
                         </label>
-                        <div id={styles.searchdiv} className={` ml-[29.53px] mr-4`}>
-                            <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
-                            {/* <i className="material-symbols-outlined absolute">search</i> */}
-                            <span className="absolute">
-                                <SearchIcon />
-                            </span>
-
+                        <div id={styles.searchdiv} className={`relative ml-10 mr-4 transition-all duration`}>
+                            <SearchIcon />
                             <input
+                                autoComplete="off"
                                 type="text"
                                 id="search"
                                 value={query}
@@ -184,6 +171,7 @@ export default function Sidebaradmin({ children }) {
                                 className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
                                 placeholder="Search (Keyword, etc)"
                             />
+                            {query !== '' ? <button onClick={() => setQuery('')} className={`fa-regular fa-circle-xmark mr-2 text-sm absolute right-0 top-1/2 -translate-y-1/2`} /> : null}
                         </div>
                     </div>
 
@@ -323,7 +311,19 @@ export default function Sidebaradmin({ children }) {
                 <hr className={`mt-[20px]`} />
                 {/* ////////////////////////////Children START //////////////////////////////////////////////////////// */}
 
-                {query == '' ? children : results}
+                {query == '' ? children :
+                    <div className="w-full mt-10 p-5 flex flex-col gap-y-4">
+                        {results.map((result, index) => {
+                            return <Link key={index} href={result.navlink || ''} className="group font_futura flex justify-between items-center bg-white p-3 rounded-xl hover:rounded-md shadow-lg transition-all duration-500 overflow-hidden">
+                                <div className="h-full">
+                                    <h2 className="text-lg mb-2 group-hover:translate-y-1/2 group-hover:text-xl transition-all duration-500">{result.label}</h2>
+                                    <p className="text-sm group-hover:translate-y-20 transition-all duration-500">{result.navlink}</p>
+                                </div>
+                                <i className="fa-solid fa-chevron-right mr-10 group-hover:translate-x-3 transition-all duration-500" />
+                            </Link>
+                        })}
+                    </div>
+                }
 
                 {/* ///////////////////////////////Children END///////////////////////////////////////////////////// */}
             </div>

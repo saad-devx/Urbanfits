@@ -20,33 +20,26 @@ export default function Verification(props) {
     const router = useRouter()
     const [content, setContent] = useState(
         <><BigSpinner />
-            <p className="w-4/5 my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">CREATING YOUR ACCOUNT, PLEASE WAIT !</p></>
+            <p className="w-4/5 my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">Creatig your account, Please wait !</p></>
     )
 
     useEffect(() => {
         const decodedToken = jwt.decode(token)
         const unixTime = Math.floor(Date.now() / 1000)
         if (!token || token.length < 80 || decodedToken.exp <= unixTime) return setContent(<AlertPage type="error" heading="Oh Snap! Session Expired" message="The session your are trying to access either invalid or expired. Please try again." />)
-        return async () => {
+        const makeAccount = async () => {
             try {
-                const res = await axios.post(`${process.env.HOST}/api/user/signup/callback?token=${token}`)
+                const { data } = await axios.post(`${process.env.HOST}/api/user/signup/callback?token=${token}`)
+                setContent(<>
+                    <BigSpinner />
+                    <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">Almost there !</p>
+                </>)
+                await updateUser(data.payload, true)
+                toaster("success", data.msg)
                 setContent(
-                    <><BigSpinner />
-                        <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">ALMOST THERE !</p></>
-                )
-                if (res.data.success && res.data.payload) {
-                    const { data } = res
-                    await updateUser(data.payload, true)
-                    toaster("success", data.msg)
-                    setContent(
-                        <> <Image src={successIcon} alt="Success" />
-                            <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">YOU'R READY TO GO !</p></>)
-                    router.push('/user/personalinfo')
-                }
-                else {
-                    const { data } = res.response
-                    toaster("error", data.msg)
-                }
+                    <> <Image src={successIcon} alt="Success" />
+                        <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">You'r ready to go !</p></>)
+                router.push('/user/personalinfo')
             } catch (error) {
                 setContent(
                     <AlertPage type="error" heading="Oh Snap! Some Error Occured" message={error.response.data.msg} />
@@ -55,6 +48,7 @@ export default function Verification(props) {
                 toaster("error", error.response.data.msg)
             }
         }
+        makeAccount()
     }, [token])
 
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
@@ -62,16 +56,16 @@ export default function Verification(props) {
         <>
             <Head><title>Email Verification</title></Head>
             <main className='w-full h-screen flex flex-col justify-center items-center'>
-                <h1 className="w-4/5 font_gotham_medium text-center text-base lg:text-3xl tracking-widest mb-10">THANKS FOR SIGNING UP FOR URBAN FITS !</h1>
+                <h1 className="w-4/5 font_gotham_medium text-center text-base lg:text-3xl mb-10">Thanks for signing up for Urban Fits !</h1>
                 <section className="flex items-center gap-x-2">
                     <Image src={Logo} alt='Urban Fits' className='w-15 md:w-20' width={80} />
                     <div className="flex gap-x-3">
-                        <span className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
-                        <span className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
-                        <span className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
-                        <span className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
-                        <span className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
-                        <span className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
+                        <span key={1} className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
+                        <span key={2} className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
+                        <span key={3} className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
+                        <span key={4} className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
+                        <span key={5} className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
+                        <span key={6} className="bg-gold-land w-3 h-0.5 md:w-5 md:h-1 -skew-x-[18deg]"></span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-15 md:w-20 md:h-20 text-yellow-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path className='text-[#cfa435]' strokeLinecap="round" strokeLineJoin="round" stroke-width="1" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />

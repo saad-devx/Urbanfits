@@ -5,26 +5,60 @@ import getUser_LS from '@/utils/getUserfromLS';
 
 const useProduct = create((set, get) => ({
 
-    products: null,
+    products: [],
     productLoading: false,
+    currentPage: 1,
+    totalPages: 1,
+    totalProducts: 0,
+    selectedProducts: [],
+    setSelectedProducts: (newArray) => set(() => ({ selectedProducts: newArray })),
 
-    getProducts: async (category_id = null) => {
+    getProducts: async (page = 1, category_id = null) => {
         set(() => ({
             productLoading: true
         }))
         try {
             if (category_id) {
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}`)
+                const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
                 set(() => (
-                    { products: data.products }
+                    {
+                        products: data.products,
+                        totalPages: data.totalPages,
+                        currentPage: data.currentPage,
+                        totalProducts: data.totalProducts
+                    }
                 ))
             }
             else {
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/many`)
+                const { data } = await axios.get(`${process.env.HOST}/api/products/get/many?page=${page}`)
                 set(() => (
-                    { products: data.products }
+                    {
+                        products: data.products,
+                        totalPages: data.totalPages,
+                        currentPage: data.currentPage,
+                        totalProducts: data.totalProducts
+                    }
                 ))
             }
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({
+            productLoading: false
+        }))
+    },
+
+    getOneProduct: async (product_id) => {
+        set(() => ({
+            productLoading: true
+        }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/products/get/one?id=${product_id}`)
+            set(() => ({
+                productLoading: false
+            }))
+            return data.product
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)
@@ -46,6 +80,26 @@ const useProduct = create((set, get) => ({
             set(() => (
                 { products: data.products }
             ))
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({
+            productLoading: false
+        }))
+    },
+
+    createProduct: async (productsToDelete) => {
+        const user = getUser_LS()
+        if (!user) return
+
+        set(() => ({
+            productLoading: true
+        }))
+        try {
+            const { data } = await axios.put(`${process.env.HOST}/api/products/delete?id=${user._id}`, productsToDelete)
+            await get().getProducts(1)
+            toaster(data.deletedCount < 1 ? "info" : "success", data.msg)
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)

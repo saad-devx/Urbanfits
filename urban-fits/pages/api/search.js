@@ -1,7 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 
-// Only accessable by Admin 
 const UpdateProducts = async (req, res) => {
     try {
         if (req.method === 'GET') {
@@ -10,15 +9,10 @@ const UpdateProducts = async (req, res) => {
             const searchTerm = req.query.q
             const results = await Product.find({
                 $or: [
-                    { category: { $regex: searchTerm, $options: "i" } },
+                    // { category: { $regex: searchTerm, $options: "i" } },
                     { name: { $regex: searchTerm, $options: "i" } },
                     { tags: { $elemMatch: { $regex: searchTerm, $options: "i" } } }
                 ]
-                // $or: [
-                //     // { category: { $regex: searchTerm, $options: "i" } },
-                //     // { name: { $regex: searchTerm, $options: "i" } },
-                //     { subcategories: {$in: searchTerm}  }
-                // ]
             })
             res.json(results);
         }
@@ -27,6 +21,7 @@ const UpdateProducts = async (req, res) => {
         }
     }
     catch (err) {
+        console.log(err)
         res.status(500).send("Internal Server Error occurred. Please retry")
     }
 }

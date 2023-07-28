@@ -29,9 +29,9 @@ export default function Trackorder() {
             <Navbar />
             <main className='bg-white w-full h-full transition-all duration-700 overflow-y-scroll'>
                 <div className="mx-5 md:w-4/5 md:mx-auto lg:w-70pr my-20">
-                    <h2 className="text-2xl md:text-4xl lg:text-[44px] font_gotham_medium tracking-widest mb-8">TRACK YOUR ORDER</h2>
+                    <h2 className="text-2xl md:text-4xl lg:text-[44px] font_gotham_medium mb-8">Track Your Order</h2>
                     <form className="w-full mt-16 pb-10 lg:pb-0 font_gotham text-sm space-y-10" onReset={handleReset} onSubmit={handleSubmit} >
-                        <h3 className="text-lg md:text-xl lg:text-[22px] font_gotham_medium">ENTER YOUR ORDER INFORMATION</h3>
+                        <h3 className="text-lg md:text-xl lg:text-[22px] font_gotham_medium">Enter Your Order Information</h3>
                         <p className='font_gotham_light'>Enter your email address and order number in the space below and we will provide you with a list of the items you ordered and the relevant shipping information. If you have only just confirmed your order, this information will appear in a few minutes.</p>
                         <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                             {touched.orderemail && errors.orderemail ? <Tooltip classes="form-error" content={errors.orderemail} /> : null}
@@ -49,7 +49,7 @@ export default function Trackorder() {
                             <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                         </div>
                         <div className="w-full flex justify-start space-x-4">
-                            <Button type="submit" classes="w-full md:w-40 font_gotham_medium tracking-widest">CONTINUE</Button>
+                            <Button type="submit" classes="w-full md:w-40 font_gotham_medium">Continue</Button>
                         </div>
                     </form>
                 </div>

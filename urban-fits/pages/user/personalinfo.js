@@ -143,7 +143,7 @@ export default function Personalinfo() {
             <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
             <User>
                 <form className="mt-10 font_gotham gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
-                    <h1 className='text-xl lg:text-[22px] font_gotham_medium tracking-widest' >PERSONAL INFORMATION</h1>
+                    <h1 className='text-xl lg:text-[22px] font_gotham_medium' >Personal Information</h1>
                     <div className="flex flex-col md:flex-row md:items-end justify-between w-full ">
                         <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
                             {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
@@ -193,7 +193,7 @@ export default function Personalinfo() {
                         </div>
                     </div>
                     <div className="w-full">
-                        <h1 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mt-5">NEWSLETTER SUBSCRIPTION</h1>
+                        <h1 className="text-xl lg:text-[22px] font_gotham_medium mt-5">Newsletter Subscription</h1>
                         <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
                             <div className="w-1/2 md:w-1/4 flex justify-between">
                                 Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
@@ -208,25 +208,25 @@ export default function Personalinfo() {
                         </div>
                     </div>
                     <div className="w-full flex justify-end">
-                        <Button disabled={!loader ? false : true} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3 mx-2" font='font_gotham_medium' >CANCEL</Button>
-                        <Button loading={!loader ? false : true} type="submit" classes="w-full md:w-1/3 ml-2" font='font_gotham_medium' >SAVE</Button>
+                        <Button disabled={!loader ? false : true} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3 mx-2" font='font_gotham_medium'>Cancel</Button>
+                        <Button loading={!loader ? false : true} type="submit" classes="w-full md:w-1/3 ml-2" font='font_gotham_medium'>Save</Button>
                     </div>
                 </form>
                 <div className='w-full' >
                     <div className='my-14 space-y-5' >
-                        <h2 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest">EMAIL & PASSWORD</h2>
+                        <h2 className="text-xl lg:text-[22px] font_gotham_medium">Email & Password</h2>
                         <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                             <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
                         </div>
                     </div>
                     <div className='my-14 space-y-5' >
-                        <h2 className="text-xl lg:text-[22px] font_gotham_medium tracking-widest mb-8">MY ADDRESSES</h2>
+                        <h2 className="text-xl lg:text-[22px] font_gotham_medium mb-8">My Address</h2>
                         <div>
-                            <h5 className='text-lg font_gotham_medium tracking-widest my-2'>SHIPPING</h5>
+                            <h5 className='text-lg font_gotham_medium my-2'>Shipping</h5>
                             <AddressContainer tag="shipping" />
                         </div>
                         <div>
-                            <h5 className='text-lg font_gotham_medium tracking-widest my-2'>BILLING</h5>
+                            <h5 className='text-lg font_gotham_medium my-2'>Billing</h5>
                             <AddressContainer tag="billing" />
                         </div>
                     </div>
