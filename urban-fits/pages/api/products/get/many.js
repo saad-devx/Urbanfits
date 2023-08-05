@@ -15,7 +15,7 @@ const getManyProducts = async (req, res) => {
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
-                .populate("category");
+                .populate("categories");
 
             res.status(200).json({
                 length: products.length,

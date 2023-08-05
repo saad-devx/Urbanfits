@@ -20,6 +20,13 @@ const BundleItem = (props) => {
         if (props.value && props.value.length > 18) getOneProduct(props.value)
         else setFoundProduct(null)
     }, [props.value])
+    const getCorrespondingProduct = async (e) => {
+        const { value } = e.target
+        handleChange(e);
+        if (value.length < 10) return
+        let product = await getOneProduct(value)
+        setFoundProduct(product)
+    }
 
     return <section className='w-full flex items-center' key={index}>
         <div className="w-1/2 flex items-center">
@@ -29,13 +36,8 @@ const BundleItem = (props) => {
                     type="text"
                     name={`products[${index}].id`}
                     value={props.value}
-                    onChange={async (e) => {
-                        const { value } = e.target
-                        handleChange(e);
-                        if (value.length < 10) return
-                        let product = await getOneProduct(value)
-                        setFoundProduct(product)
-                    }}
+                    onChange={getCorrespondingProduct}
+                    onPaste={getCorrespondingProduct}
                     placeholder="Product ID"
                 />
                 {errors.products && errors.products[index] && errors.products[index].id ? <p className='absolute text-red-600 bottom-[-19px] left-[10px] text-[11px]' >{errors.products[index].id}</p> : null}
@@ -100,7 +102,6 @@ export default function CreateBundles() {
     };
 
     const handleRemoveProduct = (index) => {
-        // setFieldValue(`products[${index}].id`, '');
         const newProducts = [...values.products];
         newProducts.splice(index, 1);
         setFieldValue('products', newProducts);

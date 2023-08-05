@@ -16,7 +16,7 @@ import { productListTableColumns } from '@/mock/tablesdata';
 export default function allproducts() {
     const router = useRouter()
     const { categories, getCategories, categLoading } = useCategories()
-    const { products, getProducts, productLoading, totalProducts, DeleteProducts, selectedProducts, setSelectedProducts } = useProduct()
+    const { products, getProducts, productLoading, totalProducts, DeleteProducts, selectedProducts, setSelectedProducts, setProductInfo } = useProduct()
     const [categoryOption, setCategoryOption] = useState(false)
     const [deleteModal, setDeleteModal] = useState(null)
     const [query, setQuery] = useState('')
@@ -164,10 +164,13 @@ export default function allproducts() {
                             status: "Active",
                             date: product.createdAt,
                             updatedAt: product.updatedAt,
+                            handleInfo: () => { setProductInfo(product) },
+                            infoLink: "/admin/products/productinfo",
                             actions: [
                                 {
                                     name: "Edit",
-                                    onClick: () => { return }
+                                    link: '/admin/products/productinfo',
+                                    onClick: () => { setProductInfo(product) }
                                 },
                                 {
                                     name: "Copy ID",
@@ -175,7 +178,7 @@ export default function allproducts() {
                                 },
                                 {
                                     name: "Visit",
-                                    onClick: () => { router.push(`/products/product/${product._id}`) }
+                                    onClick: () => { window.open(`/products/product/${product._id}`) }
                                 },
                             ]
                         }

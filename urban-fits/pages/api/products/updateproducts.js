@@ -1,12 +1,20 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
+import User from "@/models/user";
+import mongoose from "mongoose";
 
 // Only accessable by Admin 
 const UpdateProducts = async (req, res) => {
     try {
         if (req.method === 'PUT') {
+            const { user_id, id } = req.query
+            if (!user_id || !mongoose.Types.ObjectId(user_id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
+
             await ConnectDB()
-            if (!req.query.id) {
+            let user = await User.findById(user_id)
+            if (!user || user.role !== "administrator") return res.status(403).json({ success: false, msg: "The user with corresponding id must exist and should be administrator create categories" })
+
+            if (!id) {
                 let products = await Product.updateMany({}, req.body)
                 res.status(200).json({
                     success: true,
@@ -14,15 +22,15 @@ const UpdateProducts = async (req, res) => {
                     products
                 })
             }
-            else if (req.query.id) {
-                let product = await Product.findById(req.query.id)
-                if (!product) return res.status(404).json({ success: false, msg: "Product not found" })
+            else if (id) {
+                let product = await Product.findById(id)
+                if (!product) return res.status(404).json({ success: false, msg: `Product not found with specified id : ${id}` })
                 if (product) {
-                    product = await Product.findByIdAndUpdate(req.query.id, req.body)
+                    product = await Product.findByIdAndUpdate(id, req.body)
                 }
                 res.status(200).json({
                     success: true,
-                    msg: `Success ! Products with id ${req.query.id} has been updated successfully`,
+                    msg: `Products with id ${req.query.id} has been updated successfully.`,
                     product
                 })
             }

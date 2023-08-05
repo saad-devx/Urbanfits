@@ -36,7 +36,7 @@ export function SmallShoppingcard(props) {
     const { product } = props
     const { addItem } = useCart()
     return (
-        <div key={props.li_key} className={`relative bg-[#eaeaea] border ${props.classes} w-full min-h-[212px] h-[230px] 2xl:h-[250px] ${props.margin ? props.margin : 'my-3 md:my-5'} rounded-xl hover:scale-[1.01] hover:rounded-lg font_gotham transition-all duration-500 overflow-hidden`} >
+        <div {...props} className={`relative bg-[#eaeaea] border ${props.classes} w-full min-h-[212px] h-[230px] 2xl:h-[250px] ${props.margin ? props.margin : 'my-3 md:my-5'} rounded-xl hover:scale-[1.01] hover:rounded-lg font_gotham transition-all duration-500 overflow-hidden`} >
             <button title='Add to Cart' onClick={() => {
                 if (inCart(`${product.variants[0]._id}${product.variants[0].sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
                 addItem({ product_id: product._id, id: `${product.variants[0]._id}${product.variants[0].sizes[0].size}`, name: product.name, price: product.price, shipping_fee: product.shipping_detials.fees, stock: product.variants[0].stock, size: product.variants[0].sizes[0].size, sizes: product.variants[0].sizes, color: product.variants[0].color_name, images: product.variants[0].images }, 1); toaster('success', "Your item is added to the Cart")
@@ -45,13 +45,13 @@ export function SmallShoppingcard(props) {
             </button>
             <Link href={`/products/product/64806298f7cd24b01e205f3f`}>
                 <div className="relative w-full h-4/5 pt-3">
-                    <Image src={props.img} width={640} height={853} className="h-full object-contain object-center" alt='Urban Fits' />
+                    <Image src={product.cover_image} width={640} height={853} className="h-full object-contain object-center" alt={product.name} />
                 </div>
                 <div className="w-full h-1/5 py-2 px-3 text-black flex flex-col items-center">
                     <span className="max-w-full font_gotham_bold tracking-wide text-[8px] lg:text-[10px] text-center overflow-hidden whitespace-nowrap text-ellipsis" >{props.product.name.toUpperCase()}</span>
                     <div className='w-full mt-1.5 flex justify-between font_gotham_medium text-[8px] '>
-                        <span className='tracking-[0.15em]' >{props.product.variants.length} COLOR(S)</span>
-                        <span className='tracking-[0.15em]' >${props.product.price}</span>
+                        <span className='tracking-[0.15em]'>{product.variants.length} COLOR(S)</span>
+                        <span className='tracking-[0.15em]'>${product.price}</span>
                     </div>
                 </div>
             </Link>

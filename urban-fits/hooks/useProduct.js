@@ -6,12 +6,12 @@ import getUser_LS from '@/utils/getUserfromLS';
 const useProduct = create((set, get) => ({
 
     products: [],
+    productInfo: null,
     productLoading: false,
-    currentPage: 1,
-    totalPages: 1,
     totalProducts: 0,
     selectedProducts: [],
     setSelectedProducts: (newArray) => set(() => ({ selectedProducts: newArray })),
+    setProductInfo: (info) => set(() => ({ productInfo: info })),
 
     getProducts: async (page = 1, category_id = null) => {
         set(() => ({
@@ -23,8 +23,6 @@ const useProduct = create((set, get) => ({
                 set(() => (
                     {
                         products: data.products,
-                        totalPages: data.totalPages,
-                        currentPage: data.currentPage,
                         totalProducts: data.totalProducts
                     }
                 ))
@@ -34,8 +32,6 @@ const useProduct = create((set, get) => ({
                 set(() => (
                     {
                         products: data.products,
-                        totalPages: data.totalPages,
-                        currentPage: data.currentPage,
                         totalProducts: data.totalProducts
                     }
                 ))
@@ -68,7 +64,7 @@ const useProduct = create((set, get) => ({
         }))
     },
 
-    createProduct: async (category) => {
+    createProduct: async (productToCreate) => {
         const user = getUser_LS()
         if (!user) return
 
@@ -76,10 +72,11 @@ const useProduct = create((set, get) => ({
             productLoading: true
         }))
         try {
-            const { data } = await axios.post(`${process.env.HOST}/api/products/create?id=${user._id}`, category)
-            set(() => (
-                { products: data.products }
-            ))
+            const { data } = await axios.post(`${process.env.HOST}/api/products/createproduct?id=${user._id}`, productToCreate)
+            set(() => ({
+                productLoading: false
+            }))
+            return data.product
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)
@@ -89,7 +86,31 @@ const useProduct = create((set, get) => ({
         }))
     },
 
-    createProduct: async (productsToDelete) => {
+    updateProduct: async (id, updatedProduct) => {
+        const user = getUser_LS()
+        if (!user) return
+
+        set(() => ({
+            productLoading: true
+        }))
+        try {
+            const { data } = await axios.put(`${process.env.HOST}/api/products/updateproducts?user_id=${user._id}&id=${id}`, updatedProduct)
+            set(() => ({
+                productLoading: false,
+                productInfo: data.product
+            }))
+            toaster("success", data.msg)
+            return data.product
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({
+            productLoading: false
+        }))
+    },
+
+    deleteProduct: async (productsToDelete) => {
         const user = getUser_LS()
         if (!user) return
 

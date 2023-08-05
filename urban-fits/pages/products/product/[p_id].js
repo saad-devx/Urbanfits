@@ -125,7 +125,7 @@ export default function Product(props) {
                                     </div>
                                 </div>
 
-                                <div className="w-full gap-2 lg:gap-4 flex flex-wrap justify-between">
+                                <div className="w-full gap-2 lg:gap-4 lg:gap-y-8 flex flex-wrap justify-between">
                                     <div className="flex flex-col max-w-[320px] w-48pr">
                                         <div className='relative w-full h-9 lg:h-[52px] border'>
                                             <span className="select_container after:right-[10%]"></span>
@@ -136,7 +136,7 @@ export default function Product(props) {
                                                 })}
                                             </select>
                                         </div>
-                                        <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button>
+                                        {/* <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_gotham_medium italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button> */}
                                     </div>
                                     <div className='relative max-w-[320px] w-48pr h-9 lg:h-[52px] border'>
                                         <span className="select_container after:right-[10%]"></span>
@@ -152,9 +152,9 @@ export default function Product(props) {
                                         <input type="number" readOnly className='w-3/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
                                         <span onClick={(e) => { changeQuantity(e) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                                     </span>
-                                    <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr border text-xs text-black">
+                                    {/* <button onClick={toggleModal} name="modal4" className="lg:hidden flex justify-center items-center max-w-[320px] w-48pr border text-xs text-black">
                                         Customization
-                                    </button>
+                                    </button> */}
                                     {
                                         getFilteredQuantity() < 1 ? <span className="lg:max-w-[320px] w-full lg:w-48pr h-9 lg:h-[52px] my-2 flex justify-center items-center font_gotham_medium italic text-center text-xs text-gray-300 tracking-[0.15em]">OUT OF STOCK</span>
                                             : <>
@@ -164,20 +164,22 @@ export default function Product(props) {
                                     }
                                 </div>
 
-                                <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">
-                                    <h1 className="font_gotham_medium text-xs text-gray-300 italic">MATCH WITH</h1>
-                                    <div className="hidden lg:grid w-full grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
-                                        <SmallShoppingcard product={si_product} img={image3} />
-                                        <SmallShoppingcard product={si_product} img={image4} />
-                                        <SmallShoppingcard product={si_product} img={image1} />
+                                {productData.bundle_items && productData.bundle_items.length !== 0 ?
+                                    <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">
+                                        <h1 className="font_gotham_medium text-xs text-gray-300 italic">MATCH WITH</h1>
+                                        <div className="hidden lg:grid w-full grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
+                                            {productData.bundle_items.map((product, index) => (
+                                                <SmallShoppingcard key={index} product={product} />
+                                            ))}
+                                        </div>
+                                        <div className="lg:hidden w-full grid grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
+                                            <Shoppingcard product={si_product} img={image3} />
+                                            <Shoppingcard product={si_product} img={image4} />
+                                            <Shoppingcard product={si_product} img={image1} />
+                                            <Shoppingcard classes='md:hidden' product={si_product} img={image1} />
+                                        </div>
                                     </div>
-                                    <div className="lg:hidden w-full grid grid-cols-2 md:grid-cols-3 gap-3 2xl:gap-6">
-                                        <Shoppingcard product={si_product} img={image3} />
-                                        <Shoppingcard product={si_product} img={image4} />
-                                        <Shoppingcard product={si_product} img={image1} />
-                                        <Shoppingcard classes='md:hidden' product={si_product} img={image1} />
-                                    </div>
-                                </div>
+                                    : null}
                             </div>
                         </div>
 

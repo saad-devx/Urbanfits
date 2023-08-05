@@ -43,12 +43,7 @@ export const sidebarItems = [
         label: "Add Bundle",
 
         navlink: "/admin/products/addbundle",
-      },
-      {
-        label: "Attributes",
-
-        navlink: "/admin",
-      },
+      }
     ],
   },
   {

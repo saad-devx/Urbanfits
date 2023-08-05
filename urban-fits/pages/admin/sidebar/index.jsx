@@ -154,13 +154,13 @@ export default function Sidebaradmin({ children }) {
             </div>
 
             <div className={`min-h-[100vh] px-[30px] py-[44px] bg-[#F4F4F4] overflow-y-scroll ${sidebaropen ? "ml-[250px]" : "ml-[80px]"}  duration-300 `} >
-                <div className={` flex justify-between  items-center `}>
+                <div className={`flex justify-between items-center`}>
                     <div className={`flex items-center `}>
                         <label className={`${styles.switch2} w-[40px] h-[22.25px] `}>
                             <input onClick={handleSidebar} type="checkbox" defaultChecked={true} />
                             <span className={styles.slider}></span>
                         </label>
-                        <div id={styles.searchdiv} className={`relative ml-10 mr-4 transition-all duration`}>
+                        <div id={styles.searchdiv} className='relative ml-10 mr-4 transition-all duration'>
                             <SearchIcon />
                             <input
                                 autoComplete="off"
@@ -171,11 +171,11 @@ export default function Sidebaradmin({ children }) {
                                 className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
                                 placeholder="Search (Keyword, etc)"
                             />
-                            {query !== '' ? <button onClick={() => setQuery('')} className={`fa-regular fa-circle-xmark mr-2 text-sm absolute right-0 top-1/2 -translate-y-1/2`} /> : null}
+                            {query !== '' ? <button onClick={() => setQuery('')} className='fa-regular fa-circle-xmark mr-2 text-sm absolute right-0 top-1/2 -translate-y-1/2'/> : null}
                         </div>
                     </div>
 
-                    <div className={` flex items-center  `}>
+                    <div className='flex items-center'>
                         <span onClick={() => handlemenuclick("avatar")} className="w-10 border border-gray-400 aspect-square rounded-full overflow-hidden cursor-pointer" >
                             <Image src={user.image} className="w-full h-full object-cover" width={80} height={80} />
                         </span>
