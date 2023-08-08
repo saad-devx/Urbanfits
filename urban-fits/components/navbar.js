@@ -138,7 +138,7 @@ export default function Navbar(props) {
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} hidden lg:block right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <ToTopBtn />
             {/* <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div> */}
-            <nav id='navbar' className="sticky z-40 top-0 left-0 right-0 group_whole_nav w-full font_gotham_medium text-sm overflow-hidden">
+            <nav id='navbar' className="sticky z-40 top-0 left-0 right-0 group_whole_nav w-full font_urbanist_bold text-sm overflow-hidden">
                 <section className={`${navBg} z-40 w-full h-[50px] flex justify-between items-center p-7 lg:px-14 2xl:px-16 ${navBg === "bg-white" ? "border-b" : null} transition-all duration-300`}>
                     {window.matchMedia('(min-width: 1024px)').matches ? <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
                         <div className={`${bars} menu btn3`}>

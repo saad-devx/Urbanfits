@@ -6,7 +6,7 @@ import Link from "next/link";
 import Aos from "aos";
 import 'aos/dist/aos.css';
 import Image from "next/image";
-import hero_bg from '@/public/cart/cartbg.jpg'
+const hero_bg = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/cartbg.jpg'
 import img1 from '@/public/stories/img1.jpg'
 import img2 from '@/public/stories/img3.jpg'
 import img3 from '@/public/stories/img4.jpg'

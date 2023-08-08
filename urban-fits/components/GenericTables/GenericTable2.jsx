@@ -11,22 +11,9 @@ import {
   useExpanded,
 } from "react-table";
 
-import Styles from "@/styles/generictables.module.css";
-import styles from "@/styles/sidebar.module.css";
-
 import { InputSelect } from "../InputSelect";
 import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import Pagination from "./Pagination";
-
-
-// tbody{
-//   tr{
-//       :nth-child(odd){
-//           background-color: #f2f2f2;
-//         }
-//   }
-// }
-
 
 const Styled = styled.div`
   /* This is required to make the table full-width */

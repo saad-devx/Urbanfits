@@ -9,7 +9,6 @@ import {
   usePagination,
   useGlobalFilter
 } from "react-table";
-import styles from "@/styles/sidebar.module.css";
 import { SearchIcon } from "@/public/sidebaricons/SearchIcon";
 import Pagination from "./Pagination";
 
@@ -140,7 +139,7 @@ const GenericTable1 = (props) => {
               </select>
             </div> : null
           }
-          <div id={styles.searchdiv} >
+          <div>
             <div className="flex flex-row items-center gap-[10] w-[15.95px] h-[16px]"></div>
             <span className="absolute">
               <SearchIcon />

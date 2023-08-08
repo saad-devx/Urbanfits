@@ -45,7 +45,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, [router.events])
 
   return <>
-    <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={100} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
+    <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={0} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className="toast" />
     <SessionProvider session={session}>
       <CartProvider>
