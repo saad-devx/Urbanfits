@@ -4,7 +4,8 @@ import '@/styles/pillbtns.css'
 import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'
 import { SessionProvider } from "next-auth/react"
-// import CustomCursor from '@/components/customCursor'
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
 import dynamic from 'next/dynamic';
 import useLocation from '@/hooks/useLocation'
 import { ToastContainer } from 'react-toastify'
@@ -12,16 +13,16 @@ import useUser from '@/hooks/useUser'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
 import LoadingBar from 'react-top-loading-bar'
+import Error403 from './403'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getLocation } = useLocation()
   const { user } = useUser()
-  // const { cursor } = useCursor()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
-
+  const Exception = router.pathname.startsWith("/admin")
   if (router.pathname.startsWith("/admin")) {
-    if (!user || user.role == "customer") return <div className="w-full h-screen flex justify-center items-center font_gotham_medium text-2xl tracking-expand">ACCESS DENIED</div>
+    if (!user || user.role == "customer") return <Error403 />
   }
 
   useEffect(() => {
@@ -31,11 +32,9 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       else localStorage.removeItem("loadingModal")
     })
   }, [])
-
   useEffect(() => {
     getLocation()
   }, [])
-
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)
@@ -45,17 +44,16 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     })
   }, [router.events])
 
-  return (
-    <>
-      {/* {cursor ? <CustomCursor /> : null} */}
-      <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={400} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
-      <ToastContainer className="toast" />
-      <SessionProvider session={session}>
-        <CartProvider>
-          <Component {...pageProps} />
-        </CartProvider>
-      </SessionProvider>
-    </>
-  )
+  return <>
+    <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={100} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
+    <ToastContainer className="toast" />
+    <SessionProvider session={session}>
+      <CartProvider>
+        {Exception ? null : <Navbar />}
+        <Component {...pageProps} />
+        {Exception ? null : <Footer />}
+      </CartProvider>
+    </SessionProvider>
+  </>
 }
 export default dynamic(() => Promise.resolve(App), { ssr: false })

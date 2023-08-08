@@ -12,10 +12,16 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a price for your product"],
         maxlength: [10, "Price can't be more than 10 figures"]
     },
+    uf_points: {
+        type: Number,
+    },
     sale_price: {
         type: Number,
-        required: [true, "Please enter a price for your product"],
         maxlength: [10, "Price can't be more than 10 figures"]
+    },
+    gift_code: {
+        type: Boolean,
+        default: false,
     },
     description: {
         type: String,

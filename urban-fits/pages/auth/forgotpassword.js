@@ -55,14 +55,19 @@ export default function ForgotPassword() {
     return (
         <>
             <AuthPage loading={loading} >
-                <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
-                    <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                        {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                        <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Username or Email' />
-                    </div>
-                    {resendOption}
-                    <Button classes='w-full tracking-expand' font='font_gotham_medium' fontSize='text-sm' type="submit" >VERIFY</Button>
-                    <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Sign in with an exiting account</h1></Link>
+                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+                    <section className="w-full mb-6">
+                        <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Forgot Password</h1>
+                        <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
+                            <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Username or Email' />
+                        </div>
+                        {resendOption}
+                    </section>
+                    <section>
+                        <Button classes='w-full' type="submit">Verfiy</Button>
+                        <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Sign in with an exiting account</h1></Link>
+                    </section>
                 </form>
             </AuthPage>
         </>

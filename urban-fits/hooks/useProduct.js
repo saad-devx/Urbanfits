@@ -72,7 +72,7 @@ const useProduct = create((set, get) => ({
             productLoading: true
         }))
         try {
-            const { data } = await axios.post(`${process.env.HOST}/api/products/createproduct?id=${user._id}`, productToCreate)
+            const { data } = await axios.post(`${process.env.HOST}/api/products/create?id=${user._id}`, productToCreate)
             set(() => ({
                 productLoading: false
             }))
@@ -94,7 +94,7 @@ const useProduct = create((set, get) => ({
             productLoading: true
         }))
         try {
-            const { data } = await axios.put(`${process.env.HOST}/api/products/updateproducts?user_id=${user._id}&id=${id}`, updatedProduct)
+            const { data } = await axios.put(`${process.env.HOST}/api/products/update?user_id=${user._id}&id=${id}`, updatedProduct)
             set(() => ({
                 productLoading: false,
                 productInfo: data.product
@@ -110,7 +110,7 @@ const useProduct = create((set, get) => ({
         }))
     },
 
-    deleteProduct: async (productsToDelete) => {
+    deleteProducts: async (productsToDelete) => {
         const user = getUser_LS()
         if (!user) return
 
@@ -118,7 +118,7 @@ const useProduct = create((set, get) => ({
             productLoading: true
         }))
         try {
-            const { data } = await axios.put(`${process.env.HOST}/api/products/delete?id=${user._id}`, productsToDelete)
+            const { data } = await axios.put(`${process.env.HOST}/api/products/delete?user_id=${user._id}`, { products: productsToDelete })
             await get().getProducts(1)
             toaster(data.deletedCount < 1 ? "info" : "success", data.msg)
         } catch (error) {

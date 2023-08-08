@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import CatalogueCarousel from '@/components/carousels/catalogueCarousel';
-import Navbar from '../../components/navbar';
 import Shoppingcard from '@/components/cards/shoppingcard';
-import Footer from '../../components/footer'
 import MoreToExplore from '@/components/more_to_explore';
 import ListingShopSection from '@/components/listingShop_section';
 
@@ -29,7 +27,6 @@ export default function productlisting(props) {
 
     return (
         <>
-            <Navbar hideNav={hideNav} />
             <main className="w-full pb-20 bg-white flex justify-center font_gotham overflow-hidden">
                 <section className='' >
                     <CatalogueCarousel />
@@ -63,7 +60,6 @@ export default function productlisting(props) {
                 </section>
             </main>
             <ListingShopSection whiteTheme />
-            <Footer />
         </>
     )
 }

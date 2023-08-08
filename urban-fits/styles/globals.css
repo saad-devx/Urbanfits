@@ -1,32 +1,38 @@
 /* test */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Montserrat&family=Urbanist&display=swap');
 
 @font-face {
   font-family: 'Futura LT Pro';
   font-style: normal;
   font-display: swap;
-  src: url('../public/fonts/FuturaLTPro-Book.woff') format('woff');
+  src: url('https://urban-fits.s3.eu-north-1.amazonaws.com/fonts/FuturaLTPro-Book.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Futura LT Pro Light';
   font-style: normal;
   font-display: swap;
-  src: url('../public/fonts/FuturaLTPro-Light.woff') format('woff');
+  src: url('https://urban-fits.s3.eu-north-1.amazonaws.com/fonts/FuturaLTPro-Light.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Futura LT Pro Bold';
   font-style: 700;
   font-display: swap;
-  src: url('../public/fonts/FuturaLT-Bold.woff') format('woff');
+  src: url('https://urban-fits.s3.eu-north-1.amazonaws.com/fonts/FuturaLT-Bold.woff') format('woff');
 }
 
-/* font futura classes */
+@font-face {
+  font-family: 'Copperplate Gothic 33 BC';
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+  src: url('https://urban-fits.s3.eu-north-1.amazonaws.com/fonts/CopperplateGothicStd-33BC.woff2') format('woff2');
+}
+
 .font_futura {
   font-family: 'Futura LT Pro';
 }
@@ -39,83 +45,92 @@
   font-family: 'Futura LT Pro Bold';
 }
 
-@font-face {
-  font-family: 'Gotham Pro';
-  src: url('../public/fonts/GothamPro.eot');
-  src: local('Gotham Pro'), local('GothamPro'),
-    url('../public/fonts/GothamPro.eot?#iefix') format('embedded-opentype'),
-    url('../public/fonts/GothamPro.woff2') format('woff2'),
-    url('../public/fonts/GothamPro.woff') format('woff'),
-    url('../public/fonts/GothamPro.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+.font_gotham {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
 }
 
-@font-face {
-  font-family: 'Gotham Pro Light';
-  src: url('../public/fonts/GothamPro-Light.eot');
-  src: local('Gotham Pro Light'), local('GothamPro-Light'),
-    url('../public/fonts/GothamPro-Light.eot?#iefix') format('embedded-opentype'),
-    url('../public/fonts/GothamPro-Light.woff2') format('woff2'),
-    url('../public/fonts/GothamPro-Light.woff') format('woff'),
-    url('../public/fonts/GothamPro-Light.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
+.font_gotham_light {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
 }
 
-@font-face {
-  font-family: 'Gotham Pro Black';
-  src: url('../public/fonts/GothamPro-Black.eot');
-  src: local('Gotham Pro Black'), local('GothamPro-Black'),
-    url('../public/fonts/GothamPro-Black.eot?#iefix') format('embedded-opentype'),
-    url('../public/fonts/GothamPro-Black.woff2') format('woff2'),
-    url('../public/fonts/GothamPro-Black.woff') format('woff'),
-    url('../public/fonts/GothamPro-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
+.font_gotham_bold {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
 }
 
-@font-face {
-  font-family: 'Gotham Pro Bold';
-  src: url('../public/fonts/GothamPro-Bold.eot');
-  src: local('Gotham Pro Bold'), local('GothamPro-Bold'),
-    url('../public/fonts/GothamPro-Bold.eot?#iefix') format('embedded-opentype'),
-    url('../public/fonts/GothamPro-Bold.woff2') format('woff2'),
-    url('../public/fonts/GothamPro-Bold.woff') format('woff'),
-    url('../public/fonts/GothamPro-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+.font_gotham_black {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
 }
 
-@font-face {
-  font-family: 'Gotham Pro Meduim';
-  src: url('../public/fonts/GothamPro-Medium.eot');
-  src: local('Gotham Pro Medium'), local('GothamPro-Medium'),
-    url('../public/fonts/GothamPro-Medium.eot?#iefix') format('embedded-opentype'),
-    url('../public/fonts/GothamPro-Medium.woff2') format('woff2'),
-    url('../public/fonts/GothamPro-Medium.woff') format('woff'),
-    url('../public/fonts/GothamPro-Medium.ttf') format('truetype');
+.font_copper {
+  font-family: "Copperplate Gothic 33 BC";
+  font-weight: 400;
+}
+
+.font_cinzel {
+  font-family: 'Cinzel Decorative';
+}
+
+.font_montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@media only screen and (min-width: 1000px) {
+  .lg\:font_gotham_bold {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 600;
+  }
+
+  .lg\:font_gotham_black {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 600;
+  }
+
+  .lg\:font_gotham_medium {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 500;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .sm\:font_gotham_medium {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 500;
+  }
+
+  .sm\:font_gotham {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 400;
+  }
+}
+
+.font_gotham_medium {
+  font-family: 'Urbanist', sans-serif;
   font-weight: 500;
-  font-style: normal;
 }
 
-@font-face {
-  font-family: 'Copperplate Gothic 33 BC';
-  src: url('../public/fonts/CopperplateGothicStd-33BC.woff2');
-  src: local('Copperplate Gothic 33 BC'), local('Copperplate-Gothic-33BC'),
-    url('../public/fonts/CopperplateGothicStd-33BC.woff2') format('woff2'),
-    url('../public/fonts/CopperplateGothicStd-33BC.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+/* Urbanist Font Family */
+.font_urbanist_light {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
 }
 
-@font-face {
-  font-family: 'Urbanist';
-  src: url('../public/fonts/Urbanist-VariableFont.ttf');
-  src: local('Urbanist VariableFont'), local('Urbanist-VariableFont'),
-    url('../public/fonts/Urbanist-VariableFont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+.font_urbanist {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
+}
+
+.font_urbanist_medium {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 500;
+}
+
+.font_urbanist_bold {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
 }
 
 * {
@@ -124,12 +139,13 @@
   color: #383838;
   scroll-behavior: smooth;
 }
-*::selection{
+
+*::selection {
   background-color: rgb(216, 213, 49);
   color: #ffff;
 }
 
-select{
+select {
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -152,66 +168,6 @@ select{
   }
 }
 
-.font_gotham {
-  font-family: 'Gotham Pro';
-}
-
-.font_gotham_light {
-  font-family: 'Gotham Pro Light';
-}
-
-.font_gotham_black {
-  font-family: 'Gotham Pro Black';
-}
-
-.font_gotham_bold {
-  font-family: 'Gotham Pro Bold';
-}
-
-.font_copper_gothic {
-  font-family: "Copperplate Gothic 33 BC";
-}
-
-.font_cinzel {
-  font-family: 'Cinzel Decorative';
-}
-
-.font_montserrat {
-  font-family: 'Montserrat', sans-serif;
-}
-
-@media only screen and (min-width: 1000px) {
-  .lg\:font_gotham_bold {
-    font-family: 'Gotham Pro Bold';
-  }
-
-  .lg\:font_gotham_black {
-    font-family: 'Gotham Pro Black';
-  }
-
-  .lg\:font_gotham_medium {
-    font-family: 'Gotham Pro Meduim';
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-  .sm\:font_gotham_medium {
-    font-family: 'Gotham Pro Meduim';
-  }
-
-  .sm\:font_gotham {
-    font-family: 'Gotham Pro';
-  }
-}
-
-.font_gotham_medium {
-  font-family: 'Gotham Pro Meduim';
-}
-
-.font_urbanist {
-  font-family: 'Urbanist';
-}
-
 .stroke_text {
   color: transparent;
   -webkit-text-stroke-color: rgb(39, 39, 42);
@@ -232,12 +188,12 @@ select{
 }
 
 .bg_404 {
-  background-image: url(../public/404\ Page.png);
+  background-image: url("https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/404+Page.png");
 
 }
 
-.gradient_background{
-   background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+.gradient_background {
+  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
 }
 
 .gradient_txt {
@@ -521,13 +477,6 @@ input:checked+.slider:before {
   background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
 }
 
-/* css for footer */
-footer li {
-  font-size: 12px;
-  color: black;
-  font-family: 'Gotham Pro Light';
-}
-
 /* height css for layout accordint to the navbar height in pixels */
 .layout_height {
   height: calc(100vh - 50px);
@@ -559,15 +508,12 @@ footer li {
   width: calc(100vw - 72px);
 }
 
-
-
 /* Admin Area Start  */
 
 #input_text_2 {
   width: auto !important;
   width: 300% !important;
 }
-
 /* Admin Area END  */
 
 .border_gradient_2 {
@@ -578,24 +524,27 @@ footer li {
 
 /* About Page animation */
 @keyframes animateHeading {
-  100%{
+  100% {
     transform: translateX(-150%);
   }
 }
+
 @keyframes animBlackBoxHeading {
-  100%{
+  100% {
     transform: translateX(-200%);
   }
 }
 
-.animate_loop{
+.animate_loop {
   animation: animateHeading 10s infinite linear;
 }
-.animate_heading{
+
+.animate_heading {
   transform-origin: right;
   animation: animateHeading 8s infinite linear;
 }
-.animate_white_heading{
+
+.animate_white_heading {
   transform-origin: left;
   animation: animateHeading 8s infinite linear reverse;
 }

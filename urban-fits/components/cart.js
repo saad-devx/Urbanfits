@@ -5,8 +5,8 @@ import Button from './buttons/simple_btn';
 import MoreToExplore from './more_to_explore';
 // Image imports
 import Image from 'next/image'
-import EmptyCartVector from "../public/cart/emptyCart.svg"
-import CartBg from '@/public/cart/cartbg.jpg'
+import EmptyCartVector from "../public/emptyCart.svg"
+const CartBg = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/cartbg.jpg'
 import Link from 'next/link';
 
 // Cart item function
@@ -95,7 +95,6 @@ function CartItem(props) {
 }
 
 export default function Cart(props) {
-    // Setting up the Cart functions
     const { isEmpty, totalUniqueItems, items, cartTotal, emptyCart } = useCart()
     // function to get rounded off number upto 3 decimal places
     const get3dpNumber = (num) => {
@@ -108,7 +107,7 @@ export default function Cart(props) {
                 <div className="w-full flex justify-center">
                     {isEmpty ?
                         <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
-                            <Image src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
+                            <Image width={200} height={200} src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                             <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
                             <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Look like have not added anything to your cart. Go ahead & explore top categories.</p>
                             <Button onClick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
@@ -116,7 +115,7 @@ export default function Cart(props) {
                         :
                         <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
                             <div className="relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
-                                <Image src={CartBg} className='h-full lg:w-full lg:h-auto object-cover object-center' />
+                                <Image width={1600} height={1000} src={CartBg} className='h-full lg:w-full lg:h-auto object-cover object-center' />
                                 <h1 className="w-full text-center absolute top-1/2 -translate-y-1/2 font_gotham_bold text-white text-2xl md:text-[32px] tracking-[0.15em] lg:tracking-expand my-10">SHOPPING CART</h1>
                             </div>
                             <div className="w-full px-4 lg:px-14 flex flex-col lg:justify-between">

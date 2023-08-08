@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
 import Shoppingcard, { SmallShoppingcard } from '@/components/cards/shoppingcard';
 import ProductCarousel from '@/components/carousels/productCarousel';
 import Cutomization from '@/components/modals/cutomization';
@@ -75,7 +73,7 @@ export default function Product(props) {
             id: `${product._id}${sizevalue}`,
             name: productData.name,
             price: productData.price,
-            shipping_fee: productData.shipping_detials.fees,
+            shipping_fee: productData.shipping_details.fees,
             stock: product.stock,
             size: sizevalue,
             sizes: product.sizes,
@@ -96,7 +94,6 @@ export default function Product(props) {
                 <title className='capitalize' >{`${productData.name} - UF`}</title>
             </Head>
             <Cutomization show={modal4} toggleModal={toggleModal} toaster={toaster} />
-            <Navbar />
             <main className={`bg-white w-full h-full font_gotham transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
                     <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-20 lg:w-[90%] h-full font_gotham text-left pt-8' >
@@ -198,7 +195,6 @@ export default function Product(props) {
                         </div>
                     </section>
                 </div>
-                <Footer />
             </main>
         </>
     )

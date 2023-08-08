@@ -6,19 +6,17 @@ import Link from 'next/link'
 import Search from './search';
 import Cart from './cart';
 import ToTopBtn from './buttons/toTopBtn';
-// import CursorToggleBtn from './buttons/cursor-toggle-btn';
 import Logo from '@/public/logos/logo_black.svg'
 // image imports
 import Image from 'next/image';
 import search_logo from '@/public/search.svg'
-import female_avatar from '@/public/avatars/female.svg'
-import male_avatar from '@/public/avatars/male.svg'
+const DefaultPfp = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg'
 
 const ListItem = (props) => {
     const router = useRouter()
     return (
         <>
-            <Link onClick={props.handleMenu} href={props.href? props.href:'#'} className={`${props.classes} ${router.asPath === props.href ? 'text-gotham-black' : 'stroke_text hover:text-gotham-black'} transition-all duration-500`}>{props.children}</Link>
+            <Link onClick={props.handleMenu} href={props.href ? props.href : '#'} className={`${props.classes} ${router.asPath === props.href ? 'text-gotham-black' : 'stroke_text hover:text-gotham-black'} transition-all duration-500`}>{props.children}</Link>
         </>
     )
 }
@@ -37,12 +35,8 @@ const SocialIcons = ({ classes }) => {
 const SecondaryNavbar = ({ user, navBg, handleMenu, bars, toggleSearch }) => {
     const getPfp = () => {
         if (!user) return
-        let pfp = user.image
-        if (!pfp) {
-            if (user.gender === "Male") return male_avatar
-            else return female_avatar
-        }
-        if (pfp) return pfp
+        if (user.image) return user.image
+        else return DefaultPfp
     }
 
     if (window.matchMedia('(min-width: 1024px)').matches && user?.email) return <>
@@ -143,8 +137,8 @@ export default function Navbar(props) {
             <Cart cart={cart} toggleCart={toggleCart} />
             <Link href="/" ><Image src={Logo} className={`${props.hideNav ? 'translate-x-40' : ''} fixed ${props.lowerLogo ? 'top-[18vh]' : 'top-[11vh]'} hidden lg:block right-6 md:top-[13vh] md:right-10 z-40 w-14 md:w-24 lg:w-20 transition-all duration-1000 ease-linear`} alt="Urban images" /></Link>
             <ToTopBtn />
-            <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div>
-            <nav id='navbar' className="group_whole_nav w-full fixed z-40 top-0 left-0 font_gotham_medium text-sm overflow-hidden">
+            {/* <div className={`${props.hideNav ? 'h-0 -translate-y-full' : 'h-[50px]'} w-full -z-10 overflow-hidden transition-all duration-1000 ease-linear`}></div> */}
+            <nav id='navbar' className="sticky z-40 top-0 left-0 right-0 group_whole_nav w-full font_gotham_medium text-sm overflow-hidden">
                 <section className={`${navBg} z-40 w-full h-[50px] flex justify-between items-center p-7 lg:px-14 2xl:px-16 ${navBg === "bg-white" ? "border-b" : null} transition-all duration-300`}>
                     {window.matchMedia('(min-width: 1024px)').matches ? <button onClick={handleMenu} className='menu_parent gap-10 flex items-center cursor-pointer' >
                         <div className={`${bars} menu btn3`}>
@@ -169,7 +163,7 @@ export default function Navbar(props) {
                         <span>{totalUniqueItems}</span>
                     </button>
                 </section>
-                <SecondaryNavbar user={user} navBg={navBg} handleMenu={handleMenu} toggleSearch={toggleSearch} bars={bars} />
+                {/* <SecondaryNavbar user={user} navBg={navBg} handleMenu={handleMenu} toggleSearch={toggleSearch} bars={bars} /> */}
             </nav>
 
             <div className={`${menu} w-full layout_height fixed left-0 top-[-100vh] z-30 flex justify-center items-center transition-all ${props.transition ? props.transition : 'duration-1000'} ease-[cubic-bezier(1,0.35,0.15,1)] bg-white shadow-lg`}>

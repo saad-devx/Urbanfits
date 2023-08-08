@@ -12,7 +12,7 @@ import Spinner from './loaders/spinner'
 import useProduct from '@/hooks/useProduct'
 import uploadImage from '@/utils/uploadImage'
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { addProductSchema } from '@/mock/yupSchemas'
 import toaster from '@/utils/toast_function'
 
 const VariantItem = (props) => {
@@ -33,7 +33,7 @@ const VariantItem = (props) => {
         </div>
         <section className='w-full mb-6 flex flex-col gap-y-8' key={index}>
             <div className='w-full flex gap-x-6'>
-                <nav className="relative w-1/2 flex justify-around gap-y-3 flex-wrap ">
+                <nav className="relative w-1/2 grid grid-cols-3 justify-around gap-y-3 ">
                     {variant.images.map((imgUrl, imgIndex) => {
                         return <div key={`${index}-${imgIndex}`} className='flex flex-col gap-[10px]'>
                             <div className='w-[120px] h-[112px] border flex items-center justify-center border-[#DADADA] rounded-[15px] relative' >
@@ -168,41 +168,7 @@ export default function ProductInfoPage(props) {
         }
     }
     const { values, errors, handleBlur, handleChange, handleSubmit, handleReset, touched, setFieldValue, setValues } = useFormik({
-        validationSchema: Yup.object().shape({
-            name: Yup.string().required("Product name is required."),
-            slug: Yup.string().required("Product slug is required."),
-            categories: Yup.array().of(Yup.mixed().required("Category is required.")).max(3),
-            description: Yup.string().required("Description is required.").nullable(),
-            cover_image: Yup.mixed().required("Cover Image is essential."),
-            newTag: Yup.string().trim(),
-            tags: Yup.array().of(Yup.string().required('Tag is required')),
-            price: Yup.number().required("Product Price is required."),
-            sale_price: Yup.number(),
-            seo_details: Yup.object().shape({
-                title: Yup.string().required('SEO title is required.'),
-                description: Yup.string().required('SEO description is required.'),
-                meta_keywords: Yup.string().required('SEO keywords are required.'),
-            }),
-            shipping_details: Yup.object().shape({
-                width: Yup.string().required('Please define the width.'),
-                height: Yup.string().required('Please define the height.'),
-                weight: Yup.string().required('Please define the weight.'),
-                fees: Yup.string().required('Please define the fees.'),
-            }),
-            variants: Yup.array().of(
-                Yup.object().shape({
-                    color: Yup.string().required('Variant color is required.'),
-                    color_name: Yup.string().required('Color name is required.'),
-                    images: Yup.array().of(Yup.string().required('Image is required')).min(6, 'minimum 6 images are required (if not available, then repeat images).').max(6, 'You can only upload a maximum of 6 images.'),
-                    sizes: Yup.array().of(
-                        Yup.object().shape({
-                            size: Yup.string(),
-                            quantity: Yup.number()
-                        })
-                    )
-                })
-            )
-        }),
+        validationSchema: addProductSchema,
         initialValues: {
             name: '',
             slug: '',
@@ -211,8 +177,10 @@ export default function ProductInfoPage(props) {
             cover_image: '',
             newTag: '',
             tags: [],
-            price: 0,
-            sale_price: 0,
+            price: null,
+            uf_points: null,
+            sale_price: null,
+            gift_code: false,
             seo_details: {
                 title: '',
                 description: '',
@@ -253,12 +221,9 @@ export default function ProductInfoPage(props) {
     };
 
     useEffect(() => {
+        if (props.product) setValues(props.product)
         if (categories.length !== 0) return
         if (categories.length === 0) getCategories()
-    }, [])
-
-    useEffect(() => {
-        if (props.product) setValues(props.product)
     }, [])
 
     return (
@@ -281,7 +246,7 @@ export default function ProductInfoPage(props) {
             </section>
             <CardAdmin classes="my-5" >
                 <h2 className='mx-10 px-4 pt-8 pb-4 mb-3 border-b text-2xl' >Basic Information</h2>
-                <form className='px-[50px]' onSubmit={handleSubmit}>
+                <form className='px-[50px]' onSubmit={handleSubmit} onReset={handleReset}>
                     <section className="w-full mb-7 flex justify-between gap-x-4">
                         <InputText
                             classes="w-1/2"
@@ -401,9 +366,9 @@ export default function ProductInfoPage(props) {
                         }
                     </section>
                     <h2 className='w-full pt-8 pb-4 mb-3 border-b text-xl'>Prices</h2>
-                    <section className="w-full mb-7 flex justify-between gap-x-6">
+                    <section className="w-full mb-7 grid grid-cols-2 gap-6">
                         <InputText
-                            classes="w-1/2"
+                            classes="w-full"
                             label="Price"
                             placeholder="$00"
                             type="number"
@@ -414,13 +379,33 @@ export default function ProductInfoPage(props) {
                             error={errors.price && touched.price ? errors.price : null}
                         />
                         <InputText
-                            classes="w-1/2"
-                            label="Discount Price"
+                            classes="w-full"
+                            label="UF Points"
+                            placeholder="00"
+                            type="number"
+                            name="uf_points"
+                            value={values.uf_points}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={errors.uf_points && touched.uf_points ? errors.uf_points : null}
+                        />
+                        <div className="w-full h-11 place-self-end flex justify-between items-center">
+                            Enable Gift Code <label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='gift_code' checked={values.gift_code} value={values.gift_code} onChange={(e) => {
+                                if (values.sale_price || values.sale_price !== '') return toaster("info", "You can either enalbe Gift Code or Sale Price.")
+                                handleChange(e);
+                            }} /><span className="slider"></span></label>
+                        </div>
+                        <InputText
+                            classes="w-full"
+                            label="Sale Price"
                             placeholder="$00"
                             type="number"
                             name="sale_price"
                             value={values.sale_price}
-                            onChange={handleChange}
+                            onChange={(e) => {
+                                if (values.gift_code) return toaster("info", "You can either enalbe Gift Code or Sale Price.")
+                                handleChange(e);
+                            }}
                             onBlur={handleBlur}
                             error={errors.sale_price && touched.sale_price ? errors.sale_price : null}
                         />
