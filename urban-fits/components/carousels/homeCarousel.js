@@ -18,17 +18,17 @@ export default function HomeCarousel() {
         if (play === true) return setPlay(false)
         if (play === false) return setPlay(true)
     }
-    return <Splide fixed className="w-full h-full relative transition-all duration-1000" hasTrack={false}
+    return <Splide fixed className="w-full h-full relative font_urbanist transition-all duration-1000" hasTrack={false}
         options={{
             type: 'loop',
-            fixedWidth: '100vw',
-            fixedHeight: '100vh',
+            // fixedWidth: '100vw',
+            // fixedHeight: '99.5vh',
             speed: 900,
             gap: '0.5rem',
             cover: true,
             autoplay: true,
             waitForTransition: true,
-            interval: 3200,
+            interval: 3300,
             // easing: 'cubic-bezier(1,0.35,0.15,1)',
             drag: false,
             pauseOnHover: false,
@@ -38,11 +38,11 @@ export default function HomeCarousel() {
         <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
             {[image1, image2, image3, image4, image5, image6].map((img, index) => {
                 return <SplideSlide key={index} className="w-full h-full p-10">
-                    <div className="absolute w-2/6 flex flex-col items-start text-white transition-all duration-1000 ease-linear text-5xl">
+                    {/* <div className="absolute w-2/6 flex flex-col items-start text-white transition-all duration-1000 ease-linear text-5xl">
                         <h1 className="text-white text-2xl md:text-[38px] font_gotham font-semibold tracking-expand">DENIM</h1>
                         <p className="mt-1 mb-4 text-base md:text-xl font_gotam_light text-white">For Women</p>
                         <LinkBtn href="/productlisting" my="my-0" bg="bg-white" text="text-black" classes="w-full md:w-[198px] text-xs md:text-base" >Shop Now</LinkBtn>
-                    </div>
+                    </div> */}
                     <Image className='w-full h-full' src={img} alt="Urban images" />
                 </SplideSlide>
             })}
@@ -55,10 +55,10 @@ export default function HomeCarousel() {
         </div>
 
         {/* Scroll down indicator */}
-        <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-default">
+        {/* <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-default">
             <i class="fa-solid fa-chevron-up fa-bounce text-white text-base md:text-2xl"></i>
             <span className='text-white text-[10px] md:text-sm font_gotham_medium tracking-widest' >SCROLL DOWN</span>
-        </div>
+        </div> */}
 
         {/* Buttons for next, prev slide and to pause the carousel */}
         <div className="splide__arrows absolute flex space-x-5 bottom-[8%] right-10">

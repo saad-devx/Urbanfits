@@ -36,12 +36,12 @@ export default function CatalogueCarousel() {
     }
 
     return (
-        <Splide onPaginationMounted={onPGMounted} className="catalogue_carousel w-screen h-screen relative transition-all duration-1000" hasTrack={false}
+        <Splide onPaginationMounted={onPGMounted} className="catalogue_carousel w-screen layout_height relative transition-all duration-1000" hasTrack={false}
             options={{
                 type: 'fade',
                 rewind: true,
-                fixedWidth: '100vw',
-                fixedHeight: '100vh',
+                // fixedWidth: '100vw',
+                // fixedHeight: '100vh',
                 speed: 900,
                 gap: '0.5rem',
                 arrows: false,
@@ -60,7 +60,7 @@ export default function CatalogueCarousel() {
                             <div className="w-full lg:w-1/2 h-full flex justify-center items-center">
                                 <Link href='/products/Carousel Item' className='w-3/5 h-[45%] md:h-3/5 lg:w-[42%] lg:h-[68%] z-20 flex flex-col justify-center items-center bg-gray-100 overflow-hidden' >
                                     <Image src={pair.pairImg} className='w-4/5' />
-                                    <span className="w-36 my-4 justify-self-end font_gotham_medium text-[10px] tracking-widest">
+                                    <span className="w-36 my-4 justify-self-end font_urbanist_medium text-[10px] tracking-widest">
                                         SATIN FINISH PLAYSUIT DRESS <br />
                                         $26
                                     </span>
@@ -70,7 +70,7 @@ export default function CatalogueCarousel() {
                                 <Image className='h-full object-cover' src={pair.img} alt="Urban images" />
                             </div>
                         </section>
-                        <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_gotham_medium tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >BUY</Link>
+                        <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_urbanist_bold tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >BUY</Link>
                     </SplideSlide>
                 })}
             </SplideTrack>
