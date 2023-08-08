@@ -12,22 +12,28 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Please enter a price for your product"],
         maxlength: [10, "Price can't be more than 10 figures"]
     },
+    uf_points: {
+        type: Number,
+    },
     sale_price: {
         type: Number,
-        required: [true, "Please enter a price for your product"],
         maxlength: [10, "Price can't be more than 10 figures"]
+    },
+    gift_code: {
+        type: Boolean,
+        default: false,
     },
     description: {
         type: String,
         required: [true, "Please enter a description for your product"],
         trim: true
     },
-    category: {
+    categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: true,
         default: mongoose.Types.ObjectId("64b6d07d82dcb19775042d76")
-    },
+    }],
     slug: {
         type: String,
         required: true
@@ -51,7 +57,8 @@ const ProductSchema = mongoose.Schema({
             },
             color_name: { type: String },
             images: {
-                type: Array
+                type: Array,
+                default: []
             },
             sizes: [{
                 size: String,
@@ -70,12 +77,12 @@ const ProductSchema = mongoose.Schema({
             ref: "Product"
         }
     ],
-    seo_detials: {
+    seo_details: {
         title: { type: String, required: true },
         description: { type: String, required: true },
-        meta_keywords: { type: Array, required: true },
+        meta_keywords: { type: String, required: true },
     },
-    shipping_detials: {
+    shipping_details: {
         width: { type: String, required: true },
         height: { type: String, required: true },
         weight: { type: String, required: true },

@@ -14,7 +14,7 @@ const GetSignedS3Url = async (req, res) => {
             })
             const params = {
                 Bucket: "urban-fits",
-                Key: folder + `file-at-${fileName? fileName: Date.now()}`
+                Key: folder + `${fileName? fileName: Date.now()}`
             }
             const uploadUrl = await s3.getSignedUrlPromise("putObject", params)
             return res.status(200).json({

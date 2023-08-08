@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -19,7 +17,6 @@ export default function CustomerServices(props) {
     }, [])
     return (
         <>
-            <Navbar />
             <main className='w-full p-5 lg:p-10 lg:pt-16 2xl:p-14 flex flex-col lg:flex-row lg:justify-between bg-white'>
                 <section className={`max-w-[2000px] lg:w-1/4 lg:h-auto lg:max-h-none rounded-2xl lg:rounded-none transition-all duration-500 overflow-x-scroll overflow-y-hidden lg:overflow-visible hide_scrollbar`}>
                     <div id='menu_container' className="lg:sticky lg:top-16 lg:left-0 lg:right-0 w-auto lg:w-full py-8 2xl:py-10 lg:px-7 gap-y-4 flex lg:flex-col lg:bg-gray-50 font_gotham rounded-2xl">
@@ -43,7 +40,6 @@ export default function CustomerServices(props) {
                     {props.children}
                 </section>
             </main>
-            <Footer />
         </>
     )
 }

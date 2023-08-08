@@ -3,7 +3,6 @@ import Sidebaradmin from "../sidebar";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import CardAdmin from "@/components/cards/cardadmin";
 import Image from "next/image";
-import ProfilePic from "@/public/ProfilePic.png";
 import Button from "@/components/buttons/simple_btn";
 import { AvatarIcon } from "@/public/sidebaricons/AvatarIcon";
 import { AvatarSIcon } from "@/public/icons/AvatarSIcon";
@@ -18,6 +17,7 @@ import { TelegramIcon } from "@/public/icons/TelegramIcon";
 import { TwitterIcon } from "@/public/icons/TwitterIcon";
 import { FacebookIcon } from "@/public/icons/FacebookIcon";
 import { InstagramIcon } from "@/public/icons/InstagramIcon";
+const ProfilePic = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg";
 
 const userprofile = () => {
   const [checked, setChecked] = useState(1);
@@ -62,7 +62,7 @@ const userprofile = () => {
           <section className="col-span-2  border-r-[1px] border-r-slate-200 p-[40px] flex flex-col  font-[400]">
             <div className="flex flex-col items-center">
               <span className="w-[45px] h-[45px] rounded-[10px] ">
-                <Image width="45px" height="45px" src={ProfilePic} />
+                <Image width={150} height={150} className="w-11 h-11 aspect-square" src={ProfilePic} />
               </span>
               <p className="text-[14px] mt-[20px] ">John Deo</p>
               <p className="text-[14px]">John.example@gmail.com</p>

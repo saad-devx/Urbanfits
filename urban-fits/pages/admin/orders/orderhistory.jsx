@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Sidebaradmin from "../sidebar";
 import CardAdmin from "@/components/cards/cardadmin";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
@@ -45,11 +44,11 @@ const orderhistory = () => {
     <CardAdmin classes="px-[40px] py-[42px] mt-[20px] ">
       <div className="grid grid-cols-1">
         {/* <div className="flex flex-col  "> */}
-          <GenericTable1
+          {/* <GenericTable1
           border={true}
             columns={orderHistoryTableColumns}
             data={orderHistoryTableData}
-          />
+          /> */}
         </div>
       {/* </div> */}
     </CardAdmin>

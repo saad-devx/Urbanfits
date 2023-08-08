@@ -96,57 +96,64 @@ export default function Signup() {
                 <title>Urban Fits - Sign Up</title>
             </Head>
             <AuthPage loading={loading} >
-                <form className="bg-white p-2 font_gotham text-xl" onReset={handleReset} onSubmit={handleSubmit} >
-                    <div className="relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                        {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
-                        <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
-                    </div>
-                    <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                        {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                        <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Email' />
-                    </div>
-                    <div className={` relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                        {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
-                        <select defaultValue='Country Code' value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                            <option value={null}>Select Country Code</option>
-                            {countryCodes.map((item) => {
-                                if (!item.code) return <option disabled>{item.name}</option>
-                                return <option value={item.code}>{item.name} {item.code}</option>
-                            })}
-                        </select>
-                    </div>
-                    <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                        {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
-                        <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
-                    </div>
-                    <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                        {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input ref={passRef} className="w-full outline-none border-none" type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
-                        <span onClick={() => { passRef.current.focus(); if (showPass) return setShowPass(false); if (!showPass) return setShowPass(true) }} className="material-symbols-outlined text-black md:text-3xl font-bold cursor-pointer select-none">{showPass ? "lens_blur" : "motion_photos_on"}</span>
-                    </div>
-                    <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
-                        Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.
-                    </div>
-                    <div className={`relative w-full h-14 mb-5 flex items-center`}>
-                        {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
-                        <div className='mr-2' >
-                            <input className='rounded' type="checkbox" id="accept_policies" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
+                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+                    <section className="w-full mb-6">
+                        <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Sign Up</h1>
+                        <div className="relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
+                            <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
                         </div>
-                        <label htmlFor='accept_policies' className="w-full cursor-pointer text-sm text-left">
-                            <p className="ml-1 text-gray-400">By creating an account, I agree to the <Link href="/policies/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/policies/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/policies/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>
-                        </label>
-                    </div>
-                    <Button loading={loading} classes='w-full' font='font_gotham_medium' fontSize='text-sm' type="submit" >Sign Up</Button>
-                    <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
+                        <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
+                            <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Email' />
+                        </div>
+                        <div className={` relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
+                            <select defaultValue='Country Code' value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                <option value={null}>Select Country Code</option>
+                                {countryCodes.map((item) => {
+                                    if (!item.code) return <option disabled>{item.name}</option>
+                                    return <option value={item.code}>{item.name} {item.code}</option>
+                                })}
+                            </select>
+                        </div>
+                        <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
+                            <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
+                        </div>
+                        <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                            {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
+                            <input ref={passRef} className="w-full outline-none border-none" type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                            <i onClick={() => {
+                                passRef.current.focus();
+                                if (showPass) return setShowPass(false);
+                                if (!showPass) return setShowPass(true)
+                            }} className={`fa-regular ${showPass ? "fa-eye-slash" : "fa-eye"} text-black font-bold cursor-pointer select-none`} />
+                        </div>
+                        <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
+                            Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.
+                        </div>
+                    </section>
+
+                    <section>
+                        <div className="relative w-full h-14 mb-5 flex items-center">
+                            {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
+                            <div className='mr-2' >
+                                <input className='rounded' type="checkbox" id="accept_policies" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
+                            </div>
+                            <label htmlFor='accept_policies' className="w-full cursor-pointer text-sm text-left">
+                                <p className="ml-1 text-gray-400">By creating an account, I agree to the <Link href="/policies/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/policies/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/policies/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>
+                            </label>
+                        </div>
+                        <Button loading={loading} classes='w-full' type="submit" >Sign Up</Button>
+                        <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
+                        <button onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
+                            <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
+                            <span className='w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:w-32'>Sign Up with</span>
+                            Google
+                        </button>
+                    </section>
                 </form>
-                <button onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-2 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
-                    <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
-                    <span className='w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:w-32'>Sign Up with</span>
-                    Google
-                </button>
-                {/* <div className="font_gotham w-full mt-5 flex justify-center space-x-6">
-                    <button onClick={()=>providerSignIn("apple")} name='apple' className="w-[190px] h-12 py-2 px-9 border border-black bg-black rounded-full hover:shadow-xl transition"><span title="Continue with Google" className='text-lg flex justify-center items-center'><Image src={apple_logo} className='w-1/5 mr-3' alt="apple" /><p className='text-white' >Apple</p></span></button>
-                </div> */}
             </AuthPage>
         </>
     )

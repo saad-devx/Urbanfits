@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Sidebaradmin from "../sidebar";
 import CardAdmin from "@/components/cards/cardadmin";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
@@ -9,14 +8,12 @@ import {transactionTableColumns, transactionTableData } from '@/mock/tablesdata'
 import { RedirectIcon } from '@/public/icons/RedirectIcon';
 
 const transaction = () => {
-
     const [selectedrowindex, setSelectedrowindex] = React.useState();
     const handlerowclick = (rowindex) =>{
       setSelectedrowindex(rowindex);
       setrow();
     }
     const [selectedrow, setSelectedrow] = React.useState();
-
 
     const setrow = () => {
         transactionTableData.forEach(element => {
@@ -26,9 +23,6 @@ const transaction = () => {
         });
     }
 
-    
-
-
   return (
     <Sidebaradmin>
         <p className='text-[22px] font-[500] mt-[20px] ' > 
@@ -37,10 +31,10 @@ const transaction = () => {
         <CardAdmin >
             <div className='grid grid-cols-4' >
                 <div className='p-[40px] col-span-3 ' >
-                    <GenericTable1  columns={transactionTableColumns}  data={transactionTableData} 
+                    {/* <GenericTable1  columns={transactionTableColumns}  data={transactionTableData} 
                         handlerowclick={handlerowclick}
                         isrowclick={true}
-                    />
+                    /> */}
                 </div>
 
                 <div className='col-span-1 px-[20px] py-[40px] 

@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import Card from '../components/cards/card';
 import toaster from '@/utils/toast_function';
-import Navbar from '../components/navbar';
 import Button from '../components/buttons/simple_btn';
 import Head from 'next/head';
-import Footer from '../components/footer'
 import Loader from '@/components/loaders/loader';
 import countryCodes from '@/static data/countryCodes';
 
@@ -60,7 +58,6 @@ export default function Contact() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             {loader}
-            <Navbar />
             <main className="w-full pb-20 bg-white flex justify-center font_gotham overflow-x-hidden">
                 <section className='w-full p-5 lg:p-0 lg:pt-9 lg:w-[75%] h-full font_gotham text-left pt-9' >
                     <h2 className="text-4xl lg:text-[44px]- font_gotham_medium tracking-widest mb-4">CONTACT US</h2>
@@ -132,7 +129,6 @@ export default function Contact() {
                     </div>
                 </section>
             </main>
-            <Footer />
         </>
     )
 }

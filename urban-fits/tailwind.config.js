@@ -29,8 +29,8 @@ module.exports = {
         '90vh': '90vh',
       },
       letterSpacing: {
-        expand: '0.2em',
-        vast: '0.3em'
+        '1': '1.4px',
+        '2': '5.2px'
       },
       fontSize: {
         '10px': '10px',

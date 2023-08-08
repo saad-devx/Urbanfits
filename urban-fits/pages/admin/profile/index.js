@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Sidebaradmin from "../sidebar";
-
-import ProfilePic from "../../../public/ProfilePic.png";
 import Image from "next/image";
 import Button from "@/components/buttons/simple_btn";
 import { BasketIcon } from "@/public/sidebaricons/BasketIcon";
@@ -17,6 +15,7 @@ import CardAdmin from "@/components/cards/cardadmin";
 import CustomModal from "@/components/modals/CustomModal";
 import QrCode from "@/public/QrCode.png";
 import { InputText } from "@/components/InputText";
+const ProfilePic = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg";
 
 
 export default function Profile({ children }) {

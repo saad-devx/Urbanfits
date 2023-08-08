@@ -21,6 +21,7 @@ export default function DeleteAction(props) {
                                     <p className='text-sm '>Please type <span className='text-red-600' >"delete"</span> here to proceed.</p>
                                 </div>
                                 <InputText
+                                    autoComplete="off"
                                     placeholder="delete"
                                     name="delete"
                                     value={actionValue}

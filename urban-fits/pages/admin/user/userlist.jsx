@@ -46,11 +46,11 @@ const userlist = () => {
       <CardAdmin classes="px-[40px] py-[42px] mt-[20px] ">
         <div className="grid grid-cols-1">
           {/* <div className="flex flex-col  "> */}
-            <GenericTable1
+            {/* <GenericTable1
             border={true}
               columns={userListTableColumns}
               data={userListTableData}
-            />
+            /> */}
           </div>
         {/* </div> */}
       </CardAdmin>

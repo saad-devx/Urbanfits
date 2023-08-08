@@ -12,7 +12,7 @@ export default function Document() {
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Montserrat&family=Urbanist:wght@300;400;500;600;700" rel="stylesheet"/>
       </Head>
       <body>
         <Main />

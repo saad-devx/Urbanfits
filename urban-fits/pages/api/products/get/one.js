@@ -15,7 +15,7 @@ const GetSingleProduct = async (req, res) => {
                 })
             }
 
-            let product = await Product.findById(id)
+            let product = await Product.findById(id).populate('bundle_items')
             if (!product) return res.status(404).json({
                 success: false,
                 msg: "Product not found with corresponding id",

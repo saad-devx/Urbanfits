@@ -9,9 +9,7 @@ import axios from 'axios';
 import AlertPage from '@/components/alertPage'
 import CheckoutCalcSection from '@/components/checkoutCalcSection';
 import Head from 'next/head';
-import Navbar from '@/components/navbar';
 import Loader from '@/components/loaders/loader';
-import Footer from '@/components/footer';
 import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/languagemodal';
 import ifExists from '@/utils/if_exists';
@@ -201,7 +199,6 @@ export default function Checkout1() {
             </Head>
             {loader}
             <LanguageModal show={modal3} toggleModal={toggleModal} />
-            <Navbar />
             <main className={`bg-white w-full layout_height transition-all duration-700 overflow-x-hidden overflow-y-scroll`}>
                 <div className="w-full pb-20 flex justify-center">
                     <section className='w-full lg:w-[85%] h-full flex flex-col lg:flex-row p-5 md:p-7 lg:p-0 lg:pt-16 font_gotham text-left pt-5' >
@@ -364,7 +361,6 @@ export default function Checkout1() {
                         <CheckoutCalcSection />
                     </section>
                 </div>
-                <Footer />
             </main >
         </>
     )

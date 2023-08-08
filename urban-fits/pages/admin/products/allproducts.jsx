@@ -16,7 +16,7 @@ import { productListTableColumns } from '@/mock/tablesdata';
 export default function allproducts() {
     const router = useRouter()
     const { categories, getCategories, categLoading } = useCategories()
-    const { products, getProducts, productLoading, totalProducts, DeleteProducts, selectedProducts, setSelectedProducts } = useProduct()
+    const { products, getProducts, productLoading, totalProducts, deleteProducts, selectedProducts, setSelectedProducts, setProductInfo } = useProduct()
     const [categoryOption, setCategoryOption] = useState(false)
     const [deleteModal, setDeleteModal] = useState(null)
     const [query, setQuery] = useState('')
@@ -50,7 +50,7 @@ export default function allproducts() {
                 heading="Delete Product(s)"
                 msg={`This is an irreversible action, the specified product will be deleted permanently. If it is included in a bundle, only this product will be removed from the bundle and rest of the bundle will remain intact.`}
                 setDeleteModal={setDeleteModal}
-                onTakeAction={() => DeleteProducts(setSelectedProducts.map(c => c.id))}
+                onTakeAction={() => deleteProducts(selectedProducts.map(c => c.id))}
             />
         )
     }
@@ -164,10 +164,13 @@ export default function allproducts() {
                             status: "Active",
                             date: product.createdAt,
                             updatedAt: product.updatedAt,
+                            handleInfo: () => { setProductInfo(product) },
+                            infoLink: "/admin/products/productinfo",
                             actions: [
                                 {
                                     name: "Edit",
-                                    onClick: () => { return }
+                                    link: '/admin/products/productinfo',
+                                    onClick: () => { setProductInfo(product) }
                                 },
                                 {
                                     name: "Copy ID",
@@ -175,7 +178,21 @@ export default function allproducts() {
                                 },
                                 {
                                     name: "Visit",
-                                    onClick: () => { router.push(`/products/product/${product._id}`) }
+                                    onClick: () => { window.open(`/products/product/${product._id}`) }
+                                },
+                                {
+                                    name: "Delete",
+                                    onClick: () => {
+                                        setDeleteModal(
+                                            <DeleteAction
+                                                show={true}
+                                                heading="Delete Product(s)"
+                                                msg={`This is an irreversible action, the specified product will be deleted permanently. If it is included in a bundle, only this product will be removed from the bundle and rest of the bundle will remain intact.`}
+                                                setDeleteModal={setDeleteModal}
+                                                onTakeAction={async () => await deleteProducts([product._id])}
+                                            />
+                                        )
+                                    }
                                 },
                             ]
                         }

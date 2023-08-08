@@ -18,27 +18,27 @@ const GetProductByCategory = async (req, res) => {
 
             const LIMIT = 50;
             let totalProducts = await Product.countDocuments({
-                category: mongoose.Types.ObjectId(id),
+                categories: { $in: [mongoose.Types.ObjectId(id)] }
             });
 
             const totalPages = Math.ceil(totalProducts / LIMIT);
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
-            const products = await Product.find({ category: mongoose.Types.ObjectId(id) })
+            const products = await Product.find({ categories: { $in: [mongoose.Types.ObjectId(id)] } })
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
-                .populate("category");
+                .populate("categories");
 
             let childProducts = []
             if (page >= totalPages) {
                 let category = await Category.findById(id);
                 if (category && category.children.length !== 0) {
                     for (const child of category.children) {
-                        let foundChildProducts = await Product.find({ category: child })
+                        let foundChildProducts = await Product.find({ categories: { $in: [child] } })
                             .sort({ createdAt: -1 })
                             .limit(Math.ceil(category.children.length / LIMIT))
-                            .populate("category")
+                            .populate("categories")
 
                         childProducts.push(...foundChildProducts)
                     }
@@ -67,7 +67,7 @@ const GetProductByCategory = async (req, res) => {
         }
     } catch (err) {
         console.log(err)
-        res.status(500).json({success: false, error: err, msg:"Internal Server Error occurred. Please retry"})
+        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry" })
     }
 }
 

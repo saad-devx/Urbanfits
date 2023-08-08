@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import styles from "@/styles/sidebar.module.css";
 import logo_outlined from "../../../public/icons/logo_outlined.svg";
-import sidebar_logo_closed from "../../../public/icons/sidebar_logo_closed.svg";
 import { sidebarItems, SearchQueryData } from "@/mock/navData";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
-import { AvatarIcon } from "@/public/sidebaricons/AvatarIcon";
 import { DownArowSmallIcon } from "@/public/sidebaricons/DownArowSmallIcon";
 import { SettingIcon } from "@/public/sidebaricons/SettingIcon";
 import { BellIcon } from "@/public/sidebaricons/BellIcon";
@@ -19,8 +16,31 @@ import { ClockIcon } from "@/public/icons/ClockIcon";
 import { Button2 } from "@/components/buttons/Button2";
 import useUser from "@/hooks/useUser";
 
+const SideBarItem = ({ item, sidebaropen }, props) => {
+    const [expand, setExpand] = useState(false)
+    return <div {...props}>
+        <div onClick={() => setExpand(!expand)} style={{ margin: sidebarItems.length == props.key + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center select-none" >
+            <Link href={item.navlink || "#"}>
+                <div className="flex gap-[10px] items-center font_futura uppercase text-black text-[12px]">
+                    <span>{item.icon}</span>
+                    {sidebaropen ? item.label : null}
+                </div>
+            </Link>
+            <div className={` cursor-pointer ${item.subrows ? "visible" : "hidden"}  ${sidebaropen ? "visible" : "hidden"}`} >
+                <RightArrowIcon className={`${expand ? 'rotate-90' : null} transition-all duration-300`} />
+            </div>
+        </div>
+        {item.subrows && sidebaropen ? item.subrows.map((subitem, index) => (
+            <div className={`flex items-center gap-2 mt-6 pl-6  ${expand ? "visible" : "hidden"} select-none`} >
+                <Link key={index} href={subitem.navlink || '#'} className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro]  ${expand ? "visible" : "hidden"} `}>
+                    {subitem.label}
+                </Link>
+            </div>
+        )) : null}
+    </div>
+}
+
 export default function Sidebaradmin({ children }) {
-    const [sidebaritems, setSidebaritems] = React.useState(sidebarItems);
     const { user } = useUser()
     const [showmenue, setshowMenue] = React.useState(false);
     const [shownotification, setShownotification] = React.useState(false);
@@ -52,25 +72,6 @@ export default function Sidebaradmin({ children }) {
     };
 
     const [sidebaropen, setSidebaropen] = React.useState(true);
-    const handleSidebar = () => {
-        if (sidebaropen == true) {
-            let temp = sidebaritems;
-            temp.forEach((item) => {
-                item.expanded = false;
-            });
-            setSidebaritems([...temp]);
-        }
-        setSidebaropen(!sidebaropen);
-    };
-
-    const handleItemClick = (index) => {
-        index += 1;
-        let temp = sidebaritems;
-        temp.forEach((item) => {
-            if (item.id == index) item.expanded = !item.expanded;
-        });
-        setSidebaritems([...temp]);
-    };
 
     const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
@@ -87,41 +88,15 @@ export default function Sidebaradmin({ children }) {
 
     return (
         <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
-            <div className={`fixed ${sidebaropen ? "w-[250px]" : "w-[80px]"} duration-300 ${sidebaropen && "rounded-r-[25px]"} bg-[#FFFFFF] h-screen`} >
+            <div className={`fixed ${sidebaropen ? "w-[250px]" : "w-[80px]"} duration-300 ${sidebaropen && "rounded-r-[25px]"} bg-white h-screen`} >
                 <div className="flex-col justify-between h-full">
-                    <div id={styles.top_gradient} className={`h-[12%] ${sidebaropen && "rounded-tr-[25px]"}   `} >
-                        <div className={`relative`}>
-                            <div className={`absolute  flex  items-center ${sidebaropen ? "pl-[40px]" : "pl-[20px]"}  pt-[20px] `} >
-                                <Image width={37.05} height={37.05} alt="Urban Fits" src={sidebaropen ? logo_outlined : sidebar_logo_closed} />
-                                <p className={` font_futura  text-white ${!sidebaropen && "hidden"} size text-[22px] ml-[12px]`} > URBAN FITS</p>
-                            </div>
-                        </div>
+                    <div className={`h-[12%] bg-gold ${sidebaropen && "rounded-tr-[25px]"} flex justify-center items-center`} >
+                        <Image width={37.05} height={37.05} className="" alt="Urban Fits" src={logo_outlined} />
+                        <p className={`font_futura text-white ${!sidebaropen && "hidden"} size text-[22px] ml-[12px]`}>URBAN FITS</p>
                     </div>
 
-                    <div className={`overflow-x-hidden overflow-y-scroll  ${sidebaropen ? "h-3/5" : "h-full"} ${sidebaropen ? "px-[30px]" : "px-[29.94px]"}`} >
-                        {sidebaritems?.map((item, index) => (
-                            <div>
-                                <div onClick={() => handleItemClick(index)} style={{ margin: sidebaritems.length == index + 1 ? "36px 0" : "36px 0 0 0" }} className="flex cursor-pointer justify-between items-center select-none" >
-                                    <Link href={item.navlink || "#"}>
-                                        <div className={`flex gap-[10px] items-center font_futura uppercase text-black text-[12px] ${sidebaropen ? "visible" : "hidden"}`}>
-                                            <div>{item.icon}</div>
-                                            {item.label}
-                                        </div>
-                                    </Link>
-                                    <div className={` cursor-pointer ${item.subrows ? "visible" : "hidden"}  ${sidebaropen ? "visible" : "hidden"}`} onClick={() => handleItemClick(index)} >
-                                        <RightArrowIcon className={`${item.expanded ? 'rotate-90' : null} transition-all duration-300`} />
-                                    </div>
-                                </div>
-
-                                {item.subrows?.map((subitem, index) => (
-                                    <div className={`flex items-center gap-2 mt-6 pl-6  ${item.expanded ? "visible" : "hidden"} select-none`} >
-                                        <Link key={index} href={subitem.navlink || '#'} className={` font_futura uppercase text-black cursor-pointer text-[12px] font-[500] font-[Futura LT Pro]  ${sidebaropen ? "visible" : "hidden"} `}>
-                                            {subitem.label}
-                                        </Link>
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
+                    <div className={`overflow-x-hidden overflow-y-scroll ${sidebaropen ? "h-3/5" : "h-full"} px-[30px]`} >
+                        {sidebarItems.map((item, index) => <SideBarItem key={index} item={item} sidebaropen={sidebaropen} />)}
                     </div>
 
                     <div className="w-full h-[27%] pl-[30px] flex flex-col justify-center hide_scrollbar border-t border-gray-300">
@@ -154,13 +129,12 @@ export default function Sidebaradmin({ children }) {
             </div>
 
             <div className={`min-h-[100vh] px-[30px] py-[44px] bg-[#F4F4F4] overflow-y-scroll ${sidebaropen ? "ml-[250px]" : "ml-[80px]"}  duration-300 `} >
-                <div className={` flex justify-between  items-center `}>
-                    <div className={`flex items-center `}>
-                        <label className={`${styles.switch2} w-[40px] h-[22.25px] `}>
-                            <input onClick={handleSidebar} type="checkbox" defaultChecked={true} />
-                            <span className={styles.slider}></span>
-                        </label>
-                        <div id={styles.searchdiv} className={`relative ml-10 mr-4 transition-all duration`}>
+                <div className={`flex justify-between items-center`}>
+                    <div className='flex items-center'>
+                        <div className="w-1/2 md:w-1/4 flex justify-between">
+                            <label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='toggle_sidebar' defaultChecked={true} onChange={() => setSidebaropen(!sidebaropen)} /><span className="slider"></span></label>
+                        </div>
+                        <div className='relative w-80 h-10 bg-white flex items-center px-3 border border-gray-300 rounded-full gap-x-3 transition-all duration'>
                             <SearchIcon />
                             <input
                                 autoComplete="off"
@@ -171,11 +145,11 @@ export default function Sidebaradmin({ children }) {
                                 className="w-[139px] h-[17px] flex items-center text-[14px] font-[400] font_futuralt bg-transparent outline-none  "
                                 placeholder="Search (Keyword, etc)"
                             />
-                            {query !== '' ? <button onClick={() => setQuery('')} className={`fa-regular fa-circle-xmark mr-2 text-sm absolute right-0 top-1/2 -translate-y-1/2`} /> : null}
+                            {query !== '' ? <button onClick={() => setQuery('')} className='fa-regular fa-circle-xmark mr-2 text-sm absolute right-0 top-1/2 -translate-y-1/2' /> : null}
                         </div>
                     </div>
 
-                    <div className={` flex items-center  `}>
+                    <div className='flex items-center'>
                         <span onClick={() => handlemenuclick("avatar")} className="w-10 border border-gray-400 aspect-square rounded-full overflow-hidden cursor-pointer" >
                             <Image src={user.image} className="w-full h-full object-cover" width={80} height={80} />
                         </span>
@@ -244,7 +218,6 @@ export default function Sidebaradmin({ children }) {
                                     {notchecked == 1 &&
                                         <>
                                             {[...Array(5)].map(() => (
-
                                                 <div className="flex items-center gap-[15px] my-[9px] " >
                                                     <div className="bg-[#B9BBC1] w-[25px] h-[25px] flex items-center justify-center rounded-[50px] " >
                                                         <AvatarIconV fill="white" stroke="white" w="8" h="10" />
@@ -254,9 +227,7 @@ export default function Sidebaradmin({ children }) {
                                                         <p className=" text-[10px] font-[300] flex gap-[5px] items-center "> <ClockIcon w="8" h="8" /> <p>Today</p></p>
                                                     </div>
                                                 </div>
-
                                             ))}
-
                                         </>
                                     }
                                     {notchecked == 2 &&
