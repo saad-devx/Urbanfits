@@ -79,9 +79,8 @@
 }
 
 @media only screen and (min-width: 1000px) {
-  .lg\:font_gotham_bold {
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 600;
+  .lg\:font_copper {
+    font-family: 'Copperplate Gothic 33 BC', sans;
   }
 
   .lg\:font_gotham_black {
@@ -506,6 +505,10 @@ input:checked+.slider:before {
   .bglisting_black {
     background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 74%, rgba(0, 0, 0, 0) 100%);
   }
+
+  .bglisting_white {
+    background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0.00) 100%);
+  }
 }
 
 /* css for size giude button */
@@ -519,6 +522,7 @@ input:checked+.slider:before {
   width: auto !important;
   width: 300% !important;
 }
+
 /* Admin Area END  */
 
 .border_gradient_2 {

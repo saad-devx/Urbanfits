@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebaradmin from '../sidebar'
+import Admin from '..'
 import CardAdmin from '@/components/cards/cardadmin'
 import LineChart from '@/components/charts/LineChart'
 import { AvatarIcon } from '@/public/sidebaricons/AvatarIcon'
@@ -28,7 +28,7 @@ import DollarCardIcon from '@/public/icons/DollarCardIcon'
 
 const index = () => {
   return (
-    <Sidebaradmin>
+    <Admin>
 
       
         <section className='grid grid-cols-4 gap-[27px] mt-[20px] ' >
@@ -391,7 +391,7 @@ const index = () => {
             </CardAdmin> */}
 
 
-    </Sidebaradmin>
+    </Admin>
   )
 }
 

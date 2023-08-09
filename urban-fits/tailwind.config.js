@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       width: {
-        '15' : '60px',
+        '15': '60px',
         '35pr': '35%',
         '90pr': '90%',
         '70pr': '70%',
@@ -32,6 +32,10 @@ module.exports = {
         '1': '1.4px',
         '2': '5.2px'
       },
+      fontFamily: {
+        copper: ['Copperplate Gothic 33 BC', 'sans'],
+        urbanist: ['Urbanist', 'sans']
+      },
       fontSize: {
         '10px': '10px',
         '13px': '13px',
@@ -40,8 +44,8 @@ module.exports = {
         'gotham-black': '#383838',
       },
       backgroundImage: {
-        'gold' : "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",
-        'gold-land' : "linear-gradient(90deg, #FAE892 0%, #B3903E 100%)",
+        'gold': "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",
+        'gold-land': "linear-gradient(90deg, #FAE892 0%, #B3903E 100%)",
         'metal-gold': "linear-gradient(270deg, rgba(250, 232, 146, 0.2) 0.02%, rgba(179, 144, 62, 0) 55.35%);"
       }
     }

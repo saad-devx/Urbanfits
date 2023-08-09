@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import {QuestionIcon} from "@/public/icons/QuestionIcon";
 import {WebIcon} from "@/public/icons/WebIcon";
@@ -31,7 +31,7 @@ const shipping = () => {
 
   return (
     <div className="font_futura">
-      <Sidebaradmin>
+      <Admin>
         <div className="flex mt-[15px] justify-between items-center ">
           <div>
             <div className="font_futura">
@@ -271,7 +271,7 @@ const shipping = () => {
             </section>
           </div>
         </CardAdmin>
-      </Sidebaradmin>
+      </Admin>
     </div>
   );
 };

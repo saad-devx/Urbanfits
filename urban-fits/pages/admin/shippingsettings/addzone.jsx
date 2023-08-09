@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import QuestionIcon from "@/public/icons/QuestionIcon";
 
@@ -30,7 +30,7 @@ const addzone = () => {
 
   return (
     <div className="font-futura">
-      <Sidebaradmin>
+      <Admin>
         <div className="mt-[15px]  ">
           <div>
             <div className="font_futura">
@@ -265,7 +265,7 @@ const addzone = () => {
         <div className="flex float-right text-[15px] font-normal">
           <Button>Save Changes</Button>
         </div>
-      </Sidebaradmin>
+      </Admin>
     </div>
   );
 };

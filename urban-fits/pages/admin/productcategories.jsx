@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import slugify from 'slugify';
 import useCategories from '@/hooks/useCategories'
 import DataTable from 'react-data-table-component';
-import Sidebaradmin from './sidebar'
+import Admin from '.'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
 import Spinner from '@/components/loaders/spinner'
@@ -74,7 +74,7 @@ export default function productcategories() {
     }, [])
 
     return (
-        <Sidebaradmin>
+        <Admin>
             {deleteModal}
             <div className="flex mt-[15px] justify-between items-center">
                 <div>
@@ -218,6 +218,6 @@ export default function productcategories() {
                         </div>
                     </div>
             </section>
-        </Sidebaradmin>
+        </Admin>
     )
 }

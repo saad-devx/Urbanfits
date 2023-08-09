@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import Spinner from '@/components/loaders/spinner';
 import Button from "@/components/buttons/simple_btn";
@@ -114,7 +114,7 @@ export default function CreateBundles() {
 
 
     return (
-        <Sidebaradmin>
+        <Admin>
             <div className="flex mt-[15px] justify-between items-center ">
                 <div>
                     <h2 className="font_futura text-[22px]">Create Bundle</h2>
@@ -142,6 +142,6 @@ export default function CreateBundles() {
                     <Button loading={loading} disabled={loading} type="submit">Create Bundle</Button>
                 </form>
             </CardAdmin>
-        </Sidebaradmin>
+        </Admin>
     )
 }

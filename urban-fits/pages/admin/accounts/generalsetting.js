@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebaradmin from "../sidebar";
+import Sidebaradmin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
 import { QuestionIcon } from "@/public/icons/QuestionIcon";

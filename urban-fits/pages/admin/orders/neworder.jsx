@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
@@ -10,7 +10,7 @@ import { newOrderTableColumns, newOrderTableData } from '@/mock/tablesdata';
 
 const neworder = () => {
   return (
-    <Sidebaradmin>
+    <Admin>
     <div className="flex mt-[15px] justify-between items-center ">
       <div>
         <div className="font_futura">
@@ -54,7 +54,7 @@ const neworder = () => {
         </div>
       {/* </div> */}
     </CardAdmin>
-  </Sidebaradmin>
+  </Admin>
   )
 }
 

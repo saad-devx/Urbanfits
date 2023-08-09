@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
@@ -24,7 +24,7 @@ const transaction = () => {
     }
 
   return (
-    <Sidebaradmin>
+    <Admin>
         <p className='text-[22px] font-[500] mt-[20px] ' > 
         Transaction
         </p>
@@ -78,7 +78,7 @@ const transaction = () => {
             </div>
 
         </CardAdmin>
-    </Sidebaradmin>
+    </Admin>
   )
 }
 
