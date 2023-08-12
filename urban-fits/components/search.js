@@ -13,9 +13,9 @@ export default function Search(props) {
         const { value } = e.target
         setLoader(<div className="flex justify-center"><BounceLoader /></div>)
         setQuery(value)
+        if (value === '') return
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/search?q=${query}`)
-            console.log(data)
+            const { data } = await axios.get(`${process.env.HOST}/api/search?q=${value}`)
             setResults(data)
         } catch (error) {
             console.log(error)
@@ -25,13 +25,14 @@ export default function Search(props) {
     }
     return <div className={`${props.classes} relative w-full md:w-4/5 lg:w-2/5 h-9 lg:h-10 px-6 justify-between items-center font_urbanist bg-gray-100 text-xs md:text-sm rounded-full`}>
         <input type="text" value={query} onChange={onSearch} className='w-full bg-transparent border-none outline-none' placeholder='Search Products' />
-        {query===''?<i className="fa-solid fa-magnifying-glass text-xl text-gray-400" /> : <button onClick={() => setQuery('')} className="fa-solid fa-xmark text-xl text-gray-700" />}
+        {query === '' ? <i className="fa-solid fa-magnifying-glass text-xl text-gray-400" /> : <button onClick={() => setQuery('')} className="fa-solid fa-xmark text-xl text-gray-700" />}
         {query !== '' ? <div className="absolute top-full right-0.5 translate-y-1 w-full min-h-[5rem] p-2 bg-white border rounded-md shadow-md">
             {loader}
+            {results.length === 0 || !results ? <span className="w-full h-[4rem] flex justify-center items-center font_urbanist_medium text-xs">No Results Found :(</span>: null}
             {results.map((result, index) => {
                 if (result.cover_image) return <Link key={index} onClick={() => setQuery('')} className={`${results.length === index + 1 ? null : "border-b"} w-full h-10 flex items-center font-urbanist text-xs capitalize`} href={`/products/product/${result._id}`}>
                     <span className="w-7 aspect-square rounded-md mr-2 overflow-hidden">
-                        <Image src={result.cover_image} width={50} height={50} className='w-full h-full object-cover' />
+                        <Image src={result.cover_image} width={50} height={50} alt='p img' className='w-full h-full object-cover' />
                     </span>
                     {result.name}
                 </Link>

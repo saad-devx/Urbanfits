@@ -31,7 +31,6 @@ const ProductSchema = new mongoose.Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true,
         default: mongoose.Types.ObjectId("64b6d07d82dcb19775042d76")
     }],
     slug: {

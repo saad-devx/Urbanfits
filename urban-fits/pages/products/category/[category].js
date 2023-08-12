@@ -1,30 +1,23 @@
-"use server"
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic';
+import axios from 'axios';
 const CatalogueCarousel = dynamic(() => import('@/components/carousels/catalogueCarousel'));
 import Shoppingcard from '@/components/cards/shoppingcard';
 import MoreToExplore from '@/components/more_to_explore';
-import Spinner from '@/components/loaders/spinner';
+// import Spinner from '@/components/loaders/spinner';
 import BounceLoader from '@/components/loaders/bounceLoader';
 import ListingShopSection from '@/components/listingShop_section';
 import useProduct from '@/hooks/useProduct';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import toaster from '@/utils/toast_function';
 
-export default function ProductCatalogueCategory() {
-    const router = useRouter()
-    const { products, getProducts, productLoading } = useProduct()
-    const { category, name } = router.query
-    const [catalogueProducts, setCatalogueProducts] = useState([])
+export default function ProductCatalogueCategory({ products, category, name }) {
+    // const router = useRouter()
+    // const { name } = router.query
+    const { getProducts, productLoading } = useProduct()
+    const [catalogueProducts, setCatalogueProducts] = useState(products)
     const [page, setPage] = useState(1)
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        console.log("entry point 1")
-        // fetchProducts()
-        getProducts(1, category)
-        // return () => { console.log("operation successful!") }
-    }, [category]);
+    // const [loading, setLoading] = useState(false)
 
     // const fetchProducts = async () => {
     //     console.log("entry point functional")
@@ -35,6 +28,10 @@ export default function ProductCatalogueCategory() {
     //     setCatalogueProducts(products)
     //     setLoading(false)
     // }
+
+    useEffect(() => {
+        setCatalogueProducts(products)
+    }, [category, name])
 
     return <>
         <main className="w-full pb-20 bg-white flex justify-center font_urbanist overflow-hidden">
@@ -55,17 +52,17 @@ export default function ProductCatalogueCategory() {
                                 </button>
                             </nav>
                         </div>
-                        {loading ? <div className="w-full h-[20vh] col-span-full flex justify-center"><Spinner forBtn variant="border-black" /></div> :
-                            products.length !== 0 ? products.map((product, index) => {
-                                if (index == 4) return <>
-                                    <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' />
-                                    <Shoppingcard key={`${index}-listing sections`} margin='0' product={product} />
-                                </>
-                                return <Shoppingcard key={index} margin='0' product={product} />
-                            }) : <div className='w-full col-span-full flex justify-center items-center h-[20vh] font_urbanist_medium text-base md:text-lg lg:text-xl'>No Products found for this Category :(</div>}
+                        {/* {loading ? <div className="w-full h-[20vh] col-span-full flex justify-center"><Spinner forBtn variant="border-black" /></div> : */}
+                        {catalogueProducts.length !== 0 ? catalogueProducts.map((product, index) => {
+                            if (index == 4) return <>
+                                <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' />
+                                <Shoppingcard key={`${index}-listing sections`} margin='0' product={product} />
+                            </>
+                            return <Shoppingcard key={index} margin='0' product={product} />
+                        }) : <div className='w-full col-span-full flex justify-center items-center h-[20vh] font_urbanist_medium text-base md:text-lg lg:text-xl'>No Products found for this Category :(</div>}
                     </div>
 
-                    {products.length === 0 ? null :
+                    {catalogueProducts.length === 0 ? null :
                         <button disabled={productLoading} onClick={async () => {
                             const products = await getProducts(page + 1, category)
                             if (products.length === 0) return toaster('info', "No more products available")
@@ -85,21 +82,21 @@ export default function ProductCatalogueCategory() {
         <ListingShopSection whiteTheme />
     </>
 }
-// export async function getServerSideProps(context) {
-//     const { category, name } = await context.query
-//     console.log(category, name)
-//     try {
-//         const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
-//         console.log(data)
-//         return { props: { products: data.products } }
-//     }
-//     catch (error) {
-//         console.error('Error fetching data:', error);
-//         return {
-//             redirect: {
-//                 destination: '/404',
-//                 permanent: false,
-//             },
-//         };
-//     }
-// }
+export async function getServerSideProps(context) {
+    const { category, name } = await context.query
+    console.log(category)
+    try {
+        const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
+        console.log(data)
+        return { props: { products: data.products, category, name } }
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+        return {
+            redirect: {
+                destination: '/404',
+                permanent: false,
+            },
+        };
+    }
+}
