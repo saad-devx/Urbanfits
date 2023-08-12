@@ -19,6 +19,7 @@ const useProduct = create((set, get) => ({
         }))
         try {
             if (category_id) {
+                console.log(page, category_id)
                 const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
                 set(() => ({
                     products: data.products,

@@ -1,3 +1,4 @@
+"use server"
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic';
 const CatalogueCarousel = dynamic(() => import('@/components/carousels/catalogueCarousel'));
@@ -12,7 +13,7 @@ import toaster from '@/utils/toast_function';
 
 export default function ProductCatalogueCategory() {
     const router = useRouter()
-    const { getProducts, productLoading } = useProduct()
+    const { products, getProducts, productLoading } = useProduct()
     const { category, name } = router.query
     const [catalogueProducts, setCatalogueProducts] = useState([])
     const [page, setPage] = useState(1)
@@ -20,19 +21,20 @@ export default function ProductCatalogueCategory() {
 
     useEffect(() => {
         console.log("entry point 1")
-        fetchProducts()
-        return () => { console.log("operation successful!") }
+        // fetchProducts()
+        getProducts(1, category)
+        // return () => { console.log("operation successful!") }
     }, [category]);
 
-    const fetchProducts = async () => {
-        console.log("entry point functional")
-        if (!category || category.length < 16) return
-        setLoading(true)
-        const products = await getProducts(1, category)
-        if (!products) return
-        setCatalogueProducts(products)
-        setLoading(false)
-    }
+    // const fetchProducts = async () => {
+    //     console.log("entry point functional")
+    //     if (!category || category.length < 16) return
+    //     setLoading(true)
+    //     const products = await getProducts(1, category)
+    //     if (!products) return setLoading(false)
+    //     setCatalogueProducts(products)
+    //     setLoading(false)
+    // }
 
     return <>
         <main className="w-full pb-20 bg-white flex justify-center font_urbanist overflow-hidden">
@@ -54,7 +56,7 @@ export default function ProductCatalogueCategory() {
                             </nav>
                         </div>
                         {loading ? <div className="w-full h-[20vh] col-span-full flex justify-center"><Spinner forBtn variant="border-black" /></div> :
-                            catalogueProducts.length !== 0 ? catalogueProducts.map((product, index) => {
+                            products.length !== 0 ? products.map((product, index) => {
                                 if (index == 4) return <>
                                     <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' />
                                     <Shoppingcard key={`${index}-listing sections`} margin='0' product={product} />
@@ -63,7 +65,7 @@ export default function ProductCatalogueCategory() {
                             }) : <div className='w-full col-span-full flex justify-center items-center h-[20vh] font_urbanist_medium text-base md:text-lg lg:text-xl'>No Products found for this Category :(</div>}
                     </div>
 
-                    {catalogueProducts.length === 0 ? null :
+                    {products.length === 0 ? null :
                         <button disabled={productLoading} onClick={async () => {
                             const products = await getProducts(page + 1, category)
                             if (products.length === 0) return toaster('info', "No more products available")
