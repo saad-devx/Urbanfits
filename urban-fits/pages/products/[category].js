@@ -12,28 +12,17 @@ import { useRouter } from 'next/router';
 import toaster from '@/utils/toast_function';
 
 export default function ProductCatalogueCategory(props) {
+    console.log(props.products)
     const router = useRouter()
     const { getProducts, productLoading } = useProduct()
     const { category, name } = router.query
-    const [catalogueProducts, setCatalogueProducts] = useState([])
+    const [catalogueProducts, setCatalogueProducts] = useState(props.products)
     const [page, setPage] = useState(1)
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        console.log("entry point 1")
-        if (!category || category.length < 16) return
-        console.log("entry point 2")
-        const fetchProducts = async () => {
-            setLoading(true)
-            const products = await getProducts(page, category)
-            setCatalogueProducts(products)
-            return setLoading(false)
-        }
-        console.log("entry point 3")
-        return ()=>fetchProducts()
-    }, [category]);
-
-    console.log(catalogueProducts, page)
+    useEffect(()=>{
+        setCatalogueProducts(props.products)
+    },[category])
 
     return <>
         <main className="w-full pb-20 bg-white flex justify-center font_urbanist overflow-hidden">
@@ -54,8 +43,8 @@ export default function ProductCatalogueCategory(props) {
                                 </button>
                             </nav>
                         </div>
-                        {loading ? <div className="w-full h-[20vh] col-span-full flex justify-center"><Spinner forBtn variant="border-black" /></div> :
-                            catalogueProducts.length !== 0 ? catalogueProducts.map((product, index) => {
+                        {/* {<div className="w-full h-[20vh] col-span-full flex justify-center"><Spinner forBtn variant="border-black" /></div> : */}
+                            {catalogueProducts.length !== 0 ? catalogueProducts.map((product, index) => {
                                 if (index == 4) return <>
                                     <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' />
                                     <Shoppingcard key={`${index}-listing sections`} margin='0' product={product} />
@@ -85,20 +74,19 @@ export default function ProductCatalogueCategory(props) {
         <ListingShopSection whiteTheme />
     </>
 }
-// export async function getServerSideProps(context) {
-//     const { category } = await context.query
-//     console.log(category)
-//     try {
-//         const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
-//         return { props: { products: data.products } }
-//     }
-//     catch (error) {
-//         console.error('Error fetching data:', error);
-//         return {
-//             redirect: {
-//                 destination: '/404',
-//                 permanent: false,
-//             },
-//         };
-//     }
-// }
+export async function getServerSideProps(context) {
+    const { category } = await context.query
+    try {
+        const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
+        return { props: { products: data.products } }
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+        return {
+            redirect: {
+                destination: '/404',
+                permanent: false,
+            },
+        };
+    }
+}
