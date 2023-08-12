@@ -35,8 +35,20 @@ const GetProductByCategory = async (req, res) => {
                 let category = await Category.findById(id);
                 if (category && category.children.length !== 0) {
                     for (const child of category.children) {
+                        // let totalChildProducts = 0;
+
+                        // for (const child of category.children) {
+                        //     let childProductsCount = await Product.countDocuments({
+                        //         categories: { $in: [child] }
+                        //     });
+
+                        //     totalChildProducts += childProductsCount;
+                        // }
+                        // const totalChildPages = Math.ceil(totalChildProducts / LIMIT) + totalPages
+
                         let foundChildProducts = await Product.find({ categories: { $in: [child] } })
                             .sort({ createdAt: -1 })
+                            .skip((page - 1) * LIMIT)
                             .limit(Math.ceil(category.children.length / LIMIT))
                             .populate("categories")
 

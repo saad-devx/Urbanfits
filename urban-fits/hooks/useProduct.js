@@ -20,21 +20,21 @@ const useProduct = create((set, get) => ({
         try {
             if (category_id) {
                 const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
-                set(() => (
-                    {
-                        products: data.products,
-                        totalProducts: data.totalProducts
-                    }
-                ))
+                set(() => ({
+                    products: data.products,
+                    totalProducts: data.totalProducts,
+                    productLoading: false
+                }))
+                return data.products
             }
             else {
                 const { data } = await axios.get(`${process.env.HOST}/api/products/get/many?page=${page}`)
-                set(() => (
-                    {
-                        products: data.products,
-                        totalProducts: data.totalProducts
-                    }
-                ))
+                set(() => ({
+                    products: data.products,
+                    totalProducts: data.totalProducts,
+                    productLoading: false
+                }))
+                return data.products
             }
         } catch (error) {
             console.log(error)

@@ -1,5 +1,4 @@
 import '@/styles/globals.css'
-import '@/styles/Navbar.css'
 import '@/styles/pillbtns.css'
 import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'

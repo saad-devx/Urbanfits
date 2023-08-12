@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Shoppingcard, { SmallShoppingcard } from '@/components/cards/shoppingcard';
-import ProductCarousel from '@/components/carousels/productCarousel';
+const ProductCarousel = dynamic(() => import('@/components/carousels/productCarousel'));
 import Cutomization from '@/components/modals/cutomization';
 import toaster from '@/utils/toast_function';
 // image imports

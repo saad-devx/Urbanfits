@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import HomeCarousel from "@/components/carousels/homeCarousel";
-import HomeCarousel2 from "@/components/carousels/homeCarousel2";
+import dynamic from "next/dynamic";
+const HomeCarousel = dynamic(() => import('@/components/carousels/homeCarousel'));
+const HomeCarousel2 = dynamic(() => import('@/components/carousels/homeCarousel2'));
 import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
 import OfferCard from "@/components/cards/offerCard";
@@ -110,7 +111,7 @@ export default function Home() {
                 <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Kids Collection</h2>
-                        <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop KIds</Link>
+                        <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Kids</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                         <Shoppingcard margin='0' product={product} img={image4} />

@@ -14,7 +14,6 @@ import useProduct from '@/hooks/useProduct';
 import { productListTableColumns } from '@/mock/tablesdata';
 
 export default function allproducts() {
-    const router = useRouter()
     const { categories, getCategories, categLoading } = useCategories()
     const { products, getProducts, productLoading, totalProducts, deleteProducts, selectedProducts, setSelectedProducts, setProductInfo } = useProduct()
     const [categoryOption, setCategoryOption] = useState(false)

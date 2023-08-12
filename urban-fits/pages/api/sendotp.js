@@ -1,25 +1,25 @@
 import ConnectDB from "@/utils/connect_db"
 // import { Twilio } from "twilio";
 
-const SendOtp = async (req, res) => {
-    try {
-        if (req.method === 'POST') {
-            await ConnectDB()
-            const accountSid = '';
-            const authToken = '';
-            const client = require('twilio')(accountSid, authToken);
+// const SendOtp = async (req, res) => {
+//     try {
+//         if (req.method === 'POST') {
+//             await ConnectDB()
+//             const accountSid = '';
+//             const authToken = '';
+            // const client = require('twilio')(accountSid, authToken);
 
             // const otp = require('crypto-random-string')({ length: 6, type: 'numeric' });
-            const otp = 352061
+            // const otp = 352061
 
-            client.messages
-                .create({
-                    body: `Hey your OTP code is ${otp}`,
-                    from: '03164975295',
-                    to: '03420046922'
-                })
-                .then(message => console.log(message.sid))
-                .catch(error => console.log(error));
+            // client.messages
+            //     .create({
+            //         body: `Hey your OTP code is ${otp}`,
+            //         from: '03164975295',
+            //         to: '03420046922'
+            //     })
+            //     .then(message => console.log(message.sid))
+            //     .catch(error => console.log(error));
 
             // const accountSid = "ACc5361c82b5155fcdc1c7e968d3f7d7ea";
             // const authToken = "f1f51dc1278638394b98bfbeeaa62aaf";
@@ -45,18 +45,18 @@ const SendOtp = async (req, res) => {
                 // });
 
 
-            res.status(200).json({
-                success: true,
-                msg: "Your mobile otp sent successfully !",
-            })
-        }
-        else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
-        }
-    }
-    catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
-    }
-}
-export default SendOtp
+//             res.status(200).json({
+//                 success: true,
+//                 msg: "Your mobile otp sent successfully !",
+//             })
+//         }
+//         else {
+//             res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
+//         }
+//     }
+//     catch (error) {
+//         console.log(error)
+//         res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
+//     }
+// }
+// export default SendOtp

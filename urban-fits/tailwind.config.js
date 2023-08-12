@@ -30,10 +30,10 @@ module.exports = {
       },
       letterSpacing: {
         '1': '1.4px',
-        '2': '5.2px'
+        '2': '4.2px',
+        '3': '5.2px'
       },
       fontFamily: {
-        copper: ['Copperplate Gothic 33 BC', 'sans'],
         urbanist: ['Urbanist', 'sans']
       },
       fontSize: {

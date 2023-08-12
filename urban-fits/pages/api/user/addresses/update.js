@@ -1,7 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import Addresses from "@/models/addresses"
 import User from "@/models/user"
-// import NextCors from 'nextjs-cors';
 const jwt = require("jsonwebtoken")
 
 const UpdateAddress = async (req, res) => {

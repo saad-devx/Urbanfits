@@ -483,12 +483,12 @@ input:checked+.slider:before {
 
 /* height css for layout accordint to the navbar height in pixels */
 .layout_height {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 105px);
 }
 
 @media screen and (min-width: 1024px) {
   .lg_layout_height {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 105px);
   }
 }
 
