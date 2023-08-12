@@ -36,14 +36,14 @@ const ListItem = (props) => {
 const SecondaryNavbar = () => {
     if (window.matchMedia('(min-width: 1024px)').matches) return <section className="w-full h-[50px] flex justify-between items-center px-7 lg:px-14 2xl:px-16 font_urbanist text-[15px] bg-white transition-all duration-300">
         <ListItem key={1} href='/all-categories' categories>All Categories</ListItem>
-        <ListItem key={2} href='/products/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
-        <ListItem key={3} href='/products/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
-        <ListItem key={4} href='/products/649b292762a7c100cfb7207f?name=men'>Men</ListItem>
-        <ListItem key={5} href='/products/64d4dfa643c643cc9c60c672?name=kids'>Kids</ListItem>
-        <ListItem key={6} href='/products/64d4dfa643c643cc9c60c672?name=baby+products' classes="group hidden 2xl:flex flex-col">Baby Products</ListItem>
+        <ListItem key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
+        <ListItem key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
+        <ListItem key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>Men</ListItem>
+        <ListItem key={5} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>Kids</ListItem>
+        <ListItem key={6} href='/products/category/64d4dfa643c643cc9c60c672?name=baby+products' classes="group hidden 2xl:flex flex-col">Baby Products</ListItem>
         <ListItem key={7} href='/sale'>Sales</ListItem>
         <ListItem key={8} href='/giftcard' classes="group hidden xl:flex flex-col">Gifts</ListItem>
-        <ListItem key={9} href='/products/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
+        <ListItem key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
         <ListItem key={10} href='/uf-points'>Earn Uf Points</ListItem>
         <ListItem key={11} href='/wishlist'>Wishlist</ListItem>
         <span className="flex flex-col justify-center items-center text-sm">
