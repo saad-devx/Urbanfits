@@ -66,7 +66,7 @@ export default function Navbar() {
 
     useEffect(() => {
         if (!address) getAddress()
-    }, [])
+    }, [user])
 
     const getDisplayAddress = () => {
         if (!address) return <Link href='/user/address'>Set your Address</Link>

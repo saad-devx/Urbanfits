@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic';
+import axios from 'axios';
 const CatalogueCarousel = dynamic(() => import('@/components/carousels/catalogueCarousel'));
 import Shoppingcard from '@/components/cards/shoppingcard';
 import MoreToExplore from '@/components/more_to_explore';
@@ -10,7 +11,7 @@ import useProduct from '@/hooks/useProduct';
 import { useRouter } from 'next/router';
 import toaster from '@/utils/toast_function';
 
-export default function ProductCatalogueCategory() {
+export default function ProductCatalogueCategory(props) {
     const router = useRouter()
     const { getProducts, productLoading } = useProduct()
     const { category, name } = router.query
@@ -19,14 +20,17 @@ export default function ProductCatalogueCategory() {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        console.log("entry point 1")
         if (!category || category.length < 16) return
+        console.log("entry point 2")
         const fetchProducts = async () => {
             setLoading(true)
             const products = await getProducts(page, category)
             setCatalogueProducts(products)
             return setLoading(false)
         }
-        fetchProducts()
+        console.log("entry point 3")
+        return ()=>fetchProducts()
     }, [category]);
 
     console.log(catalogueProducts, page)
@@ -81,3 +85,20 @@ export default function ProductCatalogueCategory() {
         <ListingShopSection whiteTheme />
     </>
 }
+// export async function getServerSideProps(context) {
+//     const { category } = await context.query
+//     console.log(category)
+//     try {
+//         const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
+//         return { props: { products: data.products } }
+//     }
+//     catch (error) {
+//         console.error('Error fetching data:', error);
+//         return {
+//             redirect: {
+//                 destination: '/404',
+//                 permanent: false,
+//             },
+//         };
+//     }
+// }
