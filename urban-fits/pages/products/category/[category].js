@@ -92,11 +92,12 @@ export async function getServerSideProps(context) {
     }
     catch (error) {
         console.error('Error fetching data:', error);
-        return {
-            redirect: {
-                destination: '/404',
-                permanent: false,
-            },
-        };
+        return { props: { products: [], category, name } }
+        // return {
+        //     redirect: {
+        //         destination: '/404',
+        //         permanent: false,
+        //     },
+        // };
     }
 }
