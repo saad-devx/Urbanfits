@@ -28,7 +28,8 @@ export default function ProductCatalogueCategory() {
         console.log("entry point functional")
         if (!category || category.length < 16) return
         setLoading(true)
-        const products = await getProducts(page, category)
+        const products = await getProducts(1, category)
+        if (!products) return
         setCatalogueProducts(products)
         setLoading(false)
     }
