@@ -2,7 +2,11 @@ const mongoose = require('mongoose')
 import ConnectDB from "@/utils/connect_db"
 import product from "@/models/product";
 import category from "@/models/category";
+import Cors from 'micro-cors';
 
+const cors = Cors({
+    allowMethods: ['GET', 'HEAD'],
+});
 const GetProductByCategory = async (req, res) => {
     try {
         if (req.method === 'GET') {
@@ -78,4 +82,4 @@ const GetProductByCategory = async (req, res) => {
     }
 }
 
-export default GetProductByCategory
+export default cors(GetProductByCategory)
