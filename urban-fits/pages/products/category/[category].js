@@ -8,15 +8,13 @@ import BounceLoader from '@/components/loaders/bounceLoader';
 import ListingShopSection from '@/components/listingShop_section';
 import useProduct from '@/hooks/useProduct';
 import toaster from '@/utils/toast_function';
-// import Spinner from '@/components/loaders/spinner';
-// import { useRouter } from 'next/router';
 
 export default function ProductCatalogueCategory({ products, category, name }) {
-    // const router = useRouter()
-    // const { name } = router.query
     const { getProducts, productLoading } = useProduct()
     const [catalogueProducts, setCatalogueProducts] = useState(products)
     const [page, setPage] = useState(1)
+    // const router = useRouter()
+    // const { name } = router.query
     // const [loading, setLoading] = useState(false)
 
     // const fetchProducts = async () => {

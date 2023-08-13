@@ -27,7 +27,7 @@ export default function Shoppingcard(props) {
         <Link href={props.link || `/products/product/${product._id}`}>
             <div className="relative w-full h-3/4 lg:h-[70%] xl:h-[72%] pt-3 lg:pt-5 flex justify-center items-center">
                 <ImgLoader loading={loading} />
-                <Image src={product.cover_image || DemoImg} width={640} height={853} onLoad={() => setLoading(false)} className={`${loading ? 'w-0 h-0' : 'w-auto h-full'} object-contain`} alt='Urban Fits' />
+                <Image src={product.cover_image?`${product.cover_image}?timestamp=${Date.now()}` : DemoImg} width={640} height={853} onLoad={() => setLoading(false)} className={`${loading ? 'w-0 h-0' : 'w-auto h-full'} object-contain`} alt='Urban Fits' />
             </div>
             <div className="w-full h-1/5 md:h-1/5 lg:h-1/5 py-2 lg:py-3 px-4 text-black flex flex-col items-center">
                 <span className="w-full font_urbanist_medium text-sm lg:text-base text-center">
