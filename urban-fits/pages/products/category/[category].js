@@ -32,6 +32,7 @@ export default function ProductCatalogueCategory({ products, category, name }) {
     useEffect(() => {
         setCatalogueProducts(products)
     }, [category, name])
+    console.log(category, name, products)
 
     return <>
         <main className="w-full pb-20 bg-white flex justify-center font_urbanist overflow-hidden">
@@ -84,20 +85,40 @@ export default function ProductCatalogueCategory({ products, category, name }) {
 }
 export async function getServerSideProps(context) {
     const { category, name } = await context.query
-    console.log(category)
+    console.log(category, name)
     try {
-        const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
-        console.log(data)
-        return { props: { products: data.products, category, name } }
+        let response = await (await fetch(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)).json()
+        if (!response.success) {
+            return {
+                redirect: {
+                    destination: '/404',
+                    permanent: false,
+                },
+            };
+        }
+        return { props: { products: response.products, category, name } }
     }
     catch (error) {
         console.error('Error fetching data:', error);
         return { props: { products: [], category, name } }
-        // return {
-        //     redirect: {
-        //         destination: '/404',
-        //         permanent: false,
-        //     },
-        // };
     }
 }
+// export async function getServerSideProps(context) {
+//     const { category, name } = await context.query
+//     console.log(category)
+//     try {
+//         const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
+//         console.log(data)
+//         return { props: { products: data.products, category, name } }
+//     }
+//     catch (error) {
+//         console.error('Error fetching data:', error);
+//         return { props: { products: [], category, name } }
+//         // return {
+//         //     redirect: {
+//         //         destination: '/404',
+//         //         permanent: false,
+//         //     },
+//         // };
+//     }
+// }

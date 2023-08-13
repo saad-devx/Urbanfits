@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', "pbs.twimg.com", "i.etsystatic.com", "urban-fits.s3.eu-north-1.amazonaws.com", "lh3.googleusercontent.com"]
+    domains: ['images.unsplash.com', "urban-fits.s3.eu-north-1.amazonaws.com"]
   },
   env: {
     HOST: "https://st.urbanfits.ae",
