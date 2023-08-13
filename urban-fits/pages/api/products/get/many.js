@@ -1,17 +1,17 @@
 import ConnectDB from "@/utils/connect_db"
-import Product from "@/models/product"
+import product from "@/models/product";
 
 const getManyProducts = async (req, res) => {
     try {
         if (req.method === 'GET') {
             await ConnectDB()
             const LIMIT = 50;
-            let totalProducts = await Product.countDocuments();
+            let totalProducts = await product.countDocuments();
 
             const totalPages = Math.ceil(totalProducts / LIMIT);
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
-            const products = await Product.find()
+            const products = await product.find()
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
@@ -31,7 +31,7 @@ const getManyProducts = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({success: false, error: err, msg:"Internal Server Error occurred. Please retry"})
+        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry" })
     }
 }
 

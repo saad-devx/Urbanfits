@@ -4,12 +4,12 @@ import axios from 'axios';
 const CatalogueCarousel = dynamic(() => import('@/components/carousels/catalogueCarousel'));
 import Shoppingcard from '@/components/cards/shoppingcard';
 import MoreToExplore from '@/components/more_to_explore';
-// import Spinner from '@/components/loaders/spinner';
 import BounceLoader from '@/components/loaders/bounceLoader';
 import ListingShopSection from '@/components/listingShop_section';
 import useProduct from '@/hooks/useProduct';
-// import { useRouter } from 'next/router';
 import toaster from '@/utils/toast_function';
+// import Spinner from '@/components/loaders/spinner';
+// import { useRouter } from 'next/router';
 
 export default function ProductCatalogueCategory({ products, category, name }) {
     // const router = useRouter()
@@ -85,40 +85,20 @@ export default function ProductCatalogueCategory({ products, category, name }) {
 }
 export async function getServerSideProps(context) {
     const { category, name } = await context.query
-    console.log(category, name)
+    console.log(category)
     try {
-        let response = await (await fetch(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)).json()
-        if (!response.success) {
-            return {
-                redirect: {
-                    destination: '/404',
-                    permanent: false,
-                },
-            };
-        }
-        return { props: { products: response.products, category, name } }
+        const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
+        console.log(data)
+        return { props: { products: data.products, category, name } }
     }
     catch (error) {
         console.error('Error fetching data:', error);
         return { props: { products: [], category, name } }
+        // return {
+        //     redirect: {
+        //         destination: '/404',
+        //         permanent: false,
+        //     },
+        // };
     }
 }
-// export async function getServerSideProps(context) {
-//     const { category, name } = await context.query
-//     console.log(category)
-//     try {
-//         const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
-//         console.log(data)
-//         return { props: { products: data.products, category, name } }
-//     }
-//     catch (error) {
-//         console.error('Error fetching data:', error);
-//         return { props: { products: [], category, name } }
-//         // return {
-//         //     redirect: {
-//         //         destination: '/404',
-//         //         permanent: false,
-//         //     },
-//         // };
-//     }
-// }
