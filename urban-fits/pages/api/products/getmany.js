@@ -1,17 +1,17 @@
 import ConnectDB from "@/utils/connect_db"
-import product from "@/models/product";
+import Product from "@/models/product";
 
 const getManyProducts = async (req, res) => {
     try {
         if (req.method === 'GET') {
             await ConnectDB()
             const LIMIT = 50;
-            let totalProducts = await product.countDocuments();
+            let totalProducts = await Product.countDocuments();
 
             const totalPages = Math.ceil(totalProducts / LIMIT);
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
-            const products = await product.find()
+            const products = await Product.find()
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)

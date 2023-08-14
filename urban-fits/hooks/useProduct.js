@@ -20,7 +20,7 @@ const useProduct = create((set, get) => ({
         try {
             if (category_id) {
                 console.log(page, category_id)
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
+                const { data } = await axios.get(`${process.env.HOST}/api/products/getbycategory?id=${category_id}&page=${page}`)
                 set(() => ({
                     products: data.products,
                     totalProducts: data.totalProducts,
@@ -29,7 +29,7 @@ const useProduct = create((set, get) => ({
                 return data.products
             }
             else {
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/many?page=${page}`)
+                const { data } = await axios.get(`${process.env.HOST}/api/products/getmany?page=${page}`)
                 set(() => ({
                     products: data.products,
                     totalProducts: data.totalProducts,
@@ -51,7 +51,7 @@ const useProduct = create((set, get) => ({
             productLoading: true
         }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/products/get/one?id=${product_id}`)
+            const { data } = await axios.get(`${process.env.HOST}/api/products/getone?id=${product_id}`)
             set(() => ({
                 productLoading: false
             }))

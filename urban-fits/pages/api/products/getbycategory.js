@@ -1,12 +1,7 @@
 const mongoose = require('mongoose')
 import ConnectDB from "@/utils/connect_db"
-import product from "@/models/product";
-import category from "@/models/category";
-import Cors from 'micro-cors';
-
-const cors = Cors({
-    allowMethods: ['GET', 'HEAD'],
-});
+import Product from "@/models/product";
+import Category from "@/models/category";
 const GetProductByCategory = async (req, res) => {
     try {
         if (req.method === 'GET') {
@@ -22,14 +17,14 @@ const GetProductByCategory = async (req, res) => {
             await ConnectDB();
 
             const LIMIT = 50;
-            let totalProducts = await product.countDocuments({
+            let totalProducts = await Product.countDocuments({
                 categories: { $in: [mongoose.Types.ObjectId(id)] }
             });
 
             const totalPages = Math.ceil(totalProducts / LIMIT);
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
-            const products = await product.find({ categories: { $in: [mongoose.Types.ObjectId(id)] } })
+            const products = await Product.find({ categories: { $in: [mongoose.Types.ObjectId(id)] } })
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
@@ -40,13 +35,13 @@ const GetProductByCategory = async (req, res) => {
 
             let childProducts = []
             if (page >= totalPages) {
-                let _category = await category.findById(id);
-                if (_category && _category.children.length !== 0) {
-                    for (const child of _category.children) {
-                        let foundChildProducts = await product.find({ categories: { $in: [child] } })
+                let category = await Category.findById(id);
+                if (category && category.children.length !== 0) {
+                    for (const child of category.children) {
+                        let foundChildProducts = await Product.find({ categories: { $in: [child] } })
                             .sort({ createdAt: -1 })
                             .skip((page - 1) * LIMIT)
-                            .limit(Math.ceil(_category.children.length / LIMIT))
+                            .limit(Math.ceil(category.children.length / LIMIT))
                             .populate("categories")
 
                         childProducts.push(...foundChildProducts)
@@ -82,4 +77,4 @@ const GetProductByCategory = async (req, res) => {
     }
 }
 
-export default cors(GetProductByCategory)
+export default GetProductByCategory

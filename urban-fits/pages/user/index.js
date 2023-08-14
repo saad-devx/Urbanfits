@@ -71,7 +71,7 @@ export default function User(props) {
         SetImgSpinner(null)
     }
     if (!user) return <Error403 />
-    return <main className={`bg-white w-full flex font_gotham transition-all duration-700`}>
+    return <main className={`bg-gray-100 w-full flex font_gotham transition-all duration-700`}>
         <Logout logOut={logOut} modal5={modal5} toggleModal={toggleModal} />
         <div className="w-[33%] min-h-screen hidden lg:block">
             <div className="flex flex-col sticky top-[100px] left-20 2xl:left-28 items-center w-[280px] list-none font_gotham">

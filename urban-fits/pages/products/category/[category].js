@@ -85,7 +85,7 @@ export async function getServerSideProps(context) {
     const { category, name } = await context.query
     console.log(category)
     try {
-        const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}&page=1`)
+        const { data } = await axios.get(`${process.env.HOST}/api/products/getbycategory?id=${category}`)
         console.log(data)
         return { props: { products: data.products, category, name } }
     }
