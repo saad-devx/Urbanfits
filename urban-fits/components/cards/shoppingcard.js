@@ -58,7 +58,9 @@ export default function Shoppingcard(props) {
 
 export function SmallShoppingcard(props) {
     const { product } = props
-    const { addItem } = useCart()
+    const { addItem, inCart } = useCart()
+    const { wishList, addToWishList, removeFromWishList, inWishList } = useUser()
+    
     return <div {...props} className={`relative bg-gray-100 border ${props.classes} w-full min-h-[212px] h-[230px] 2xl:h-[250px] ${props.margin ? props.margin : 'my-3 md:my-5'} rounded-xl hover:scale-[1.01] hover:rounded-lg transition-all duration-500 overflow-hidden`} >
         <button title='Add to Cart' onClick={() => {
             if (inCart(`${product.variants[0]._id}${product.variants[0].sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
