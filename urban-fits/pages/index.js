@@ -58,11 +58,11 @@ export default function Home() {
 
                 {/* Collection Section */}
                 <section>
-                    <div className="w-full px-5 md:px-7 lg:px-14 mb-3 md:mb-5 flex justify-between items-center">
+                    <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">New Collection</h2>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">See all Collection</Link>
                     </div>
-                    <div className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
+                    <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                         <Shoppingcard margin='0' product={product} img={image4} />
                         <Shoppingcard margin='0' product={product} img={image5} />
                         <Shoppingcard margin='0' product={product} img={image6} />
@@ -70,7 +70,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section className="w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 gap-4 xl:gap-7">
+                <section className="w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 gap-4 xl:gap-7">
                     <OfferCard key={1} href="#" badge="Clearance" heading="Up To" offer="50% Off" />
                     <OfferCard key={2} href="#" badge="Shop Women" heading="All Under" offer="$50.00" />
                     <OfferCard key={2} href="#" badge="Shop Men" heading="All Under" offer="$50.00" />
@@ -79,11 +79,11 @@ export default function Home() {
 
                 {/* Women Collection Section */}
                 <section>
-                    <div className="w-full px-5 md:px-7 lg:px-14 mb-3 md:mb-5 flex justify-between items-center">
+                    <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Women Collection</h2>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Women</Link>
                     </div>
-                    <div className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
+                    <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                         <Shoppingcard margin='0' product={product} img={image4} />
                         <Shoppingcard margin='0' product={product} img={image5} />
                         <Shoppingcard margin='0' product={product} img={image6} />
@@ -95,11 +95,11 @@ export default function Home() {
 
                 {/* Men Collection Section */}
                 <section>
-                    <div className="w-full px-5 md:px-7 lg:px-14 mb-3 md:mb-5 flex justify-between items-center">
+                    <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Men Collection</h2>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Men</Link>
                     </div>
-                    <div className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
+                    <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                         <Shoppingcard margin='0' product={product} img={image4} />
                         <Shoppingcard margin='0' product={product} img={image5} />
                         <Shoppingcard margin='0' product={product} img={image6} />
@@ -109,11 +109,11 @@ export default function Home() {
 
                 {/* Kids Collection Section */}
                 <section>
-                    <div className="w-full px-5 md:px-7 lg:px-14 mb-3 md:mb-5 flex justify-between items-center">
+                    <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Kids Collection</h2>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Kids</Link>
                     </div>
-                    <div className="box_2 w-full px-5 md:px-7 lg:px-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
+                    <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                         <Shoppingcard margin='0' product={product} img={image4} />
                         <Shoppingcard margin='0' product={product} img={image5} />
                         <Shoppingcard margin='0' product={product} img={image6} />

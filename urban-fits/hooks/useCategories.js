@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import toaster from "@/utils/toast_function";
 import axios from "axios";
-import getUser_LS from '@/utils/getUserfromLS';
+import useUser from './useUser';
 
 const useCategories = create((set, get) => ({
 
@@ -9,7 +9,7 @@ const useCategories = create((set, get) => ({
     categLoading: false,
 
     getCategories: async () => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user) return
 
         set(() => ({
@@ -30,7 +30,7 @@ const useCategories = create((set, get) => ({
     },
 
     createCategory: async (category) => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user || user.role === "customer") return
 
         set(() => ({
@@ -52,7 +52,7 @@ const useCategories = create((set, get) => ({
     },
 
     updateCategory: async (update) => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user || user.role === "customer") return
 
         set(() => ({
@@ -74,7 +74,7 @@ const useCategories = create((set, get) => ({
     },
 
     deleteCategories: async (categoriesToDelete) => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user || user.role === "customer") return
 
         set(() => ({

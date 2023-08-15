@@ -6,7 +6,6 @@ const GetProductByCategory = async (req, res) => {
     try {
         if (req.method === 'GET') {
             const { id } = req.query;
-            console.log(id)
 
             if (!id || !mongoose.Types.ObjectId.isValid(id))
                 return res.status(400).json({
@@ -30,9 +29,6 @@ const GetProductByCategory = async (req, res) => {
                 .limit(LIMIT)
                 .populate("categories");
 
-
-            console.log(products)
-
             let childProducts = []
             if (page >= totalPages) {
                 let category = await Category.findById(id);
@@ -48,8 +44,6 @@ const GetProductByCategory = async (req, res) => {
                     }
                 }
             }
-
-            console.log(childProducts)
             const finalProducts = products.concat(childProducts)
 
             if (!finalProducts)

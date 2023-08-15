@@ -74,4 +74,46 @@ const countryCodes = [
     { name: "Trinidad and Tobago", code: "+1-868" },
     { name: "United States of America", code: "+1" }
 ]
+export const Countries = [
+    {
+        code: '+971',
+        country: 'ae',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg"
+    },
+    {
+        code: '+61',
+        country: 'au',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AU.jpg"
+    },
+    {
+        code: '+1',
+        country: 'ca',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/CA.jpg"
+    },
+    {
+        code: '+91',
+        country: 'in',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/IN.jpg"
+    },
+    {
+        code: '+92',
+        country: 'pk',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/PK.jpg"
+    },
+    {
+        code: '+966',
+        country: 'sa',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/SA.jpg"
+    },
+    {
+        code: '+44',
+        country: 'gb',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/GB.jpg"
+    },
+    {
+        code: '+1',
+        country: 'us',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/US.jpg"
+    }
+]
 export default countryCodes

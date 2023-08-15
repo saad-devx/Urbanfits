@@ -1,50 +1,62 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { useCart } from "react-use-cart";
-import useNewsletter from "./useNewsletter";
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { signOut } from "next-auth/react"
 import toaster from "@/utils/toast_function";
+import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-export default function useUser() {
-    const router = useRouter()
-    const { emptyCart } = useCart()
-    const { clearNewsletterData } = useNewsletter()
-    const getInitialToken = () => {
-        const token = jwt.decode(localStorage.getItem("authToken"))
-        if (token && token._doc && token._doc.email) return token._doc
-        else return null
-    }
-    const [user, setUser] = useState(getInitialToken)
-
-    const updateUser = async (valuesObj, initUser = false) => {
-        if (initUser) {
-            localStorage.setItem("authToken", valuesObj)
+const useUser = create(persist((set, get) => ({
+    user: null,
+    wishList: [],
+    country: {
+        code: '+971',
+        country: 'ae',
+        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg"
+    },
+    setCountry: (value) => set(() => ({ country: value })),
+    addToWishList: (item) => set((state) => {
+        return { wishList: [...state.wishList, item] }
+    }),
+    removeFromWishList: (itemToRemove) => {
+        set((state) => {
+            const wishListArray = state.wishList
+            const index = wishListArray.indexOf(itemToRemove);
+            if (index !== -1) wishListArray.splice(index, 1);
+            return { wishList: wishListArray }
+        })
+    },
+    inWishList: (item) => {
+        let isInList = get().wishList.includes(item)
+        return isInList
+    },
+    updateUser: async (valuesObj, updateLocally = false) => {
+        if (updateLocally) {
             const userData = jwt.decode(valuesObj)?._doc
-            setUser(userData)
+            delete userData.password
+            set(() => ({ user: userData }))
         }
         else {
-            const response = await fetch(`${process.env.HOST}/api/user/update?id=${user._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(valuesObj)
-            })
-            const res = await response.json()
-            toaster(res.success ? "success" : "error", res.msg)
-            localStorage.setItem("authToken", res.payload)
-            const userData = jwt.decode(res.payload)?._doc
-            setUser(userData)
+            try {
+                const { data } = await axios.put(`${process.env.HOST}/api/user/update?id=${get().user._id}`, valuesObj)
+                const userData = jwt.decode(data.payload)?._doc
+                delete userData.password
+                set(() => ({ user: userData }))
+                toaster("success", data.msg)
+            } catch (error) {
+                console.log(error)
+                toaster("error", error.response.data.msg)
+            }
         }
-    }
-    const logOut = () => {
-        router.push('/')
-        if (user.register_provider !== "urbanfits") signOut()
+    },
+    logOut: () => {
+        window.location.href = '/'
+        if (get().user.register_provider !== "urbanfits") signOut()
+        set(() => ({ user: null }))
         localStorage.clear()
-        clearNewsletterData()
         sessionStorage.clear()
-        setUser(null)
-        emptyCart()
         toaster("success", "You are signed out !")
     }
-    return { updateUser, user, logOut }
-}
+}),
+    { name: "authToken" }
+))
+export default useUser

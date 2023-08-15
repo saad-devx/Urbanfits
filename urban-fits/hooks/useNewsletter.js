@@ -1,6 +1,6 @@
 import { create } from 'zustand'
+import useUser from './useUser';
 import toaster from "@/utils/toast_function";
-import getUser_LS from '@/utils/getUserfromLS';
 import axios from "axios";
 import jwt from 'jsonwebtoken';
 
@@ -15,7 +15,7 @@ const useNewsletter = create((set, get) => ({
     },
 
     getNewsletterData: async () => {
-        const user = get().user()
+        const { user } = useUser.getState()
         if (!user) return
 
         const token = jwt.decode(localStorage.getItem("user_newsletter_token"))
@@ -40,7 +40,7 @@ const useNewsletter = create((set, get) => ({
     },
 
     updateNewsletterData: async (valuesObj, sendRequest = true) => {
-        const user = get().user()
+        const { user } = useUser.getState()
         if (sendRequest) {
             try {
                 const res = await axios.put(`${process.env.HOST}/api/newsletter/update?id=${user._id}`, valuesObj)
@@ -60,17 +60,15 @@ const useNewsletter = create((set, get) => ({
         else if (!sendRequest) {
             localStorage.setItem("user_newsletter_token", valuesObj)
             const decodedPayload = jwt.decode(valuesObj)?._doc
-            set((state) =>
+            set(() =>
                 ({ newsletterData: decodedPayload })
             )
             return decodedPayload
         }
     },
 
-    clearNewsletterData: ()=>{
-        set((state) => (
-            {newsletterData: null}
-        ))
+    clearNewsletterData: () => {
+        set(() => ({ newsletterData: null }))
     }
 }))
 export default useNewsletter
