@@ -23,7 +23,7 @@ export default function Search(props) {
         }
         setLoader(null)
     }
-    return <div className={`${props.classes} relative w-full md:w-4/5 lg:w-2/5 h-9 lg:h-10 px-6 justify-between items-center font_urbanist bg-gray-100 text-xs md:text-sm rounded-full`}>
+    return <div className={`${props.classes} relative w-full md:w-4/5 lg:w-1/3 xl:w-2/5 h-9 lg:h-10 px-6 justify-between items-center font_urbanist bg-gray-100 text-xs md:text-sm rounded-full`}>
         <input type="text" value={query} onChange={onSearch} className='w-full bg-transparent border-none outline-none' placeholder='Search Products' />
         {query === '' ? <i className="fa-solid fa-magnifying-glass text-xl text-gray-400" /> : <button onClick={() => setQuery('')} className="fa-solid fa-xmark text-xl text-gray-700" />}
         {query !== '' ? <div className="absolute top-full right-0.5 translate-y-1 w-full min-h-[5rem] p-2 bg-white border rounded-md shadow-md">

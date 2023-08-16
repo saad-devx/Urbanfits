@@ -194,7 +194,7 @@ export default function Personalinfo() {
                     </div>
                     <div className="w-full">
                         <h1 className="text-xl lg:text-[22px] font_gotham_medium mt-5">Newsletter Subscription</h1>
-                        <div className="flex justify-between w-full md:w-3/4 my-7 space-x-4 md:space-x-0">
+                        <div className="flex items-center w-full md:w-3/4 my-7 gap-x-16">
                             <div className="w-1/2 md:w-1/4 flex justify-between">
                                 Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                             </div>
