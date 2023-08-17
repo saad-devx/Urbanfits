@@ -55,7 +55,7 @@ export default function ForgotPassword() {
     return (
         <>
             <AuthPage loading={loading} >
-                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around items-center lg:justify-center" onReset={handleReset} onSubmit={handleSubmit} >
                     <section className="w-full mb-6">
                         <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Forgot Password</h1>
                         <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>

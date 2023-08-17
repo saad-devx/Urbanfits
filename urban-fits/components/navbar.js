@@ -159,7 +159,7 @@ export default function Navbar() {
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
             </button>
-            <section className="w-[15%] pl-[2%] flex items-center justify-between">
+            <section className="w-1/4 lg:w-[15%] lg:pl-[2%] flex items-center justify-between">
                 <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">
                     <span className="w-7 h-5 overflow-hidden border" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +168,7 @@ export default function Navbar() {
                 </button>
                 <button className='relative'>
                     <i className="absolute top-0 right-0 z-10 translate-x-1/3 w-2 h-2 border border-white aspect-square rounded-full bg-gold-land"></i>
-                    <button className="fa-regular fa-envelope text-xl translate-y-[15%]"></button>
+                    <button className="fa-regular fa-envelope text-[22px] translate-y-[15%]"></button>
                 </button>
                 <button onClick={() => {
                     document.body.style.overflowY = cart ? null : 'hidden'

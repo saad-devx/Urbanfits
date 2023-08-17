@@ -19,7 +19,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   const { user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
-  const Exception = router.pathname.startsWith("/admin")
+  const Exception = router.pathname.startsWith("/admin") || (window.matchMedia('(max-width: 786px)').matches)
   if (router.pathname.startsWith("/admin")) {
     if (!user || user.role == "customer") return <Error403 />
   }

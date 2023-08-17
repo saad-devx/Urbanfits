@@ -95,7 +95,7 @@ export default function Signup() {
             <Head>
                 <title>Urban Fits - Sign Up</title>
             </Head>
-            <AuthPage loading={loading} >
+            <AuthPage loading={loading} height="h-screen lg:h-auto" >
                 <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                     <section className="w-full mb-6">
                         <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Sign Up</h1>

@@ -64,7 +64,7 @@ export default function ResetPassword() {
     return (
         <>
             <AuthPage loading={loading} >
-                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:justify-center" onReset={handleReset} onSubmit={handleSubmit} >
                     <section className="w-full mb-6">
                         <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Reset Your Password</h1>
                         <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
