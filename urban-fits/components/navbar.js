@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
+import Logout from '@/components/modals/logout'
+import LanguageModal from './modals/languagemodal';
 import dynamic from 'next/dynamic';
 const Cart = dynamic(() => import('./cart'));
 const Search = dynamic(() => import('./search'));
-import { Countries } from '@/static data/countryCodes';
 import useUser from '@/hooks/useUser';
 import useAddress from '@/hooks/useAddress';
 import Link from 'next/link'
 import ToTopBtn from './buttons/toTopBtn';
 import Image from 'next/image';
-import logoutIcon from '@/public/logoutIcon.svg'
 import bag from '@/public/bag.svg'
+import {
+    LogoutIcon,
+    LocationIcon,
+    UserIcon
+} from "@/public/accountIcons"
 
 const ListItem = (props) => {
     const router = useRouter()
@@ -35,7 +40,7 @@ const ListItem = (props) => {
 
 const SecondaryNavbar = ({ cart, setCart, totalUniqueItems }) => {
     const router = useRouter()
-    if (window.matchMedia('(min-width: 1024px)').matches) return <nav className="sticky top-[-1px] left-0 right-0 z-40 w-full h-[50px] border-b flex justify-between items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white transition-all duration-300">
+    if (window.matchMedia('(min-width: 1024px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] border-b flex justify-between items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white transition-all duration-300">
         <ListItem key={1} href='/all-categories' categories>All Categories</ListItem>
         <ListItem key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
         <ListItem key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
@@ -97,10 +102,12 @@ const SecondaryNavbar = ({ cart, setCart, totalUniqueItems }) => {
 
 
 export default function Navbar() {
-    const { user, country, setCountry } = useUser()
+    const { user, country } = useUser()
     const { address, getAddress } = useAddress()
     const { totalUniqueItems } = useCart()
     const [cart, setCart] = useState(false)
+    const [logout, setLogout] = useState(false)
+    const [langModal, setLangModal] = useState(false)
 
     useEffect(() => {
         if (!address) getAddress()
@@ -115,21 +122,23 @@ export default function Navbar() {
 
     return <>
         <Cart cart={cart} setCart={setCart} />
+        <Logout show={logout} setLogout={setLogout} />
+        <LanguageModal show={langModal} setLangModal={setLangModal} />
         <ToTopBtn />
-        <nav className="sticky -top-full z-50 font_urbanist w-full h-[65px] flex justify-between items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
+        <nav className="sticky z-50 font_urbanist w-full h-[65px] flex justify-between items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
             <Link href='/' className='font_copper text-xl lg:text-2xl tracking-2'><h1>URBAN FITS</h1></Link>
             <Search classes="hidden lg:flex" />
             <Link href={user ? '/user/address' : "#"} className="hidden md:justify-self-end lg:justify-self-auto md:flex items-center text-black">
-                <i className="fa-solid fa-location-dot mr-3 text-lg text-gray-400"></i>
-                <div className="flex flex-col justify-center items-start">
-                    <p className="font_urbanist text-[13px]">Deliver to</p>
-                    <p className="font_urbanist_bold text-[13px] truncate max-w-[130px]">{getDisplayAddress()}</p>
+                <LocationIcon />
+                <div className="flex flex-col justify-center ml-3 items-start text-[13px]">
+                    <p className="font_urbanist leading-snug">Deliver to</p>
+                    <p className="font_urbanist_bold truncate max-w-[130px]">{getDisplayAddress()}</p>
                 </div>
             </Link>
             <button onClick={() => {
                 if (!user || !user.email) return
-            }} className="relative hidden group lg:flex items-center font_urbanist text-[13px] text-black">
-                <i className="fa-regular fa-user text-lg mr-3"></i>
+            }} className="relative hidden group lg:flex items-center font_urbanist text-[13px] text-black gap-x-3">
+                <UserIcon />
                 {user && user.email ? <>
                     <div className="flex flex-col justify-center items-start">
                         <p className="font_urbanist text-[13px]">Welcome Back</p>
@@ -141,45 +150,34 @@ export default function Navbar() {
                             <span className="font_copper text-base">UF-Points</span>
                             <p className='font_urbanist_medium'>{100}</p>
                         </li>
-                        <Link href="/user/personalnifo" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
+                        <Link href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
                         <Link href="/user/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
                         <Link href="/user/orders/buyagain" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Buy Again</Link>
                         <Link href="/user/shoppinglists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
-                        <button className="w-full px-4 hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><Image src={logoutIcon} alt="lo" /> Log Out</button>
+                        <button onClick={() => setLogout(!logout)} className="w-full px-4 hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</button>
                     </div>
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
             </button>
-            <button className="group relative flex items-center gap-x-2">
-                <span className="w-7 h-5 overflow-hidden" title={country.country}><Image width={50} height={40} src={country.src} /></span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
-                </svg>
-                <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
-                <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white equillibrium_shadow w-36 max-h-[12rem] text-xs rounded-lg overflow-y-scroll transition-all opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
-                    {Countries.map((c, index) => {
-                        return <li onClick={() => {
-                            return setCountry(c)
-                        }} key={index} title={c.country} className="w-full px-3 border-b hover:bg-slate-100 flex justify-between items-center py-2 transition-all">
-                            <span className="w-5 h-4 overflow-hidden">
-                                <Image width={50} height={40} src={c.src} />
-                            </span>
-                            {c.code}
-                        </li>
-                    })}
-                </div>
-            </button>
-            <div className='relative'>
-                <i className="absolute top-0 right-0 z-10 translate-x-1/3 w-2 h-2 border border-white aspect-square rounded-full bg-gold-land"></i>
-                <button className="fa-regular fa-envelope text-xl translate-y-[15%]"></button>
-            </div>
-            <button onClick={() => {
-                document.body.style.overflowY = cart ? null : 'hidden'
-                setCart(!cart)
-            }} className="hidden lg:block relative">
-                {totalUniqueItems !== 0 ? <i className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 w-2 h-2 border border-white aspect-square rounded-full bg-gold-land"></i> : null}
-                <Image src={bag} />
-            </button>
+            <section className="w-[15%] pl-[2%] flex items-center justify-between">
+                <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">
+                    <span className="w-7 h-5 overflow-hidden border" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
+                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
+                    </svg>
+                </button>
+                <button className='relative'>
+                    <i className="absolute top-0 right-0 z-10 translate-x-1/3 w-2 h-2 border border-white aspect-square rounded-full bg-gold-land"></i>
+                    <button className="fa-regular fa-envelope text-xl translate-y-[15%]"></button>
+                </button>
+                <button onClick={() => {
+                    document.body.style.overflowY = cart ? null : 'hidden'
+                    setCart(!cart)
+                }} className="hidden lg:block relative">
+                    {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-[14px] border border-white text-white text-[8px] aspect-square rounded-full bg-gold-land">{totalUniqueItems}</span> : null}
+                    <Image src={bag} />
+                </button>
+            </section>
         </nav>
         <SecondaryNavbar
             cart={cart}

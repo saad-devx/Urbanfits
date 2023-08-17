@@ -37,7 +37,7 @@ export default function Login() {
                 const { data } = res
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
-                router.push('/user/personalinfo')
+                router.push('/user/myaccount')
             }
             else {
                 const { data } = res.response

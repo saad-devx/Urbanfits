@@ -106,7 +106,10 @@ export default function Cart(props) {
                     <Image width={200} height={200} src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                     <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
                     <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Looks like you have not added anything to your cart. Go ahead & explore top categories.</p>
-                    <Button onClick={() => props.setCart(false)} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
+                    <Button onClick={() => {
+                        document.body.style.overflowY = props.cart ? null : 'hidden'
+                        props.setCart(false)
+                    }} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                 </section>
                 :
                 <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
@@ -125,7 +128,10 @@ export default function Cart(props) {
                                 <span className='w-[10%] text-gray-300'>AMOUNT</span>
                             </div>
                             {items.map((product) => {
-                                return <CartItem key={product.id} toggleCart={() => props.setCart(false)} product={product} get3dpNumber={get3dpNumber} />
+                                return <CartItem key={product.id} toggleCart={() => {
+                                    document.body.style.overflowY = props.cart ? null : 'hidden'
+                                    props.setCart(false)
+                                }} product={product} get3dpNumber={get3dpNumber} />
                             })}
                             <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
@@ -137,7 +143,10 @@ export default function Cart(props) {
                                 <br />
                                 <span className="w-full my-3 mx-auto flex justify-between"><small>TOTAL</small> <small>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</small></span>
                             </div>
-                            <LinkBtn href="/checkout/step1" onClick={() => props.setCart(false)} font='font_urbanist_bold tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
+                            <LinkBtn href="/checkout/step1" onClick={() => {
+                                document.body.style.overflowY = props.cart ? null : 'hidden'
+                                props.setCart(false)
+                            }} font='font_urbanist_bold tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14">

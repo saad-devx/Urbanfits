@@ -38,7 +38,7 @@ export default function Signup() {
                 const { data } = res
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
-                router.push('/user/personalinfo')
+                router.push('/user/myaccount')
             }
             if (res.data.success && res.data.payload && !oAuthQuery) {
                 router.push(`/auth/signup/verification/${values.email}`)

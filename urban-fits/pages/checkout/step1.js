@@ -198,7 +198,7 @@ export default function Checkout1() {
         </Head>
         {loader}
         <LanguageModal show={modal3} toggleModal={toggleModal} />
-        <main className='bg-white w-full h-full px-5 md:px-7 lg:px-14 flex flex-col lg:flex-row p-5 md:p-7 lg:p-0 lg:pt-16 font_urbanist text-left pt-5' >
+        <main className='bg-white w-full h-full px-5 md:px-8 lg:px-14 xl:px-20 2xl:px-24 flex flex-col lg:flex-row p-5 md:p-7 lg:p-0 lg:pt-16 font_urbanist text-left pt-5' >
             <div className="w-full lg:w-[55%] mb-3 mr-auto">
                 <form className="w-full text-sm" onSubmit={handleSubmit} onReset={handleReset} >
                     <div className="w-full border-b border-b-gray-200 mb-5 py-4"><span onClick={router.back} className='cursor-pointer font_urbanist_medium'><i className="fa-solid fa-chevron-left mr-2"></i>Back</span></div>

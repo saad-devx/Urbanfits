@@ -78,41 +78,49 @@ export const Countries = [
     {
         code: '+971',
         country: 'ae',
+        name: 'United Arab Emirates',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg"
     },
     {
         code: '+61',
         country: 'au',
+        name: 'Australia',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AU.jpg"
     },
     {
         code: '+1',
         country: 'ca',
+        name: 'Canada',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/CA.jpg"
     },
     {
         code: '+91',
         country: 'in',
+        name: 'India',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/IN.jpg"
     },
     {
         code: '+92',
         country: 'pk',
+        name: 'Pakistan',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/PK.jpg"
     },
     {
         code: '+966',
         country: 'sa',
+        name: 'Saudia Arabia',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/SA.jpg"
     },
     {
         code: '+44',
         country: 'gb',
+        name: 'United Kingdom',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/GB.jpg"
     },
     {
         code: '+1',
         country: 'us',
+        name: 'United States America',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/US.jpg"
     }
 ]

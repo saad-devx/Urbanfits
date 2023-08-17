@@ -39,7 +39,7 @@ export default function Verification(props) {
                 setContent(
                     <> <Image src={successIcon} alt="Success" />
                         <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">You'r ready to go !</p></>)
-                router.push('/user/personalinfo')
+                router.push('/user/myaccount')
             } catch (error) {
                 setContent(
                     <AlertPage type="error" heading="Oh Snap! Some Error Occured" message={error.response.data.msg} />

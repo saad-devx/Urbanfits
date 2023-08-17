@@ -11,6 +11,7 @@ const useUser = create(persist((set, get) => ({
     country: {
         code: '+971',
         country: 'ae',
+        name: 'United Arab Emirates',
         src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg"
     },
     setCountry: (value) => set(() => ({ country: value })),
