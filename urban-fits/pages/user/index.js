@@ -90,7 +90,6 @@ export default function User(props) {
         if (!newsletterData) return () => getNewsletterData()
     }, [])
 
-    if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 1024px)').matches) return <>
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
@@ -123,13 +122,13 @@ export default function User(props) {
                         </span>
                     </nav>
                 </> :
-                    <div className="flex items-center font_urbanist_bolc text-base gap-x-4">
+                    <div className="py-7 flex items-center font_urbanist_bolc text-base gap-x-4">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.2819 15.5591C13.2577 15.5591 13.2214 15.5591 13.1973 15.5591C13.161 15.5591 13.1126 15.5591 13.0763 15.5591C10.3312 15.4744 8.27539 13.334 8.27539 10.6977C8.27539 8.01304 10.4642 5.82422 13.1489 5.82422C15.8335 5.82422 18.0223 8.01304 18.0223 10.6977C18.0103 13.3461 15.9424 15.4744 13.3182 15.5591C13.294 15.5591 13.294 15.5591 13.2819 15.5591ZM13.1368 7.62607C11.4438 7.62607 10.0772 9.00466 10.0772 10.6856C10.0772 12.3423 11.3712 13.6847 13.0159 13.7451C13.0521 13.733 13.1731 13.733 13.294 13.7451C14.9145 13.6605 16.1842 12.3302 16.1963 10.6856C16.1963 9.00466 14.8298 7.62607 13.1368 7.62607Z" fill="#383838" />
                             <path d="M12.9984 26.9023C9.76795 26.9023 6.68162 25.5367 4.29182 23.0513C4.07566 22.8328 3.97958 22.5051 4.0036 22.191C4.15972 20.5659 5.04839 19.0501 6.52551 17.9303C10.1042 15.2264 15.9046 15.2264 19.4713 17.9303C20.9484 19.0637 21.8371 20.5659 21.9932 22.191C22.0292 22.5187 21.9211 22.8328 21.705 23.0513C19.3151 25.5367 16.2288 26.9023 12.9984 26.9023ZM5.88903 21.9179C7.88253 23.8161 10.3924 24.8539 12.9984 24.8539C15.6043 24.8539 18.1142 23.8161 20.1077 21.9179C19.8916 21.0848 19.3152 20.2791 18.4625 19.6236C15.5083 17.384 10.5005 17.384 7.52226 19.6236C6.66962 20.2791 6.10519 21.0848 5.88903 21.9179Z" fill="#383838" />
                             <path d="M13.1347 26.7069C5.96357 26.7069 0.134766 20.8781 0.134766 13.707C0.134766 6.53583 5.96357 0.707031 13.1347 0.707031C20.3058 0.707031 26.1346 6.53583 26.1346 13.707C26.1346 20.8781 20.3058 26.7069 13.1347 26.7069ZM13.1347 2.52097C6.96728 2.52097 1.94871 7.53955 1.94871 13.707C1.94871 19.8744 6.96728 24.8929 13.1347 24.8929C19.3021 24.8929 24.3207 19.8744 24.3207 13.707C24.3207 7.53955 19.3021 2.52097 13.1347 2.52097Z" fill="#383838" />
                         </svg>
-                        Sign In / Register
+                        <p> <Link href='/auth/login'>Sign In</Link> / <Link href='/auth/signup'>Register</Link></p>
                     </div>
                 }
             </section>
@@ -244,15 +243,15 @@ export default function User(props) {
                     Membership
                 </button>
             </div>
-            <h2 className="mt-5 font_urbanist_bold text-base">Newsletter Subscription</h2>
-            <section className="flex items-center w-full md:w-3/4 my-7 gap-x-8 text-[13px] font_urbanist_medium">
-                <div className="w-1/4 flex justify-between">
-                    Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
-                </div>
-                <div className="w-1/4 flex justify-between">
-                    Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
-                </div>
-            </section>
+            {user && user.email ? <><h2 className="mt-5 font_urbanist_bold text-base">Newsletter Subscription</h2>
+                <section className="flex items-center w-full md:w-3/4 my-7 gap-x-8 text-[13px] font_urbanist_medium">
+                    <div className="w-1/4 flex justify-between">
+                        Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                    </div>
+                    <div className="w-1/4 flex justify-between">
+                        Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                    </div>
+                </section></> : null}
             <h2 className="mt-5 font_urbanist_bold text-xl">Recently viewed</h2>
             <section className="w-full min-h-[30vh] flex flex-col justify-center items-center gap-y-4">
                 <Image width={300} height={300} className='w-2/5' src={giantSearchIcon} />
@@ -260,7 +259,7 @@ export default function User(props) {
             </section>
         </main>
     </>
-
+    if (!user) return <Error403 />
     else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
         <div className="w-1/4 min-h-screen hidden lg:block">

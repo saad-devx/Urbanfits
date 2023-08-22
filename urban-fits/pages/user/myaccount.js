@@ -162,7 +162,7 @@ export default function Personalinfo() {
                     Phone No.<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.phone_prefix} {user.phone_number} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address.shipping_address?.address}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address?.shipping_address?.address}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Language<span className="flex items-center gap-x-2 font_urbanist capitalize">English <i className="fa-solid fa-chevron-right text-xs"></i></span>

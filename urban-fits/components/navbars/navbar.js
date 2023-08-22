@@ -116,7 +116,7 @@ export default function Navbar() {
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
             </button>
-            <section className="w-2/5 md:w-[15%] lg:pl-[2.5%] flex items-center justify-between">
+            <section className="w-auto gap-x-7 md:gap-x-0 md:w-[15%] lg:pl-[2.5%] flex items-center justify-between">
                 <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">
                     <span className="w-7 h-5 overflow-hidden border" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">

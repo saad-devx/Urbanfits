@@ -68,17 +68,17 @@ export default function Checkout1() {
         phone_number: Yup.string().min(9).required("Please enter your phone number")
     }
     const addressFieldsValues = (type) => {
-        const Address = address[type]
+        // const Address = address[type]
         return {
-            address_title: Address?.address_title,
-            firstname: Address?.firstname,
-            lastname: Address?.lastname,
-            address: Address?.address,
-            apt_suite: Address?.apt_suite,
-            city: Address?.city,
-            country: Address ? Address.country : "Country",
-            phone_prefix: Address ? Address.phone_prefix : "Select Country Code",
-            phone_number: Address?.phone_number
+            address_title: address && address[type] ? address[type].address_title : '',
+            firstname: address && address[type] ? address[type].firstname : '',
+            lastname: address && address[type] ? address[type].lastname : '',
+            address: address && address[type] ? address[type].address : '',
+            apt_suite: address && address[type] ? address[type].apt_suite : '',
+            city: address && address[type] ? address[type].city : '',
+            country: address && address[type] ? address[type].country : "Country",
+            phone_prefix: address && address[type] ? address[type].phone_prefix : "Select Country Code",
+            phone_number: address && address[type] ? address[type].phone_number : ''
         }
     }
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
@@ -211,7 +211,7 @@ export default function Checkout1() {
                         <label className='font_urbanist_medium md:text-lg' htmlFor="email">Email</label>
                         <div className="relative w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                             {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                            <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="John Doe" /><button onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="email">edit_square</i></button>
+                            <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="johndoe.123@gmail.com" /><button onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="email">edit_square</i></button>
                         </div>
                     </span>
                     <span className=" my-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>2. Shipping Information</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
