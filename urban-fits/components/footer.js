@@ -21,13 +21,13 @@ export default function Footer() {
                     <div className="w-full lg:w-1/2 flex justify-around items-start">
                         <span className='w-1/2 md:w-48pr mx-auto lg:mx-0 mb-7 flex flex-col justify-center text-center' >
                             <i className="fa-solid fa-lock text-black mb-5 text-xl"></i>
-                            <h5 className="my-3 text-xs md:text-sm font_copper">100% SECURE PAYMENT</h5>
-                            <p className="w-4/5 mx-auto text-10px lg:text-xs">Moving your card details to a much more secured place</p>
+                            <h5 className="my-3 text-sm md:text-base font_urbanist_bold">100% Secure Payment</h5>
+                            <p className="w-4/5 mx-auto text-xs lg:text-sm">Moving your card details to a much more secured place</p>
                         </span>
                         <span className='w-1/2 md:w-48pr mx-auto lg:mx-0 mb-7 flex flex-col justify-center text-center' >
                             <i className="fa-solid fa-wallet text-black mb-5 text-xl"></i>
-                            <h5 className="my-3 text-xs md:text-sm font_copper">TRUST PAY</h5>
-                            <p className="w-4/5 mx-auto text-10px lg:text-xs">100% payment protection. Easy return and policy</p>
+                            <h5 className="my-3 text-sm md:text-base font_urbanist_bold">Trust Pay</h5>
+                            <p className="w-4/5 mx-auto text-xs lg:text-sm">100% payment protection. Easy return and policy</p>
                         </span>
                     </div>
 
@@ -36,24 +36,24 @@ export default function Footer() {
                             <span className='mb-5 -translate-y-1'>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.50231 0.532377C4.51689 0.733841 1.44238 1.47838 1.25406 1.55721C0.943102 1.69736 0.746018 1.85941 0.522656 2.14847C0.189803 2.59081 0.159146 2.71782 0.167905 3.63754C0.202942 6.50621 0.978139 9.44057 2.34897 11.8975C3.99571 14.845 5.96655 16.9473 8.69945 18.6729C11.555 20.4729 14.4324 21.3576 17.8967 21.489C18.466 21.5109 18.6456 21.5021 18.8602 21.4452C19.3989 21.3006 19.8588 20.9109 20.0865 20.4028C20.1435 20.267 20.4062 19.2553 20.6603 18.1517C21.1902 15.8918 21.2208 15.6378 21.0325 15.156C20.8968 14.7969 20.6296 14.4509 20.3537 14.2669C20.2223 14.1793 19.1318 13.6844 17.9317 13.1676C15.5361 12.1384 15.3565 12.0815 14.8441 12.1691C14.2309 12.2742 13.9506 12.4932 13.0178 13.6275L12.3346 14.4553L12.0937 14.3195C11.6688 14.083 10.771 13.4655 10.298 13.0888C9.78998 12.6815 8.92281 11.81 8.53302 11.3194C8.04688 10.7019 7.28482 9.55882 7.22351 9.34422C7.21475 9.32232 7.56512 9.01136 7.99871 8.66099C9.098 7.76317 9.37391 7.41718 9.47902 6.80402C9.56662 6.29599 9.50968 6.11204 8.49361 3.75142C7.98557 2.57329 7.52132 1.52218 7.46439 1.41706C7.07898 0.760118 6.24247 0.383471 5.50231 0.532377ZM6.15926 1.89007C6.24685 1.94262 6.3432 2.06525 6.40014 2.1835C6.65854 2.73534 8.16513 6.26533 8.19579 6.39234C8.27462 6.71643 8.23083 6.76899 7.0308 7.75441C6.41328 8.26245 5.8702 8.72669 5.82202 8.788C5.77385 8.8537 5.72129 8.98509 5.71253 9.0902C5.69501 9.24787 5.72129 9.33546 5.94027 9.75152C6.80744 11.4026 7.95929 12.8129 9.50968 14.1136C10.2498 14.7356 10.9856 15.2305 11.8966 15.7035C12.3127 15.9224 12.4046 15.9531 12.5623 15.9356C12.663 15.9268 12.7944 15.8743 12.8601 15.8261C12.9214 15.7779 13.3857 15.2348 13.8937 14.6173C14.8791 13.4173 14.9273 13.3735 15.2558 13.4523C15.4397 13.4917 19.4821 15.2392 19.6135 15.3312C19.7361 15.4188 19.8456 15.6421 19.8456 15.8042C19.8413 16.0276 18.9434 19.8335 18.8646 19.9561C18.7201 20.1751 18.5449 20.2101 17.8091 20.1795C14.209 20.0174 11.2177 18.9794 8.41477 16.9166C7.67899 16.3779 7.20161 15.9662 6.46145 15.2261C4.42054 13.1895 3.03219 10.9253 2.20444 8.26245C1.78837 6.93979 1.53873 5.44196 1.46866 3.83901C1.43362 3.07695 1.47304 2.91052 1.72268 2.78351C1.89786 2.69154 5.60742 1.81123 5.8483 1.80685C5.94903 1.80247 6.07604 1.83751 6.15926 1.89007Z" fill="black" /></svg>
                             </span>
-                            <h5 className="my-3 text-xs md:text-sm font_copper">HELP CENTER</h5>
-                            <p className="w-4/5 mx-auto text-10px lg:text-xs">Got a question ? Look no further. Browser our FAQs or submit your query here.</p>
+                            <h5 className="my-3 text-sm md:text-base font_urbanist_bold">Help Center</h5>
+                            <p className="w-4/5 mx-auto text-xs lg:text-sm">Got a question ? Look no further. Browser our FAQs or submit your query here.</p>
                         </span>
                         <span className='w-1/2 md:w-48pr mx-auto lg:mx-0 mb-7 flex flex-col justify-center items-center text-center' >
                             <Image className='mb-5' src={truck} alt="delivery vehicle" />
-                            <h5 className="my-3 text-xs md:text-sm font_copper">EXPRESS SHIPPING</h5>
-                            <p className="w-4/5 mx-auto text-10px lg:text-xs">Moving your card details to a much more secured place</p>
+                            <h5 className="my-3 text-sm md:text-base font_urbanist_bold">Express Shipping</h5>
+                            <p className="w-4/5 mx-auto text-xs lg:text-sm">Moving your card details to a much more secured place</p>
                         </span>
                     </div>
                 </section>
 
                 <section className="w-full mt-10 px-6 lg:px-0 font_urbanist_light text-sm grid grid-cols-2 md:flex md:flex-wrap justify-between items-start md:items-start">
                     <nav className="w-full lg:w-1/5 col-span-2 lg:mr-0 text-sm pb-10 md:pb-3 space-y-5 lg:space-y-4 flex flex-col items-start">
-                        <Link className="text-[26px] mb-3 font_copper whitespace-nowrap tracking-3" href="/">URBAN FITS</Link>
-                        <p className='hidden lg:block text-xs text-start font_urbanist_light' >This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good.<br /><br />500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102<br /><br />+0123.456.8386</p>
+                        <Link className="text-[26px] md:mb-3 lg:mb-0 font_copper whitespace-nowrap tracking-3" href="/">URBAN FITS</Link>
+                        <p className='hidden lg:block text-[13px] text-start font_urbanist_light' >This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good.<br /><br />500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102<br /><br />+0123.456.8386</p>
                     </nav>
                     <nav className="list-none pb-7 md:pb-3 gap-y-2 lg:gap-y-4 flex flex-col items-start">
-                        <h3 className="md:text-sm font-urbanist font-medium lg:font_copper lg:tracking-1 lg:uppercase">Services</h3>
+                        <h3 className="text-sm lg:text-base font_urbanist_bold">Services</h3>
                         <li>
                             <Link href='/'>Help</Link>
                         </li>
@@ -74,7 +74,7 @@ export default function Footer() {
                         </li>
                     </nav>
                     <nav className="list-none pb-7 md:pb-3 space-y-2 lg:space-y-4 flex flex-col items-start">
-                        <h3 className="md:text-sm font-urbanist font-medium lg:font_copper lg:tracking-1 lg:uppercase">Explore</h3>
+                        <h3 className="text-sm lg:text-base font_urbanist_bold">Explore</h3>
                         <li>
                             <Link href='/stories'>Stories</Link>
                         </li>
@@ -93,7 +93,7 @@ export default function Footer() {
                             </li> : null}
                     </nav>
                     <nav className="list-none pb-7 md:pb-3 space-y-2 lg:space-y-4 flex flex-col items-start">
-                        <h3 className="md:text-sm font-urbanist font-medium lg:font_copper lg:tracking-1 lg:uppercase">Your Orders</h3>
+                        <h3 className="text-sm lg:text-base font_urbanist_bold">Your Orders</h3>
                         <li>
                             <Link href='/user/orders/orders'>Orders</Link>
                         </li>
@@ -108,7 +108,7 @@ export default function Footer() {
                         </li>
                     </nav>
                     <nav className="list-none pb-7 md:pb-3 space-y-2 lg:space-y-4 flex flex-col items-start">
-                        <h3 className="md:text-sm font-urbanist font-medium lg:font_copper lg:tracking-1 lg:uppercase">About UFs</h3>
+                        <h3 className="text-sm lg:text-base font_urbanist_bold">About UFs</h3>
                         <li>
                             <Link href='/about'>About Us</Link>
                         </li>
@@ -126,7 +126,7 @@ export default function Footer() {
                         </li>
                     </nav>
                     <nav className="w-full md:w-1/5 xl:w-auto col-span-2 flex flex-col justify-start items-start md:items-end gap-y-3 md:gap-y-5">
-                        <h3 className="hidden lg:block text-xs md:text-sm font_copper tracking-1"><Link href="/contact">CONNECT</Link></h3>
+                        <h3 className="hidden lg:block text-sm lg:text-base font_urbanist_bold"><Link href="/contact">Connect</Link></h3>
                         <div className="space-x-5 text-base text-black">
                             <Link href='#' ><i className="fa-solid fa-paper-plane"></i></Link>
                             <Link href='#' ><i className="fa-brands fa-twitter"></i></Link>

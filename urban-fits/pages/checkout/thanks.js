@@ -14,6 +14,10 @@ export default function Thanks() {
     const [orderAvailable, setOrderAvailable] = useState(true)
     const [orderData, setOrderData] = useState(null)
 
+    const get3dpNumber = (num) => {
+        return num.toFixed(3)
+    }
+
     useEffect(() => {
         const { payment } = router.query
         if (payment) {
@@ -30,8 +34,8 @@ export default function Thanks() {
         if (parsedOrder) setOrderData(parsedOrder)
     }, [])
 
-    if (!orderAvailable || !orderData) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
-    if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a peyment." />
+    if (!orderAvailable || !orderData) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
+    if (orderData.used) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
     sessionStorage.setItem("this_order_data", JSON.stringify({ ...orderData, used: true }))
     const date = new Date()
     return <>
@@ -54,7 +58,7 @@ export default function Thanks() {
                 </div>
                 <div>
                     <h4 className="text-base md:text-xl font_urbanist_bold mb-5">Itmes(s) On This Order</h4>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-x-7 justify-items-stretch">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-x-7 lg:gap-x-10 justify-items-stretch">
                         {orderData.items?.map((item) => {
                             return <div className="w-full my-5 flex justify-between items-center">
                                 <div className="w-1/4 md:w-1/4 aspect-square">
@@ -70,10 +74,10 @@ export default function Thanks() {
                     </div>
                     <h4 className="text-base md:text-xl font_urbanist_bold my-5">Price Details</h4>
                     <div className="w-full h-auto my-5 md:my-3">
-                        <span key={1} className="w-full mx-auto flex justify-between"><small>Price</small> <small>{orderData.cartTotal}</small></span>
+                        <span key={1} className="w-full mx-auto flex justify-between"><small>Price</small> <small>{get3dpNumber(orderData.cartTotal)}</small></span>
                         <span key={2} className="w-full mx-auto flex justify-between"><small>Discount</small> <small>0%</small></span>
                         <span key={3} className="w-full mx-auto flex justify-between"><small>Shipping Fee</small> <small>${15}</small></span>
-                        <span key={5} className="w-full mx-auto flex justify-between"><small>Total Amount</small> <small>${orderData.cartTotal + 15}</small></span>
+                        <span key={5} className="w-full mx-auto flex justify-between"><small>Total Amount</small> <small>${get3dpNumber(orderData.cartTotal + 15)}</small></span>
                     </div>
                     <div className="flex flex-col md:flex-row md:items-end border-t border-t-gray-400">
                         <div className="relative w-full pt-2 flex flex-col">

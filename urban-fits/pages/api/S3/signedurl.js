@@ -7,8 +7,8 @@ const GetSignedS3Url = async (req, res) => {
             const s3 = new S3({
                 region: "eu-north-1",
                 credentials: {
-                    accessKeyId: process.env.S3_ACCESS_KEY,
-                    secretAccessKey: process.env.S3_SECRET_KEY,
+                    accessKeyId: process.env.AWS_ACCESS_KEY,
+                    secretAccessKey: process.env.AWS_SECRET_KEY,
                 },
                 signatureVersion: 'v4'
             })

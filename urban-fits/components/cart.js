@@ -99,7 +99,7 @@ export default function Cart(props) {
         return num.toFixed(3)
     }
 
-    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'layout_height top-[115px]'} right-0 z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_gotham`}>
+    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_gotham`}>
         <div className="w-full flex justify-center">
             {isEmpty ?
                 <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
@@ -149,7 +149,7 @@ export default function Cart(props) {
                             }} font='font_urbanist_bold tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
                         </div>
                     </div>
-                    <div className="w-full px-4 lg:px-14">
+                    <div className="w-full px-4 lg:px-14 mb-20">
                         <MoreToExplore />
                     </div>
                 </section>}

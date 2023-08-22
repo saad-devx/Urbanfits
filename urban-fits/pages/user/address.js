@@ -13,10 +13,9 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 const AddressForm = (props) => {
-    const { tag, loading, address } = props
+    const { type, loading, address } = props
     const { values, errors, touched, handleChange, handleReset, handleBlur, handleSubmit, setValues } = useFormik({
         initialValues: {
-            tag: tag,
             address_title: '',
             firstname: '',
             lastname: '',
@@ -28,7 +27,6 @@ const AddressForm = (props) => {
             phone_number: ''
         },
         validationSchema: Yup.object({
-            tag: Yup.string().required(),
             address_title: Yup.string().required("Please enter your address title"),
             firstname: Yup.string().min(2).max(30).required("Please enter your firstname"),
             lastname: Yup.string().min(2).max(30).required("Please enter your lastname"),
@@ -39,16 +37,12 @@ const AddressForm = (props) => {
             phone_prefix: Yup.string().required("Please enter your phone prefix"),
             phone_number: Yup.string().min(9).required("Please enter your phone number"),
         }),
-        onSubmit: props.onsubmit
+        onSubmit: async (values) => await props.onsubmit(values, type)
     })
 
     useEffect(() => {
-        if (!address || address.addresses.length < 1) return
-        let userAddress = address.addresses.filter((address) => {
-            return address.tag === tag
-        })
-        if (userAddress.length === 0) return
-        setValues(userAddress[0])
+        if (!address || !address[type]) return
+        setValues(address[type])
     }, [])
 
     return (
@@ -130,9 +124,10 @@ export default function Address() {
         }
     }, [address])
 
-    const onsubmit = async (values) => {
+    const onsubmit = async (values, type) => {
         setUpdatelLoad(true)
-        await updateAddress(values)
+        if (type === 'shipping_address') await updateAddress({ shipping_address: values })
+        if (type === 'billing_address') await updateAddress({ billing_address: values })
         setUpdatelLoad(false)
     }
 
@@ -147,8 +142,8 @@ export default function Address() {
             <User>
                 {loading ? <div className="w-full h-screen flex justify-center items-center text-base md:text-xl font_urbanist_medium tracking-widest">LOADING...</div> :
                     <>
-                        <AddressForm loading={updatelLoad} address={address} tag="shipping" heading="Add or change the Shipping Address" onsubmit={onsubmit} />
-                        <AddressForm loading={updatelLoad} address={address} tag="billing" heading="Add or change the Billing Address" onsubmit={onsubmit} />
+                        <AddressForm loading={updatelLoad} address={address} type="shipping_address" heading="Add or change the Shipping Address" onsubmit={onsubmit} />
+                        <AddressForm loading={updatelLoad} address={address} type="billing_address" heading="Add or change the Billing Address" onsubmit={onsubmit} />
                     </>}
             </User>
         </>

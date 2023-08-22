@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import useUser from '@/hooks/useUser';
 import Link from 'next/link'
+import Image from 'next/image';
 import User from '.';
 import jwt from 'jsonwebtoken';
+import uploadImage from '@/utils/uploadImage'
 import ifExists from '@/utils/if_exists';
 import Head from 'next/head';
 import Loader from '@/components/loaders/loader';
@@ -12,49 +14,62 @@ import useNewsletter from '@/hooks/useNewsletter';
 import useAddress from '@/hooks/useAddress';
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
+import dynamic from 'next/dynamic';
+const GenderSelect = dynamic(() => import('@/components/modals/mobile/genderSelect'));
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
+import { EditIcon } from '@/public/accountIcons';
 
 // Function to show addresses of the user in a container
 const AddressContainer = (props) => {
-    const { tag } = props
+    const { type } = props
     const addressLink = <Link href='/user/address' id='address' className="w-full px-3 py-4 border border-gray-400 text-sm rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
-    let userAddress = jwt.decode(localStorage.getItem("addressToken"))
-    if (userAddress) {
-        let addressObj = userAddress._doc
-        if (addressObj.addresses.length === 0) return addressLink
-        let address = addressObj.addresses.filter((address) => {
-            return address.tag === tag
-        })
-        if (address.length === 0) return addressLink
-        let field = address[0]
+    let address = jwt.decode(localStorage.getItem("addressToken"))
+    if (address) {
+        let userAddress = address._doc
+        if (!userAddress || !userAddress[type]) return addressLink
+        console.log(userAddress[type].address_title)
         return <div className="w-full p-4 text-sm border border-black flex justify-between items-start rounded-lg bg-white">
             <div>
-                <span>{field.address_title}</span><br />
-                <span>{field.firstname} {field.lastname}</span><br />
-                <span>{field.address}</span><br />
-                <span>{field.city}, {field.country}</span><br />
-                <span>{field.phone_prefix} {field.phone_number}</span>
+                <span>{userAddress[type].address_title}</span><br />
+                <span>{userAddress[type].firstname} {userAddress[type].lastname}</span><br />
+                <span>{userAddress[type].address}</span><br />
+                <span>{userAddress[type].city}, {userAddress[type].country}</span><br />
+                <span>{userAddress[type].phone_prefix} {userAddress[type].phone_number}</span>
             </div>
-            <Link href='/user/address' className='text-sm' >Modify<i className="fa-regular fa-pen-to-square mx-2"></i></Link>
+            <Link href='/user/address' className='text-xs' >Modify<i className="fa-regular fa-pen-to-square mx-2"></i></Link>
         </div>
     }
     else return addressLink
 }
 
 export default function Personalinfo() {
-    const { user, updateUser } = useUser()
-    const { newsletterData, getNewsletterData, updateNewsletterData, clearNewsletterData } = useNewsletter()
+    const { user, updateUser, country } = useUser()
+    const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
     const { address, getAddress } = useAddress()
+    const [imgSpinner, SetImgSpinner] = useState(null)
     const [loader, setLoader] = useState(false)
     const [letterModal, setLetterModal] = useState(false)
-
-    const toggleLetterModal = () => {
-        if (letterModal === false) return setLetterModal(true)
-        if (letterModal === true) return setLetterModal(false)
+    const [genderModal, setGenderModal] = useState(false)
+    const [nameModal, setNameModal] = useState(false)
+    const getPfp = () => {
+        if (!user) return
+        if (user.image) return user.image
+        else return process.env.DEFAULT_PFP
     }
+    const [photo, setPhoto] = useState(getPfp)
+    const onFileChange = async (e) => {
+        const file = e.target.files[0]
+        SetImgSpinner(<Spinner />)
+        const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
+        setPhoto(imgUrl)
+        await updateUser({ image: imgUrl })
+        SetImgSpinner(null)
+    }
+
+    const toggleLetterModal = () => setLetterModal(!letterModal)
     // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
@@ -83,10 +98,7 @@ export default function Personalinfo() {
             phone_prefix: ifExists(user.phone_prefix),
             phone_number: ifExists(user.phone_number)
         })
-        return async () => {
-            if (!newsletterData) await getNewsletterData()
-            if (!newsletterData) return
-        }
+        if (!newsletterData) return () => getNewsletterData()
     }, [])
 
     useEffect(() => {
@@ -96,137 +108,165 @@ export default function Personalinfo() {
                 await getAddress()
                 return setLoader(false)
             }
-            if (!address) return
         }
     }, [address])
 
     const newsletterSubToggle = async (e) => {
         const { name } = e.target
         if (name == "active_by_email") {
-            if (!newsletterData || !newsletterData.email) {
-                clearNewsletterData()
-                return toggleLetterModal()
-            }
+            if (!newsletterData || !newsletterData.email) return toggleLetterModal()
             else {
                 setLoader(<Loader />)
-                await updateNewsletterData({ active_by_email: newsletterData.active_by_email ? false : true })
+                await updateNewsletterData({ active_by_email: !newsletterData.active_by_email })
                 setLoader(false)
             }
         }
         if (name == "active_by_phone") {
-            if (!newsletterData || !newsletterData.phone) {
-                clearNewsletterData()
-                return toggleLetterModal()
-            }
+            if (!newsletterData || !newsletterData.phone) return toggleLetterModal()
             else {
                 setLoader(<Loader />)
-                await updateNewsletterData({ active_by_phone: newsletterData.active_by_phone ? false : true })
+                await updateNewsletterData({ active_by_phone: !newsletterData.active_by_phone })
                 setLoader(false)
             }
         }
 
     }
     if (!user) return <Error403 />
-    return (
-        <>
-            <Head>
-                <title>Personal Information</title>
-                <meta name="description" content="Generated by create next app" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-            </Head>
-            {loader}
-            <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
-            <User>
-                <form className="mt-10 font_urbanist gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
-                    <h1 className='text-sm lg:text-base font_urbanist_bold' >Personal Information</h1>
-                    <div className="flex flex-col md:flex-row md:items-end justify-between w-full text-sm ">
-                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
-                            {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
-                            <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                <option >Title</option>
-                                <option id="Mr" value="Mr.">Mr</option>
-                                <option id="Mrs" value="Mrs.">Ms</option>
-                            </select>
-                        </div>
-                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
-                            {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
-                            <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
-                        </div>
+    if (window.matchMedia('(max-width: 1024px)').matches) return <>
+        <Head><title>My Profile</title></Head>
+        <main className="w-screen h-screen p-4 bg-white">
+            <h1 className="font_urbanist_bold text-xl">My Profile</h1>
+            <section className="w-full h-44 flex flex-col justify-center items-center gap-y-4">
+                <label htmlFor='pfp' className="group relative w-20 aspect-square rounded-full cursor-pointer border-2 border-gray-300 overflow-hidden">
+                    <span className="opacity-0 group-hover:opacity-100 text-white font_urbanist_medium text-xs cursor-pointer flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
+                        <i className="fa-solid fa-camera text-white" />Upload
+                    </span>
+                    {imgSpinner}
+                    <Image className="w-full h-full object-cover" width={150} height={150} src={photo} alt="avatar" />
+                    <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
+                </label>
+                <button className="flex font_urbanist_bold text-base gap-x-2">{user.firstname} {user.lastname} <EditIcon /></button>
+            </section>
+            <GenderSelect user={user} show={genderModal} setGenderModal={setGenderModal} />
+            <section className="w-full flex flex-col">
+                <button onClick={() => setGenderModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Email<span className="flex items-center gap-x-2 font_urbanist">{user.email} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Country<span className="flex items-center gap-x-2 font_urbanist capitalize">{country.name} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Phone No.<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.phone_prefix} {user.phone_number} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address.shipping_address?.address}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Language<span className="flex items-center gap-x-2 font_urbanist capitalize">English <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Currency<span className="flex items-center gap-x-2 font_urbanist capitalize">USD <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </button>
+            </section>
+        </main>
+    </>
+    return <>
+        <Head><title>My Profile</title></Head>
+        {loader}
+        <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
+        <User>
+            <form className="mt-10 font_urbanist gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
+                <h1 className='text-sm lg:text-base font_urbanist_bold' >Personal Information</h1>
+                <div className="flex flex-col md:flex-row md:items-end justify-between w-full text-sm ">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
+                        {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
+                        <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                            <option >Title</option>
+                            <option id="Mr" value="Mr.">Mr</option>
+                            <option id="Mrs" value="Mrs.">Ms</option>
+                        </select>
                     </div>
-                    <div className="flex flex-col md:flex-row justify-between w-full text-sm">
-                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
-                            {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
-                            <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
-                        </div>
-                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
-                            {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
-                            <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                <option disabled >Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="fluid">Fluid</option>
-                            </select>
-                        </div>
-                        {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                        {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
+                    </div>
+                </div>
+                <div className="flex flex-col md:flex-row justify-between w-full text-sm">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                        {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
+                    </div>
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                        {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
+                        <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                            <option disabled >Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="fluid">Fluid</option>
+                        </select>
+                    </div>
+                    {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="gender" id="gender" value={values.gender} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div> */}
+                </div>
+                <div className="flex flex-col md:flex-row justify-between w-full text-sm">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                        {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
+                        <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                            {countryCodes.map((item) => {
+                                if (!item.code) return <option disabled>{item.name}</option>
+                                return <option value={item.code}>{item.name} {item.code}</option>
+                            })}
+                        </select>
                     </div>
-                    <div className="flex flex-col md:flex-row justify-between w-full text-sm">
-                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
-                            {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
-                            <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                {countryCodes.map((item) => {
-                                    if (!item.code) return <option disabled>{item.name}</option>
-                                    return <option value={item.code}>{item.name} {item.code}</option>
-                                })}
-                            </select>
-                        </div>
-                        <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
-                            {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
-                            <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
-                        </div>
-                    </div>
-                    <div className="w-full text-sm">
-                        <h1 className="text-sm lg:text-base font_urbanist_bold mt-5">Newsletter Subscription</h1>
-                        <div className="flex items-center w-full md:w-3/4 my-7 gap-x-16">
-                            <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
-                            </div>
-                            <div className="w-1/2 md:w-1/4 flex justify-between">
-                                Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
-                            </div>
-                        </div>
-                        <div className=" w-full space-y-5 font_urbanist_light">
-                            <p>Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our privacy policy.</p>
-                            <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
-                        </div>
-                    </div>
-                    <div className="w-full flex justify-end">
-                        <Button disabled={!loader ? false : true} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3 mx-2" font='font_urbanist_medium'>Cancel</Button>
-                        <Button loading={!loader ? false : true} type="submit" classes="w-full md:w-1/3 ml-2" font='font_urbanist_medium'>Save</Button>
-                    </div>
-                </form>
-                <div className='w-full' >
-                    <div className='my-14 space-y-5' >
-                        <h2 className="text-sm lg:text-base font_urbanist_bold">Email & Password</h2>
-                        <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                            <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
-                        </div>
-                    </div>
-                    <div className='my-14 space-y-5' >
-                        <h2 className="text-sm lg:text-base font_urbanist_bold mb-8">My Address</h2>
-                        <div>
-                            <h5 className='text-sm font_urbanist my-2'>Shipping</h5>
-                            <AddressContainer tag="shipping" />
-                        </div>
-                        <div>
-                            <h5 className='text-sm font_urbanist my-2'>Billing</h5>
-                            <AddressContainer tag="billing" />
-                        </div>
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                        {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                     </div>
                 </div>
-            </User>
-        </>
-    )
+                <div className="w-full text-sm">
+                    <h1 className="text-sm lg:text-base font_urbanist_bold mt-5">Newsletter Subscription</h1>
+                    <div className="flex items-center w-full md:w-3/4 my-7 gap-x-16">
+                        <div className="w-1/2 md:w-1/4 flex justify-between">
+                            Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                        </div>
+                        <div className="w-1/2 md:w-1/4 flex justify-between">
+                            Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                        </div>
+                    </div>
+                    <div className=" w-full space-y-5 font_urbanist_light">
+                        <p>Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our privacy policy.</p>
+                        <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
+                    </div>
+                </div>
+                <div className="w-full flex justify-end">
+                    <Button disabled={!loader ? false : true} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3 mx-2" font='font_urbanist_medium'>Cancel</Button>
+                    <Button loading={!loader ? false : true} type="submit" classes="w-full md:w-1/3 ml-2" font='font_urbanist_medium'>Save</Button>
+                </div>
+            </form>
+            <div className='w-full' >
+                <div className='my-14 space-y-5' >
+                    <h2 className="text-sm lg:text-base font_urbanist_bold">Email & Password</h2>
+                    <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
+                    </div>
+                </div>
+                <div className='my-14 space-y-5' >
+                    <h2 className="text-sm lg:text-base font_urbanist_bold mb-8">My Address</h2>
+                    <div>
+                        <h5 className='text-sm font_urbanist my-2'>Shipping</h5>
+                        <AddressContainer type="shipping_address" />
+                    </div>
+                    <div>
+                        <h5 className='text-sm font_urbanist my-2'>Billing</h5>
+                        <AddressContainer type="billing_address" />
+                    </div>
+                </div>
+            </div>
+        </User>
+    </>
 }

@@ -20,7 +20,7 @@ export default function Verification(props) {
     const router = useRouter()
     const [content, setContent] = useState(
         <><BigSpinner />
-            <p className="w-4/5 my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">Creatig your account, Please wait !</p></>
+            <p className="w-4/5 my-4 lg:mt-8 text-center font_urbanist_medium text-sm lg:text-lg tracking-widest">Creatig your account, Please wait !</p></>
     )
 
     useEffect(() => {
@@ -32,13 +32,13 @@ export default function Verification(props) {
                 const { data } = await axios.post(`${process.env.HOST}/api/user/signup/callback?token=${token}`)
                 setContent(<>
                     <BigSpinner />
-                    <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">Almost there !</p>
+                    <p className="my-4 lg:mt-8 text-center font_urbanist_medium text-sm lg:text-lg tracking-widest">Almost there !</p>
                 </>)
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
                 setContent(
                     <> <Image src={successIcon} alt="Success" />
-                        <p className="my-4 lg:mt-8 text-center font_gotham_medium text-sm lg:text-lg tracking-widest">You'r ready to go !</p></>)
+                        <p className="my-4 lg:mt-8 text-center font_urbanist_medium text-sm lg:text-lg tracking-widest">You'r ready to go !</p></>)
                 router.push('/user/myaccount')
             } catch (error) {
                 setContent(
@@ -56,7 +56,7 @@ export default function Verification(props) {
         <>
             <Head><title>Email Verification</title></Head>
             <main className='w-full h-screen flex flex-col justify-center items-center'>
-                <h1 className="w-4/5 font_gotham_medium text-center text-base lg:text-3xl mb-10">Thanks for signing up for Urban Fits !</h1>
+                <h1 className="w-4/5 font_urbanist_medium text-center text-base lg:text-3xl mb-10">Thanks for signing up for Urban Fits !</h1>
                 <section className="flex items-center gap-x-2">
                     <Image src={Logo} alt='Urban Fits' className='w-15 md:w-20' width={80} />
                     <div className="flex gap-x-3">
@@ -71,7 +71,7 @@ export default function Verification(props) {
                         <path className='text-[#cfa435]' strokeLinecap="round" strokeLineJoin="round" stroke-width="1" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
                     </svg>
                 </section>
-                <p className="w-4/5 font_gotham text-sm lg:text-base text-center mt-8">We just sent a confirmation email to <span className="font_gotham_medium">{props.email}</span>. <br /> Please open your inbox and click the link to continue registration.</p>
+                <p className="w-4/5 font_urbanist text-sm lg:text-base text-center mt-8">We just sent a confirmation email to <span className="font_urbanist_medium">{props.email}</span>. <br /> Please open your inbox and click the link to continue registration.</p>
             </main>
         </>
     )

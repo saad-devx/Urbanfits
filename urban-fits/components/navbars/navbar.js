@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
-import Logout from '@/components/modals/logout'
-import LanguageModal from './modals/languagemodal';
 import dynamic from 'next/dynamic';
-const Cart = dynamic(() => import('./cart'));
-const Search = dynamic(() => import('./search'));
 import useUser from '@/hooks/useUser';
 import useAddress from '@/hooks/useAddress';
 import Link from 'next/link'
-import ToTopBtn from './buttons/toTopBtn';
+import ToTopBtn from '../buttons/toTopBtn';
 import Image from 'next/image';
 import bag from '@/public/bag.svg'
+const LanguageModal = dynamic(() => import('../modals/languagemodal'));;
+const Logout = dynamic(() => import('@/components/modals/logout'));
+const Cart = dynamic(() => import('../cart'));
+const Search = dynamic(() => import('../search'));
+const MobileNavbar = dynamic(() => import('./mobileNavbar'));
 import {
     LogoutIcon,
     LocationIcon,
@@ -30,17 +31,16 @@ const ListItem = (props) => {
             </svg>
             {props.children}
         </div>
-        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[2.5px] mt-px justify-self-start bg-gold-land transition-all duration-1000`}></span>
+        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-2 justify-self-start bg-gold-land transition-all duration-1000`}></span>
     </Link>
     else return <Link {...props} className={props.classes || "group flex flex-col"}>
         {props.children}
-        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[2.5px] mt-px justify-self-start bg-gold-land transition-all duration-1000`}></span>
+        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-2 justify-self-start bg-gold-land transition-all duration-1000`}></span>
     </Link>
 }
 
-const SecondaryNavbar = ({ cart, setCart, totalUniqueItems }) => {
-    const router = useRouter()
-    if (window.matchMedia('(min-width: 1024px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] border-b flex justify-between items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white transition-all duration-300">
+const SecondaryNavbar = (props) => {
+    if (window.matchMedia('(min-width: 1024px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
         <ListItem key={1} href='/all-categories' categories>All Categories</ListItem>
         <ListItem key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
         <ListItem key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
@@ -57,49 +57,8 @@ const SecondaryNavbar = ({ cart, setCart, totalUniqueItems }) => {
             <p className="font_urbanist_bold text-[13px]">USD 100</p>
         </span>
     </nav>
-
-    else if (window.matchMedia('(max-width: 1024px)').matches) return <>
-        <section className="w-full h-[50px] flex justify-center items-start px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white border-b transition-all duration-300">
-            <Search classes="flex lg:hidden" />
-        </section>
-        <section className="fixed z-40 bottom-4 left-[5%] right-[5%] bg-gray-50 w-[90%] h-14 rounded-full border flex justify-around items-center">
-            <button>
-                <svg width="25" height="17" viewBox="0 0 25 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <line y1="1.80469" x2="25" y2="1.80469" stroke="gray" strokeWidth="2" />
-                    <line y1="8.80469" x2="20" y2="8.80469" stroke="gray" strokeWidth="2" />
-                    <line y1="15.8047" x2="25" y2="15.8047" stroke="gray" strokeWidth="2" />
-                </svg>
-            </button>
-            <button>
-                <svg width="24" height="21" viewBox="0 0 24 21" fill={router.pathname === '/wishlist' ? 'black' : "#000000"} xmlns="http://www.w3.org/2000/svg">
-                    <g id="Group">
-                        <path id="Vector" d="M5.70654 0.532631C5.61255 0.54438 5.34821 0.597248 5.11912 0.650116C3.20413 1.09655 1.5711 2.37713 0.689969 4.12177C-0.255778 5.99564 -0.226407 8.42756 0.760459 10.3308C1.31851 11.4058 1.60634 11.7054 5.57731 15.4002C7.61566 17.2976 9.57764 19.1245 9.93597 19.4534C10.2884 19.7883 10.6996 20.1407 10.8406 20.2347C11.3986 20.5989 12.0624 20.5872 12.6381 20.2053C12.8026 20.0996 13.3841 19.5886 13.9304 19.0775C19.3641 14.0198 21.4847 12.0285 21.6903 11.7876C22.5949 10.7126 23.0942 9.71401 23.3409 8.46868C23.4701 7.81664 23.4701 6.50082 23.3409 5.84879C22.8768 3.52847 21.3495 1.71922 19.1467 0.890957C18.4536 0.632492 17.9954 0.54438 17.1612 0.509134C15.5811 0.444517 14.3592 0.808718 12.9847 1.76034C12.456 2.12454 12.2152 2.33014 11.9567 2.64147L11.7452 2.89406L11.3986 2.53573C10.447 1.56649 9.00784 0.808718 7.68615 0.579624C7.23971 0.497385 6.16473 0.473888 5.70654 0.532631ZM7.93874 2.10692C9.08421 2.42413 9.86548 2.9528 10.7701 4.02191C11.2107 4.54471 11.4456 4.72094 11.7217 4.72094C12.0213 4.72094 12.2093 4.58583 12.6616 4.05128C13.437 3.14078 14.0009 2.69434 14.8351 2.34776C15.5282 2.05405 15.8689 1.99531 16.8382 1.99531C17.9073 1.99531 18.4007 2.10692 19.2231 2.52399C20.5859 3.21714 21.514 4.40373 21.8782 5.91928C21.9957 6.43033 22.0075 7.75203 21.9017 8.27483C21.6844 9.27932 21.2438 10.1605 20.6035 10.8536C20.4332 11.0357 15.6457 15.506 12.4384 18.4783C12.0977 18.7955 11.7746 19.054 11.7217 19.054C11.6747 19.054 10.0593 17.5972 8.13846 15.8173C2.49922 10.5834 2.58734 10.6656 2.08803 9.76101C1.64746 8.96212 1.47711 8.21609 1.48299 7.09999C1.48886 5.89578 1.71795 5.12039 2.34649 4.18639C3.08664 3.07616 4.26736 2.30077 5.60668 2.04818C6.18235 1.93657 7.43943 1.97181 7.93874 2.10692Z"
-                            fill={router.pathname === '/wishlist' ? 'black' : 'gray'} />
-                    </g>
-                </svg>
-            </button>
-            <button onClick={() => {
-                document.body.style.overflowY = cart ? null : 'hidden'
-                setCart(!cart)
-            }} className="relative">
-                {totalUniqueItems !== 0 ? <i className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 w-2 h-2 border border-white aspect-square rounded-full bg-gold-land"></i> : null}
-                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9.99911 0.762917C9.93454 0.771265 9.72701 0.800486 9.53792 0.825531C8.24195 0.996679 7.01978 1.90252 6.4894 3.08386C6.26341 3.58061 6.21729 3.85611 6.18501 4.83709L6.15734 5.7471H4.40017C2.45853 5.7471 2.24638 5.76797 1.74368 5.99756C1.19946 6.24802 0.793609 6.76564 0.682922 7.36675C0.646026 7.56712 0.636802 9.06154 0.650638 12.593C0.669086 18.0281 0.65525 17.7692 0.950417 18.4288C1.47618 19.5851 2.55538 20.4074 3.9113 20.6829C4.22492 20.7456 4.80603 20.7539 10.322 20.7539C15.8379 20.7539 16.419 20.7456 16.7326 20.6829C18.0885 20.4074 19.1677 19.5851 19.6935 18.4288C19.9887 17.7692 19.9748 18.0281 19.9933 12.593C20.0071 9.06154 19.9979 7.56712 19.961 7.36675C19.8918 6.9994 19.6474 6.5444 19.3891 6.31481C19.2784 6.21045 19.057 6.06852 18.9002 5.99756C18.3975 5.76797 18.1854 5.7471 16.2437 5.7471H14.4866L14.4589 4.83709C14.4266 3.85611 14.3805 3.58061 14.1545 3.08386C13.638 1.93591 12.4988 1.06347 11.2213 0.842228C10.8616 0.779613 10.179 0.733696 9.99911 0.762917ZM10.8662 2.05697C11.5395 2.1822 12.1575 2.54537 12.5541 3.04629C12.9784 3.58478 13.0891 3.99804 13.0891 5.03746V5.7471H10.322H7.55477V5.03746C7.55477 3.99804 7.66545 3.58478 8.08975 3.04629C8.47716 2.55371 9.09978 2.1822 9.74545 2.06114C10.1698 1.97765 10.4373 1.97765 10.8662 2.05697ZM6.1804 8.65662C6.19423 10.5017 6.19884 10.5142 6.50785 10.6603C6.83069 10.8106 7.29188 10.7104 7.44869 10.4516C7.52248 10.3305 7.53171 10.151 7.54554 8.65662L7.55938 6.9994H10.322H13.0845L13.0984 8.65662C13.1122 10.5017 13.1168 10.5142 13.4258 10.6603C13.7486 10.8106 14.2098 10.7104 14.3667 10.4516C14.4404 10.3305 14.4497 10.151 14.4635 8.65662L14.4773 6.99523L16.3314 7.00775C18.3698 7.02028 18.3283 7.0161 18.5174 7.27909C18.5958 7.38344 18.6004 7.69235 18.6143 12.28C18.6281 17.6607 18.6327 17.5397 18.3468 18.0823C18.0747 18.5916 17.4982 19.0967 16.9494 19.3096C16.3959 19.5266 16.4743 19.5225 10.322 19.5225C4.16958 19.5225 4.24798 19.5266 3.69454 19.3096C3.14572 19.0967 2.56922 18.5874 2.29711 18.0823C2.01578 17.5438 2.02039 17.6649 2.02039 12.376C2.02039 9.32035 2.03884 7.50867 2.06651 7.41266C2.12186 7.23734 2.27867 7.09541 2.46314 7.04115C2.53694 7.02445 3.39938 7.00358 4.38173 7.00358L6.16656 6.9994L6.1804 8.65662Z"
-                        fill={cart ? 'black' : 'gray'} />
-                </svg>
-            </button>
-            <button>
-                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.2819 15.5591C13.2577 15.5591 13.2214 15.5591 13.1973 15.5591C13.161 15.5591 13.1126 15.5591 13.0763 15.5591C10.3312 15.4744 8.27539 13.334 8.27539 10.6977C8.27539 8.01304 10.4642 5.82422 13.1489 5.82422C15.8335 5.82422 18.0223 8.01304 18.0223 10.6977C18.0103 13.3461 15.9424 15.4744 13.3182 15.5591C13.294 15.5591 13.294 15.5591 13.2819 15.5591ZM13.1368 7.62607C11.4438 7.62607 10.0772 9.00466 10.0772 10.6856C10.0772 12.3423 11.3712 13.6847 13.0159 13.7451C13.0521 13.733 13.1731 13.733 13.294 13.7451C14.9145 13.6605 16.1842 12.3302 16.1963 10.6856C16.1963 9.00466 14.8298 7.62607 13.1368 7.62607Z" fill="gray" />
-                    <path d="M12.9984 26.9023C9.76795 26.9023 6.68162 25.5367 4.29182 23.0513C4.07566 22.8328 3.97958 22.5051 4.0036 22.191C4.15972 20.5659 5.04839 19.0501 6.52551 17.9303C10.1042 15.2264 15.9046 15.2264 19.4713 17.9303C20.9484 19.0637 21.8371 20.5659 21.9932 22.191C22.0292 22.5187 21.9211 22.8328 21.705 23.0513C19.3151 25.5367 16.2288 26.9023 12.9984 26.9023ZM5.88903 21.9179C7.88253 23.8161 10.3924 24.8539 12.9984 24.8539C15.6043 24.8539 18.1142 23.8161 20.1077 21.9179C19.8916 21.0848 19.3152 20.2791 18.4625 19.6236C15.5083 17.384 10.5005 17.384 7.52226 19.6236C6.66962 20.2791 6.10519 21.0848 5.88903 21.9179Z" fill="gray" />
-                    <path d="M13.1347 26.7069C5.96357 26.7069 0.134766 20.8781 0.134766 13.707C0.134766 6.53583 5.96357 0.707031 13.1347 0.707031C20.3058 0.707031 26.1346 6.53583 26.1346 13.707C26.1346 20.8781 20.3058 26.7069 13.1347 26.7069ZM13.1347 2.52097C6.96728 2.52097 1.94871 7.53955 1.94871 13.707C1.94871 19.8744 6.96728 24.8929 13.1347 24.8929C19.3021 24.8929 24.3207 19.8744 24.3207 13.707C24.3207 7.53955 19.3021 2.52097 13.1347 2.52097Z" fill="gray" />
-                </svg>
-            </button>
-            <Link href='/' className={`fa-solid fa-house text-xl ${router.pathname === '/' ? 'text-black' : 'text-gray-400'}`}></Link>
-        </section>
-    </>
+    else if (window.matchMedia('(max-width: 1024px)').matches) return <MobileNavbar {...props} />
 }
-
 
 export default function Navbar() {
     const { user, country } = useUser()
@@ -114,10 +73,8 @@ export default function Navbar() {
     }, [user])
 
     const getDisplayAddress = () => {
-        if (!address) return <Link href='/user/address'>Set your Address</Link>
-        let shippingAddress = address.addresses.filter(address => address.tag === 'shipping')[0]
-        if (shippingAddress) return shippingAddress.address
-        else return <Link href='/user/address'>Set your Address</Link>
+        if (!address || !address.shipping_address) return <Link href='/user/address'>Set your Address</Link>
+        return address.shipping_address.address
     }
 
     return <>
@@ -125,8 +82,8 @@ export default function Navbar() {
         <Logout show={logout} setLogout={setLogout} />
         <LanguageModal show={langModal} setLangModal={setLangModal} />
         <ToTopBtn />
-        <nav className="sticky z-50 font_urbanist w-full h-[65px] flex justify-between items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
-            <Link href='/' className='font_copper text-xl lg:text-2xl tracking-2'><h1>URBAN FITS</h1></Link>
+        <nav className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
+            <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1'><h1>URBAN FITS</h1></Link>
             <Search classes="hidden lg:flex" />
             <Link href={user ? '/user/address' : "#"} className="hidden md:justify-self-end lg:justify-self-auto md:flex items-center text-black">
                 <LocationIcon />
@@ -159,7 +116,7 @@ export default function Navbar() {
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
             </button>
-            <section className="w-1/4 lg:w-[15%] lg:pl-[2%] flex items-center justify-between">
+            <section className="w-2/5 md:w-[15%] lg:pl-[2.5%] flex items-center justify-between">
                 <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">
                     <span className="w-7 h-5 overflow-hidden border" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -167,7 +124,7 @@ export default function Navbar() {
                     </svg>
                 </button>
                 <button className='relative'>
-                    <i className="absolute top-0 right-0 z-10 translate-x-1/3 w-2 h-2 border border-white aspect-square rounded-full bg-gold-land"></i>
+                    <i className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[-30%] w-3 h-3 border border-white aspect-square rounded-full bg-gold-land"></i>
                     <button className="fa-regular fa-envelope text-[22px] translate-y-[15%]"></button>
                 </button>
                 <button onClick={() => {
@@ -177,11 +134,20 @@ export default function Navbar() {
                     {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-[14px] border border-white text-white text-[8px] aspect-square rounded-full bg-gold-land">{totalUniqueItems}</span> : null}
                     <Image src={bag} />
                 </button>
+                {user && window.matchMedia('(max-width: 786px)').matches ? <Link href='/earn-uf-points'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="21" viewBox="0 0 25 21" fill="none">
+                        <path d="M5.00075 0.529482C4.15007 0.663237 3.41709 1.18756 3.01048 1.95263C2.66806 2.60536 1.063 6.37725 1.0095 6.65011C0.977402 6.83202 0.961351 8.77949 0.972051 11.9629C0.988102 16.655 0.998802 17.0027 1.08976 17.2703C1.30911 17.939 1.71038 18.4473 2.2882 18.7897C2.95698 19.1963 2.59316 19.1696 8.25903 19.191L13.331 19.207L13.1384 18.9502C13.0314 18.8111 12.8334 18.5062 12.6943 18.2761L12.4482 17.8641H7.91661C2.91417 17.8641 3.08538 17.8748 2.72692 17.5271C2.63061 17.4308 2.49151 17.2328 2.42731 17.0884L2.2989 16.8208V11.9896V7.16373H10.9983H19.6978L19.6603 6.81062C19.6389 6.61801 19.58 6.33445 19.5265 6.17929C19.3928 5.79408 17.7396 2.11849 17.5791 1.84028C17.242 1.26781 16.7712 0.887945 16.065 0.620436L15.7547 0.502731L10.5115 0.497379C7.6277 0.492029 5.15056 0.508081 5.00075 0.529482ZM9.68218 3.81985V5.82618H6.20455C4.29453 5.82618 2.72692 5.81548 2.72692 5.80478C2.72692 5.77268 3.99492 2.91567 4.12332 2.65351C4.32128 2.26295 4.64229 1.97939 5.0275 1.86168C5.10241 1.84028 6.1778 1.81888 7.42439 1.81888L9.68218 1.81353V3.81985ZM15.867 1.95798C16.3004 2.18804 16.4555 2.44485 17.1939 4.11947C17.5737 4.9862 17.8947 5.72453 17.9054 5.75663C17.9268 5.81013 17.2153 5.82618 14.4492 5.82618H10.9662V3.81985V1.80818L13.3096 1.82423C15.6049 1.84028 15.653 1.84028 15.867 1.95798Z" fill="black" />
+                        <path d="M18.3499 8.555C16.9749 8.7048 15.7711 9.27727 14.7866 10.251C13.631 11.4013 13.0371 12.8405 13.0371 14.5205C13.0371 16.2004 13.631 17.6396 14.7866 18.7899C15.6373 19.6299 16.6057 20.1489 17.8148 20.411C18.3659 20.5287 19.5697 20.5287 20.1743 20.4164C21.6884 20.1221 22.9296 19.3303 23.8659 18.0677C24.631 17.0297 25.0002 15.8794 25.0002 14.5205C25.0002 13.7768 24.9253 13.2792 24.7112 12.6158C24.1495 10.8716 22.7263 9.42708 21.0036 8.84391C20.2492 8.5871 19.1524 8.46939 18.3499 8.555ZM20.1957 9.9942C21.8435 10.4276 23.0901 11.6795 23.5503 13.3434C23.7161 13.9533 23.7161 15.0876 23.5503 15.6975C23.0901 17.3614 21.8596 18.592 20.1957 19.0521C19.8479 19.143 19.6232 19.1644 19.0186 19.1644C18.4141 19.1644 18.1894 19.143 17.8416 19.0521C16.1777 18.592 14.9471 17.3614 14.487 15.6975C14.3961 15.3498 14.3747 15.125 14.3747 14.5205C14.3747 13.9159 14.3961 13.6912 14.487 13.3434C14.9792 11.5565 16.3221 10.3045 18.168 9.9193C18.6762 9.81229 19.6393 9.84975 20.1957 9.9942Z" fill="black" />
+                        <path d="M21.1369 12.6022C21.0299 12.645 20.3986 13.2282 19.6816 13.9344C18.9861 14.6246 18.3869 15.1917 18.3494 15.1917C18.3173 15.1917 18.0017 14.9188 17.6593 14.5818C16.9423 13.8863 16.7604 13.7899 16.4501 13.9398C16.0649 14.1217 15.9258 14.5497 16.1452 14.8546C16.204 14.9349 16.6588 15.4057 17.1564 15.8979C18.0659 16.8021 18.205 16.8984 18.4993 16.8235C18.5902 16.8021 19.1948 16.2457 20.2113 15.2292C21.0727 14.3678 21.8324 13.5973 21.8913 13.5171C22.1106 13.2121 21.9555 12.7467 21.581 12.5915C21.367 12.5006 21.367 12.5006 21.1369 12.6022Z" fill="black" />
+                    </svg>
+                </Link> : null}
             </section>
         </nav>
         <SecondaryNavbar
             cart={cart}
             setCart={setCart}
+            logout={logout}
+            setLogout={setLogout}
             totalUniqueItems={totalUniqueItems}
         />
     </>

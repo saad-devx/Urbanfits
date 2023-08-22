@@ -3,7 +3,7 @@ import '@/styles/pillbtns.css'
 import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'
 import { SessionProvider } from "next-auth/react"
-import Navbar from '@/components/navbar'
+import Navbar from '@/components/navbars/navbar'
 import Footer from '@/components/footer'
 import dynamic from 'next/dynamic';
 import useLocation from '@/hooks/useLocation'
@@ -19,7 +19,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   const { user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
-  const Exception = router.pathname.startsWith("/admin") || (window.matchMedia('(max-width: 786px)').matches)
+  const Exception = router.pathname.startsWith("/admin") || (window.matchMedia('(max-width: 786px)').matches && router.pathname.startsWith('/auth'))
   if (router.pathname.startsWith("/admin")) {
     if (!user || user.role == "customer") return <Error403 />
   }

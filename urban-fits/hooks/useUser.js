@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { signOut } from "next-auth/react"
+import useNewsletter from './useNewsletter';
+import { useCart } from 'react-use-cart';
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -50,12 +52,14 @@ const useUser = create(persist((set, get) => ({
         }
     },
     logOut: () => {
+        const { clearNewsletterData } = useNewsletter.getState()
+        localStorage.clear()
         window.location.href = '/'
+        clearNewsletterData()
         if (get().user.register_provider !== "urbanfits") signOut()
         set(() => ({ user: null }))
-        localStorage.clear()
-        sessionStorage.clear()
         toaster("success", "You are signed out !")
+        sessionStorage.clear()
     }
 }),
     { name: "authToken" }

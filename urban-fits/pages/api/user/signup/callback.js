@@ -15,18 +15,6 @@ const SignupCallback = async (req, res) => {
                 msg: "Invalid confirmation token."
             })
             await ConnectDB()
-            const createAddressSchema = async (userId) => {
-                let user = await User.findById(userId)
-                if (!user) return console.log("User with corresponding id not found")
-                let addresses = await Addresses.findOne({ user_id: userId })
-                if (addresses) return console.log("This address schema already exists")
-                addresses = await Addresses.create({
-                    "user_id": userId,
-                    "addresses": []
-                })
-                console.log("Address schema created successfully")
-                return addresses
-            }
 
             let credentials = null;
             try {
@@ -43,7 +31,6 @@ const SignupCallback = async (req, res) => {
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create({ ...credentials, password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString() })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
-                await createAddressSchema(user._id)
                 res.status(200).json({
                     success: true,
                     msg: "You're Resgistered successfully !",

@@ -67,8 +67,8 @@ export default function Checkout1() {
         phone_prefix: Yup.string().required("Please enter your phone prefix"),
         phone_number: Yup.string().min(9).required("Please enter your phone number")
     }
-    const addressFieldsValues = (tag) => {
-        const Address = address?.addresses.filter(address => { return address.tag === tag })[0]
+    const addressFieldsValues = (type) => {
+        const Address = address[type]
         return {
             address_title: Address?.address_title,
             firstname: Address?.firstname,
@@ -86,8 +86,8 @@ export default function Checkout1() {
             name: user && user.firstname ? (user?.firstname + ' ' + user?.lastname) : "",
             email: user?.email,
             delivery_option: 'express',
-            shipping_address: addressFieldsValues("shipping"),
-            billing_address: addressFieldsValues("billing")
+            shipping_address: addressFieldsValues("shipping_address"),
+            billing_address: addressFieldsValues("billing_address")
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().min(2).required("Please enter your Full Name"),
@@ -137,20 +137,17 @@ export default function Checkout1() {
             if (user) {
                 if (!address) await getAddress()
                 if (!address) return
-                let shippingAddress = address.addresses.filter(address => { return address.tag === 'shipping' })[0]
-                let billingAddress = address.addresses.filter(address => { return address.tag === 'billing' })[0]
                 setValues({
                     name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
                     email: ifExists(user.email),
                     delivery_option: 'express',
-                    shipping_address: getValuesToBeSet(shippingAddress),
-                    billing_address: getValuesToBeSet(billingAddress)
+                    shipping_address: getValuesToBeSet(address.shipping_address),
+                    billing_address: getValuesToBeSet(address.billing_address)
                 })
             }
             const filledAddressInfo = sessionStorage.getItem("this_order_data")
             if (filledAddressInfo) {
                 const { shipping_info } = JSON.parse(filledAddressInfo)
-                console.log("This is the retrieved information", shipping_info)
                 setValues({
                     name: shipping_info.name,
                     email: ifExists(shipping_info.email),

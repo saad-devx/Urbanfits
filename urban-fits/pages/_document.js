@@ -17,7 +17,8 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <script src="https://kit.fontawesome.com/4a4e1e58b7.js" crossorigin="anonymous"></script>
+        {/* <script src="https://kit.fontawesome.com/4a4e1e58b7.js" crossorigin="anonymous"></script> */}
+        <script src="https://kit.fontawesome.com/4e881d944d.js" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>

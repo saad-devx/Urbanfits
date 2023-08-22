@@ -8,7 +8,7 @@ const CreateProduct = async (req, res) => {
     try {
         if (req.method === 'POST') {
             const { id } = req.query
-            if (!id || !mongoose.Types.ObjectId(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
+            if (!id || !mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
 
             await ConnectDB()
             let user = await User.findById(id)
