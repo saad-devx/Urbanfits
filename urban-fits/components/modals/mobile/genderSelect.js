@@ -24,15 +24,15 @@ export default function GenderSelect({ user, updateUser, show, setGenderModal })
         <div className="w-full px-4 flex flex-col">
             <button name='Male' onClick={updateGender} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
                 Male
-                {user.gender.toLowerCase() === "male" ? <i name='Male' className="fa-solid fa-check text-black text-lg z-50" /> : null}
+                {user.gender?.toLowerCase() === "male" ? <i name='Male' className="fa-solid fa-check text-black text-lg z-50" /> : null}
             </button>
             <button name='Female' onClick={updateGender} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
                 Female
-                {user.gender.toLowerCase() === "female" ? <i name='Female' className="fa-solid fa-check text-black text-lg z-50" /> : null}
+                {user.gender?.toLowerCase() === "female" ? <i name='Female' className="fa-solid fa-check text-black text-lg z-50" /> : null}
             </button>
             <button name='Other' onClick={updateGender} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
                 Other
-                {user.gender.toLowerCase() === "other" ? <i name='Other' className="fa-solid fa-check text-black text-lg z-50" /> : null}
+                {user.gender?.toLowerCase() === "other" ? <i name='Other' className="fa-solid fa-check text-black text-lg z-50" /> : null}
             </button>
         </div>
     </section>

@@ -165,19 +165,19 @@ export default function Personalinfo() {
             <CurrencySelect show={currencyModal} setCurrencyModal={setCurrencyModal} />
             <section className="w-full flex flex-col">
                 <button onClick={() => setGenderModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender? user.gender: "Set your gender"} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <Link href="/user/emailaddress" className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Email<span className="flex items-center gap-x-2 font_urbanist"><p className="max-w-[16rem] truncate">{user.email}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </Link>
                 <button onClick={() => setCoutnryModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Country<span className="flex items-center gap-x-2 font_urbanist capitalize">{country.name} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Country<span className="flex items-center gap-x-2 font_urbanist capitalize">{country.name || "Set your name"} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button onClick={() => setUserInfoModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Phone No.<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.phone_prefix} {user.phone_number} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Phone No.<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.phone_prefix || null} {user.phone_number || "Set your phone no."} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address?.shipping_address?.address}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address?.shipping_address?.address || "Set your address"}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button onClick={() => setLanguageModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Language<span className="flex items-center gap-x-2 font_urbanist capitalize">English <i className="fa-solid fa-chevron-right text-xs"></i></span>

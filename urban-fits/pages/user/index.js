@@ -25,6 +25,7 @@ import {
     HelpCenterIcon,
     CameraIcon,
     GiftBoxIcon,
+    SecurityIcon,
     ProcessIcon,
     OrderListIcon,
     OrderPackageIcon,
@@ -160,13 +161,13 @@ export default function User(props) {
                 </div>
                 <h2 className="mt-5 font_urbanist_bold text-base">My Dashboard</h2>
                 <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
-                    <Link href="/user" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
-                        <AccountIcon />
-                        My Account
-                    </Link>
                     <Link href="/user/uf-wallet" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <UfPointsIcon />
                         My UF Wallet
+                    </Link>
+                    <Link href="/user/security" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                        <SecurityIcon />
+                        Security
                     </Link>
                     <Link href="/user/emailaddress" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <EmailIcon />

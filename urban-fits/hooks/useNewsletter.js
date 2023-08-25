@@ -18,8 +18,7 @@ const useNewsletter = create(persist((set) => ({
             delete decodedData.user;
             return set(() => ({ newsletterData: decodedData }))
         } catch (error) {
-            console.log(error)
-            return toaster("error", error.response.data.msg)
+            return console.log(error)
         }
     },
 
