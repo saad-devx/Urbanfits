@@ -2,20 +2,30 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { signOut } from "next-auth/react"
 import useNewsletter from './useNewsletter';
-import { useCart } from 'react-use-cart';
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
 const useUser = create(persist((set, get) => ({
     user: null,
-    wishList: [],
-    country: {
-        code: '+971',
-        country: 'ae',
-        name: 'United Arab Emirates',
-        src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg"
+    recentItems: [],
+    setRecentItems: (newItem) => {
+        console.log(get().recentItems)
+        const alreadyInItem = get().recentItems.filter(item => item.id === newItem.id)
+        console.log(alreadyInItem)
+        if (get().recentItems.length > 5) return console.log("max limit reached")
+        if (alreadyInItem.length && alreadyInItem[0].id) {
+            const itemIndex = get().recentItems.indexOf(alreadyInItem[0])
+            if (itemIndex === -1) return
+            if (itemIndex !== -1) return set((state) => {
+                const arrayToSet = state.recentItems.splice(itemIndex, 1)
+                return { recentItems: [...arrayToSet, newItem] }
+            })
+        }
+        else return set((state) => ({ recentItems: [...state.recentItems, newItem] }))
     },
+    wishList: [],
+    country: { name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" },
     setCountry: (value) => set(() => ({ country: value })),
     addToWishList: (item) => set((state) => {
         return { wishList: [...state.wishList, item] }

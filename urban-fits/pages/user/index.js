@@ -46,7 +46,7 @@ const Option = (props) => {
 }
 
 export default function User(props) {
-    const { user, updateUser } = useUser()
+    const { user, updateUser, recentItems } = useUser()
     const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
     const [imgSpinner, SetImgSpinner] = useState(null)
     const [loader, setLoader] = useState(false)
@@ -114,7 +114,7 @@ export default function User(props) {
                     <nav className="w-full py-4 border rounded-md flex justify-center items-center font_urbanist text-xs gap-x-[25%]">
                         <span className="flex flex-col items-center gap-2">
                             <span className='font_urbanist_bold text-lg'>{0}</span>
-                            Vounchers
+                            Vouchers
                         </span>
                         <span className="flex flex-col items-center gap-2">
                             <span className='font_urbanist_bold text-lg'>{0}</span>
@@ -168,7 +168,7 @@ export default function User(props) {
                         <UfPointsIcon />
                         My UF Wallet
                     </Link>
-                    <Link href="/user/email&password" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <Link href="/user/emailaddress" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <EmailIcon />
                         Change Email
                     </Link>
@@ -252,21 +252,31 @@ export default function User(props) {
                         Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                     </div>
                 </section></> : null}
-            <h2 className="mt-5 font_urbanist_bold text-xl">Recently viewed</h2>
-            <section className="w-full min-h-[30vh] flex flex-col justify-center items-center gap-y-4">
-                <Image width={300} height={300} className='w-2/5' src={giantSearchIcon} />
-                <p className="font_urbanist text-sm text-gray-400">No Recent Views</p>
+            <h2 className="mt-5 mb-3 font_urbanist_bold text-xl">Recently viewed</h2>
+            <section className="w-full min-h-[30vh] grid grid-cols-2 gap-7">
+                {recentItems.length ? recentItems.map((item, i) => {
+                    return <Link href={item.href} key={i} className="w-full font_urbanist_medium text-sm flex flex-col items-center justify-center gap-y-2">
+                        <span className="w-full aspect-square rounded-xl overflow-hidden">
+                            <Image width={250} height={250} src={item.image} alt={item.name} className='w-full h-full object-cover' />
+                        </span>
+                        {item.name}
+                    </Link>
+                }) :
+                    <div className="w-full flex flex-col justify-center items-center col-span-full gap-y-4">
+                        <Image width={300} height={300} className='w-2/5' src={giantSearchIcon} alt='recent items' />
+                        <p className="font_urbanist text-sm text-gray-400">No Recent Views</p>
+                    </div>}
             </section>
         </main>
     </>
     if (!user) return <Error403 />
     else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
-        <div className="w-1/4 min-h-screen hidden lg:block">
+        <section className="w-1/4 min-h-screen hidden lg:block">
             <div className="flex flex-col sticky left-0 top-20 items-center w-[280px] rounded-lg list-none font_urbanist overflow-hidden">
                 <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>
                 <Option icon={<UfPointsIcon />} href='/user/my-uf-wallet'>My UF-Wallet</Option>
-                <Option icon={<EmailIcon />} href='/user/email&password'>Email & Password</Option>
+                <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option>
                 <Option icon={<SettingIcon />} href='/user/settings'>Settings / Security</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
@@ -281,7 +291,7 @@ export default function User(props) {
                     <i className=" arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i>
                 </button>
             </div>
-        </div>
+        </section>
         <section className='bg-white w-full lg:w-[70%] px-12 py-10 rounded-lg font_urbanist text-left overflow-x-hidden overflow-y-scroll' >
             <nav className={`${props.profileNull ? 'hidden' : null} flex flex-col`}>
                 <h2 className="text-lg lg:text-2xl font_urbanist_bold mb-6">My Account</h2>

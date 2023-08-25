@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import Head from 'next/head';
@@ -12,6 +13,7 @@ import Button from '@/components/buttons/simple_btn';
 export default function Product(props) {
     const productData = { ...props.resProduct, id: props.resProduct._id }
     const router = useRouter()
+    const { setRecentItems } = useUser()
     const [product, setProduct] = useState(productData.variants[0])
     const [sizevalue, setSizevalue] = useState(product.sizes[0].size)
     const [quantity, setQuantity] = useState(1)
@@ -26,6 +28,15 @@ export default function Product(props) {
         setProduct(newProduct[0])
         setSizevalue(newProduct[0].sizes[0].size)
     }, [router.query.color])
+
+    useEffect(() => {
+        setRecentItems({
+            id: product._id,
+            href: router.asPath,
+            image: product.images[0],
+            name: productData.name
+        })
+    }, [])
 
     // size value channge funciton
     const onSizeChange = (e) => {
@@ -121,7 +132,7 @@ export default function Product(props) {
                                 </div>
                                 <div className='relative max-w-[320px] w-48pr h-9 lg:h-[52px] border'>
                                     <span className="select_container after:right-[10%]"></span>
-                                    <select type="select" defaultValue={productData.variants.color_name} onChange={onColorChange} className="select_element relative cursor-pointer w-full h-full px-5 font_urbanist_bold tracking-widest text-xs outline-none">
+                                    <select type="select" defaultValue={router.query.color || productData.variants.color_name} onChange={onColorChange} className="select_element relative cursor-pointer w-full h-full px-5 font_urbanist_bold tracking-widest text-xs outline-none">
                                         {productData.variants.map(variant => {
                                             let { color, color_name } = variant
                                             return <option value={color_name}>{color_name.toUpperCase()}</option>

@@ -16,6 +16,10 @@ import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
 import dynamic from 'next/dynamic';
 const GenderSelect = dynamic(() => import('@/components/modals/mobile/genderSelect'));
+const UserInfoModal = dynamic(() => import('@/components/modals/mobile/userInfo'));
+const CountrySelection = dynamic(() => import('@/components/modals/mobile/countrySelect'));
+const LanguageSelect = dynamic(() => import('@/components/modals/mobile/language'));
+const CurrencySelect = dynamic(() => import('@/components/modals/mobile/currency'));
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -53,7 +57,10 @@ export default function Personalinfo() {
     const [loader, setLoader] = useState(false)
     const [letterModal, setLetterModal] = useState(false)
     const [genderModal, setGenderModal] = useState(false)
-    const [nameModal, setNameModal] = useState(false)
+    const [userInfoModal, setUserInfoModal] = useState(false)
+    const [countryModal, setCoutnryModal] = useState(false)
+    const [languageModal, setLanguageModal] = useState(false)
+    const [currencyModal, setCurrencyModal] = useState(false)
     const getPfp = () => {
         if (!user) return
         if (user.image) return user.image
@@ -134,40 +141,48 @@ export default function Personalinfo() {
     if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 1024px)').matches) return <>
         <Head><title>My Profile</title></Head>
-        <main className="w-screen h-screen p-4 bg-white">
-            <h1 className="font_urbanist_bold text-xl">My Profile</h1>
-            <section className="w-full h-44 flex flex-col justify-center items-center gap-y-4">
+        <main className="relative w-screen h-screen p-4 pb-10 bg-white">
+            <div className="absolute left-0 top-0 right-0 w-full p-4 border-b border-gray-100 flex justify-between items-center">
+                <Link href='/user' className='fa-solid fa-chevron-left text-xl'></Link>
+                <h1 className="font_urbanist_medium text-lg">My Profile</h1>
+                <i className='w-3 h-0' />
+            </div>
+            <section className="w-full h-44 mt-16 flex flex-col justify-center items-center gap-y-4">
                 <label htmlFor='pfp' className="group relative w-20 aspect-square rounded-full cursor-pointer border-2 border-gray-300 overflow-hidden">
                     <span className="opacity-0 group-hover:opacity-100 text-white font_urbanist_medium text-xs cursor-pointer flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
                         <i className="fa-solid fa-camera text-white" />Upload
                     </span>
                     {imgSpinner}
                     <Image className="w-full h-full object-cover" width={150} height={150} src={photo} alt="avatar" />
-                    <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                 </label>
-                <button className="flex font_urbanist_bold text-base gap-x-2">{user.firstname} {user.lastname} <EditIcon /></button>
+                <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
+                <button onClick={() => setUserInfoModal(true)} className="flex font_urbanist_bold text-base gap-x-2">{user.firstname} {user.lastname} <EditIcon /></button>
             </section>
-            <GenderSelect user={user} show={genderModal} setGenderModal={setGenderModal} />
+            <GenderSelect user={user} updateUser={updateUser} show={genderModal} setGenderModal={setGenderModal} />
+            <UserInfoModal user={user} updateUser={updateUser} show={userInfoModal} setUserInfoModal={setUserInfoModal} />
+            <CountrySelection show={countryModal} setCoutnryModal={setCoutnryModal} />
+            <LanguageSelect show={languageModal} setLanguageModal={setLanguageModal} />
+            <CurrencySelect show={currencyModal} setCurrencyModal={setCurrencyModal} />
             <section className="w-full flex flex-col">
                 <button onClick={() => setGenderModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
-                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Email<span className="flex items-center gap-x-2 font_urbanist">{user.email} <i className="fa-solid fa-chevron-right text-xs"></i></span>
-                </button>
-                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                <Link href="/user/emailaddress" className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Email<span className="flex items-center gap-x-2 font_urbanist"><p className="max-w-[16rem] truncate">{user.email}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                </Link>
+                <button onClick={() => setCoutnryModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Country<span className="flex items-center gap-x-2 font_urbanist capitalize">{country.name} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
-                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                <button onClick={() => setUserInfoModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Phone No.<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.phone_prefix} {user.phone_number} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address?.shipping_address?.address}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
-                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                <button onClick={() => setLanguageModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Language<span className="flex items-center gap-x-2 font_urbanist capitalize">English <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
-                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                <button onClick={() => setCurrencyModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Currency<span className="flex items-center gap-x-2 font_urbanist capitalize">USD <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
             </section>
@@ -252,7 +267,7 @@ export default function Personalinfo() {
                 <div className='my-14 space-y-5' >
                     <h2 className="text-sm lg:text-base font_urbanist_bold">Email & Password</h2>
                     <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                        <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/email&password' ><i className="material-symbols-outlined">edit_square</i></Link>
+                        <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/emailaddress' ><i className="material-symbols-outlined">edit_square</i></Link>
                     </div>
                 </div>
                 <div className='my-14 space-y-5' >

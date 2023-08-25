@@ -44,23 +44,22 @@ function CartItem(props) {
     return <li {...props} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
         <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
             <Image width={129} height={160} src={product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
-            <button onClick={() => { removeItem(product.id) }} className="md:hidden absolute top-2 left-2 fa-solid fa-xmark text-gray-200" />
         </div>
         {/* to be displayed from md breakpoint */}
         <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_urbanist_medium">
-            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_urbanist_bold text-black transition-all duration-700 tracking-widest">{product.name.toUpperCase()}</Link>
-            <h3 className="w-[100px] font_urbanist_bold">{product?.color.toUpperCase()}</h3>
+            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_urbanist_bold text-black transition-all duration-700">{product.name}</Link>
+            <h3 className="w-[100px] font_urbanist_bold capitalize">{product?.color}</h3>
             {/* <Select /> */}
             <div className='relative'>
                 <span className="select_container after:right-[20%]"></span>
-                <select type="select" onChange={onSizeChange} value={sizevalue} className="select_element relative cursor-pointer w-24 h-11 font_urbanist_bold tracking-widest text-xs px-5 border outline-none">
+                <select type="select" onChange={onSizeChange} value={sizevalue} className="select_element relative cursor-pointer w-24 h-11 rounded-md font_urbanist_bold tracking-widest text-xs px-5 border outline-none">
                     {product.sizes.map(obj => {
                         const { size } = obj
                         return <option disabled={obj.quantity < 1 ? true : false} value={size}>{size}</option>
                     })}
                 </select>
             </div>
-            <span className="w-24 h-11 px-5 font_urbanist_light border flex justify-between items-center">
+            <span className="w-24 h-11 px-5 rounded-md font_urbanist_light border flex justify-between items-center">
                 <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                 <input type="number" readOnly className='w-3/5 h-auto font_urbanist text-center border-none outline-none pointer-events-none' value={quantity} />
                 <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
@@ -70,19 +69,19 @@ function CartItem(props) {
         </div>
         {/* to be displayed in mobile */}
         <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_gotham_medium tracking-widest">
-            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full font_gotham_medium text-black transition-all duration-700">{product.name.toUpperCase()} </Link>
-            <h3 className="font_gotham_black self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
+            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_gotham_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200"/></Link>
+            <h3 className="font_urbanist_medium self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
             <div className="w-full flex self-end gap-3">
                 <div className='relative'>
                     <span className="select_container after:right-[20%]"></span>
-                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
+                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] rounded-md font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
                         {product.sizes.map(obj => {
                             const { size } = obj
                             return <option value={size}>{size}</option>
                         })}
                     </select>
                 </div>
-                <span className="w-[100px] h-[30px] px-5 font_gotham_light border flex justify-between items-center">
+                <span className="w-[100px] h-[30px] px-5 rounded-md font_gotham_light border flex justify-between items-center">
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                     <input type="number" readOnly className='w-2/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
@@ -113,9 +112,9 @@ export default function Cart(props) {
                 </section>
                 :
                 <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
-                    <div className="relative w-full layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
+                    <div className="relative w-full h-[20vh] lg_layout_height mb-5 md:mb-7 lg:mb-10 overflow-hidden">
                         <Image width={1600} height={1000} src={CartBg} className='h-full lg:w-full lg:h-auto object-cover object-center' />
-                        <h1 className="w-full text-center absolute top-1/2 -translate-y-1/2 font_urbanist_bold text-white text-2xl md:text-[32px] tracking-[0.15em] lg:tracking-expand my-10">SHOPPING CART</h1>
+                        <h1 className="w-full text-center absolute top-1/2 -translate-y-1/2 font_copper text-white text-2xl md:text-[32px] tracking-[0.15em] lg:tracking-expand my-10">SHOPPING CART</h1>
                     </div>
                     <div className="w-full px-4 lg:px-14 flex flex-col lg:justify-between">
                         <div className="w-full mb-3">

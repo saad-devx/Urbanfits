@@ -2,13 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ]
-    // domains: ["images.unsplash.com", "urban-fits.s3.eu-north-1.amazonaws.com"]
+    remotePatterns: [{
+      protocol: "https",
+      hostname: "**",
+    }]
   },
   env: {
     HOST: "https://st.urbanfits.ae",
@@ -31,6 +28,8 @@ const nextConfig = {
     //AWS S3 Access Key IDs
     AWS_ACCESS_KEY: "AKIAWXH553KR4VBPA7YM",
     AWS_SECRET_KEY: "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",
+    // IP2Lcation access key
+    IP2L_ACCESS_KEY: "30CAECE4E00638DB1297D0D0B20DB2CE"
   },
   async headers() {
     return [

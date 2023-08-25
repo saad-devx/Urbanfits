@@ -16,7 +16,8 @@ const MobileNavbar = dynamic(() => import('./mobileNavbar'));
 import {
     LogoutIcon,
     LocationIcon,
-    UserIcon
+    UserIcon,
+    DropDownIcon
 } from "@/public/accountIcons"
 
 const ListItem = (props) => {
@@ -31,11 +32,11 @@ const ListItem = (props) => {
             </svg>
             {props.children}
         </div>
-        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-2 justify-self-start bg-gold-land transition-all duration-1000`}></span>
+        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-3 justify-self-start bg-gold-land transition-all duration-1000`}></span>
     </Link>
     else return <Link {...props} className={props.classes || "group flex flex-col"}>
         {props.children}
-        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-2 justify-self-start bg-gold-land transition-all duration-1000`}></span>
+        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-3 justify-self-start bg-gold-land transition-all duration-1000`}></span>
     </Link>
 }
 
@@ -52,7 +53,7 @@ const SecondaryNavbar = (props) => {
         <ListItem key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
         <ListItem key={10} href='/uf-points'>Earn Uf Points</ListItem>
         <ListItem key={11} href='/products/category/wishlist'>Wishlist</ListItem>
-        <span className="flex flex-col justify-center items-center text-sm">
+        <span className="mb-2 flex flex-col justify-center items-center text-sm">
             Minimum Order
             <p className="font_urbanist_bold text-[13px]">USD 100</p>
         </span>
@@ -83,9 +84,9 @@ export default function Navbar() {
         <LanguageModal show={langModal} setLangModal={setLangModal} />
         <ToTopBtn />
         <nav className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
-            <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1'><h1>URBAN FITS</h1></Link>
+            <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1 leading-none'><h1>URBAN FITS</h1></Link>
             <Search classes="hidden lg:flex" />
-            <Link href={user ? '/user/address' : "#"} className="hidden md:justify-self-end lg:justify-self-auto md:flex items-center text-black">
+            <Link href={user && user.email ? '/user/address' : "#"} className="hidden md:justify-self-end lg:justify-self-auto md:flex items-center text-black">
                 <LocationIcon />
                 <div className="flex flex-col justify-center ml-3 items-start text-[13px]">
                     <p className="font_urbanist leading-snug">Deliver to</p>
@@ -118,32 +119,31 @@ export default function Navbar() {
             </button>
             <section className="w-auto gap-x-7 md:gap-x-0 md:w-[15%] lg:pl-[2.5%] flex items-center justify-between">
                 <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">
-                    <span className="w-7 h-5 overflow-hidden border" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
-                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
-                    </svg>
+                    <span className="w-7 h-5 overflow-hidden" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
+                    <DropDownIcon />
                 </button>
                 <button className='relative'>
-                    <i className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[-30%] w-3 h-3 border border-white aspect-square rounded-full bg-gold-land"></i>
-                    <button className="fa-regular fa-envelope text-[22px] translate-y-[15%]"></button>
+                    <span className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[10%] lg:translate-y-[-30%] w-2 h-2 lg:w-4 lg:h-4 flex justify-center items-center text-[10px] border border-white aspect-square rounded-full bg-black"><p className='hidden lg:block text-white'>1</p></span>
+                    <button className="fa-regular fa-envelope text-[22px] translate-y-[15%] text-[#4d4d4d]"></button>
                 </button>
                 <button onClick={() => {
                     document.body.style.overflowY = cart ? null : 'hidden'
                     setCart(!cart)
                 }} className="hidden lg:block relative">
-                    {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-[14px] border border-white text-white text-[8px] aspect-square rounded-full bg-gold-land">{totalUniqueItems}</span> : null}
+                    {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-black">{totalUniqueItems}</span> : null}
                     <Image src={bag} />
                 </button>
                 {user && window.matchMedia('(max-width: 786px)').matches ? <Link href='/earn-uf-points'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="21" viewBox="0 0 25 21" fill="none">
-                        <path d="M5.00075 0.529482C4.15007 0.663237 3.41709 1.18756 3.01048 1.95263C2.66806 2.60536 1.063 6.37725 1.0095 6.65011C0.977402 6.83202 0.961351 8.77949 0.972051 11.9629C0.988102 16.655 0.998802 17.0027 1.08976 17.2703C1.30911 17.939 1.71038 18.4473 2.2882 18.7897C2.95698 19.1963 2.59316 19.1696 8.25903 19.191L13.331 19.207L13.1384 18.9502C13.0314 18.8111 12.8334 18.5062 12.6943 18.2761L12.4482 17.8641H7.91661C2.91417 17.8641 3.08538 17.8748 2.72692 17.5271C2.63061 17.4308 2.49151 17.2328 2.42731 17.0884L2.2989 16.8208V11.9896V7.16373H10.9983H19.6978L19.6603 6.81062C19.6389 6.61801 19.58 6.33445 19.5265 6.17929C19.3928 5.79408 17.7396 2.11849 17.5791 1.84028C17.242 1.26781 16.7712 0.887945 16.065 0.620436L15.7547 0.502731L10.5115 0.497379C7.6277 0.492029 5.15056 0.508081 5.00075 0.529482ZM9.68218 3.81985V5.82618H6.20455C4.29453 5.82618 2.72692 5.81548 2.72692 5.80478C2.72692 5.77268 3.99492 2.91567 4.12332 2.65351C4.32128 2.26295 4.64229 1.97939 5.0275 1.86168C5.10241 1.84028 6.1778 1.81888 7.42439 1.81888L9.68218 1.81353V3.81985ZM15.867 1.95798C16.3004 2.18804 16.4555 2.44485 17.1939 4.11947C17.5737 4.9862 17.8947 5.72453 17.9054 5.75663C17.9268 5.81013 17.2153 5.82618 14.4492 5.82618H10.9662V3.81985V1.80818L13.3096 1.82423C15.6049 1.84028 15.653 1.84028 15.867 1.95798Z" fill="black" />
-                        <path d="M18.3499 8.555C16.9749 8.7048 15.7711 9.27727 14.7866 10.251C13.631 11.4013 13.0371 12.8405 13.0371 14.5205C13.0371 16.2004 13.631 17.6396 14.7866 18.7899C15.6373 19.6299 16.6057 20.1489 17.8148 20.411C18.3659 20.5287 19.5697 20.5287 20.1743 20.4164C21.6884 20.1221 22.9296 19.3303 23.8659 18.0677C24.631 17.0297 25.0002 15.8794 25.0002 14.5205C25.0002 13.7768 24.9253 13.2792 24.7112 12.6158C24.1495 10.8716 22.7263 9.42708 21.0036 8.84391C20.2492 8.5871 19.1524 8.46939 18.3499 8.555ZM20.1957 9.9942C21.8435 10.4276 23.0901 11.6795 23.5503 13.3434C23.7161 13.9533 23.7161 15.0876 23.5503 15.6975C23.0901 17.3614 21.8596 18.592 20.1957 19.0521C19.8479 19.143 19.6232 19.1644 19.0186 19.1644C18.4141 19.1644 18.1894 19.143 17.8416 19.0521C16.1777 18.592 14.9471 17.3614 14.487 15.6975C14.3961 15.3498 14.3747 15.125 14.3747 14.5205C14.3747 13.9159 14.3961 13.6912 14.487 13.3434C14.9792 11.5565 16.3221 10.3045 18.168 9.9193C18.6762 9.81229 19.6393 9.84975 20.1957 9.9942Z" fill="black" />
-                        <path d="M21.1369 12.6022C21.0299 12.645 20.3986 13.2282 19.6816 13.9344C18.9861 14.6246 18.3869 15.1917 18.3494 15.1917C18.3173 15.1917 18.0017 14.9188 17.6593 14.5818C16.9423 13.8863 16.7604 13.7899 16.4501 13.9398C16.0649 14.1217 15.9258 14.5497 16.1452 14.8546C16.204 14.9349 16.6588 15.4057 17.1564 15.8979C18.0659 16.8021 18.205 16.8984 18.4993 16.8235C18.5902 16.8021 19.1948 16.2457 20.2113 15.2292C21.0727 14.3678 21.8324 13.5973 21.8913 13.5171C22.1106 13.2121 21.9555 12.7467 21.581 12.5915C21.367 12.5006 21.367 12.5006 21.1369 12.6022Z" fill="black" />
+                        <path d="M5.00075 0.529482C4.15007 0.663237 3.41709 1.18756 3.01048 1.95263C2.66806 2.60536 1.063 6.37725 1.0095 6.65011C0.977402 6.83202 0.961351 8.77949 0.972051 11.9629C0.988102 16.655 0.998802 17.0027 1.08976 17.2703C1.30911 17.939 1.71038 18.4473 2.2882 18.7897C2.95698 19.1963 2.59316 19.1696 8.25903 19.191L13.331 19.207L13.1384 18.9502C13.0314 18.8111 12.8334 18.5062 12.6943 18.2761L12.4482 17.8641H7.91661C2.91417 17.8641 3.08538 17.8748 2.72692 17.5271C2.63061 17.4308 2.49151 17.2328 2.42731 17.0884L2.2989 16.8208V11.9896V7.16373H10.9983H19.6978L19.6603 6.81062C19.6389 6.61801 19.58 6.33445 19.5265 6.17929C19.3928 5.79408 17.7396 2.11849 17.5791 1.84028C17.242 1.26781 16.7712 0.887945 16.065 0.620436L15.7547 0.502731L10.5115 0.497379C7.6277 0.492029 5.15056 0.508081 5.00075 0.529482ZM9.68218 3.81985V5.82618H6.20455C4.29453 5.82618 2.72692 5.81548 2.72692 5.80478C2.72692 5.77268 3.99492 2.91567 4.12332 2.65351C4.32128 2.26295 4.64229 1.97939 5.0275 1.86168C5.10241 1.84028 6.1778 1.81888 7.42439 1.81888L9.68218 1.81353V3.81985ZM15.867 1.95798C16.3004 2.18804 16.4555 2.44485 17.1939 4.11947C17.5737 4.9862 17.8947 5.72453 17.9054 5.75663C17.9268 5.81013 17.2153 5.82618 14.4492 5.82618H10.9662V3.81985V1.80818L13.3096 1.82423C15.6049 1.84028 15.653 1.84028 15.867 1.95798Z" fill="#4d4d4d" />
+                        <path d="M18.3499 8.555C16.9749 8.7048 15.7711 9.27727 14.7866 10.251C13.631 11.4013 13.0371 12.8405 13.0371 14.5205C13.0371 16.2004 13.631 17.6396 14.7866 18.7899C15.6373 19.6299 16.6057 20.1489 17.8148 20.411C18.3659 20.5287 19.5697 20.5287 20.1743 20.4164C21.6884 20.1221 22.9296 19.3303 23.8659 18.0677C24.631 17.0297 25.0002 15.8794 25.0002 14.5205C25.0002 13.7768 24.9253 13.2792 24.7112 12.6158C24.1495 10.8716 22.7263 9.42708 21.0036 8.84391C20.2492 8.5871 19.1524 8.46939 18.3499 8.555ZM20.1957 9.9942C21.8435 10.4276 23.0901 11.6795 23.5503 13.3434C23.7161 13.9533 23.7161 15.0876 23.5503 15.6975C23.0901 17.3614 21.8596 18.592 20.1957 19.0521C19.8479 19.143 19.6232 19.1644 19.0186 19.1644C18.4141 19.1644 18.1894 19.143 17.8416 19.0521C16.1777 18.592 14.9471 17.3614 14.487 15.6975C14.3961 15.3498 14.3747 15.125 14.3747 14.5205C14.3747 13.9159 14.3961 13.6912 14.487 13.3434C14.9792 11.5565 16.3221 10.3045 18.168 9.9193C18.6762 9.81229 19.6393 9.84975 20.1957 9.9942Z" fill="#4d4d4d" />
+                        <path d="M21.1369 12.6022C21.0299 12.645 20.3986 13.2282 19.6816 13.9344C18.9861 14.6246 18.3869 15.1917 18.3494 15.1917C18.3173 15.1917 18.0017 14.9188 17.6593 14.5818C16.9423 13.8863 16.7604 13.7899 16.4501 13.9398C16.0649 14.1217 15.9258 14.5497 16.1452 14.8546C16.204 14.9349 16.6588 15.4057 17.1564 15.8979C18.0659 16.8021 18.205 16.8984 18.4993 16.8235C18.5902 16.8021 19.1948 16.2457 20.2113 15.2292C21.0727 14.3678 21.8324 13.5973 21.8913 13.5171C22.1106 13.2121 21.9555 12.7467 21.581 12.5915C21.367 12.5006 21.367 12.5006 21.1369 12.6022Z" fill="#4d4d4d" />
                     </svg>
                 </Link> : null}
             </section>
         </nav>
         <SecondaryNavbar
+            user={user}
             cart={cart}
             setCart={setCart}
             logout={logout}

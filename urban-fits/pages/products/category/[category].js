@@ -17,7 +17,6 @@ export default function ProductCatalogueCategory({ products, category, name }) {
     useEffect(() => {
         setCatalogueProducts(products)
     }, [category, name])
-    console.log(category, name, products)
 
     return <>
         <main className="w-full pb-20 bg-white font_urbanist overflow-hidden">
@@ -52,7 +51,7 @@ export default function ProductCatalogueCategory({ products, category, name }) {
                         if (products.length === 0) return toaster('info', "No more products available")
                         setCatalogueProducts([catalogueProducts.concat(products)])
                         return setPage(page + 1)
-                    }} className={`${productLoading && 'pointer-events-none'} lg:mt-20 group flex items-center mx-auto font_copper text-xs md:text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300`}>
+                    }} className={`${productLoading && 'pointer-events-none'} mt-10 lg:mt-20 group flex items-center mx-auto font_copper text-xs md:text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300`}>
                         <i className="w-16 group-hover:w-28 h-0.5 mx-1 bg-black transition-all"></i>
                         <i className="w-5 group-hover:w-0 h-0.5 mx-1 bg-black transition-all"></i>
                         {productLoading ? <BounceLoader /> : <p>&nbsp;MORE</p>}

@@ -90,11 +90,9 @@ export default function Signup() {
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     return (
         <>
-            <Head>
-                <title>Urban Fits - Sign Up</title>
-            </Head>
-            <AuthPage loading={loading} height="h-screen lg:h-auto" >
-                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+            <Head><title>Urban Fits - Sign Up</title></Head>
+            <AuthPage loading={loading} height="lg:h-[110vh]" mblNav="/auth/login" mblNavName="Sign in" >
+                <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                     <section className="w-full mb-6">
                         <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Sign Up</h1>
                         <div className="relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -108,7 +106,7 @@ export default function Signup() {
                         <div className={` relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                             {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                             <select defaultValue='Country Code' value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                <option value={null}>Select Country Code</option>
+                                <option value={null}>Select country code</option>
                                 {countryCodes.map((item) => {
                                     if (!item.code) return <option disabled>{item.name}</option>
                                     return <option value={item.code}>{item.name} {item.code}</option>
@@ -144,7 +142,12 @@ export default function Signup() {
                             </label>
                         </div>
                         <Button loading={loading} classes='w-full' type="submit" >Sign Up</Button>
-                        <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
+                        <div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
+                            <span className="w-2/5 h-px bg-gray-200"></span>
+                            login via
+                            <span className="w-2/5 h-px bg-gray-200"></span>
+                        </div>
+                        <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
                         <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
                             <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
                             <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[10rem]'>Sign Up with&nbsp;</span>

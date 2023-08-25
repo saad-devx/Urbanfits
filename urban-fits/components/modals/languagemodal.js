@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../buttons/simple_btn'
 import useUser from '@/hooks/useUser';
-import { Countries } from '@/static data/countryCodes';
+import countryCodes from '@/static data/countryCodes';
 import Image from 'next/image';
 // imports for the schema and validation
 import { useFormik } from 'formik';
@@ -22,7 +22,7 @@ export default function LanguageModal(props) {
         }
     })
 
-    if (props.show) return <section className={`w-full h-full font_urbanist fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
+    if (props.show) return <section className={`w-full h-full font_urbanist fixed inset-0 z-[100] bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
         <div className={`${props.show === false ? "translate-y-10" : ''} relative max-w-[450px] w-11/12 md:w-4/6 lg:w-2/5 py-5 text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-2xl overflow-hidden transition-all duration-500`}>
             <button onClick={() => props.setLangModal(false)} name="modal3" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
             <form className="w-full h-full p-7" onReset={handleReset} onSubmit={handleSubmit} >
@@ -35,7 +35,7 @@ export default function LanguageModal(props) {
                         {touched.country && errors.country ? <Tooltip classes="form-error" content={errors.country} /> : null}
                         <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
                         <div className="absolute z-50 top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white equillibrium_shadow w-full max-h-[15rem] text-xs rounded-lg overflow-y-scroll transition-all opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
-                            {Countries.map((c, index) => {
+                            {countryCodes.map((c, index) => {
                                 return <button onClick={() => {
                                     return setCountry(c)
                                 }} key={index} title={c.country} className="w-full px-3 border-b hover:bg-slate-100 flex justify-between items-center py-2 transition-all">
