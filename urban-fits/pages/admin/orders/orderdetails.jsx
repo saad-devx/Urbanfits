@@ -1,6 +1,6 @@
 import React from "react";
 
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import CardAdmin from "@/components/cards/cardadmin";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import Button from "@/components/buttons/simple_btn";
@@ -17,7 +17,7 @@ import { PassengerLIcon } from "@/public/icons/PassengerLIcon";
 
 const orderdetails = () => {
   return (
-    <Sidebaradmin>
+    <Admin>
       <div className="flex mt-[15px] justify-between items-center ">
         <div>
           <div className="font_futura">
@@ -217,7 +217,7 @@ const orderdetails = () => {
       </div>
       </CardAdmin>
 
-    </Sidebaradmin>
+    </Admin>
   );
 };
 

@@ -5,7 +5,7 @@ import { QuestionIcon } from "@/public/icons/QuestionIcon";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import { InputText } from "@/components/InputText";
 import { InputSelect } from "@/components/InputSelect";
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import { useFormik } from "formik";
 import { inventeryManagementSchema } from "@/mock/yupSchemas";
 
@@ -28,7 +28,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
 
 
   return (
-    <Sidebaradmin>
+    <Admin>
       <section>
         <div className="font_futura">
           <p className="not-italic text-[22px] mt-[15px] font-medium text-black">
@@ -145,7 +145,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit, touched } = useFo
 
 
       </section>
-      </Sidebaradmin>
+      </Admin>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Sidebaradmin from '@/pages/admin/sidebar'
+import Admin from '@/pages/admin'
 import Button from '@/components/buttons/simple_btn'
 import CardAdmin from '@/components/cards/cardadmin'
 import useCategories from '@/hooks/useCategories'
@@ -227,7 +227,7 @@ export default function ProductInfoPage(props) {
     }, [])
 
     return (
-        <Sidebaradmin>
+        <Admin>
             {loader}
             <section className="flex mt-[15px] justify-between items-center ">
                 <div>
@@ -337,7 +337,7 @@ export default function ProductInfoPage(props) {
                     </section>
                     <section className="w-full mb-7 flex flex-col items-start gap-y-6">
                         <h2 className='w-full pt-8 pb-4 mb-3 border-b text-xl'>Add Categories</h2>
-                        {categLoading ? <div className="relative w-3/5 aspect-square flex justify-center"><Spinner variant="border-black" /></div> :
+                        {categLoading ? <div className="relative w-3/5 flex justify-center"><Spinner variant="border-black" /></div> :
                             values.categories.map((category, categoryIndex) => {
                                 return <div key={categoryIndex} className="w-full flex items-center">
                                     <InputSelect
@@ -528,6 +528,6 @@ export default function ProductInfoPage(props) {
                     </section>
                 </form>
             </CardAdmin>
-        </Sidebaradmin>
+        </Admin>
     )
 }

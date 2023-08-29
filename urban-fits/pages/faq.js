@@ -9,7 +9,7 @@ export const Accordian = (props) => {
     return (
         <div className="group outline-none accordion-section mb-7 border-b border-b-gray-300" tabIndex={props.index} >
             <div className="group flex justify-between py-3 items-center text-gray-700 transition ease duration-500 cursor-pointer pr-10 relative">
-                <div className="group-focus:text-black font_gotham_medium transition ease duration-500">
+                <div className="group-focus:text-black font_urbanist_medium transition ease duration-500">
                     {props.title}
                 </div>
                 {/* <div className="h-8 w-8 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 absolute top-0 right-0 mb-auto ml-auto mt-2 mr-2"> */}
@@ -50,15 +50,8 @@ export default function index() {
         );
         setFaqData(filtered);
     }
-    // const getContent = (data)=>{
-    //     const regex = /\[([^\]]+)\]\(([^\)]+)\)/g;
-    //     const replacedContent = data.replace(regex, (_, text, url) => {
-    //         return `<Link href="${url}">${text}</Link>`;
-    //     })
-    //     return replacedContent
-    // }
-    return <main className='bg-white w-full p-5 md:p-10 lg:p-0 lg:pt-9 lg:w-70pr h-full mx-auto font_gotham text-left pt-9' >
-        <h2 className="font_gotham_medium text-2xl md:text-4xl lg:text-[44px] tracking-widest mb-5 lg:mb-16">FAQ</h2>
+    return <main className='bg-white w-full p-5 md:p-10 lg:p-0 lg:pt-9 lg:w-70pr h-full mx-auto font_urbanist text-left pt-9' >
+        <h2 className="font_urbanist_bold text-2xl md:text-4xl lg:text-[44px] mb-5 lg:mb-16">FAQ</h2>
         {/*                                         Search Bar */}
         <div className='w-full h-[42px] md:h-12 bg-white px-5 py-1 lg:py-2 flex justify-start items-center border border-gray-400 rounded-full' >
             <i className="fa-solid fa-magnifying-glass mr-4 text-xl"></i><input type="text" className="bg-transparent outline-none border-none w-full h-full" onChange={onSearch} value={query} placeholder='Type a Question here' />
@@ -73,8 +66,8 @@ export default function index() {
 
         {/*                                        Accordians section                                                  */}
         <section className="w-full min-h-[30vh] my-10 mx-auto">
-            <h1 style={{ display: query !== '' ? "none" : "block" }} className="font_gotham_medium text-xl md:text-[22px] tracking-widest mb-7">{faqHeading.toUpperCase()}</h1>
-            <h1 style={{ display: query == '' ? "none" : "block" }} className="font_gotham_medium text-xl md:text-[22px] tracking-widest mb-7">SEARCH : {query.toUpperCase()}</h1>
+            <h1 style={{ display: query !== '' ? "none" : "block" }} className="font_urbanist_medium text-xl md:text-[22px] mb-7">{faqHeading}</h1>
+            <h1 style={{ display: query == '' ? "none" : "block" }} className="font_urbanist_medium text-xl md:text-[22px] mb-7">Search : {query}</h1>
             <div className="w-full overflow-hidden">
                 {
                     faqData.map((faq, i) => {
@@ -84,8 +77,8 @@ export default function index() {
             </div>
         </section>
         <div className={`w-full my-10 p-8 pb-4 justify-center items-center md:items-start rounded-2xl bg-white card_boxshadow flex flex-col transition duration-500`}>
-            <h2 className="font_gotham_bold text-center md:text-left text-xl md:text-2xl">Can't find answer to your question?</h2>
-            <LinkBtn href="/contact" classes="w-[150px] h-11 text-sm" font='font_gotham_medium' fontSize='text-xs md:text-sm' >CONTACT US</LinkBtn>
+            <h2 className="font_urbanist_bold text-center md:text-left text-xl md:text-2xl">Can't find answer to your question?</h2>
+            <LinkBtn href="/contact" classes="w-[150px] h-11 text-sm" font='font_urbanist_medium' fontSize='text-xs md:text-sm' >CONTACT US</LinkBtn>
         </div>
     </main>
 }

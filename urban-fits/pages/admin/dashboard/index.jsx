@@ -1,8 +1,7 @@
 import React from 'react'
-import Sidebaradmin from '../sidebar'
+import Admin from '..'
 import CardAdmin from '@/components/cards/cardadmin'
 import LineChart from '@/components/charts/LineChart'
-import { AvatarIcon } from '@/public/sidebaricons/AvatarIcon'
 import DoughnutChart from '@/components/charts/DoughnutChart'
 import DownloadIcon from '@/public/icons/DownloadIcon'
 import LineChart2 from '@/components/charts/LineChart2'
@@ -11,11 +10,9 @@ import { GeoChart } from '@/components/charts/GeoChart'
 import BarChartHor from '@/components/charts/BarChartHor'
 import { RefreshIcon } from '@/public/icons/RefreshIcon'
 import { Dots3Icon } from '@/public/icons/Dots3Icon'
-import { DownArowSmallIcon } from '@/public/sidebaricons/DownArowSmallIcon'
 import DownStickArrowIcon from '@/public/icons/DownStickArrowIcon'
 import { recentOrdersTableColumns, recentOrdersTableData } from '@/mock/tablesdata'
 import GenericTable3 from '@/components/GenericTables/GenericTable3'
-
 import avatarYellow from '@/public/avatarYellow.png'
 import pinkShoesAvatar from '@/public/pinkShoesAvatar.png'
 import Image from 'next/image'
@@ -28,7 +25,7 @@ import DollarCardIcon from '@/public/icons/DollarCardIcon'
 
 const index = () => {
   return (
-    <Sidebaradmin>
+    <Admin>
 
       
         <section className='grid grid-cols-4 gap-[27px] mt-[20px] ' >
@@ -391,7 +388,7 @@ const index = () => {
             </CardAdmin> */}
 
 
-    </Sidebaradmin>
+    </Admin>
   )
 }
 

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
+import useUser from './useUser';
 import toaster from "@/utils/toast_function";
 import axios from "axios";
-import getUser_LS from '@/utils/getUserfromLS';
 
 const useProduct = create((set, get) => ({
 
@@ -19,22 +19,23 @@ const useProduct = create((set, get) => ({
         }))
         try {
             if (category_id) {
+                console.log(page, category_id)
                 const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
-                set(() => (
-                    {
-                        products: data.products,
-                        totalProducts: data.totalProducts
-                    }
-                ))
+                set(() => ({
+                    products: data.products,
+                    totalProducts: data.totalProducts,
+                    productLoading: false
+                }))
+                return data.products
             }
             else {
                 const { data } = await axios.get(`${process.env.HOST}/api/products/get/many?page=${page}`)
-                set(() => (
-                    {
-                        products: data.products,
-                        totalProducts: data.totalProducts
-                    }
-                ))
+                set(() => ({
+                    products: data.products,
+                    totalProducts: data.totalProducts,
+                    productLoading: false
+                }))
+                return data.products
             }
         } catch (error) {
             console.log(error)
@@ -65,7 +66,7 @@ const useProduct = create((set, get) => ({
     },
 
     createProduct: async (productToCreate) => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user) return
 
         set(() => ({
@@ -87,7 +88,7 @@ const useProduct = create((set, get) => ({
     },
 
     updateProduct: async (id, updatedProduct) => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user) return
 
         set(() => ({
@@ -111,7 +112,7 @@ const useProduct = create((set, get) => ({
     },
 
     deleteProducts: async (productsToDelete) => {
-        const user = getUser_LS()
+        const { user } = useUser.getState()
         if (!user) return
 
         set(() => ({

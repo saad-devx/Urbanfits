@@ -31,22 +31,16 @@ export default function useAddress() {
 
     const updateAddress = async (values) => {
         try {
-            let response = await fetch(`${process.env.HOST}/api/user/addresses/update?user_id=${user._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values)
-            })
-            let res = await response.json()
-            if (!res.success) toaster("error", res.msg)
-            if (res.success) toaster("success", res.msg)
-            if (!res.payload) return
-            const address = jwt.decode(res.payload)
+            let { data } = await axios.put(`${process.env.HOST}/api/user/addresses/update?user_id=${user._id}`, values)
+            if (!data.payload) return toaster("error", "Some error occurred")
+            const address = jwt.decode(data.payload)
             setAddress(address)
-            localStorage.setItem("addressToken", res.payload)
+            localStorage.setItem("addressToken", data.payload)
+            toaster("success", data.msg)
         }
         catch (e) {
             console.log(e)
-            return toaster("error", "We're sorry some error has occurred, we'll fix it soon")
+            return toaster("error", e.response.data.msg)
         }
     }
 

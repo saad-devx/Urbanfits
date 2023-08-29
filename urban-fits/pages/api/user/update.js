@@ -18,6 +18,7 @@ const UpdateUser = async (req, res) => {
             // updating the user profile
             let user = await User.findById(req.query.id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
+            delete req.body.email
             await User.findByIdAndUpdate(req.query.id, req.body)
             user = await User.findById(req.query.id)
             const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
@@ -27,9 +28,7 @@ const UpdateUser = async (req, res) => {
                 payload
             })
         }
-        else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
-        }
+        else res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
     }
     catch (err) {
         console.log(err)

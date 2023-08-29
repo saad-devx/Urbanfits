@@ -48,8 +48,8 @@ export default function Storeis() {
                 <section className="relative w-full layout_height flex flex-col justify-center items-center gap-y-5 transition-all ease-linear duration-500 overflow-hidden" >
                     <Image width={1400} height={512} src={hero_bg} alt='Storeis background' className="h-full lg:w-full absolute top-0 left-0 object-cover object-top" />
                     <div className="z-10 flex flex-col justify-center items-center gap-5">
-                        <span className="font_gotham text-white text-sm"><Link className="underline underline-offset-8" href='/' >Main Page</Link> / <Link className="underline underline-offset-8 capitalize" href='/stories' >{story}</Link></span>
-                        <h1 className="font_gotham_bold text-2xl lg:text-[32px] text-white tracking-[0.15em]">{story && story.toUpperCase()}</h1>
+                        <span className="font_urbanist text-white text-sm"><Link className="underline underline-offset-8" href='/' >Main Page</Link> / <Link className="underline underline-offset-8 capitalize" href='/stories' >{story}</Link></span>
+                        <h1 className="font_copper text-2xl lg:text-[32px] text-white tracking-[0.15em]">{story && story.toUpperCase()}</h1>
                     </div>
                 </section>
                 <section className="w-full lg:px-12 xl:px-16 2xl:px-20 flex flex-col">

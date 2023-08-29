@@ -6,19 +6,19 @@ import SizeTableAccordian from '@/components/accordians/sizeTable-accordian'
 
 export const TableButton = (props) => {
     return <>
-        <LinkBtn href={props.href} bg='bg-gold' font='font_gotham_medium' fontSize='text-xs' classes={`hidden md:flex sticky left-0 ${props.classes ? props.classes : 'w-36'}`} >{props.children}</LinkBtn>
+        <LinkBtn href={props.href} bg='bg-gold' font='font_urbanist_medium' fontSize='text-xs' classes={`hidden md:flex sticky left-0 ${props.classes ? props.classes : 'w-36'}`} >{props.children}</LinkBtn>
         <div className='sticky left-0 md:hidden btn_width h-[38px] p-[1px] bg-gold rounded-md' >
             <Link href={props.href || "#"} >
-                <div className='w-full h-full bg-white rounded-[5px] flex justify-center items-center font_gotham_medium text-[10px] tracking-vast' >{props.children}</div>
+                <div className='w-full h-full bg-white rounded-[5px] flex justify-center items-center font_urbanist_medium text-[10px] tracking-vast' >{props.children}</div>
             </Link>
         </div>
     </>
 }
 
 export const HelpSection = () => {
-    return <div className="w-full flex flex-col md:flex-row md:justify-between sm:items-center font_gotham text-xs md:text-sm gap-3">
+    return <div className="w-full flex flex-col md:flex-row md:justify-between sm:items-center font_urbanist text-xs md:text-sm gap-3">
         <div className='mb-2 md:mb-0 flex flex-col md:flex-row' >
-            <span className="mb-1.5 md:mb-0 mr-2 font_gotham_bold tracking-widest">NEED HELP?</span>
+            <span className="mb-1.5 md:mb-0 mr-2 font_urbanist_bold">Need Help?</span>
             We are available Monday to Sunday: 9 AM 6 PM
         </div>
         <LinkBtn my='0' classes='w-36 sm:w-48' href='/contact' >Contact Us</LinkBtn>
@@ -28,8 +28,8 @@ export const HelpSection = () => {
 export default function Women() {
     return (
         <CutomerServices>
-            <h1 className="mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">WOMEN' SIZE</h1>
-            <SizeTableAccordian title='COATS, JACKETS, BLAZERS' tableHeading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
+            <h1 className="mb-6 font_urbanist_bold text-sm md:text-lg xl:text-xl tracking-vast">Women' Sizes</h1>
+            <SizeTableAccordian title='Coats, Jackets, Blazers' tableHeading='Urban Fits' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL', '6XL', '7XL']}
                 rowsData={[
                     ['UK/IE Size', 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
@@ -43,7 +43,7 @@ export default function Women() {
                     ['Hips', { CM: '85- 89', INCH: '33½- 35' }, { CM: '89- 93', INCH: '35- 36⅗' }, { CM: '93- 97', INCH: '36⅗- 38⅕' }, { CM: '97- 101', INCH: '38⅕- 39⅘' }, { CM: '101- 105', INCH: '39⅘ - 41⅓' }, { CM: '105- 110', INCH: '41⅓ - 43⅓' }, { CM: '110- 115', INCH: '43⅓- 45⅓' }, { CM: '115- 120', INCH: '45⅓ - 47⅕' }, { CM: '121- 126', INCH: '47⅗- 49⅗' }, { CM: '126- 131', INCH: '49⅗- 51⅗' }, { CM: '131- 136', INCH: '51⅗- 53½' }, { CM: '136- 141', INCH: '53½- 55½' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SWEATS, HOODIES, POLO KNITS TEES' tableHeading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
+            <SizeTableAccordian title='Sweats, Hoodies, Polo knives Tees' tableHeading='Urban Fits' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL', '6XL', '7XL']}
                 rowsData={[
                     ['UK/IE Size', 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
@@ -56,7 +56,7 @@ export default function Women() {
                     ['Waist', { CM: '60- 64', INCH: '30⅛- 31⅔' }, { CM: '64- 68', INCH: '31⅔- 33⅓' }, { CM: '68- 72', INCH: '33⅓- 34⅘' }, { CM: '72- 76', INCH: '34⅘- 36⅖' }, { CM: '76- 81', INCH: '36⅖- 38' }, { CM: '81- 86', INCH: '38- 40' }, { CM: '86- 91', INCH: '40- 41⅞' }, { CM: '91- 96', INCH: '41⅞- 44⅛' }, { CM: '97- 102', INCH: '44½- 46½' }, { CM: '102- 107', INCH: '46½- 48⅖' }, { CM: '107- 112', INCH: '48⅖ - 50⅖' }, { CM: '112- 118', INCH: '50⅖- 52⅘' }],
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='DRESSES, SKIRTS, JUMPSUITS' tableHeading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
+            <SizeTableAccordian title='Dresses, Skirts, Jumpsuits' tableHeading='Urban Fits' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL', '6XL', '7XL']}
                 rowsData={[
                     ['UK/IE Size', 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
@@ -68,9 +68,9 @@ export default function Women() {
                     ['Chest', { CM: '76.5- 80.5', INCH: '30⅛- 31⅔' }, { CM: '80.5- 84.5', INCH: '31⅔- 33⅓' }, { CM: '84.5- 88.5', INCH: '33⅓- 34⅘' }, { CM: '88.5-92.5', INCH: '34⅘- 36⅖' }, { CM: '92.5- 96.5', INCH: '36⅖ - 38' }, { CM: '96.5- 101.5', INCH: '38 - 40' }, { CM: '101.5- 106.5', INCH: '40- 41⅞' }, { CM: '106.5- 112', INCH: '41⅞- 44⅛' }, { CM: '113- 118', INCH: '44½- 46½' }, { CM: '118- 123', INCH: '46½- 48⅖' }, { CM: '123- 128', INCH: '48⅖- 50⅖' }, { CM: '128- 134', INCH: '50⅖ - 52⅘' }],
                     ['Hips', { CM: '85- 89', INCH: '33½- 35' }, { CM: '89- 93', INCH: '35- 36⅗' }, { CM: '93- 97', INCH: '36⅗- 38⅕' }, { CM: '97- 101', INCH: '38⅕- 39⅘' }, { CM: '101- 105', INCH: '39⅘ - 41⅓' }, { CM: '105- 110', INCH: '41⅓ - 43⅓' }, { CM: '110- 115', INCH: '43⅓- 45⅓' }, { CM: '115- 120', INCH: '45⅓ - 47⅕' }, { CM: '121- 126', INCH: '47⅗- 49⅗' }, { CM: '126- 131', INCH: '49⅗- 51⅗' }, { CM: '131- 136', INCH: '51⅗- 53½' }, { CM: '136- 141', INCH: '53½- 55½' }]
                 ]}>
-                <TableButton href='/products/Dresses' >SHOP DRESSES</TableButton>
+                <TableButton href='/products/Dresses' >Shop Dresses</TableButton>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SHIRTS, BLOUSES' tableHeading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
+            <SizeTableAccordian title='Shirts, Blouses' tableHeading='Urban Fits' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL', '6XL', '7XL']}
                 rowsData={[
                     ['UK/IE Size', 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
@@ -84,7 +84,7 @@ export default function Women() {
                     ['Hips', { CM: '85- 89', INCH: '33½- 35' }, { CM: '89- 93', INCH: '35- 36⅗' }, { CM: '93- 97', INCH: '36⅗- 38⅕' }, { CM: '97- 101', INCH: '38⅕- 39⅘' }, { CM: '101- 105', INCH: '39⅘ - 41⅓' }, { CM: '105- 110', INCH: '41⅓ - 43⅓' }, { CM: '110- 115', INCH: '43⅓- 45⅓' }, { CM: '115- 120', INCH: '45⅓ - 47⅕' }, { CM: '121- 126', INCH: '47⅗- 49⅗' }, { CM: '126- 131', INCH: '49⅗- 51⅗' }, { CM: '131- 136', INCH: '51⅗- 53½' }, { CM: '136- 141', INCH: '53½- 55½' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='URBAN DENIM' tableHeading='URBAN FITS' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7.63%]'
+            <SizeTableAccordian title='Urban Denim' tableHeading='Urban Fits' indexColWidth='w-32 xl:w-[16%]' restColsWidth='w-15 xl:w-[7.63%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL', '6XL']}
                 rowsData={[
                     ['UK/IE Size', 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24],
@@ -95,7 +95,7 @@ export default function Women() {
                     ['Legs', { CM: '86 - 89', INCH: '33⅞ - 35' }, { CM: '90 - 93', INCH: '35⅖ - 36⅗' }, { CM: '94 - 97', INCH: '37 - 38⅕' }, { CM: '98 - 101', INCH: '38⅗ - 39⅘' }, { CM: '102 - 103.5', INCH: '40⅕ - 40⅔' }, { CM: '106 - 111', INCH: '41⅔ - 43⅔' }, { CM: '112 - 116', INCH: '44⅛ - 45⅔' }, { CM: '117 - 122', INCH: '46⅛ - 48' }, { CM: '123 - 128', INCH: '48⅖ - 50⅖' }, { CM: '129 - 134', INCH: '50⅘ - 52⅘' }, { CM: '135 - 140', INCH: '53⅛ - 55⅛' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='BEACH COVER UPS TOPS, LOUNGE TOPS, BIKINI TOPS, BRAS (ALPHA SIZES)' tableHeading='URBAN FITS' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[8.82%]'
+            <SizeTableAccordian title='Beach Cover ups Tops, Lounge Tops, Bikini Tops, Bras (Alpha Sizes)' tableHeading='Urban Fits' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[8.82%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL']}
                 rowsData={[
                     ['US Size', 0, 2, 4, '6-8', '8-10', '10-12', 14, 16, '18-20'],
@@ -107,7 +107,7 @@ export default function Women() {
                     ['Waist', { CM: '56 - 60', INCH: '22 - 23⅗' }, { CM: '61 - 65', INCH: '24 - 25⅗' }, { CM: '66 - 71', INCH: '26 - 28' }, { CM: '72 - 77', INCH: '28⅓ - 30⅓' }, { CM: '78 - 83', INCH: '30⅔ - 32⅔' }, { CM: '84 - 89', INCH: '33⅛ - 35' }, { CM: '92 - 97', INCH: '36⅕ - 38⅕' }, { CM: '98 - 104', INCH: '38⅗ - 40⅞' }, { CM: '105 - 111', INCH: '41⅓ - 43⅔' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='BEACH COVER UPS BOTTOMS, LOUNGE BOTTOMS, BIKINI BOTTOMS, COORDINATE PANTIES' tableHeading='URBAN FITS' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[8.82%]'
+            <SizeTableAccordian title='Beach Cover ups Bottoms, Lounge Bottoms, Bikini Bottoms, Coordinate Panties' tableHeading='Urban Fits' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[8.82%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL']}
                 rowsData={[
                     ['US Size', 0, 2, 4, '6-8', '8-10', '10-12', 14, 16, '18-20'],
@@ -119,7 +119,7 @@ export default function Women() {
                     ['Hips', { CM: '82 - 86', INCH: '32⅓ - 33⅞' }, { CM: '87 - 91', INCH: '34⅓ - 35⅘' }, { CM: '92 - 97', INCH: '36⅕ - 38⅕' }, { CM: '98 - 103', INCH: '38⅗ - 40⅗' }, { CM: '104 - 109', INCH: '40⅞ - 42⅞' }, { CM: '110 - 115', INCH: '43⅓ - 45⅓' }, { CM: '116 - 121', INCH: '45⅔ - 47⅗' }, { CM: '122 - 128', INCH: '48 - 50⅖' }, { CM: '129 - 135', INCH: '50⅘ - 53⅛' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='PAJAMA SETS' tableHeading='URBAN FITS' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[8.82%]'
+            <SizeTableAccordian title='Pajama Sets' tableHeading='Urban Fits' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[8.82%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL']}
                 rowsData={[
                     ['US Size', 0, 2, 4, '6-8', '8-10', '10-12', 14, 16, '18-20'],
@@ -132,7 +132,7 @@ export default function Women() {
                     ['Hips', { CM: '82 - 86', INCH: '32⅓ - 33⅞' }, { CM: '87 - 91', INCH: '34⅓ - 35⅘' }, { CM: '92 - 97', INCH: '36⅕ - 38⅕' }, { CM: '98 - 103', INCH: '38⅗ - 40⅗' }, { CM: '104 - 109', INCH: '40⅞ - 42⅞' }, { CM: '110 - 115', INCH: '43⅓ - 45⅓' }, { CM: '116 - 121', INCH: '45⅔ - 47⅗' }, { CM: '122 - 128', INCH: '48 - 50⅖' }, { CM: '129 - 135', INCH: '50⅘ - 53⅛' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='WOMEN SHOES' tableHeading='' indexColWidth='w-32 xl:w-[8%]' restColsWidth='w-15 xl:w-[5.75%]'
+            <SizeTableAccordian title='Women Shoes' tableHeading='' indexColWidth='w-32 xl:w-[8%]' restColsWidth='w-15 xl:w-[5.75%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL', '7XL', '8XL', '9XL', '10XL', '11XL']}
                 rowsData={[
                     ['UK Size', 2.5, 3, 3.5, 3.5, 4, 4.5, 5, 5.5, 6, 6, 6.5, 6.5, 7, 7, 7.5, 7.5,],
@@ -142,18 +142,18 @@ export default function Women() {
                 ]}>
                 <TableButton href='/products/Women-Shoes' classes='w-48'>SHOP WOMEN SHOES</TableButton>
             </SizeTableAccordian>
-            <SizeTableAccordian title='BELTS' tableHeading='SIZE' indexColWidth='w-24' restColsWidth='w-16' unitBtns={null}
+            <SizeTableAccordian title='Belts' tableHeading='Size' indexColWidth='w-24' restColsWidth='w-16' unitBtns={null}
                 columnHeadings={['S-M', 'L-XL']} rowsData={[['CM', '70cm', '80cm']]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SOCKS' tableHeading='LABEL' indexColWidth='w-32' restColsWidth='w-20' unitBtns={null}
+            <SizeTableAccordian title='Socks' tableHeading='Label' indexColWidth='w-32' restColsWidth='w-20' unitBtns={null}
                 columnHeadings={['S-M', 'L-XL']}
                 rowsData={[
                     ['Shoe Size', '35', '39'],
                     ['Foot Length', '21.7-24.3', '24.4-27']
                 ]}>
             </SizeTableAccordian>
-            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN JEANS SIZES</h1>
-            <SizeTableAccordian title='DRESSES, JUMPSUITS' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+            <h1 className="mt-20 lg:mt-28 mb-6 font_urbanist_bold text-sm md:text-lg xl:text-xl tracking-vast">Urban Jeans Sizes</h1>
+            <SizeTableAccordian title='Dresses, Jumpsuits' tableHeading='Label(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
                     ['EU Size', '30-32', '32-34', '36-38', '38-40', '40-42', '42-44'],
@@ -166,7 +166,7 @@ export default function Women() {
                     ['Hips', { CM: '84 - 86.5', INCH: '33⅛ - 34⅛' }, { CM: '86.5 - 91.5', INCH: '34⅛ - 36' }, { CM: '91.5 - 96.5', INCH: '36 - 38' }, { CM: '96.5 - 101.5', INCH: '38 - 40' }, { CM: '101.5 - 106.5', INCH: '40 - 41⅞' }, { CM: '106.5 - 111.5', INCH: '41⅞ - 43⅞' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='COATS, JACKETS' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+            <SizeTableAccordian title='Coats, Jackets' tableHeading='Label(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
                     ['EU Size', '30-32', '32-34', '36-38', '38-40', '40-42', '42-44'],
@@ -180,7 +180,7 @@ export default function Women() {
                     ['Sleeve', { CM: '84 - 86.5', INCH: '30⅗ - 30⅘' }, { CM: '86.5 - 91.5', INCH: '30⅘ - 31' }, { CM: '91.5 - 96.5', INCH: '31 - 31⅕' }, { CM: '96.5 - 101.5', INCH: '31⅕ - 31⅖' }, { CM: '101.5 - 106.5', INCH: '31⅕ - 31⅖' }, { CM: '106.5 - 111.5', INCH: '31⅗ - 31⅘' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='KNITWEAR, SHIRTS, BLOUSES, TOPS' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+            <SizeTableAccordian title='Knitwear, Shirts, Blouses, Tops' tableHeading='Label(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
                     ['EU Size', '30-32', '32-34', '36-38', '38-40', '40-42', '42-44'],
@@ -193,7 +193,7 @@ export default function Women() {
                     ['Sleeve', { CM: '84 - 86.5', INCH: '30⅗ - 30⅘' }, { CM: '86.5 - 91.5', INCH: '30⅘ - 31' }, { CM: '91.5 - 96.5', INCH: '31 - 31⅕' }, { CM: '96.5 - 101.5', INCH: '31⅕ - 31⅖' }, { CM: '101.5 - 106.5', INCH: '31⅕ - 31⅖' }, { CM: '106.5 - 111.5', INCH: '31⅗ - 31⅘' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='PANTS' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+            <SizeTableAccordian title='Pants' tableHeading='Label(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
                     ['EU Size', '30-32', '32-34', '36-38', '38-40', '40-42', '42-44'],
@@ -205,7 +205,7 @@ export default function Women() {
                     ['Hips', { CM: '84 - 86.5', INCH: '33⅛ - 34⅛' }, { CM: '86.5 - 91.5', INCH: '34⅛ - 36' }, { CM: '91.5 - 96.5', INCH: '36 - 38' }, { CM: '96.5 - 101.5', INCH: '38 - 40' }, { CM: '101.5 - 106.5', INCH: '40 - 41⅞' }, { CM: '106.5 - 111.5', INCH: '41⅞ - 43⅞' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='JEANS' tableHeading='URBAN SIZE' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[7.27%]'
+            <SizeTableAccordian title='Jeans' tableHeading='Urban Size' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[7.27%]'
                 columnHeadings={[24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]}
                 rowsData={[
                     ['EU Size', '32', '34-36', '34-36', '36-38', '36-38', '38-40', '38-40', '40-42', '40-42', 44, 44],
@@ -217,12 +217,12 @@ export default function Women() {
                     ['Hips', { CM: '85 - 89', INCH: '33½ - 35' }, { CM: '89 - 91', INCH: '35 - 35⅘' }, { CM: '91 - 93', INCH: '35⅘ - 36⅗' }, { CM: '93 - 95', INCH: '36⅗ - 37⅖' }, { CM: '95 - 97', INCH: '37⅖ - 38⅕' }, { CM: '97 - 99', INCH: '38⅕ - 39' }, { CM: '97 - 99', INCH: '39 - 39⅘' }, { CM: '101 - 103', INCH: '39⅘ - 40⅗' }, { CM: '103 - 105', INCH: '40⅗ - 41⅓' }, { CM: '106 - 110', INCH: '41⅔ - 43⅓' }, { CM: '111 - 115', INCH: '43⅔ - 45⅓' }],
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='INSEAM JEANS LENGTH' tableHeading='Inseam Jeans Length' headingTracking_null indexColWidth='w-32 lg:w-[30%]' restColsWidth='w-15 lg:w-[17%]'
+            <SizeTableAccordian title='Inseam Jeans length' tableHeading='Inseam Jeans Length' headingTracking_null indexColWidth='w-32 lg:w-[30%]' restColsWidth='w-15 lg:w-[17%]'
                 bigFontOf_nthRow={[0]}
                 columnHeadings={['28"', '30"', '32"', '34"']}
                 rowsData={[['Inseam', { CM: '68.5 - 73.5', INCH: '27 - 28⅞' }, { CM: '73.5 - 78.5', INCH: '28⅞ - 30⅞' }, { CM: '78.5 - 83.5', INCH: '30⅞ - 32⅞' }, { CM: '83.5 - 88.5', INCH: '32⅞ - 34⅘' }]]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SWEATERS, T-SHIRTS, OTHER KNITS, OUTERWEAR, DRESSES' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+            <SizeTableAccordian title='Sweaters, T-Shirts, Other Knits, Outerwear, Dresses' tableHeading='Label(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 bigFontOf_nthRow={[3, 4, 5, 6]}
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
@@ -234,9 +234,9 @@ export default function Women() {
                     ['Hips', { CM: '86', INCH: '33⅞' }, { CM: '90', INCH: '35⅖' }, { CM: '94', INCH: '37' }, { CM: '98', INCH: '38⅗' }, { CM: '102', INCH: '40⅕' }, { CM: '106', INCH: '41⅔' }],
                     ['Inside Legs', { CM: '76.5', INCH: '30⅛' }, { CM: '77', INCH: '30⅓' }, { CM: '77.5', INCH: '30½' }, { CM: '78', INCH: '30⅔' }, { CM: '78', INCH: '30⅞' }, { CM: '78', INCH: '31⅛' }]
                 ]}>
-                <TableButton href='/products/Urban Jeans' classes='w-48'>SHOP URBAN JEANS</TableButton>
+                <TableButton href='/products/Urban Jeans' classes='w-48'>Shop Urban Jeans</TableButton>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SWEATERS, T-SHIRTS, OTHER KNITS, OUTERWEAR, DRESSES' tableHeading='LABEL(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
+            <SizeTableAccordian title='Sweaters, T-Shirts, Other Knitwear, Outerwear, Dresses' tableHeading='Label(XS-XL)' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-[13.3%]'
                 bigFontOf_nthRow={[3, 4, 5]}
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
@@ -248,8 +248,8 @@ export default function Women() {
                     ['Inside Legs', { CM: '76.5', INCH: '30⅛' }, { CM: '77', INCH: '30⅓' }, { CM: '77.5', INCH: '30½' }, { CM: '78', INCH: '30⅔' }, { CM: '78', INCH: '30⅞' }, { CM: '78', INCH: '31⅛' }]
                 ]}>
             </SizeTableAccordian>
-            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">UF CURVE</h1>
-            <SizeTableAccordian title='COATS, JACKETS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+            <h1 className="mt-20 lg:mt-28 mb-6 font_urbanist_bold text-sm md:text-lg xl:text-xl tracking-vast">UF Curve</h1>
+            <SizeTableAccordian title='Coats, Jackets' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
                 bigFontOf_nthRow={[5, 6, 7, 8]}
                 columnHeadings={['1XL', '2XL', '3XL']}
                 rowsData={[
@@ -264,7 +264,7 @@ export default function Women() {
                     ['Sleeve', { CM: '81.3 - 81.8', INCH: '32 - 32⅕' }, { CM: '81.8 - 82.2', INCH: '32⅕ - 32⅖' }, { CM: '82.2 - 82.8', INCH: '32⅖ - 32⅗' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='DRESSES' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+            <SizeTableAccordian title='Dresses' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
                 bigFontOf_nthRow={[5, 6, 7]}
                 columnHeadings={['1XL', '2XL', '3XL']}
                 rowsData={[
@@ -278,7 +278,7 @@ export default function Women() {
                     ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='KNITWEAR, SHIRTS, BLOUSES, TOPS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+            <SizeTableAccordian title='Knitwear, Shirts, Blouses, Tops' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
                 bigFontOf_nthRow={[5, 6, 7]}
                 columnHeadings={['1XL', '2XL', '3XL']}
                 rowsData={[
@@ -292,7 +292,7 @@ export default function Women() {
                     ['Sleeve', { CM: '81.3 - 81.8', INCH: '32 - 32⅕' }, { CM: '81.8 - 82.2', INCH: '32⅕ - 32⅖' }, { CM: '82.2 - 82.8', INCH: '32⅖ - 32⅗' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='PANTS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
+            <SizeTableAccordian title='Pants' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-1/4'
                 bigFontOf_nthRow={[5, 6]}
                 columnHeadings={['1XL', '2XL', '3XL']}
                 rowsData={[
@@ -305,7 +305,7 @@ export default function Women() {
                     ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='JEANS' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-1/5'
+            <SizeTableAccordian title='Jeans' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/5' restColsWidth='w-15 lg:w-1/5'
                 bigFontOf_nthRow={[0, 1]}
                 columnHeadings={[36, 38, 40, 42]}
                 rowsData={[
@@ -313,8 +313,8 @@ export default function Women() {
                     ['Hips', { CM: '115 - 120', INCH: '45⅓ - 47⅕' }, { CM: '121 - 126', INCH: '47⅗ - 49⅗' }, { CM: '126 - 131', INCH: '49⅗ - 51⅗' }, { CM: '131 - 136', INCH: '51⅗ - 53½' }]
                 ]}>
             </SizeTableAccordian>
-            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN SPORT SIZES</h1>
-            <SizeTableAccordian title='UPPER BODY + LOWER BODY' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
+            <h1 className="mt-20 lg:mt-28 mb-6 font_urbanist_bold text-sm md:text-lg xl:text-xl tracking-vast">Urban Sport Sizes</h1>
+            <SizeTableAccordian title='Upper Body + Lower Body' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
                 bigFontOf_nthRow={[4, 5, 6, 7]}
                 columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
@@ -328,7 +328,7 @@ export default function Women() {
                     ['Hips', { CM: '89 - 92', INCH: '35 - 36⅕' }, { CM: '93 - 96', INCH: '36⅗ - 37⅘' }, { CM: '97 - 100', INCH: '38⅕ - 39⅖' }, { CM: '101 - 104', INCH: '39⅘ - 40⅞' }, { CM: '105 - 108', INCH: '41⅓ - 42½' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SPORT WOMEN - TOPS (INCL. T-SHIRTS, OUTERWEAR, BRAS…)' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
+            <SizeTableAccordian title='Sport Women - Tops (Incl. T-Shirts, Outerwears, Bras…)' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
                 bigFontOf_nthRow={[5, 6, 7, 8]}
                 columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[
@@ -343,7 +343,7 @@ export default function Women() {
                     ['Hips', { CM: '87.5 - 92.5', INCH: '34⅖ - 36⅖' }, { CM: '92.5 - 97.5', INCH: '36⅖ - 38⅖' }, { CM: '97.5 - 102.5', INCH: '38⅖ - 40⅖' }, { CM: '102.5 - 107.5', INCH: '40⅖ - 42⅓' }, { CM: '107.5 - 112.5', INCH: '42⅓ - 44⅓' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SPORT WOMEN - BOTTOMS (INCL LEGGINGS, PANTS, SHORTS…)' tableHeading='UF CURVE SIZE' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
+            <SizeTableAccordian title='Sport Women - Bottoms (Incl Leggings, Pants, Shorts…)' tableHeading='UF Curve Size' indexColWidth='w-32 lg:w-1/4' restColsWidth='w-15 lg:w-[15%]'
                 bigFontOf_nthRow={[5, 6]}
                 columnHeadings={['XS', 'S', 'M', 'L', 'XL']}
                 rowsData={[

@@ -16,7 +16,6 @@ import { useFormik } from 'formik'
 //Image imports
 import Image from 'next/image'
 import google_logo from '@/public/logos/google-logo.svg'
-import apple_logo from '@/public/logos/apple-logo.svg';
 
 export default function Signup() {
     const { data: session } = useSession()
@@ -24,21 +23,18 @@ export default function Signup() {
     const [loading, setLoading] = useState(false)
     const { user, updateUser } = useUser()
     const [showPass, setShowPass] = useState(false)
-
     const passRef = useRef()
-
-    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
 
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
             setLoading(true)
-            const res = await axios.post(`${process.env.HOST}/api/user/signup/${oAuthQuery ? oAuthQuery : ''}`, values)
+            const res = await axios.post(`${process.env.HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
             console.log(res)
             if (res.data.success && res.data.payload && oAuthQuery) {
                 const { data } = res
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
-                router.push('/user/personalinfo')
+                router.push('/user/myaccount')
             }
             if (res.data.success && res.data.payload && !oAuthQuery) {
                 router.push(`/auth/signup/verification/${values.email}`)
@@ -46,7 +42,7 @@ export default function Signup() {
         }
         catch (error) {
             console.log(error)
-            toaster("error", error.response.data.msg)
+            if (error.response) toaster("error", error.response.data.msg)
         }
         setLoading(false)
     }
@@ -78,6 +74,7 @@ export default function Signup() {
         const oauth = sessionStorage.getItem('oauth')
         const register_provider = sessionStorage.getItem('register_provider')
         if (oauth && session) {
+            console.log(session)
             let username = session.user.email.split('@')[0]
             let name = session.user.name.split(' ')
             let firstname = name[0]
@@ -90,13 +87,12 @@ export default function Signup() {
         else return
     }, [session])
 
+    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     return (
         <>
-            <Head>
-                <title>Urban Fits - Sign Up</title>
-            </Head>
-            <AuthPage loading={loading} >
-                <form className="h-full bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+            <Head><title>Urban Fits - Sign Up</title></Head>
+            <AuthPage loading={loading} height="lg:h-[110vh]" mblNav="/auth/login" mblNavName="Sign in" >
+                <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                     <section className="w-full mb-6">
                         <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Sign Up</h1>
                         <div className="relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -110,7 +106,7 @@ export default function Signup() {
                         <div className={` relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                             {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                             <select defaultValue='Country Code' value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                <option value={null}>Select Country Code</option>
+                                <option value={null}>Select country code</option>
                                 {countryCodes.map((item) => {
                                     if (!item.code) return <option disabled>{item.name}</option>
                                     return <option value={item.code}>{item.name} {item.code}</option>
@@ -146,10 +142,15 @@ export default function Signup() {
                             </label>
                         </div>
                         <Button loading={loading} classes='w-full' type="submit" >Sign Up</Button>
-                        <Link href='/auth/login' className='underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
-                        <button onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
+                        <div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
+                            <span className="w-2/5 h-px bg-gray-200"></span>
+                            sign up via
+                            <span className="w-2/5 h-px bg-gray-200"></span>
+                        </div>
+                        <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
+                        <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
                             <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
-                            <span className='w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:w-32'>Sign Up with</span>
+                            <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[10rem]'>Sign Up with&nbsp;</span>
                             Google
                         </button>
                     </section>

@@ -61,10 +61,10 @@ export default function Newsletter(props) {
                 else return { phone: values0.contact, gender: values0.gender.toLowerCase(), interests: values0.interests }
             })()
             let id = user?._id
-            let payload = user ? { ...values, user: id } : values
+            let registerData = user ? { ...values, user: id } : values
             setLoading(true);
             try {
-                let { data } = await axios.post(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, payload)
+                let { data } = await axios.post(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, registerData)
                 await updateNewsletterData(data.payload, false)
                 toaster("success", data.msg)
                 props.toggleModal(false)

@@ -9,11 +9,11 @@ import img2 from '@/public/card imgs/card img5.jpg'
 import img3 from '@/public/card imgs/card img12.jpg'
 
 const GuideCard = (props) => {
-    return <Link href={props.href || "#"} className='group w-[200px]'>
-        <div className='w-full h-[300px] overflow-hidden'>
-            <Image src={props.img} alt='cover image' className='w-full h-full object-cover group-hover:scale-105 transition-all duration-700' />
+    return <Link href={props.href} className='group w-[200px]'>
+        <div className='w-full aspect-square rounded-full group-hover:rounded-[4rem] overflow-hidden transition-all duration-700'>
+            <Image src={props.img} alt='cover image' className='w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700' />
         </div>
-        <h4 className="mt-4 font_gotham_medium text-sm tracking-wide group-hover:tracking-expand transition-all duration-700">{props.title}</h4>
+        <h4 className="mt-4 font_copper text-lg text-center tracking-1 group-hover:tracking-3 transition-all duration-700">{props.title}</h4>
     </Link>
 }
 
@@ -27,7 +27,7 @@ export default function SizeGuide() {
                 { img: img3, link: 'kids' }
             ]} />
             {/* To be displayed on the desktop screens */}
-            <div className="hidden md:flex flex-col md:flex-row items-center md:justify-start gap-5">
+            <div className="hidden md:flex flex-col md:flex-row items-center md:justify-around gap-5">
                 <GuideCard href='/customerservices/sizeguide/women' img={img1} title='WOMEN' />
                 <GuideCard href='/customerservices/sizeguide/men' img={img2} title='MEN' />
                 <GuideCard href='/customerservices/sizeguide/kids' img={img3} title='KIDS' />

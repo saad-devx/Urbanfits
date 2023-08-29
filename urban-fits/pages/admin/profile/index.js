@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import Image from "next/image";
 import Button from "@/components/buttons/simple_btn";
 import { BasketIcon } from "@/public/sidebaricons/BasketIcon";
@@ -38,7 +38,7 @@ export default function Profile({ children }) {
   }
 
   return (
-    <Sidebaradmin>
+    <Admin>
       <div className={` mt-[40px] flex items-center font_futura `}>
         <div className="w-36 h-36 rounded-2xl p-1 bg-gold border border-white flex justify-center items-center overflow-hidden">
           {imgSpinner}
@@ -139,6 +139,6 @@ export default function Profile({ children }) {
         </div>
       </CustomModal>
       {/*  */}
-    </Sidebaradmin>
+    </Admin>
   );
 }

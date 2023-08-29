@@ -1,5 +1,5 @@
 import ConnectDB from "@/utils/connect_db"
-import Product from "@/models/product"
+import Product from "@/models/product";
 
 const getManyProducts = async (req, res) => {
     try {
@@ -31,7 +31,7 @@ const getManyProducts = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({success: false, error: err, msg:"Internal Server Error occurred. Please retry"})
+        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry" })
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebaradmin from '../sidebar'
+import Admin from '..'
 import Button from '@/components/buttons/simple_btn'
 import CardAdmin from '@/components/cards/cardadmin'
 import { RightArrowIcon } from '@/public/sidebaricons/RightArrowIcon'
@@ -7,7 +7,7 @@ import { RightArrowIcon } from '@/public/sidebaricons/RightArrowIcon'
 
 const accountsetting = () => {
     return (
-        <Sidebaradmin>
+        <Admin>
             <div className='font_futura' >
                 <p className='not-italic text-[22px] mt-[15px] font-medium text-black'>Account Setting</p>
                 </div>
@@ -72,7 +72,7 @@ const accountsetting = () => {
             <div className='float-right'>
             <Button className="mt-0 mb-0 " > Save Changes </Button>
              </div>
-        </Sidebaradmin>
+        </Admin>
     )
 }
 

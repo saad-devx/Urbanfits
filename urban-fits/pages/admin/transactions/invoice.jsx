@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebaradmin from '../sidebar'
+import Admin from '..'
 import { RightArrowIcon } from '@/public/sidebaricons/RightArrowIcon'
 import Button from '@/components/buttons/simple_btn'
 import { Button2 } from '@/components/buttons/Button2'
@@ -12,7 +12,7 @@ import { invoiceTableColumns, invoiceTableData } from '@/mock/tablesdata'
 
 const invoice = () => {
   return (
-    <Sidebaradmin>
+    <Admin>
             <div className="flex mt-[15px] justify-between items-center ">
         <div>
           <div className="font_futura">
@@ -137,7 +137,7 @@ const invoice = () => {
       </CardAdmin>
 
 
-    </Sidebaradmin>
+    </Admin>
   )
 }
 

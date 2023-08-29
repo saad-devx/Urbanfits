@@ -6,7 +6,7 @@ const AboutComponent = dynamic(() => import('@/components/aboutComponent'), {
 });
 
 const About = () => {
-    if (window.matchMedia('(max-width: 1000px)').matches) return <div className="w-full h-screen flex justify-center items-center font_gotham_medium text-2xl tracking-expand">ABOUT US</div>
+    if (window.matchMedia('(max-width: 1000px)').matches) return <div className="w-full h-screen flex justify-center items-center font_urbanist_medium text-2xl tracking-expand">ABOUT US</div>
     const [loading, setLoading] = useState(<OneTimeLoader />)
     useEffect(() => {
         setTimeout(() => {

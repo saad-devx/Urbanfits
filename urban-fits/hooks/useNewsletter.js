@@ -1,76 +1,50 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import useUser from './useUser';
 import toaster from "@/utils/toast_function";
-import getUser_LS from '@/utils/getUserfromLS';
 import axios from "axios";
 import jwt from 'jsonwebtoken';
 
-const useNewsletter = create((set, get) => ({
-
+const useNewsletter = create(persist((set) => ({
     newsletterData: null,
-
-    user: () => {
-        const token = jwt.decode(localStorage.getItem("authToken"))
-        if (token && token._doc && token._doc.email) return token._doc
-        else return null
-    },
-
     getNewsletterData: async () => {
-        const user = get().user()
+        const { user } = useUser.getState()
         if (!user) return
 
-        const token = jwt.decode(localStorage.getItem("user_newsletter_token"))
-        if (token && token._doc && token._doc.user) return set((state) =>
-            ({ newsletterData: token._doc })
-        )
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/newsletter/get?id=${user._id}`)
-            const { payload } = data
-            const decodedPayload = jwt.decode(payload)?._doc
-            localStorage.setItem("user_newsletter_token", payload)
-            return set((state) =>
-                ({ newsletterData: decodedPayload })
-            )
+            const decodedData = jwt.decode(data.payload)?._doc
+            delete decodedData._id;
+            delete decodedData.user;
+            return set(() => ({ newsletterData: decodedData }))
         } catch (error) {
-            console.log(error)
-            localStorage.setItem("user_newsletter_token", null)
-            return set((state) =>
-                ({ newsletterData: null })
-            )
+            return console.log(error)
         }
     },
 
     updateNewsletterData: async (valuesObj, sendRequest = true) => {
-        const user = get().user()
+        const { user } = useUser.getState()
         if (sendRequest) {
             try {
-                const res = await axios.put(`${process.env.HOST}/api/newsletter/update?id=${user._id}`, valuesObj)
-                const { payload } = res.data
-                toaster("success", res.data.msg)
-                localStorage.setItem("user_newsletter_token", payload)
-                const decodedPayload = jwt.decode(payload)?._doc
-                set((state) =>
-                    ({ newsletterData: decodedPayload })
-                )
-                return decodedPayload
+                const { data } = await axios.put(`${process.env.HOST}/api/newsletter/update?id=${user._id}`, valuesObj)
+                toaster("success", data.msg)
+                const decodedData = jwt.decode(data.payload)?._doc
+                delete decodedData._id;
+                delete decodedData.user;
+                set(() => ({ newsletterData: decodedData }))
+                return decodedData
             } catch (error) {
                 console.log(error)
-                toaster("error", error.response.data.msg)
+                return toaster("error", error.response.data.msg)
             }
         }
         else if (!sendRequest) {
-            localStorage.setItem("user_newsletter_token", valuesObj)
-            const decodedPayload = jwt.decode(valuesObj)?._doc
-            set((state) =>
-                ({ newsletterData: decodedPayload })
-            )
-            return decodedPayload
+            const decodedData = jwt.decode(valuesObj)?._doc
+            set(() => ({ newsletterData: decodedData }))
+            return decodedData
         }
     },
+    clearNewsletterData: () => set(() => ({ newsletterData: null }))
 
-    clearNewsletterData: ()=>{
-        set((state) => (
-            {newsletterData: null}
-        ))
-    }
-}))
+}), { name: 'user_newsletter_data' }))
 export default useNewsletter

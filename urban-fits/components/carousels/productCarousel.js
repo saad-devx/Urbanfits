@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image'
-import Spinner from '../loaders/spinner';
+import ImgLoader from '../loaders/imgLoader';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
 export default function ProductCarousel(props) {
   const [images, setImages] = useState([])
+  const [loading, setLoading] = useState(true)
   const slider1 = useRef(null);
   const slider2 = useRef(null);
 
@@ -30,7 +31,8 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full layout_height flex justify-center items-center' >
-                <Image className='w-full h-full object-cover object-center' priority={true} width={1200} height={1265} src={img} alt="Urban images" />
+                <ImgLoader loading={loading} />
+                <Image className={`${loading ? 'w-0 h-0' : 'w-full h-full'} object-cover object-center`} onLoad={() => setLoading(false)} priority={true} width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>
             )
           })}
@@ -77,7 +79,8 @@ export default function ProductCarousel(props) {
           {images.map((img) => {
             return (
               <SplideSlide className='w-full h-[94vw] flex justify-center items-center' >
-                <Image className='w-full h-full object-cover object-center' width={1200} height={1265} src={img} alt="Urban images" />
+                <ImgLoader loading={loading} />
+                <Image className={`${loading ? 'w-0 h-0' : 'w-full h-full'} object-cover object-center`} onLoad={() => setLoading(false)} width={1200} height={1265} src={img} alt="Urban images" />
               </SplideSlide>
             )
           })}

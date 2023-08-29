@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import DataTable from 'react-data-table-component';
 import DeleteAction from '@/components/modals/deleteAction';
 import CardAdmin from "@/components/cards/cardadmin";
@@ -14,7 +14,6 @@ import useProduct from '@/hooks/useProduct';
 import { productListTableColumns } from '@/mock/tablesdata';
 
 export default function allproducts() {
-    const router = useRouter()
     const { categories, getCategories, categLoading } = useCategories()
     const { products, getProducts, productLoading, totalProducts, deleteProducts, selectedProducts, setSelectedProducts, setProductInfo } = useProduct()
     const [categoryOption, setCategoryOption] = useState(false)
@@ -56,7 +55,7 @@ export default function allproducts() {
     }
 
     return (
-        <Sidebaradmin>
+        <Admin>
             {deleteModal}
             <div className="flex mt-[15px] justify-between items-center ">
                 <div>
@@ -199,6 +198,6 @@ export default function allproducts() {
                     })}
                 />
             </CardAdmin>
-        </Sidebaradmin>
+        </Admin>
     )
 }

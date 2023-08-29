@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const ProductSchema = mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please enter a name for your product"],
@@ -31,7 +31,6 @@ const ProductSchema = mongoose.Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true,
         default: mongoose.Types.ObjectId("64b6d07d82dcb19775042d76")
     }],
     slug: {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import CardAdmin from "@/components/cards/cardadmin";
 import Image from "next/image";
@@ -27,7 +27,7 @@ const userprofile = () => {
   };
 
   return (
-    <Sidebaradmin>
+    <Admin>
       <div className="flex mt-[15px] justify-between items-center ">
         <div>
           <div className="font_futura">
@@ -268,7 +268,7 @@ const userprofile = () => {
           </div>
         </section>
       </CardAdmin>
-    </Sidebaradmin>
+    </Admin>
   );
 };
 

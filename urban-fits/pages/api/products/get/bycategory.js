@@ -1,8 +1,7 @@
-import ConnectDB from "@/utils/connect_db"
-import Product from "@/models/product"
-import Category from "@/models/category"
 const mongoose = require('mongoose')
-
+import ConnectDB from "@/utils/connect_db"
+import Product from "@/models/product";
+import Category from "@/models/category";
 const GetProductByCategory = async (req, res) => {
     try {
         if (req.method === 'GET') {
@@ -37,6 +36,7 @@ const GetProductByCategory = async (req, res) => {
                     for (const child of category.children) {
                         let foundChildProducts = await Product.find({ categories: { $in: [child] } })
                             .sort({ createdAt: -1 })
+                            .skip((page - 1) * LIMIT)
                             .limit(Math.ceil(category.children.length / LIMIT))
                             .populate("categories")
 
@@ -44,7 +44,7 @@ const GetProductByCategory = async (req, res) => {
                     }
                 }
             }
-            const finalProducts = [...products, ...childProducts]
+            const finalProducts = products.concat(childProducts)
 
             if (!finalProducts)
                 return res.status(404).json({

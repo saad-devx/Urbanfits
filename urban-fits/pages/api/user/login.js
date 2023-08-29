@@ -34,9 +34,7 @@ const Login = async (req, res) => {
                 })
             }
         }
-        else {
-            res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
-        }
+        else return res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
     }
     catch (error) {
         console.log(error)

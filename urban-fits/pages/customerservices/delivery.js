@@ -5,20 +5,20 @@ import Link from 'next/link'
 export default function Delivery() {
     return (
         <CustomerServices>
-            <h1 className="mb-7 text-lg lg:text-xl font_gotham_bold tracking-expand">DELIVERY</h1>
+            <h1 className="mb-7 text-lg lg:text-xl font_urbanist_bold">Delivery</h1>
 
-            <div className="w-full p-4 lg:p-7 mb-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
+            <div className="w-full mb-6 text-black text-sm rounded-lg font_urbanist_light">
                 <p>Every order that is sent from our warehouse is carefully inspected. You can track and trace your order via MyAccount.
                     Delivery Times, Areas, Tracking, Damages, Collect in Store.</p> <br />
-                <h1 className="mb-3 font_gotham_medium tracking-widest">DELIVERY TIMES</h1>
+                <h1 className="mb-3 font_urbanist_medium">Delivery Times</h1>
                 <p>We do our best to get your order to you as quickly as possible. Please look at the table below for information on delivery time, cost, partners and options that we have available:</p><br />
-                <h1 className="my-3 font_gotham_medium tracking-widest">STANDARD DELIVERY</h1>
+                <h1 className="my-3 font_urbanist_medium">Standard Delivery</h1>
                 <table className="w-full mb-3 table-auto">
-                    <thead className='font_gotham_medium tracking-widest' >
+                    <thead className='font_urbanist_medium' >
                         <tr>
-                            <td className='text-left' >CARRIER</td>
-                            <td className='text-left' >EXPECTED TIME</td>
-                            <td className='text-left' >COST</td>
+                            <td className='text-left' >Carrier</td>
+                            <td className='text-left' >Expected Time</td>
+                            <td className='text-left' >Cost</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,16 +36,16 @@ export default function Delivery() {
                     We cannot change your order (product, size, color, address) once it has been shipped.
                 </p>
             </div>
-            <div className="w-full p-4 lg:p-7 my-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
-                <h1 className="mb-3 font_gotham_medium tracking-widest">TRACK YOUR ORDER</h1>
+            <div className="w-full my-6 text-black text-sm rounded-lg font_urbanist_light">
+                <h1 className="mb-3 font_urbanist_medium">Track you order</h1>
                 <p>
                     You can always track your order(s) anytime/24 hours per day via My Account. As soon as your order is dispatched from our warehouse we send you an email that will include a tracking number for your order with a link to track the package whenever you want to check on its progress.<br />
                     You can also track your order simply by entering your tracking number here. Please note that the tracking number only becomes active and shows the parcel progress when it has entered the destination country.<br />
                     Should you need any assistance, please do not hesitate to contact us.
                 </p>
             </div>
-            <div className="w-full p-4 lg:p-7 my-6 text-black text-sm bg-gray-50 rounded-lg font_gotham_light">
-                <h1 className="mb-3 font_gotham_medium tracking-widest">DAMAGES</h1>
+            <div className="w-full my-6 text-black text-sm rounded-lg font_urbanist_light">
+                <h1 className="mb-3 font_urbanist_medium">Damages</h1>
                 <p>
                     Every order that we send from our warehouse is carefully inspected.<br />
                     Should you receive a damaged parcel, we kindly ask you to contact our customer service team:<br />

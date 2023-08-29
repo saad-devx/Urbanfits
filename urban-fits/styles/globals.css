@@ -79,9 +79,8 @@
 }
 
 @media only screen and (min-width: 1000px) {
-  .lg\:font_gotham_bold {
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 600;
+  .lg\:font_copper {
+    font-family: 'Copperplate Gothic 33 BC', sans;
   }
 
   .lg\:font_gotham_black {
@@ -230,6 +229,9 @@ select {
 .card_boxshadow {
   box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.25);
 
+}
+.equillibrium_shadow{
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
 }
 
 /*                                    Google icons setup */
@@ -484,12 +486,12 @@ input:checked+.slider:before {
 
 /* height css for layout accordint to the navbar height in pixels */
 .layout_height {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 105px);
 }
 
 @media screen and (min-width: 1024px) {
   .lg_layout_height {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 105px);
   }
 }
 
@@ -506,6 +508,10 @@ input:checked+.slider:before {
   .bglisting_black {
     background: linear-gradient(90deg, #000000 0%, #000000 69.37%, #000000 74%, rgba(0, 0, 0, 0) 100%);
   }
+
+  .bglisting_white {
+    background: linear-gradient(90deg, #F6F8FC 0%, #F6F8FC 44.79%, #F5F7FA 74.48%, rgba(243, 239, 238, 0.00) 100%);
+  }
 }
 
 /* css for size giude button */
@@ -519,12 +525,11 @@ input:checked+.slider:before {
   width: auto !important;
   width: 300% !important;
 }
+
 /* Admin Area END  */
 
 .border_gradient_2 {
   border-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%) 20;
-  /* border-width: 1px; */
-  /* border-style: solid */
 }
 
 /* About Page animation */
@@ -552,4 +557,14 @@ input:checked+.slider:before {
 .animate_white_heading {
   transform-origin: left;
   animation: animateHeading 8s infinite linear reverse;
+}
+
+/* CSS for Customer Services */
+.active_bg{
+  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+}
+@media screen and (min-width: 1024px) {
+  .active_bg{
+    background: rgb(243 244 246);
+  }
 }

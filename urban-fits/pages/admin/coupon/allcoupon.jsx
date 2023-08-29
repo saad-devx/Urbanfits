@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebaradmin from "../sidebar";
+import Admin from "..";
 import { RightArrowIcon } from "@/public/sidebaricons/RightArrowIcon";
 import CardAdmin from "@/components/cards/cardadmin";
 import { InputText } from "@/components/InputText";
@@ -19,7 +19,7 @@ const allcoupon = () => {
   };
 
   return (
-    <Sidebaradmin>
+    <Admin>
       <div className="font_futura">
         <p className="not-italic text-[22px] mt-[15px] font-medium text-black">
           Coupon
@@ -224,7 +224,7 @@ const allcoupon = () => {
       <div className="flex justify-end" >
         <Button> Save Changes </Button>
       </div>
-    </Sidebaradmin>
+    </Admin>
   );
 };
 

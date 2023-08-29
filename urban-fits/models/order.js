@@ -15,13 +15,17 @@ const addressObject = {
 
 const OrderSchema = new mongoose.Schema({
 
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     shippingAddress: addressObject,
     billingAddress: addressObject,
-    user: {
-        type: mongoose.Schema.Types.ObjectId,   
-        ref: "User",
-        required: true,
-    },
+    orderStatus: {
+        type: String,
+        enum: ['Pending', 'Shipped', 'ReadyToShip', 'Returned'],
+        default: 'Pending',
+      },
     orderItems: [
         {
             name: {
@@ -80,11 +84,6 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0,
-    },
-    orderStatus: {
-        type: String,
-        required: true,
-        default: "Processing",
     },
     deliveredAt: Date,
     createdAt: {
