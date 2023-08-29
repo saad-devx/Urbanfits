@@ -30,7 +30,17 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        minLength: [8, "Password should be greater than 8 characters"],
+        minLength: [8, "Password should be greater than 8 characters"]
+    },
+    two_fa_secret: {
+        type: String,
+        minLength: 20,
+        select: false
+    },
+    two_fa_activation_date: Date,
+    two_fa_enabled: {
+        type: Boolean,
+        default: false
     },
     role: {
         type: String,

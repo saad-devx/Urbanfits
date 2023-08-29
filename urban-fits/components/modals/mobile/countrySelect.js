@@ -6,7 +6,7 @@ import countryCodes from '@/static data/countryCodes'
 export default function CountrySelection({ show, setCoutnryModal }) {
     const { country, setCountry } = useUser()
     const [query, setQuery] = useState('')
-    const filteredCountries = countryCodes.filter(country => country.name.toLowerCase().includes(query))
+    const filteredCountries = countryCodes.filter(country => country.name.toLowerCase().includes(query.toLowerCase()))
 
     return <section style={{ transform: show ? "translateX(-100%)" : "translateX(0)" }} className='fixed z-50 top-0 -right-full w-full h-screen overflow-y-scroll bg-white flex flex-col transition-all duration-500'>
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">

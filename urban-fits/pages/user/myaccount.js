@@ -34,7 +34,6 @@ const AddressContainer = (props) => {
     if (address) {
         let userAddress = address._doc
         if (!userAddress || !userAddress[type]) return addressLink
-        console.log(userAddress[type].address_title)
         return <div className="w-full p-4 text-sm border border-black flex justify-between items-start rounded-lg bg-white">
             <div>
                 <span>{userAddress[type].address_title}</span><br />
@@ -139,7 +138,7 @@ export default function Personalinfo() {
 
     }
     if (!user) return <Error403 />
-    if (window.matchMedia('(max-width: 1024px)').matches) return <>
+    if (window.matchMedia('(max-width: 786px)').matches) return <>
         <Head><title>My Profile</title></Head>
         <main className="relative w-screen h-screen p-4 pb-10 bg-white">
             <div className="absolute left-0 top-0 right-0 w-full p-4 border-b border-gray-100 flex justify-between items-center">
@@ -165,7 +164,7 @@ export default function Personalinfo() {
             <CurrencySelect show={currencyModal} setCurrencyModal={setCurrencyModal} />
             <section className="w-full flex flex-col">
                 <button onClick={() => setGenderModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender? user.gender: "Set your gender"} <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender ? user.gender : "Set your gender"} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <Link href="/user/emailaddress" className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Email<span className="flex items-center gap-x-2 font_urbanist"><p className="max-w-[16rem] truncate">{user.email}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
@@ -176,9 +175,9 @@ export default function Personalinfo() {
                 <button onClick={() => setUserInfoModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Phone No.<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.phone_prefix || null} {user.phone_number || "Set your phone no."} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
-                <button className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                <Link href="/user/address" className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Address<span className="flex items-center gap-x-2 font_urbanist capitalize"><p className="max-w-[10rem] truncate">{address?.shipping_address?.address || "Set your address"}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
-                </button>
+                </Link>
                 <button onClick={() => setLanguageModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Language<span className="flex items-center gap-x-2 font_urbanist capitalize">English <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
@@ -196,7 +195,7 @@ export default function Personalinfo() {
             <form className="mt-10 font_urbanist gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                 <h1 className='text-sm lg:text-base font_urbanist_bold' >Personal Information</h1>
                 <div className="flex flex-col md:flex-row md:items-end justify-between w-full text-sm ">
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 my-6">
                         {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                         <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                             <option >Title</option>
@@ -204,17 +203,17 @@ export default function Personalinfo() {
                             <option id="Mrs" value="Mrs.">Ms</option>
                         </select>
                     </div>
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                         {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between w-full text-sm">
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                         {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
                     </div>
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                         {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                         <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                             <option disabled >Gender</option>
@@ -223,13 +222,13 @@ export default function Personalinfo() {
                             <option value="fluid">Fluid</option>
                         </select>
                     </div>
-                    {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    {/* <div className="relative w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="gender" id="gender" value={values.gender} onChange={handleChange} onBlur={handleBlur} placeholder="Date Of Birth" />
                                 </div> */}
                 </div>
                 <div className="flex flex-col md:flex-row justify-between w-full text-sm">
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                         {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                         <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                             {countryCodes.map((item) => {
@@ -238,7 +237,7 @@ export default function Personalinfo() {
                             })}
                         </select>
                     </div>
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-6">
                         {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                     </div>
@@ -266,7 +265,7 @@ export default function Personalinfo() {
             <div className='w-full' >
                 <div className='my-14 space-y-5' >
                     <h2 className="text-sm lg:text-base font_urbanist_bold">Email & Password</h2>
-                    <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-400 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                    <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-200 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                         <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/emailaddress' ><i className="material-symbols-outlined">edit_square</i></Link>
                     </div>
                 </div>

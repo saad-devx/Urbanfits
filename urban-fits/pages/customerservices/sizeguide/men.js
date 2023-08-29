@@ -8,8 +8,8 @@ import Link from 'next/link'
 export default function Men() {
     return (
         <CutomerServices>
-            <h1 className="mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">MEN' SIZE</h1>
-            <SizeTableAccordian title='TOPS, OUTERWEAR, CASUAL SHIRTS' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.3%]'
+            <h1 className="mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">Men' Size</h1>
+            <SizeTableAccordian title='Tops, Outerwear, Casual Shirts' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.3%]'
                 columnHeadings={['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL']}
                 rowsData={[
                     ['UK/IE Size', 34, '36 - 38', 40, 42, 44, 46, 48],
@@ -38,7 +38,7 @@ export default function Men() {
                     </div>
                 </div>
             </SizeTableAccordian>
-            <SizeTableAccordian title='URBAN MENSWEAR AND TH SPORTS - BOTTOMS - DENIM - CHINO - SHORTS' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.3%]'
+            <SizeTableAccordian title='Urban Menswear and the Sports - Bottoms - Denim - Chino - Shorts.' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.3%]'
                 columnHeadings={['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']}
                 rowsData={[
                     ['UK/IE Size', 32, 34, '36 - 38', 40, 42, 44, 46],
@@ -50,9 +50,9 @@ export default function Men() {
                     ['Tights', { CM: '51 - 52', INCH: '20⅛ - 20½' }, { CM: '52 - 54', INCH: '20½ - 21⅓' }, { CM: '54 - 56', INCH: '21⅓ - 22' }, { CM: '56 - 58', INCH: '22 - 22⅘' }, { CM: '58 - 60', INCH: '22⅘ - 23⅗' }, { CM: '60 - 62', INCH: '23⅗ - 24⅖' }, { CM: '62 - 64', INCH: '24⅖ - 25⅕' }],
                     ['Urban Inch Size', { CM: 28, INCH: 11 }, { CM: '29/2 - 30/2', INCH: '11⅖ - 11⅘' }, { CM: '31 - 32', INCH: '12⅕ - 12⅗' }, { CM: '33 - 34', INCH: '13 - 13⅖' }, { CM: '35 - 36', INCH: '13⅘ - 14⅕' }, { CM: '38', INCH: '15' }, { CM: '40', INCH: '15⅔' }]
                 ]}>
-                <TableButton href='/products/Jeans' >SHOP JEANS</TableButton>
+                <TableButton href='/products/Jeans' >Shop Jeans</TableButton>
             </SizeTableAccordian>
-            <SizeTableAccordian title='INSEAM LENGTHS' tableHeading='LABEL' indexColWidth='w-32' restColsWidth='w-24' unitBtns={null}
+            <SizeTableAccordian title='Inseam Lengths' tableHeading='Label' indexColWidth='w-32' restColsWidth='w-24' unitBtns={null}
                 columnHeadings={['Size', 'Insie Leg']}
                 rowsData={[
                     ['Crop', 28, '71cm'],
@@ -62,7 +62,7 @@ export default function Men() {
                     ['X-Tall', 36, '91cm']
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SWIMSHORTS, LOUNGE BOTTOMS, UNDERWEAR' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
+            <SizeTableAccordian title='Swimshorts, Lounge Bottoms, Underwear.' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
                 columnHeadings={['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']}
                 rowsData={[
                     ['UK + US Size', 38, 40, 42, 44, 46, 48, 50, 52],
@@ -71,17 +71,7 @@ export default function Men() {
                     ['Hips', { CM: '93-97', INCH: '36⅗ - 38⅕' }, { CM: '98-103', INCH: '38⅗ - 40⅗' }, { CM: '104-109', INCH: '40⅞ - 42⅞' }, { CM: '110-115', INCH: '43⅓ - 45⅓' }, { CM: '116-121', INCH: '45⅔ - 47⅗' }, { CM: '122-127', INCH: '48 - 50' }, { CM: '128-133', INCH: '50⅖ - 52⅖' }, { CM: '134-139', INCH: '52⅘ - 54⅔' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='BEACHCOVER UPS AND LOUNGE TOPS' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
-                columnHeadings={['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']}
-                rowsData={[
-                    ['UK + US Size', 38, 40, 42, 44, 46, 48, 50, 52],
-                    ['EU Size', 48, 50, 52, 54, 56, 58, 60, 62],
-                    ['Chest', { CM: '94-98', INCH: '37 - 38⅗' }, { CM: '99-104', INCH: '39 - 40⅞' }, { CM: '105-110', INCH: '41⅓ - 43⅓' }, { CM: '111-116', INCH: '43⅔ - 45⅔' }, { CM: '117-122', INCH: '46⅛ - 48' }, { CM: '123-128', INCH: '48⅖ - 50⅖' }, { CM: '129-134', INCH: '50⅘ - 52⅘' }, { CM: '135-140', INCH: '53⅛ - 55⅛' }],
-                    ['Waist', { CM: '81-85', INCH: '31⅞ - 33½' }, { CM: '86-91', INCH: '33⅞ - 35⅘' }, { CM: '92-97', INCH: '36⅕ - 38⅕' }, { CM: '98-103', INCH: '38⅗ - 40⅗' }, { CM: '104-109', INCH: '40⅞ - 42⅞' }, { CM: '110-115', INCH: '45⅔ - 47⅗' }, { CM: '116-121', INCH: '45⅔ - 47⅗' }, { CM: '122-127', INCH: '48 - 50' }],
-                    ['Hips', { CM: '93-97', INCH: '36⅗ - 38⅕' }, { CM: '98-103', INCH: '38⅗ - 40⅗' }, { CM: '104-109', INCH: '40⅞ - 42⅞' }, { CM: '110-115', INCH: '43⅓ - 45⅓' }, { CM: '116-121', INCH: '45⅔ - 47⅗' }, { CM: '122-127', INCH: '48 - 50' }, { CM: '128-133', INCH: '50⅖ - 52⅖' }, { CM: '134-139', INCH: '52⅘ - 54⅔' }]
-                ]}>
-            </SizeTableAccordian>
-            <SizeTableAccordian title='PAJAMA SETS' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
+            <SizeTableAccordian title='Beachcover Ups and Lounge Tops.' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
                 columnHeadings={['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']}
                 rowsData={[
                     ['UK + US Size', 38, 40, 42, 44, 46, 48, 50, 52],
@@ -91,7 +81,17 @@ export default function Men() {
                     ['Hips', { CM: '93-97', INCH: '36⅗ - 38⅕' }, { CM: '98-103', INCH: '38⅗ - 40⅗' }, { CM: '104-109', INCH: '40⅞ - 42⅞' }, { CM: '110-115', INCH: '43⅓ - 45⅓' }, { CM: '116-121', INCH: '45⅔ - 47⅗' }, { CM: '122-127', INCH: '48 - 50' }, { CM: '128-133', INCH: '50⅖ - 52⅖' }, { CM: '134-139', INCH: '52⅘ - 54⅔' }]
                 ]}>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SHOES' headingTracking_null tableHeading={null} indexColWidth='w-32' restColsWidth='w-16'
+            <SizeTableAccordian title='Pajama Sets' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
+                columnHeadings={['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']}
+                rowsData={[
+                    ['UK + US Size', 38, 40, 42, 44, 46, 48, 50, 52],
+                    ['EU Size', 48, 50, 52, 54, 56, 58, 60, 62],
+                    ['Chest', { CM: '94-98', INCH: '37 - 38⅗' }, { CM: '99-104', INCH: '39 - 40⅞' }, { CM: '105-110', INCH: '41⅓ - 43⅓' }, { CM: '111-116', INCH: '43⅔ - 45⅔' }, { CM: '117-122', INCH: '46⅛ - 48' }, { CM: '123-128', INCH: '48⅖ - 50⅖' }, { CM: '129-134', INCH: '50⅘ - 52⅘' }, { CM: '135-140', INCH: '53⅛ - 55⅛' }],
+                    ['Waist', { CM: '81-85', INCH: '31⅞ - 33½' }, { CM: '86-91', INCH: '33⅞ - 35⅘' }, { CM: '92-97', INCH: '36⅕ - 38⅕' }, { CM: '98-103', INCH: '38⅗ - 40⅗' }, { CM: '104-109', INCH: '40⅞ - 42⅞' }, { CM: '110-115', INCH: '45⅔ - 47⅗' }, { CM: '116-121', INCH: '45⅔ - 47⅗' }, { CM: '122-127', INCH: '48 - 50' }],
+                    ['Hips', { CM: '93-97', INCH: '36⅗ - 38⅕' }, { CM: '98-103', INCH: '38⅗ - 40⅗' }, { CM: '104-109', INCH: '40⅞ - 42⅞' }, { CM: '110-115', INCH: '43⅓ - 45⅓' }, { CM: '116-121', INCH: '45⅔ - 47⅗' }, { CM: '122-127', INCH: '48 - 50' }, { CM: '128-133', INCH: '50⅖ - 52⅖' }, { CM: '134-139', INCH: '52⅘ - 54⅔' }]
+                ]}>
+            </SizeTableAccordian>
+            <SizeTableAccordian title='Shoes' headingTracking_null tableHeading={null} indexColWidth='w-32' restColsWidth='w-16'
                 unitBtns={null} containerWidth='2xl:w-full' columnHeadings={[]}
                 rowsData={[
                     ['US Size', 6.5, 7, 7.5, 8, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11, 11.5, 12, 12, 12.5, 13, 13.5, 14],
@@ -100,19 +100,19 @@ export default function Men() {
                     ['CM*', 24, 24.5, 25, 25.5, 26, 26, 26.5, 27, 27.5, 27.5, 28, 28.5, 29, 29.5, 29.5, 30, 30.5, 31, 31.5],
                     ['INCH*', 9.5, 9.5, 10, 10, 10.25, 10.25, 10.5, 10.5, 10.75, 10.75, 11, 11.25, 11.5, 11.5, 11.75, 11.75, 12, 12.25, 12.25]
                 ]}>
-                <TableButton href='/products/Jeans' >SHOP SHOES</TableButton>
+                <TableButton href='/products/Jeans' >Shop Shoes</TableButton>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SOCKS' tableHeading='LABEL' indexColWidth='w-32' restColsWidth='w-28' unitBtns={null}
+            <SizeTableAccordian title='Socks' tableHeading='Label' indexColWidth='w-32' restColsWidth='w-28' unitBtns={null}
                 containerWidth='w-full' columnHeadings={['39 / 42', '43 / 46']}
                 rowsData={[
                     ['Shoe Size', '39', '43'],
                     ['Foot Length Cm', '24.4 - 27', '27.1 - 29.7']
                 ]} />
-            <SizeTableAccordian title='BELTS' tableHeading='SIZE' indexColWidth='w-24' restColsWidth='w-16' unitBtns={null}
+            <SizeTableAccordian title='Belts' tableHeading='Size' indexColWidth='w-24' restColsWidth='w-16' unitBtns={null}
                 columnHeadings={['S - M', 'L - XL']} rowsData={[['CM', '70cm', '80cm']]}>
             </SizeTableAccordian>
-            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">TAILORED</h1>
-            <SizeTableAccordian title='SUITS, COATS, BUSINESS SHIRTS' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
+            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">Tailored</h1>
+            <SizeTableAccordian title='Suits, Coats, Business Shirts.' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[10%]'
                 bigFontOf_nthRow={[9]} columnHeadings={['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL']}
                 rowsData={[
                     ['UK/IE Size', 34, 36, 38, 40, 42, 44, 46, 48],
@@ -126,7 +126,7 @@ export default function Men() {
                     ['Arms', { CM: '61 - 62', INCH: '24 - 24⅖' }, { CM: '63 - 64', INCH: '24⅘ - 25⅕' }, { CM: '64 - 65', INCH: '25⅕ - 25⅗' }, { CM: '65 - 66', INCH: '25⅗ - 26' }, { CM: '66 - 67', INCH: '26 - 26⅖' }, { CM: '67 - 68', INCH: '26⅖ - 26⅘' }, { CM: '68 - 69', INCH: '26⅘ - 27⅕' }, { CM: '69 - 70', INCH: '27⅕ - 27⅗' }],
                     ['Inseam', { CM: 83, INCH: '32⅔' }, { CM: 84, INCH: '33⅛' }, { CM: 85, INCH: '33½' }, { CM: 86, INCH: '33⅞' }, { CM: 87, INCH: '34⅓' }, { CM: 88, INCH: '34⅗' }, { CM: 89, INCH: '35' }, { CM: 90, INCH: '35⅖' }]
                 ]} />
-            <SizeTableAccordian title='LONG LENGTH SIZES (185 CM - 192 CM) - SUITS - COATS - SHIRTS' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[16%]'
+            <SizeTableAccordian title='Long Length Sizes (185 cm - 192 cm) - Suits - Coats - Shirts.' headingTracking_null tableHeading='Urban Alpha Size' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[16%]'
                 bigFontOf_nthRow={[9]} columnHeadings={['S', 'M', 'L', 'XL', 'XXL']}
                 rowsData={[
                     ['UK/IE Size', '38 long', '40 long', '42 long', '44 long', '46 long'],
@@ -140,7 +140,7 @@ export default function Men() {
                     ['Arms', { CM: '66 - 67', INCH: '26 - 26⅖' }, { CM: '68 - 69', INCH: '26⅘ - 27⅕' }, { CM: '69 - 70', INCH: '27⅕ - 27⅗' }, { CM: '70 - 71', INCH: '27⅗ - 28' }, { CM: '71 - 72', INCH: '28 - 28⅓' }],
                     ['Inseam', { CM: 89, INCH: '35' }, { CM: 90, INCH: '35⅖' }, { CM: 91, INCH: '35⅘' }, { CM: 92, INCH: '36⅕' }, { CM: 93, INCH: '36⅗' }]
                 ]} />
-            <SizeTableAccordian title='SHORT LENGTH SIZES (LESS THAN 175 CM) - SUITS - COATS - SHIRTS' headingTracking_null tableHeading='LABEL (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[16%]'
+            <SizeTableAccordian title='Short Length Sizes (Less Than 175 cm) - Suits - Coats - Shirts.' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[16%]'
                 bigFontOf_nthRow={[9]} columnHeadings={['S', 'M', 'L', 'XL', 'XXL']}
                 rowsData={[
                     ['UK/IE Size', '38 short', '40 short', '42 short', '44 short', '46 short'],
@@ -154,8 +154,8 @@ export default function Men() {
                     ['Arms', { CM: '60 - 62', INCH: '23⅗ - 24⅖' }, { CM: '61 - 62', INCH: '24 - 24⅖' }, { CM: '63 - 64', INCH: '24⅘ - 25⅕' }, { CM: '64 - 65', INCH: '25⅕ - 25⅗' }, { CM: '65 - 66', INCH: '25⅗ - 26' }],
                     ['Inseam', { CM: 82, INCH: '32⅓' }, { CM: 83, INCH: '32⅔' }, { CM: 84, INCH: '33⅛' }, { CM: 85, INCH: '33½' }, { CM: 86, INCH: '33⅞' }]
                 ]} />
-            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBAN JEANS SIZES</h1>
-            <SizeTableAccordian title='SWEATERS, T-SHIRTS, OTHER KNITS, OUTER WEAR' headingTracking_null tableHeading='LABEL (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.33%]'
+            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">Urban Jeans Sizes</h1>
+            <SizeTableAccordian title='Sweaters, T-Shirts, Other Knits, Outer Wear.' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.33%]'
                 bigFontOf_nthRow={[9]} columnHeadings={['XS', 'S', 'M', 'L', 'XL', 'XXL']}
                 rowsData={[
                     ['UK + US Size', 34, 36, 38, 40, 42, 42],
@@ -165,9 +165,9 @@ export default function Men() {
                     ['Sleeve', { CM: 61, INCH: '24' }, { CM: 62.5, INCH: '24⅗' }, { CM: 64, INCH: '25⅕' }, { CM: 65.5, INCH: '25⅘' }, { CM: 67, INCH: '26⅖' }, { CM: 68.5, INCH: '27' }],
                     ['Arms', { CM: '84 - 85', INCH: '33⅛ - 33½' }, { CM: '86 - 87', INCH: '33⅞ - 34⅓' }, { CM: '88 - 89', INCH: '34⅗ - 35' }, { CM: '90 - 91', INCH: '35⅖ - 35⅘' }, { CM: '92 - 93', INCH: '36⅕ - 36⅗' }, { CM: '94 - 95', INCH: '37 - 37⅖' }]
                 ]}>
-                <TableButton href='/products/Jeans' classes='w-48' >SHOP URBAN JEANS</TableButton>
+                <TableButton href='/products/Jeans' classes='w-48' >Shop Urban Jeans</TableButton>
             </SizeTableAccordian>
-            <SizeTableAccordian title='SHORTS, PANTS' headingTracking_null tableHeading='LABEL (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.33%]'
+            <SizeTableAccordian title='Shorts, Pants' headingTracking_null tableHeading='Label (XS - XXL)' indexColWidth='w-32 md:w-1/5' restColsWidth='w-16 md:w-[13.33%]'
                 unitBtns={null} columnHeadings={['XS', 'S', 'M', 'L', 'XL', 'XXL']}
                 rowsData={[
                     ['UK + US Size', 34, 36, 38, 40, 42, 42],
@@ -177,7 +177,7 @@ export default function Men() {
                     ['Sleeve', 93.5, 97.5, 101.5, 105.5, 109.5, 113.5],
                     ['Arms', 81, 81.5, 82, 82.5, 83, 83.5]
                 ]} />
-            <SizeTableAccordian title='INSEAM LENGTHS' tableHeading='Label' headingTracking_null indexColWidth='w-32' restColsWidth='w-28' unitBtns={null}
+            <SizeTableAccordian title='Inseam Lengths' tableHeading='Label' headingTracking_null indexColWidth='w-32' restColsWidth='w-28' unitBtns={null}
                 containerWidth='w-full' columnHeadings={['Size', 'Inside Leg']}
                 rowsData={[
                     ['Short', 30, '76 cm'],
@@ -185,19 +185,19 @@ export default function Men() {
                     ['Tall', 34, '86 cm'],
                     ['X-Tall', 36, '91 cm']
                 ]} />
-            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">URBANFITS BIG & TALL / URBAN JEANS PLUS</h1>
-            <SizeTableAccordian title='URBANFITS BIG AND TALL / URBAN JEANS PLUS - SIZE CONVERSIONS' tableHeading='Alpha Size' headingTracking_null indexColWidth='w-32 sm:w-1/5' restColsWidth='w-28 sm:w-[13.3%]' unitBtns={null}
+            <h1 className="mt-20 lg:mt-28 mb-6 font_gotham_bold text-sm md:text-lg xl:text-xl tracking-vast">Urbanfits Big & Tall / Urban Jeans Plus.</h1>
+            <SizeTableAccordian title='Urbanfits Big and Tall / Urban Jeans Plus - Size Conversions.' tableHeading='Alpha Size' headingTracking_null indexColWidth='w-32 sm:w-1/5' restColsWidth='w-28 sm:w-[13.3%]' unitBtns={null}
                 containerWidth='w-full' columnHeadings={['XLT', '2XLT', '3XLT', '4XLT', '5XLT', 'XXL']}
                 rowsData={[
                     ['Urban/Inch', 42, 44, 46, 48, 50, 42]
                 ]} />
-            <SizeTableAccordian title="URBANFITS MEN'S BIG AND TALL / URBAN JEANS PLUS - TOPS - OUTERWEAR - SHIRTS - SWEATERS" tableHeading='Alpha Size' headingTracking_null indexColWidth='w-32 sm:w-1/5' restColsWidth='w-28 sm:w-[16%]' unitBtns={null}
+            <SizeTableAccordian title="Urbanfits Men's Big and Tall / Urban Jeans Plus - Tops - Outerwear - Shirts - Sweaters." tableHeading='Alpha Size' headingTracking_null indexColWidth='w-32 sm:w-1/5' restColsWidth='w-28 sm:w-[16%]' unitBtns={null}
                 containerWidth='w-full' columnHeadings={['XLT', '2XLT', '3XLT', '4XLT', '5XLT']}
                 rowsData={[
                     ['Chest', '123 - 127', '128 - 132', '133 - 137', '138 - 142', '143 - 147'],
                     ['Arms', '94 - 95', '95 - 96', '97 - 98', '99 - 100', '101 - 102']
                 ]} />
-            <SizeTableAccordian title="URBANFITS MEN'S BIG AND TALL / URBAN JEANS PLUS - BOTTOMS - DENIM - CHINO - SHORTS" tableHeading='Alpha Size' headingTracking_null indexColWidth='w-32 sm:w-1/5' restColsWidth='w-28 sm:w-[16%]' unitBtns={null}
+            <SizeTableAccordian title="Urbanfits Men's Big and Tall / Urban Jeans Plus - Bottoms - Denim - Chino - Shorts." tableHeading='Alpha Size' headingTracking_null indexColWidth='w-32 sm:w-1/5' restColsWidth='w-28 sm:w-[16%]' unitBtns={null}
                 containerWidth='w-full' columnHeadings={['XLT', '2XLT', '3XLT', '4XLT', '5XLT']}
                 rowsData={[
                     ['Waist', '110 - 114', '115 - 119', '120 - 124', '125 - 128', '129 - 134'],

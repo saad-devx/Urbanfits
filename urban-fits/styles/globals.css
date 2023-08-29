@@ -530,8 +530,6 @@ input:checked+.slider:before {
 
 .border_gradient_2 {
   border-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%) 20;
-  /* border-width: 1px; */
-  /* border-style: solid */
 }
 
 /* About Page animation */
@@ -559,4 +557,14 @@ input:checked+.slider:before {
 .animate_white_heading {
   transform-origin: left;
   animation: animateHeading 8s infinite linear reverse;
+}
+
+/* CSS for Customer Services */
+.active_bg{
+  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+}
+@media screen and (min-width: 1024px) {
+  .active_bg{
+    background: rgb(243 244 246);
+  }
 }

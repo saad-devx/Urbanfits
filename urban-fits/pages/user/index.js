@@ -34,10 +34,10 @@ import {
     UfPointsIcon
 } from "@/public/accountIcons"
 
-const Option = (props) => {
+export const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
-    return <Link href={props.href} className={`w-full py-5 flex justify-between items-center border-b border-[#F5F5F5] px-4 ${route === props.href ? 'bg-gray-100' : 'bg-white'} transition-all overflow-hidden`}>
+    return <Link href={props.href} className={`w-full py-5 px-4 flex justify-between items-center border-b border-[#F5F5F5] ${route === props.href ? 'bg-gray-100' : 'bg-white'} transition-all overflow-hidden`}>
         <span className={`${route === props.href ? 'opacity-100' : 'opacity-70'} flex items-center gap-x-3`}>
             {props.icon}
             {props.children}
@@ -274,11 +274,11 @@ export default function User(props) {
     else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
         <section className="w-1/4 min-h-screen hidden lg:block">
-            <div className="flex flex-col sticky left-0 top-20 items-center w-[280px] rounded-lg list-none font_urbanist overflow-hidden">
+            <div className="flex flex-col sticky left-0 top-20 items-center w-[95%] 2xl:w-[90%] rounded-lg list-none font_urbanist overflow-hidden">
                 <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>
                 <Option icon={<UfPointsIcon />} href='/user/my-uf-wallet'>My UF-Wallet</Option>
-                <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option>
-                <Option icon={<SettingIcon />} href='/user/settings'>Settings / Security</Option>
+                {user.register_provider === "urbanfits" ? <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option> : null}
+                <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
                 <Option icon={<HeartShopListIcon />} href='/user/shopping-list'>My Shopping List</Option>
@@ -293,7 +293,7 @@ export default function User(props) {
                 </button>
             </div>
         </section>
-        <section className='bg-white w-full lg:w-[70%] px-12 py-10 rounded-lg font_urbanist text-left overflow-x-hidden overflow-y-scroll' >
+        <section className='bg-white w-full lg:w-[70%] 2xl:w-[73%] px-12 py-10 rounded-lg font_urbanist text-left overflow-x-hidden overflow-y-scroll' >
             <nav className={`${props.profileNull ? 'hidden' : null} flex flex-col`}>
                 <h2 className="text-lg lg:text-2xl font_urbanist_bold mb-6">My Account</h2>
                 <div className="w-3/5 md:w-auto flex items-center gap-x-3">

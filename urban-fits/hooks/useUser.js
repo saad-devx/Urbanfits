@@ -61,15 +61,28 @@ const useUser = create(persist((set, get) => ({
             }
         }
     },
-    logOut: () => {
+    logOut: (redirect) => {
         const { clearNewsletterData } = useNewsletter.getState()
         localStorage.clear()
-        window.location.href = '/'
+        window.location.href = redirect || '/'
         clearNewsletterData()
         if (get().user.register_provider !== "urbanfits") signOut()
         set(() => ({ user: null }))
         toaster("success", "You are signed out !")
         sessionStorage.clear()
+    },
+    matchOtpAndUpdate: async (values) => {
+        try {
+            const { data } = await axios.put(`${process.env.HOST}/api/user/auth-otp-and-change-email`, values)
+            const userData = jwt.decode(data.payload)?._doc
+            delete userData.password
+            set(() => ({ user: userData }))
+            toaster("success", data.msg)
+            window.location.href = '/'
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
     }
 }),
     { name: "authToken" }

@@ -35,14 +35,14 @@ export default function UserInfoModal({ user, updateUser, show, setUserInfoModal
         {loading ? <Loader /> : null}
         <form className="w-full px-4 flex flex-col font_urbanist" onSubmit={handleSubmit} onReset={handleReset}>
             <h2 className="my-4 font_urbanist_bold text-base">Name*</h2>
-            <div className={`relative w-full data_field flex items-center border-b ${touched.firstname && errors.firstname ? "border-red-500" : "border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
+            <div className={`relative w-full data_field flex items-center border-b ${touched.firstname && errors.firstname ? "border-red-500" : "border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
                 <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
             </div>
-            <div className={`relative w-full data_field flex items-center border-b ${touched.lastname && errors.lastname ? "border-red-500" : "border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
+            <div className={`relative w-full data_field flex items-center border-b ${touched.lastname && errors.lastname ? "border-red-500" : "border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
                 <input className="w-full bg-transparent outline-none border-none" type="text" name="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
             </div>
             <h2 className="my-4 font_urbanist_bold text-base">Phone No.*</h2>
-            <div className={`relative w-full data_field flex items-center border-b ${touched.phone_prefix && errors.phone_prefix ? "border-red-500" : "border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
+            <div className={`relative w-full data_field flex items-center border-b ${touched.phone_prefix && errors.phone_prefix ? "border-red-500" : "border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
                 <select value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                     {countryCodes.map((item) => {
                         if (!item.code) return <option disabled>{item.name}</option>
@@ -50,7 +50,7 @@ export default function UserInfoModal({ user, updateUser, show, setUserInfoModal
                     })}
                 </select>
             </div>
-            <div className={`relative w-full data_field flex items-center border-b ${touched.phone_number && errors.phone_number ? "border-red-500" : "border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
+            <div className={`relative w-full data_field flex items-center border-b ${touched.phone_number && errors.phone_number ? "border-red-500" : "border-b-gray-200 focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-6`}>
                 <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
             </div>
             <div className="w-full my-4 flex gap-x-4">

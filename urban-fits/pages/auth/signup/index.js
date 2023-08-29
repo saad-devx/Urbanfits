@@ -144,7 +144,7 @@ export default function Signup() {
                         <Button loading={loading} classes='w-full' type="submit" >Sign Up</Button>
                         <div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
                             <span className="w-2/5 h-px bg-gray-200"></span>
-                            login via
+                            sign up via
                             <span className="w-2/5 h-px bg-gray-200"></span>
                         </div>
                         <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
