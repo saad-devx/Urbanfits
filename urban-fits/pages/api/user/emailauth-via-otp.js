@@ -35,13 +35,13 @@ const AuthEmailByOtp = async (req, res) => {
                 })
             }
 
+            const template = changeEmail(`${user.firstname} ${user.lastname}`, otp)
+            await sendEmail({ to: new_email, subject: "Confirm your OTP to change your Email" }, template)
             res.status(200).json({
                 success: true,
                 otp_id: dbOtp._id,
                 msg: "We just sent an otp to your new email, please check and submit the code."
             })
-            const template = changeEmail(`${user.firstname} ${user.lastname}`, otp)
-            await sendEmail({ to: new_email, subject: "Confirm your OTP to change your Email" }, template)
         }
         else {
             res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })

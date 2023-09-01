@@ -41,12 +41,12 @@ const Signup = async (req, res) => {
                         expireAt: Date.now()
                     })
                     const template = verifyEmail(otp)
+                    await sendEmail({ to: req.body.email, subject: "Verify your email for registration on Urban Fits" }, template)
                     res.status(200).json({
                         success: true,
                         msg: `Verification Email sent to ${email}`,
                         redirect_url: `/auth/signup/verify-otp?otp_id=${dbOtp._id}`
                     })
-                    await sendEmail({ to: req.body.email, subject: "Verify your email for registration on Urban Fits" }, template)
                 }
             }
         }

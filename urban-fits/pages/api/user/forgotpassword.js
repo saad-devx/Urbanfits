@@ -32,12 +32,12 @@ const forgotPassword = async (req, res) => {
                 expireAt: Date.now()
             })
             let template = resetPassTemplate(user.firstname, otp)
+            await sendEmail({ to: user.email, subject: "Reset Password" }, template)
             res.json({
                 success: true,
                 msg: "We just sent you an OTP, please check your Mail Box",
                 otp_id: dbOtp._id
             })
-            await sendEmail({ to: user.email, subject: "Reset Password" }, template)
         }
         else res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
     }
