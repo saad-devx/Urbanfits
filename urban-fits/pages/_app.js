@@ -32,20 +32,20 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       else localStorage.removeItem("loadingModal")
     })
   }, [])
-  // useEffect(() => {
-  //   return async () => {
-  //     try {
-  //       const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
-  //       console.log(data)
-  //       const filteredCountry = countryCodes.filter(country => country.country === data.geo_meta.country_code.toLowerCase())[0]
-  //       console.log(filteredCountry)
-  //       if (filteredCountry) return setCountry(filteredCountry)
-  //       else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }, [])
+  useEffect(() => {
+    return async () => {
+      try {
+        const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
+        console.log(data)
+        const filteredCountry = countryCodes.filter(country => country.country === data.geo_meta.country_code.toLowerCase())[0]
+        console.log(filteredCountry)
+        if (filteredCountry) return setCountry(filteredCountry)
+        else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)
