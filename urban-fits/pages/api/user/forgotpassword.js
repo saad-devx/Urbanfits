@@ -37,7 +37,7 @@ const forgotPassword = async (req, res) => {
                 msg: "We just sent you an OTP, please check your Mail Box",
                 otp_id: dbOtp._id
             })
-            sendEmail({ to: user.email, subject: "Reset Password" }, template)
+            await sendEmail({ to: user.email, subject: "Reset Password" }, template)
         }
         else res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
     }
