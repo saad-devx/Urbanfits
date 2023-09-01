@@ -19,6 +19,9 @@ const UpdateUser = async (req, res) => {
             let user = await User.findById(req.query.id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
             delete req.body.email
+            delete req.body.password
+            delete req.body.two_fa_secret
+            delete req.body.role
             await User.findByIdAndUpdate(req.query.id, req.body)
             user = await User.findById(req.query.id)
             const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)

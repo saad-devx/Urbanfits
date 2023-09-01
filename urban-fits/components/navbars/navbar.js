@@ -100,7 +100,7 @@ export default function Navbar() {
                 {user && user.email ? <>
                     <div className="flex flex-col justify-center items-start">
                         <p className="font_urbanist text-[13px]">Welcome Back</p>
-                        <p className="font_urbanist_bold text-[13px] truncate max-w-[130px]">{user.firstname ? user.firstname : user.email}</p>
+                        <p className="font_urbanist_bold text-[13px] truncate max-w-[130px]">{user.firstname || user.username}</p>
                     </div>
                     <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
                     <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">

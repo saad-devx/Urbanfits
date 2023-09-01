@@ -13,7 +13,6 @@ const GetQrCode = async (req, res) => {
                 name: "Urban Fits - 2FA key",
                 length: 30
             })
-            console.log(secret)
             const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url)
 
             res.status(200).json({

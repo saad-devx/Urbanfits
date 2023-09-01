@@ -1,32 +1,26 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
+import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
-import Addresses from "@/models/addresses"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 
-// Only accessable by Admin 
 const SignupCallback = async (req, res) => {
     try {
         if (req.method === 'POST') {
-            const { token } = req.query
-            if (!token || token.length < 10) return res.status(400).json({
+            const { otp_id, otp } = req.body
+            if (!otp_id || otp_id.length < 18) return res.status(401).json({
                 success: false,
-                msg: "Invalid confirmation token."
+                msg: "All parameters are required. Body Parameter: otp_id"
             })
             await ConnectDB()
 
-            let credentials = null;
-            try {
-                credentials = jwt.verify(token, process.env.SECRET_KEY)
-            } catch (e) {
-                return res.status(400).json({
-                    success: false,
-                    msg: "Invalid or expired web token provided.",
-                    payload: e
-                })
-            }
-            if (token) {
+            const dbOtp = await OTP.findById(otp_id)
+            if (!dbOtp) return res.status(401).json({ success: false, msg: "The OTP has expired, please try again." })
+            if (dbOtp.otp !== otp) return res.status(401).json({ success: false, msg: "The OTP is incorrect." })
+
+            let credentials = dbOtp.new_user
+            if (dbOtp) {
                 let user = await User.findOne().or([{ email: credentials.email }, { username: credentials.username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create({ ...credentials, password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString() })

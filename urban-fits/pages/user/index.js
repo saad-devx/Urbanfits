@@ -21,6 +21,7 @@ import {
     DiamondIcon,
     EmailIcon,
     HeartShopListIcon,
+    TrackOrderIcon,
     LogoutIcon,
     HelpCenterIcon,
     CameraIcon,
@@ -214,7 +215,7 @@ export default function User(props) {
                             <CameraIcon />
                             Stories
                         </Link>
-                        <Link href="/products/category/gifts" className="h-11 opacity-50 flex flex-col justify-between items-center font_urbanist text-xs">
+                        <Link href="/products/category/gifts" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <GiftBoxIcon />
                             Gifts
                         </Link>
@@ -231,9 +232,9 @@ export default function User(props) {
                     </svg>
                     Categories
                 </Link>
-                <Link href="/user/settings" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
-                    <SettingIcon />
-                    Settings
+                <Link href="/trackorder" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <TrackOrderIcon />
+                    Track Order
                 </Link>
                 <Link href="/help-center" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                     <HelpCenterIcon />

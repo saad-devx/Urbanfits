@@ -45,6 +45,7 @@ const useUser = create(persist((set, get) => ({
     updateUser: async (valuesObj, updateLocally = false) => {
         if (updateLocally) {
             const userData = jwt.decode(valuesObj)?._doc
+            console.log(userData)
             delete userData.password
             set(() => ({ user: userData }))
         }

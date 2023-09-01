@@ -31,12 +31,12 @@ export default function Login() {
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
             setLoading(true)
-            const res = await axios.post(`${process.env.HOST}/api/user/login${oAuthQuery ? oAuthQuery : ''}`, values)
-            if (res.data.success && res.data.payload) {
-                const { data } = res
+            const { data } = await axios.post(`${process.env.HOST}/api/user/login${oAuthQuery ? oAuthQuery : ''}`, values)
+            if (data.redirect_url && !data.payload) router.push(data.redirect_url)
+            else if (data.payload) {
                 await updateUser(data.payload, true)
+                router.push('/')
                 toaster("success", data.msg)
-                router.push('/user/myaccount')
             }
             else {
                 const { data } = res.response
@@ -111,7 +111,7 @@ export default function Login() {
                     </div>
                     <div className={`relative data_field flex items-center border-b ${touched.new_email && errors.new_email ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input ref={passRef} className="w-full outline-none border-none" type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <input ref={passRef} className={`w-full outline-none border-none ${values.password ? "tracking-2" : null}`} type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
                         <i onClick={() => {
                             passRef.current.focus();
                             return setShowPass(!showPass);
@@ -136,14 +136,14 @@ export default function Login() {
                         </div>
                     </div>
                     <Button loading={loading} my="my-4" classes='w-full' type="submit">Login</Button><div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
-                            <span className="w-2/5 h-px bg-gray-200"></span>
-                            login via
-                            <span className="w-2/5 h-px bg-gray-200"></span>
-                        </div>
+                        <span className="w-2/5 h-px bg-gray-200"></span>
+                        login via
+                        <span className="w-2/5 h-px bg-gray-200"></span>
+                    </div>
                     <Link href='/auth/signup' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center'>Create a New Account</h1></Link>
-                    <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
+                    <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                         <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
-                        <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[10rem]'>Login Up with&nbsp;</span>
+                        <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>Login with&nbsp;</span>
                         Google
                     </button>
                 </section>

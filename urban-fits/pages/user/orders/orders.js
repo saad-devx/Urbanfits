@@ -68,6 +68,5 @@ export default function orders() {
         <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />
         <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />
         <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />
-        <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />
     </OrdersPage>
 }

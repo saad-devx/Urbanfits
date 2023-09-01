@@ -20,6 +20,7 @@ const GuideCard = (props) => {
 export default function SizeGuide() {
     return (
         <CustomerServices>
+            <h2 className="mb-10 text-xl font_urbanist_bold">Size Guides</h2>
             {/* To be displayed on the mobile screens */}
             <SizeGuideCarousel slideData={[
                 { img: img1, link: 'women' },

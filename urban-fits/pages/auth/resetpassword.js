@@ -140,7 +140,7 @@ export default function ResetPassword() {
                         <span className="w-2/5 h-px bg-gray-200"></span>
                     </div>
                     <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
-                    <button type='button' onClick={() => providerSignIn("google")} name='google' className="lg:hidden group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
+                    <button type='button' onClick={() => providerSignIn("google")} name='google' className="lg:hidden group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                         <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
                         <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[10rem]'>Sign Up with&nbsp;</span>
                         Google

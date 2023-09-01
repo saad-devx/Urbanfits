@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import useUser from '@/hooks/useUser';
-import User from '.';
+import User from '..';
 import Head from 'next/head';
 import Button from '@/components/buttons/simple_btn';
 import Loader from '@/components/loaders/loader';
-import Error403 from '../403';
+import Error403 from '@/pages/403';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import LinkBtn from '@/components/buttons/link_btn';
 const TwoFa = dynamic(() => import('@/components/modals/twoFa'));
 
 export default function Security() {
@@ -24,20 +25,24 @@ export default function Security() {
     if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 786px)').matches) return <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
-            <Link href="/user/myaccount" className='fa-solid fa-chevron-left text-xl'></Link>
+            <Link href="/user" className='fa-solid fa-chevron-left text-xl'></Link>
             <div className="flex flex-col justify-center items-center font_urbanist text-xs text-gray-400">
                 <h1 className="font_urbanist_medium text-lg">Security / 2FA</h1>
                 All data will be encrypted
             </div>
             <i className='w-0 h-0' />
         </div>
+        {loading ? <Loader /> : null}
         <section className="w-full h-full p-4 flex flex-col justify-between font_urbanist">
             <div className="text-sm">
-                <h1 className="mb-4 font_urbanist_bold text-base">Enable Google Authenticator</h1>
+                <div className="w-full mb-4 flex justify-between items-center">
+                    <h1 className="font_urbanist_bold text-base">{user.two_fa_enabled && user.two_fa_activation_date ? "Disable" : "Enable"} Google Authenticator 2FA</h1>
+                    {user.two_fa_activation_date ? <label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={user.two_fa_enabled} value={user.two_fa_enabled} onChange={toggle2FA} /><span className="slider"></span></label> : null}
+                </div>
                 Two-factor authentication is a method for protection your web account. When it is activated you need to enter not only your password, but also a special code. <br />
                 You can receive this code by in mobile app. Even if third person will find your password, then can't access with that code.
             </div>
-            <Button type="button" classes="w-full">Enable 2FA</Button>
+            {user.two_fa_activation_date ? null : <LinkBtn my='0' href="/user/security/register-2fa" classes="w-full">Enable 2FA</LinkBtn>}
         </section>
     </main>
     else return <>

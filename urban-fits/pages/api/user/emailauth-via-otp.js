@@ -23,16 +23,10 @@ const AuthEmailByOtp = async (req, res) => {
             if (password !== originalPassword) return res.status(401).json({ success: false, msg: "Your password is incorrect" })
 
             // Creating an opt and sending to new email
-            let otp = generateRandomInt(10001, 999999)
             let dbOtp = await OTP.findOne({ user_id: user._id })
-            if (dbOtp) {
-                dbOtp = await OTP.findByIdAndUpdate(dbOtp._id, {
-                    otp,
-                    new_email,
-                    expireAt: Date.now()
-                })
-            }
+            if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'change email' session, try after 5 minutes." })
             else if (!dbOtp) {
+                let otp = generateRandomInt(10001, 999999)
                 dbOtp = await OTP.create({
                     user_id: user._id,
                     otp,

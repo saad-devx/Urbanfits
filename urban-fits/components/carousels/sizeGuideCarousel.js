@@ -40,7 +40,7 @@ export default function CatalogueCarousel(props) {
                 {props.slideData.map((pair, index) => {
                     return <SplideSlide key={index} className="w-full h-full">
                         <Link href={`/customerservices/sizeguide/${pair.link}`} className='w-full h-full'><Image className='h-full object-cover object-top' src={pair.img} alt="Urban images" /></Link>
-                        <div className="w-full text-center mt-3 font_gotham_bold tracking-[0.7em] hover:tracking-[1em] transition-all duration-500 text-xs" ><Link href={`/customerservices/sizeguide/${pair.link}`}>{pair.link && pair.link.toUpperCase()}</Link></div>
+                        <div className="w-full text-center mt-3 font_copper tracking-[0.7em] hover:tracking-[1em] transition-all duration-500 text-base" ><Link href={`/customerservices/sizeguide/${pair.link}`}>{pair.link.toUpperCase()}</Link></div>
                     </SplideSlide>
                 })}
             </SplideTrack>

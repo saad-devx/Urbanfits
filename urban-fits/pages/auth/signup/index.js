@@ -28,16 +28,16 @@ export default function Signup() {
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
             setLoading(true)
-            const res = await axios.post(`${process.env.HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
-            console.log(res)
-            if (res.data.success && res.data.payload && oAuthQuery) {
+            const { data } = await axios.post(`${process.env.HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
+            if (data.success && data.payload && oAuthQuery) {
                 const { data } = res
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
                 router.push('/user/myaccount')
             }
-            if (res.data.success && res.data.payload && !oAuthQuery) {
-                router.push(`/auth/signup/verification/${values.email}`)
+            if (data.success && data.redirect_url && !oAuthQuery) {
+                router.push(data.redirect_url)
+                toaster("success", data.msg)
             }
         }
         catch (error) {
@@ -119,7 +119,7 @@ export default function Signup() {
                         </div>
                         <div className={`relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
                             {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                            <input ref={passRef} className="w-full outline-none border-none" type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                            <input ref={passRef} className={`w-full outline-none border-none ${values.password ? "tracking-2" : null}`} type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
                             <i onClick={() => {
                                 passRef.current.focus();
                                 if (showPass) return setShowPass(false);
@@ -148,7 +148,7 @@ export default function Signup() {
                             <span className="w-2/5 h-px bg-gray-200"></span>
                         </div>
                         <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
-                        <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-100 text-lg border border-gray-400 rounded-full hover:shadow-xl transition">
+                        <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                             <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
                             <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[10rem]'>Sign Up with&nbsp;</span>
                             Google

@@ -7,7 +7,7 @@ export default function cancelledorders() {
   const {user} = useUser()
   if(!user) return <Error403 />
   return (
-    <OrdersPage>
+    <OrdersPage noOrders={true}>
       <h1 className="text-xl">This is "Cancelled Orders" tab</h1>
     </OrdersPage>
   )
