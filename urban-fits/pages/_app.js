@@ -45,7 +45,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         console.log(error)
       }
     }
-    return ()=>getGeoLocation()
+    getGeoLocation()
   }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {

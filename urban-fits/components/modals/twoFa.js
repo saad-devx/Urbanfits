@@ -28,7 +28,7 @@ export default function TwoFa({ show, setMfaModa }) {
             }
             setLoading(false)
         }
-        return () => getQrCode()
+        getQrCode()
     }, [])
 
     const onTotpConfirm = async () => {

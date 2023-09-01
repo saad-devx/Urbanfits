@@ -34,7 +34,7 @@ export default function Security() {
             }
             setLoading(false)
         }
-        return () => getQrCode()
+        getQrCode()
     }, [qrUrl, qrSecret])
 
     const onTotpConfirm = async () => {
