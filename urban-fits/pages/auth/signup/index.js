@@ -92,7 +92,7 @@ export default function Signup() {
         <>
             <Head><title>Urban Fits - Sign Up</title></Head>
             <AuthPage loading={loading} height="lg:h-[110vh]" mblNav="/auth/login" mblNavName="Sign in" >
-                <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_gotham text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
+                <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                     <section className="w-full mb-6">
                         <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Sign Up</h1>
                         <div className="relative data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">

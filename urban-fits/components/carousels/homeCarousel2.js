@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 // images imports
 import Image from "next/image";
-import image1 from "../../public/carousel2 imgs/img1.png";
+import image1 from "@/public/carousel2 imgs/img1.png";
 export default function HomeCarousel2() {
     useEffect(() => {
         const script = document.createElement("script");

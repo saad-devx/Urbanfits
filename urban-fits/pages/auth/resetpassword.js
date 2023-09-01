@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import AuthPage from "."
-import Button from '@/components/buttons/simple_btn';
-import Link from 'next/link';
-import jwt from 'jsonwebtoken';
-import axios from 'axios';
+import AuthPage from '.'
+import Link from 'next/link'
+import Button from '@/components/buttons/simple_btn'
+import Image from 'next/image'
+import Tooltip from '@/components/tooltip'
+import toaster from '@/utils/toast_function'
 import { useSession, signIn } from "next-auth/react"
 import useUser from '@/hooks/useUser'
-import toaster from '@/utils/toast_function';
-import AlertPage from '@/components/alertPage';
-import Tooltip from '@/components/tooltip';
+import axios from 'axios'
 import * as Yup from 'yup'
-import { useFormik } from 'formik';
-import Image from 'next/image'
+import { useFormik } from 'formik'
 import google_logo from '@/public/logos/google-logo.svg'
+import { useRouter } from 'next/router'
 
-export default function ResetPassword() {
+export default function ForgotPassword() {
     const { data: session } = useSession()
-    const { user } = useUser()
     const router = useRouter()
+    const { user } = useUser()
     const [loading, setLoading] = useState(false)
-    const [payload, setPayload] = useState(null)
-    const [token, setToken] = useState(null)
+    const [otp, setOtp] = useState('')
+    const [otpId, setOtpId] = useState(null)
+    const [resendOption, setResendOption] = useState(
+        <div className="mt-4 text-gray-400 text-xs md:text-sm text-left">
+            Please enter your username or email address. You will receive an email with an OTP code, submit it here to reset password.
+        </div>)
 
     const signInWithGoogle = async (values, x, oAuthQuery) => {
         try {
@@ -68,78 +70,92 @@ export default function ResetPassword() {
         else return
     }, [session])
 
-    const onsubmit = async (values) => {
-        console.log(values, token)
-        try {
-            setLoading(true)
-            const res = await axios.put(`${process.env.HOST}/api/user/resetpassword`, { ...values, token })
-            if (res.data.success && res.data.resetPassword) {
-                const { data } = res
-                toaster("success", data.msg)
-                router.push('/auth/login')
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
+        initialValues: { email: '', password: '', new_password: '' },
+        validationSchema: Yup.object({
+            email: Yup.mixed().test('valid', 'Invalid email or username', function (value) {
+                const { path, createError } = this;
+                if (Yup.string().required('Email or Username is required').email().isValidSync(value)) return true;
+                if (Yup.string().required('Email or Username is required').min(5, 'Username must be atleast 5 characters').matches(/^[a-zA-Z0-9_]+$/, 'Invalid username').isValidSync(value)) return true;
+                return createError({ path, message: 'Invalid Email or Username' });
+            }),
+            password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+            new_password: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Please confirm your password'),
+        }),
+        onSubmit: async (values) => {
+            try {
+                setLoading(true)
+                const { data } = await axios.post(`${process.env.HOST}/api/user/forgotpassword`, values)
+                if (data.success && data.otp_id) {
+                    setOtpId(data.otp_id)
+                    setResendOption(<span className='w-full flex justify-between items-center text-xs md:text-sm text-gray-400'> Didn't get the email? <button type='submit' className="border-b border-b-yellow-700">Resend Code</button></span>)
+                    toaster("success", data.msg)
+                }
+                else {
+                    const { data } = res.response
+                    if (data) toaster("error", data.msg)
+                }
             }
-            else {
-                const { data } = res.response
-                toaster("error", data.msg)
+            catch (error) {
+                console.log(error)
+                setLoading(false)
+                toaster("error", error.response.data.msg)
             }
+            return setLoading(false)
         }
-        catch (error) {
+    })
+
+    const onVerify = async () => {
+        if (!otpId) return;
+        setLoading(true)
+        try {
+            const { data } = await axios.put(`${process.env.HOST}/api/user/auth-otp-and-reset-password`, {
+                otp_id: otpId,
+                otp
+            })
+            if (data.success) {
+                router.push('/auth/login')
+                toaster("success", data.msg)
+            }
+            else toaster("error", "Something went wrong, please try again later.")
+        } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)
         }
         setLoading(false)
     }
 
-    const resetpassSchema = Yup.object({
-        email: Yup.string().email().required('Email is required to change your password'),
-        password: Yup.string().min(8).max(30).required("Please enter your password"),
-        confirm_password: Yup.string().min(8, "Password must be atleast 8 characters").max(30, "Password cannot exceed 30 characters").required("Please enter your password").oneOf([Yup.ref("password"), null], "Password must match")
-    })
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { email: payload?.email, password: '', confirm_password: '' },
-        validationSchema: resetpassSchema,
-        onSubmit: onsubmit
-    })
-
-    useEffect(() => {
-        const resetpassToken = router.query.token
-        const decodedToken = jwt.decode(resetpassToken)
-        setPayload(decodedToken)
-        setToken(resetpassToken)
-        setValues({ ...values, email: decodedToken?.email })
-    }, [router.query])
-
-    const unixTime = Math.floor(Date.now() / 1000)
-    if (!payload || payload.exp <= unixTime) return <AlertPage type="error" heading="Oh Snap! Session Expired" message="The content your are trying to access either invalid or expired. Please try again." />
-
     return <>
-        <AuthPage loading={loading} mblNav="/auth/forgotpassword" mblNavName="Forgot password" >
-            <form className="w-full h-full lg:h-auto bg-white p-2 font_gotham text-base flex flex-col justify-between md:justify-around lg:justify-center" onReset={handleReset} onSubmit={handleSubmit} >
+        <AuthPage loading={loading} mblNav="/auth/login" mblNavName="Sign in" >
+            <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around items-center lg:justify-center" onReset={handleReset} onSubmit={handleSubmit} >
                 <section className="w-full mb-6 md:mb-0">
-                    <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Reset Your Password</h1>
-                    <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
-                        <span className="w-full outline-none border-none" name="email" id="email" value={values.email} placeholder='Email' >{values.email}</span>
+                    <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Forgot Password</h1>
+                    <div className={`relative data_field flex items-center border-b ${touched.email && errors.email ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
+                        {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
+                        <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Username or Email' />
+                        <button type='submit' className="font_urbanist_medium px-3 py-2 bg-gray-100 rounded-full text-sm whitespace-nowrap hover:text-white hover:bg-black transition-all">{otpId ? "Resend Code" : "Send Code"}</button>
                     </div>
-                    <div className={`relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4`}>
+                    <div className={`relative data_field flex items-center border-b ${touched.password && errors.password ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input className="w-full outline-none border-none" type='password' name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <input className={`w-full outline-none border-none ${values.password ? 'tracking-2' : null}`} type="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
                     </div>
-                    <div className={`relative data_field lex items-center border-b  focus:border-yellow-700 hover:border-yellow-600 transition py-2`}>
-                        {touched.confirm_password && errors.confirm_password ? <Tooltip classes="form-error" content={errors.confirm_password} /> : null}
-                        <input className="w-full outline-none border-none" type='password' name="confirm_password" id="confirm_password" value={values.confirm_password} onBlur={handleBlur} onChange={handleChange} placeholder="Confirm Password" />
+                    <div className={`relative data_field flex items-center border-b ${touched.new_password && errors.new_password ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
+                        {touched.new_password && errors.new_password ? <Tooltip classes="form-error" content={errors.new_password} /> : null}
+                        <input className={`w-full outline-none border-none ${values.new_password ? 'tracking-2' : null}`} type="password" id="new_password" value={values.new_password} onBlur={handleBlur} onChange={handleChange} placeholder='Confirm password' />
                     </div>
-                    <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
-                        Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.
-                    </div>
+                    {otpId ? <div className="relative data_field lex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <input className="w-full outline-none border-none" type='number' name="otp" id="otp" value={otp} onChange={(e) => setOtp(e.target.value)} placeholder='Enter OTP code' />
+                    </div> : null}
+                    {resendOption}
                 </section>
-                <section>
-                    <Button loading={loading} classes='w-full' type="submit" >Update</Button>
+                <section className='w-full mb-4 lg:m-0'>
+                    <Button disabled={!otp || !otpId || otp.length < 5} onClick={onVerify} classes='w-full' type="button">Verfiy</Button>
                     <div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
                         <span className="w-2/5 h-px bg-gray-200"></span>
                         login via
                         <span className="w-2/5 h-px bg-gray-200"></span>
                     </div>
-                    <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
+                    <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Sign in with an exiting account</h1></Link>
                     <button type='button' onClick={() => providerSignIn("google")} name='google' className="lg:hidden group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                         <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
                         <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[10rem]'>Sign Up with&nbsp;</span>

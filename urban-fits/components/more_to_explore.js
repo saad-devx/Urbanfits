@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Shoppingcard from './cards/shoppingcard'
 import Button from './buttons/simple_btn'
-import image from '@/public/card imgs/card img17.jpg'
 
 export default function MoreToExplore() {
     const exploreItems = ["Ready to Wear", "Atelier Urban", "Essentials", "Bags", "Sneakers"]
@@ -31,7 +30,7 @@ export default function MoreToExplore() {
                 <div className="w-full h-auto md:h-[290px] lg:h-[380px] xl:h-[430px] 2xl:h-[470px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                     {[1, 2, 3, 4].map((items, i) => {
                         if (window.matchMedia('(min-width: 640px) and (max-width: 967px)').matches && i >= 3) return
-                        else return <Shoppingcard key={i} product={product} img={image} />
+                        else return <Shoppingcard key={i} product={product} />
                     })}
                 </div>}
         </section>

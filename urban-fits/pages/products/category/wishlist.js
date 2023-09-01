@@ -10,7 +10,7 @@ import ListingShopSection from '@/components/listingShop_section';
 import toaster from '@/utils/toast_function';
 import Link from 'next/link';
 import Image from 'next/image';
-import emptyWishlist from '@/public/emptyWishlist.jpg';
+const emptyWishlist = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/emptyWishlist.jpg';
 
 export default function WisthList() {
     const { wishList } = useUser()
@@ -57,7 +57,7 @@ export default function WisthList() {
         <main className="w-full pb-20 bg-white font_urbanist overflow-hidden">
             {loading ? <div className="w-full layout_height flex justify-center items-center"><Spinner forBtn variant="border-black" /></div> :
                 products.length === 0 ? <section className="w-full layout_height flex flex-col justify-center items-center gap-y-3 md:gap-y-5">
-                    <Image width={200} height={200} src={emptyWishlist} alt='Wishlist is empty' />
+                    <Image width={250} height={250} src={emptyWishlist} alt='Wishlist is empty' />
                     <h2 className="font_urbanist_bold text-lg lg:text-xl">Your Wishlist is Empty</h2>
                     <p className="font_urbanist text-sm">Add items by clicking on the little heart</p>
                     <Link href='/' className="font_urbanist mt-2 text-sm bg-gray-100 px-4 py-1 rounded-full">Go Shopping</Link>

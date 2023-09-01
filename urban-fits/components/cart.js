@@ -68,22 +68,22 @@ function CartItem(props) {
             <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_urbanist_medium text-xs tracking-widest"></button>
         </div>
         {/* to be displayed in mobile */}
-        <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_gotham_medium tracking-widest">
-            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_gotham_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200"/></Link>
+        <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
+            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200"/></Link>
             <h3 className="font_urbanist_medium self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
             <div className="w-full flex self-end gap-3">
                 <div className='relative'>
                     <span className="select_container after:right-[20%]"></span>
-                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] rounded-md font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
+                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] rounded-md font_urbanist_medium tracking-widest text-[10px] px-5 border outline-none">
                         {product.sizes.map(obj => {
                             const { size } = obj
                             return <option value={size}>{size}</option>
                         })}
                     </select>
                 </div>
-                <span className="w-[100px] h-[30px] px-5 rounded-md font_gotham_light border flex justify-between items-center">
+                <span className="w-[100px] h-[30px] px-5 rounded-md font_urbanist_light border flex justify-between items-center">
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
-                    <input type="number" readOnly className='w-2/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
+                    <input type="number" readOnly className='w-2/5 h-auto font_urbanist text-center border-none outline-none pointer-events-none' value={quantity} />
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                 </span>
             </div>
@@ -98,7 +98,7 @@ export default function Cart(props) {
         return num.toFixed(3)
     }
 
-    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_gotham`}>
+    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
         <div className="w-full flex justify-center">
             {isEmpty ?
                 <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >

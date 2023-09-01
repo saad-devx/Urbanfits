@@ -7,7 +7,7 @@ const UpdateAddress = async (req, res) => {
     try {
         if (req.method === 'PUT') {
             const { user_id } = req.query
-            if (!user_id) return res.status(400).json({ success: false, msg: "A valid user id is required. parameter: user_id" })
+            if (!user_id) return res.status(400).json({ success: false, msg: "A valid user id is required. Query Parameter: user_id" })
             await ConnectDB()
             let user = await User.findById(user_id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })

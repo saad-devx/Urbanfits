@@ -4,14 +4,14 @@ import SizeGuideCarousel from '@/components/carousels/sizeGuideCarousel'
 import CustomerServices from '../index'
 import Link from 'next/link'
 import Image from 'next/image'
-import img1 from '@/public/card imgs/card img6.jpg'
-import img2 from '@/public/card imgs/card img5.jpg'
-import img3 from '@/public/card imgs/card img12.jpg'
+const img1 = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/women_img.jpg'
+const img2 = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/men_img.jpg'
+const img3 = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/kids_img.jpg'
 
 const GuideCard = (props) => {
     return <Link href={props.href} className='group w-[200px]'>
         <div className='w-full aspect-square rounded-full group-hover:rounded-[4rem] overflow-hidden transition-all duration-700'>
-            <Image src={props.img} alt='cover image' className='w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700' />
+            <Image width={500} height={500} src={props.img} alt='cover image' className='w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700' />
         </div>
         <h4 className="mt-4 font_copper text-lg text-center tracking-1 group-hover:tracking-3 transition-all duration-700">{props.title}</h4>
     </Link>

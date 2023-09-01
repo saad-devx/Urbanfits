@@ -260,14 +260,14 @@ const AboutComponent = () => {
                     <nav className="w-full h-[70px] px-10 flex justify-between items-center">
                         <Link href="/" ><Image src={Logo} alt='UF' className='w-[40px]' /></Link>
                         <div className="w-1/5 flex justify-between items-center">
-                            <Link href="/products/Men" className='font_gotham_medium text-base' >Men</Link>
-                            <Link href="/products/Women" className='font_gotham_medium text-base' >Women</Link>
-                            <Link href="/products/Kids" className='font_gotham_medium text-base' >Kids</Link>
+                            <Link href="/products/Men" className='font_urbanist_medium text-base' >Men</Link>
+                            <Link href="/products/Women" className='font_urbanist_medium text-base' >Women</Link>
+                            <Link href="/products/Kids" className='font_urbanist_medium text-base' >Kids</Link>
                         </div>
                     </nav>
                     {/* <h1 ref={endingHeading} className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full font_copper_gothic text-9xl text-center opacity-0 scale-[3] pointer-events-none"><Link href='/' >URBAN FITS</Link></h1> */}
                     <h1 className="font_copper_gothic text-9xl text-center hover:tracking-expand transition-all duration-700"><Link href='/' >URBAN FITS</Link></h1>
-                    <div className="w-full h-20 flex justify-center items-start font_gotham text-xs text-center">Urban Fits LLC, State ID: 7053037, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87 102 <br />Urban Fits LLC &copy; 2023-2024 all rights reserved</div>
+                    <div className="w-full h-20 flex justify-center items-start font_urbanist text-xs text-center">Urban Fits LLC, State ID: 7053037, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87 102 <br />Urban Fits LLC &copy; 2023-2024 all rights reserved</div>
                 </section>
             </main>
         </>

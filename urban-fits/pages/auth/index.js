@@ -12,7 +12,7 @@ export default function AuthPage(props) {
                 <p className="font_urbanist_light text-xl md:text-2xl text-center">Urban Members get Exclusive access to <br /> products, events, and offers. Just provide <br /> a few details. It’s free to join and <br /> open to all.</p>
             </section>
             {props.loading ? <Loader /> : null}
-            <section className="w-full lg:w-3/4 xl:px-[5%] 2xl:px-[7%] flex flex-col lg:flex-row justify-center items-center h-full font_gotham bg-white">
+            <section className="w-full lg:w-3/4 xl:px-[5%] 2xl:px-[7%] flex flex-col lg:flex-row justify-center items-center h-full font_urbanist bg-white">
                 <nav className="lg:hidden w-full py-4 md:py-8 mb-6 text-lg font_urbanist flex justify-between items-center">
                     <Link href="/"><i className='fa-solid fa-xmark text-2xl' /></Link>
                     <Link href={props.mblNav}>{props.mblNavName}</Link>

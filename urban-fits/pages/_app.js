@@ -16,7 +16,7 @@ import axios from 'axios'
 import countryCodes from '@/static data/countryCodes'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { user, setCountry } = useUser()
+  const { user, logOut, setCountry } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   const url = router.pathname
@@ -28,25 +28,25 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
     window.addEventListener("beforeunload", () => {
       const sessionValid = localStorage.getItem('remember_me')
-      if (sessionValid === true) return localStorage.clear()
+      if (sessionValid === true) return logOut()
       else localStorage.removeItem("loadingModal")
     })
   }, [])
-  useEffect(() => {
-    const getGeoLocation = async () => {
-      try {
-        const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
-        console.log(data)
-        const filteredCountry = countryCodes.filter(country => country.country === data.geo_meta.country_code.toLowerCase())[0]
-        console.log(filteredCountry)
-        if (filteredCountry) return setCountry(filteredCountry)
-        else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getGeoLocation()
-  }, [])
+  // useEffect(() => {
+  //   const getGeoLocation = async () => {
+  //     try {
+  //       const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
+  //       console.log(data)
+  //       const filteredCountry = countryCodes.filter(country => country.country === data.geo_meta.country_code.toLowerCase())[0]
+  //       console.log(filteredCountry)
+  //       if (filteredCountry) return setCountry(filteredCountry)
+  //       else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   getGeoLocation()
+  // }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)

@@ -10,7 +10,7 @@ function Giftcard() {
             <main className="w-full h-full bg-gray-100">
                 <section className='w-full flex flex-col justify-center items-center  transition-all duration-700'>
                     <div className='rounded-sm mt-7 overflow-hidden w-[95%] lg:w-11/12 h-[40vh] lg:h-auto relative mx-5 lg:mx-auto bg_giftbanner bg-no-repeat bg-cover bg-right transition-all duration-700'>
-                        <h1 className="w-full text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[6vw] lg:text-[4vw] font_gotham ">Urban Gift Cards</h1>
+                        <h1 className="w-full text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[6vw] lg:text-[4vw] font_urbanist ">Urban Gift Cards</h1>
                         <Image src={giftBanner} alt="Urban images" className={`hidden lg:block`} />
                     </div>
                     <div className="w-full lg:w-11/12 mx-3 p-5 flex flex-col lg:flex-row justify-around items-center space-y-6 lg:space-y-0">
