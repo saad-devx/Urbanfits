@@ -19,7 +19,7 @@ export default function Security() {
     const [totp, setTotp] = useState(null)
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        return async () => {
+        const getQrCode = async () => {
             if (qrUrl && qrSecret) return
             setLoading(true)
             try {
@@ -34,6 +34,7 @@ export default function Security() {
             }
             setLoading(false)
         }
+        return () => getQrCode()
     }, [qrUrl, qrSecret])
 
     const onTotpConfirm = async () => {

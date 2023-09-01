@@ -33,7 +33,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     })
   }, [])
   useEffect(() => {
-    return async () => {
+    const getGeoLocation = async () => {
       try {
         const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
         console.log(data)
@@ -45,6 +45,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         console.log(error)
       }
     }
+    return ()=>getGeoLocation()
   }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {

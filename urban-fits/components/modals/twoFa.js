@@ -13,7 +13,7 @@ export default function TwoFa({ show, setMfaModa }) {
     const [totp, setTotp] = useState(null)
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        return async () => {
+        const getQrCode = async () => {
             if (qrUrl && qrSecret) return
             setLoading(true)
             try {
@@ -28,6 +28,7 @@ export default function TwoFa({ show, setMfaModa }) {
             }
             setLoading(false)
         }
+        return () => getQrCode()
     }, [])
 
     const onTotpConfirm = async () => {
