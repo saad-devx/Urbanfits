@@ -3,17 +3,13 @@ const GeoLocation = async (req, res) => {
     try {
         if (req.method === 'GET') {
             try {
-                const { data } = await axios.get(`https://api.ip2location.io?key=${process.env.IP2L_ACCESS_KEY}`,
-                    {
-                        headers: {
-                            'Access-Control-Allow-Origin': '*',
-                            'credentials': true,
-                            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                        }
-                    })
+                const userIPAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                console.log(userIPAddress)
+                const { data } = await axios.get(`https://ipinfo.io/${userIPAddress}?token=${process.env.IPINFO_ACCESS_TOKEN}`)
                 return res.status(200).json({
                     success: true,
-                    geo_meta: data
+                    geo_meta: data,
+                    userIPAddress
                 })
             } catch (error) {
                 console.log(error)

@@ -29,7 +29,7 @@ const nextConfig = {
     AWS_ACCESS_KEY: "AKIAWXH553KR4VBPA7YM",
     AWS_SECRET_KEY: "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",
     // IP2Lcation access key
-    IP2L_ACCESS_KEY: "30CAECE4E00638DB1297D0D0B20DB2CE"
+    IPINFO_ACCESS_TOKEN: "9435a9027e6305"
   },
   async headers() {
     return [

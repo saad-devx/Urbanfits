@@ -60,7 +60,7 @@ export function SmallShoppingcard(props) {
     const { product } = props
     const { addItem, inCart } = useCart()
     const { wishList, addToWishList, removeFromWishList, inWishList } = useUser()
-    
+
     return <div {...props} className={`relative bg-gray-100 border ${props.classes} w-full min-h-[212px] h-[230px] 2xl:h-[250px] ${props.margin ? props.margin : 'my-3 md:my-5'} rounded-xl hover:scale-[1.01] hover:rounded-lg transition-all duration-500 overflow-hidden`} >
         <button title='Add to Cart' onClick={() => {
             if (inCart(`${product.variants[0]._id}${product.variants[0].sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
@@ -81,7 +81,7 @@ export function SmallShoppingcard(props) {
         }} title='Add to Wishlist' className="group w-8 h-8 absolute top-1 left-2 z-20 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60 hover:shadow-xl">
             <Image src={inWishList(product._id) ? redHeart : heart} alt='wishlist' className='w-4 md:w-5' />
         </button>
-        <Link href={`/products/product/64806298f7cd24b01e205f3f`}>
+        <Link href={props.link || `/products/product/${product._id}`}>
             <div className="relative w-full h-4/5 pt-3">
                 <Image src={product.cover_image} width={640} height={853} className="h-full object-contain object-center" alt={product.name} />
             </div>
