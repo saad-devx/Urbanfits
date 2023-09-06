@@ -10,7 +10,7 @@ const GetProductByCategory = async (req, res) => {
             if (!id || !mongoose.Types.ObjectId.isValid(id))
                 return res.status(400).json({
                     success: false,
-                    msg: 'A valid category id is required',
+                    msg: 'A valid category id is required. Query parameters: id',
                 });
 
             await ConnectDB();
@@ -59,15 +59,10 @@ const GetProductByCategory = async (req, res) => {
                 msg: `Products found with the category of id ${id}`,
                 products: finalProducts,
             });
-        } else {
-            res.status(405).json({
-                success: false,
-                msg: 'Method not Allowed, you are using the wrong request method!',
-            });
-        }
+        } else res.status(405).json({ success: false, msg: 'Method not Allowed. Allowed methods: GET' });
     } catch (err) {
         console.log(err)
-        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry" })
+        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 

@@ -10,9 +10,7 @@ const useUser = create(persist((set, get) => ({
     user: null,
     recentItems: [],
     setRecentItems: (newItem) => {
-        console.log(get().recentItems)
         const alreadyInItem = get().recentItems.filter(item => item.id === newItem.id)
-        console.log(alreadyInItem)
         if (get().recentItems.length > 5) return console.log("max limit reached")
         if (alreadyInItem.length && alreadyInItem[0].id) {
             const itemIndex = get().recentItems.indexOf(alreadyInItem[0])
@@ -26,6 +24,8 @@ const useUser = create(persist((set, get) => ({
     },
     wishList: [],
     country: { name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" },
+    geo_selected_by_user: false,
+    setGeoSelectedByUser: (bool) => set(() => ({ geo_selected_by_user: bool })),
     setCountry: (value) => set(() => ({ country: value })),
     addToWishList: (item) => set((state) => {
         return { wishList: [...state.wishList, item] }

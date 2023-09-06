@@ -9,6 +9,7 @@ import Shoppingcard, { SmallShoppingcard } from '@/components/cards/shoppingcard
 const ProductCarousel = dynamic(() => import('@/components/carousels/productCarousel'));
 import toaster from '@/utils/toast_function';
 import Button from '@/components/buttons/simple_btn';
+import { pusherClient } from '@/utils/pusher';
 
 export default function Product(props) {
     const productData = { ...props.resProduct, id: props.resProduct._id }
@@ -17,6 +18,15 @@ export default function Product(props) {
     const [product, setProduct] = useState(productData.variants[0])
     const [sizevalue, setSizevalue] = useState(product.sizes[0].size)
     const [quantity, setQuantity] = useState(1)
+
+    useEffect(() => {
+        const channel = pusherClient.subscribe('urban-fits')
+        channel.bind('server-update', (data) => {
+            console.log(data)
+            toaster('info', data.pusher_msg)
+        })
+        return () => pusherClient.unsubscribe('urban-fits')
+    }, [])
 
     useEffect(() => {
         const { color } = router.query

@@ -19,6 +19,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 import Button from '@/components/buttons/simple_btn';
+// Socket io client
+import io from 'socket.io-client';
+
+const socket = io();
 
 loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
@@ -68,7 +72,6 @@ export default function Checkout1() {
         phone_number: Yup.string().min(9).required("Please enter your phone number")
     }
     const addressFieldsValues = (type) => {
-        // const Address = address[type]
         return {
             address_title: address && address[type] ? address[type].address_title : '',
             firstname: address && address[type] ? address[type].firstname : '',
@@ -124,6 +127,14 @@ export default function Checkout1() {
             phone_number: obj ? obj.phone_number : ''
         }
     }
+
+    useEffect(() => {
+        socket.on('payment-success', (data) => {
+            console.log('Payment successful event received on the client:', data);
+        });
+
+        return () => { socket.off('payment-success') };
+    }, []);
 
     useEffect(() => {
         const { payment } = router.query

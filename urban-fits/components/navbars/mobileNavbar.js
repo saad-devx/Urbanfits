@@ -32,7 +32,7 @@ function MobileNavbar({ user, cart, setCart, logout, setLogout, totalUniqueItems
 
     return <>
         <section className="sticky top-0 left-0 right-0 z-50 w-full h-[70px] flex justify-center items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white border-b transition-all duration-300">
-            <Search classes="flex lg:hidden" />
+            <Search classes="flex md:hidden" />
         </section>
         <section style={{ transform: menu ? "translateX(0)" : "translateX(-100%)" }} className="fixed z-[70] inset-0 w-screen min-h-screen overflow-y-scroll p-4 flex flex-col items-center bg-white overflow-x-hidden transition-all duration-700">
             <nav className="absolute left-0 top-0 right-0 w-full p-4 mb-6 flex justify-center items-center border-b border-gray-50">
@@ -91,7 +91,7 @@ function MobileNavbar({ user, cart, setCart, logout, setLogout, totalUniqueItems
             <p className="my-5 font_urbanist_medium text-sm text-gray-500">Urban Fits LLC (7053037)</p>
             {user && user.email ? <button onClick={() => setLogout(!logout)} className="w-full py-3 bg-gray-50 rounded-full font_urbanist_medium text-sm">Sign Out</button> : null}
         </section>
-        <section className="fixed z-[60] bottom-4 left-[5%] right-[5%] bg-gray-50 w-[90%] h-14 rounded-full border flex justify-around items-center">
+        <section className="fixed z-[60] bottom-4 left-1/2 -translate-x-1/2 bg-gray-50 w-[90%] md:w-3/5 h-14 rounded-full border flex justify-around items-center">
             <button onClick={toggleMenu}>
                 <svg width="25" height="17" viewBox="0 0 25 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <line y1="1.80469" x2="25" y2="1.80469" stroke="gray" strokeWidth="2" />

@@ -16,7 +16,7 @@ import axios from 'axios'
 import countryCodes from '@/static data/countryCodes'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { user, logOut, setCountry } = useUser()
+  const { user, logOut, setCountry, geo_selected_by_user, setGeoSelectedByUser } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   const url = router.pathname
@@ -26,14 +26,16 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }
 
   useEffect(() => {
-    window.addEventListener("beforeunload", () => {
+    const handleSessionValidity = () => {
       const sessionValid = localStorage.getItem('remember_me')
       if (sessionValid === true) return logOut()
-      else localStorage.removeItem("loadingModal")
-    })
+    }
+    window.addEventListener("beforeunload", handleSessionValidity)
+    return () => window.removeEventListener("beforeunload", handleSessionValidity)
   }, [])
   useEffect(() => {
     const getGeoLocation = async () => {
+      if(geo_selected_by_user) return
       try {
         const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
         console.log(data)

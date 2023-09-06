@@ -7,14 +7,31 @@ import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
 import OfferCard from "@/components/cards/offerCard";
 import Shoppingcard from "@/components/cards/shoppingcard";
+import useUser from "@/hooks/useUser";
+import toaster from "@/utils/toast_function";
+import { pusherClient } from '@/utils/pusher';
 
 export default function Home() {
+    const { user } = useUser()
     // temporary product object for shopping card
     const product = {
         name: 'Sample Product name',
         price: '76.99',
         variants: [1, 2, 3, 4]
     }
+
+    useEffect(() => {
+        const triggerEvent = async () => {
+            await fetch(`${process.env.HOST}/api/pusher?username=${user.firstname}`)
+        }
+        triggerEvent()
+        const channel = pusherClient.subscribe('urban-fits')
+        channel.bind('user-login', (data) => {
+            console.log(data)
+            toaster('success', data.pusher_msg)
+        })
+        return () => pusherClient.unsubscribe('urban-fits')
+    }, [])
 
     return <>
         <Head><title>Urban Fits</title></Head>

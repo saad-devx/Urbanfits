@@ -9,7 +9,7 @@ import * as Yup from 'yup'
 import Tooltip from '../tooltip';
 
 export default function LanguageModal(props) {
-    const { user, country, setCountry } = useUser()
+    const { user, country, setCountry, setGeoSelectedByUser } = useUser()
     const validatedSchema = Yup.object({
         country: Yup.string().required("Please select your country"),
         language: Yup.string().required("Please select your prefered language")
@@ -37,7 +37,8 @@ export default function LanguageModal(props) {
                         <div className="absolute z-50 top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white equillibrium_shadow w-full max-h-[15rem] text-xs rounded-lg overflow-y-scroll transition-all opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                             {countryCodes.map((c, index) => {
                                 return <button onClick={() => {
-                                    return setCountry(c)
+                                    setCountry(c)
+                                    return setGeoSelectedByUser(true)
                                 }} key={index} title={c.country} className="w-full px-3 border-b hover:bg-slate-100 flex justify-between items-center py-2 transition-all">
                                     <span className="flex items-center gap-x-2 capitalize">
                                         <span className="w-5 h-4 overflow-hidden">

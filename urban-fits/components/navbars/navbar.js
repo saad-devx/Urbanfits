@@ -41,7 +41,7 @@ const ListItem = (props) => {
 }
 
 const SecondaryNavbar = (props) => {
-    if (window.matchMedia('(min-width: 1024px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
+    if (window.matchMedia('(min-width: 786px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
         <ListItem key={1} href='/all-categories' categories>All Categories</ListItem>
         <ListItem key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
         <ListItem key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
@@ -51,14 +51,14 @@ const SecondaryNavbar = (props) => {
         <ListItem key={7} href='/products/category/sale'>Sales</ListItem>
         <ListItem key={8} href='/giftcard' classes="group hidden xl:flex flex-col">Gifts</ListItem>
         <ListItem key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
-        <ListItem key={10} href='/uf-points'>Earn Uf Points</ListItem>
+        <ListItem key={10} href='/uf-points' classes="group hidden lg:flex flex-col">Earn Uf Points</ListItem>
         <ListItem key={11} href='/products/category/wishlist'>Wishlist</ListItem>
         <span className="mb-2 flex flex-col justify-center items-center text-sm">
             Minimum Order
             <p className="font_urbanist_bold text-[13px]">USD 100</p>
         </span>
     </nav>
-    else if (window.matchMedia('(max-width: 1024px)').matches) return <MobileNavbar {...props} />
+    else if (window.matchMedia('(max-width: 786px)').matches) return <MobileNavbar {...props} />
 }
 
 export default function Navbar() {
@@ -85,8 +85,8 @@ export default function Navbar() {
         <ToTopBtn />
         <nav className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
             <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1 leading-none'><h1>URBAN FITS</h1></Link>
-            <Search classes="hidden lg:flex" />
-            <Link href={user && user.email ? '/user/address' : "#"} className="hidden md:justify-self-end lg:justify-self-auto md:flex items-center text-black">
+            <Search classes="hidden md:flex" />
+            <Link href={user && user.email ? '/user/address' : "#"} className="hidden lg:flex items-center text-black">
                 <LocationIcon />
                 <div className="flex flex-col justify-center ml-3 items-start text-[13px]">
                     <p className="font_urbanist leading-snug">Deliver to</p>
@@ -95,7 +95,7 @@ export default function Navbar() {
             </Link>
             <button onClick={() => {
                 if (!user || !user.email) return
-            }} className="relative hidden group lg:flex items-center font_urbanist text-[13px] text-black gap-x-3">
+            }} className="relative hidden group md:flex items-center font_urbanist text-[13px] text-black gap-x-3">
                 <UserIcon />
                 {user && user.email ? <>
                     <div className="flex flex-col justify-center items-start">
@@ -117,9 +117,9 @@ export default function Navbar() {
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
             </button>
-            <section className="w-auto gap-x-7 md:gap-x-0 md:w-[15%] lg:pl-[2.5%] flex items-center justify-between">
+            <section className="w-auto gap-x-7 lg:gap-x-0 lg:w-[15%] lg:pl-[2.5%] flex items-center justify-between">
                 <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">
-                    <span className="w-7 h-5 overflow-hidden" title={country.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country.src} /></span>
+                    <span className="w-7 h-5 overflow-hidden" title={country?.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country?.src} /></span>
                     <DropDownIcon />
                 </button>
                 <button className='relative'>
@@ -129,7 +129,7 @@ export default function Navbar() {
                 <button onClick={() => {
                     document.body.style.overflowY = cart ? null : 'hidden'
                     setCart(!cart)
-                }} className="hidden lg:block relative">
+                }} className="hidden md:block relative">
                     {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-black">{totalUniqueItems}</span> : null}
                     <Image src={bag} />
                 </button>

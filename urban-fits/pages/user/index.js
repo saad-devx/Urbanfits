@@ -92,10 +92,10 @@ export default function User(props) {
         if (!newsletterData) return () => getNewsletterData()
     }, [])
 
-    if (window.matchMedia('(max-width: 1024px)').matches) return <>
+    if (window.matchMedia('(max-width: 786px)').matches) return <>
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
-        <main className='bg-white w-full min-h-screen p-4 flex flex-col'>
+        <main className='bg-white w-full min-h-screen p-4 md:p-10 flex flex-col'>
             {loader}
             <section className="w-full flex flex-col">
                 {user && user.email ? <>

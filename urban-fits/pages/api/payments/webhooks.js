@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import Cors from 'micro-cors';
+const io = require('@/pages/api/socket')
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -30,10 +31,8 @@ const webhookHandler = async (req, res) => {
         webhookSecret
       );
     } catch (err) {
-      // On error, log and return the error message.
       console.log(`❌ Error message: ${err.message}`);
-      res.status(400).send(`Webhook Error: ${err.message}`);
-      return;
+      return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     // Successfully constructed event.
@@ -43,14 +42,17 @@ const webhookHandler = async (req, res) => {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object;
         console.log(`PaymentIntent status: ${paymentIntent.status}`);
-        return {paymentIntent, success: true, msg: "yess we got the payload"}
+        io.emit('payment-success',
+          {
+            paymentIntent,
+            success: true,
+            msg: "payment successfull"
+          })
         break;
       }
       case 'payment_intent.payment_failed': {
         const paymentIntent = event.data.object;
-        console.log(
-          `❌ Payment failed: ${paymentIntent.last_payment_error?.message}`
-        );
+        console.log(`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`);
         break;
       }
       case 'charge.succeeded': {
