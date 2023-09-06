@@ -1,7 +1,6 @@
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import Cors from 'micro-cors';
-const io = require('@/pages/api/socket')
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -42,12 +41,11 @@ const webhookHandler = async (req, res) => {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object;
         console.log(`PaymentIntent status: ${paymentIntent.status}`);
-        io.emit('payment-success',
-          {
-            paymentIntent,
-            success: true,
-            msg: "payment successfull"
-          })
+        return {
+          paymentIntent,
+          success: true,
+          msg: "payment successfull"
+        }
         break;
       }
       case 'payment_intent.payment_failed': {
