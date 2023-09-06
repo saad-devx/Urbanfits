@@ -14,6 +14,8 @@ import LoadingBar from 'react-top-loading-bar'
 import Error403 from './403'
 import axios from 'axios'
 import countryCodes from '@/static data/countryCodes'
+import toaster from "@/utils/toast_function";
+import { pusherClient } from '@/utils/pusher';
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { user, logOut, setCountry, geo_selected_by_user, setGeoSelectedByUser } = useUser()
@@ -49,6 +51,14 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     }
     getGeoLocation()
   }, [])
+  useEffect(() => {
+    const channel = pusherClient.subscribe('urban-fits')
+    channel.bind('user-login', (data) => {
+      console.log(data)
+      toaster('success', data.pusher_msg)
+    })
+    return () => pusherClient.unsubscribe('urban-fits')
+  }, [router.events])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)

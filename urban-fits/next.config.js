@@ -31,10 +31,10 @@ const nextConfig = {
     // IP2Lcation access key
     IPINFO_ACCESS_TOKEN: "9435a9027e6305",
     // Pusher app credentials
-    PUSHER_APP_ID: "1665659",
-    PUSHER_KEY: "b1922c08c9c41869d7b3",
-    PUSHER_SECRET: "cef24361002750c60137",
-    PUSHER_CLUSTER: "mt1"
+    PUSHER_APP_ID: "1666015",
+    PUSHER_KEY: "9f78e98323601d1a7b77",
+    PUSHER_SECRET: "02a3e8a11541c9b55b05",
+    PUSHER_CLUSTER: "ap2"
   },
   async headers() {
     return [

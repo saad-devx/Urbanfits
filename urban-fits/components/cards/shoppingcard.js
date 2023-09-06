@@ -36,7 +36,7 @@ export default function Shoppingcard(props) {
         }} title='Add to Wishlist' className="group w-10 h-10 absolute top-1 left-1 md:top-3 md:left-4 z-10 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60 hover:shadow-xl">
             <Image src={inWishList(product._id) ? redHeart : heart} className='w-4 md:w-5' alt='wishlist' />
         </button>
-        <Link href={props.link || `/products/product/${product._id}`}>
+        <Link href={props.link || `/products/product/${product._id}?timestamp=${Date.now()}`}>
             <div className="relative w-full h-3/4 lg:h-[70%] xl:h-[72%] pt-3 lg:pt-5 flex justify-center items-center">
                 <ImgLoader loading={loading} />
                 <Image src={product.cover_image || DemoImg} width={640} height={853} onLoad={() => setLoading(false)} className={`${loading ? 'w-0 h-0' : 'w-auto h-full'} object-contain`} alt='Urban Fits' />
@@ -81,7 +81,7 @@ export function SmallShoppingcard(props) {
         }} title='Add to Wishlist' className="group w-8 h-8 absolute top-1 left-2 z-20 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60 hover:shadow-xl">
             <Image src={inWishList(product._id) ? redHeart : heart} alt='wishlist' className='w-4 md:w-5' />
         </button>
-        <Link href={props.link || `/products/product/${product._id}`}>
+        <Link href={props.link || `/products/product/${product._id}?timestamp=${Date.now()}`}>
             <div className="relative w-full h-4/5 pt-3">
                 <Image src={product.cover_image} width={640} height={853} className="h-full object-contain object-center" alt={product.name} />
             </div>

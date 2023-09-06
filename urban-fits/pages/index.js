@@ -8,8 +8,6 @@ import ListingShopSection from "@/components/listingShop_section";
 import OfferCard from "@/components/cards/offerCard";
 import Shoppingcard from "@/components/cards/shoppingcard";
 import useUser from "@/hooks/useUser";
-import toaster from "@/utils/toast_function";
-import { pusherClient } from '@/utils/pusher';
 
 export default function Home() {
     const { user } = useUser()
@@ -22,15 +20,9 @@ export default function Home() {
 
     useEffect(() => {
         const triggerEvent = async () => {
-            await fetch(`${process.env.HOST}/api/pusher?username=${user.firstname}`)
+            await fetch(`${process.env.HOST}/api/pusher?username=${user?.firstname}`)
         }
         triggerEvent()
-        const channel = pusherClient.subscribe('urban-fits')
-        channel.bind('user-login', (data) => {
-            console.log(data)
-            toaster('success', data.pusher_msg)
-        })
-        return () => pusherClient.unsubscribe('urban-fits')
     }, [])
 
     return <>
