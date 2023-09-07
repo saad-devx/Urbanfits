@@ -48,8 +48,8 @@ const OrderCard = (props) => {
                         <Image alt="Urban images" src={props.img} className="w-full object-cover" />
                     </span>
                     <div className="flex flex-col space-y-2">
-                        <h3 className="font_urbanist_medium text-sm md:text-base">{props.product_title}</h3>
-                        <p className="font_urbanist_light text-[10px] md:text-xs">Return Window Closed on June 23</p>
+                        <h3 className="font_urbanist_bold text-sm md:text-base">{props.product_title}</h3>
+                        <p className="font_urbanist text-[10px] md:text-xs">Return Window Closed on June 23</p>
                     </div>
                 </div>
                 <span className='hidden md:flex justify-self-end text-[10px] md:text-xs' >
@@ -64,7 +64,7 @@ export default function orders() {
     const { user } = useUser()
     if (!user) return <Error403 />
     return <OrdersPage>
-        <h2 className="text-sm md:text-base">Order Placed in 2023</h2>
+        <h2 className="mb-4 text-sm md:text-base">Order Placed in 2023</h2>
         <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />
         <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />
         <OrderCard product_title="Urban T-shirt with logo Design" img={shirt_img} order_date="8 Jan 2023" price="$78.00" order_number="406-0406900-597108" />

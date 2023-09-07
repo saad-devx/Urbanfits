@@ -10,15 +10,14 @@ import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
+import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
 import Error403 from './403'
-import axios from 'axios'
-import countryCodes from '@/static data/countryCodes'
 import toaster from "@/utils/toast_function";
 import { pusherClient } from '@/utils/pusher';
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { user, logOut, setCountry, geo_selected_by_user, setGeoSelectedByUser } = useUser()
+  const { user, logOut } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   const url = router.pathname
@@ -28,37 +27,21 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }
 
   useEffect(() => {
+    const channel = pusherClient.subscribe('urban-fits')
+    channel.bind('user-login', (data) => {
+      console.log(data)
+      toaster('success', data.pusher_msg)
+    })
+  }, [])
+  useEffect(() => {
     const handleSessionValidity = () => {
       const sessionValid = localStorage.getItem('remember_me')
       if (sessionValid === true) return logOut()
     }
+    getGeoLocation()
     window.addEventListener("beforeunload", handleSessionValidity)
     return () => window.removeEventListener("beforeunload", handleSessionValidity)
   }, [])
-  useEffect(() => {
-    const getGeoLocation = async () => {
-      if(geo_selected_by_user) return
-      try {
-        const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
-        console.log(data)
-        const filteredCountry = countryCodes.filter(country => country.country === data.geo_meta.country.toLowerCase())[0]
-        console.log(filteredCountry)
-        if (filteredCountry) return setCountry(filteredCountry)
-        else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getGeoLocation()
-  }, [])
-  // useEffect(() => {
-  //   const channel = pusherClient.subscribe('urban-fits')
-  //   channel.bind('user-login', (data) => {
-  //     console.log(data)
-  //     toaster('success', data.pusher_msg)
-  //   })
-  //   return () => pusherClient.unsubscribe('urban-fits')
-  // }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)

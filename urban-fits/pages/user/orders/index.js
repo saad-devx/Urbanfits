@@ -11,12 +11,21 @@ const EmtpyOrderImg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-co
 const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
-    return <Link className='h-full group flex flex-col justify-between items-center transition-all' href={props.href}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
+    return <Link className='h-full group flex flex-col justify-between items-center font_urbanist_medium transition-all' href={props.href}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
 }
 
 const MblOption = (props) => {
     const router = useRouter()
     return <Link href={props.href} className={`${router.pathname === props.href ? "border-b border-b-black text-black font_urbanist_bold" : "font_urbanist_medium text-gray-500"} pb-3 text-base items-center transition-all`}>{props.children}</Link>
+}
+
+const NoOrderSection = () => {
+    return <section className="w-full flex flex-col items-center gap-y-4 pt-[40%] md:pt-[30%] lg:pt-[16%]">
+        <Image src={EmtpyOrderImg} width={150} height={150} alt='empty orders' />
+        <span className="font_urbanist_bold text-[17px]">No orders to display</span>
+        <span className="font_urbanist text-sm">You can track and review your orders <Link href="/trackorder" className='font_urbanist_medium underline text-black'>here</Link></span>
+        <Link href="/products/category/all-categories" className='font_urbanist text-sm px-4 py-2 rounded-full bg-gray-100'>Go Shopping</Link>
+    </section>
 }
 
 export default function OrdersPage(props) {
@@ -36,14 +45,7 @@ export default function OrdersPage(props) {
                 <MblOption href="/user/orders/shipped">Shipped</MblOption>
                 <MblOption href="/user/orders/returns">Returns</MblOption>
             </section>
-            {props.noOrders? <section className="w-full flex flex-col items-center gap-y-4 pt-[40%]">
-                <Image src={EmtpyOrderImg} width={150} height={150} alt='empty orders' />
-                <span className="font_urbanist_bold text-[17px]">No orders to display</span>
-                <span className="font_urbanist text-sm">You can track and review your orders <Link href="/trackorder" className='font_urbanist_medium underline text-black'>here</Link></span>
-                <Link href="/products/category/all-categories" className='font_urbanist text-sm px-4 py-2 rounded-full bg-gray-100'>Go Shopping</Link>
-            </section>
-            :
-            <section className="w-full h-full p-4">{props.children}</section>}
+            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">{props.children}</section>}
         </main>
     </>
     return <>
@@ -53,13 +55,13 @@ export default function OrdersPage(props) {
             <div className="w-full text-sm md:text-base overflow-x-scroll hide_scrollbar">
                 <div className="w-[150%] md:w-full h-full flex justify-between border-b border-b-gray-300 ">
                     <Option href='/user/orders/orders'>Orders</Option>
-                    <Option href='/user/orders/buyagain'>Buy Again</Option>
-                    <Option href='/user/orders/notdispatched'>Not Yet Dispatched</Option>
-                    <Option href='/user/orders/cancelledorders'>Cancelled Orders</Option>
+                    <Option href='/user/orders/pending'>In Progress</Option>
+                    <Option href='/user/orders/shipped'>Shipped</Option>
+                    <Option href='/user/orders/returns'>Returns</Option>
                 </div>
             </div>
             <section className="w-full my-5 font_urbanist">
-                {props.children}
+            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">{props.children}</section>}
             </section>
         </User>
     </>

@@ -109,8 +109,8 @@ export default function Navbar() {
                             <p className='font_urbanist_medium'>{100}</p>
                         </li>
                         <Link href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
-                        <Link href="/user/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
-                        <Link href="/user/orders/buyagain" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Buy Again</Link>
+                        <Link href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
+                        <Link href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link>
                         <Link href="/user/shoppinglists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
                         <button onClick={() => setLogout(!logout)} className="w-full px-4 hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</button>
                     </div>
