@@ -18,9 +18,9 @@ export default function Home() {
         variants: [1, 2, 3, 4]
     }
 
-    // useEffect(() => {
-    //     triggerEvent()
-    // }, [])
+    useEffect(() => {
+        triggerEvent()
+    }, [])
     const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}` : ''}`)
 
     return <>
