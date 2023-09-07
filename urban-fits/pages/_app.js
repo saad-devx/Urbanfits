@@ -51,14 +51,14 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     }
     getGeoLocation()
   }, [])
-  useEffect(() => {
-    const channel = pusherClient.subscribe('urban-fits')
-    channel.bind('user-login', (data) => {
-      console.log(data)
-      toaster('success', data.pusher_msg)
-    })
-    return () => pusherClient.unsubscribe('urban-fits')
-  }, [router.events])
+  // useEffect(() => {
+  //   const channel = pusherClient.subscribe('urban-fits')
+  //   channel.bind('user-login', (data) => {
+  //     console.log(data)
+  //     toaster('success', data.pusher_msg)
+  //   })
+  //   return () => pusherClient.unsubscribe('urban-fits')
+  // }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
       setProgress(77)
