@@ -35,12 +35,11 @@ const UpdateProducts = async (req, res) => {
                 })
             }
         }
-        else {
-            res.status(405).json({ success: false, msg: "Method not Allowed, you are using wrong request method!" })
-        }
+        else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: PUT" })
     }
-    catch (err) {
-        res.status(500).send("Internal Server Error occurred. Please retry")
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 

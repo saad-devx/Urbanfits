@@ -98,13 +98,13 @@ export default function Checkout1() {
         onSubmit: async (values) => {
             setLoader(<Loader />)
             try {
-                const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
+                const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, order_items: items })
                 sessionStorage.setItem("this_order_data", JSON.stringify({ shipping_info: values, items: items, cartTotal, used: false }))
                 window.location.href = response.data
             }
             catch (e) {
                 console.log(e)
-                toaster("error", "Some uexpected error occured, We're sorry, we will fix it soon.")
+                toaster("error", e.response.data.msg)
             }
             setLoader(null)
         }

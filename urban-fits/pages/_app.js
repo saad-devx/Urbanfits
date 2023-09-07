@@ -28,9 +28,14 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 
   useEffect(() => {
     const channel = pusherClient.subscribe('urban-fits')
+    const paymentChannle = pusherClient.subscribe('payments')
     channel.bind('user-login', (data) => {
       console.log(data)
       toaster('success', data.pusher_msg)
+    })
+    paymentChannle.bind('payment-succeeded', (data) => {
+      console.log(data)
+      toaster('success', data.msg)
     })
   }, [])
   useEffect(() => {

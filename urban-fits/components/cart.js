@@ -69,7 +69,7 @@ function CartItem(props) {
         </div>
         {/* to be displayed in mobile */}
         <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
-            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200"/></Link>
+            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200" /></Link>
             <h3 className="font_urbanist_medium self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
             <div className="w-full flex self-end gap-3">
                 <div className='relative'>
@@ -135,17 +135,17 @@ export default function Cart(props) {
                             <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
                         <div className="w-full lg:w-[400px] self-center lg:self-end">
-                            <h3 className="text-center text-xs lg:text-base font_urbanist_bold tracking-[0.3em] lg:tracking-expand mb-5">ORDER SUMMARY</h3>
+                            <h3 className="text-center text-sm lg:text-[17px] font_urbanist_bold mb-5">Order Summary</h3>
                             <div className="w-full h-auto p-4 rounded-2xl font_urbanist_bold bg-white items-center border">
-                                <span className="w-full my-3 mx-auto flex justify-between"><small>SUBTOTAL</small> <small>${get3dpNumber(cartTotal)}</small></span>
-                                <span className="w-full my-3 mx-auto flex justify-between"><small>SHIPPING</small> <small>${items[0].shipping_fee}</small></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Subtotal</span> <span>${get3dpNumber(cartTotal)}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Shipping</span> <span>${items[0].shipping_fee}</span></span>
                                 <br />
-                                <span className="w-full my-3 mx-auto flex justify-between"><small>TOTAL</small> <small>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</small></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</span></span>
                             </div>
                             <LinkBtn href="/checkout/step1" onClick={() => {
                                 document.body.style.overflowY = props.cart ? null : 'hidden'
                                 props.setCart(false)
-                            }} font='font_urbanist_bold tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
+                            }} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14 mb-20">

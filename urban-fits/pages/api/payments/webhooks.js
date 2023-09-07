@@ -1,6 +1,9 @@
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import Cors from 'micro-cors';
+import sendEmail from "@/utils/sendEmail"
+import OrderConfirmed from '@/email templates/order_confirm';
+import { pusherServer } from '@/utils/pusher';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -41,11 +44,14 @@ const webhookHandler = async (req, res) => {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object;
         console.log(`PaymentIntent status: ${paymentIntent.status}`);
-        return {
-          paymentIntent,
-          success: true,
-          msg: "payment successfull"
-        }
+        pusherServer.trigger('payments', 'payment-succeeded',
+          {
+            paymentIntent,
+            success: true,
+            msg: "payment was successfull!"
+          })
+        let template = OrderConfirmed("Faizan")
+        await sendEmail({ to: paymentIntent.data.customer_details.email || "binarshadsaad6@gmail.com", subject: "Your order has been placed." }, template)
         break;
       }
       case 'payment_intent.payment_failed': {
