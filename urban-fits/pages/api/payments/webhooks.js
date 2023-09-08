@@ -8,8 +8,7 @@ import { pusherServer } from '@/utils/pusher';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-const webhookSecret = "whsec_08929f835f85103c35eeda9ecb0cd3a3a7b6e0de46df40b9c6c7d7de306f38e9";
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 // Stripe requires the raw body to construct the event.
 export const config = {
