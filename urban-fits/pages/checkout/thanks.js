@@ -5,8 +5,8 @@ import AlertPage from '@/components/alertPage';
 import LinkBtn from '@/components/buttons/link_btn';
 import toaster from '@/utils/toast_function';
 import { useCart } from 'react-use-cart';
-// imports for images
 import Image from 'next/image';
+import { pusherClient } from '@/utils/pusher';
 
 export default function Thanks() {
     const router = useRouter()
@@ -17,6 +17,18 @@ export default function Thanks() {
     const get3dpNumber = (num) => {
         return num.toFixed(3)
     }
+
+    useEffect(() => {
+        const paymentChannel = pusherClient.subscribe('payments')
+        paymentChannel.bind('payment-succeeded', (data) => {
+            console.log(data)
+            toaster('success', data.msg)
+        })
+        return () => {
+            paymentChannel.unbind('payment-succeeded')
+            pusherClient.unsubscribe('payments')
+        }
+    }, [])
 
     useEffect(() => {
         const { payment } = router.query

@@ -23,7 +23,7 @@ const GetSingleProduct = async (req, res) => {
 
             pusherServer.trigger('urban-fits', 'server-update', {
                 success: true,
-                pusher_msg: "Product updated successfully lol. i am from the pusher service btw..."
+                pusher_msg: "Product fetched to the client successfully. (socket event)"
             })
             res.status(200).json({
                 success: true,

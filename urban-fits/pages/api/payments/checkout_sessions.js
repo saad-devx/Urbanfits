@@ -13,7 +13,7 @@ export default async function handler(req, res) {
             for (const orderItem of order_items) {
                 const dbProduct = await Product.findById(orderItem.product_id)
                 if (!dbProduct) return res.status(400).json({ success: false, msg: "Either specified product IDs does not exist or the product IDs were tempered." })
-                if(!orderItem.original_id) return res.status(400).json({ success: false, msg: "Each order item must have a `original_id` property with the value of its unique variant id." })
+                if (!orderItem.original_id) return res.status(400).json({ success: false, msg: "Each order item must have a `original_id` property with the value of its unique variant id." })
                 const filteredArray = dbProduct.variants.filter(variant => variant._id.toString() === orderItem.original_id.toString())
                 if (!filteredArray || !filteredArray.length) return res.status(400).json({ success: false, msg: "Either specified product IDs does not exist or the product IDs were tempered." })
 
@@ -65,6 +65,10 @@ export default async function handler(req, res) {
                     }
                 }),
                 mode: 'payment',
+                metadata: {
+                    order_items: finalOrderItems,
+                    shipping_info
+                },
                 success_url: `${process.env.HOST}/checkout/thanks?payment=true`,
                 cancel_url: `${process.env.HOST}/checkout/step1?payment=false`
             });

@@ -44,12 +44,12 @@ const webhookHandler = async (req, res) => {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object;
         console.log(`PaymentIntent status: ${paymentIntent.status}`);
-        let template = OrderConfirmed("Faizan")
-        await sendEmail({ to: paymentIntent?.data.customer_details?.email || "binarshadsaad6@gmail.com", subject: "Your order has been placed." }, template)
+        let template = OrderConfirmed(paymentIntent?.metadata?.shipping_info?.name)
+        await sendEmail({ to: paymentIntent?.metadata?.shipping_info?.email || "binarshadsaad6@gmail.com", subject: "Your order has been placed." }, template)
         pusherServer.trigger('payments', 'payment-succeeded', {
-          paymentIntent,
+          event,
           success: true,
-          msg: "payment was successfull!"
+          msg: "Your payment was successfull!"
         })
         break;
       }

@@ -9,7 +9,7 @@ const nextConfig = {
   },
   env: {
     HOST: "https://st.urbanfits.ae",
-    // HOST: "http://localhost:3000",/
+    // HOST: "http://localhost:3000",
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     DEFAULT_PFP: "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg",
