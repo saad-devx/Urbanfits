@@ -17,7 +17,7 @@ import toaster from "@/utils/toast_function";
 import { pusherClient } from '@/utils/pusher';
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { user, logOut } = useUser()
+  const { user, logOut, setCountry, geo_selected_by_user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   const url = router.pathname
@@ -38,7 +38,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       const sessionValid = localStorage.getItem('remember_me')
       if (sessionValid === true) return logOut()
     }
-    getGeoLocation()
+    getGeoLocation(setCountry, geo_selected_by_user)
     window.addEventListener("beforeunload", handleSessionValidity)
     return () => window.removeEventListener("beforeunload", handleSessionValidity)
   }, [])

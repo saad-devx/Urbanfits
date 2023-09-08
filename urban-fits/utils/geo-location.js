@@ -1,10 +1,7 @@
 import axios from 'axios'
-import countryCodes from '@/static data/countryCodes'
-import useUser from '@/hooks/useUser'
+import countryCodes from '@/static data/countryCodes';
 
-const getGeoLocation = async () => {
-    const { setCountry, geo_selected_by_user, setGeoSelectedByUser } = useUser()
-
+const getGeoLocation = async (setCountry, geo_selected_by_user) => {
     if (geo_selected_by_user) return
     try {
         const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
