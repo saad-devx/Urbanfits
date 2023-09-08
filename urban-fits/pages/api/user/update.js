@@ -6,8 +6,9 @@ const jwt = require("jsonwebtoken")
 const UpdateUser = async (req, res) => {
     try {
         if (req.method === 'PUT') {
+            const { id } = req.query
+            if (!id) return res.status(400).json({ success: false, msg: "User id is required. Query parameters: id" })
             await ConnectDB()
-            if (!req.query.id) return res.status(400).json({ success: false, msg: "User id not provided" })
             // authenticating user password if authpassword query exists
             if (req.query.authpassword) {
                 let user = await User.findById(req.query.id)
@@ -16,14 +17,13 @@ const UpdateUser = async (req, res) => {
                 if (req.query.authpassword !== originalPassword) return res.status(404).json({ success: false, msg: "Your password is incorrect" })
             }
             // updating the user profile
-            let user = await User.findById(req.query.id)
+            let user = await User.findById(id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
             delete req.body.email
             delete req.body.password
             delete req.body.two_fa_secret
             delete req.body.role
-            await User.findByIdAndUpdate(req.query.id, req.body)
-            user = await User.findById(req.query.id)
+            user = await User.findByIdAndUpdate(id, req.body, { new: true })
             const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
             res.status(200).json({
                 success: true,
@@ -31,7 +31,7 @@ const UpdateUser = async (req, res) => {
                 payload
             })
         }
-        else res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
+        else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
     catch (err) {
         console.log(err)

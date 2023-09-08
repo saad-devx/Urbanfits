@@ -39,11 +39,11 @@ const forgotPassword = async (req, res) => {
                 otp_id: dbOtp._id
             })
         }
-        else res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
+        else res.status(400).json({ success: false, msg: "Method not allowed, Allowed Methods: POST" })
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error occurred, pleae try again later" })
+        res.status(500).json({ success: false, msg: "Internal server error occurred, please try later." })
     }
 }
 export default forgotPassword

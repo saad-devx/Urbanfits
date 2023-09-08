@@ -11,7 +11,7 @@ const SignupCallback = async (req, res) => {
             const { otp_id, otp } = req.body
             if (!otp_id || otp_id.length < 18) return res.status(401).json({
                 success: false,
-                msg: "All parameters are required. Body Parameter: otp_id"
+                msg: "All valid parameters are required. Body Parameter: otp_id, otp"
             })
             await ConnectDB()
 
@@ -34,9 +34,7 @@ const SignupCallback = async (req, res) => {
                 if (userLetter) return userLetter.update({ active: true, user: user._id })
             }
         }
-        else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
-        }
+        else return res.status(400).json({ success: false, msg: "Method not allowed, Allowed Methods: POST" })
     }
     catch (error) {
         console.log(error)

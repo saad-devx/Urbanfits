@@ -22,7 +22,7 @@ const AuthOtpAndChangeEmail = async (req, res) => {
                 msg: "Your password has been updated!"
             })
         }
-        else res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
+        else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
     catch (err) {
         console.log(err)

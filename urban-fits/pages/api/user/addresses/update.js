@@ -1,16 +1,17 @@
 import ConnectDB from "@/utils/connect_db"
 import Addresses from "@/models/addresses"
 import User from "@/models/user"
+import mongoose from "mongoose"
 const jwt = require("jsonwebtoken")
 
 const UpdateAddress = async (req, res) => {
     try {
         if (req.method === 'PUT') {
             const { user_id } = req.query
-            if (!user_id) return res.status(400).json({ success: false, msg: "A valid user id is required. Query Parameter: user_id" })
+            if (!user_id || !mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "A valid user id is required. Query Parameter: user_id" })
             await ConnectDB()
             let user = await User.findById(user_id)
-            if (!user) return res.status(404).json({ success: false, msg: "User not found" })
+            if (!user) return res.status(404).json({ success: false, msg: "User not found with corresponding user_id." })
 
             let addresses = await Addresses.findOne({ user_id: user._id })
             if (!addresses) {
@@ -32,7 +33,7 @@ const UpdateAddress = async (req, res) => {
                 })
             }
         }
-        else return res.status(405).json({ success: false, msg: "Only PUT method allowed." })
+        else return res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
     catch (error) {
         console.log(error)

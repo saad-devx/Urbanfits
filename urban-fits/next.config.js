@@ -9,7 +9,7 @@ const nextConfig = {
   },
   env: {
     HOST: "https://st.urbanfits.ae",
-    // HOST: "http://localhost:3000",
+    // HOST: "http://localhost:3000",/
     MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     DEFAULT_PFP: "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg",
@@ -24,7 +24,7 @@ const nextConfig = {
     //Stripe keys
     // STRIPE_PUBLISHABLE_KEY: "pk_test_51MkU2DHF1bkFLgckS5AUrOHFjoJAPxAW1RxkHDfriM4uDbVAM3MeVu3XOVfy7BqUGx9kiu9CMQxqbdRxoWSXMO8c003NMTN2AT",
     // STRIPE_SECRET_KEY: "sk_test_51MkU2DHF1bkFLgck4aQNuqKxTOrWh2uSlx8AxKJucUFGPl4cDSpjLhhn4ynhISjShrTqGhl2U4A1UZJFe0RRclyo00hWAfnqeB",
-    // STRIPE_WEBHOOK_SECRET: "we_1N9UYDHF1bkFLgckaP6rowKH",
+    // STRIPE_WEBHOOK_SECRET: "whsec_zh0f1sztGeE8osV6cPvZeX9Nb8SMmZ6f",
     STRIPE_PUBLISHABLE_KEY: "pk_test_51MkNT6BIhEpWj9u7qSXh10bWCubPCpGhUPbEwcWHap0EZZcn1FCnX46CYwmtSIRmdl8HfKPgqczIJ92t92Efj4AE00kUAlBVgf",
     STRIPE_SECRET_KEY: "sk_test_51MkNT6BIhEpWj9u7Kmn5ZPcmpXKSSQsDhiC0UjuoI2AdT5OUgUdqZAZFFQQ3ijO06znVKf0MMi7oBWnP3uMNWGrB00pzZZ7ZDJ",
     STRIPE_WEBHOOK_SECRET: "whsec_sT7z0VH7oD8ekxbRs1PSoqyvmQ1OYbvx",

@@ -44,7 +44,7 @@ const AuthEmailByOtp = async (req, res) => {
             })
         }
         else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
+            res.status(400).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
         }
     }
     catch (err) {
