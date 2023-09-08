@@ -31,7 +31,8 @@ export default async function handler(req, res) {
 
             let totalPrice = 0;
             for (const item of finalOrderItems) {
-                totalPrice += item.price
+                const itemPrice = item.price * item.quantity
+                totalPrice += itemPrice
             }
             console.log(totalPrice)
 
