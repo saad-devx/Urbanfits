@@ -1,6 +1,7 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
+import OrderSession from "@/models/order_session";
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -26,6 +27,12 @@ export default async function handler(req, res) {
                 }
                 finalOrderItems.push(finalProduct)
             }
+
+            const orderSession = await OrderSession.create({
+                name: shipping_info.name,
+                email: shipping_info.email,
+                order_items
+            })
 
             // Create Checkout Sessions from body params.
             const session = await stripe.checkout.sessions.create({
@@ -66,8 +73,7 @@ export default async function handler(req, res) {
                 }),
                 mode: 'payment',
                 metadata: {
-                    order_items: finalOrderItems,
-                    shipping_info
+                    order_session_id: orderSession._id
                 },
                 success_url: `${process.env.HOST}/checkout/thanks?payment=true`,
                 cancel_url: `${process.env.HOST}/checkout/step1?payment=false`
