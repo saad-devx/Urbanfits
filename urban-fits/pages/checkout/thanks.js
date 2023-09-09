@@ -16,10 +16,7 @@ export default function Thanks() {
     const [negativeState, setNegativeState] = useState(<Loader />)
     const [orderData, setOrderData] = useState(null)
 
-    const get3dpNumber = (num) => {
-        // return num.toFixed(3)
-        return 324
-    }
+    const get3dpNumber = (num) => num.toFixed(3)
 
     useEffect(() => {
         emptyCart()
@@ -29,7 +26,11 @@ export default function Thanks() {
             toaster(data.type, data.msg)
             setOrderData(data.order_session)
         })
+        const timeOutId = setTimeout(() => {
+            setNegativeState(<AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or request timed out. Please check your Account Dashboard or your email inbox to see your order updates." />)
+        }, 180000);
         return () => {
+            clearTimeout(timeOutId)
             paymentChannel.unbind('payment-succeeded')
             pusherClient.unsubscribe('payments')
         }
