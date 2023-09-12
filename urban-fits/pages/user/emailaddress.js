@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Loader from '@/components/loaders/loader';
 import Button from '../../components/buttons/simple_btn';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import mongoose from 'mongoose';
@@ -55,7 +56,7 @@ export default function EmailPassword() {
     }
 
     if (!user || user.register_provider !== "urbanfits") return <Error403 />
-    if (window.matchMedia('(max-width: 1024px)').matches) return <>
+    if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>Email</title></Head>
         <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
             <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
@@ -79,7 +80,7 @@ export default function EmailPassword() {
             </div>
         </main>
     </>
-    return <>
+    else return <>
         <Head><title>Email</title></Head>
         <User>
             {loading ? <Loader /> : null}
@@ -95,10 +96,10 @@ export default function EmailPassword() {
                     {touched.new_email && errors.new_email ? <Tooltip classes="form-error" content={errors.new_email} /> : null}
                     <input className="w-full bg-transparent outline-none border-none" name="new_email" id="new_email" value={values.new_email} onChange={handleChange} onBlur={handleBlur} placeholder="Confirm Email*" />
                 </div>
-                <div className='w-full flex justify-between items-center text-sm font_urbanist_medium' ><h2>Current Password</h2> <Link href='/resetpassword' className='text-xs flex items-center' >Change<i className="material-symbols-outlined text-sm ml-2">edit_square</i></Link></div>
+                <div className='w-full flex justify-between items-center text-sm font_urbanist_medium' ><h2>Current Password</h2> <button type='button' onClick={() => { logOut(); useRouter().push("/auth/resetpassword") }} className='text-xs flex items-center' >Change<i className="material-symbols-outlined text-sm ml-2">edit_square</i></button></div>
                 <div className={`relative data_field flex items-center border-b ${touched.password && errors.password ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
                     {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                    <input ref={passRef} className="w-full outline-none border-none" type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password*' />
+                    <input ref={passRef} className={`w-full outline-none border-none ${values.password && "tracking-2"}`} type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password*' />
                     <i onClick={() => {
                         passRef.current.focus();
                         return setShowPass(!showPass);

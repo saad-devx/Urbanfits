@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo_outlined from "@/public/icons/logo_outlined.svg";
 import { sidebarItems, SearchQueryData } from "@/mock/navData";
@@ -16,6 +16,8 @@ import AvatarIconV from "@/public/icons/AvatarIconV";
 import { ClockIcon } from "@/public/icons/ClockIcon";
 import { Button2 } from "@/components/buttons/Button2";
 import useUser from "@/hooks/useUser";
+import { pusherClient } from "@/utils/pusher";
+import toaster from "@/utils/toast_function";
 
 const SideBarItem = ({ item, sidebaropen }, props) => {
     const [expand, setExpand] = useState(false)
@@ -46,6 +48,18 @@ export default function Admin({ children }, props) {
     const [showmenue, setshowMenue] = React.useState(false);
     const [shownotification, setShownotification] = React.useState(false);
     const [arrowmenue, setArrowmenu] = React.useState(false);
+
+    useEffect(() => {
+        const adminChannel = pusherClient.subscribe('admin-channel')
+        adminChannel.bind('new-order-received', (data) => {
+            toaster("info", <span>{data.msg}<Link className="underline" href='#'>&nbsp;view orders</Link></span>)
+        })
+
+        return () => {
+            adminChannel.unbind('new-order-received')
+            pusherClient.unsubscribe('admin-channel')
+        }
+    }, [])
 
     const handlemenuclick = (menu) => {
         if (menu == "avatar") {
@@ -84,8 +98,9 @@ export default function Admin({ children }, props) {
         setResults(filteredResults)
     }
 
-    console.log(props.user_id, props)
-    // if (user._id !== props.user_id || props.user_id.length < 18) return <Error404 />
+    // console.log(props.user_id, props)
+    if (!user || !user._id) return <Error404 />
+    if (props.user_id.length < 18 || user._id !== props.user_id) return <Error404 />
     return <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
         <div className={`fixed ${sidebaropen ? "w-[250px]" : "w-[80px]"} duration-300 ${sidebaropen && "rounded-r-[25px]"} bg-white h-screen`} >
             <div className="flex-col justify-between h-full">

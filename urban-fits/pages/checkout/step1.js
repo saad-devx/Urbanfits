@@ -26,7 +26,7 @@ export default function Checkout1() {
     console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
     const router = useRouter()
     const { address, getAddress } = useAddress()
-    const { user } = useUser()
+    const { user, setGuestUser } = useUser()
     // loader and billing form state
     const [loader, setLoader] = useState(null)
     const [billingForm, setBillingForm] = useState(null)
@@ -98,12 +98,13 @@ export default function Checkout1() {
         onSubmit: async (values) => {
             setLoader(<Loader />)
             try {
-                const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, {
+                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, {
                     ...(user && { user_id: user._id }),
                     shipping_info: values,
                     order_items: items
                 })
-                router.push(response.data)
+                router.push(data.url)
+                await setGuestUser(data.guest_user_payload)
             }
             catch (e) {
                 console.log(e)
@@ -138,7 +139,7 @@ export default function Checkout1() {
             setLoader(<Loader />)
             if (user) {
                 if (!address) await getAddress()
-                if (!address) return
+                if (!address) return setLoader(null)
                 setValues({
                     name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
                     email: ifExists(user.email),

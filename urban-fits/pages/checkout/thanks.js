@@ -5,6 +5,7 @@ import AlertPage from '@/components/alertPage';
 import Loader from '@/components/loaders/loader';
 import LinkBtn from '@/components/buttons/link_btn';
 import toaster from '@/utils/toast_function';
+import useUser from '@/hooks/useUser';
 import { useCart } from 'react-use-cart';
 import Image from 'next/image';
 import mongoose from 'mongoose';
@@ -12,6 +13,7 @@ import { pusherClient } from '@/utils/pusher';
 
 export default function Thanks() {
     const router = useRouter()
+    const { user } = useUser()
     const { emptyCart } = useCart()
     const [negativeState, setNegativeState] = useState(<Loader />)
     const [orderData, setOrderData] = useState(null)
@@ -20,11 +22,15 @@ export default function Thanks() {
 
     useEffect(() => {
         emptyCart()
-        const paymentChannel = pusherClient.subscribe('payments')
+        const paymentChannel = pusherClient.subscribe(`payments-user_${user._id}`)
         paymentChannel.bind('payment-succeeded', (data) => {
             console.log(data)
             toaster(data.type, data.msg)
             setOrderData(data.order_session)
+        })
+        paymentChannel.bind('checkout-session-completed', (data) => {
+            console.log(data)
+            toaster(data.type, data.msg)
         })
         const timeOutId = setTimeout(() => {
             setNegativeState(<AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or request timed out. Please check your Account Dashboard or your email inbox to see your order updates." />)

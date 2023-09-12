@@ -5,11 +5,11 @@ import sendEmail from "@/utils/sendEmail"
 import OrderConfirmed from '@/email templates/order_confirm';
 import OrderSession from '@/models/order_session';
 import { pusherServer } from '@/utils/pusher';
+const util = require('util');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-// const webhookSecret = "whsec_08929f835f85103c35eeda9ecb0cd3a3a7b6e0de46df40b9c6c7d7de306f38e9";
 
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -55,11 +55,15 @@ const webhookHandler = async (req, res) => {
         console.log("entry point 1")
 
         try {
-          pusherServer.trigger('payments', 'payment-succeeded', {
+          pusherServer.trigger(`payments-user_${orderSession.user_id.toString()}`, 'payment-succeeded', {
             order_session: orderSession,
             success: true,
             type: 'success',
             msg: "Your payment was successfull!"
+          })
+          pusherServer.trigger('admin-channel', 'new-order-received', {
+            success: true,
+            msg: "A new order has been received!"
           })
         } catch (error) { console.log(error) }
         console.log("entry point 2")
@@ -68,15 +72,23 @@ const webhookHandler = async (req, res) => {
       }
       case 'payment_intent.payment_failed': {
         const paymentIntent = event.data.object;
+        const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
+
         console.log(`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`);
-        pusherServer.trigger('payments', 'payment-succeeded', {
-          success: true,
+        pusherServer.trigger(`payments-user_${orderSession.user_id.toString()}`, 'payment-succeeded', {
+          success: false,
           type: "error",
           msg: "Your payment was failed!"
         })
         break;
       }
       case 'charge.succeeded': {
+        const charge = event.data.object;
+        console.log(`Charge id: ${charge.id}`);
+        break;
+      }
+      case 'checkout.session.completed': {
+        console.log("here is the checkout session completed event", util.inspect(event, { depth: null }))
         const charge = event.data.object;
         console.log(`Charge id: ${charge.id}`);
         break;

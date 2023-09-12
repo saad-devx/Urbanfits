@@ -7,8 +7,8 @@ const Login = async (req, res) => {
     try {
         if (req.method === 'POST') {
             const { email, password } = req.body
-            if (!email || !password) return res.status(400).json({ success: false, msg: 'All valid parameters are required. Body parameters: email, password' })
             await ConnectDB()
+            if (!email) return res.status(400).json({ success: false, msg: 'All valid parameters are required. Body parameters: email' })
             if (req.query.auth === 'OAuth') {
                 let user = await User.findOne({ email })
                 if (!user) return res.status(404).json({ success: false, msg: "User not found, please Sign up" })
@@ -20,7 +20,7 @@ const Login = async (req, res) => {
                         redirect_url: `/auth/confirm-2fa-totp?user_id=${user._id}`
                     })
                 }
-                if (user.two_fa_enabled) {
+                if (!user.two_fa_enabled) {
                     const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                     return res.status(200).json({
                         success: true,
@@ -30,6 +30,7 @@ const Login = async (req, res) => {
                 }
             }
             else {
+                if (!email || !password) return res.status(400).json({ success: false, msg: 'All valid parameters are required. Body parameters: email, password' })
                 let user = await User.findOne().or([{ email }, { username: email }])
                 if (!user) return res.status(404).json({ success: false, msg: "User not found, please create an account" })
                 if (user.register_provider !== req.body.register_provider) return res.status(404).json({ success: false, msg: `This account is associated with ${user.register_provider}` })

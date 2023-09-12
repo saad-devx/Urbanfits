@@ -10,10 +10,10 @@ import { generateRandomInt } from "@/utils/generatePassword";
 const Signup = async (req, res) => {
     try {
         const { username, email, phone_prefix, phone_number, password } = req.body;
-        if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
         if (req.method === 'POST') {
             await ConnectDB()
             if (req.query.auth && req.query.auth === 'OAuth') {
+                if (!username || !email) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create(req.body)
@@ -25,6 +25,7 @@ const Signup = async (req, res) => {
                 })
             }
             else {
+                if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 if (!req.body.accept_policies) return res.status(400).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 const HomeCarousel = dynamic(() => import('@/components/carousels/homeCarousel'));
@@ -18,10 +18,10 @@ export default function Home() {
         variants: [1, 2, 3, 4]
     }
 
-    useEffect(() => {
-        triggerEvent()
-    }, [])
-    const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}` : ''}`)
+    const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}&user_id=${user._id}` : ''}`)
+    // useEffect(() => {
+    //     triggerEvent()
+    // }, [])
 
     return <>
         <Head><title>Urban Fits</title></Head>

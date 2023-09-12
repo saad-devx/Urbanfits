@@ -92,7 +92,7 @@
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   tap-highlight-color: rgba(0, 0, 0, 0);
-  color: #383838;
+  /* color: #383838; */
   scroll-behavior: smooth;
 }
 
@@ -182,7 +182,8 @@ select {
   box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.25);
 
 }
-.equillibrium_shadow{
+
+.equillibrium_shadow {
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -441,9 +442,16 @@ input:checked+.slider:before {
   height: calc(100vh - 105px);
 }
 
+.min-h-layout_height {
+  min-height: auto
+}
+
 @media screen and (min-width: 1024px) {
   .lg_layout_height {
     height: calc(100vh - 105px);
+  }
+  .min-h-layout_height {
+    min-height: calc(100vh - 105px);
   }
 }
 
@@ -512,11 +520,12 @@ input:checked+.slider:before {
 }
 
 /* CSS for Customer Services */
-.active_bg{
+.active_bg {
   background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
 }
+
 @media screen and (min-width: 1024px) {
-  .active_bg{
+  .active_bg {
     background: rgb(243 244 246);
   }
 }

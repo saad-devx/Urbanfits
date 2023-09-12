@@ -2,7 +2,10 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import OrderSession from "@/models/order_session";
+import GuestUser from "@/models/guest_user";
 import mongoose from "mongoose";
+const jwt = require("jsonwebtoken")
+import { pusherServer } from "@/utils/pusher";
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -34,10 +37,21 @@ export default async function handler(req, res) {
                 const itemPrice = item.price * item.quantity
                 totalPrice += itemPrice
             }
-            console.log(totalPrice)
+
+            let userID = null;
+            let guestUser = null;
+            if (!user_id) {
+                const newGuest = await GuestUser.create({
+                    name: shipping_info.name,
+                    email: shipping_info.email
+                })
+                userID = newGuest._id.toString()
+                guestUser = jwt.sign({ ...newGuest }, process.env.SECRET_KEY)
+            }
+            else if (user_id && mongoose.Types.ObjectId.isValid(user_id)) userID = user_id
 
             const orderSession = await OrderSession.create({
-                ...(user_id && mongoose.Types.ObjectId.isValid(user_id) && { user_id }),
+                user_id: userID,
                 name: shipping_info.name,
                 email: shipping_info.email,
                 order_items,
@@ -96,7 +110,10 @@ export default async function handler(req, res) {
                 cancel_url: `${process.env.HOST}/checkout/step1?payment=false`
             });
             const { url } = session
-            res.send(url)
+            res.json({
+                url,
+                guest_user_payload: guestUser
+            })
 
         } catch (error) {
             console.log(error)

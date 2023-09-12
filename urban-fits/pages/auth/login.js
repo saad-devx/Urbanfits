@@ -98,9 +98,7 @@ export default function Login() {
 
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     return <>
-        <Head>
-            <title>Urban Fits - Login</title>
-        </Head>
+        <Head><title>Urban Fits - Login</title></Head>
         <AuthPage loading={loading} mblNav="/auth/signup" mblNavName="Register">
             <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                 <section className="w-full mb-6 md:mb-0">

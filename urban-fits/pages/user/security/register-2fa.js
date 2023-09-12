@@ -61,7 +61,7 @@ export default function Security() {
         router.push('/user/security')
         return
     }
-    else if (window.matchMedia('(max-width: 786px)').matches) return <>
+    else if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>Register for 2FA - UF</title></Head>
         <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
             <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">

@@ -59,6 +59,10 @@ const UserSchema = new mongoose.Schema({
     gender: {
         type: String
     },
+    is_active: {
+        type: Boolean,
+        default: true
+    },
     date_of_birth: {
         type: String
     }

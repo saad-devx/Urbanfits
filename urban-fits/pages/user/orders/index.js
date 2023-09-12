@@ -14,7 +14,7 @@ const Option = (props) => {
     return <Link className='h-full group flex flex-col justify-between items-center font_urbanist_medium transition-all' href={props.href}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
 }
 
-const MblOption = (props) => {
+export const MblOption = (props) => {
     const router = useRouter()
     return <Link href={props.href} className={`${router.pathname === props.href ? "border-b border-b-black text-black font_urbanist_bold" : "font_urbanist_medium text-gray-500"} pb-3 text-base items-center transition-all`}>{props.children}</Link>
 }
@@ -31,7 +31,7 @@ const NoOrderSection = () => {
 export default function OrdersPage(props) {
     const { user } = useUser()
     if (!user) return <Error403 />
-    if (window.matchMedia('(max-width: 1024px)').matches) return <>
+    if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>Orders</title></Head>
         <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
             <section className="w-full p-4 border-b border-gray-50 flex justify-between items-center">

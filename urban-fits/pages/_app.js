@@ -14,51 +14,45 @@ import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
 import Error403 from './403'
 import toaster from "@/utils/toast_function";
+import axios from 'axios'
 import { pusherClient } from '@/utils/pusher';
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { user, logOut, setCountry, geo_selected_by_user } = useUser()
+  const { user, guestUser, setGuestUser, logOut, setCountry, geo_selected_by_user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
-  const url = router.pathname
-  const Exception = url.startsWith("/admin") || (window.matchMedia('(max-width: 786px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
-  if (url.startsWith("/admin")) {
-    if (!user || user.role == "customer") return <Error403 />
-  }
 
   useEffect(() => {
-    const channel = pusherClient.subscribe('urban-fits')
+    if (!user || !user._id) return
+    const channel = pusherClient.subscribe(`user_${user._id}`)
     channel.bind('user-login', (data) => {
       console.log(data)
       toaster('success', data.pusher_msg)
     })
   }, [])
+
   useEffect(() => {
-    const handleSessionValidity = () => {
+    const igniteSession = () => {
       const sessionValid = localStorage.getItem('remember_me')
-      if (sessionValid === true) return logOut()
+      if (sessionValid === true) logOut()
+      // axios.post(`${process.env.HOST}/api/remove-guest-session?user_id=blabla`)
     }
-    getGeoLocation(setCountry, geo_selected_by_user)
-    window.addEventListener("beforeunload", handleSessionValidity)
-    return () => window.removeEventListener("beforeunload", handleSessionValidity)
+    window.addEventListener("beforeunload", igniteSession)
+    return () => window.removeEventListener("beforeunload", igniteSession)
   }, [])
   useEffect(() => {
-    router.events.on("routeChangeStart", () => {
-      setProgress(77)
-    })
-    router.events.on("routeChangeComplete", () => {
-      setProgress(100)
-    })
+    router.events.on("routeChangeStart", () => setProgress(77))
+    router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
   return <>
     <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={0} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
-    <ToastContainer className="toast" />
+    <ToastContainer className="text-white" />
     <SessionProvider session={session}>
       <CartProvider>
-        {Exception ? null : <Navbar />}
+        <Navbar />
         <Component {...pageProps} />
-        {Exception ? null : <Footer />}
+        <Footer />
       </CartProvider>
     </SessionProvider>
   </>

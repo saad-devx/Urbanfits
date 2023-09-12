@@ -30,7 +30,6 @@ export default function Signup() {
             setLoading(true)
             const { data } = await axios.post(`${process.env.HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
             if (data.success && data.payload && oAuthQuery) {
-                const { data } = res
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
                 router.push('/user/myaccount')
@@ -43,6 +42,7 @@ export default function Signup() {
         catch (error) {
             console.log(error)
             if (error.response) toaster("error", error.response.data.msg)
+            throw new Error(error)
         }
         setLoading(false)
     }

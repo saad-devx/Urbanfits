@@ -134,7 +134,7 @@ export default function Address() {
     }
 
     if (!user) return <Error403 />
-    if (window.matchMedia('(max-width: 786px)').matches) return <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
+    if (window.matchMedia('(max-width: 760px)').matches) return <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
             <Link href="/user/myaccount" className='fa-solid fa-chevron-left text-xl'></Link>
             <div className="flex flex-col justify-center items-center font_urbanist text-xs text-gray-400">

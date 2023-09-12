@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 
 const useUser = create(persist((set, get) => ({
     user: null,
+    guestUser: null,
     recentItems: [],
     setRecentItems: (newItem) => {
         const alreadyInItem = get().recentItems.filter(item => item.id === newItem.id)
@@ -61,6 +62,10 @@ const useUser = create(persist((set, get) => ({
                 toaster("error", error.response.data.msg)
             }
         }
+    },
+    setGuestUser: async (token) => {
+        const userData = jwt.decode(token)?._doc
+        set(() => ({ guestUser: userData }))
     },
     logOut: (redirect) => {
         const { clearNewsletterData } = useNewsletter.getState()

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import useUser from '@/hooks/useUser'
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import dynamic from 'next/dynamic';
 const Newsletter = dynamic(() => import('./modals/newsletter'));
@@ -9,11 +10,16 @@ import truck from '../public/truck.svg'
 export default function Footer() {
     const { user } = useUser()
     const [modal2, setModal2] = useState(false)
+    const url = useRouter().pathname
+    const Exception = url.startsWith("/admin") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
+    if (url.startsWith("/admin")) {
+        if (!user || user.role == "customer") return
+    }
     const toggleModal = () => {
         if (modal2 === false) return setModal2(true)
         if (modal2 === true) return setModal2(false)
     }
-    return <>
+    if (!Exception) return <>
         <Newsletter show={modal2} toggleModal={toggleModal} />
         <footer className="border-t w-full pt-10 font_urbanist_light text-gotham-black bg-white">
             <section className="pt-10 md:p-5 lg:p-24 lg:pt-16 lg:pb-16 md:pb-7">

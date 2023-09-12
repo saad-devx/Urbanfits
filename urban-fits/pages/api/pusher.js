@@ -1,10 +1,10 @@
 import { pusherServer } from "@/utils/pusher";
 
 export default (req, res) => {
-    console.log("pusher api working...")
+    const { user_id, username } = req.query
     try {
-        pusherServer.trigger('urban-fits', 'user-login', {
-            pusher_msg: `A user ${req.query?.username || ''} just logged in to the Urban Fits!`,
+        pusherServer.trigger(`user_${user_id}`, 'user-login', {
+            pusher_msg: `A user ${username || ''} just logged in to the Urban Fits!`,
         });
         console.log("yes event triggered and api resolved")
         res.status(200).end('Event triggered!');

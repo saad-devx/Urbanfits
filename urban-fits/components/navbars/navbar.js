@@ -41,7 +41,7 @@ const ListItem = (props) => {
 }
 
 const SecondaryNavbar = (props) => {
-    if (window.matchMedia('(min-width: 786px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
+    if (window.matchMedia('(min-width: 760px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
         <ListItem key={1} href='/all-categories' categories>All Categories</ListItem>
         <ListItem key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
         <ListItem key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
@@ -53,12 +53,12 @@ const SecondaryNavbar = (props) => {
         <ListItem key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
         <ListItem key={10} href='/uf-points' classes="group hidden lg:flex flex-col">Earn Uf Points</ListItem>
         <ListItem key={11} href='/products/category/wishlist'>Wishlist</ListItem>
-        <span className="mb-2 flex flex-col justify-center items-center text-sm">
+        <span className="hidden lg:flex mb-2 flex-col justify-center items-center text-sm">
             Minimum Order
             <p className="font_urbanist_bold text-[13px]">USD 100</p>
         </span>
     </nav>
-    else if (window.matchMedia('(max-width: 786px)').matches) return <MobileNavbar {...props} />
+    else if (window.matchMedia('(max-width: 760px)').matches) return <MobileNavbar {...props} />
 }
 
 export default function Navbar() {
@@ -68,6 +68,11 @@ export default function Navbar() {
     const [cart, setCart] = useState(false)
     const [logout, setLogout] = useState(false)
     const [langModal, setLangModal] = useState(false)
+    const url = useRouter().pathname
+    const Exception = url.startsWith("/admin") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
+    if (url.startsWith("/admin")) {
+        if (!user || user.role == "customer") return
+    }
 
     useEffect(() => {
         if (!address) getAddress()
@@ -78,7 +83,7 @@ export default function Navbar() {
         return address.shipping_address.address
     }
 
-    return <>
+    if (!Exception) return <>
         <Cart cart={cart} setCart={setCart} />
         <Logout show={logout} setLogout={setLogout} />
         <LanguageModal show={langModal} setLangModal={setLangModal} />
@@ -122,10 +127,10 @@ export default function Navbar() {
                     <span className="w-7 h-5 overflow-hidden" title={country?.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country?.src} /></span>
                     <DropDownIcon />
                 </button>
-                <button className='relative'>
+                <Link href='/user/inbox' className='relative'>
                     <span className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[10%] lg:translate-y-[-30%] w-2 h-2 lg:w-4 lg:h-4 flex justify-center items-center text-[10px] border border-white aspect-square rounded-full bg-black"><p className='hidden lg:block text-white'>1</p></span>
                     <button className="fa-regular fa-envelope text-[22px] translate-y-[15%] text-[#4d4d4d]"></button>
-                </button>
+                </Link>
                 <button onClick={() => {
                     document.body.style.overflowY = cart ? null : 'hidden'
                     setCart(!cart)
@@ -133,7 +138,7 @@ export default function Navbar() {
                     {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-black">{totalUniqueItems}</span> : null}
                     <Image src={bag} />
                 </button>
-                {user && window.matchMedia('(max-width: 786px)').matches ? <Link href='/earn-uf-points'>
+                {user && window.matchMedia('(max-width: 760px)').matches ? <Link href='/earn-uf-points'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="21" viewBox="0 0 25 21" fill="none">
                         <path d="M5.00075 0.529482C4.15007 0.663237 3.41709 1.18756 3.01048 1.95263C2.66806 2.60536 1.063 6.37725 1.0095 6.65011C0.977402 6.83202 0.961351 8.77949 0.972051 11.9629C0.988102 16.655 0.998802 17.0027 1.08976 17.2703C1.30911 17.939 1.71038 18.4473 2.2882 18.7897C2.95698 19.1963 2.59316 19.1696 8.25903 19.191L13.331 19.207L13.1384 18.9502C13.0314 18.8111 12.8334 18.5062 12.6943 18.2761L12.4482 17.8641H7.91661C2.91417 17.8641 3.08538 17.8748 2.72692 17.5271C2.63061 17.4308 2.49151 17.2328 2.42731 17.0884L2.2989 16.8208V11.9896V7.16373H10.9983H19.6978L19.6603 6.81062C19.6389 6.61801 19.58 6.33445 19.5265 6.17929C19.3928 5.79408 17.7396 2.11849 17.5791 1.84028C17.242 1.26781 16.7712 0.887945 16.065 0.620436L15.7547 0.502731L10.5115 0.497379C7.6277 0.492029 5.15056 0.508081 5.00075 0.529482ZM9.68218 3.81985V5.82618H6.20455C4.29453 5.82618 2.72692 5.81548 2.72692 5.80478C2.72692 5.77268 3.99492 2.91567 4.12332 2.65351C4.32128 2.26295 4.64229 1.97939 5.0275 1.86168C5.10241 1.84028 6.1778 1.81888 7.42439 1.81888L9.68218 1.81353V3.81985ZM15.867 1.95798C16.3004 2.18804 16.4555 2.44485 17.1939 4.11947C17.5737 4.9862 17.8947 5.72453 17.9054 5.75663C17.9268 5.81013 17.2153 5.82618 14.4492 5.82618H10.9662V3.81985V1.80818L13.3096 1.82423C15.6049 1.84028 15.653 1.84028 15.867 1.95798Z" fill="#4d4d4d" />
                         <path d="M18.3499 8.555C16.9749 8.7048 15.7711 9.27727 14.7866 10.251C13.631 11.4013 13.0371 12.8405 13.0371 14.5205C13.0371 16.2004 13.631 17.6396 14.7866 18.7899C15.6373 19.6299 16.6057 20.1489 17.8148 20.411C18.3659 20.5287 19.5697 20.5287 20.1743 20.4164C21.6884 20.1221 22.9296 19.3303 23.8659 18.0677C24.631 17.0297 25.0002 15.8794 25.0002 14.5205C25.0002 13.7768 24.9253 13.2792 24.7112 12.6158C24.1495 10.8716 22.7263 9.42708 21.0036 8.84391C20.2492 8.5871 19.1524 8.46939 18.3499 8.555ZM20.1957 9.9942C21.8435 10.4276 23.0901 11.6795 23.5503 13.3434C23.7161 13.9533 23.7161 15.0876 23.5503 15.6975C23.0901 17.3614 21.8596 18.592 20.1957 19.0521C19.8479 19.143 19.6232 19.1644 19.0186 19.1644C18.4141 19.1644 18.1894 19.143 17.8416 19.0521C16.1777 18.592 14.9471 17.3614 14.487 15.6975C14.3961 15.3498 14.3747 15.125 14.3747 14.5205C14.3747 13.9159 14.3961 13.6912 14.487 13.3434C14.9792 11.5565 16.3221 10.3045 18.168 9.9193C18.6762 9.81229 19.6393 9.84975 20.1957 9.9942Z" fill="#4d4d4d" />
