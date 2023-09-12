@@ -4,7 +4,7 @@ export default function toaster(type, msg) {
     toast(msg, {
         position: "top-left",
         style: {
-            borderRadius: "100px",
+            borderRadius: "100px"
         },
         bodyStyle: {
             fontFamily: 'urbanist',
@@ -18,7 +18,7 @@ export default function toaster(type, msg) {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        type: type,
+        type,
         progress: undefined,
         theme: "dark",
         transition: Slide

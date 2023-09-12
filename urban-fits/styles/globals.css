@@ -387,9 +387,8 @@ input:checked+.slider:before {
     top: 10px !important;
     left: 10px !important;
     width: 65% !important;
-    border-radius: 10px !important;
     height: 100px !important;
-    font-size: smaller !important;
+    font-size: 12px !important;
   }
 }
 
