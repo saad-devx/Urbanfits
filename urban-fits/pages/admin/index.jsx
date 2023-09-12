@@ -99,8 +99,8 @@ export default function Admin({ children }, props) {
     }
 
     // console.log(props.user_id, props)
-    if (!user || !user._id) return <Error404 />
-    if (props.user_id.length < 18 || user._id !== props.user_id) return <Error404 />
+    if (!user || !user._id || user._id.length < 18) return <Error404 />
+    // if (!props.user_id.length || user._id !== props.user_id || props.user_id.length < 18) return <Error404 />
     return <div className="flex-col bg-[#F4F4F4] overflow-x-hidden overflow-y-scroll font_futura ">
         <div className={`fixed ${sidebaropen ? "w-[250px]" : "w-[80px]"} duration-300 ${sidebaropen && "rounded-r-[25px]"} bg-white h-screen`} >
             <div className="flex-col justify-between h-full">
