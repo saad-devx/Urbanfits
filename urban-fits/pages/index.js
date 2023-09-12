@@ -18,10 +18,10 @@ export default function Home() {
         variants: [1, 2, 3, 4]
     }
 
+    useEffect(() => {
+        triggerEvent()
+    }, [])
     const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}&user_id=${user._id}` : ''}`)
-    // useEffect(() => {
-    //     triggerEvent()
-    // }, [])
 
     return <>
         <Head><title>Urban Fits</title></Head>
@@ -34,7 +34,6 @@ export default function Home() {
                 <section>
                     <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">New Collection</h2>
-                        <button onClick={triggerEvent} className="px-4 py-1 bg-black rounded-full text-white text-[8px] lg:text-sm font_urbanist">Click to trigger socket event</button>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">See all Collection</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
