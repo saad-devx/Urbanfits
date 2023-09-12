@@ -22,7 +22,7 @@ export default function CustomerServices(props) {
         <>
             <main className='w-full p-5 lg:p-10 lg:pt-16 2xl:p-14 flex flex-col lg:flex-row lg:justify-between bg-gray-50'>
                 <section className={`max-w-[2000px] lg:w-1/4 lg:h-auto lg:max-h-none rounded-2xl lg:rounded-none transition-all duration-500 overflow-x-scroll overflow-y-hidden lg:overflow-visible hide_scrollbar`}>
-                    <div id='menu_container' className="lg:sticky lg:top-20 lg:left-0 lg:right-0 w-auto lg:w-full 2xl:py-10 lg:px-7 flex lg:flex-col font_urbanist rounded-2xl">
+                    <div id='menu_container' className="lg:sticky lg:top-20 lg:left-0 lg:right-0 w-auto lg:w-full lg:px-7 flex lg:flex-col font_urbanist rounded-2xl">
                         <MenuLink href='/returns&refund' >Returns & Refund</MenuLink>
                         <MenuLink href='/orderinfo' >Order Information</MenuLink>
                         <MenuLink href='/payment' >Payment</MenuLink>

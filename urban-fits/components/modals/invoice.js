@@ -1,14 +1,14 @@
 import React from 'react'
 import Button from '../buttons/simple_btn'
 import Image from 'next/image'
-import image from '@/public/card imgs/card img3.jpg'
+import image from '@/public/card imgs/card img5.jpg'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 // import { saveAs } from 'file-saver';
 
 const OrderItem = (props) => {
     return (
-        <div className={`w-full flex items-center py-3 px-1 border-b font_gotham text-[10px] md:text-xs ${props.index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
+        <div className={`w-full flex items-center py-3 px-1 border-b font_urbanist text-[10px] md:text-xs ${props.index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
             <span className="w-[10%] pl-2">{props.index}</span>
             <div className="w-[15%]">
                 <div className="w-11 h-11 rounded-xl overflow-hidden">
@@ -70,40 +70,40 @@ export default function Invoice(props) {
         <main className={`w-full h-screen overflow-y-scroll py-5 px-3 md:px-[5%] fixed left-0 top-0 z-50 bg-gray-200/40 backdrop-blur transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
             <div className="w-full h-full">
                 <section className="w-full my-5 flex flex-row justify-between items-center">
-                    <h1 className="font_gotham_medium text-lg md:text-3xl self-start tracking-expand">INVOICE</h1>
+                    <h1 className="font_urbanist_medium text-lg md:text-3xl self-start tracking-expand">INVOICE</h1>
                     <div className="flex flex-wrap items-center gap-2">
-                        <Button onClick={props.toggleInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-white' text='black border' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-chevron-left mr-2" />BACK</Button>
-                        <Button onClick={() => { downloadInvoice('invoice#36') }} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-download text-white mr-2" />DOWNLOAD</Button>
-                        <Button onClick={() => { window.print() }} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-print text-white mr-2" />PRINT</Button>
-                        <Button onClick={shareInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_gotham tracking-widest'><i className="fa-solid fa-share-nodes text-white mr-2" />SHARE</Button>
+                        <Button onClick={props.toggleInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-white' text='black border' fontSize='text-[10px] md:text-xs' font='font_urbanist tracking-widest'><i className="fa-solid fa-chevron-left mr-2" />BACK</Button>
+                        <Button onClick={() => { downloadInvoice('invoice#36') }} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_urbanist tracking-widest'><i className="fa-solid fa-download text-white mr-2" />DOWNLOAD</Button>
+                        <Button onClick={() => { window.print() }} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_urbanist tracking-widest'><i className="fa-solid fa-print text-white mr-2" />PRINT</Button>
+                        <Button onClick={shareInvoice} classes='w-48pr md:w-auto' my='mb-2' bg='bg-gold' fontSize='text-[10px] md:text-xs' font='font_urbanist tracking-widest'><i className="fa-solid fa-share-nodes text-white mr-2" />SHARE</Button>
                     </div>
                 </section>
 
                 <section className="w-full pb-10 rounded-3xl overflow-x-scroll scrollbar_x">
                     <section id='invoice' className="w-full min-w-[1350px] p-7 lg:px-[3.5%] py-7 bg-white rounded-3xl">
-                        <h2 className="mb-4 font_gotham_medium text-base md:text-lg tracking-widiest">INVOICE #36</h2>
+                        <h2 className="mb-4 font_urbanist_medium text-base md:text-lg tracking-widiest">INVOICE #36</h2>
                         <div className="flex justify-between items-start">
-                            <div className="flex flex-col items-start justify-start font_gotham_light text-xs gap-y-2">
-                                <h3 className="font_gotham text-xs md:text-sm">To</h3>
+                            <div className="flex flex-col items-start justify-start font_urbanist_light text-xs gap-y-2">
+                                <h3 className="font_urbanist text-xs md:text-sm">To</h3>
                                 <span>Bilawal Ashraf</span>
                                 <span>47 Elita Squre, VIP Chowk,</span>
-                                <p className="font_gotham">Email: <span className="font_gotham_light">urbansoftware@gmail.com</span></p>
-                                <p className="font_gotham">Phone: <span className="font_gotham_light">+91 5264 251 325</span></p>
+                                <p className="font_urbanist">Email: <span className="font_urbanist_light">urbansoftware@gmail.com</span></p>
+                                <p className="font_urbanist">Phone: <span className="font_urbanist_light">+91 5264 251 325</span></p>
                             </div>
 
                             <div className="flex justify-between items-start">
-                                <div className="flex flex-col items-start justify-start font_gotham_light text-xs gap-y-2">
-                                    <h3 className="font_gotham text-xs md:text-sm">Detials</h3>
+                                <div className="flex flex-col items-start justify-start font_urbanist_light text-xs gap-y-2">
+                                    <h3 className="font_urbanist text-xs md:text-sm">Detials</h3>
                                     <span>Bilawal Ashraf</span>
                                     <span>47 Elita Squre, VIP Chowk,</span>
-                                    <p className="font_gotham">Email: <span className="font_gotham_light">urbansoftware@gmail.com</span></p>
-                                    <p className="font_gotham">Phone: <span className="font_gotham_light">+91 5264 251 325</span></p>
+                                    <p className="font_urbanist">Email: <span className="font_urbanist_light">urbansoftware@gmail.com</span></p>
+                                    <p className="font_urbanist">Phone: <span className="font_urbanist_light">+91 5264 251 325</span></p>
                                 </div>
                             </div>
                         </div>
 
                         <div className="w-full overflow-y-scroll mt-5">
-                            <div className="w-full flex items-center py-3 px-1 border-b font_gotham text-xs">
+                            <div className="w-full flex items-center py-3 px-1 border-b font_urbanist text-xs">
                                 <span className="w-[10%] pl-2 text-gray-400">#</span>
                                 <span className="w-[15%] text-gray-400">IMAGE</span>
                                 <span className="w-[20%] text-gray-400">ITEM</span>
@@ -118,7 +118,7 @@ export default function Invoice(props) {
                         </div>
 
                         <div className="w-full pt-10 flex flex-col items-end">
-                            <div className="w-1/5 flex justify-between font_gotham text-xs gap-y-3">
+                            <div className="w-1/5 flex justify-between font_urbanist text-xs gap-y-3">
                                 <div className="flex flex-col gap-y-3">
                                     <span>Subtotal</span>
                                     <span>Vat</span>
@@ -131,7 +131,7 @@ export default function Invoice(props) {
                                     <span>${1034.58}</span>
                                 </div>
                             </div>
-                            <Button onClick={() => { downloadInvoice('invoice#36') }} fontSize='text-xs' classes='w-1/5' font='font_gotham tracking-widest'>DOWNLOAD</Button>
+                            <Button onClick={() => { downloadInvoice('invoice#36') }} fontSize='text-xs' classes='w-1/5' font='font_urbanist tracking-widest'>DOWNLOAD</Button>
                         </div>
                     </section>
                 </section>

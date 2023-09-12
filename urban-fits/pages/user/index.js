@@ -21,6 +21,7 @@ import {
     DiamondIcon,
     EmailIcon,
     HeartShopListIcon,
+    TrackOrderIcon,
     LogoutIcon,
     HelpCenterIcon,
     CameraIcon,
@@ -37,14 +38,18 @@ import {
 export const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
-    return <Link href={props.href} className={`w-full py-5 px-4 flex justify-between items-center border-b border-[#F5F5F5] ${route === props.href ? 'bg-gray-100' : 'bg-white'} transition-all overflow-hidden`}>
+    if (window.matchMedia('(min-width: 1024px)').matches) return <Link href={props.href} className={`w-full py-5 px-4 flex justify-between items-center border-b border-[#F5F5F5] ${route === props.href ? 'bg-gray-100' : 'bg-white'} transition-all overflow-hidden`}>
         <span className={`${route === props.href ? 'opacity-100' : 'opacity-70'} flex items-center gap-x-3`}>
             {props.icon}
             {props.children}
         </span>
         <i className="arrow material-symbols-outlined text-lg text-gray-600 transition-all">chevron_right</i>
     </Link>
+    else return <Link href={props.href} className={`${route === props.href ? 'active_bg text-white lg:text-black active' : 'bg-white text-black'} shadow-md flex justify-center lg:justify-between items-center px-4 py-1 mx-2 lg:m-0 lg:py-5 whitespace-nowrap lg:border-b lg:border-[#F5F5F5] rounded-full lg:rounded text-sm lg:text-base`}>
+        {props.children}
+    </Link>
 }
+
 
 export default function User(props) {
     const { user, updateUser, recentItems } = useUser()
@@ -90,11 +95,17 @@ export default function User(props) {
     useEffect(() => {
         if (!newsletterData) return () => getNewsletterData()
     }, [])
+    useEffect(() => {
+        if (window.matchMedia('(min-width: 760px)').matches) {
+            let activeLink = document.querySelector('#menu_container .active')
+            activeLink && activeLink.scrollIntoView()
+        }
+    }, [])
 
-    if (window.matchMedia('(max-width: 1024px)').matches) return <>
+    if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
-        <main className='bg-white w-full min-h-screen p-4 flex flex-col'>
+        <main className='bg-white w-full min-h-screen p-4 md:p-10 flex flex-col'>
             {loader}
             <section className="w-full flex flex-col">
                 {user && user.email ? <>
@@ -214,7 +225,7 @@ export default function User(props) {
                             <CameraIcon />
                             Stories
                         </Link>
-                        <Link href="/products/category/gifts" className="h-11 opacity-50 flex flex-col justify-between items-center font_urbanist text-xs">
+                        <Link href="/products/category/gifts" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <GiftBoxIcon />
                             Gifts
                         </Link>
@@ -231,9 +242,9 @@ export default function User(props) {
                     </svg>
                     Categories
                 </Link>
-                <Link href="/user/settings" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
-                    <SettingIcon />
-                    Settings
+                <Link href="/trackorder" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <TrackOrderIcon />
+                    Track Order
                 </Link>
                 <Link href="/help-center" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                     <HelpCenterIcon />
@@ -271,8 +282,19 @@ export default function User(props) {
         </main>
     </>
     if (!user) return <Error403 />
-    else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex justify-between font_urbanist`}>
+    else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex flex-col lg:flex-row justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
+        <section id='menu_container' className="hidden mid:flex lg:hidden w-full pb-7 px-4 rounded-full overflow-x-scroll hide_scrollbar">
+            <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>
+            <Option icon={<UfPointsIcon />} href='/user/my-uf-wallet'>My UF-Wallet</Option>
+            {user.register_provider === "urbanfits" ? <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option> : null}
+            <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
+            <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
+            <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
+            <Option icon={<HeartShopListIcon />} href='/user/shopping-list'>My Shopping List</Option>
+            <Option icon={<AddressIcon />} href='/user/address'>My Addresses</Option>
+            <Option icon={<PackageBagIcon />} href='/user/orders/single-use-package-fees'>Single use package fees</Option>
+        </section>
         <section className="w-1/4 min-h-screen hidden lg:block">
             <div className="flex flex-col sticky left-0 top-20 items-center w-[95%] 2xl:w-[90%] rounded-lg list-none font_urbanist overflow-hidden">
                 <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>

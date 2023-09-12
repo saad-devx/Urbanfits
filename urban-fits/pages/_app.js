@@ -10,49 +10,39 @@ import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
+import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
 import Error403 from './403'
+import toaster from "@/utils/toast_function";
 import axios from 'axios'
-import countryCodes from '@/static data/countryCodes'
+import { pusherClient } from '@/utils/pusher';
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { user, setCountry } = useUser()
+  const { user, guestUser, setGuestUser, logOut, setCountry, geo_selected_by_user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
-  const url = router.pathname
-  const Exception = url.startsWith("/admin") || (window.matchMedia('(max-width: 786px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
-  if (url.startsWith("/admin")) {
-    if (!user || user.role == "customer") return <Error403 />
-  }
 
   useEffect(() => {
-    window.addEventListener("beforeunload", () => {
-      const sessionValid = localStorage.getItem('remember_me')
-      if (sessionValid === true) return localStorage.clear()
-      else localStorage.removeItem("loadingModal")
+    if (!user || !user._id) return
+    const channel = pusherClient.subscribe(`user_${user._id}`)
+    channel.bind('user-login', (data) => {
+      console.log(data)
+      toaster('success', data.pusher_msg)
     })
   }, [])
-  // useEffect(() => {
-  //   return async () => {
-  //     try {
-  //       const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
-  //       console.log(data)
-  //       const filteredCountry = countryCodes.filter(country => country.country === data.geo_meta.country_code.toLowerCase())[0]
-  //       console.log(filteredCountry)
-  //       if (filteredCountry) return setCountry(filteredCountry)
-  //       else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }, [])
+
   useEffect(() => {
-    router.events.on("routeChangeStart", () => {
-      setProgress(77)
-    })
-    router.events.on("routeChangeComplete", () => {
-      setProgress(100)
-    })
+    const igniteSession = () => {
+      const sessionValid = localStorage.getItem('remember_me')
+      if (sessionValid === true) logOut()
+      // axios.post(`${process.env.HOST}/api/remove-guest-session?user_id=blabla`)
+    }
+    window.addEventListener("beforeunload", igniteSession)
+    return () => window.removeEventListener("beforeunload", igniteSession)
+  }, [])
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => setProgress(77))
+    router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
   return <>
@@ -60,9 +50,9 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     <ToastContainer className="toast" />
     <SessionProvider session={session}>
       <CartProvider>
-        {Exception ? null : <Navbar />}
+        <Navbar />
         <Component {...pageProps} />
-        {Exception ? null : <Footer />}
+        <Footer />
       </CartProvider>
     </SessionProvider>
   </>

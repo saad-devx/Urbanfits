@@ -5,7 +5,7 @@ export default function TermsAndconditions() {
     return (
         <PoliciesPage>
             <section className="w-full px-2 md:px-7 lg:px-16 xl:px-20 text-xs md:text-sm">
-                <h1 className="font_gotham_medium text-xl md:text-[22px] xl:text-2xl tracking-widest mb-7">TERMS AND CONDITIONS</h1>
+                <h1 className="font_urbanist_bold text-xl mb-7">Terms and Conditions</h1>
                 <small className="text-gray-600 italic" >Effective Date: 1-3-2024</small> <br /> <br />
                 These Terms and Conditions ("Terms") govern your use of the Urban Fits [www.urbanfits.ae] ("Website") and your interactions with Urban Fits ("we," "us," or "our"). By accessing or using the Website, placing an order, or engaging with our products and services, you agree to be bound by these Terms. If you do not agree with these Terms, please refrain from using the Website.<br /><br />
                 1. Website Use<br /><br />

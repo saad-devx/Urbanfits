@@ -5,7 +5,7 @@ export default function CookiesPolicy() {
     return (
         <PoliciesPage>
             <section className="w-full px-2 md:px-7 lg:px-16 xl:px-20 text-xs md:text-sm">
-                <h1 className="font_gotham_medium text-xl md:text-[22px] xl:text-2xl tracking-widest mb-7">COOKIES POLICY</h1>
+                <h1 className="font_urbanist_bold text-xl mt-5 lg:mt-0 mb-7">Cookies Policies</h1>
                 <small className="text-gray-600 italic" >Effective Date: 1-3-2024</small> <br /> <br />
                 1. Introduction <br /><br />
                 This Cookie Policy ("Policy") explains how Urban Fits ("we," "us," or "our") uses cookies and similar technologies on our website [www.urbanfits.ae] ("Website"). This Policy should be read in conjunction with our Privacy Policy, which provides detailed information about how we collect, use, and protect your personal data.<br /><br />

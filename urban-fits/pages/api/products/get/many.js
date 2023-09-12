@@ -26,13 +26,12 @@ const getManyProducts = async (req, res) => {
             })
         }
         else {
-            res.status(405).json({ success: false, msg: "Method not Allowed, you are using wrong request method!" })
+            res.status(405).json({ success: false, msg: "Method not Allowed, Allowed methods: GET" })
         }
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry" })
+        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
-
 export default getManyProducts

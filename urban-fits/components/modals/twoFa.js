@@ -13,8 +13,7 @@ export default function TwoFa({ show, setMfaModa }) {
     const [totp, setTotp] = useState(null)
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        if (!show) return
-        return async () => {
+        const getQrCode = async () => {
             if (qrUrl && qrSecret) return
             setLoading(true)
             try {
@@ -29,6 +28,7 @@ export default function TwoFa({ show, setMfaModa }) {
             }
             setLoading(false)
         }
+        getQrCode()
     }, [])
 
     const onTotpConfirm = async () => {
@@ -40,7 +40,7 @@ export default function TwoFa({ show, setMfaModa }) {
                 qr_secret: qrSecret,
                 totp_code: totp
             })
-            updateUser(data.payload, true)
+            await updateUser(data.payload, true)
             toaster("success", data.msg)
             setMfaModa(false)
         } catch (error) {
@@ -61,12 +61,11 @@ export default function TwoFa({ show, setMfaModa }) {
                 <button onClick={() => navigator.clipboard.writeText(qrSecret)} className="p-1 flex items-center gap-x-2 text-center text-black font_urbanist_medium text-[15px] rounded-lg border-[4px] border-transparent focus:border-[#d7bd69ad] transition-all">{qrSecret}<i className="fa-solid fa-copy text-black" /></button>
                 <p className="px-5 text-sm text-gray-500 text-center">If you are unable to scan the QR code, please enter thiscode manually into the app.</p>
 
-                <div className="w-full py-0.5 pl-5 pr-0.5 border rounded-full flex justify-around text-sm">
+                <div className="w-full py-1 pl-5 pr-1 border rounded-full flex justify-around text-sm">
                     <input onChange={(e) => setTotp(e.target.value)} value={totp} type="text" className='w-4/5 outline-none' placeholder='Enter the code to verify' />
                     <Button disabled={!totp || totp === ''} onClick={onTotpConfirm} my="0" bg="bg-gold" classes="w-1/4 text-sm md:text-base text-center" fontSize="text-sm">Confirm</Button>
                 </div>
             </section> : <div className="w-full h-[30vh] flex justify-center items-center"><Spinner forBtn variant="border-black" /></div>}
         </div>
     </div>
-    else return
 }

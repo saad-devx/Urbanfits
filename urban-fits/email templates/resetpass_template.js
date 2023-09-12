@@ -1,45 +1,38 @@
-const resetPassTemplate = (username, token)=>{
-    return `
-    <html>
-    <head>
-<meta charset="utf-8">
-<title>Password Reset Email</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-section{
-    width: 100%;
-    height: 100vh;
-    padding: 1rem;
-    background: #000326;
-  }
-  h1{
-    text-align: center;
-  }
-  span{
-     cursor: pointer;
-     padding: 0.7rem 1rem;
-     border: none;
-     outline: none;
-     border-radius: 1rem;
-     background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%)
-     color: #ffff;
-  }
-</style>
-</head>
-    <body>
-    <section>
-    <h1>Reset Password</h1>
-    <h4>Hi ${username}!</h4>
-    <p>We received a request from your email to change the password of your Urban Fits uesr account. Click the button below to reset your password</p>
-    <span><a href="${process.env.HOST}/auth/resetpassword?token=${token}" >Reset Password</a></span>
-    <p>This session will expire in 5 minutes. And don't expose this email to anyone</p>
-    <p>If you did not make this request, you can ignore this email and your password will remain unchanged.</p>
-    </br><small>~Urban Fits</small>
-    </section>
-    </body>
-    </html>`
+const resetPassTemplate = (username, otp) => {
+  return `
+    <!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+<html lang="en">
+
+<head></head>
+<div id="__react-email-preview" style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
+    Please Confirm your OTP to change your Email.<div>
+    </div>
+</div>
+
+<body
+    style="background-color:#0a0a0a; color: #ffffff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
+    <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%"
+        style="max-width:37.5em;margin:0 auto;padding:20px 0 48px">
+        <tr style="width:100%">
+            <td><img alt="Urban Fits"
+                    src="https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/logo_gold_outlined.png"
+                    width="100"
+                    style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto;margin-top:7rem" />
+                <p style="font-size:16px;line-height:26px;margin:16px 0">Dear ${username || "User"},</p>
+                <p style="font-size:16px;line-height:26px;margin:16px 0">You requested to change your current password of Urban Fits Account. This is Your OTP code:</p> <br>
+                <span style="font-size:22px;line-height:26px;margin:auto;color:#23ff86;">${otp}</span> <br>
+                <p style="font-size:16px;line-height:26px;margin:16px 0">Please submit this code to the Urban Fits website prompt. This
+                    OTP will expire within 5 minutes. If you didn't request this email by any means then you can ignore it and the password will remain intact.</p>
+                <p style="font-size:16px;line-height:26px;margin:16px 0">Best Regards,<br />The Urban Fits team</p>
+                <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
+                <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">Urban Fits L.L.C. &copy;
+                    2023-2024 All rights reserved</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`
 }
 export default resetPassTemplate

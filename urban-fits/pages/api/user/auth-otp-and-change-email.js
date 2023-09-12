@@ -23,11 +23,11 @@ const AuthOtpAndChangeEmail = async (req, res) => {
                 payload
             })
         }
-        else res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
+        else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
     catch (err) {
         console.log(err)
-        res.status(500).send("Internal Server Error occurred. Please retry")
+        res.status(500).send("Internal Server Error occurred. Please retry later.")
     }
 }
 

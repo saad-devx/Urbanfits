@@ -24,10 +24,10 @@ export default function Trackorder() {
     })
     return <main className='bg-white w-full h-full transition-all duration-700 overflow-y-scroll'>
         <div className="mx-5 md:w-4/5 md:mx-auto lg:w-70pr my-20">
-            <h2 className="text-2xl md:text-4xl lg:text-[44px] font_gotham_medium mb-8">Track Your Order</h2>
-            <form className="w-full mt-16 pb-10 lg:pb-0 font_gotham text-sm space-y-10" onReset={handleReset} onSubmit={handleSubmit} >
-                <h3 className="text-lg md:text-xl lg:text-[22px] font_gotham_medium">Enter Your Order Information</h3>
-                <p className='font_gotham_light'>Enter your email address and order number in the space below and we will provide you with a list of the items you ordered and the relevant shipping information. If you have only just confirmed your order, this information will appear in a few minutes.</p>
+            <h2 className="text-2xl md:text-4xl lg:text-[44px] font_urbanist_medium mb-8">Track Your Order</h2>
+            <form className="w-full mt-16 pb-10 lg:pb-0 font_urbanist text-sm space-y-10" onReset={handleReset} onSubmit={handleSubmit} >
+                <h3 className="text-lg md:text-xl lg:text-[22px] font_urbanist_medium">Enter Your Order Information</h3>
+                <p className='font_urbanist_light'>Enter your email address and order number in the space below and we will provide you with a list of the items you ordered and the relevant shipping information. If you have only just confirmed your order, this information will appear in a few minutes.</p>
                 <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                     {touched.orderemail && errors.orderemail ? <Tooltip classes="form-error" content={errors.orderemail} /> : null}
                     <input className="w-full bg-transparent outline-none border-none" type="email" name="orderemail" id="orderemail" value={values.orderemail} onBlur={handleBlur} onChange={handleChange} placeholder="Order Email*" />
@@ -39,12 +39,12 @@ export default function Trackorder() {
                     </div>
                     <small className='self-end text-gray-500 my-3' >9 to 20 digits, no spaces</small>
                 </div>
-                <div className="font_gotham_light w-full my-10 space-y-5">
+                <div className="font_urbanist_light w-full my-10 space-y-5">
                     <p>Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our privacy policy.</p>
                     <p>Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.</p>
                 </div>
                 <div className="w-full flex justify-start space-x-4">
-                    <Button type="submit" classes="w-full md:w-40 font_gotham_medium">Continue</Button>
+                    <Button type="submit" classes="w-full md:w-40 font_urbanist_medium">Continue</Button>
                 </div>
             </form>
         </div>

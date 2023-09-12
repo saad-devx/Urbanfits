@@ -23,8 +23,8 @@ export default function PrivacyPolicy() {
         <PoliciesPage>
             <main className="w-full lg:flex scroll-smooth">
                 <section className={`max-w-[2000px] lg:w-1/4 lg:h-auto lg:max-h-none rounded-2xl lg:rounded-none transition-all duration-500 overflow-x-scroll overflow-y-hidden lg:overflow-visible hide_scrollbar`}>
-                    <div id='menu_container' className="lg:sticky lg:top-16 lg:left-0 lg:right-0 w-auto lg:w-full py-8 2xl:py-10 lg:px-7 gap-y-4 flex lg:flex-col lg:bg-gray-50 font_gotham rounded-2xl">
-                        <h1 className="hidden lg:block mb-3 2xl:mb-5 font_gotham_bold tracking-widest">QUICK LINKS</h1>
+                    <div id='menu_container' className="lg:sticky lg:top-16 lg:left-0 lg:right-0 w-auto lg:w-full py-8 2xl:py-10 lg:px-7 gap-y-4 flex lg:flex-col lg:bg-gray-50 font_urbanist rounded-2xl">
+                        <h1 className="hidden lg:block mb-3 2xl:mb-5 font_urbanist_bold">Quick Links</h1>
                         <MenuLink href='question1' >1. Responsibility of your Personal Data</MenuLink>
                         <MenuLink href='question2' >2. What personal data do we process?</MenuLink>
                         <MenuLink href='question3' >3. About Cookies</MenuLink>
@@ -36,27 +36,27 @@ export default function PrivacyPolicy() {
                     </div>
                 </section>
                 <section className="w-full lg:w-3/4 md:px-4 lg:px-10 text-xs md:text-sm scroll-smooth">
-                    <h1 className="font_gotham_medium text-xl md:text-[22px] xl:text-2xl tracking-widest mb-7">PRIVACY POLICY</h1>
+                    <h1 className="font_urbanist_bold text-xl mb-7">Privacy Policy</h1>
                     <small className="text-gray-600 italic" >Effective Date: 1-3-2024</small> <br /> <br />
                     URBAN FITS attaches great importance to the protection of your privacy.<br />
                     Our Privacy Policy describes how and why we process your personal data and provides you with information about your rights. It is drafted in accordance with the requirements of the GDPR.<br />
                     The Policy applies only to personal data collected via our website www.urbanfits.ae and in our stores. <br />
                     Please note that some sections, at the end, are applicable to residents of named territories, outside the European Union, with local privacy regulations requiring specificities in addition to the requirements of the GDPR.<br /><br /><br />
-                    <h1 id='question1' className="mb-2 text-base lg:text-lg font_gotham_medium">1. Who is responsible for processing your personal data?</h1>
+                    <h1 id='question1' className="mb-2 text-base lg:text-lg font_urbanist_medium">1. Who is responsible for processing your personal data?</h1>
                     The data controller is URBAN FITS, having its registered office at Dubai United Arab Emirates and registered in the Dubai Trade and Companies Register under the number 0000000.<br />
                     Email address: support@urbanfits.ae<br />
                     Telephone number: +971500000000<br />
                     Urban Fits ensures that its processing of personal data is lawful, justified by a valid legal basis and that the data is kept for a reasonable period of time necessary for the operations for which it was collected, in compliance with the legislation in force and taking into account the limitation periods.<br /><br />
-                    <h1 id='question2' className="mb-4 text-base lg:text-lg font_gotham_medium">2. What personal data do we process? For what purpose? On what legal basis? For how long?</h1>
+                    <h1 id='question2' className="mb-4 text-base lg:text-lg font_urbanist_medium">2. What personal data do we process? For what purpose? On what legal basis? For how long?</h1>
                     <div className="w-full overflow-x-scroll scrollbar_x">
-                    <small className="text-gray-600 italic lg:hidden" >Scroll to view full table <i class="fa-solid fa-arrow-right"/></small>
+                        <small className="text-gray-600 italic lg:hidden" >Scroll to view full table <i class="fa-solid fa-arrow-right" /></small>
                         <table className='w-full min-w-[700px] border border-black' border="2" >
 
-                            <tr className='bg-gotham-black font_gotham_medium text-xs tracking-widest' >
-                                <td colSpan={0.5} className='p-5 text-white text-center border-r border-white' >TYPES OF DATA</td>
-                                <td className='p-5 text-white text-center border-r border-white' >PURPOSES</td>
-                                <td className='p-5 text-white text-center border-r border-white' >LEGAL BASIS</td>
-                                <td className='p-5 text-white text-center border-r border-black' >MAXIMUM RETENTION PERIOD</td>
+                            <tr className='bg-gotham-black font_urbanist_bold text-sm' >
+                                <td colSpan={0.5} className='p-5 text-white text-center border-r border-white' >Types of Data</td>
+                                <td className='p-5 text-white text-center border-r border-white' >Purposes</td>
+                                <td className='p-5 text-white text-center border-r border-white' >Legal Basis</td>
+                                <td className='p-5 text-white text-center border-r border-black' >Maximum Retention Perios</td>
                             </tr>
                             <tr className='border border-black' >
                                 <td className='p-2 border-r border-black' >Title, surname, first name, e-mail address, telephone number, subject, free text area</td>
@@ -139,7 +139,7 @@ export default function PrivacyPolicy() {
                         </table>
                     </div>
                     Mandatory data collection is indicated by an asterisk in the collection form. <br /><br />
-                    <h1 id='question3' className="mb-2 text-base lg:text-lg font_gotham_medium">3. About Cookies</h1>
+                    <h1 id='question3' className="mb-2 text-base lg:text-lg font_urbanist_medium">3. About Cookies</h1>
                     <p>
                         The site uses cookies. During your visits, utility cookies, solely dedicated to the proper functioning of the website, may be automatically installed on your browse.  <br />
                         Some cookies are necessary and must always be active to ensure the proper functioning of our site. <br />
@@ -165,9 +165,9 @@ export default function PrivacyPolicy() {
                         -&nbsp;&nbsp;&nbsp;&nbsp;Pinterest : <Link href="https://policy.pinterest.com/privacy-policy" className='underline text-cyan-700' > https://policy.pinterest.com/privacy-policy</Link> <br />
                         -&nbsp;&nbsp;&nbsp;&nbsp;Apple : <Link href="https://www.apple.com/legal/privacy/" className='underline text-cyan-700' > https://www.apple.com/legal/privacy/</Link> <br />
                     </p><br />
-                    <h1 id='question4' className="mb-2 text-base lg:text-lg font_gotham_medium">4. Do we profile your personal data?</h1>
+                    <h1 id='question4' className="mb-2 text-base lg:text-lg font_urbanist_medium">4. Do we profile your personal data?</h1>
                     <p>Urban Fits carries out profiling on the basis of your personal data, with your consent, with a view to personalising your experience when you have created an account on the site and to send you personalised commercial communications according to your profile.</p>
-                    <h1 id='question5' className="mb-2 text-base lg:text-lg font_gotham_medium">5. What are your rights and how can you exercise them?</h1>
+                    <h1 id='question5' className="mb-2 text-base lg:text-lg font_urbanist_medium">5. What are your rights and how can you exercise them?</h1>
                     <p>
                         Where the processing is based on your consent, you may withdraw it at any time, without prejudice to the lawfulness of the processing carried out prior to such withdrawal. <br />In accordance with the General Data Protection Regulation no. 2016/679 of 27 April 2016, you have the following rights: <br /> <br />
                         <ul className='list-disc pl-10' >
@@ -183,17 +183,17 @@ export default function PrivacyPolicy() {
                         To exercise your rights with Urban Fits, or for more information about our personal data protection policy, you may send a letter to the postal address Dubai, United Arab Emirates or an e-mail to support@urbanfits.ae <br />
                         All requests by post or e-mail must be signed and specify the address to which the reply should be sent. In case of doubt, you may be asked to provide a photocopy of an identity document in order to respond to your request. A reply will then be sent to you as soon as reasonably practicable within one month of receipt of the request. <br /><br />
                     </p>
-                    <h1 id='question6' className="mb-2 text-base lg:text-lg font_gotham_medium">6. What security measures have we put in place to protect your personal data?</h1>
+                    <h1 id='question6' className="mb-2 text-base lg:text-lg font_urbanist_medium">6. What security measures have we put in place to protect your personal data?</h1>
                     <p>
                         We are committed to maintaining the confidentiality and integrity of your data. <br />
                         We have put in place appropriate technical and organizational security measures to protect your personal data against unauthorized use, accidental access, processing, erasure, loss or partial or total destruction. <br />
                         If you have any questions on this subject, please send a letter to the postal address Dubai, United Arab Emirates or an e-mail to support@urbanfits.ae. <br /><br />
                     </p>
-                    <h1 id='question7' className="mb-2 text-base lg:text-lg font_gotham_medium">7. Who else may have access to your personal data?</h1>
+                    <h1 id='question7' className="mb-2 text-base lg:text-lg font_urbanist_medium">7. Who else may have access to your personal data?</h1>
                     <p>
                         We provide personal information to our affiliates and other trusted companies or individuals who process it on our behalf, at our direction, in accordance with this Privacy Policy and other appropriate security and confidentiality measures. The list is available upon request. <br /><br />
                     </p>
-                    <h1 id='question8' className="mb-2 text-base lg:text-lg font_gotham_medium">8. Is your personal data transferred outside the European Union?</h1>
+                    <h1 id='question8' className="mb-2 text-base lg:text-lg font_urbanist_medium">8. Is your personal data transferred outside the European Union?</h1>
                     <p>
                         Your personal data may be transferred to and processed by third parties located outside the European Union, such as our affiliates <br />
                         In this case, we ensure that the transfer of your personal data is carried out in accordance with the applicable law and in particular either that the destination territory has been the subject of an adequacy decision by the European Union Commission, or that the recipient has validated the standard contractual clauses validated by the European Commission and or that appropriate technical and organizational contractual provisions have been put in place.<br /><br />

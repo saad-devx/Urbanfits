@@ -138,7 +138,7 @@ export default function Personalinfo() {
 
     }
     if (!user) return <Error403 />
-    if (window.matchMedia('(max-width: 786px)').matches) return <>
+    if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>My Profile</title></Head>
         <main className="relative w-screen h-screen p-4 pb-10 bg-white">
             <div className="absolute left-0 top-0 right-0 w-full p-4 border-b border-gray-100 flex justify-between items-center">
@@ -264,9 +264,9 @@ export default function Personalinfo() {
             </form>
             <div className='w-full' >
                 <div className='my-14 space-y-5' >
-                    <h2 className="text-sm lg:text-base font_urbanist_bold">Email & Password</h2>
+                    <h2 className="text-sm lg:text-base font_urbanist_bold">Email</h2>
                     <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-200 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                        <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/emailaddress' ><i className="material-symbols-outlined">edit_square</i></Link>
+                        <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/emailaddress' >{user.register_provider === "urbanfits" ? <i className="material-symbols-outlined">edit_square</i> : null}</Link>
                     </div>
                 </div>
                 <div className='my-14 space-y-5' >

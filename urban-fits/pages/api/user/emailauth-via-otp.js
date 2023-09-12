@@ -23,34 +23,28 @@ const AuthEmailByOtp = async (req, res) => {
             if (password !== originalPassword) return res.status(401).json({ success: false, msg: "Your password is incorrect" })
 
             // Creating an opt and sending to new email
-            let otp = generateRandomInt(10001, 999999)
             let dbOtp = await OTP.findOne({ user_id: user._id })
-            if (dbOtp) {
-                dbOtp = await OTP.findByIdAndUpdate(dbOtp._id, {
-                    otp,
-                    new_email,
-                    expireAt: Date.now()
-                })
-            }
+            if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'change email' session, try after 5 minutes." })
             else if (!dbOtp) {
+                let otp = generateRandomInt(10001, 999999)
                 dbOtp = await OTP.create({
                     user_id: user._id,
                     otp,
                     new_email,
                     expireAt: Date.now()
                 })
-            }
 
-            res.status(200).json({
-                success: true,
-                otp_id: dbOtp._id,
-                msg: "We just sent an otp to your new email, please check and submit the code."
-            })
-            const template = changeEmail(`${user.firstname} ${user.lastname}`, otp)
-            return sendEmail({ to: new_email, subject: "Confirm your OTP to change your Email" }, template)
+                const template = changeEmail(`${user.firstname} ${user.lastname}`, otp)
+                await sendEmail({ to: new_email, subject: "Confirm your OTP to change your Email" }, template)
+                res.status(200).json({
+                    success: true,
+                    otp_id: dbOtp._id,
+                    msg: "We just sent an otp to your new email, please check and submit the code."
+                })
+            }
         }
         else {
-            res.status(400).json({ success: false, msg: "bad request, you are using wrong request method!" })
+            res.status(400).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
         }
     }
     catch (err) {

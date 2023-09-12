@@ -4,7 +4,7 @@ import useUser from '@/hooks/useUser'
 import countryCodes from '@/static data/countryCodes'
 
 export default function CountrySelection({ show, setCoutnryModal }) {
-    const { country, setCountry } = useUser()
+    const { country, setCountry, setGeoSelectedByUser } = useUser()
     const [query, setQuery] = useState('')
     const filteredCountries = countryCodes.filter(country => country.name.toLowerCase().includes(query.toLowerCase()))
 
@@ -22,7 +22,7 @@ export default function CountrySelection({ show, setCoutnryModal }) {
         </div>
         <div className="w-full flex flex-col">
             {filteredCountries.map((c, i) => {
-                return <button onClick={() => { setCountry(c); setCoutnryModal(false) }} key={i} className={`w-full p-4 flex justify-between items-center ${country.country === c.country ? "bg-gray-50 border border-gray-400 rounded-lg" : "border-b border-gray-50"} font_urbanist text-base capitalize`}>
+                return <button onClick={() => { setCountry(c); setCoutnryModal(false); setGeoSelectedByUser(true) }} key={i} className={`w-full p-4 flex justify-between items-center ${country.country === c.country ? "bg-gray-50 border border-gray-400 rounded-lg" : "border-b border-gray-50"} font_urbanist text-base capitalize`}>
                     <div className='flex items-center gap-x-3'>
                         <span className="w-5 overflow-hidden"><Image width={100} height={80} className="w-full h-full object-cover" src={c.src} alt={c.country} /></span>
                         {c.name}

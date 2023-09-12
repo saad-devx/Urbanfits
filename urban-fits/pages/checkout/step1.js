@@ -26,7 +26,7 @@ export default function Checkout1() {
     console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
     const router = useRouter()
     const { address, getAddress } = useAddress()
-    const { user } = useUser()
+    const { user, setGuestUser } = useUser()
     // loader and billing form state
     const [loader, setLoader] = useState(null)
     const [billingForm, setBillingForm] = useState(null)
@@ -53,7 +53,7 @@ export default function Checkout1() {
         }
     }
 
-    const { isEmpty, totalUniqueItems, items, cartTotal, emptyCart } = useCart()
+    const { isEmpty, items, cartTotal } = useCart()
 
     // getting data from input fields and applying validation
     const addressFieldsValidation = {
@@ -68,7 +68,6 @@ export default function Checkout1() {
         phone_number: Yup.string().min(9).required("Please enter your phone number")
     }
     const addressFieldsValues = (type) => {
-        // const Address = address[type]
         return {
             address_title: address && address[type] ? address[type].address_title : '',
             firstname: address && address[type] ? address[type].firstname : '',
@@ -99,13 +98,17 @@ export default function Checkout1() {
         onSubmit: async (values) => {
             setLoader(<Loader />)
             try {
-                const response = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { shipping_info: values, items: items })
-                sessionStorage.setItem("this_order_data", JSON.stringify({ shipping_info: values, items: items, cartTotal, used: false }))
-                window.location.href = response.data
+                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, {
+                    ...(user && { user_id: user._id }),
+                    shipping_info: values,
+                    order_items: items
+                })
+                router.push(data.url)
+                await setGuestUser(data.guest_user_payload)
             }
             catch (e) {
                 console.log(e)
-                toaster("error", "Some uexpected error occured, We're sorry, we will fix it soon.")
+                toaster("error", e.response.data.msg)
             }
             setLoader(null)
         }
@@ -136,7 +139,7 @@ export default function Checkout1() {
             setLoader(<Loader />)
             if (user) {
                 if (!address) await getAddress()
-                if (!address) return
+                if (!address) return setLoader(null)
                 setValues({
                     name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
                     email: ifExists(user.email),
@@ -204,14 +207,14 @@ export default function Checkout1() {
                         <label className='font_urbanist_medium md:text-lg' htmlFor="name">Name</label>
                         <div className="relative w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                             {touched.name && errors.name ? <Tooltip classes="form-error" content={errors.name} /> : null}
-                            <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.name} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="name">edit_square</i></button>
+                            <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.name} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button type='button' onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="name">edit_square</i></button>
                         </div>
                     </span>
                     <span className="flex flex-col">
                         <label className='font_urbanist_medium md:text-lg' htmlFor="email">Email</label>
                         <div className="relative w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                             {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                            <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="johndoe.123@gmail.com" /><button onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="email">edit_square</i></button>
+                            <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="johndoe.123@gmail.com" /><button type='button' onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="email">edit_square</i></button>
                         </div>
                     </span>
                     <span className=" my-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>2. Shipping Information</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>

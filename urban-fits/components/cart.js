@@ -68,22 +68,22 @@ function CartItem(props) {
             <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_urbanist_medium text-xs tracking-widest"></button>
         </div>
         {/* to be displayed in mobile */}
-        <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_gotham_medium tracking-widest">
-            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_gotham_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200"/></Link>
+        <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
+            <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200" /></Link>
             <h3 className="font_urbanist_medium self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
             <div className="w-full flex self-end gap-3">
                 <div className='relative'>
                     <span className="select_container after:right-[20%]"></span>
-                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] rounded-md font_gotham_medium tracking-widest text-[10px] px-5 border outline-none">
+                    <select type="select" defaultValue={product.size} className="select_element relative cursor-pointer w-[100px] h-[30px] rounded-md font_urbanist_medium tracking-widest text-[10px] px-5 border outline-none">
                         {product.sizes.map(obj => {
                             const { size } = obj
                             return <option value={size}>{size}</option>
                         })}
                     </select>
                 </div>
-                <span className="w-[100px] h-[30px] px-5 rounded-md font_gotham_light border flex justify-between items-center">
+                <span className="w-[100px] h-[30px] px-5 rounded-md font_urbanist_light border flex justify-between items-center">
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
-                    <input type="number" readOnly className='w-2/5 h-auto font_gotham text-center border-none outline-none pointer-events-none' value={quantity} />
+                    <input type="number" readOnly className='w-2/5 h-auto font_urbanist text-center border-none outline-none pointer-events-none' value={quantity} />
                     <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
                 </span>
             </div>
@@ -98,7 +98,7 @@ export default function Cart(props) {
         return num.toFixed(3)
     }
 
-    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_gotham`}>
+    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
         <div className="w-full flex justify-center">
             {isEmpty ?
                 <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
@@ -135,17 +135,17 @@ export default function Cart(props) {
                             <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
                         <div className="w-full lg:w-[400px] self-center lg:self-end">
-                            <h3 className="text-center text-xs lg:text-base font_urbanist_bold tracking-[0.3em] lg:tracking-expand mb-5">ORDER SUMMARY</h3>
+                            <h3 className="text-center text-sm lg:text-[17px] font_urbanist_bold mb-5">Order Summary</h3>
                             <div className="w-full h-auto p-4 rounded-2xl font_urbanist_bold bg-white items-center border">
-                                <span className="w-full my-3 mx-auto flex justify-between"><small>SUBTOTAL</small> <small>${get3dpNumber(cartTotal)}</small></span>
-                                <span className="w-full my-3 mx-auto flex justify-between"><small>SHIPPING</small> <small>${items[0].shipping_fee}</small></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Subtotal</span> <span>${get3dpNumber(cartTotal)}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Shipping</span> <span>${items[0].shipping_fee}</span></span>
                                 <br />
-                                <span className="w-full my-3 mx-auto flex justify-between"><small>TOTAL</small> <small>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</small></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</span></span>
                             </div>
                             <LinkBtn href="/checkout/step1" onClick={() => {
                                 document.body.style.overflowY = props.cart ? null : 'hidden'
                                 props.setCart(false)
-                            }} font='font_urbanist_bold tracking-[0.4em]' fontSize='text-xs' classes="w-full">CHECK OUT</LinkBtn>
+                            }} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14 mb-20">

@@ -1,6 +1,11 @@
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import Cors from 'micro-cors';
+import sendEmail from "@/utils/sendEmail"
+import OrderConfirmed from '@/email templates/order_confirm';
+import OrderSession from '@/models/order_session';
+import { pusherServer } from '@/utils/pusher';
+const util = require('util');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -30,10 +35,8 @@ const webhookHandler = async (req, res) => {
         webhookSecret
       );
     } catch (err) {
-      // On error, log and return the error message.
       console.log(`❌ Error message: ${err.message}`);
-      res.status(400).send(`Webhook Error: ${err.message}`);
-      return;
+      return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     // Successfully constructed event.
@@ -43,17 +46,49 @@ const webhookHandler = async (req, res) => {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object;
         console.log(`PaymentIntent status: ${paymentIntent.status}`);
-        return {paymentIntent, success: true, msg: "yess we got the payload"}
+        console.log("here is the whole event:", event);
+
+        const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
+
+        let template = OrderConfirmed(orderSession.name)
+        await sendEmail({ to: orderSession.email, subject: "Your order has been placed." }, template)
+        console.log("entry point 1")
+
+        try {
+          pusherServer.trigger(`payments-user_${orderSession.user_id.toString()}`, 'payment-succeeded', {
+            order_session: orderSession,
+            success: true,
+            type: 'success',
+            msg: "Your payment was successfull!"
+          })
+          pusherServer.trigger('admin-channel', 'new-order-received', {
+            success: true,
+            msg: "A new order has been received!"
+          })
+        } catch (error) { console.log(error) }
+        console.log("entry point 2")
+        await OrderSession.findByIdAndDelete(paymentIntent.metadata.order_session_id)
         break;
       }
       case 'payment_intent.payment_failed': {
         const paymentIntent = event.data.object;
-        console.log(
-          `❌ Payment failed: ${paymentIntent.last_payment_error?.message}`
-        );
+        const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
+
+        console.log(`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`);
+        pusherServer.trigger(`payments-user_${orderSession.user_id.toString()}`, 'payment-succeeded', {
+          success: false,
+          type: "error",
+          msg: "Your payment was failed!"
+        })
         break;
       }
       case 'charge.succeeded': {
+        const charge = event.data.object;
+        console.log(`Charge id: ${charge.id}`);
+        break;
+      }
+      case 'checkout.session.completed': {
+        console.log("here is the checkout session completed event", util.inspect(event, { depth: null }))
         const charge = event.data.object;
         console.log(`Charge id: ${charge.id}`);
         break;

@@ -10,7 +10,7 @@ const nextConfig = {
   env: {
     HOST: "https://st.urbanfits.ae",
     // HOST: "http://localhost:3000",
-    MONGO_URI: "mongodb+srv://darkreaper:s19114666d@cluster0.eyxeosm.mongodb.net/Urbanfits?retryWrites=true&w=majority",
+    MONGO_URI: "mongodb+srv://UFdbuser:Admin%402023@cluster0.qogq2kp.mongodb.net/?tls=true",
     SECRET_KEY: "MuhammadBilawalAshrafOwnsUrbanFitsBrand",
     DEFAULT_PFP: "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg",
     // Google client credentials
@@ -24,12 +24,17 @@ const nextConfig = {
     //Stripe keys
     STRIPE_PUBLISHABLE_KEY: "pk_test_51MkU2DHF1bkFLgckS5AUrOHFjoJAPxAW1RxkHDfriM4uDbVAM3MeVu3XOVfy7BqUGx9kiu9CMQxqbdRxoWSXMO8c003NMTN2AT",
     STRIPE_SECRET_KEY: "sk_test_51MkU2DHF1bkFLgck4aQNuqKxTOrWh2uSlx8AxKJucUFGPl4cDSpjLhhn4ynhISjShrTqGhl2U4A1UZJFe0RRclyo00hWAfnqeB",
-    STRIPE_WEBHOOK_SECRET: "we_1N9UYDHF1bkFLgckaP6rowKH",
+    STRIPE_WEBHOOK_SECRET: "whsec_zh0f1sztGeE8osV6cPvZeX9Nb8SMmZ6f",
     //AWS S3 Access Key IDs
     AWS_ACCESS_KEY: "AKIAWXH553KR4VBPA7YM",
     AWS_SECRET_KEY: "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",
     // IP2Lcation access key
-    IP2L_ACCESS_KEY: "30CAECE4E00638DB1297D0D0B20DB2CE"
+    IPINFO_ACCESS_TOKEN: "9435a9027e6305",
+    // Pusher app credentials
+    PUSHER_APP_ID: "1665659",
+    PUSHER_KEY: "b1922c08c9c41869d7b3",
+    PUSHER_SECRET: "cef24361002750c60137",
+    PUSHER_CLUSTER: "mt1"
   },
   async headers() {
     return [

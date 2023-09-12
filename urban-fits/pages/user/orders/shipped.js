@@ -7,7 +7,7 @@ export default function Shipped() {
   const {user} = useUser()
   if(!user) return <Error403 />
   return (
-    <OrdersPage>
+    <OrdersPage noOrders={true}>
       <h1 className="text-xl">Hey This is Shipped Orders Tab</h1>
     </OrdersPage>
   )

@@ -15,7 +15,7 @@ export default function ToTopBtn() {
     if (window.matchMedia('(min-width: 1024px)').matches) return (
         <div className={`fixed z-20 right-10 bottom-10 transition-all duration-300 ${!upBtn ? 'opacity-0 pointer-events-none translate-y-7' : ''}`}>
             <button onClick={() => { scrollTo(0, 0) }} className={`${toTopBtn.button_cover} border-2 border-black hover:border-0 transition-all rounded-full shadow-md`} role="button">
-                <span className="text font_gotham_medium text-[10px]">GO UP</span><span className="fa-solid fa-chevron-up text-white" />
+                <span className="text font_urbanist_medium text-[10px]">GO UP</span><span className="fa-solid fa-chevron-up text-white" />
             </button>
         </div>
     )
