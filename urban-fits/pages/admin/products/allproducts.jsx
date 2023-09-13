@@ -66,7 +66,7 @@ export default function allproducts() {
                     <div className="flex items-center mt-4 font_futura text-sm gap-x-3">
                         <Link href="/admin">Home</Link> <i className="fa-solid fa-chevron-right" />
                         <span >Products</span> <i className="fa-solid fa-chevron-right" />
-                        <Link href="/admin/alproducts">Product List</Link>
+                        <Link href="/admin/allproducts">Product List</Link>
                     </div>
                 </div>
                 <div className='flex gap-x-2'>

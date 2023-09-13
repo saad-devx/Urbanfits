@@ -1,8 +1,8 @@
 import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function toaster(type, msg) {
+export default function toaster(type, msg, position = "top-left") {
     toast(msg, {
-        position: "top-left",
+        position,
         style: {
             borderRadius: "100px"
         },
@@ -10,7 +10,7 @@ export default function toaster(type, msg) {
             fontFamily: 'urbanist',
             fontSize: "14px",
             fontWeight: "500",
-            color: "white"
+            color: "black"
         },
         closeButton: false,
         autoClose: 5000,
@@ -20,7 +20,7 @@ export default function toaster(type, msg) {
         draggable: true,
         type,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
         transition: Slide
     })
 }
