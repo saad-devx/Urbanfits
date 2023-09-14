@@ -59,6 +59,7 @@ const UserSchema = new mongoose.Schema({
     gender: {
         type: String
     },
+    country: String,
     is_active: {
         type: Boolean,
         default: true

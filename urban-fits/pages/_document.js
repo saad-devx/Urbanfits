@@ -17,7 +17,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
         {/* <script src="https://kit.fontawesome.com/4a4e1e58b7.js" crossorigin="anonymous"></script> */}
         <script src="https://kit.fontawesome.com/4e881d944d.js" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
