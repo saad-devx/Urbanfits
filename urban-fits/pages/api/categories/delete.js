@@ -2,10 +2,12 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user";
 import Category from "@/models/category"
 const mongoose = require('mongoose')
+import CorsMiddleware from "@/utils/cors-config"
 
 // Only accessable by Admin 
 const DeleteCategories = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { id } = req.query
             const { categories } = req.body

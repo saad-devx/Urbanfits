@@ -2,8 +2,10 @@ import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import User from "@/models/user";
 import jwt from 'jsonwebtoken';
+import CorsMiddleware from "@/utils/cors-config"
 
 const VerfiyTotp = async (req, res) => {
+    await CorsMiddleware(req, res)
     try {
         if (req.method === 'GET') {
             const { user_id, totp_code } = req.query

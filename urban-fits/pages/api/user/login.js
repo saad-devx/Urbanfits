@@ -2,8 +2,11 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
+import CorsMiddleware from "@/utils/cors-config"
+
 
 const Login = async (req, res) => {
+    await CorsMiddleware(req, res)
     try {
         if (req.method === 'POST') {
             const { email, password } = req.body
@@ -38,7 +41,7 @@ const Login = async (req, res) => {
                 const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
                 if (password !== originalPassword) return res.status(404).json({ success: false, msg: "Your password is incorrect" })
                 if (user.two_fa_activation_date && user.two_fa_enabled) {
-                    res.status(200).json({
+                    res.json({
                         success: true,
                         msg: "",
                         redirect_url: `/auth/confirm-2fa-totp?user_id=${user._id}`,

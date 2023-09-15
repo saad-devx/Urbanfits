@@ -2,10 +2,12 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import mongoose from "mongoose";
 import User from "@/models/user";
+import CorsMiddleware from "@/utils/cors-config"
 
 // Only accessable by Admin 
 const DeleteProducts = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { user_id } = req.query
             const { products } = req.body

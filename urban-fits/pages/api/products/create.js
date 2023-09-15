@@ -2,10 +2,12 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import User from "@/models/user";
 import mongoose from "mongoose";
+import CorsMiddleware from "@/utils/cors-config"
 
 // Only accessable by Admin 
 const CreateProduct = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { id } = req.query
             if (!id || !mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })

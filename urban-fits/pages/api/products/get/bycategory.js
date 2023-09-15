@@ -2,8 +2,11 @@ const mongoose = require('mongoose')
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product";
 import Category from "@/models/category";
+import CorsMiddleware from "@/utils/cors-config"
+
 const GetProductByCategory = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             const { id } = req.query;
 

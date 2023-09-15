@@ -2,9 +2,11 @@ import ConnectDB from "@/utils/connect_db"
 import Category from "@/models/category"
 import User from "@/models/user";
 import mongoose from "mongoose";
+import CorsMiddleware from "@/utils/cors-config"
 
 const getCategories = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { id } = req.query
             if (!id || !mongoose.Types.ObjectId(id)) return res.status(400).json({ success: false, msg: "A valid user id required." })

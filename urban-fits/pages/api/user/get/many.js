@@ -1,9 +1,11 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user";
 import mongoose from "mongoose";
+import CorsMiddleware from "@/utils/cors-config"
 
 const getManyUsers = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             const { user_id } = req.query
             if (!user_id || !mongoose.Types.ObjectId(user_id)) return res.status(400).json({ success: false, msg: "A valid user id required. Query parameters: user_id, page (optional, default: 1)" })

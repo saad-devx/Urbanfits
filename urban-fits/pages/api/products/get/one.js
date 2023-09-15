@@ -2,9 +2,11 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 const mongoose = require('mongoose')
 import { pusherServer } from "@/utils/pusher"
+import CorsMiddleware from "@/utils/cors-config"
 
 const GetSingleProduct = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             const { id } = req.query
             if (!id || !mongoose.Types.ObjectId.isValid(id)) {

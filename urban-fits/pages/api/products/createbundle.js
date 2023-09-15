@@ -2,10 +2,12 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 import Product from "@/models/product"
 import mongoose from "mongoose"
+import CorsMiddleware from "@/utils/cors-config"
 
 // Only accessable by Admin 
 const CreateBundle = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { id } = req.query
             const { products } = req.body
@@ -22,7 +24,7 @@ const CreateBundle = async (req, res) => {
 
                 let newProduct = await Product.findByIdAndUpdate(id,
                     { bundle_items: bundle_ids },
-                    {new: true}
+                    { new: true }
                 )
             }
             res.status(200).json({

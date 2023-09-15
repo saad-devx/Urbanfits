@@ -1,8 +1,9 @@
-import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import qrcode from 'qrcode';
+import CorsMiddleware from "@/utils/cors-config"
 
 const GetQrCode = async (req, res) => {
+    await CorsMiddleware(req, res)
     try {
         if (req.method === 'GET') {
             const { user_id } = req.query

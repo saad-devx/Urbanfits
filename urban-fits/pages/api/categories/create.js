@@ -2,9 +2,11 @@ import ConnectDB from "@/utils/connect_db";
 import mongoose from "mongoose";
 import User from "@/models/user";
 import Category from "@/models/category";
+import CorsMiddleware from "@/utils/cors-config"
 
 const CreateProducts = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { id } = req.query
             if (!id || !mongoose.Types.ObjectId(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })

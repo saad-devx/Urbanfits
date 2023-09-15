@@ -1,8 +1,10 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product";
+import CorsMiddleware from "@/utils/cors-config"
 
 const getProductsByIds = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { productIds } = req.body
             if (!productIds || productIds.length === 0) return res.status(400).json({ success: false, msg: "No products to get, product id array wasn't specified. Body parameters: productIds (array)" })

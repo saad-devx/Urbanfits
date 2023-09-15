@@ -1,8 +1,10 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product";
+import CorsMiddleware from "@/utils/cors-config"
 
 const getManyProducts = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             await ConnectDB()
             const LIMIT = 50;
