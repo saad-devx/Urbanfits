@@ -4,10 +4,9 @@ const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 import CorsMiddleware from "@/utils/cors-config"
 
-
 const Login = async (req, res) => {
-    await CorsMiddleware(req, res)
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { email, password } = req.body
             await ConnectDB()

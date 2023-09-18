@@ -25,7 +25,8 @@ export default function VerifyOtp() {
                 otp
             })
             await updateUser(data.payload, true)
-            router.push('/')
+            // router.push('/')
+            window.location.href = '/'
             toaster("success", data.msg)
         } catch (error) {
             console.log(error)

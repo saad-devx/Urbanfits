@@ -3,9 +3,11 @@ import Addresses from "@/models/addresses"
 import User from "@/models/user"
 import mongoose from "mongoose"
 const jwt = require("jsonwebtoken")
+import CorsMiddleware from "@/utils/cors-config"
 
 const GetAddress = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             const { user_id } = req.query
             if (!user_id || !mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "A valid user id required. Query parameter: user_id" })

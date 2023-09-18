@@ -2,9 +2,11 @@ import ConnectDB from "@/utils/connect_db"
 import Addresses from "@/models/addresses"
 import User from "@/models/user"
 const jwt = require("jsonwebtoken")
+import CorsMiddleware from "@/utils/cors-config"
 
 const CreateAddress = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             await ConnectDB()
             let user = await User.findById(req.query.user_id)

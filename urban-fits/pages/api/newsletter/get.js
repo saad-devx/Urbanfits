@@ -2,10 +2,12 @@ import ConnectDB from "@/utils/connect_db";
 import Newsletter from "@/models/newsletter";
 import mongoose from "mongoose";
 const jwt = require("jsonwebtoken")
+import CorsMiddleware from "@/utils/cors-config"
 
 const getNewsletters = async (req, res) => {
-    if (req.method === "GET") {
-        try {
+    try {
+        await CorsMiddleware(req, res)
+        if (req.method === "GET") {
             const { id, email } = req.query
             await ConnectDB()
 
@@ -32,11 +34,11 @@ const getNewsletters = async (req, res) => {
                 })
             }
 
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
-        }
+        } else return res.status(405).json({ success: false, msg: "method not allowed, you are using wrong request method!" })
     }
-    else return res.status(405).json({ success: false, msg: "method not allowed, you are using wrong request method!" })
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
+    }
 }
 export default getNewsletters

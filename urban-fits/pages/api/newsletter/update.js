@@ -2,12 +2,14 @@ import ConnectDB from "@/utils/connect_db"
 import Newsletter from "@/models/newsletter"
 import jwt from 'jsonwebtoken'
 const mongoose = require('mongoose')
+import CorsMiddleware from "@/utils/cors-config"
 
 const UpdateNewsletter = async (req, res) => {
-    const { id } = req.query
-    if (!id) return res.status(400).json({ success: false, msg: "no user id parameter was found in the query." })
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
+            const { id } = req.query
+            if (!id) return res.status(400).json({ success: false, msg: "no user id parameter was found in the query." })
             await ConnectDB()
             const letter = await Newsletter.findOneAndUpdate({ user: mongoose.Types.ObjectId(id) }, req.body, { new: true })
             if (!letter) return res.status(404).json({ success: false, msg: "No registration found with the corresponding user id" })

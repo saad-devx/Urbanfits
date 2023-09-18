@@ -12,30 +12,51 @@ import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
 import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
-import Error403 from './403'
 import toaster from "@/utils/toast_function";
 import axios from 'axios'
-import { pusherClient } from '@/utils/pusher';
+import { generateRandString } from '@/utils/generatePassword'
+import PusherClient from 'pusher-js'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const { user, guestUser, setGuestUser, logOut, setCountry, geo_selected_by_user } = useUser()
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
+  const subscribeToPresence = async () => {
+    let paramConfig;
+    if (!user || !user._id) {
+      try {
+        const { data } = await axios.post(`${process.env.HOST}/api/user/guest/create-session`, {})
+        if (data.user) setGuestUser(data.user)
+        paramConfig = { user_id: `${data.user._id}_isguest` }
+      } catch (e) {
+        console.log(e);
+      }
+    } else paramConfig = {
+      user_id: user?._id,
+      email: user?.email
+    }
+    console.log("the guest: ", guestUser)
+    const pusherPresenceClient = new PusherClient(process.env.PUSHER_KEY, {
+      cluster: process.env.PUSHER_CLUSTER,
+      authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+      auth: {
+        params: paramConfig
+      }
+    });
+    const presenceChannel = pusherPresenceClient.subscribe('presence-urbanfits')
+  }
+
   useEffect(() => {
-    if (!user || !user._id) return
-    const channel = pusherClient.subscribe(`user_${user._id}`)
-    channel.bind('user-login', (data) => {
-      console.log(data)
-      toaster('success', data.pusher_msg)
-    })
+    subscribeToPresence()
   }, [])
 
   useEffect(() => {
+    getGeoLocation(setCountry, geo_selected_by_user)
     const igniteSession = () => {
+      setGuestUser(null)
       const sessionValid = localStorage.getItem('remember_me')
       if (sessionValid === true) logOut()
-      // axios.post(`${process.env.HOST}/api/remove-guest-session?user_id=blabla`)
     }
     window.addEventListener("beforeunload", igniteSession)
     return () => window.removeEventListener("beforeunload", igniteSession)

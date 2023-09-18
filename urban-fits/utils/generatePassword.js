@@ -17,4 +17,15 @@ const generatePassword = (email) => {
     }
     return password
 }
+export const generateRandString = (length) => {
+    const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
+    let password = "";
+
+    // Generate a random password of the specified length
+    for (let i = 0; i < length; i++) {
+        const randomIndex = generateRandomInt(0, key.length)
+        password += key.charAt(randomIndex)
+    }
+    return password
+}
 export default generatePassword

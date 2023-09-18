@@ -18,10 +18,10 @@ export default function Home() {
         variants: [1, 2, 3, 4]
     }
 
-    useEffect(() => {
-        triggerEvent()
-    }, [])
-    const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}&user_id=${user._id}` : ''}`)
+    // useEffect(() => {
+    //     triggerEvent()
+    // }, [])
+    // const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}&user_id=${user._id}` : ''}`)
 
     return <>
         <Head><title>Urban Fits</title></Head>

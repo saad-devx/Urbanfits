@@ -6,9 +6,11 @@ import sendEmail from "@/utils/sendEmail"
 import sendSMS from "@/utils/sendSMS"
 import jwt from 'jsonwebtoken'
 const mongoose = require('mongoose')
+import CorsMiddleware from "@/utils/cors-config"
 
 const CreateNewsletter = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             console.log(req.body)
             await ConnectDB()

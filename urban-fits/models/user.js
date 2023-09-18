@@ -64,6 +64,14 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    uf_points: {
+        type: Number,
+        default: 0
+    },
+    purchases: {
+        type: Number,
+        default: 0
+    },
     date_of_birth: {
         type: String
     }

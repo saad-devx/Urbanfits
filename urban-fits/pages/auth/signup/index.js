@@ -32,7 +32,7 @@ export default function Signup() {
             if (data.success && data.payload && oAuthQuery) {
                 await updateUser(data.payload, true)
                 toaster("success", data.msg)
-                router.push('/user/myaccount')
+                window.location.href = '/'
             }
             if (data.success && data.redirect_url && !oAuthQuery) {
                 router.push(data.redirect_url)

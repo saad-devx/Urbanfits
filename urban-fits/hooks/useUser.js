@@ -63,8 +63,8 @@ const useUser = create(persist((set, get) => ({
             }
         }
     },
-    setGuestUser: async (token) => {
-        const userData = jwt.decode(token)?._doc
+    setGuestUser: async (userData) => {
+        // const userData = jwt.decode(token)?._doc
         set(() => ({ guestUser: userData }))
     },
     logOut: (redirect) => {

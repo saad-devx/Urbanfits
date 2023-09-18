@@ -2,9 +2,11 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
+import CorsMiddleware from "@/utils/cors-config"
 
 const UpdateUser = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { id } = req.query
             if (!id) return res.status(400).json({ success: false, msg: "User id is required. Query parameters: id" })
