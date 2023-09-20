@@ -63,9 +63,9 @@ const DeleteCategories = async (req, res) => {
             res.status(405).json({ success: false, msg: "Method not Allowed, please use `PUT` method instead!" })
         }
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({ success: false, msg: "Internal Server Error occurred. Please retry later." })
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 

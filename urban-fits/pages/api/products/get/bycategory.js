@@ -63,9 +63,9 @@ const GetProductByCategory = async (req, res) => {
                 products: finalProducts,
             });
         } else res.status(405).json({ success: false, msg: 'Method not Allowed. Allowed methods: GET' });
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry later." })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 

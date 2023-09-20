@@ -2,16 +2,17 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import OrderSession from "@/models/order_session";
+import User from "@/models/user";
 import GuestUser from "@/models/guest_user";
 import mongoose from "mongoose";
-const jwt = require("jsonwebtoken")
-import { pusherServer } from "@/utils/pusher";
+import CorsMiddleware from "@/utils/cors-config"
 
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        try {
-            const { user_id, shipping_info, order_items } = req.body
-            if (!shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id (must provide if user session exists)" })
+    try {
+        await CorsMiddleware(req, res)
+        if (req.method === 'POST') {
+            const { user_id, is_guest, shipping_info, order_items } = req.body
+            if (!user_id || !shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id" })
             await ConnectDB()
 
             let finalOrderItems = []
@@ -38,20 +39,14 @@ export default async function handler(req, res) {
                 totalPrice += itemPrice
             }
 
-            let userID = null;
-            let guestUser = null;
-            if (!user_id) {
-                const newGuest = await GuestUser.create({
-                    name: shipping_info.name,
-                    email: shipping_info.email
-                })
-                userID = newGuest._id.toString()
-                guestUser = jwt.sign({ ...newGuest }, process.env.SECRET_KEY)
-            }
-            else if (user_id && mongoose.Types.ObjectId.isValid(user_id)) userID = user_id
+            if (!mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "user_id is not a valid." })
+            let user = await User.findById(user_id)
+            if (!user) user = await GuestUser.findById(user_id)
+            if (!user) return res.status(404).json({ success: false, msg: "User does not exist with corresponding user_id." })
 
             const orderSession = await OrderSession.create({
-                user_id: userID,
+                user_id: user._id,
+                is_guest,
                 name: shipping_info.name,
                 email: shipping_info.email,
                 order_items,
@@ -111,16 +106,13 @@ export default async function handler(req, res) {
             });
             const { url } = session
             res.json({
-                url,
-                guest_user_payload: guestUser
+                success: true,
+                url
             })
 
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({ success: false, msg: "Internal Server Error occurred. Please retry later." })
-        }
-    } else {
-        res.setHeader('Allow', 'POST');
-        res.status(405).end('Method Not Allowed');
+        } else return res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: POST" })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }

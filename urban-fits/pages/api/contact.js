@@ -1,9 +1,11 @@
 import ConnectDB from "@/utils/connect_db"
 import sendEmail from "@/utils/sendEmail"
 import ContactTemplate from "@/email templates/contact_template"
+import CorsMiddleware from "@/utils/cors-config"
 
 const Contact = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             await ConnectDB()
             let mail = req.body
@@ -22,7 +24,7 @@ const Contact = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default Contact

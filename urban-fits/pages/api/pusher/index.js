@@ -10,5 +10,6 @@ export default (req, res) => {
         res.status(200).end('Event triggered!');
     } catch (error) {
         console.log(error);
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 };

@@ -25,9 +25,9 @@ const UpdateNewsletter = async (req, res) => {
             res.status(403).json({ success: false, msg: "Method no allowed, you are using wrong request method!" })
         }
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({ success: false, msg: "Internal Server Error occurred. Please retry later." })
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 

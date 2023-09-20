@@ -1,8 +1,10 @@
 import ConnectDB from "@/utils/connect_db"
 import GuestUser from "@/models/guest_user"
+import CorsMiddleware from "@/utils/cors-config"
 
 const RemoveGuestSesison = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { user_id } = req.query
             console.log(user_id, "Yes the remove session api is working fine!")
@@ -13,9 +15,9 @@ const RemoveGuestSesison = async (req, res) => {
         }
         else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).send("Internal Server Error occurred. Please retry")
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 

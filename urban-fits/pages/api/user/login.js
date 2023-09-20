@@ -38,7 +38,7 @@ const Login = async (req, res) => {
                 if (user.register_provider !== req.body.register_provider) return res.status(404).json({ success: false, msg: `This account is associated with ${user.register_provider}` })
                 const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
                 const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
-                if (password !== originalPassword) return res.status(404).json({ success: false, msg: "Your password is incorrect" })
+                if (password !== originalPassword) return res.status(403).json({ success: false, msg: "Your password is incorrect" })
                 if (user.two_fa_activation_date && user.two_fa_enabled) {
                     res.json({
                         success: true,
@@ -60,7 +60,7 @@ const Login = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error occured, please try again later." })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default Login

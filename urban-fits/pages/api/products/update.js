@@ -41,7 +41,7 @@ const UpdateProducts = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal Server Error occurred. Please retry later." })
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 

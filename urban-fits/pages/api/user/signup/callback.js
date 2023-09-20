@@ -4,9 +4,11 @@ import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
+import CorsMiddleware from "@/utils/cors-config"
 
 const SignupCallback = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { otp_id, otp } = req.body
             if (!otp_id || otp_id.length < 18) return res.status(401).json({
@@ -38,7 +40,7 @@ const SignupCallback = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error occured, please try again later" })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default SignupCallback

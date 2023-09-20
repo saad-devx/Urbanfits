@@ -22,6 +22,7 @@ const UpdateUser = async (req, res) => {
             let user = await User.findById(id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
             delete req.body.email
+            delete req.body.username
             delete req.body.password
             delete req.body.two_fa_secret
             delete req.body.role
@@ -35,9 +36,9 @@ const UpdateUser = async (req, res) => {
         }
         else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).send("Internal Server Error occurred. Please retry")
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 

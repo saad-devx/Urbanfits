@@ -13,7 +13,7 @@ import { pusherClient } from '@/utils/pusher';
 
 export default function Thanks() {
     const router = useRouter()
-    const { user } = useUser()
+    const { user, guestUser } = useUser()
     const { emptyCart } = useCart()
     const [negativeState, setNegativeState] = useState(<Loader />)
     const [orderData, setOrderData] = useState(null)
@@ -22,7 +22,7 @@ export default function Thanks() {
 
     useEffect(() => {
         emptyCart()
-        const paymentChannel = pusherClient.subscribe(`payments-user_${user._id}`)
+        const paymentChannel = pusherClient.subscribe(`payments-user_${user._id || guestUser._id}`)
         paymentChannel.bind('payment-succeeded', (data) => {
             console.log(data)
             toaster(data.type, data.msg)
@@ -34,7 +34,7 @@ export default function Thanks() {
         })
         const timeOutId = setTimeout(() => {
             setNegativeState(<AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or request timed out. Please check your Account Dashboard or your email inbox to see your order updates." />)
-        }, 180000);
+        }, 120000);
         return () => {
             clearTimeout(timeOutId)
             paymentChannel.unbind('payment-succeeded')

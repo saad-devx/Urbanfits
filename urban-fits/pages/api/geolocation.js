@@ -1,6 +1,8 @@
 import axios from "axios"
+import CorsMiddleware from "@/utils/cors-config"
 const GeoLocation = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             try {
                 const userIPAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -25,7 +27,7 @@ const GeoLocation = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error, please try again later" })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default GeoLocation

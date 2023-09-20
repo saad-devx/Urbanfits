@@ -39,7 +39,7 @@ const UpdateAddress = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error occurred, please try again later." })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default UpdateAddress

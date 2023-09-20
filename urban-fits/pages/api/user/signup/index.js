@@ -5,10 +5,12 @@ import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
 const jwt = require("jsonwebtoken")
 import { generateRandomInt } from "@/utils/generatePassword";
+import CorsMiddleware from "@/utils/cors-config"
 
 // Only accessable by Admin 
 const Signup = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         const { username, email, phone_prefix, phone_number, password } = req.body;
         if (req.method === 'POST') {
             await ConnectDB()
@@ -55,7 +57,7 @@ const Signup = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error occured, please retry later." })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default Signup

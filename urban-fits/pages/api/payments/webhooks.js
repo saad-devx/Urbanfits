@@ -51,9 +51,6 @@ const webhookHandler = async (req, res) => {
         const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
 
         let template = OrderConfirmed(orderSession.name)
-        await sendEmail({ to: orderSession.email, subject: "Your order has been placed." }, template)
-        console.log("entry point 1")
-
         try {
           pusherServer.trigger(`payments-user_${orderSession.user_id.toString()}`, 'payment-succeeded', {
             order_session: orderSession,
@@ -65,6 +62,7 @@ const webhookHandler = async (req, res) => {
             success: true,
             msg: "A new order has been received!"
           })
+          await sendEmail({ to: orderSession.email, subject: "Your order has been placed." }, template)
         } catch (error) { console.log(error) }
         console.log("entry point 2")
         await OrderSession.findByIdAndDelete(paymentIntent.metadata.order_session_id)

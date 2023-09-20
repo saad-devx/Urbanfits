@@ -5,9 +5,11 @@ import sendEmail from "@/utils/sendEmail";
 import changeEmail from "@/email templates/change_email";
 const CryptoJS = require("crypto-js")
 import { generateRandomInt } from "@/utils/generatePassword";
+import CorsMiddleware from "@/utils/cors-config"
 
 const AuthEmailByOtp = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { new_email, old_email, password } = req.body;
             if (!new_email || !old_email || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: new_email, old_email, password" })
@@ -47,9 +49,9 @@ const AuthEmailByOtp = async (req, res) => {
             res.status(400).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
         }
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).send("Internal Server Error occurred. Please retry")
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 

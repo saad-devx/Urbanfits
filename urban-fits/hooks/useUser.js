@@ -10,6 +10,9 @@ const useUser = create(persist((set, get) => ({
     user: null,
     guestUser: null,
     recentItems: [],
+    wishList: [],
+    country: { name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" },
+    geo_selected_by_user: false,
     setRecentItems: (newItem) => {
         const alreadyInItem = get().recentItems.filter(item => item.id === newItem.id)
         if (get().recentItems.length > 5) return console.log("max limit reached")
@@ -23,9 +26,6 @@ const useUser = create(persist((set, get) => ({
         }
         else return set((state) => ({ recentItems: [...state.recentItems, newItem] }))
     },
-    wishList: [],
-    country: { name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" },
-    geo_selected_by_user: false,
     setGeoSelectedByUser: (bool) => set(() => ({ geo_selected_by_user: bool })),
     setCountry: (value) => set(() => ({ country: value })),
     addToWishList: (item) => set((state) => {
@@ -46,7 +46,6 @@ const useUser = create(persist((set, get) => ({
     updateUser: async (valuesObj, updateLocally = false) => {
         if (updateLocally) {
             const userData = jwt.decode(valuesObj)?._doc
-            console.log(userData)
             delete userData.password
             set(() => ({ user: userData }))
         }

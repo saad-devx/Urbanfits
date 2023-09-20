@@ -18,38 +18,64 @@ import { generateRandString } from '@/utils/generatePassword'
 import PusherClient from 'pusher-js'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
+  const router = useRouter()
   const { user, guestUser, setGuestUser, logOut, setCountry, geo_selected_by_user } = useUser()
   const [progress, setProgress] = useState(0)
-  const router = useRouter()
+  const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
+  const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.PUSHER_KEY, {
+    cluster: process.env.PUSHER_CLUSTER,
+    authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+    auth: {
+      params: {
+        user_id: user?._id,
+        email: user?.email
+      }
+    }
+  }))
 
   const subscribeToPresence = async () => {
-    let paramConfig;
-    if (!user || !user._id) {
+    let presenceInstance;
+    if (user && user._id) {
+      presenceInstance = pusherPresenceClient;
+    }
+    else if (guestUser && guestUser._id) {
+      console.log("Guest user exists");
+      presenceInstance = new PusherClient(process.env.PUSHER_KEY, {
+        cluster: process.env.PUSHER_CLUSTER,
+        authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+        auth: { params: { user_id: `${guestUser._id}_isguest` } }
+      });
+      setPusherPresenceClient(presenceInstance);
+    } else {
+      console.log("Making guest user because it doesn't exist");
       try {
-        const { data } = await axios.post(`${process.env.HOST}/api/user/guest/create-session`, {})
-        if (data.user) setGuestUser(data.user)
-        paramConfig = { user_id: `${data.user._id}_isguest` }
+        const { data } = await axios.post(`${process.env.HOST}/api/user/guest/create-session`, {});
+        setGuestUser(data.user);
+        console.log(data.user);
+        presenceInstance = new PusherClient(process.env.PUSHER_KEY, {
+          cluster: process.env.PUSHER_CLUSTER,
+          authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+          auth: { params: { user_id: `${data.user._id}_isguest` } }
+        });
+        setPusherPresenceClient(presenceInstance);
       } catch (e) {
         console.log(e);
       }
-    } else paramConfig = {
-      user_id: user?._id,
-      email: user?.email
     }
-    console.log("the guest: ", guestUser)
-    const pusherPresenceClient = new PusherClient(process.env.PUSHER_KEY, {
-      cluster: process.env.PUSHER_CLUSTER,
-      authEndpoint: `${process.env.HOST}/api/pusher/auth`,
-      auth: {
-        params: paramConfig
-      }
-    });
-    const presenceChannel = pusherPresenceClient.subscribe('presence-urbanfits')
-  }
+
+    if (presenceInstance) {
+      const channel = presenceInstance.subscribe('presence-urbanfits');
+      setLastPresenceChannel(channel);
+    }
+  };
 
   useEffect(() => {
-    subscribeToPresence()
-  }, [])
+    if (lastPresenceChannel) lastPresenceChannel.unsubscribe('presence-urbanfits')
+    subscribeToPresence();
+    return () => {
+      if (pusherPresenceClient) pusherPresenceClient.unsubscribe('presence-urbanfits');
+    };
+  }, []);
 
   useEffect(() => {
     getGeoLocation(setCountry, geo_selected_by_user)

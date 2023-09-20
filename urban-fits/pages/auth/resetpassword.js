@@ -137,7 +137,7 @@ export default function ForgotPassword() {
                     </div>
                     <div className={`relative data_field flex items-center border-b ${touched.password && errors.password ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input className={`w-full outline-none border-none ${values.password ? 'tracking-2' : null}`} type="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <input className={`w-full outline-none border-none ${values.password ? 'tracking-2' : null}`} type="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='New Password' />
                     </div>
                     <div className={`relative data_field flex items-center border-b ${touched.new_password && errors.new_password ? "border-red-500" : "focus:border-yellow-700 hover:border-yellow-600"} transition py-2 mb-4`}>
                         {touched.new_password && errors.new_password ? <Tooltip classes="form-error" content={errors.new_password} /> : null}

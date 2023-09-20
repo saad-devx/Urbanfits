@@ -26,8 +26,9 @@ const DeleteProducts = async (req, res) => {
         }
         else res.status(405).json({ success: false, msg: "Method not Allowed, you are using wrong request method!" })
     }
-    catch (err) {
-        res.status(500).json({ success: false, msg: "Internal Server Error occurred. Please retry" })
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry" })
     }
 }
 

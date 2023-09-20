@@ -1,9 +1,11 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import Category from "@/models/category"
+import CorsMiddleware from "@/utils/cors-config"
 
 const UpdateProducts = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             await ConnectDB()
             const searchTerm = req.query.q
@@ -66,9 +68,9 @@ const UpdateProducts = async (req, res) => {
             res.status(400).json({ error: "bad request, you are using wrong request method!" })
         }
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).send("Internal Server Error occurred. Please retry")
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 

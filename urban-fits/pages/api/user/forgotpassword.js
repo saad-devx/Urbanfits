@@ -5,9 +5,11 @@ import { generateRandomInt } from "@/utils/generatePassword"
 const CryptoJS = require("crypto-js")
 import sendEmail from "@/utils/sendEmail"
 import resetPassTemplate from "@/email templates/resetpass_template"
+import CorsMiddleware from "@/utils/cors-config"
 
 const forgotPassword = async (req, res) => {
     try {
+        await CorsMiddleware(req, res)
         const { email, new_password } = req.body
         if (!email || !new_password) return res.status(400).json({ success: false, msg: "All valid parameters are required. Body Parameters: email, new_password" })
         if (req.method === 'POST') {
@@ -43,7 +45,7 @@ const forgotPassword = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, msg: "Internal server error occurred, please try later." })
+        res.status(500).json({ success: false, error, msg: "Internal server error occurred, please try again later." })
     }
 }
 export default forgotPassword

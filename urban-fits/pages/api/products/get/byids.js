@@ -29,9 +29,9 @@ const getProductsByIds = async (req, res) => {
             })
         }
         else res.status(405).json({ success: false, msg: "Method not Allowed. Allowed methods: PUT" })
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ success: false, error: err, msg: "Internal Server Error occurred. Please retry later." })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
 
