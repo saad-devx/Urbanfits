@@ -4,6 +4,7 @@ import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
 const jwt = require("jsonwebtoken")
+import { pusherServer } from "@/utils/pusher"
 import { generateRandomInt } from "@/utils/generatePassword";
 import CorsMiddleware from "@/utils/cors-config"
 
@@ -20,10 +21,14 @@ const Signup = async (req, res) => {
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create(req.body)
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
-                return res.status(200).json({
+                res.status(200).json({
                     success: true,
                     msg: "You are Resgistered successfully !",
                     payload
+                })
+                pusherServer.trigger("admin-channel", "new-signup", {
+                    msg: `A new user ${user.username} just signed up.`,
+                    user_id: user._id
                 })
             }
             else {

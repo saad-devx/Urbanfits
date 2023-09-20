@@ -16,7 +16,7 @@ const Option = (props) => {
 
 export const MblOption = (props) => {
     const router = useRouter()
-    return <Link href={props.href} className={`${router.pathname === props.href ? "border-b border-b-black text-black font_urbanist_bold" : "font_urbanist_medium text-gray-500"} pb-3 text-base items-center transition-all`}>{props.children}</Link>
+    return <Link href={props.href} className={`${router.pathname === props.href ? "border-b border-b-black text-black font_urbanist_bold" : props.unseen ? "font_urbanist_bold text-black fa-bounce" : "font_urbanist_medium text-gray-500"} ${props.unseen ? "font_urbanist_bold text-black fa-bounce" : null} pb-3 text-base items-center transition-all`}>{props.children}</Link>
 }
 
 const NoOrderSection = () => {
@@ -61,7 +61,7 @@ export default function OrdersPage(props) {
                 </div>
             </div>
             <section className="w-full my-5 font_urbanist">
-            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">{props.children}</section>}
+                {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">{props.children}</section>}
             </section>
         </User>
     </>

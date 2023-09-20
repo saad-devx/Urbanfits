@@ -1,7 +1,9 @@
 import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import User from "@/models/user";
+import Notification from "@/models/notification"
 import jwt from 'jsonwebtoken';
+import { pusherServer } from "@/utils/pusher";
 import CorsMiddleware from "@/utils/cors-config"
 
 const VerfiyTotp = async (req, res) => {
@@ -26,11 +28,34 @@ const VerfiyTotp = async (req, res) => {
                 delete user.two_fa_secret
                 delete user.password
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY, { algorithm: 'HS256' })
-                return res.status(200).json({
+                res.status(200).json({
                     success: true,
                     msg: "You are signed in successfully!",
                     payload
                 })
+                pusherServer.trigger("admin-channel", "login", {
+                    msg: `A user ${user.username} just logged in.`,
+                    user_id: user._id
+                })
+                const userNotification = await Notification.findOneAndUpdate(
+                    { user_id: user._id },
+                    {
+                        $push: {
+                            notifications: {
+                                $each: [{
+                                    category: "account",
+                                    heading: "Login",
+                                    type: "login",
+                                    message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
+                                    timestamp: new Date()
+                                }],
+                                $position: 0,
+                                $slice: 20,
+                            }
+                        }
+                    },
+                    { upsert: true, new: true }
+                ); console.log(userNotification)
             }
             else return res.status(500).json({
                 success: false,

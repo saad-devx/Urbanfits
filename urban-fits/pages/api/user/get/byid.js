@@ -7,11 +7,11 @@ const getManyUsers = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
-            const { user_id, user_to_get } = req.query
-            if (!user_id || !user_to_get || !mongoose.Types.ObjectId(user_id)) return res.status(400).json({ success: false, msg: "A valid user id required. Query parameters: user_id, user_to_get" })
+            const { admin_id, user_to_get } = req.query
+            if (!admin_id || !user_to_get || !mongoose.Types.ObjectId(admin_id)) return res.status(400).json({ success: false, msg: "A valid user id required. Query parameters: admin_id, user_to_get" })
             await ConnectDB()
-            let user = await User.findById(user_id)
-            if (!user || user.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })
+            let admin = await User.findById(admin_id)
+            if (!admin || admin.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })
 
             const userToGet = await User.findById(user_to_get)
             if (!userToGet) return res.status(404).json({ success: false, msg: "The user with corresponding id does not exist." })

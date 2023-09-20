@@ -11,8 +11,22 @@ const useUser = create(persist((set, get) => ({
     guestUser: null,
     recentItems: [],
     wishList: [],
+    notifications: [],
     country: { name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" },
     geo_selected_by_user: false,
+    setNotification: (newNotifications) => set(() => ({ notifications: newNotifications })),
+    getNotifications: async () => {
+        const user = get().user
+        if (!user) return
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/user/notifications/get?user_id=${user._id}`)
+            set(() => ({
+                notifications: data.notification_data.notifications
+            }))
+        } catch (error) {
+            console.log(error)
+        }
+    },
     setRecentItems: (newItem) => {
         const alreadyInItem = get().recentItems.filter(item => item.id === newItem.id)
         if (get().recentItems.length > 5) return console.log("max limit reached")

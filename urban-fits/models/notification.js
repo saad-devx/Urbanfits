@@ -7,10 +7,10 @@ const NotificationSchema = new mongoose.Schema({
     },
     notifications: [
         {
-            cateogry: {
+            category: {
                 type: String,
                 default: "account",
-                enum: ["account", ""]
+                enum: ["account", "primary", "reward", "order"]
             },
             heading: String,
             message: {

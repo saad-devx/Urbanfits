@@ -14,12 +14,12 @@ import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
 import toaster from "@/utils/toast_function";
 import axios from 'axios'
-import { generateRandString } from '@/utils/generatePassword'
+import { pusherClient } from '@/utils/pusher'
 import PusherClient from 'pusher-js'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter()
-  const { user, guestUser, setGuestUser, logOut, setCountry, geo_selected_by_user } = useUser()
+  const { user, guestUser, setGuestUser, setNotification, logOut, setCountry, geo_selected_by_user } = useUser()
   const [progress, setProgress] = useState(0)
   const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
   const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.PUSHER_KEY, {
@@ -39,7 +39,6 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       presenceInstance = pusherPresenceClient;
     }
     else if (guestUser && guestUser._id) {
-      console.log("Guest user exists");
       presenceInstance = new PusherClient(process.env.PUSHER_KEY, {
         cluster: process.env.PUSHER_CLUSTER,
         authEndpoint: `${process.env.HOST}/api/pusher/auth`,
@@ -47,7 +46,6 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       });
       setPusherPresenceClient(presenceInstance);
     } else {
-      console.log("Making guest user because it doesn't exist");
       try {
         const { data } = await axios.post(`${process.env.HOST}/api/user/guest/create-session`, {});
         setGuestUser(data.user);
@@ -72,6 +70,14 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
     if (lastPresenceChannel) lastPresenceChannel.unsubscribe('presence-urbanfits')
     subscribeToPresence();
+    if (user) {
+      const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
+      userChannel.bind('new-notification', (data) => {
+        console.log(data)
+        setNotification(data.notification_data.notifications)
+        toaster("info", data.notification_data.notifications[0].message)
+      })
+    }
     return () => {
       if (pusherPresenceClient) pusherPresenceClient.unsubscribe('presence-urbanfits');
     };

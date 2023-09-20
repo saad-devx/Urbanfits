@@ -4,6 +4,7 @@ import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
+import { pusherServer } from "@/utils/pusher"
 import CorsMiddleware from "@/utils/cors-config"
 
 const SignupCallback = async (req, res) => {
@@ -31,6 +32,10 @@ const SignupCallback = async (req, res) => {
                     success: true,
                     msg: "You're Resgistered successfully !",
                     payload
+                })
+                pusherServer.trigger("admin-channel", "new-signup", {
+                    msg: `A new user ${user.username} just signed up.`,
+                    user_id: user._id
                 })
                 const userLetter = await Newsletter.findOne({ email: credentials.email, user: "guest" })
                 if (userLetter) return userLetter.update({ active: true, user: user._id })
