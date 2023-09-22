@@ -28,15 +28,16 @@ const VerfiyTotp = async (req, res) => {
                 delete user.two_fa_secret
                 delete user.password
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                pusherServer.trigger("admin-channel", "login", {
+                    msg: `A user ${user.username} just logged in.`,
+                    user_id: user._id
+                })
                 res.status(200).json({
                     success: true,
                     msg: "You are signed in successfully!",
                     payload
                 })
-                pusherServer.trigger("admin-channel", "login", {
-                    msg: `A user ${user.username} just logged in.`,
-                    user_id: user._id
-                })
+                const date = new Date()
                 const userNotification = await Notification.findOneAndUpdate(
                     { user_id: user._id },
                     {
@@ -55,7 +56,8 @@ const VerfiyTotp = async (req, res) => {
                         }
                     },
                     { upsert: true, new: true }
-                ); console.log(userNotification)
+                );
+                console.log(userNotification)
             }
             else return res.status(500).json({
                 success: false,
