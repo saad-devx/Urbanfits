@@ -14,12 +14,12 @@ export default function ProductCatalogueCategory() {
     const [selectedCategory, setSelectedCategory] = useState('')
     const respectedCategories = categories.filter(category => category.parent === selectedCategory._id)
     useEffect(() => {
-        if (!categories.length) getCategories()
+        if (!categories.length) getCategories((firstCategory)=>setSelectedCategory(firstCategory))
     }, [])
 
     return <>
         <main className="w-full pb-10 bg-white font_urbanist overflow-hidden">
-            {/* <CatalogueCarousel /> */}
+            <CatalogueCarousel />
             <section className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_urbanist text-left' >
                 <h1 className="font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">Shop by Category&nbsp;</h1>
                 <div className="w-full my-4 md:my-10 flex gap-x-4 md:gap-x-6 lg:gap-x-8">

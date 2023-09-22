@@ -6,13 +6,14 @@ const useCategories = create((set, get) => ({
 
     categories: [],
     categLoading: false,
-    getCategories: async () => {
+    getCategories: async (callback) => {
         set(() => ({ categLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/categories/get?populate_parents=false`)
             set(() => (
                 { categories: data.categories }
             ))
+            callback(data.categories[0])
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)
