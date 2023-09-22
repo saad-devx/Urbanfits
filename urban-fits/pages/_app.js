@@ -84,7 +84,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   useEffect(() => {
-    getGeoLocation(setCountry, geo_selected_by_user)
+    // getGeoLocation(setCountry, geo_selected_by_user)
     const igniteSession = () => {
       setGuestUser(null)
       const sessionValid = localStorage.getItem('remember_me')

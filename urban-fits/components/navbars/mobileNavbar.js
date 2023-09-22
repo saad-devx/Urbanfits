@@ -44,7 +44,8 @@ function MobileNavbar({ user, cart, setCart, logout, setLogout, totalUniqueItems
                     { name: "New Collection", href: "/products/category/64d517f6218f4e9ee6253b18?name=new+collection" },
                     { name: "Women", href: "/products/category/64a59d5816b4c91fa1967b2e?name=women" },
                     { name: "Men", href: "/products/category/649b292762a7c100cfb7207f?name=men" },
-                    { name: "Kids", href: "/products/category/64d4dfa643c643cc9c60c672?name=kids" }
+                    { name: "Kids", href: "/products/category/64d4dfa643c643cc9c60c672?name=kids" },
+                    { name: "View All", href: "/products/category/all-categories" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={1} name="Earn UF points" subLinks={[
                     { name: "Dashboard", href: "/user/myaccount" },

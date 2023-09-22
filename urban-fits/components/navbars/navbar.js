@@ -42,7 +42,7 @@ const ListItem = (props) => {
 
 const SecondaryNavbar = (props) => {
     if (window.matchMedia('(min-width: 760px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
-        <ListItem key={1} href='/all-categories' categories>All Categories</ListItem>
+        <ListItem key={1} href='/products/category/all-categories' categories>All Categories</ListItem>
         <ListItem key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
         <ListItem key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
         <ListItem key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>Men</ListItem>

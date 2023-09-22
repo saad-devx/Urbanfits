@@ -48,6 +48,7 @@ module.exports = {
       },
       backgroundImage: {
         'gold': "linear-gradient(180deg, #FAE892 0%, #B3903E 100%)",
+        'subtle-white': "linear-gradient(180deg, rgba(0, 0, 0, 0), #FFFFFF 130%)",
         'gold-land': "linear-gradient(90deg, #FAE892 0%, #B3903E 100%)",
         'metal-gold': "linear-gradient(270deg, rgba(250, 232, 146, 0.2) 0.02%, rgba(179, 144, 62, 0) 55.35%);"
       }

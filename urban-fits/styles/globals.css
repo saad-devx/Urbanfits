@@ -480,3 +480,11 @@ input:checked+.slider:before {
     background: rgb(243 244 246);
   }
 }
+
+/* CSS for Category page gradient text */
+.gradient_text {
+  background-image: linear-gradient(180deg, #ffffff 0%, rgba(0, 0, 0, 0));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}

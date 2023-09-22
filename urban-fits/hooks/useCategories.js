@@ -1,22 +1,15 @@
 import { create } from 'zustand'
 import toaster from "@/utils/toast_function";
 import axios from "axios";
-import useUser from './useUser';
 
 const useCategories = create((set, get) => ({
 
     categories: [],
     categLoading: false,
-
     getCategories: async () => {
-        const { user } = useUser.getState()
-        if (!user) return
-
-        set(() => ({
-            categLoading: true
-        }))
+        set(() => ({ categLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/categories/get?id=${user._id}`)
+            const { data } = await axios.get(`${process.env.HOST}/api/categories/get?populate_parents=false`)
             set(() => (
                 { categories: data.categories }
             ))
@@ -24,9 +17,7 @@ const useCategories = create((set, get) => ({
             console.log(error)
             toaster("error", error.response.data.msg)
         }
-        return set(() => ({
-            categLoading: false
-        }))
+        return set(() => ({ categLoading: false }))
     }
 
 }))
