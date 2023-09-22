@@ -31,6 +31,7 @@ const SignupCallback = async (req, res) => {
                 res.status(200).json({
                     success: true,
                     msg: "You're Resgistered successfully !",
+                    user_id: user._id,
                     payload
                 })
                 pusherServer.trigger("admin-channel", "new-signup", {

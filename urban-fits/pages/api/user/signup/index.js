@@ -8,7 +8,6 @@ import { pusherServer } from "@/utils/pusher"
 import { generateRandomInt } from "@/utils/generatePassword";
 import CorsMiddleware from "@/utils/cors-config"
 
-// Only accessable by Admin 
 const Signup = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
@@ -32,11 +31,10 @@ const Signup = async (req, res) => {
                 })
             }
             else {
-                if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
+                if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policies" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 if (!req.body.accept_policies) return res.status(400).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })
-                // const token = jwt.sign({ ...req.body }, process.env.SECRET_KEY, { expiresIn: '10m' })
 
                 let dbOtp = await OTP.findOne({ email })
                 if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'registration' session, try after 5 minutes." })
@@ -52,6 +50,7 @@ const Signup = async (req, res) => {
                     await sendEmail({ to: req.body.email, subject: "Verify your email for registration on Urban Fits" }, template)
                     res.status(200).json({
                         success: true,
+                        otp_id: dbOtp._id,
                         msg: `Verification Email sent to ${email}`,
                         redirect_url: `/auth/signup/verify-otp?otp_id=${dbOtp._id}`
                     })

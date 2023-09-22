@@ -29,7 +29,7 @@ const Option = (props) => {
     const router = useRouter()
     const route = router.pathname
     if (window.matchMedia('(min-width: 1024px)').matches) return <Link href={props.href} className={`relative w-full py-5 px-4 flex justify-between items-center ${props.unseen ? "border border-black rounded-lg" : "border-b border-[#F5F5F5]"} ${route === props.href ? 'bg-gray-100' : 'bg-white'} transition-all overflow-hidden`}>
-        {props.unseen ? <span className="absolute top-[23%] right-[18%] text-10px text-white fa-bounce font_urbanist_light px-3 py-px bg-black rounded-full">1</span> : null}
+        {props.unseen ? <span className="absolute top-[23%] right-[18%] text-[8px] text-white fa-bounce font_urbanist_light px-3 py-px bg-black rounded-full">new</span> : null}
         <span className={`${route === props.href ? 'opacity-100' : 'opacity-70'} flex items-center gap-x-3`}>
             {props.icon}
             {props.children}

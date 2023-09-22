@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema({
     country: String,
     is_active: {
         type: Boolean,
-        default: true
+        default: false
     },
     uf_points: {
         type: Number,

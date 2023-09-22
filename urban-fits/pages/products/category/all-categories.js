@@ -5,7 +5,6 @@ import Link from 'next/link';
 const CatalogueCarousel = dynamic(() => import('@/components/carousels/catalogueCarousel'));
 import BounceLoader from '@/components/loaders/bounceLoader';
 import useCategories from '@/hooks/useCategories';
-import DemoImg from '@/public/card imgs/demo-img.png'
 import toaster from '@/utils/toast_function';
 
 export default function ProductCatalogueCategory() {

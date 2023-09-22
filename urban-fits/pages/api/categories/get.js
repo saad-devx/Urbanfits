@@ -5,7 +5,6 @@ import CorsMiddleware from "@/utils/cors-config"
 const getCategories = async (req, res) => {
     try {
         const { populate_parents } = req.query
-        console.log(populate_parents, typeof populate_parents)
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             await ConnectDB()
