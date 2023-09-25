@@ -1,5 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product";
+import Category from "@/models/category";
 import CorsMiddleware from "@/utils/cors-config"
 
 const getManyProducts = async (req, res) => {
@@ -13,11 +14,14 @@ const getManyProducts = async (req, res) => {
             const totalPages = Math.ceil(totalProducts / LIMIT);
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
-            const products = await Product.find()
-                .populate("categories")
+            let products = await Product.find()
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
+                .populate("categories")
+                .exec();
+
+            // products = await products.populate("categories");
 
             res.status(200).json({
                 length: products.length,
