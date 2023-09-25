@@ -14,10 +14,10 @@ const getManyProducts = async (req, res) => {
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
             const products = await Product.find()
+                .populate("categories")
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
-                // .populate("categories");
 
             res.status(200).json({
                 length: products.length,
