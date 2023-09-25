@@ -1,10 +1,9 @@
-
 import Cors from 'cors'
 
 const cors = Cors({
     methods: ['POST', 'GET', 'HEAD', 'PUT', 'DELETE', 'OPTIONS'],
-    // origin: ["https://admin.urbanfits.ae", "http://localhost:3000", "http://localhost:3000"],
-    origin: "*"
+    origin: ["https://admin.urbanfits.ae", "http://localhost:3001", "http://localhost:3000"],
+    // origin: "*"
 })
 
 const CorsMiddleware = (req, res) => {

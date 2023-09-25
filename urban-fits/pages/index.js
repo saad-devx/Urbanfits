@@ -10,18 +10,12 @@ import Shoppingcard from "@/components/cards/shoppingcard";
 import useUser from "@/hooks/useUser";
 
 export default function Home() {
-    const { user } = useUser()
     // temporary product object for shopping card
     const product = {
         name: 'Sample Product name',
         price: '76.99',
         variants: [1, 2, 3, 4]
     }
-
-    // useEffect(() => {
-    //     triggerEvent()
-    // }, [])
-    // const triggerEvent = async () => await fetch(`${process.env.HOST}/api/pusher${user ? `?username=${user.username}&user_id=${user._id}` : ''}`)
 
     return <>
         <Head><title>Urban Fits</title></Head>

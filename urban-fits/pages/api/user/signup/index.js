@@ -13,8 +13,9 @@ const Signup = async (req, res) => {
         await CorsMiddleware(req, res)
         const { username, email, phone_prefix, phone_number, password } = req.body;
         if (req.method === 'POST') {
+            console.log(req.body)
             await ConnectDB()
-            if (req.query.auth && req.query.auth === 'OAuth') {
+            if (req.query.auth && req.query.auth === 'Google') {
                 if (!username || !email) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })

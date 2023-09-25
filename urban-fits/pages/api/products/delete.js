@@ -24,11 +24,11 @@ const DeleteProducts = async (req, res) => {
                 msg: `${products.length} Products deleted successfully`
             })
         }
-        else res.status(405).json({ success: false, msg: "Method not Allowed, you are using wrong request method!" })
+        else res.status(405).json({ success: false, msg: "Method not Allowed. Allowed methods: PUT" })
     }
     catch (error) {
         console.log(error)
-        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry" })
+        res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry." })
     }
 }
 

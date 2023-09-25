@@ -13,7 +13,7 @@ const Login = async (req, res) => {
             const { email, password } = req.body
             await ConnectDB()
             if (!email) return res.status(400).json({ success: false, msg: 'All valid parameters are required. Body parameters: email' })
-            if (req.query.auth === 'OAuth') {
+            if (req.query.auth === 'Google') {
                 let user = await User.findOne({ email })
                 if (!user) return res.status(404).json({ success: false, msg: "User not found, please Sign up" })
                 if (user.register_provider !== req.body.register_provider) return res.status(404).json({ success: false, msg: `This account is associated with ${user.register_provider}` })

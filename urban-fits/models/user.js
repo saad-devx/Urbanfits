@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: ""
+        default: "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg"
     },
     phone_prefix: {
         type: String

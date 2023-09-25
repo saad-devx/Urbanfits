@@ -73,9 +73,8 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     if (user) {
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
       userChannel.bind('new-notification', (data) => {
-        console.log(data)
         setNotification(data.notification_data.notifications)
-        toaster("info", data.notification_data.notifications[0].message)
+        if (data.notify) toaster("info", data.notification_data.notifications[0].message)
       })
     }
     return () => {
@@ -84,7 +83,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   useEffect(() => {
-    getGeoLocation(setCountry, geo_selected_by_user)
+    // getGeoLocation(setCountry, geo_selected_by_user)
     const igniteSession = () => {
       setGuestUser(null)
       const sessionValid = localStorage.getItem('remember_me')

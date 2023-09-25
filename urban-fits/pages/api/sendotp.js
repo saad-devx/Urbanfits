@@ -4,7 +4,6 @@ import sendSMS from "@/utils/sendSMS"
 const SendOtp = async (req, res) => {
     try {
         if (req.method === 'PUT') {
-            // await ConnectDB()
             const { msg, to } = req.body
             const response = await sendSMS(to, msg)
             res.status(200).json({

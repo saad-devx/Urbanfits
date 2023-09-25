@@ -64,7 +64,7 @@ export default function ForgotPassword() {
             name.shift()
             let lastname = name.join(' ')
             const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
-            signInWithGoogle(loginDetails, null, '?auth=OAuth')
+            signInWithGoogle(loginDetails, null, '?auth=google')
             return sessionStorage.removeItem('oauth')
         }
         else return

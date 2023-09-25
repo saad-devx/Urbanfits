@@ -82,7 +82,7 @@ export default function Signup() {
             name.shift()
             let lastname = name.join(' ')
             const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
-            onsubmit(loginDetails, null, '?auth=OAuth')
+            onsubmit(loginDetails, null, '?auth=google')
             return sessionStorage.removeItem('oauth')
         }
         else return

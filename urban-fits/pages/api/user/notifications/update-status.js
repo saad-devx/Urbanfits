@@ -8,13 +8,14 @@ const updateNotificationStatus = async (req, res) => {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
             const { user_id, category } = req.query
+            console.log(user_id, category)
             if (!user_id || !mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "A valid user id and category (of which notifications are to be updated) are required. Query parameters: user_id, category, status (if not provided then will be assumed 'true')" })
             await ConnectDB()
 
             await Notification.updateOne(
-                { user_id: user_id, 'notifications.category': category },
+                { user_id, 'notifications.category': category },
                 {
-                    $set: { 'notifications.$.seen': req.query.status == undefined ? true : req.query.status }
+                    $set: { 'notifications.$.seen': true }
                 })
 
             return res.status(200).json({

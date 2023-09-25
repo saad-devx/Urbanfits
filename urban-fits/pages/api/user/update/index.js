@@ -2,6 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
+import sendNotification from "@/utils/send_notification"
 import CorsMiddleware from "@/utils/cors-config"
 
 const UpdateUser = async (req, res) => {
@@ -27,12 +28,20 @@ const UpdateUser = async (req, res) => {
             delete req.body.two_fa_secret
             delete req.body.role
             user = await User.findByIdAndUpdate(id, req.body, { new: true })
+            delete user.password
+
             const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
             res.status(200).json({
                 success: true,
                 msg: `Your data has been updated successfully`,
                 payload
             })
+            await sendNotification(user._id, {
+                category: "account",
+                heading: "User Data Updated",
+                type: "user-data",
+                message: `You updated your profile data.`,
+            }, { notify: true, notifySilently: true })
         }
         else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }

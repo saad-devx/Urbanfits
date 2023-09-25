@@ -1,10 +1,9 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
-const jwt = require("jsonwebtoken")
 import sendNotification from "@/utils/send_notification"
 import CorsMiddleware from "@/utils/cors-config"
 
-const UpdateUser = async (req, res) => {
+const RsetUser2fa = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
@@ -16,28 +15,22 @@ const UpdateUser = async (req, res) => {
 
             let user = await User.findById(user_id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
-            if (req.body.email && req.body.email.includes("@")) {
-                user = await User.findOne({ email: req.body.email })
-                if (user) delete req.body.email
-            } else delete req.body.email
 
-            delete req.body.username
-            delete req.body.password
-            delete req.body.two_fa_secret
-            user = await User.findByIdAndUpdate(user_id, req.body, { new: true })
-            delete req.body.password
+            user.two_fa_activation_date = undefined
+            user.two_fa_secret = undefined
+            user.two_fa_enabled = false
+            await user.save()
             res.status(200).json({
                 success: true,
-                msg: `${user.username}'s data has been updated successfully`,
+                msg: `${user.username}'s 2FA has been reset.`,
                 user
             })
-            const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
-            await sendNotification(user._id, {
+            await sendNotification(user_id, {
                 category: "account",
-                heading: "User Data Updated",
-                type: "user-data",
-                message: `Your profile data was updated by Urban Fits team.`,
-            }, { userData: payload })
+                heading: "2FA Reset",
+                type: "2fa",
+                message: "Your 2FA has been reset by Urban Fits team. Please register again to enable 2FA.",
+            })
         }
         else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
@@ -47,4 +40,4 @@ const UpdateUser = async (req, res) => {
     }
 }
 
-export default UpdateUser
+export default RsetUser2fa
