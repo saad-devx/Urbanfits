@@ -3,6 +3,7 @@ import User from "@/models/user"
 import Notification from "@/models/notification"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
+import sendNotification from "@/utils/send_notification"
 import { pusherServer } from "@/utils/pusher"
 import CorsMiddleware from "@/utils/cors-config"
 
@@ -83,27 +84,12 @@ const Login = async (req, res) => {
                         msg: `A user ${user.username} just logged in.`,
                         user_id: user._id
                     })
-                    console.log("yeah i reached to the notification")
-                    const date = new Date()
-                    const userNotification = await Notification.findOneAndUpdate(
-                        { user_id: user._id },
-                        {
-                            $push: {
-                                notifications: {
-                                    $each: [{
-                                        category: "account",
-                                        heading: "Login",
-                                        type: "login",
-                                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
-                                        timestamp: new Date()
-                                    }],
-                                    $position: 0,
-                                    $slice: 20,
-                                }
-                            }
-                        },
-                        { upsert: true, new: true }
-                    ); console.log(userNotification)
+                    await sendNotification(updatedUser._id, {
+                        category: "account",
+                        heading: "Login",
+                        type: "login",
+                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                    }, { notify: true, notifySilently: true })
                 }
             }
         }

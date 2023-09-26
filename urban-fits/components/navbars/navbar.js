@@ -73,7 +73,7 @@ export default function Navbar() {
     if (url.startsWith("/admin")) {
         if (!user || user.role == "customer") return
     }
-    const unseenNotificCount = notifications.filter(notific=> notific.seen === false).length
+    const unseenNotificCount = notifications?.filter(notific=> notific.seen === false).length || 0
 
     useEffect(() => {
         if (!address) getAddress()

@@ -64,7 +64,7 @@ const VerfiyTotp = async (req, res) => {
                 msg: "The code is either wrong or expired. Please try again."
             })
         }
-        else res.status(405).json({ success: false, msg: "bad request, you are using wrong request method!" })
+        else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: GET" })
     }
     catch (error) {
         console.log(error)

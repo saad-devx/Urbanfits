@@ -57,11 +57,14 @@ const useUser = create(persist((set, get) => ({
         let isInList = get().wishList.includes(item)
         return isInList
     },
-    updateUser: async (valuesObj, updateLocally = false) => {
+    updateUser: async (valuesObj, updateLocally = false, updateDirectly = false) => {
         if (updateLocally) {
-            const userData = jwt.decode(valuesObj)?._doc
-            delete userData.password
-            set(() => ({ user: userData }))
+            if (updateDirectly) set(() => ({ user: valuesObj }))
+            else {
+                const userData = jwt.decode(valuesObj)?._doc
+                delete userData.password
+                set(() => ({ user: userData }))
+            }
         }
         else {
             try {

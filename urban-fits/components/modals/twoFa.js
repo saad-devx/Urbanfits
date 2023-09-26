@@ -6,7 +6,7 @@ import useUser from '@/hooks/useUser';
 import axios from 'axios';
 import toaster from '@/utils/toast_function';
 
-export default function TwoFa({ show, setMfaModa }) {
+export default function TwoFa({ show, setMfaModal }) {
     const { user, updateUser } = useUser()
     const [qrUrl, setQrUrl] = useState(null)
     const [qrSecret, setQrSecret] = useState(null)
@@ -42,7 +42,7 @@ export default function TwoFa({ show, setMfaModa }) {
             })
             await updateUser(data.payload, true)
             toaster("success", data.msg)
-            setMfaModa(false)
+            setMfaModal(false)
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)
@@ -52,7 +52,7 @@ export default function TwoFa({ show, setMfaModa }) {
 
     if (show) return <div className={`w-full h-full font_urbanist fixed inset-0 z-[100] bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500`}>
         <div className={`relative lg:w-[33rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
-            <button onClick={() => setMfaModa(false)} className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
+            <button onClick={() => setMfaModal(false)} className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
             {qrSecret && qrUrl && !loading ? <section className="w-full h-full p-10 flex flex-col items-center gap-y-5">
                 <h2 className="text-black text-[22px] font_urbanist_medium">Enable 2FA Authentication</h2>
                 <p className='text-xs md:text-sm text-center'>Step 1: install 'Google Authenticator' app from Google Play or App Store</p>

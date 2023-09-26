@@ -20,7 +20,7 @@ const OTPSchema = new mongoose.Schema({
     },
     new_user: {
         username: String,
-        firsname: String,
+        firstname: String,
         lastname: String,
         gender: String,
         phone_prefix: String,

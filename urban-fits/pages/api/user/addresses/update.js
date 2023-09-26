@@ -15,25 +15,25 @@ const UpdateAddress = async (req, res) => {
             let user = await User.findById(user_id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found with corresponding user_id." })
 
-            let addresses = await Addresses.findOne({ user_id: user._id })
-            if (!addresses) {
-                const createdAddress = await Addresses.create({ ...req.body, user_id: user._id })
-                const payload = jwt.sign({ ...createdAddress }, process.env.SECRET_KEY)
-                return res.status(200).json({
-                    success: true,
-                    msg: "Your Address updated successfully",
-                    payload
-                })
-            }
-            if (addresses) {
-                const updatedAddress = await Addresses.findOneAndUpdate({ user_id: user_id }, req.body, { new: true })
-                const payload = jwt.sign({ ...updatedAddress }, process.env.SECRET_KEY)
-                return res.status(200).json({
-                    success: true,
-                    msg: "Your Address updated successfully",
-                    payload
-                })
-            }
+            // let addresses = await Addresses.findOne({ user_id: user._id })
+            // if (!addresses) {
+            //     const createdAddress = await Addresses.create({ ...req.body, user_id: user._id })
+            //     const payload = jwt.sign({ ...createdAddress }, process.env.SECRET_KEY)
+            //     return res.status(200).json({
+            //         success: true,
+            //         msg: "Your Address updated successfully",
+            //         payload
+            //     })
+            // }
+            // if (addresses) {
+            const updatedAddress = await Addresses.findOneAndUpdate({ user_id }, req.body, { new: true, upsert: true })
+            const payload = jwt.sign({ ...updatedAddress }, process.env.SECRET_KEY)
+            return res.status(200).json({
+                success: true,
+                msg: "Your Address updated successfully",
+                payload
+            })
+
         }
         else return res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })
     }
