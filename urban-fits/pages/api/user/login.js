@@ -62,7 +62,7 @@ const Login = async (req, res) => {
                 else if (!user.two_fa_enabled) {
                     const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                     const date = new Date()
-                    await sendNotification(updatedUser._id, {
+                    await sendNotification(user._id, {
                         category: "account",
                         heading: "Login",
                         type: "login",
