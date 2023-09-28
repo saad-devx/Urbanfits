@@ -3,7 +3,6 @@ import User from "@/models/user"
 import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
-import sendNotification from "@/utils/send_notification"
 const jwt = require("jsonwebtoken")
 import { pusherServer } from "@/utils/pusher"
 import { generateRandomInt } from "@/utils/generatePassword";
@@ -22,6 +21,12 @@ const Signup = async (req, res) => {
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create(req.body)
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                await sendNotification(user._id, {
+                    category: "account",
+                    heading: "Sign Up",
+                    type: "signup",
+                    message: `Congratulations ! You're a part of Urban Fits now. You signed up at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                }, { notify: true })
                 res.status(200).json({
                     success: true,
                     msg: "You are Resgistered successfully !",
@@ -56,12 +61,6 @@ const Signup = async (req, res) => {
                         msg: `Verification Email sent to ${email}`,
                         redirect_url: `/auth/signup/verify-otp?otp_id=${dbOtp._id}`
                     })
-                    await sendNotification(updatedUser._id, {
-                        category: "account",
-                        heading: "Sign Up",
-                        type: "signup",
-                        message: `Congratulations ! You're a part of Urban Fits now. You signed up at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
-                    }, { notify: true })
                 }
             }
         }

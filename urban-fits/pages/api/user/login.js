@@ -26,6 +26,12 @@ const Login = async (req, res) => {
                 }
                 if (!user.two_fa_enabled) {
                     const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                    await sendNotification(user._id, {
+                        category: "account",
+                        heading: "Login",
+                        type: "login",
+                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                    }, { notify: true, notifySilently: true })
                     res.status(200).json({
                         success: true,
                         msg: "You are Logged in successfully !",
@@ -35,12 +41,6 @@ const Login = async (req, res) => {
                         msg: `A user ${user.username} just logged in.`,
                         user_id: user._id
                     })
-                    await sendNotification(user._id, {
-                        category: "account",
-                        heading: "Login",
-                        type: "login",
-                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
-                    }, { notify: true, notifySilently: true })
                 }
             }
             else {
@@ -60,6 +60,12 @@ const Login = async (req, res) => {
                 }
                 else if (!user.two_fa_enabled) {
                     const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                    await sendNotification(updatedUser._id, {
+                        category: "account",
+                        heading: "Login",
+                        type: "login",
+                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                    }, { notify: true, notifySilently: true })
                     res.status(200).json({
                         success: true,
                         msg: "You are Logged in successfully !",
@@ -69,12 +75,6 @@ const Login = async (req, res) => {
                         msg: `A user ${user.username} just logged in.`,
                         user_id: user._id
                     })
-                    await sendNotification(updatedUser._id, {
-                        category: "account",
-                        heading: "Login",
-                        type: "login",
-                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
-                    }, { notify: true, notifySilently: true })
                 }
             }
         }

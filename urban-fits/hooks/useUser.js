@@ -88,6 +88,7 @@ const useUser = create(persist((set, get) => ({
         localStorage.clear()
         window.location.href = redirect || '/'
         clearNewsletterData()
+        get().setNotification([])
         if (get().user.register_provider !== "urbanfits") signOut()
         set(() => ({ user: null }))
         toaster("success", "You are signed out !")

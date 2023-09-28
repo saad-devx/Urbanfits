@@ -2,6 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
+import sendNotification from "@/utils/send_notification"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 import { pusherServer } from "@/utils/pusher"
@@ -28,6 +29,12 @@ const SignupCallback = async (req, res) => {
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create({ ...credentials, password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString() })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                await sendNotification(user._id, {
+                    category: "account",
+                    heading: "Sign Up",
+                    type: "signup",
+                    message: `Congratulations ! You're a part of Urban Fits now. You signed up at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                }, { notify: true })
                 res.status(200).json({
                     success: true,
                     msg: "You're Resgistered successfully !",
