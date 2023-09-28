@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { InputText } from '@/components/InputText'
 import useCategories from '@/hooks/useCategories'
 import Spinner from '../loaders/spinner'
@@ -8,7 +8,7 @@ export default function DeleteAction(props) {
     const [actionValue, setActionValue] = useState('')
     if (props.show) return (
         <>
-            <div className="w-full h-full font_futura fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all">
+            <div className="w-full h-full font_urbanist fixed inset-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all">
                 <div className="relative w-3/5 min-h-[8rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all">
                     {categLoading ? <div className='w-full h-32 flex justify-center items-center' >
                         <Spinner forBtn={true} variant="border-black" />
@@ -16,7 +16,7 @@ export default function DeleteAction(props) {
                         <><button onClick={() => { props.setDeleteModal(null); setActionValue('') }} name="deleteModal" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
                             <section className="w-full h-full p-6">
                                 <div className="w-full space-y-3">
-                                    <h2 className="text-black font_futura_medium text-base md:text-lg lg:text-xl">{props.heading}</h2>
+                                    <h2 className="text-black font_urbanist_medium text-base md:text-lg lg:text-xl">{props.heading}</h2>
                                     <p className='text-sm text-red-500'>{props.msg}</p>
                                     <p className='text-sm '>Please type <span className='text-red-600' >"delete"</span> here to proceed.</p>
                                 </div>

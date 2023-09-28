@@ -192,7 +192,7 @@ const AboutComponent = () => {
 
                     <section className="brand w-[58vw] h-screen flex justify-center items-center">
                         <div ref={brand} className="flex flex-col justify-end items-end select-none">
-                            <h1 className="text-[134px] leading-[1] text-right font_copper_gothic tracking-wide">URBAN <br /> FITS</h1>
+                            <h1 className="text-[134px] leading-[1] text-right font_copper tracking-wide">URBAN <br /> FITS</h1>
                             <h3 ref={brand_subhead} className="text-[34px] font-medium font_cinzel text-yellow-700">FASHION BRAND</h3>
                         </div>
                     </section>
@@ -219,7 +219,7 @@ const AboutComponent = () => {
 
                     <section ref={section_2} className="relative w-screen h-screen flex">
                         <div className="w-[7%] h-full flex justify-center items-center border-x-2 border-black">
-                            <h2 className="font_copper_gothic text-5xl 2xl:text-7xl -rotate-90 whitespace-nowrap">Urban Fits</h2>
+                            <h2 className="font_copper text-5xl 2xl:text-7xl -rotate-90 whitespace-nowrap">Urban Fits</h2>
                         </div>
                         <div className="w-[58%] h-full px-2">
                             <h1 className="w-full h-[17%] pb-3 flex items-end font_montserrat font-bold text-6xl">ENCHANTÉ COUTURE</h1>
@@ -245,15 +245,15 @@ const AboutComponent = () => {
                 </section>
                 <section ref={section_3} className="w-screen h-screen bg-black text-white flex flex-col justify-between overflow-hidden">
                     <div ref={blackBox_blackSec1} className="w-full h-1/3 justify-self-start self-start bg-black flex justify-center items-center text-white overflow-hidden">
-                        <h1 ref={ufH1} className="w-full font_copper_gothic text-8xl text-white whitespace-nowrap">Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits</h1>
+                        <h1 ref={ufH1} className="w-full font_copper text-8xl text-white whitespace-nowrap">Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits</h1>
                     </div>
 
                     <div ref={blackBox_whiteSec} className="w-full h-0 justify-self-center bg-white overflow-hidden flex justify-center items-center text-black">
-                        <h1 ref={ufH3} className="w-full font_copper_gothic text-8xl text-black whitespace-nowrap">Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits</h1>
+                        <h1 ref={ufH3} className="w-full font_copper text-8xl text-black whitespace-nowrap">Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits</h1>
                     </div>
 
                     <div ref={blackBox_blackSec2} className="w-full h-1/3 justify-self-end self-end bg-black flex justify-center items-center overflow-hidden">
-                        <h1 ref={ufH2} className="w-full font_copper_gothic text-8xl text-white whitespace-nowrap">Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits</h1>
+                        <h1 ref={ufH2} className="w-full font_copper text-8xl text-white whitespace-nowrap">Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits&nbsp;&nbsp;Urban Fits</h1>
                     </div>
                 </section>
                 <section ref={section_4} className="bg-white w-screen h-screen flex flex-col justify-between items-center">
@@ -265,8 +265,8 @@ const AboutComponent = () => {
                             <Link href="/products/Kids" className='font_urbanist_medium text-base' >Kids</Link>
                         </div>
                     </nav>
-                    {/* <h1 ref={endingHeading} className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full font_copper_gothic text-9xl text-center opacity-0 scale-[3] pointer-events-none"><Link href='/' >URBAN FITS</Link></h1> */}
-                    <h1 className="font_copper_gothic text-9xl text-center hover:tracking-expand transition-all duration-700"><Link href='/' >URBAN FITS</Link></h1>
+                    {/* <h1 ref={endingHeading} className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full font_copper text-9xl text-center opacity-0 scale-[3] pointer-events-none"><Link href='/' >URBAN FITS</Link></h1> */}
+                    <h1 className="font_copper text-9xl text-center hover:tracking-[25px] transition-all duration-[1.5s]"><Link href='/' >URBAN FITS</Link></h1>
                     <div className="w-full h-20 flex justify-center items-start font_urbanist text-xs text-center">Urban Fits LLC, State ID: 7053037, Registered Office Address - 500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87 102 <br />Urban Fits LLC &copy; 2023-2024 all rights reserved</div>
                 </section>
             </main>

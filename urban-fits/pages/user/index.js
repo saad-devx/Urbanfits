@@ -291,7 +291,7 @@ export default function User(props) {
             <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
             <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
             <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
-            <Option icon={<HeartShopListIcon />} href='/user/shopping-list'>My Shopping List</Option>
+            <Option icon={<HeartShopListIcon />} href='/user/shopping-lists'>My Shopping List</Option>
             <Option icon={<AddressIcon />} href='/user/address'>My Addresses</Option>
             <Option icon={<PackageBagIcon />} href='/user/orders/single-use-package-fees'>Single use package fees</Option>
         </section>
@@ -303,7 +303,7 @@ export default function User(props) {
                 <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
-                <Option icon={<HeartShopListIcon />} href='/user/shopping-list'>My Shopping List</Option>
+                <Option icon={<HeartShopListIcon />} href='/user/shopping-lists'>My Shopping List</Option>
                 <Option icon={<AddressIcon />} href='/user/address'>My Addresses</Option>
                 <Option icon={<PackageBagIcon />} href='/user/orders/single-use-package-fees'>Single use package fees</Option>
                 <button onClick={() => setLogout(!logout)} className="w-full py-5 flex justify-between items-center px-4 bg-white transition-all overflow-hidden">

@@ -1,6 +1,5 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
-import Notification from "@/models/notification"
 const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 import sendNotification from "@/utils/send_notification"
@@ -14,7 +13,7 @@ const Login = async (req, res) => {
             const { email, password } = req.body
             await ConnectDB()
             if (!email) return res.status(400).json({ success: false, msg: 'All valid parameters are required. Body parameters: email' })
-            if (req.query.auth === 'Google') {
+            if (req.query.auth === 'google') {
                 let user = await User.findOne({ email })
                 if (!user) return res.status(404).json({ success: false, msg: "User not found, please Sign up" })
                 if (user.register_provider !== req.body.register_provider) return res.status(404).json({ success: false, msg: `This account is associated with ${user.register_provider}` })
@@ -36,25 +35,12 @@ const Login = async (req, res) => {
                         msg: `A user ${user.username} just logged in.`,
                         user_id: user._id
                     })
-                    const userNotification = await Notification.findOneAndUpdate(
-                        { user_id: user._id },
-                        {
-                            $push: {
-                                notifications: {
-                                    $each: [{
-                                        category: "account",
-                                        heading: "Login",
-                                        type: "login",
-                                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
-                                        timestamp: new Date()
-                                    }],
-                                    $position: 0,
-                                    $slice: 20,
-                                }
-                            }
-                        },
-                        { upsert: true, new: true }
-                    ); console.log(userNotification)
+                    await sendNotification(user._id, {
+                        category: "account",
+                        heading: "Login",
+                        type: "login",
+                        message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                    }, { notify: true, notifySilently: true })
                 }
             }
             else {
@@ -72,14 +58,13 @@ const Login = async (req, res) => {
                         redirect_url: `/auth/confirm-2fa-totp?user_id=${user._id}`,
                     })
                 }
-                if (!user.two_fa_enabled) {
+                else if (!user.two_fa_enabled) {
                     const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                     res.status(200).json({
                         success: true,
                         msg: "You are Logged in successfully !",
                         payload
                     })
-                    console.log("yeah i reached to pusher event")
                     pusherServer.trigger("admin-channel", "login", {
                         msg: `A user ${user.username} just logged in.`,
                         user_id: user._id

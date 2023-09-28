@@ -11,10 +11,7 @@ export default function Footer() {
     const { user } = useUser()
     const [modal2, setModal2] = useState(false)
     const url = useRouter().pathname
-    const Exception = url.startsWith("/admin") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
-    if (url.startsWith("/admin")) {
-        if (!user || user.role == "customer") return
-    }
+    const Exception = url.startsWith("/about") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
     const toggleModal = () => {
         if (modal2 === false) return setModal2(true)
         if (modal2 === true) return setModal2(false)

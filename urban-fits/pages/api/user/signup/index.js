@@ -3,6 +3,7 @@ import User from "@/models/user"
 import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
+import sendNotification from "@/utils/send_notification"
 const jwt = require("jsonwebtoken")
 import { pusherServer } from "@/utils/pusher"
 import { generateRandomInt } from "@/utils/generatePassword";
@@ -15,7 +16,7 @@ const Signup = async (req, res) => {
         if (req.method === 'POST') {
             console.log(req.body)
             await ConnectDB()
-            if (req.query.auth && req.query.auth === 'Google') {
+            if (req.query.auth && req.query.auth === 'google') {
                 if (!username || !email) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
@@ -35,7 +36,7 @@ const Signup = async (req, res) => {
                 if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policies" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
-                if (!req.body.accept_policies) return res.status(400).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })
+                if (!req.body.accept_policies) return res.status(403).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })
 
                 let dbOtp = await OTP.findOne({ email })
                 if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'registration' session, try after 5 minutes." })
@@ -55,6 +56,12 @@ const Signup = async (req, res) => {
                         msg: `Verification Email sent to ${email}`,
                         redirect_url: `/auth/signup/verify-otp?otp_id=${dbOtp._id}`
                     })
+                    await sendNotification(updatedUser._id, {
+                        category: "account",
+                        heading: "Sign Up",
+                        type: "signup",
+                        message: `Congratulations ! You're a part of Urban Fits now. You signed up at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                    }, { notify: true })
                 }
             }
         }

@@ -69,11 +69,8 @@ export default function Navbar() {
     const [logout, setLogout] = useState(false)
     const [langModal, setLangModal] = useState(false)
     const url = useRouter().pathname
-    const Exception = url.startsWith("/admin") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
-    if (url.startsWith("/admin")) {
-        if (!user || user.role == "customer") return
-    }
-    const unseenNotificCount = notifications?.filter(notific=> notific.seen === false).length || 0
+    const Exception = url.startsWith("/about") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
+    const unseenNotificCount = notifications?.filter(notific => notific.seen === false).length || 0
 
     useEffect(() => {
         if (!address) getAddress()
@@ -118,7 +115,7 @@ export default function Navbar() {
                         <Link href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
                         <Link href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
                         <Link href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link>
-                        <Link href="/user/shoppinglists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
+                        <Link href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
                         <button onClick={() => setLogout(!logout)} className="w-full px-4 hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</button>
                     </div>
                 </>
