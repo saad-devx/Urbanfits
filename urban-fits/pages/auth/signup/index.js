@@ -43,7 +43,6 @@ export default function Signup() {
         catch (error) {
             console.log(error)
             if (error.response) toaster("error", error.response.data.msg)
-            throw new Error(error)
         }
         setLoading(false)
     }

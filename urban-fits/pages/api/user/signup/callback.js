@@ -29,6 +29,7 @@ const SignupCallback = async (req, res) => {
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
                 user = await User.create({ ...credentials, password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString() })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                const date = new Date()
                 await sendNotification(user._id, {
                     category: "account",
                     heading: "Sign Up",
