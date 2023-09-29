@@ -184,9 +184,9 @@ export default function User(props) {
                         <EmailIcon />
                         Change Email
                     </Link>
-                    <Link href="/user/shoppinglists" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <Link href="/user/shopping-lists" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <PackageBagIcon />
-                        Shopping List
+                        Shopping Lists
                     </Link>
                 </div>
                 <h2 className="mt-5 font_urbanist_bold text-base">My Orders</h2>
