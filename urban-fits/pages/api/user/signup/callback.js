@@ -1,5 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
+import createUFcard from "@/utils/create-ufcard"
 import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
 import sendNotification from "@/utils/send_notification"
@@ -27,7 +28,12 @@ const SignupCallback = async (req, res) => {
             if (dbOtp) {
                 let user = await User.findOne().or([{ email: credentials.email }, { username: credentials.username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
-                user = await User.create({ ...credentials, password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString() })
+                const ufCardData = await createUFcard()
+                user = await User.create({
+                    ...credentials,
+                    password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString(),
+                    uf_wallet: ufCardData
+                })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 const date = new Date()
                 await sendNotification(user._id, {

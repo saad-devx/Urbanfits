@@ -3,6 +3,7 @@ import User from "@/models/user"
 import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
+import createUFcard from "@/utils/create-ufcard"
 const jwt = require("jsonwebtoken")
 import { pusherServer } from "@/utils/pusher"
 import { generateRandomInt } from "@/utils/generatePassword";
@@ -19,7 +20,11 @@ const Signup = async (req, res) => {
                 if (!username || !email) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
                 let user = await User.findOne().or([{ email }, { username }])
                 if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
-                user = await User.create(req.body)
+                const ufCardData = await createUFcard()
+                user = await User.create({
+                    ...req.body,
+                    uf_wallet: ufCardData
+                })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 await sendNotification(user._id, {
                     category: "account",

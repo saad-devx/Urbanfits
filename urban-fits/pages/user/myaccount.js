@@ -69,7 +69,7 @@ export default function Personalinfo() {
     const onFileChange = async (e) => {
         const file = e.target.files[0]
         SetImgSpinner(<Spinner />)
-        const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
+        const imgUrl = await uploadImage(file, user._id, 'user-profiles')
         setPhoto(imgUrl)
         await updateUser({ image: imgUrl })
         SetImgSpinner(null)

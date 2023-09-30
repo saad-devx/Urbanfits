@@ -68,7 +68,7 @@ export default function User(props) {
     const onFileChange = async (e) => {
         const file = e.target.files[0]
         SetImgSpinner(<Spinner />)
-        const imgUrl = await uploadImage(file, user._id, 'user-profiles/')
+        const imgUrl = await uploadImage(file, user._id, 'user-profiles')
         setPhoto(imgUrl)
         await updateUser({ image: imgUrl })
         SetImgSpinner(null)
@@ -286,7 +286,7 @@ export default function User(props) {
         <Logout show={logout} setLogout={setLogout} />
         <section id='menu_container' className="hidden mid:flex lg:hidden w-full pb-7 px-4 rounded-full overflow-x-scroll hide_scrollbar">
             <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>
-            <Option icon={<UfPointsIcon />} href='/user/my-uf-wallet'>My UF-Wallet</Option>
+            <Option icon={<UfPointsIcon />} href='/user/uf-wallet'>My UF-Wallet</Option>
             {user.register_provider === "urbanfits" ? <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option> : null}
             <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
             <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
@@ -298,7 +298,7 @@ export default function User(props) {
         <section className="w-1/4 min-h-screen hidden lg:block">
             <div className="flex flex-col sticky left-0 top-20 items-center w-[95%] 2xl:w-[90%] rounded-lg list-none font_urbanist overflow-hidden">
                 <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>
-                <Option icon={<UfPointsIcon />} href='/user/my-uf-wallet'>My UF-Wallet</Option>
+                <Option icon={<UfPointsIcon />} href='/user/uf-wallet'>My UF-Wallet</Option>
                 {user.register_provider === "urbanfits" ? <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option> : null}
                 <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
                 <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>

@@ -1,8 +1,9 @@
 export const generateRandomInt = (from, to) => {
-    let randint = Math.floor(Math.random() * (to + 1));
-    if (randint < from) {
-        randint = from
-    }
+    let randint = Math.floor(Math.random() * (to - from + 1)) + from;
+    //  Math.floor(Math.random() * (to + 1));
+    // if (randint < from) {
+    //     randint = from
+    // }
     return randint
 }
 const generatePassword = (email) => {

@@ -1,16 +1,17 @@
 import axios from "axios"
 import toaster from "./toast_function"
 
-const uploadImage = async (file, fileName, folder) => {
+const uploadImage = async (file = "zero", fileName, folder) => {
     try {
-        const file_name = fileName ? `&fileName=${fileName}` : ''
-        const url = `${process.env.HOST}/api/S3/signedurl?folder=${folder}${file_name}`
-        const { data } = await axios.get(url)
-        await axios.put(data.uploadUrl, file)
-        const imageUrl = `${data?.uploadUrl.split("?")[0]}?timestamp=${Date.now()}`
-        return imageUrl
+        const { data } = await axios.post(`${process.env.HOST}/api/S3/upload-image`, {
+            file,
+            folder,
+            fileName
+        })
+        return data.imageUrl
     }
     catch (error) {
+        console.log(error)
         toaster('error', error)
     }
 }
