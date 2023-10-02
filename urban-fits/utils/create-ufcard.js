@@ -26,7 +26,7 @@ const createUFcard = async () => {
         return {
             card_number: cardNumber,
             bar_code: barCodeUrl,
-            points: 100
+            points: 500
         }
     } catch (error) { console.log(error) }
 }

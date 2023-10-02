@@ -35,12 +35,11 @@ const SignupCallback = async (req, res) => {
                     uf_wallet: ufCardData
                 })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
-                const date = new Date()
                 await sendNotification(user._id, {
                     category: "account",
                     heading: "Sign Up",
                     type: "signup",
-                    message: `Congratulations ! You're a part of Urban Fits now. You signed up at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+                    message: `Congratulations ! You're a part of Urban Fits now. You got 500 UF Points as a signup bonus, Happy Shopping!`
                 }, { notify: true })
                 res.status(200).json({
                     success: true,

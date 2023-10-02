@@ -1,8 +1,10 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user";
 import Addresses from "@/models/addresses";
+import UFpoints from "@/models/ufpoints";
 import Newsletter from "@/models/newsletter";
 import Notification from "@/models/notification";
+import Shoppinglist from "@/models/shoppinglist";
 import Order from "@/models/order";
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
@@ -27,6 +29,8 @@ const DeleteUsers = async (req, res) => {
                 await Newsletter.deleteMany({ user: { $in: users } })
                 await Notification.deleteMany({ user_id: { $in: users } })
                 await Order.deleteMany({ user_id: { $in: users } })
+                await Shoppinglist.deleteMany({ user_id: { $in: users } })
+                await UFpoints.deleteMany({ user_id: { $in: users } })
                 res.status(200).json({
                     success: true,
                     msg: `${users.length} users deleted successfully`

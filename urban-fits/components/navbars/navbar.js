@@ -110,7 +110,7 @@ export default function Navbar() {
                     <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                         <li className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
                             <span className="font_copper text-base">UF-Points</span>
-                            <p className='font_urbanist_medium'>{100}</p>
+                            <p className='font_urbanist_medium'>{user.uf_wallet.points}</p>
                         </li>
                         <Link href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
                         <Link href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>

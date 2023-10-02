@@ -80,6 +80,7 @@ const UserSchema = new mongoose.Schema({
             required: true
         }
     },
+    last_seen: Date,
     purchases: {
         type: Number,
         default: 0

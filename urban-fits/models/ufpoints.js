@@ -19,7 +19,7 @@ const UFpointsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    expirationDate: { type: Date, required: true },
+    expiration_date: { type: Date, required: true },
 }, { timestamps: true });
 
 UFpointsSchema.pre('save', function (next) {
@@ -29,6 +29,6 @@ UFpointsSchema.pre('save', function (next) {
     next();
 });
 
-UFpointsSchema.index({ expirationDate: 1 }, { expireAfterSeconds: 0 });
+UFpointsSchema.index({ expiration_date: 1 }, { expireAfterSeconds: 0 });
 
 module.exports = mongoose.models.UFpoints || mongoose.model('UFpoints', UFpointsSchema);
