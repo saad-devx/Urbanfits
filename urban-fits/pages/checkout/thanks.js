@@ -34,7 +34,7 @@ export default function Thanks() {
         })
         const timeOutId = setTimeout(() => {
             setNegativeState(<AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or request timed out. Please check your Account Dashboard or your email inbox to see your order updates." />)
-        }, 120000);
+        }, 60000);
         return () => {
             clearTimeout(timeOutId)
             paymentChannel.unbind('payment-succeeded')
