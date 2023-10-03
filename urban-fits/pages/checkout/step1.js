@@ -75,8 +75,8 @@ export default function Checkout1() {
             address: address && address[type] ? address[type].address : '',
             apt_suite: address && address[type] ? address[type].apt_suite : '',
             city: address && address[type] ? address[type].city : '',
-            country: address && address[type] ? address[type].country : "Country",
-            phone_prefix: address && address[type] ? address[type].phone_prefix : "Select Country Code",
+            country: address && address[type] ? address[type].country : '',
+            phone_prefix: address && address[type] ? address[type].phone_prefix : '',
             phone_number: address && address[type] ? address[type].phone_number : ''
         }
     }
@@ -338,10 +338,10 @@ export default function Checkout1() {
                             <div className="flex justify-between w-full">
                                 <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.phone_prefix && errors.billing_address && errors.billing_address.phone_prefix ? <Tooltip classes="form-error" content={errors.billing_address.phone_prefix} /> : null}
-                                    <select value={values.billing_address.phone_prefix} name='billing_address.phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                        {countryCodes.map((item) => {
-                                            if (!item.code) return <option disabled>{item.name}</option>
-                                            return <option value={item.code}>{item.name} {item.code}</option>
+                                    <select placeholder='Select country code' value={values.billing_address.phone_prefix} name='billing_address.phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                        {[{name: "Select country code"}, ...countryCodes].map((item, index) => {
+                                            if(!item.code) return <option key={index} value=''>{item.name}</option>
+                                            return <option key={index} value={item.code}>{item.name} {item.code}</option>
                                         })}
                                     </select>
                                 </div>
