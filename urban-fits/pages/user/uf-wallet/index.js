@@ -6,7 +6,7 @@ import User from ".."
 import useUser from "@/hooks/useUser"
 import Tilt from "react-parallax-tilt"
 
-export default function () {
+export default function UFwallet() {
     const { user } = useUser()
 
     if (window.matchMedia('(max-width: 760px)').matches) return <>
@@ -31,7 +31,7 @@ export default function () {
                     transitionSpeed={1500}
                     tiltMaxAngleX={10}
                     tiltMaxAngleY={10}>
-                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]+ bg_rough_gold">
+                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]">
                         <div className="w-full flex justify-between">
                             <span style={{ transform: "translateZ(25px)" }} className="font_copper font-thin text-xl">Points</span>
                             <span className="font_urbanist_bold text-xl">{user.uf_wallet.points}</span>
@@ -72,10 +72,11 @@ export default function () {
                     glareEnable
                     glareMaxOpacity={0.65}
                     gyroscope={true}
+                    reset={true}
                     transitionSpeed={1500}
                     tiltMaxAngleX={10}
                     tiltMaxAngleY={10}>
-                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]+ bg_rough_gold">
+                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]">
                         <div className="translate_z w-full flex justify-between">
                             <span className="font_copper font-thin text-xl">Points</span>
                             <span className="font_urbanist_bold text-xl">{user.uf_wallet.points}</span>

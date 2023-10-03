@@ -13,7 +13,7 @@ import DemoImg from '@/public/card imgs/demo-img.png'
 
 export default function Shoppingcard({ product }, props) {
     const { addItem, inCart } = useCart()
-    const { wishList, addToWishList, removeFromWishList, inWishList } = useUser()
+    const { user, wishList, addToWishList, removeFromWishList, inWishList } = useUser()
     const [loading, setLoading] = useState(true)
     const [addToListModal, setAddToListModal] = useState(null)
 
@@ -39,7 +39,7 @@ export default function Shoppingcard({ product }, props) {
             }} title='Add to Wishlist' className="group w-10 h-10 absolute top-1 left-1 md:top-3 md:left-4 z-10 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60 hover:shadow-xl">
                 <Image src={inWishList(product._id) ? redHeart : heart} className='w-4 md:w-5' alt='wishlist' />
             </button>
-            <button onClick={() => setAddToListModal(<AddToShopListModal product_id={product._id} show={addToListModal} setAddToListModal={setAddToListModal}/>)} title="add to shopping list" className="fa-brands fa-medrt group w-10 h-10 absolute top-8 left-1 md:top-14 md:left-4 z-10 text-base md:text-lg lg:text-xl text-gray-800 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60 hover:shadow-xl"></button>
+            {user?._id && <button onClick={() => setAddToListModal(<AddToShopListModal product_id={product._id} show={addToListModal} setAddToListModal={setAddToListModal} />)} title="add to shopping list" className="fa-brands fa-medrt group w-10 h-10 absolute top-8 left-1 md:top-14 md:left-4 z-10 text-base md:text-lg lg:text-xl text-gray-800 transition-all duration-300 rounded-full flex justify-center items-center bg-transparent hover:bg-white/60 hover:shadow-xl"></button>}
             <Link href={props.link || `/products/product/${product._id}?timestamp=${Date.now()}`}>
                 <div className="relative w-full h-3/4 lg:h-[70%] xl:h-[72%] pt-3 lg:pt-5 flex justify-center items-center">
                     <ImgLoader loading={loading} />

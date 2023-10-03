@@ -1,5 +1,4 @@
 import User from "@/models/user"
-import UFpoints from "@/models/ufpoints"
 import { generateRandomInt } from "./generatePassword"
 import uploadImage from "./uploadImage";
 import bwipjs from 'bwip-js';
@@ -16,12 +15,11 @@ const createUFcard = async () => {
         if (!ufPointDoc) exists = false;
     }
     try {
-        const buffer = await bwipjs.toBuffer({
+        const barCode = await bwipjs.toBuffer({
             bcid: "code128",
             text: cardNumber,
             scale: 3,
         })
-        const barCode = buffer.toString("base64");
         const barCodeUrl = await uploadImage(barCode, cardNumber, "uf-wallet-barcodes")
         return {
             card_number: cardNumber,

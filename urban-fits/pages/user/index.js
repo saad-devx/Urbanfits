@@ -67,10 +67,13 @@ export default function User(props) {
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = async (e) => {
         const file = e.target.files[0]
-        SetImgSpinner(<Spinner />)
-        const imgUrl = await uploadImage(file, user._id, 'user-profiles')
-        setPhoto(imgUrl)
-        await updateUser({ image: imgUrl })
+        if (file) {
+            SetImgSpinner(<Spinner />)
+            const imgUrl = await uploadImage(file, user._id, 'user-profiles')
+            console.log(imgUrl);
+            setPhoto(imgUrl)
+            await updateUser({ image: imgUrl })
+        }
         SetImgSpinner(null)
     }
     const newsletterSubToggle = async (e) => {
@@ -102,6 +105,7 @@ export default function User(props) {
         }
     }, [])
 
+    if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
@@ -281,7 +285,6 @@ export default function User(props) {
             </section>
         </main>
     </>
-    if (!user) return <Error403 />
     else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex flex-col lg:flex-row justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
         <section id='menu_container' className="hidden mid:flex lg:hidden w-full pb-7 px-4 rounded-full overflow-x-scroll hide_scrollbar">
@@ -319,12 +322,12 @@ export default function User(props) {
             <nav className={`${props.profileNull ? 'hidden' : null} flex flex-col`}>
                 <h2 className="text-lg lg:text-2xl font_urbanist_bold mb-6">My Account</h2>
                 <div className="w-3/5 md:w-auto flex items-center gap-x-3">
-                    <label htmlFor='pfp' className="group relative md:w-20 aspect-square rounded-full cursor-pointer border-2 border-gray-300 overflow-hidden">
+                    <label htmlFor='pfp' className="group relative md:w-20 aspect-square rounded-full cursor-pointer border-2 border-gray-300 hover:bg-black/50 transition-all overflow-hidden">
                         <span className="opacity-0 group-hover:opacity-100 text-white font_urbanist_medium text-xs cursor-pointer flex flex-col items-center gap-y-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
                             <i className="fa-solid fa-camera text-white" />Upload
                         </span>
                         {imgSpinner}
-                        <Image className="w-full h-full object-cover" width={150} height={150} src={photo} alt="avatar" />
+                        <Image className="w-full h-full object-cover" width={150} height={150} src={photo + '?timestamp=123'} alt="avatar" />
                     </label>
                     <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                     <p className='text-sm lg:text-base'><p className="font_urbanist_medium">Welcome {ifExists(user.firstname)} !</p>Save your address details and phone number here for easy and fast in delivery process in the future.</p>

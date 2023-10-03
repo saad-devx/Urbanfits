@@ -9,6 +9,7 @@ const UpdateProducts = async (req, res) => {
         if (req.method === 'GET') {
             await ConnectDB()
             const searchTerm = req.query.q
+            console.log(searchTerm)
 
             // const results = await Product.find({
             //     $or: [
@@ -40,6 +41,7 @@ const UpdateProducts = async (req, res) => {
                     $limit: 12
                 }
             ]);
+            console.log(productResults)
             const categoryResults = await Category.aggregate([
                 {
                     $search: {
@@ -57,16 +59,12 @@ const UpdateProducts = async (req, res) => {
                         name: 1
                     },
                 },
-                {
-                    $limit: 8
-                }
+                { $limit: 8 }
             ]);
             const finalResults = productResults.concat(categoryResults)
             res.json(finalResults);
         }
-        else {
-            res.status(400).json({ error: "bad request, you are using wrong request method!" })
-        }
+        else res.status(400).json({ error: "Method now allowed. Allowed methods: GET" })
     }
     catch (error) {
         console.log(error)

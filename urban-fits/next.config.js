@@ -28,8 +28,8 @@ const nextConfig = {
     STRIPE_WEBHOOK_SECRET: "whsec_zh0f1sztGeE8osV6cPvZeX9Nb8SMmZ6f",
     //AWS S3 Access Key IDs
     AWS_REGION: "eu-north-1",
-    AWS_ACCESS_KEY: "AKIAWXH553KR4VBPA7YM",
-    AWS_SECRET_KEY: "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",
+    S3_ACCESS_KEY: "AKIAWXH553KR4VBPA7YM",
+    S3_SECRET_KEY: "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",
     // IP2Lcation access key
     IPINFO_ACCESS_TOKEN: "9435a9027e6305",
     // Pusher app credentials

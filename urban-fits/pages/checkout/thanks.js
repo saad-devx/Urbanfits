@@ -22,7 +22,7 @@ export default function Thanks() {
 
     useEffect(() => {
         emptyCart()
-        const paymentChannel = pusherClient.subscribe(`payments-user_${user._id || guestUser._id}`)
+        const paymentChannel = pusherClient.subscribe(`payments-user_${user?._id || guestUser?._id}`)
         paymentChannel.bind('payment-succeeded', (data) => {
             console.log(data)
             toaster(data.type, data.msg)

@@ -4,6 +4,7 @@ import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
 import createUFcard from "@/utils/create-ufcard"
+import sendNotification from "@/utils/send_notification"
 const jwt = require("jsonwebtoken")
 import { pusherServer } from "@/utils/pusher"
 import { generateRandomInt } from "@/utils/generatePassword";

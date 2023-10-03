@@ -152,7 +152,7 @@ export default function Personalinfo() {
                         <i className="fa-solid fa-camera text-white" />Upload
                     </span>
                     {imgSpinner}
-                    <Image className="w-full h-full object-cover" width={150} height={150} src={photo} alt="avatar" />
+                    <Image className="w-full h-full object-cover" width={150} height={150} src={photo + '?timestamp=123'} alt="avatar" />
                 </label>
                 <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                 <button onClick={() => setUserInfoModal(true)} className="flex font_urbanist_bold text-base gap-x-2">{user.firstname} {user.lastname} <EditIcon /></button>
