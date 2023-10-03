@@ -137,6 +137,7 @@ export default function Personalinfo() {
         }
 
     }
+    if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>My Profile</title></Head>
         <main className="relative w-screen h-screen p-4 pb-10 bg-white">
@@ -186,8 +187,7 @@ export default function Personalinfo() {
             </section>
         </main>
     </>
-    else if (!user) return <Error403 />
-    else return <>
+    return <>
         <Head><title>My Profile</title></Head>
         {loader}
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />

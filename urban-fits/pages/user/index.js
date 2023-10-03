@@ -105,7 +105,6 @@ export default function User(props) {
         }
     }, [])
 
-    if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
@@ -285,6 +284,7 @@ export default function User(props) {
             </section>
         </main>
     </>
+    else if (!user) return <Error403 />
     else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex flex-col lg:flex-row justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
         <section id='menu_container' className="hidden mid:flex lg:hidden w-full pb-7 px-4 rounded-full overflow-x-scroll hide_scrollbar">
