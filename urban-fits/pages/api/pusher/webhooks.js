@@ -2,6 +2,8 @@ import ConnectDB from "@/utils/connect_db";
 import User from "@/models/user";
 import UFpoints from "@/models/ufpoints";
 import GuestUser from "@/models/guest_user";
+import SavePointsHistory from "@/utils/save_points_history";
+import sendNotification from "@/utils/send_notification";
 import { generateRandomInt } from "@/utils/generatePassword";
 
 export default async function PusherWebhooks(req, res) {
@@ -13,10 +15,9 @@ export default async function PusherWebhooks(req, res) {
                 if (event.name === 'member_added') {
                     console.log("A member just joined with id: " + event.user_id)
                     if (event.user_id.endsWith('_isguest')) return res.status(200).json({ message: 'Webhook received successfully' });
+
                     await ConnectDB()
-                    await User.findByIdAndUpdate(event.user_id, {
-                        is_active: true,
-                    })
+                    await User.findByIdAndUpdate(event.user_id, { is_active: true })
 
                     const currentDate = new Date()
                     const user = await User.findById(event.user_id)
@@ -28,11 +29,19 @@ export default async function PusherWebhooks(req, res) {
                         const reward = generateRandomInt(20, 50)
                         await UFpoints.create({
                             user_id: user._id,
-                            card_number: user.card_number,
+                            card_number: user.uf_wallet.card_number,
                             points: reward,
                             source: "daily_checkin",
                             expiration_date: expiryDate
                         })
+                        await sendNotification(user._id, {
+                            category: "reward",
+                            heading: "Daily Check in Bonus",
+                            type: "daily_checkin",
+                            mini_msg: `Welcome back, you won ${reward} UF-Points today!`,
+                            message: `Welcome back! ${reward} UF-Points are added to your UF-wallet, they will expire after 7 days and shall be deducted from your wallet. Keep coming everyday and win exciting rewards.`
+                        }, { notify: true })
+                        await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: reward })
                     }
                 }
                 else if (event.name === 'member_removed') {

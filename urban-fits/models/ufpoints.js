@@ -8,7 +8,7 @@ const UFpointsSchema = new mongoose.Schema({
     },
     card_number: {
         type: String,
-        ref: 'User'
+        required: true
     },
     points: {
         type: Number,
@@ -19,12 +19,12 @@ const UFpointsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    expiration_date: { type: Date, required: true },
+    expiration_date: Date,
 }, { timestamps: true });
 
 UFpointsSchema.pre('save', function (next) {
     if (this.points !== null && this.points !== undefined) {
-        this.worth = this.points * 0.008;
+        this.worth = this.points * process.env.UF_POINT_RATE;
     }
     next();
 });

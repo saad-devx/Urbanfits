@@ -56,9 +56,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
           auth: { params: { user_id: `${data.user._id}_isguest` } }
         });
         setPusherPresenceClient(presenceInstance);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) { console.log(e) }
     }
 
     if (presenceInstance) {
@@ -74,7 +72,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
       userChannel.bind('new-notification', (data) => {
         setNotification(data.notification_data.notifications)
-        if (data.notify) toaster("info", data.notification_data.notifications[0].message)
+        if (data.notify) toaster("info", data.notification_data.notifications[0].mini_msg)
       })
     }
     return () => {

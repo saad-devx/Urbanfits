@@ -17,6 +17,10 @@ const NotificationSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
+            mini_msg: {
+                type: String,
+                required: true
+            },
             href: String,
             seen: {
                 type: Boolean,

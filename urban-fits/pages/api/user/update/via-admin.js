@@ -36,7 +36,8 @@ const UpdateUser = async (req, res) => {
                 category: "account",
                 heading: "User Data Updated",
                 type: "user-data",
-                message: `Your profile data was updated by Urban Fits team.`,
+                mini_msg: `Your profile data was updated by Urban Fits team.`,
+                message: `Your profile data was updated by Urban Fits team.`
             }, { userData: payload })
         }
         else res.status(405).json({ success: false, msg: "Method not allowed, Allowed Methods: PUT" })

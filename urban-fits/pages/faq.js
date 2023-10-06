@@ -12,9 +12,7 @@ export const Accordian = (props) => {
                 <div className="group-focus:text-black font_urbanist_medium transition ease duration-500">
                     {props.title}
                 </div>
-                {/* <div className="h-8 w-8 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 absolute top-0 right-0 mb-auto ml-auto mt-2 mr-2"> */}
                 <i className={`fa-solid fa-caret-down group-focus:-rotate-180 absolute top-1/2 -translate-y-1/2 right-0 mb-auto ml-auto mt-2 mr-2 transform transition ease duration-500`}></i>
-                {/* </div> */}
             </div>
             <div className="group-focus:max-h-screen max-h-0 bg-white rounded overflow-hidden ease duration-500">
                 <p className="p-2 text-gray-900 text-justify" dangerouslySetInnerHTML={{ __html: props.children }}></p>

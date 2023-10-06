@@ -19,7 +19,6 @@ const UpdateUser = async (req, res) => {
                 const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
                 if (req.query.authpassword !== originalPassword) return res.status(404).json({ success: false, msg: "Your password is incorrect" })
             }
-            // updating the user profile
             let user = await User.findById(id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
             delete req.body.email
@@ -28,6 +27,7 @@ const UpdateUser = async (req, res) => {
             delete req.body.two_fa_secret
             delete req.body.two_fa_enabled
             delete req.body.role
+            delete req.body.last_seen
             user = await User.findByIdAndUpdate(id, req.body, { new: true })
             delete user.password
 
@@ -41,6 +41,7 @@ const UpdateUser = async (req, res) => {
                 category: "account",
                 heading: "User Data Updated",
                 type: "user-data",
+                mini_msg: `You updated your profile data.`,
                 message: `You updated your profile data.`,
             }, { notify: true, notifySilently: true })
         }

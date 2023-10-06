@@ -28,9 +28,10 @@ const Signup = async (req, res) => {
                 })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 await sendNotification(user._id, {
-                    category: "account",
-                    heading: "Sign Up",
+                    category: "reward",
+                    heading: "Signup Bonus",
                     type: "signup",
+                    mini_msg: `Congratulations, You won 500 UF Points as a signup bonus!`,
                     message: `Congratulations ! You're a part of Urban Fits now. You got 500 UF Points as a signup bonus, Happy Shopping!`
                 }, { notify: true })
                 res.status(200).json({

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import Shoppinglist from "@/models/shoppinglist";
 import CorsMiddleware from "@/utils/cors-config"
 
-const CreateShoppinglist = async (req, res) => {
+const GetShoppinglists = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
@@ -26,4 +26,4 @@ const CreateShoppinglist = async (req, res) => {
     }
 }
 
-export default CreateShoppinglist
+export default GetShoppinglists

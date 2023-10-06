@@ -70,17 +70,15 @@ const UserSchema = new mongoose.Schema({
             required: true,
             immutable: true
         },
-        points: {
-            type: Number,
-            default: 0
-        },
-        worth: Number,
         bar_code: {
             type: String,
             required: true
         }
     },
-    last_seen: Date,
+    last_seen: {
+        type: Date,
+        default: new Date()
+    },
     purchases: {
         type: Number,
         default: 0

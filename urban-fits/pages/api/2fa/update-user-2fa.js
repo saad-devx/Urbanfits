@@ -42,6 +42,7 @@ const Update2FA = async (req, res) => {
                     category: "account",
                     heading: updatedUser.two_fa_enabled ? "2FA Enabled" : "2FA Disabled",
                     type: "2fa",
+                    mini_msg: `Your 2 Factor Authentication was ${updatedUser.two_fa_enabled ? "enabled" : "disabled"} successfully.`,
                     message: `Your 2 Factor Authentication was ${updatedUser.two_fa_enabled ? "enabled" : "disabled"} successfully.`,
                 }, { notify: true, notifySilently: true })
             }

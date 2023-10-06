@@ -31,6 +31,7 @@ const Login = async (req, res) => {
                         category: "account",
                         heading: "Login",
                         type: "login",
+                        mini_msg: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
                         message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
                     }, { notify: true, notifySilently: true })
                     res.status(200).json({
@@ -66,6 +67,7 @@ const Login = async (req, res) => {
                         category: "account",
                         heading: "Login",
                         type: "login",
+                        mini_msg: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
                         message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
                     }, { notify: true, notifySilently: true })
                     res.status(200).json({

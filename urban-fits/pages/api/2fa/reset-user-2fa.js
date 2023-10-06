@@ -28,6 +28,7 @@ const RsetUser2fa = async (req, res) => {
             await sendNotification(user_id, {
                 category: "account",
                 heading: "2FA Reset",
+                mini_msg: "Your 2FA was reset by Urban Fits team.",
                 type: "2fa",
                 message: "Your 2FA has been reset by Urban Fits team. Please register again to enable 2FA.",
             })

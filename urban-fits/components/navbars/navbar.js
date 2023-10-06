@@ -3,6 +3,7 @@ import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import useUser from '@/hooks/useUser';
+import useWallet from "@/hooks/useWallet"
 import useAddress from '@/hooks/useAddress';
 import Link from 'next/link'
 import ToTopBtn from '../buttons/toTopBtn';
@@ -63,6 +64,7 @@ const SecondaryNavbar = (props) => {
 
 export default function Navbar() {
     const { user, country, notifications, getNotifications } = useUser()
+    const { points, getUfBalance } = useWallet()
     const { address, getAddress } = useAddress()
     const { totalUniqueItems } = useCart()
     const [cart, setCart] = useState(false)
@@ -73,8 +75,9 @@ export default function Navbar() {
     const unseenNotificCount = notifications?.filter(notific => notific.seen === false).length || 0
 
     useEffect(() => {
-        if (!address) getAddress()
         getNotifications()
+        if (!address) getAddress()
+        if (!points) getUfBalance()
     }, [])
 
     const getDisplayAddress = () => {
@@ -110,7 +113,7 @@ export default function Navbar() {
                     <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                         <Link href="/user/uf-wallet" className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
                             <span className="font_copper text-base">UF-Points</span>
-                            <p className='font_urbanist_medium'>{user.uf_wallet.points}</p>
+                            <p className='font_urbanist_medium'>{points}</p>
                         </Link>
                         <Link href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
                         <Link href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>

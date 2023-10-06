@@ -12,11 +12,20 @@ const updateNotificationStatus = async (req, res) => {
             if (!user_id || !mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "A valid user id and category (of which notifications are to be updated) are required. Query parameters: user_id, category, status (if not provided then will be assumed 'true')" })
             await ConnectDB()
 
-            await Notification.updateOne(
-                { user_id, 'notifications.category': category },
+            await Notification.updateMany(
                 {
-                    $set: { 'notifications.$.seen': true }
-                })
+                    user_id,
+                    "notifications.category": category,
+                },
+                {
+                    $set: {
+                        "notifications.$[element].seen": true,
+                    },
+                },
+                {
+                    arrayFilters: [{ "element.category": category }],
+                }
+            )
 
             return res.status(200).json({
                 success: true,
