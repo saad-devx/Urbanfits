@@ -57,7 +57,8 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
     gender: {
-        type: String
+        type: String,
+        enum: ["male", "female", "other"]
     },
     country: String,
     is_active: {
@@ -87,12 +88,5 @@ const UserSchema = new mongoose.Schema({
         type: String
     }
 }, { timestamps: true })
-
-UserSchema.pre('save', function (next) {
-    if (this.uf_wallet.points !== null && this.uf_wallet.points !== undefined) {
-        this.uf_wallet.worth = this.uf_wallet.points * process.env.UF_POINT_RATE;
-    }
-    next();
-});
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema)

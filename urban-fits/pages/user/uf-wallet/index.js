@@ -15,6 +15,7 @@ export default function UFwallet() {
         getUfBalance()
     }, [])
 
+    if (!user || !user.email) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>My UF Wallet - Uraban Fits</title></Head>
         <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>

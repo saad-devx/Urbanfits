@@ -1,5 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
+import UFpoints from "@/models/ufpoints"
 import createUFcard from "@/utils/create-ufcard"
 import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
@@ -33,6 +34,12 @@ const SignupCallback = async (req, res) => {
                     ...credentials,
                     password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString(),
                     uf_wallet: ufCardData
+                })
+                await UFpoints.create({
+                    user_id: user._id,
+                    card_number: user.uf_wallet.card_number,
+                    points: 500,
+                    source: "signup"
                 })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 await sendNotification(user._id, {

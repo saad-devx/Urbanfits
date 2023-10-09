@@ -39,6 +39,7 @@ export default function UFwallet() {
         getUfHistory(setHistory)
     }, [])
 
+    if (!user || !user.email) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>UF Wallet History - Uraban Fits</title></Head>
         <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>

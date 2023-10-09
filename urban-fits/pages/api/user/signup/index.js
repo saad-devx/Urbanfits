@@ -1,5 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
+import UFpoints from "@/models/ufpoints"
 import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
@@ -15,7 +16,6 @@ const Signup = async (req, res) => {
         await CorsMiddleware(req, res)
         const { username, email, phone_prefix, phone_number, password } = req.body;
         if (req.method === 'POST') {
-            console.log(req.body)
             await ConnectDB()
             if (req.query.auth && req.query.auth === 'google') {
                 if (!username || !email) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policy" })
@@ -25,6 +25,12 @@ const Signup = async (req, res) => {
                 user = await User.create({
                     ...req.body,
                     uf_wallet: ufCardData
+                })
+                await UFpoints.create({
+                    user_id: user._id,
+                    card_number: user.uf_wallet.card_number,
+                    points: 500,
+                    source: "signup"
                 })
                 const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
                 await sendNotification(user._id, {
