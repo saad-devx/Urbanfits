@@ -13,7 +13,7 @@ const useWallet = create(persist((set, get) => ({
     setCurrency: (currency) => {
         if (currencies.includes(currency)) {
             set(() => ({ currency }))
-            location.reload()
+            // location.reload()
         }
         else return toaster("error", "Invalid currency!")
     },
