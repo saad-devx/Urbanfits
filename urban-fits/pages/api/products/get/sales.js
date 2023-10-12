@@ -3,18 +3,18 @@ import Product from "@/models/product";
 import Category from "@/models/category";
 import CorsMiddleware from "@/utils/cors-config"
 
-const getManyProducts = async (req, res) => {
+const getSaleProducts = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             await ConnectDB()
             const LIMIT = 50;
-            let totalProducts = await Product.countDocuments();
+            let totalProducts = await Product.countDocuments({ sale_price: { $exists: true, $type: 'number', $ne: 0 } });
 
             const totalPages = Math.ceil(totalProducts / LIMIT);
             const page = parseInt(req.query.page) || 1;
             const skipProducts = (page - 1) * LIMIT;
-            let products = await Product.find()
+            let products = await Product.find({ sale_price: { $exists: true, $type: 'number', $ne: 0 } })
                 .sort({ createdAt: -1 })
                 .skip(skipProducts)
                 .limit(LIMIT)
@@ -38,4 +38,4 @@ const getManyProducts = async (req, res) => {
         res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })
     }
 }
-export default getManyProducts
+export default getSaleProducts

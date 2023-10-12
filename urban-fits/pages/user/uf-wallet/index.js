@@ -9,11 +9,15 @@ import useWallet from "@/hooks/useWallet"
 import Tilt from "react-parallax-tilt"
 
 export default function UFwallet() {
-    const { points, getUfBalance, walletLoading } = useWallet()
+    const { points, getUfBalance, walletLoading, currency, formatPrice } = useWallet()
     const { user } = useUser()
     React.useEffect(() => {
         getUfBalance()
     }, [])
+
+    const get3dpNumber = (num) => {
+        if (num) return Number.isInteger(num) ? num : num.toFixed(3)
+    }
 
     if (!user || !user.email) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
@@ -42,11 +46,11 @@ export default function UFwallet() {
                     <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]">
                         <div className="w-full flex justify-between">
                             <span style={{ transform: "translateZ(25px)" }} className="font_copper font-thin text-xl">Points</span>
-                            <span className="font_urbanist_bold text-xl">{points}</span>
+                            <span className="font_urbanist_bold text-xl">{get3dpNumber(points)}</span>
                         </div>
                         <div className="w-full flex justify-between">
-                            <span className="font_copper text-xl">USD</span>
-                            <span className="font_urbanist_bold text-xl">$ {points * process.env.UF_POINT_RATE}</span>
+                            <span className="font_copper text-xl">{currency}</span>
+                            <span className="font_urbanist_bold text-xl">{formatPrice(points * process.env.UF_POINT_RATE)}</span>
                         </div>
                     </div>
                     <div className="w-full h-1/2 p-5 flex justify-center items-center">
@@ -82,7 +86,6 @@ export default function UFwallet() {
                     scale={1.08}
                     glareEnable
                     glareMaxOpacity={0.65}
-                    gyroscope={true}
                     reset={true}
                     transitionSpeed={1500}
                     tiltMaxAngleX={10}
@@ -90,11 +93,11 @@ export default function UFwallet() {
                     <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]">
                         <div className="translate_z w-full flex justify-between">
                             <span className="font_copper font-thin text-xl">Points</span>
-                            <span className="font_urbanist_bold text-xl">{points}</span>
+                            <span className="font_urbanist_bold text-xl">{get3dpNumber(points)}</span>
                         </div>
                         <div className="translate_z w-full flex justify-between">
-                            <span className="font_copper text-xl">USD</span>
-                            <span className="font_urbanist_bold text-xl">$ {points * process.env.UF_POINT_RATE}</span>
+                            <span className="font_copper text-xl">{currency}</span>
+                            <span className="font_urbanist_bold text-xl">{formatPrice(points * process.env.UF_POINT_RATE)}</span>
                         </div>
                     </div>
                     <div className="w-full h-1/2 p-6 bg-gray-50 flex justify-center items-center">

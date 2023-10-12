@@ -8,6 +8,7 @@ import Footer from '@/components/footer'
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser'
+import useWallet from '@/hooks/useWallet'
 import { useRouter } from 'next/router'
 import { CartProvider } from "react-use-cart";
 import getGeoLocation from '@/utils/geo-location'
@@ -20,6 +21,7 @@ import PusherClient from 'pusher-js'
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter()
   const { user, guestUser, setGuestUser, setNotification, logOut, setCountry, geo_selected_by_user } = useUser()
+  const { currency, getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
   const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
   const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.PUSHER_KEY, {
@@ -81,7 +83,9 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   useEffect(() => {
-    getGeoLocation(setCountry, geo_selected_by_user)
+    getExchangeRate()
+    getGeoLocation()
+
     const igniteSession = () => {
       setGuestUser(null)
       const sessionValid = localStorage.getItem('remember_me')
@@ -96,7 +100,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, [router.events])
 
   return <>
-    <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={0} loaderSpeed={200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
+    <LoadingBar color='linear-gradient(90deg, #FAE892 0%, #B3903E 70%)' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className="toast" />
     <SessionProvider session={session}>
       <CartProvider>

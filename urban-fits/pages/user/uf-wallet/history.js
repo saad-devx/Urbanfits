@@ -8,7 +8,7 @@ import useWallet from "@/hooks/useWallet"
 
 export default function UFwallet() {
     const { user } = useUser()
-    const { points, getUfHistory, walletLoading } = useWallet()
+    const { points, getUfHistory, walletLoading, currency, formatPrice } = useWallet()
     const [history, setHistory] = React.useState(null)
 
     const groupHistoryByYearAndMonth = (history) => {
@@ -60,7 +60,7 @@ export default function UFwallet() {
                     </div>
                     <div className="w-1/2 flex flex-col">
                         Balance
-                        <span className="font_urbanist_bold text-base text-yellow-600">{points} UF pts ({points * process.env.UF_POINT_RATE} USD)</span>
+                        <span className="font_urbanist_bold text-base text-yellow-600">{points} UF pts ({formatPrice(points * process.env.UF_POINT_RATE)})</span>
                     </div>
                 </section>
                 <div className="w-full py-5 flex justify-end text-10px">

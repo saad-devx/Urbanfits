@@ -1,13 +1,16 @@
 import React from 'react'
 import useUser from '@/hooks/useUser';
+import useWallet from '@/hooks/useWallet';
 import countryCodes from '@/static data/countryCodes';
 import Image from 'next/image';
 // imports for the schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '../tooltip';
+import toaster from '@/utils/toast_function';
 
 export default function LanguageModal(props) {
+    const { currency, setCurrency } = useWallet()
     const { country, setCountry, setGeoSelectedByUser } = useUser()
     const validatedSchema = Yup.object({
         country: Yup.string().required("Please select your country"),
@@ -21,8 +24,15 @@ export default function LanguageModal(props) {
         }
     })
 
+    const updateCurrency = (event) => {
+        const { value } = event.target
+        console.log(event.target)
+        setCurrency(value)
+        toaster("success", <p>Currency udpated to <span className='font_urbanist_bold'>{value}</span>.</p>)
+    }
+
     if (props.show) return <section className={`w-full h-full font_urbanist fixed inset-0 z-[100] bg-gray-800/40 backdrop-blur flex justify-center items-center transition-all duration-500 ${props.show === false ? "opacity-0 pointer-events-none" : ''}`}>
-        <div className={`${props.show === false ? "translate-y-10" : ''} relative max-w-[450px] w-11/12 md:w-4/6 lg:w-2/5 py-5 text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-2xl overflow-hidden transition-all duration-500`}>
+        <div className={`${props.show === false ? "translate-y-10" : ''} relative max-w-[450px] w-11/12 md:w-4/6 lg:w-2/5 text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-2xl overflow-hidden transition-all duration-500`}>
             <button onClick={() => props.setLangModal(false)} name="modal3" className="material-symbols-rounded text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
             <form className="w-full h-full p-7" onReset={handleReset} onSubmit={handleSubmit} >
                 <h2 className="text-xl lg:text-2xl font_copper">COUNTRY & LANGUAGE</h2>
@@ -51,8 +61,21 @@ export default function LanguageModal(props) {
                         </div>
                     </div>
                 </div>
+                <h3 className='text-sm md:text-base font_urbanist_bold'>Choose preffered currency:</h3>
+                <div className="relative w-full my-7 flex space-x-16 font_urbanist_medium">
+                    <span className="flex items-center cursor-pointer">
+                        <input className='rounded mx-2' type="radio" id="aed" name="currency" defaultChecked={currency === "AED"} value="AED" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="aed">AED (د.إ)</label>
+                    </span>
+                    <span className="flex items-center cursor-pointer">
+                        <input className='rounded mx-2' type="radio" id="sar" name="currency" defaultChecked={currency === "SAR"} value="SAR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="sar">SAR (﷼)</label>
+                    </span>
+                    <span className="flex items-center cursor-pointer">
+                        <input className='rounded mx-2' type="radio" id="pkr" name="currency" defaultChecked={currency === "PKR"} value="PKR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="pkr">PKR (₨)</label>
+                    </span>
+                </div>
+
                 <h3 className='text-sm md:text-base font_urbanist_bold'>Choose your language:</h3>
-                <div className="relative w-full my-10 flex space-x-16 font_urbanist_medium">
+                <div className="relative w-full my-7 flex space-x-16 font_urbanist_medium">
                     {touched.language && errors.language ? <Tooltip classes="form-error" content={errors.language} /> : null}
                     <span className="flex items-center">
                         <input className='rounded mx-2' type="radio" id="english" name="language" defaultChecked={true} value="english" onBlur={handleBlur} onChange={handleChange} /><label htmlFor="english">English</label>

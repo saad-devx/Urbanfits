@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
+import useWallet from '@/hooks/useWallet';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import Head from 'next/head';
@@ -9,24 +10,15 @@ import Shoppingcard, { SmallShoppingcard } from '@/components/cards/shoppingcard
 const ProductCarousel = dynamic(() => import('@/components/carousels/productCarousel'));
 import toaster from '@/utils/toast_function';
 import Button from '@/components/buttons/simple_btn';
-import { pusherClient } from '@/utils/pusher';
 
 export default function Product(props) {
     const productData = { ...props.resProduct, id: props.resProduct._id }
     const router = useRouter()
+    const { formatPrice } = useWallet()
     const { setRecentItems } = useUser()
     const [product, setProduct] = useState(productData.variants[0])
     const [sizevalue, setSizevalue] = useState(product.sizes[0].size)
     const [quantity, setQuantity] = useState(1)
-
-    useEffect(() => {
-        const channel = pusherClient.subscribe('urban-fits')
-        channel.bind('server-update', (data) => {
-            console.log(data)
-            toaster('info', data.pusher_msg)
-        })
-        return () => pusherClient.unsubscribe('urban-fits')
-    }, [])
 
     useEffect(() => {
         const { color } = router.query
@@ -81,6 +73,7 @@ export default function Product(props) {
             id: `${product._id}${sizevalue}`,
             name: productData.name,
             price: productData.price,
+            uf_points: product.uf_points,
             shipping_fee: productData.shipping_details.fees,
             stock: product.stock,
             size: sizevalue,
@@ -112,7 +105,7 @@ export default function Product(props) {
 
                         <div className="details w-full lg:w-[40%]">
                             <h1 className="hidden lg:block w-full mb-4 font_urbanist_bold lg:text-2xl capitalize">{productData.name}</h1>
-                            <h2 className="hidden lg:block font_urbanist_medium lg:text-2xl">${productData.price}</h2>
+                            <h2 className="hidden lg:block font_urbanist_medium lg:text-2xl">{formatPrice(productData.price)}</h2>
 
                             <div className="w-full my-8 flex flex-col md:flex-row justify-between">
                                 <div className="w-full lg:w-48pr mb-5 lg:mb-0 flex flex-col">
@@ -159,7 +152,7 @@ export default function Product(props) {
                                     getFilteredQuantity() < 1 ? <span className="lg:max-w-[320px] w-full lg:w-48pr h-9 lg:h-[52px] my-2 flex justify-center items-center font_urbanist_bold italic text-center text-xs text-gray-300">Out of Stock</span>
                                         : <>
                                             <button onClick={addToCart} className="hidden lg:flex bg-gold max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 justify-between items-center font_urbanist_bold text-white text-sm">Add to Cart <i className="fas fa-plus text-white" /></button>
-                                            <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' fontSize='text-[10px]' text='white' >ADD TO CART | ${productData.price}</Button>
+                                            <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' fontSize='text-[10px]' text='white' >ADD TO CART | {formatPrice(productData.price)}</Button>
                                         </>
                                 }
                             </div>

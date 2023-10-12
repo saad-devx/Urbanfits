@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import useUser from './useUser';
 import toaster from "@/utils/toast_function";
 import axios from "axios";
 
@@ -15,7 +14,6 @@ const useProduct = create((set, get) => ({
         }))
         try {
             if (category_id) {
-                console.log(page, category_id)
                 const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
                 set(() => ({
                     products: data.products,
@@ -59,6 +57,20 @@ const useProduct = create((set, get) => ({
         return set(() => ({
             productLoading: false
         }))
+    },
+
+    getSaleProducts: async (page = 1, callback) => {
+        set(() => ({ productLoading: true }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/products/get/sales?page=${page}`)
+            set(() => ({productLoading: false}))
+            callback(data.products)
+            return data.products
+        } catch (error) {
+            console.log(error)
+            if (error.response) toaster("error", error.response.data.msg)
+        }
+        return set(() => ({ productLoading: false }))
     }
 }))
 

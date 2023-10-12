@@ -6,8 +6,8 @@ import phone from '@/public/phone.svg'
 export default function Accordians() {
     return (
         <>
-            <div className="group p-5 outline-none accordion-section rounded-2xl bg-white mb-7 border-b card_boxshadow" tabIndex={1}>
-                <div className="group flex justify-between h-9 items-center text-gray-500 transition ease duration-700 cursor-pointer relative">
+            <div className="group p-5 outline-none accordion-section rounded-2xl bg-white border-b" tabIndex={1}>
+                <div className="group flex justify-between h-9 items-center transition ease duration-700 cursor-pointer relative">
                     <div className="group-focus:text-black text-xs md:text-sm font_urbanist_bold transition ease duration-700">Contact</div>
                     <span className="transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 ">
                         <i className="fas fa-minus minus_icon group-focus:block"></i>
@@ -30,8 +30,8 @@ export default function Accordians() {
                 </div>
             </div>
 
-            <div className="group p-5 outline-none accordion-section rounded-2xl bg-white mb-7 border-b card_boxshadow" tabIndex={1}>
-                <div className="group flex justify-between h-9 items-center text-gray-500 transition ease duration-700 cursor-pointer relative">
+            <div className="group p-5 outline-none accordion-section rounded-2xl bg-white border-b" tabIndex={1}>
+                <div className="group flex justify-between h-9 items-center transition ease duration-700 cursor-pointer relative">
                     <div className="group-focus:text-black text-xs md:text-sm font_urbanist_bold transition ease duration-700">Delivery & Return</div>
                     <span className="transform transition ease duration-500 group-focus:text-black group-focus:-rotate-180 ">
                         <i className="fas fa-minus minus_icon group-focus:block"></i>
