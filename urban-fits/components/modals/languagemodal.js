@@ -26,8 +26,8 @@ export default function LanguageModal(props) {
 
     const updateCurrency = (event) => {
         const { value } = event.target
-        console.log(event.target)
         setCurrency(value)
+        location.reload()
         toaster("success", <p>Currency udpated to <span className='font_urbanist_bold'>{value}</span>.</p>)
     }
 
