@@ -3,6 +3,7 @@ import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
 import countryCodes from '@/static data/countryCodes';
 import Image from 'next/image';
+import BounceLoader from '../loaders/bounceLoader';
 // imports for the schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -12,6 +13,7 @@ import toaster from '@/utils/toast_function';
 export default function LanguageModal(props) {
     const { currency, setCurrency } = useWallet()
     const { country, setCountry, setGeoSelectedByUser } = useUser()
+    const [loading, setLoading] = React.useState(false)
     const validatedSchema = Yup.object({
         country: Yup.string().required("Please select your country"),
         language: Yup.string().required("Please select your prefered language")
@@ -37,6 +39,7 @@ export default function LanguageModal(props) {
             <form className="w-full h-full p-7" onReset={handleReset} onSubmit={handleSubmit} >
                 <h2 className="text-xl lg:text-2xl font_copper">COUNTRY & LANGUAGE</h2>
                 <div className="w-full my-12 flex flex-col space-y-4">
+                    {loading ? <div className="flex justify-center"><BounceLoader /></div> : null}
                     <h3 className='text-sm md:text-base font_urbanist_bold'>Choose your shipping destination :</h3>
                     <div className="group relative w-full md:w-4/5 data_field flex items-center border-b border-b-gray-400 focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                         <span className="w-7 h-5 mr-2 overflow-hidden" title={country.country}><Image width={50} height={40} src={country.src} /></span>
@@ -45,8 +48,11 @@ export default function LanguageModal(props) {
                         <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
                         <div className="absolute z-50 top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white equillibrium_shadow w-full max-h-[15rem] py-2 text-xs rounded-lg overflow-y-scroll transition-all opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                             {countryCodes.map((c, index) => {
-                                return <button onClick={() => {
-                                    setCountry(c)
+                                return <button onClick={async () => {
+                                    setLoading(true)
+                                    await setCountry(c)
+                                    setLoading(false)
+                                    props.setLangModal(false)
                                     return setGeoSelectedByUser(true)
                                 }} key={index} title={c.country} className={`w-full px-4 ${index == countryCodes.length - 1 ? null : "border-b"} hover:bg-slate-100 flex justify-between items-center py-3 transition-all`}>
                                     <span className="flex items-center gap-x-2 capitalize">
@@ -62,15 +68,15 @@ export default function LanguageModal(props) {
                     </div>
                 </div>
                 <h3 className='text-sm md:text-base font_urbanist_bold'>Choose preffered currency:</h3>
-                <div className="relative w-full my-7 flex space-x-16 font_urbanist_medium">
+                <div className="relative w-full my-7 flex gap-x-10 md:gap-x-14 font_urbanist_medium">
                     <span className="flex items-center cursor-pointer">
-                        <input className='rounded mx-2' type="radio" id="aed" name="currency" defaultChecked={currency === "AED"} value="AED" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="aed">AED (د.إ)</label>
+                        <input className='rounded mr-1 mid:mr-2' type="radio" id="aed" name="currency" defaultChecked={currency === "AED"} value="AED" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="aed">AED (د.إ)</label>
                     </span>
                     <span className="flex items-center cursor-pointer">
-                        <input className='rounded mx-2' type="radio" id="sar" name="currency" defaultChecked={currency === "SAR"} value="SAR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="sar">SAR (﷼)</label>
+                        <input className='rounded mr-1 mid:mr-2' type="radio" id="sar" name="currency" defaultChecked={currency === "SAR"} value="SAR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="sar">SAR (﷼)</label>
                     </span>
                     <span className="flex items-center cursor-pointer">
-                        <input className='rounded mx-2' type="radio" id="pkr" name="currency" defaultChecked={currency === "PKR"} value="PKR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="pkr">PKR (₨)</label>
+                        <input className='rounded mr-1 mid:mr-2' type="radio" id="pkr" name="currency" defaultChecked={currency === "PKR"} value="PKR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="pkr">PKR (₨)</label>
                     </span>
                 </div>
 

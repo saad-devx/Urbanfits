@@ -20,8 +20,8 @@ import PusherClient from 'pusher-js'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter()
-  const { user, guestUser, setGuestUser, setNotification, logOut, setCountry, geo_selected_by_user } = useUser()
-  const { currency, getExchangeRate } = useWallet()
+  const { user, guestUser, setGuestUser, setNotification, logOut } = useUser()
+  const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
   const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
   const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.PUSHER_KEY, {
@@ -77,9 +77,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         if (data.notify) toaster("info", data.notification_data.notifications[0].mini_msg)
       })
     }
-    return () => {
-      if (pusherPresenceClient) pusherPresenceClient.unsubscribe('presence-urbanfits');
-    };
+    return () => pusherPresenceClient && pusherPresenceClient.unsubscribe('presence-urbanfits');
   }, []);
 
   useEffect(() => {

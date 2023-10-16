@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
-import { loadStripe } from '@stripe/stripe-js';
-import generatePassword from '@/utils/generatePassword';
 import useUser from '@/hooks/useUser';
 import useAddress from '@/hooks/useAddress';
+import useWallet from '@/hooks/useWallet';
+import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import AlertPage from '@/components/alertPage'
 import CheckoutCalcSection from '@/components/checkoutCalcSection';
@@ -20,14 +20,16 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 import Button from '@/components/buttons/simple_btn';
+import formatPrice from '@/utils/format_price';
 
 loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export default function Checkout1() {
-    console.log('Generated Password:', generatePassword("binarshadsaad6@gmail.com"));
     const router = useRouter()
     const { address, getAddress } = useAddress()
-    const { user, guestUser } = useUser()
+    const { user, guestUser, country } = useUser()
+    const { currency, getShippingRates } = useWallet()
+    const [shippingRates, setShippingRates] = useState(null)
     // loader and billing form state
     const [loader, setLoader] = useState(null)
     const [billingForm, setBillingForm] = useState(null)
@@ -54,7 +56,7 @@ export default function Checkout1() {
         }
     }
 
-    const { isEmpty, items } = useCart()
+    const { cartTotal, isEmpty, items } = useCart()
 
     // getting data from input fields and applying validation
     const addressFieldsValidation = {
@@ -81,15 +83,19 @@ export default function Checkout1() {
             phone_number: address && address[type] ? address[type].phone_number : ''
         }
     }
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues, setFieldValue } = useFormik({
         initialValues: {
+            currency,
+            country: country.country,
             name: user && user.firstname ? (user?.firstname + ' ' + user?.lastname) : "",
             email: user?.email,
-            delivery_option: 'express',
+            delivery_option: 'standard_shipping',
             shipping_address: addressFieldsValues("shipping_address"),
             billing_address: addressFieldsValues("billing_address")
         },
         validationSchema: Yup.object().shape({
+            currency: Yup.string().required(),
+            country: Yup.string().required(),
             name: Yup.string().min(2).required("Please enter your Full Name"),
             email: Yup.string().email().required("Please enter your email address"),
             delivery_option: Yup.string().required("Please select your prefered language"),
@@ -129,6 +135,27 @@ export default function Checkout1() {
         }
     }
 
+    const calculateTotolShippingFee = (fees, shippingMethod = values?.delivery_option) => {
+        if (shippingMethod === "free_shipping") return 0
+        const totalWeight = items.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
+        if (totalWeight <= 5100) return fees
+        const additionalWeight = totalWeight - 5100
+        const additionalCharges = (additionalWeight / 1000) * (shippingRates?.additionalKgCharges || 1)
+        return fees + additionalCharges
+    }
+
+    const getFreeDeliveryLimit = () => {
+        const shippingData = shippingRates?.shipping_rates.free_shipping
+        if (country.country === "sa") return shippingData?.ksa_order_rate
+        else if (country.country === "pk") return shippingData?.pk_order_rate
+        else if (country.country === "ae") return shippingData?.uae_order_rate
+    }
+
+    useEffect(() => {
+        if (values.delivery_option !== "free_shipping") getShippingRates((data) => setShippingRates(data), values.delivery_option)
+        else setShippingRates({ ...shippingRates, price: 0, additionalKgCharges: 0 })
+    }, [values.delivery_option])
+
     useEffect(() => {
         const { payment } = router.query
         if (payment == 'false' || payment == false) return toaster("error", "Payment failed, keep shopping and checkout when you're ready.")
@@ -136,6 +163,9 @@ export default function Checkout1() {
     }, [router.query.payment])
 
     useEffect(() => {
+        setFieldValue("currency", currency)
+        setFieldValue("country", country.country)
+        setFieldValue("delivery_option", "standard_shipping")
         return async () => {
             setLoader(<Loader />)
             if (user) {
@@ -195,9 +225,9 @@ export default function Checkout1() {
         <Head><title>Checkout - Urban Fits</title></Head>
         {loader}
         <LanguageModal show={modal3} toggleModal={toggleModal} />
-        <main className='bg-gray-100 w-full h-full px-4 md:px-5 lg:px-10 xl:px-14 2xl:px-20 flex flex-col lg:flex-row lg:flex-wrap p-5 md:p-7 lg:p-0 lg:pt-16 font_urbanist text-left pt-5' >
+        <main className='bg-gray-100 w-full h-full px-4 md:px-5 lg:px-10 xl:px-14 2xl:px-20 flex flex-col lg:flex-row lg:flex-wrap p-5 md:p-7 lg:p-0 lg:pt-10 font_urbanist text-left' >
             <div className="w-full mb-2"><span onClick={router.back} className='cursor-pointer font_urbanist_medium'><i className="fa-solid fa-chevron-left text-xs mr-2"></i>Back</span></div>
-            <section className="bg-white w-full lg:w-[56%] p-4 md:p-5 lg:p-7 mb-3 mr-auto rounded-2xl">
+            <section className="bg-white w-full lg:w-[56%] mb-10 p-4 md:p-5 lg:p-7 mr-auto rounded-2xl">
                 <form className="w-full text-sm" onSubmit={handleSubmit} onReset={handleReset} >
                     <span className=" mb-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>1. Contact Information</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
                     <span className="flex flex-col mb-6">
@@ -218,15 +248,20 @@ export default function Checkout1() {
                     <div className="flex flex-col mb-6">
                         <label className='w-full border-b pb-3 font_urbanist_medium' htmlFor="delivery_options">Delivery Option</label>
                         {touched.delivery_option && errors.delivery_option ? <Tooltip classes="form-error" content={errors.delivery_option} /> : null}
-                        <div id="delivery_options" className="w-full py-3 flex justify-between font_urbanist_medium">
+                        <div id="delivery_options" className="w-full py-3 flex items-start justify-around font_urbanist_medium">
                             <span className="flex">
-                                <input className='rounded mr-2 translate-y-1' type="radio" id="express" name="delivery_option" defaultChecked value="express" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="express">Express Delivery <p className="font_urbanist_light text-[9px]">2-4 working days</p></label>
+                                <input className='rounded mr-2 translate-y-1' type="radio" id="standard_shipping" name="delivery_option" value="standard_shipping" defaultChecked onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="standard_shipping">Standard Delivery <p className="text-[9px]">{shippingRates?.getTimeSpan("standard_shipping")}</p></label>
                             </span>
-                            <span className="flex">
-                                <input className='rounded mr-2 translate-y-1' type="radio" id="standard" name="delivery_option" value="standard" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="standard">Standard Delivery <p className="font_urbanist_light text-[9px]">3-5 working days</p></label>
-                            </span>
-                            <span className="flex">
-                                <input className='rounded mr-2 translate-y-1' type="radio" id="free" name="delivery_option" value="free" /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="free">Free Delivery <p className="font_urbanist_light text-[9px]">5-7 working days</p></label>
+                            {country.country !== "ae" && <span className="flex">
+                                <input className='rounded mr-2 translate-y-1' type="radio" id="express_shipping" name="delivery_option" value="express_shipping" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="express_shipping">Express Delivery <p className="text-[9px]">{shippingRates?.getTimeSpan("express_shipping")}</p></label>
+                            </span>}
+                            <span className={`flex ${cartTotal >= getFreeDeliveryLimit() ? null : "opacity-40 pointer-events-none"}`}>
+                                <input className="rounded mr-2 translate-y-1" type="radio" id="free_shipping" name="delivery_option" value="free_shipping" disabled={cartTotal < getFreeDeliveryLimit()} onBlur={handleBlur} onChange={(e) => {
+                                    if (cartTotal >= getFreeDeliveryLimit()) {
+                                        setShippingRates({ ...shippingRates, price: 0, additionalKgCharges: 0 }); handleChange(e)
+                                    }
+                                    else return toaster("error", `Your order must be atleast ${formatPrice(getFreeDeliveryLimit())} to avail Free Delivery.`)
+                                }} /><div className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight'><label htmlFor="free_shipping" className='cursor-pointer'>Free Delivery</label><p className="text-[9px] leading-tight">{shippingRates?.getTimeSpan("free_shipping")}</p><p className="text-[9px] leading-tight">Minimum {formatPrice(getFreeDeliveryLimit())}&nbsp; order</p></div>
                             </span>
                         </div>
                         <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">Enter Your Shipping Address</h1>
@@ -260,11 +295,11 @@ export default function Checkout1() {
                                 </div>
                                 <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.country && errors.shipping_address && errors.shipping_address.country ? <Tooltip classes="form-error" content={errors.shipping_address.country} /> : null}
-                                    <select className="w-full border-none outline-none bg-transparent border-b-gray-800" name='shipping_address.country' value={values.shipping_address.country} onBlur={handleBlur} onChange={handleChange} >
-                                        <option disabled >Country</option>
-                                        <option value="uae">UAE</option>
-                                        <option value="usa">USA</option>
-                                        <option value="pk">Pakistan</option>
+                                    <select value={values.shipping_address.phone_prefix} name='shipping_address.phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                        {countryCodes.map((item) => {
+                                            if (!item.code) return <option disabled>{item.name}</option>
+                                            return <option value={item.code}>{item.name} {item.code}</option>
+                                        })}
                                     </select>
                                 </div>
                             </div>
@@ -353,7 +388,7 @@ export default function Checkout1() {
                 </form>
             </section>
             <section className="w-full lg:w-[42%] max-w-[850px] flex flex-col gap-y-5">
-                <CheckoutCalcSection />
+                <CheckoutCalcSection shippingRates={shippingRates} calculateTotolShippingFee={calculateTotolShippingFee} selectedShippingOption={values.delivery_option} />
                 <Accordians />
             </section>
         </main>

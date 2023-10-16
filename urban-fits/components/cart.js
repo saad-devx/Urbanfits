@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useCart } from "react-use-cart";
 import LinkBtn from '@/components/buttons/link_btn';
 import Button from './buttons/simple_btn';
 import MoreToExplore from './more_to_explore';
+import useWallet from '@/hooks/useWallet';
 // Image imports
 import Image from 'next/image'
 import EmptyCartVector from "../public/emptyCart.svg"
@@ -12,6 +13,7 @@ import Link from 'next/link';
 // Cart item function
 function CartItem(props) {
     const { product } = props
+    const { formatPrice } = useWallet()
     const { updateItemQuantity, removeItem } = useCart()
     const [quantity, setQuantity] = useState(product.quantity)
     const [sizevalue, setSizevalue] = useState(product.size)
@@ -42,7 +44,7 @@ function CartItem(props) {
     }
 
     return <li {...props} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
-        <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center overflow-hidden">
+        <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center rounded-xl overflow-hidden">
             <Image width={129} height={160} src={product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
         </div>
         {/* to be displayed from md breakpoint */}
@@ -64,13 +66,13 @@ function CartItem(props) {
                 <input type="number" readOnly className='w-3/5 h-auto font_urbanist text-center border-none outline-none pointer-events-none' value={quantity} />
                 <span onClick={(e) => { changeQuantity(e, product.id) }} name="increment" className="text-lg cursor-pointer transition-all text-gray-300 select-none">+</span>
             </span>
-            <h3 className="font_urbanist_bold self-center text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
+            <h3 className="font_urbanist_bold self-center text-xs">{formatPrice(product.price * quantity)}</h3>
             <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_urbanist_medium text-xs tracking-widest"></button>
         </div>
         {/* to be displayed in mobile */}
         <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
             <Link onClick={props.toggleCart} href={`/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200" /></Link>
-            <h3 className="font_urbanist_medium self-start text-xs">${props.get3dpNumber(product.price * quantity)}</h3>
+            <h3 className="font_urbanist_medium self-start text-xs">{formatPrice(product.price * quantity)}</h3>
             <div className="w-full flex self-end gap-3">
                 <div className='relative'>
                     <span className="select_container after:right-[20%]"></span>
@@ -93,9 +95,19 @@ function CartItem(props) {
 
 export default function Cart(props) {
     const { isEmpty, items, cartTotal, emptyCart } = useCart()
-    // function to get rounded off number upto 3 decimal places
-    const get3dpNumber = (num) => {
-        return num.toFixed(3)
+    const [shippingRates, setShippingRates] = useState(null)
+    const { formatPrice, getShippingRates } = useWallet()
+
+    useEffect(() => {
+        getShippingRates((data) => setShippingRates(data))
+    }, [])
+
+    const calculateTotolShippingFee = (fees) => {
+        const totalWeight = items.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
+        if (totalWeight <= 5100) return fees
+        const additionalWeight = totalWeight - 5100
+        const additionalCharges = (additionalWeight / 1000) * (shippingRates?.additionalKgCharges || 1)
+        return fees + additionalCharges
     }
 
     return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
@@ -130,17 +142,17 @@ export default function Cart(props) {
                                 return <CartItem key={product.id} toggleCart={() => {
                                     document.body.style.overflowY = props.cart ? null : 'hidden'
                                     props.setCart(false)
-                                }} product={product} get3dpNumber={get3dpNumber} />
+                                }} product={product} />
                             })}
                             <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
                         <div className="w-full lg:w-[400px] self-center lg:self-end">
                             <h3 className="text-center text-sm lg:text-[17px] font_urbanist_bold mb-5">Order Summary</h3>
                             <div className="w-full h-auto p-4 rounded-2xl font_urbanist_bold bg-white items-center border">
-                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Subtotal</span> <span>${get3dpNumber(cartTotal)}</span></span>
-                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Shipping</span> <span>${items[0].shipping_fee}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Shipping Fee</span> <span>{formatPrice(calculateTotolShippingFee(shippingRates?.price || 0))}</span></span>
                                 <br />
-                                <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>${parseFloat(cartTotal + items[0].shipping_fee).toFixed(3)}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>{formatPrice(cartTotal + calculateTotolShippingFee(shippingRates?.price || 0))}</span></span>
                             </div>
                             <LinkBtn href="/checkout/step1" onClick={() => {
                                 document.body.style.overflowY = props.cart ? null : 'hidden'

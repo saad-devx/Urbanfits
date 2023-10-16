@@ -1,33 +1,37 @@
 import mongoose from "mongoose"
 
 const addressObject = {
-    tag: { type: String, required: true },
-    address_title: { type: String, required: true },
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
-    address: { type: String, required: true },
-    apt_suite: { type: String },
-    city: { type: String, required: true },
-    country: { type: String, required: true },
-    phone_prefix: { type: String, required: true },
-    phone_number: { type: String, required: true },
+    address_title: String,
+    firstname: String,
+    lastname: String,
+    address: String,
+    apt_suite: String,
+    city: String,
+    country: String,
+    phone_prefix: String,
+    phone_number: String,
 }
 
 const OrderSchema = new mongoose.Schema({
-
-    user: {
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    shippingAddress: addressObject,
-    billingAddress: addressObject,
-    orderStatus: {
+    name: String,
+    email: String,
+    order_status: {
         type: String,
-        enum: ['Pending', 'Shipped', 'ReadyToShip', 'Returned'],
+        enum: ['Pending', 'Shipped', 'ReadyToShip', 'Returned', 'Delivered'],
         default: 'Pending',
-      },
-    orderItems: [
+    },
+    order_items: [
         {
+            product_id: {
+                type: mongoose.Schema.ObjectId,
+                ref: "Product",
+                required: true,
+            },
+            variant: String,
             name: {
                 type: String,
                 required: true,
@@ -44,52 +48,33 @@ const OrderSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            product: {
-                type: mongoose.Schema.ObjectId,
-                ref: "Product",
-                required: true,
-            },
+            weight: String
         },
     ],
-    paymentInfo: {
-        id: {
-            type: String,
+    shipping_address: addressObject,
+    billing_address: addressObject,
+    price_details: {
+        paid_at: Date,
+        currency: String,
+        total_price: {
+            type: Number,
             required: true,
+            default: 0,
         },
-        status: {
-            type: String,
+        shipping_fees: {
+            type: Number,
             required: true,
-        },
+            default: 0,
+        }
     },
-    paidAt: {
-        type: Date,
-        required: true,
+    month: {
+        type: String,
+        required: true
     },
-    itemsPrice: {
+    year: {
         type: Number,
-        required: true,
-        default: 0,
-    },
-    taxPrice: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    shippingPrice: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    totalPrice: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    deliveredAt: Date,
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
+        required: true
+    }
+}, { timestamps: true });
 
-module.exports = mongoose.model("Order", OrderSchema);
+module.exports = mongoose.models.Order || mongoose.model("Order", OrderSchema);

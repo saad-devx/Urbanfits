@@ -85,7 +85,7 @@ const ProductSchema = new mongoose.Schema({
     shipping_details: {
         width: { type: String, required: true },
         height: { type: String, required: true },
-        weight: { type: String, required: true },
+        weight: { type: Number, required: true },
         fees: { type: Number, required: true },
     }
 
@@ -97,7 +97,7 @@ ProductSchema.pre('save', function (next) {
         variant.stock = totalQuantity;
     });
     let { price, uf_points } = this
-    if (!uf_points && !this.sale_price) {
+    if (!this.sale_price) {
         if (price >= 1 && price < 50) uf_points = 40
         else if (price >= 50 && price < 100) uf_points = 80
         else if (price >= 100 && price < 150) uf_points = 120

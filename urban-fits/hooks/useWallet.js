@@ -13,7 +13,6 @@ const useWallet = create(persist((set, get) => ({
     setCurrency: (currency) => {
         if (currencies.includes(currency)) {
             set(() => ({ currency }))
-            // location.reload()
         }
         else return toaster("error", "Invalid currency!")
     },
@@ -46,6 +45,42 @@ const useWallet = create(persist((set, get) => ({
             set(() => ({ exchange_rate: data.new_amount, walletLoading: false }))
             console.log(data)
             return data.new_amount
+        } catch (error) { console.log(error); }
+        set(() => ({ walletLoading: false }))
+    },
+
+    getShippingRates: async (callback, shippingMethod = "standard_shipping") => {
+        set(() => ({ walletLoading: true }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/get-shipping-rates`)
+            set(() => ({ walletLoading: false }))
+            console.log(data)
+
+            const { shipping_rates } = data
+            const { country } = useUser.getState()
+            let price = 0
+            let additionalKgCharges = 0
+            if (country.country === "sa") {
+                price = shipping_rates[shippingMethod].ksa_rate;
+                additionalKgCharges = shipping_rates[shippingMethod].additional_kg_charge.ksa
+            }
+            else if (country.country === "ae") {
+                price = shipping_rates[shippingMethod].uae_rate;
+                additionalKgCharges = shipping_rates[shippingMethod].additional_kg_charge.uae
+            }
+            else if (country.country === "pk") {
+                price = shipping_rates[shippingMethod].pk_rate;
+                additionalKgCharges = shipping_rates[shippingMethod].additional_kg_charge.pk
+            }
+            const getTimeSpan = (shippingMethod) => {
+                const shippingData = shipping_rates[shippingMethod]
+                if (country.country === "sa") return shippingData.shipping_timespan.ksa_shipping
+                else if (country.country === "ae") return shippingData.shipping_timespan.uae_shipping
+                else if (country.country === "pk") return shippingData.shipping_timespan.pk_shipping
+            }
+            callback({ price, getTimeSpan, additionalKgCharges, shipping_rates })
+            return { price, getTimeSpan, additionalKgCharges, shipping_rates }
+
         } catch (error) { console.log(error); }
         set(() => ({ walletLoading: false }))
     },

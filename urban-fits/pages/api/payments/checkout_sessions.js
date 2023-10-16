@@ -2,18 +2,30 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import OrderSession from "@/models/order_session";
+import Shipping_rates from "@/models/shipping_rates"
 import User from "@/models/user";
 import GuestUser from "@/models/guest_user";
 import mongoose from "mongoose";
+import axios from "axios";
 import CorsMiddleware from "@/utils/cors-config"
 
+const currencies = ["AED", "SAR", "PKR"]
+const shippingMethods = ["standard_shipping", "express_shipping", "free_shipping"]
+const countries = ["pk", "sa", "ae"]
 export default async function handler(req, res) {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { user_id, is_guest, shipping_info, order_items } = req.body
             if (!user_id || !shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id" })
+            else if (!countries.includes(shipping_info.country)) return res.status(400).json({ success: false, msg: "We only ship in the following countries: " + countries })
+            else if (!currencies.includes(shipping_info.currency)) return res.status(400).json({ success: false, msg: "Invalid Currency, Available currencies: " + currencies })
+            else if (!shippingMethods.includes(shipping_info.delivery_option)) return res.status(400).json({ success: false, msg: "Invalid shipping method, Available method args: " + shippingMethods })
             await ConnectDB()
+
+            // getting exchnge rates
+            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`)
+            const rate = data.new_amount;
 
             let finalOrderItems = []
             for (const orderItem of order_items) {
@@ -28,16 +40,56 @@ export default async function handler(req, res) {
                     name: dbProduct.name,
                     price: dbProduct.price,
                     image: filteredProduct.images[0],
-                    quantity: orderItem.quantity
+                    variant: orderItem?.color || null,
+                    quantity: orderItem.quantity,
+                    weight: dbProduct.shipping_details.weight
                 }
                 finalOrderItems.push(finalProduct)
             }
+
+            const shippingRates = await Shipping_rates.findById("652a79afd889b69c655d903b")
 
             let totalPrice = 0;
             for (const item of finalOrderItems) {
                 const itemPrice = item.price * item.quantity
                 totalPrice += itemPrice
             }
+
+            const isEligibleForFreeShipping = () => {
+                const { free_shipping } = shippingRates;
+                if (shipping_info.country === "ae" && totalPrice >= free_shipping.uae_order_rate) return true;
+                else if (shipping_info.country === "sa" && totalPrice >= free_shipping.ksa_order_rate) return true;
+                else if (shipping_info.country === "pk" && totalPrice >= free_shipping.pk_order_rate) return true;
+                else return false
+            }
+
+            const getTotalShippingFee = () => {
+                if (shipping_info.delivery_option === "free_shipping") return 0
+                const shippingData = shippingRates[shipping_info.delivery_option];
+                const totalWeight = finalOrderItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0);
+                let countryShipRate = 1;
+                let additionalKgRate = 1;
+                if (shipping_info.country === "ae") {
+                    countryShipRate = shippingData.uae_rate;
+                    additionalKgRate = shippingData.additional_kg_charge.uae;
+                }
+                else if (shipping_info.country === "sa") {
+                    countryShipRate = shippingData.ksa_rate;
+                    additionalKgRate = shippingData.additional_kg_charge.ksa;
+                }
+                else if (shipping_info.country === "pk") {
+                    countryShipRate = shippingData.pk_rate;
+                    additionalKgRate = shippingData.additional_kg_charge.pk;
+                }
+                if (totalWeight <= 5100) return countryShipRate
+                const additionalWeight = totalWeight - 5100
+                const additionalCharges = (additionalWeight / 1000) * (additionalKgRate || 1)
+                return additionalCharges + countryShipRate
+            }
+
+            let finalShippingFees = 0;
+            if (shipping_info.delivery_option === "free_shipping" && isEligibleForFreeShipping()) finalShippingFees = 0;
+            else finalShippingFees = getTotalShippingFee()
 
             if (!mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "user_id is not a valid." })
             let user = await User.findById(user_id)
@@ -53,7 +105,9 @@ export default async function handler(req, res) {
                 shipping_address: shipping_info.shipping_address,
                 billing_address: shipping_info.billing_address,
                 price_details: {
-                    total_price: totalPrice
+                    total_price: totalPrice,
+                    shipping_fees: finalShippingFees,
+                    currency: shipping_info.currency
                 }
             })
 
@@ -64,32 +118,32 @@ export default async function handler(req, res) {
                         shipping_rate_data: {
                             type: 'fixed_amount',
                             fixed_amount: {
-                                amount: 1500,
-                                currency: 'usd',
+                                amount: Math.floor(finalShippingFees * rate * 100),
+                                currency: shipping_info?.currency?.toLowerCase() || "aed",
                             },
-                            display_name: 'Next day air',
-                            delivery_estimate: {
-                                minimum: {
-                                    unit: 'business_day',
-                                    value: 1,
-                                },
-                                maximum: {
-                                    unit: 'business_day',
-                                    value: 1,
-                                },
-                            },
+                            display_name: shipping_info.delivery_option,
+                            // delivery_estimate: {
+                            //     minimum: {
+                            //         unit: 'business_day',
+                            //         value: 1,
+                            //     },
+                            //     maximum: {
+                            //         unit: 'business_day',
+                            //         value: 1,
+                            //     },
+                            // },
                         }
                     }
                 ],
                 line_items: finalOrderItems.map((product, index) => {
                     return {
                         price_data: {
-                            currency: 'usd',
+                            currency: shipping_info?.currency?.toLowerCase() || "aed",
                             product_data: {
                                 name: product.name,
                                 images: [product.image]
                             },
-                            unit_amount: Math.floor(product.price * 100),
+                            unit_amount: Math.floor(product.price * rate * 100),
                         },
                         quantity: product.quantity
                     }

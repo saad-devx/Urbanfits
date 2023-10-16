@@ -7,23 +7,28 @@ const getGeoLocation = async () => {
     const { setCountry, geo_selected_by_user } = useUser.getState()
     const { setCurrency, getExchangeRate } = useWallet.getState()
     if (geo_selected_by_user) return
-    try {
+    else try {
         const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
         const filteredCountry = countryCodes.filter(country => country.country === data?.geo_meta?.country?.toLowerCase())[0]
         if (filteredCountry) {
             setCountry(filteredCountry)
-            if (filteredCountry.country === "sa") {
-                setCurrency("SAR")
-                await getExchangeRate("SAR")
-            }
-            else if (filteredCountry.country === "pk") {
-                setCurrency("PKR")
-                await getExchangeRate("PKR")
+            switch (filteredCountry.country) {
+                case "sa":
+                    setCurrency("SAR")
+                    await getExchangeRate("SAR")
+                    break;
+                case "pk":
+                    setCurrency("PKR")
+                    await getExchangeRate("PKR")
+                    break;
+                case "ae":
+                    setCurrency("AED")
+                    await getExchangeRate("AED")
+                    break;
+                default: break;
             }
         }
         else return setCountry({ name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" })
-    } catch (error) {
-        console.log(error)
-    }
+    } catch (error) { console.log(error) }
 }
 export default getGeoLocation

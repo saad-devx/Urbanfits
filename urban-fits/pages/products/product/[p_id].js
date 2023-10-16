@@ -74,7 +74,7 @@ export default function Product(props) {
             name: productData.name,
             price: productData.price,
             uf_points: product.uf_points,
-            shipping_fee: productData.shipping_details.fees,
+            weight: productData.shipping_details.weight,
             stock: product.stock,
             size: sizevalue,
             sizes: product.sizes,

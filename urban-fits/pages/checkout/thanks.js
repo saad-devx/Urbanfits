@@ -6,6 +6,7 @@ import Loader from '@/components/loaders/loader';
 import LinkBtn from '@/components/buttons/link_btn';
 import toaster from '@/utils/toast_function';
 import useUser from '@/hooks/useUser';
+import useWallet from '@/hooks/useWallet';
 import { useCart } from 'react-use-cart';
 import Image from 'next/image';
 import mongoose from 'mongoose';
@@ -14,6 +15,7 @@ import { pusherClient } from '@/utils/pusher';
 export default function Thanks() {
     const router = useRouter()
     const { user, guestUser } = useUser()
+    const { formatPrice } = useWallet()
     const { emptyCart } = useCart()
     const [negativeState, setNegativeState] = useState(<Loader />)
     const [orderData, setOrderData] = useState(null)
@@ -73,17 +75,17 @@ export default function Thanks() {
                                 <span className="flex flex-col items-end">
                                     <h1 className="text-base lg:text-xl font_urbanist_medium">{item.name}</h1>
                                     <h2 className="text-sm md:text-base font_urbanist_medium capitalize">{item.color}</h2>
-                                    <span className="font_gotam_light space-x-5"> <small>Qty:{item.quantity}</small> <small>${item.price}</small> </span>
+                                    <span className="font_gotam_light space-x-5"> <small>Qty:{item.quantity}</small> <small>{formatPrice(item.price)}</small> </span>
                                 </span>
                             </div>
                         })}
                     </div>
                     <h4 className="text-base md:text-xl font_urbanist_bold my-5">Price Details</h4>
                     <div className="w-full h-auto my-5 md:my-3">
-                        <span key={1} className="w-full mx-auto flex justify-between"><small>Price</small> <small>{get3dpNumber(orderData.price_details.total_price)}</small></span>
+                        <span key={1} className="w-full mx-auto flex justify-between"><small>Price</small> <small>{formatPrice(orderData.price_details.total_price)}</small></span>
                         <span key={2} className="w-full mx-auto flex justify-between"><small>Discount</small> <small>0%</small></span>
-                        <span key={3} className="w-full mx-auto flex justify-between"><small>Shipping Fee</small> <small>${15}</small></span>
-                        <span key={5} className="w-full mx-auto flex justify-between"><small>Total Amount</small> <small>${get3dpNumber(orderData.price_details.total_price + 15)}</small></span>
+                        <span key={3} className="w-full mx-auto flex justify-between"><small>Shipping Fee</small> <small>{formatPrice(orderData.price_details.shipping_fees)}</small></span>
+                        <span key={5} className="w-full mx-auto flex justify-between"><small>Total Amount</small> <small>{formatPrice(orderData.price_details.total_price + orderData.price_details.shipping_fees)}</small></span>
                     </div>
                     <div className="flex flex-col md:flex-row md:items-end border-t border-t-gray-400">
                         <div className="relative w-full pt-2 flex flex-col">

@@ -4,12 +4,15 @@ import useWallet from '@/hooks/useWallet';
 import useUser from '@/hooks/useUser';
 import Image from 'next/image';
 
-export default function CheckoutCalcSection() {
+export default function CheckoutCalcSection(props) {
     const { user } = useUser()
-    const { formatPrice } = useWallet()
     const { totalUniqueItems, items, cartTotal } = useCart()
-    const totalUfPoints = items.reduce((total, item) => total + (item.uf_points || 0), 0)
-    console.log(totalUfPoints)
+    const { formatPrice } = useWallet()
+    const { shippingRates, calculateTotolShippingFee, selectedShippingOption } = props
+    const totalUfPoints = items.reduce((total, item) => total + (item?.uf_points || 0), 0)
+
+    const TotalOrderPrice = formatPrice(cartTotal + calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption))
+
     return (
         <div className="bg-white w-full p-4 md:p-5 lg:p-7 space-y-3 rounded-xl">
             <h3 className="text-xl md:text-2xl font_urbanist_bold text-center mb-3">Order Summary ({totalUniqueItems})</h3>
@@ -43,11 +46,11 @@ export default function CheckoutCalcSection() {
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-red-500'>Earned UF-Points</span> <span>{totalUfPoints}</span></div>
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></div>
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{0}%</span></div>
-                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(16)}</span></div>
+                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption)) || "We don't ship here"}</span></div>
                 </div>
                 <div className="w-full py-2 flex justify-between font_urbanist_bold border-t border-t-gray-200">
                     <h4 className="text-lg">Total</h4>
-                    <h4 className="text-lg">{formatPrice(cartTotal + 16)}</h4>
+                    <h4 className="text-lg">{TotalOrderPrice}</h4>
                 </div>
             </div>
         </div>

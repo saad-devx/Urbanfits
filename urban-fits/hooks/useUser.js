@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { signOut } from "next-auth/react"
 import useNewsletter from './useNewsletter';
+import useWallet from './useWallet';
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -41,7 +42,26 @@ const useUser = create(persist((set, get) => ({
         else return set((state) => ({ recentItems: [...state.recentItems, newItem] }))
     },
     setGeoSelectedByUser: (bool) => set(() => ({ geo_selected_by_user: bool })),
-    setCountry: (value) => set(() => ({ country: value })),
+    setCountry: async (c) => {
+        const { setCurrency, getExchangeRate } = useWallet.getState()
+        switch (c.country) {
+            case "sa":
+                await getExchangeRate("SAR")
+                set(() => ({ country: c }))
+                setCurrency("SAR")
+                break;
+            case "pk":
+                await getExchangeRate("PKR")
+                set(() => ({ country: c }))
+                setCurrency("PKR")
+                break;
+            default:
+                await getExchangeRate("AED")
+                set(() => ({ country: c }))
+                setCurrency("AED")
+                break;
+        }
+    },
     addToWishList: (item) => set((state) => {
         return { wishList: [...state.wishList, item] }
     }),
