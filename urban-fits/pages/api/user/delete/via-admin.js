@@ -5,7 +5,7 @@ import UFpoints from "@/models/ufpoints";
 import Newsletter from "@/models/newsletter";
 import Notification from "@/models/notification";
 import Shoppinglist from "@/models/shoppinglist";
-import Order from "@/models/order";
+import Order from "@/models/orders";
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
 
