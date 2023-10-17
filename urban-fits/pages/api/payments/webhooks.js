@@ -1,11 +1,9 @@
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import Cors from 'micro-cors';
-import sendEmail from "@/utils/sendEmail"
-import OrderConfirmed from '@/email templates/order_confirm';
 import OrderSession from '@/models/order_session';
-import Order from "@/models/order"
 import { pusherServer } from '@/utils/pusher';
+import axios from 'axios';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -20,7 +18,6 @@ export const config = {
 const cors = Cors({
     allowMethods: ['POST', 'HEAD'],
 });
-const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 
 const webhookHandler = async (req, res) => {
     if (req.method === 'POST') {
@@ -46,31 +43,8 @@ const webhookHandler = async (req, res) => {
             case 'payment_intent.succeeded': {
                 const paymentIntent = event.data.object;
                 console.log(`PaymentIntent status: ${paymentIntent.status}`);
-
-                const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
-                const copyOrderSession = JSON.parse(JSON.stringify(orderSession))
-                const date = new Date()
-                const newOrder = await Order.create({
-                    ...copyOrderSession,
-                    year: date.getFullYear(),
-                    month: months[date.getMonth()]
-                })
-                try {
-                    let template = OrderConfirmed(orderSession.name)
-                    await sendEmail({ to: orderSession.email, subject: "Your order has been placed." }, template)
-                    pusherServer.trigger(`payments-user_${orderSession.user_id}`, 'payment-succeeded', {
-                        order_session: orderSession,
-                        success: true,
-                        type: 'success',
-                        msg: "Your payment was successfull!"
-                    })
-                    pusherServer.trigger('admin-channel', 'new-order-received', {
-                        success: true,
-                        msg: "A new order has been received!",
-                        order_data: newOrder
-                    })
-                } catch (error) { console.log(error) }
-                await OrderSession.findByIdAndDelete(paymentIntent.metadata.order_session_id)
+                const orderSessionId = paymentIntent.metadata.order_session_id;
+                axios.post(`${process.env.HOST}/api/payments/create-order?order_session_id=${orderSessionId}`)
                 break;
             }
             case 'payment_intent.payment_failed': {

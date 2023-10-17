@@ -1,14 +1,70 @@
 import mongoose from "mongoose"
 
+const addressObject = {
+    address_title: String,
+    firstname: String,
+    lastname: String,
+    address: String,
+    apt_suite: String,
+    city: String,
+    country: String,
+    phone_prefix: String,
+    phone_number: String,
+}
 const OrderSessionSchema = new mongoose.Schema({
     user_id: {
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
-    email: String,
     name: String,
-    order_items: Array,
-    shipping_address: Object,
-    billing_address: Object,
-    price_details: Object
+    email: String,
+    order_status: {
+        type: String,
+        enum: ['Pending', 'Shipped', 'ReadyToShip', 'Returned', 'Delivered'],
+        default: 'Pending',
+    },
+    order_items: [
+        {
+            product_id: {
+                type: mongoose.Schema.ObjectId,
+                ref: "Product",
+                required: true,
+            },
+            variant: String,
+            name: {
+                type: String,
+                required: true,
+            },
+            price: {
+                type: Number,
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+            },
+            image: {
+                type: String,
+                required: true,
+            },
+            weight: String
+        }
+    ],
+    shipping_address: addressObject,
+    billing_address: addressObject,
+    price_details: {
+        paid_at: Date,
+        currency: String,
+        total_price: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
+        shipping_fees: {
+            type: Number,
+            required: true,
+            default: 0,
+        }
+    }
 }, { strict: false, timestamps: true })
 module.exports = mongoose.models.OrderSession || mongoose.model("OrderSession", OrderSessionSchema)

@@ -37,10 +37,13 @@ export default async function handler(req, res) {
 
                 const filteredProduct = filteredArray[0]
                 const finalProduct = {
+                    product_id: dbProduct._id,
                     name: dbProduct.name,
                     price: dbProduct.price,
                     image: filteredProduct.images[0],
-                    variant: orderItem?.color || null,
+                    variant: orderItem?.color || '',
+                    uf_points: orderItem?.uf_points || 0,
+                    size: orderItem.size,
                     quantity: orderItem.quantity,
                     weight: dbProduct.shipping_details.weight
                 }
@@ -101,7 +104,7 @@ export default async function handler(req, res) {
                 is_guest,
                 name: shipping_info.name,
                 email: shipping_info.email,
-                order_items,
+                order_items: finalOrderItems,
                 shipping_address: shipping_info.shipping_address,
                 billing_address: shipping_info.billing_address,
                 price_details: {

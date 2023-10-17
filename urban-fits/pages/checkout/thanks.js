@@ -20,8 +20,6 @@ export default function Thanks() {
     const [negativeState, setNegativeState] = useState(<Loader />)
     const [orderData, setOrderData] = useState(null)
 
-    const get3dpNumber = (num) => num.toFixed(3)
-
     useEffect(() => {
         emptyCart()
         const paymentChannel = pusherClient.subscribe(`payments-user_${user?._id || guestUser?._id}`)
@@ -70,7 +68,7 @@ export default function Thanks() {
                         {orderData.order_items?.map((item) => {
                             return <div className="w-full my-5 flex justify-between items-center">
                                 <div className="w-1/4 md:w-1/4 aspect-square">
-                                    <Image width={560} height={590} src={item.images[0]} alt={item.name} className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" />
+                                    <Image width={560} height={590} src={item.image} alt={item.name} className="w-full h-full rounded-lg md:rounded-xl object-cover object-top" />
                                 </div>
                                 <span className="flex flex-col items-end">
                                     <h1 className="text-base lg:text-xl font_urbanist_medium">{item.name}</h1>

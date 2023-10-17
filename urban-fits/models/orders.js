@@ -11,7 +11,6 @@ const addressObject = {
     phone_prefix: String,
     phone_number: String,
 }
-
 const OrderSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -76,5 +75,4 @@ const OrderSchema = new mongoose.Schema({
         required: true
     }
 }, { timestamps: true });
-
 module.exports = mongoose.models.Order || mongoose.model("Order", OrderSchema);

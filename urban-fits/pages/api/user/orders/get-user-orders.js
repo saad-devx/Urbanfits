@@ -1,5 +1,5 @@
 import ConnectDB from "@/utils/connect_db";
-import Order from "@/models/order"
+import Order from "@/models/orders"
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
 
