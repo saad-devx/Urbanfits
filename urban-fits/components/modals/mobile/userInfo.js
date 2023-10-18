@@ -26,7 +26,7 @@ export default function UserInfoModal({ user, updateUser, show, setUserInfoModal
     return <section style={{ transform: show ? "translateX(-100%)" : "translateX(0)" }} className='fixed z-50 top-0 -right-full w-screen h-screen bg-white flex flex-col transition-all duration-500'>
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
             <button onClick={() => setUserInfoModal(false)} className='fa-solid fa-chevron-left text-xl'></button>
-            <div className="flex flex-col justify-center items-center font_urbanist text-xs text-gray-400">
+            <div className="flex flex-col justify-center items-center font_urbanist text-xs">
                 <h1 className="font_urbanist_medium text-lg">Personal Info</h1>
                 All data will be encrypted
             </div>

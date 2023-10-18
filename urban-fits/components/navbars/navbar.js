@@ -158,4 +158,15 @@ export default function Navbar() {
             totalUniqueItems={totalUniqueItems}
         />
     </>
+    else return <>
+        <Cart cart={cart} setCart={setCart} />
+        <MobileNavbar
+            user={user}
+            cart={cart}
+            setCart={setCart}
+            logout={logout}
+            setLogout={setLogout}
+            totalUniqueItems={totalUniqueItems}
+        />
+    </>
 }

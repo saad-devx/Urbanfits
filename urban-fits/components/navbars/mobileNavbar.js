@@ -27,13 +27,15 @@ const MobileListItem = (props) => {
 
 function MobileNavbar({ user, cart, setCart, logout, setLogout, totalUniqueItems }) {
     const router = useRouter()
+    const url = router.pathname
     const [menu, setMenu] = useState(false)
     const toggleMenu = () => setMenu(!menu)
+    const Exception = url.startsWith("/about") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
 
     return <>
-        <section className="sticky top-0 left-0 right-0 z-50 w-full h-[70px] flex justify-center items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white border-b transition-all duration-300">
+        {!Exception && <section className="sticky top-0 left-0 right-0 z-50 w-full h-[70px] flex justify-center items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white border-b transition-all duration-300">
             <Search classes="flex md:hidden" />
-        </section>
+        </section>}
         <section style={{ transform: menu ? "translateX(0)" : "translateX(-100%)" }} className="fixed z-[70] inset-0 w-screen min-h-screen overflow-y-scroll p-4 flex flex-col items-center bg-white overflow-x-hidden transition-all duration-700">
             <nav className="absolute left-0 top-0 right-0 w-full p-4 mb-6 flex justify-center items-center border-b border-gray-50">
                 <button onClick={toggleMenu} className='fa-solid fa-chevron-left absolute left-4 text-xl'></button>

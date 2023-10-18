@@ -69,7 +69,7 @@ export default function OrdersPage(props) {
                 <MblOption href="/user/orders/shipped">Shipped</MblOption>
                 <MblOption href="/user/orders/returns">Returns</MblOption>
             </section>
-            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">
+            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4 pb-14">
                 {orderLoading ? <div className="w-full flex justify-center"><BounceLoader /></div> :
                     orders.map((order, index) => {
                         return <OrderItem key={index} order={order} />

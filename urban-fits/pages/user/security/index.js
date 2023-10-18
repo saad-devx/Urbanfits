@@ -70,7 +70,7 @@ export default function Security() {
         <Update2FA user={user} updateUser={updateUser} show={tfaModal} setTfaModal={setTfaModal} setLoading={setLoading} />
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
             <Link href="/user" className='fa-solid fa-chevron-left text-xl'></Link>
-            <div className="flex flex-col justify-center items-center font_urbanist text-xs text-gray-400">
+            <div className="flex flex-col justify-center items-center font_urbanist text-xs">
                 <h1 className="font_urbanist_medium text-lg">Security / 2FA</h1>
                 All data will be encrypted
             </div>

@@ -20,7 +20,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 import Button from '@/components/buttons/simple_btn';
-import formatPrice from '@/utils/format_price';
 
 loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
@@ -28,7 +27,7 @@ export default function Checkout1() {
     const router = useRouter()
     const { address, getAddress } = useAddress()
     const { user, guestUser, country } = useUser()
-    const { currency, getShippingRates } = useWallet()
+    const { currency, getShippingRates, formatPrice } = useWallet()
     const [shippingRates, setShippingRates] = useState(null)
     // loader and billing form state
     const [loader, setLoader] = useState(null)
