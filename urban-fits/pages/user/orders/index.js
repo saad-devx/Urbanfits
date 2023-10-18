@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import Error403 from '@/pages/403';
+import OrderItem from '@/components/orderItem';
+import BounceLoader from '@/components/loaders/bounceLoader';
 import Link from 'next/link'
 import User from '..';
+import axios from 'axios';
 import Image from 'next/image';
 const EmtpyOrderImg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/empty-order.png"
 
@@ -30,6 +33,27 @@ const NoOrderSection = () => {
 
 export default function OrdersPage(props) {
     const { user } = useUser()
+    const [orders, setOrders] = useState([])
+    const [orderLoading, setOrderLoading] = useState(false)
+
+    const getOrders = async (status = null) => {
+        if (!user) return
+        setOrderLoading(true)
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/user/orders/get-user-orders?user_id=${user._id}${status ? `&status=${status}` : ''}`)
+            setOrders(data.orders)
+        } catch (error) {
+            console.log(error)
+            if (error.response) toaster("error", error.response.data.msg)
+        }
+        setOrderLoading(false)
+    }
+
+    useEffect(() => {
+        getOrders(props.status)
+        return () => setOrders([])
+    }, [props.status])
+
     if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>Orders</title></Head>
@@ -45,7 +69,12 @@ export default function OrdersPage(props) {
                 <MblOption href="/user/orders/shipped">Shipped</MblOption>
                 <MblOption href="/user/orders/returns">Returns</MblOption>
             </section>
-            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">{props.children}</section>}
+            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">
+                {orderLoading ? <div className="w-full flex justify-center"><BounceLoader /></div> :
+                    orders.map((order, index) => {
+                        return <OrderItem key={index} order={order} />
+                    })}
+            </section>}
         </main>
     </>
     return <>
@@ -61,7 +90,12 @@ export default function OrdersPage(props) {
                 </div>
             </div>
             <section className="w-full my-5 font_urbanist">
-                {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">{props.children}</section>}
+                {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">
+                    {orderLoading ? <div className="w-full flex justify-center"><BounceLoader /></div> :
+                        orders.map((order, index) => {
+                            return <OrderItem key={index} order={order} />
+                        })}
+                </section>}
             </section>
         </User>
     </>

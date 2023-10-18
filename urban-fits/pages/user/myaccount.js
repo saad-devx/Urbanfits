@@ -12,6 +12,7 @@ import Error403 from '../403';
 import Newsletter from '@/components/modals/newsletter';
 import useNewsletter from '@/hooks/useNewsletter';
 import useAddress from '@/hooks/useAddress';
+import useWallet from '@/hooks/useWallet'
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
 import dynamic from 'next/dynamic';
@@ -50,6 +51,7 @@ const AddressContainer = (props) => {
 
 export default function Personalinfo() {
     const { user, updateUser, country } = useUser()
+    const { currency } = useWallet()
     const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
     const { address, getAddress } = useAddress()
     const [imgSpinner, SetImgSpinner] = useState(null)
@@ -182,7 +184,7 @@ export default function Personalinfo() {
                     Language<span className="flex items-center gap-x-2 font_urbanist capitalize">English <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
                 <button onClick={() => setCurrencyModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Currency<span className="flex items-center gap-x-2 font_urbanist capitalize">USD <i className="fa-solid fa-chevron-right text-xs"></i></span>
+                    Currency<span className="flex items-center gap-x-2 font_urbanist capitalize">{currency} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
             </section>
         </main>

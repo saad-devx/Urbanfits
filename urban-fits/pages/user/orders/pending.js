@@ -6,7 +6,5 @@ import useUser from '@/hooks/useUser';
 export default function Pending() {
   const { user } = useUser()
   if (!user) return <Error403 />
-  return <OrdersPage noOrders={true}>
-    <div className="w-full flex flex-col"></div>
-  </OrdersPage>
+  return <OrdersPage status="pending" />
 }

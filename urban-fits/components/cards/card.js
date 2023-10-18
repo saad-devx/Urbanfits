@@ -1,7 +1,6 @@
 import React from 'react'
 import LinkBtn from '../buttons/link_btn'
 
-
 const Card = (props)=> {
   return (
     <div className={`${props.classes} ${props.round? props.round: "rounded-3xl" } bg-white card_boxshadow flex flex-col hover:rounded-xl hover:scale-[1.01] transition-all duration-300`}>

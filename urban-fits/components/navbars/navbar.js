@@ -129,7 +129,7 @@ export default function Navbar() {
                     <span className="w-7 h-5 overflow-hidden" title={country?.country}><Image className='w-full h-full object-cover' width={50} height={40} src={country?.src} /></span>
                     <DropDownIcon />
                 </button>
-                {user ? <Link href='/user/inbox' className='relative'>
+                {user ? <Link href='/user/inbox/primary' className='relative'>
                     {notifications && notifications.some(notific => !notific.seen) ? <span className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[10%] lg:translate-y-[-30%] w-2 h-2 lg:w-4 lg:h-4 flex justify-center items-center text-[10px] border border-white aspect-square rounded-full bg-black"><p className='hidden lg:block text-white'>{unseenNotificCount}</p></span> : null}
                     <button className="fa-regular fa-envelope text-[22px] translate-y-[15%] text-[#4d4d4d]"></button>
                 </Link> : null}

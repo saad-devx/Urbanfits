@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
+import useWallet from '@/hooks/useWallet';
 import useNewsletter from '@/hooks/useNewsletter';
 import Error403 from '@/pages/403';
 import Loader from '@/components/loaders/loader';
@@ -53,6 +54,7 @@ export const Option = (props) => {
 
 export default function User(props) {
     const { user, updateUser, recentItems } = useUser()
+    const { points } = useWallet()
     const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
     const [imgSpinner, SetImgSpinner] = useState(null)
     const [loader, setLoader] = useState(false)
@@ -97,8 +99,6 @@ export default function User(props) {
     }
     useEffect(() => {
         if (!newsletterData) return () => getNewsletterData()
-    }, [])
-    useEffect(() => {
         if (window.matchMedia('(min-width: 760px)').matches) {
             let activeLink = document.querySelector('#menu_container .active')
             activeLink && activeLink.scrollIntoView()
@@ -132,7 +132,7 @@ export default function User(props) {
                             Vouchers
                         </span>
                         <span className="flex flex-col items-center gap-2">
-                            <span className='font_urbanist_bold text-lg'>{0}</span>
+                            <span className='font_urbanist_bold text-lg'>{points}</span>
                             UF-Points
                         </span>
                     </nav>
@@ -236,7 +236,7 @@ export default function User(props) {
                 </>}
             <h2 className="mt-5 font_urbanist_bold text-base">More Services</h2>
             <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
-                <Link href="/products/category/all" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                <Link href="/products/category/all-categories" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0.566709 6.14375L0.566709 6.14375L0.567045 6.14441C0.612783 6.23422 0.65045 6.28362 0.687623 6.32028C0.725975 6.35809 0.782047 6.4003 0.885451 6.45568L0.972253 6.5H3.51431H6.05646L6.15624 6.4491L6.1569 6.44876C6.24686 6.40303 6.29634 6.36537 6.33304 6.32822C6.37087 6.28992 6.41309 6.23393 6.46849 6.13069L6.51273 6.0442V3.50481V0.965417L6.4685 0.878953C6.41309 0.77569 6.37088 0.719701 6.33304 0.681395C6.29634 0.64425 6.24686 0.606586 6.1569 0.560857L6.15624 0.56052L6.05567 0.509214L3.55707 0.500823C2.6733 0.498627 2.01112 0.500835 1.56001 0.507367C1.33391 0.510641 1.16456 0.514952 1.04826 0.520116C0.999508 0.522281 0.96343 0.524455 0.938169 0.526441C0.743945 0.610951 0.584784 0.787259 0.525972 0.959131C0.525145 0.97156 0.521384 1.01193 0.517665 1.09655C0.512561 1.21268 0.508381 1.37873 0.505381 1.60075C0.499394 2.04395 0.498274 2.69643 0.50267 3.59017C0.50267 3.59021 0.50267 3.59024 0.502671 3.59028L0.515261 6.04309L0.566709 6.14375ZM0.902272 0.530108C0.902414 0.530142 0.90474 0.529868 0.908821 0.529187C0.90417 0.529735 0.90213 0.530075 0.902272 0.530108Z" stroke="black" />
                         <path d="M10.0804 6.14375L10.0804 6.14375L10.0807 6.14441C10.1265 6.23422 10.1641 6.28362 10.2013 6.32028C10.2396 6.35809 10.2957 6.4003 10.3991 6.45568L10.4859 6.5H13.028H15.5701L15.6699 6.4491L15.6706 6.44876C15.7605 6.40303 15.81 6.36537 15.8467 6.32822C15.8845 6.28992 15.9268 6.23393 15.9822 6.13069L16.0264 6.0442V3.50481V0.965417L15.9822 0.878953C15.9268 0.77569 15.8845 0.719701 15.8467 0.681395C15.81 0.64425 15.7605 0.606586 15.6706 0.560857L15.6699 0.56052L15.5693 0.509214L13.0707 0.500823C12.187 0.498627 11.5248 0.500835 11.0737 0.507367C10.8476 0.510641 10.6782 0.514952 10.5619 0.520116C10.5132 0.522281 10.4771 0.524455 10.4518 0.526441C10.2576 0.610951 10.0985 0.787259 10.0396 0.959131C10.0388 0.97156 10.0351 1.01193 10.0313 1.09655C10.0262 1.21268 10.0221 1.37873 10.0191 1.60075C10.0131 2.04395 10.0119 2.69643 10.0163 3.59017C10.0163 3.59021 10.0163 3.59024 10.0163 3.59028L10.0289 6.04309L10.0804 6.14375ZM10.4159 0.530108C10.4161 0.530142 10.4184 0.529868 10.4225 0.529187C10.4178 0.529735 10.4158 0.530075 10.4159 0.530108Z" stroke="black" />
