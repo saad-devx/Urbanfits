@@ -11,7 +11,7 @@ import Tooltip from '../tooltip';
 import toaster from '@/utils/toast_function';
 
 export default function LanguageModal(props) {
-    const { currency, setCurrency } = useWallet()
+    const { currency, setCurrency, setCurrency_selected_by_user } = useWallet()
     const { country, setCountry, setGeoSelectedByUser } = useUser()
     const [loading, setLoading] = React.useState(false)
     const validatedSchema = Yup.object({
@@ -30,6 +30,7 @@ export default function LanguageModal(props) {
         const { value } = event.target
         setCurrency(value)
         location.reload()
+        setCurrency_selected_by_user(true)
         toaster("success", <p>Currency udpated to <span className='font_urbanist_bold'>{value}</span>.</p>)
     }
 

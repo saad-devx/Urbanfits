@@ -28,8 +28,9 @@ export default function Checkout1() {
     const { address, getAddress } = useAddress()
     const { user, guestUser, country } = useUser()
     const { currency, getShippingRates, formatPrice } = useWallet()
+    const { cartTotal, isEmpty, items } = useCart()
     const [shippingRates, setShippingRates] = useState(null)
-    // loader and billing form state
+    const [langModal, setLangModal] = useState(false)
     const [loader, setLoader] = useState(null)
     const [billingForm, setBillingForm] = useState(null)
     // state and funciton to handle modify input fields
@@ -45,17 +46,6 @@ export default function Checkout1() {
         if (elemName === "name") return name.current.focus()
         if (elemName === "email") return email.current.focus()
     }
-
-    // states and function for change localization modal
-    const [modal3, setModal3] = useState(false)
-    const toggleModal = (e) => {
-        if (e.target.name === "modal3") {
-            if (modal3 === false) return setModal3(true)
-            if (modal3 === true) return setModal3(false)
-        }
-    }
-
-    const { cartTotal, isEmpty, items } = useCart()
 
     // getting data from input fields and applying validation
     const addressFieldsValidation = {
@@ -223,7 +213,7 @@ export default function Checkout1() {
     if (!isEmpty) return <>
         <Head><title>Checkout - Urban Fits</title></Head>
         {loader}
-        <LanguageModal show={modal3} toggleModal={toggleModal} />
+        <LanguageModal show={langModal} setLangModal={setLangModal} />
         <main className='bg-gray-100 w-full h-full px-4 md:px-5 lg:px-10 xl:px-14 2xl:px-20 flex flex-col lg:flex-row lg:flex-wrap p-5 md:p-7 lg:p-0 lg:pt-10 font_urbanist text-left' >
             <div className="w-full mb-2"><span onClick={router.back} className='cursor-pointer font_urbanist_medium'><i className="fa-solid fa-chevron-left text-xs mr-2"></i>Back</span></div>
             <section className="bg-white w-full lg:w-[56%] mb-10 p-4 md:p-5 lg:p-7 mr-auto rounded-2xl">
@@ -247,20 +237,20 @@ export default function Checkout1() {
                     <div className="flex flex-col mb-6">
                         <label className='w-full border-b pb-3 font_urbanist_medium' htmlFor="delivery_options">Delivery Option</label>
                         {touched.delivery_option && errors.delivery_option ? <Tooltip classes="form-error" content={errors.delivery_option} /> : null}
-                        <div id="delivery_options" className="w-full py-3 flex items-start justify-around font_urbanist_medium">
+                        <div id="delivery_options" className="w-full py-3 grid grid-cols-3 xl:gap-x-4 font_urbanist_medium">
                             <span className="flex">
-                                <input className='rounded mr-2 translate-y-1' type="radio" id="standard_shipping" name="delivery_option" value="standard_shipping" defaultChecked onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="standard_shipping">Standard Delivery <p className="text-[9px]">{shippingRates?.getTimeSpan("standard_shipping")}</p></label>
+                                <input className='rounded mr-2 translate-y-1' type="radio" id="standard_shipping" name="delivery_option" value="standard_shipping" defaultChecked onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="standard_shipping">Standard Delivery <p className="text-[7px] mid:text-[9px] text-gray-400">{shippingRates?.getTimeSpan("standard_shipping")}</p></label>
                             </span>
-                            {country.country !== "ae" && <span className="flex">
-                                <input className='rounded mr-2 translate-y-1' type="radio" id="express_shipping" name="delivery_option" value="express_shipping" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="express_shipping">Express Delivery <p className="text-[9px]">{shippingRates?.getTimeSpan("express_shipping")}</p></label>
+                            {country.country !== "ae" && <span className="w-full flex justify-center">
+                                <input className='rounded mr-2 translate-y-1' type="radio" id="express_shipping" name="delivery_option" value="express_shipping" onBlur={handleBlur} onChange={handleChange} /><label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="express_shipping">Express Delivery <p className="text-[7px] mid:text-[9px] text-gray-400">{shippingRates?.getTimeSpan("express_shipping")}</p></label>
                             </span>}
-                            <span className={`flex ${cartTotal >= getFreeDeliveryLimit() ? null : "opacity-40 pointer-events-none"}`}>
+                            <span className={`w-full flex justify-end ${cartTotal >= getFreeDeliveryLimit() ? null : "opacity-40 pointer-events-none"}`}>
                                 <input className="rounded mr-2 translate-y-1" type="radio" id="free_shipping" name="delivery_option" value="free_shipping" disabled={cartTotal < getFreeDeliveryLimit()} onBlur={handleBlur} onChange={(e) => {
                                     if (cartTotal >= getFreeDeliveryLimit()) {
                                         setShippingRates({ ...shippingRates, price: 0, additionalKgCharges: 0 }); handleChange(e)
                                     }
                                     else return toaster("error", `Your order must be atleast ${formatPrice(getFreeDeliveryLimit())} to avail Free Delivery.`)
-                                }} /><div className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight'><label htmlFor="free_shipping" className='cursor-pointer'>Free Delivery</label><p className="text-[9px] leading-tight">{shippingRates?.getTimeSpan("free_shipping")}</p><p className="text-[9px] leading-tight">Minimum {formatPrice(getFreeDeliveryLimit())}&nbsp; order</p></div>
+                                }} /><div className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight'><label htmlFor="free_shipping" className='cursor-pointer'>Free Delivery</label><p className="text-[7px] mid:text-[9px] text-gray-400 leading-tight">{shippingRates?.getTimeSpan("free_shipping")}</p><p className="text-[7px] mid:text-[9px] text-gray-400 leading-tight">Minimum {formatPrice(getFreeDeliveryLimit())}&nbsp; order</p></div>
                             </span>
                         </div>
                         <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">Enter Your Shipping Address</h1>
@@ -294,17 +284,13 @@ export default function Checkout1() {
                                 </div>
                                 <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.country && errors.shipping_address && errors.shipping_address.country ? <Tooltip classes="form-error" content={errors.shipping_address.country} /> : null}
-                                    <select value={values.shipping_address.phone_prefix} name='shipping_address.phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                    <select value={values.shipping_address.country} name='shipping_address.country' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                                         {countryCodes.map((item) => {
                                             if (!item.code) return <option disabled>{item.name}</option>
-                                            return <option value={item.code}>{item.name} {item.code}</option>
+                                            return <option value={item.name}>{item.name}</option>
                                         })}
                                     </select>
                                 </div>
-                            </div>
-                            <div className="flex text-sm">
-                                <p>Shipping outside of United Arab Emirates? </p>
-                                <button type='button' name='modal3' onClick={toggleModal} className="mx-2 underline font_urbanist_medium">Change Localization</button>
                             </div>
                             <div className="flex justify-between w-full">
                                 <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
@@ -321,10 +307,14 @@ export default function Checkout1() {
                                     <input className="w-full bg-transparent outline-none border-none" type="tel" name="shipping_address.phone_number" id="phone_number" size="15" maxLength={15} value={values.shipping_address.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                                 </div>
                             </div>
+                            <div className="text-sm">
+                                Shipping outside of United Arab Emirates?&nbsp;
+                                <button type='button' name='modal3' onClick={() => setLangModal(true)} className="underline">Change Localization</button>
+                            </div>
                         </section>
                         <div className="w-full my-7 flex flex-col">
                             <h1 className="font_urbanist_bold text-lg lg:text-xl">Enter You Billing Address</h1>
-                            <div className="my-2 flex items-center font_urbanist_medium text-sm md:text-base">
+                            <div className="w-full my-2 flex justify-between items-center font_urbanist_medium text-gray-400 text-sm md:text-base">
                                 Use same details for Billing Address <label className={`${handleSwitchBtn()} switch w-11 md:w-11 h-6 ml-5 `}><input type="checkbox" name='same_details_as_shipping' value={true} onChange={toggleBillingForm} /><span className="slider"></span></label>
                             </div>
                         </div>
@@ -358,11 +348,11 @@ export default function Checkout1() {
                                 </div>
                                 <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.country && errors.billing_address && errors.billing_address.country ? <Tooltip classes="form-error" content={errors.billing_address.country} /> : null}
-                                    <select className="w-full border-none outline-none bg-transparent border-b-gray-800" name='billing_address.country' value={values.billing_address.country} onBlur={handleBlur} onChange={handleChange} >
-                                        <option disabled >Country</option>
-                                        <option value="uae">UAE</option>
-                                        <option value="usa">USA</option>
-                                        <option value="pk">Pakistan</option>
+                                    <select value={values.billing_address.phone_prefix} name='billing_address.country' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                        {countryCodes.map((item) => {
+                                            if (!item.code) return <option disabled>{item.name}</option>
+                                            return <option value={item.name}>{item.name}</option>
+                                        })}
                                     </select>
                                 </div>
                             </div>

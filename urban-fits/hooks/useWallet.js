@@ -8,17 +8,18 @@ const currencies = ["AED", "SAR", "PKR"]
 const useWallet = create(persist((set, get) => ({
     points: 0,
     currency: process.env.BASE_CURRENCY,
+    currency_selected_by_user: false,
     exchange_rate: 1,
     walletLoading: false,
     setCurrency: (currency) => {
-        if (currencies.includes(currency)) {
-            set(() => ({ currency }))
-        }
+        if (currencies.includes(currency)) set(() => ({ currency }))
         else return toaster("error", "Invalid currency!")
     },
+    setCurrency_selected_by_user: (bool) => set(() => ({ currency_selected_by_user: bool })),
     setExchangeRate: (rate) => set(() => ({ exchange_rate: rate })),
     getUfBalance: async () => {
         const { user } = useUser.getState()
+        if (!user) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
@@ -28,6 +29,7 @@ const useWallet = create(persist((set, get) => ({
     },
     getUfHistory: async (setCallbackState) => {
         const { user } = useUser.getState()
+        if (!user) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)

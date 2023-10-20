@@ -30,10 +30,11 @@ function MobileNavbar({ user, cart, setCart, logout, setLogout, totalUniqueItems
     const url = router.pathname
     const [menu, setMenu] = useState(false)
     const toggleMenu = () => setMenu(!menu)
-    const Exception = url.startsWith("/about") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
+    const Exception = url.startsWith("/about") || window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth'))
+    const SearchException = url.startsWith("/about") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
 
-    return <>
-        {!Exception && <section className="sticky top-0 left-0 right-0 z-50 w-full h-[70px] flex justify-center items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white border-b transition-all duration-300">
+    if (!Exception) return <>
+        {!SearchException && <section className="sticky top-0 left-0 right-0 z-50 w-full h-[70px] flex justify-center items-center px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white border-b transition-all duration-300">
             <Search classes="flex md:hidden" />
         </section>}
         <section style={{ transform: menu ? "translateX(0)" : "translateX(-100%)" }} className="fixed z-[70] inset-0 w-screen min-h-screen overflow-y-scroll p-4 flex flex-col items-center bg-white overflow-x-hidden transition-all duration-700">

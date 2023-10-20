@@ -57,10 +57,10 @@ export default function Shoppingcard({ product }, props) {
                     </span>
                     <div className='w-full px-0 md:px-3 my-1 md:my-2 flex flex-row-reverse lg:flex-row justify-between items-center font_urbanist text-[10px] lg:text-sm '>
                         <span className='hidden lg:block'>{product.variants?.length} Color(s)</span>
-                        {product.uf_points ? <span className="lg:hidden px-1.5 py-px border text-red-500 text-[9px] font_urbanist rounded-full">Earn {product.uf_points} UF-Points</span> : <span style={{ lineHeight: 1.3 }} className="lg:hidden px-1.5 py-px border gradient_txt text-xs leading-[1.3] font_copper rounded-full">ON SALE</span>}
+                        {product.uf_points ? <span className="lg:hidden px-1.5 py-px border text-red-500 text-[9px] font_urbanist rounded-full">Earn {product.uf_points} UF-Pts</span> : <span style={{ lineHeight: 1.3 }} className="lg:hidden px-1.5 py-px border gradient_txt text-xs leading-[1.3] font_copper rounded-full">ON SALE</span>}
                         <span>{formatPrice(product.price)}</span>
                     </div>
-                    {product.uf_points ? <span className="hidden lg:flex w-full justify-center items-center border text-red-500 text-xs md:text-sm font_urbanist px-2 py-1 rounded-full">Earn {product.uf_points} UF-Points</span> : <span style={{ lineHeight: 1.3 }} className="hidden lg:flex w-full justify-center items-center border text-base gradient_txt font_copper px-2 py-1 rounded-full">ON SALE</span>}
+                    {product.uf_points ? <span className="hidden lg:flex w-full justify-center items-center border text-red-500 text-xs md:text-sm font_urbanist px-2 py-1 rounded-full">Earn {product.uf_points} UF-Pts</span> : <span style={{ lineHeight: 1.3 }} className="hidden lg:flex w-full justify-center items-center border text-base gradient_txt font_copper px-2 py-1 rounded-full">ON SALE</span>}
                 </div>
             </Link>
         </div>
