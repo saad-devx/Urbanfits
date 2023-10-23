@@ -20,7 +20,7 @@ const CheckShell = ({ dayCode, day, history }) => {
     })[0] : null
 
     return <div key={dayCode} className="relative flex flex-col items-center gap-y-2">
-        {respectedDayHistory && <span className="absolute left-1/2 -translate-x-1/2 -top-5 lg:top-7 text-xs text-red-400">+ {respectedDayHistory.points}</span>}
+        {respectedDayHistory && <span className="absolute left-1/2 -translate-x-1/2 -top-5 lg:-top-7 text-xs text-red-400">+ {respectedDayHistory.points}</span>}
         <span className="w-8 md:w-10 lg:w-16">
             <svg className='w-full' width="149" viewBox="0 0 149 117" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M87.3908 12.306C98.3798 3.937 110.4 9.38 112.26 22.509C125.306 16.923 133.718 24.893 130.326 38.45C141.913 37.947 152.287 44.564 147 54.179C138.85 69 127.934 89.918 113.608 98.184C113.604 122.112 37.7298 122.313 37.7258 97.981C23.5398 89.787 12.4999 66.5 1.99992 54.179C-3.28708 44.564 9.77006 37.947 21.3581 38.45C17.9661 24.892 26.3778 16.922 39.4238 22.509C41.2838 9.381 53.3038 3.938 64.2928 12.306C67.0618 -4.102 84.6228 -4.102 87.3908 12.306Z" fill={respectedDayHistory ? "#fca5a5" : "#EAEAEA"} />
