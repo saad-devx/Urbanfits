@@ -74,6 +74,11 @@ const UserSchema = new mongoose.Schema({
         bar_code: {
             type: String,
             required: true
+        },
+        last_uf_spin: Date,
+        spin_count: {
+            type: Number,
+            default: 0
         }
     },
     last_seen: {

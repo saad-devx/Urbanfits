@@ -1,16 +1,18 @@
 import UFpoints_history from "@/models/ufpoints_history"
+import WeeklyCheckinPointsHistory from "@/models/weekly_checkin_history"
 import axios from "axios";
 
 const SavePointsHistory = async (user_id, card_number, update) => {
     try {
         const {
             earned = 0,
-            spent = 0
+            spent = 0,
+            source = "daily_checkin"
         } = update;
         const monthNames = [
-            'January', 'February', 'March', 'April',
-            'May', 'June', 'July', 'August',
-            'September', 'October', 'November', 'December'
+            'january', 'february', 'march', 'april',
+            'may', 'june', 'july', 'august',
+            'september', 'october', 'november', 'december'
         ];
 
         const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${card_number}`)
@@ -33,6 +35,15 @@ const SavePointsHistory = async (user_id, card_number, update) => {
                 year: currentDate.getFullYear(),
                 balance: data.balance,
             }, { upsert: true })
+
+        if (source === "daily_checkin") {
+            const weeklyPointsHistory = await WeeklyCheckinPointsHistory.create({
+                user_id,
+                card_number,
+                points: earned
+            })
+            console.log(weeklyPointsHistory)
+        }
     } catch (error) { console.log(error) }
 }
 export default SavePointsHistory

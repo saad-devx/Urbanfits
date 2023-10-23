@@ -27,12 +27,26 @@ const useWallet = create(persist((set, get) => ({
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
         set(() => ({ walletLoading: false }))
     },
+
     getUfHistory: async (setCallbackState) => {
         const { user } = useUser.getState()
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            if (setCallbackState) setCallbackState(data.history)
+            set(() => ({ walletLoading: false }))
+            return data.history
+        } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
+        set(() => ({ walletLoading: false }))
+    },
+
+    getWeeklyCheckinHistory: async (setCallbackState) => {
+        const { user } = useUser.getState()
+        if (!user) return
+        set(() => ({ walletLoading: true }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-weekly-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
             if (setCallbackState) setCallbackState(data.history)
             set(() => ({ walletLoading: false }))
             return data.history

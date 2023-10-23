@@ -23,7 +23,7 @@ export default function OrderCard(props) {
     
     return <>
         <Invoice key={`invoice-${props.key}`} order={order} setInvoice={setInvoice} show={invoice} />
-        <div key={props.key} className=" w-full h-48 md:h-52 my-3 flex flex-col items-start rounded-xl overflow-clip">
+        <div key={props.key} className={`w-full h-48 md:h-52 ${props.marginClass || "my-3"} flex flex-col items-start rounded-xl overflow-clip`}>
             <div className="bg-gray-50 w-full h-[30%] px-2 md:px-5 py-2 font_urbanist_light text-[10px] md:text-xs flex justify-between">
                 <div className="w-2/5 h-full flex justify-between">
                     <span className='flex flex-col justify-between h-full space-y-2' >

@@ -28,6 +28,7 @@ const UpdateUser = async (req, res) => {
             delete req.body.two_fa_enabled
             delete req.body.role
             delete req.body.last_seen
+            delete req.body.uf_wallet
             user = await User.findByIdAndUpdate(id, req.body, { new: true })
             delete user.password
 

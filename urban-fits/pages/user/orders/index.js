@@ -57,22 +57,22 @@ export default function OrdersPage(props) {
     if (!user) return <Error403 />
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>Orders</title></Head>
-        <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
+        <main className='w-screen min-h-screen bg-white flex flex-col transition-all duration-500'>
             <section className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
                 <Link href="/user" className='fa-solid fa-chevron-left text-xl'></Link>
                 <h1 className="font_urbanist_medium text-lg">Order</h1>
                 <i className='w-0 h-0' />
             </section>
-            <section className="sticky top-0 left-0 right-0 w-full px-4 pt-3 flex justify-between items-end">
+            <section className="bg-white sticky top-0 left-0 right-0 w-full px-4 pt-3 flex justify-between items-end">
                 <MblOption href="/user/orders/orders">All Orders</MblOption>
                 <MblOption href="/user/orders/pending">In Progress</MblOption>
                 <MblOption href="/user/orders/shipped">Shipped</MblOption>
                 <MblOption href="/user/orders/returns">Returns</MblOption>
             </section>
-            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4 pb-14">
+            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">
                 {orderLoading ? <div className="w-full flex justify-center"><BounceLoader /></div> :
                     orders.map((order, index) => {
-                        return <OrderItem key={index} order={order} />
+                        return <OrderItem marginClass={orders.length == index + 1 && "mb-16 mt-3"} key={index} order={order} />
                     })}
             </section>}
         </main>

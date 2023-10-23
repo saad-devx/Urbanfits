@@ -16,7 +16,6 @@ import {
 } from '@/public/accountIcons'
 import Image from 'next/image'
 const EmptyInboxImg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/empty-inbox.png"
-const inbox_bg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/inbox-bg.jpg"
 
 const NoNotificationSection = () => {
     return <section className="w-full h-full flex flex-col mid:items-center mid:justify-center items-center gap-y-4 pt-[40%] mid:pt-0">
@@ -41,8 +40,8 @@ const Option = (props) => {
     </Link>
 }
 
-export const NotificationItem = ({ notific, key }) => {
-    return <div key={key} className="w-full flex flex-col border-b py-4">
+export const NotificationItem = ({ notific, key, marginClass }) => {
+    return <div key={key} className={`w-full ${marginClass} flex flex-col border-b py-4`}>
         <h3 className="mb-3 md:mb-4 font_urbanist_bold text-base lg:text-lg">{notific.heading}</h3>
         <p className="mb-2 font_urbanist text-sm">{notific.message}</p>
         <div className='w-full flex justify-between items-center font_urbanist_light text-10px md:text-xs'>
@@ -83,18 +82,10 @@ export default function NotificationInbox(props) {
                     </div>
                 </section>
                 <section className='relative bg-white w-full mid:min-h-[50vh] lg:min-h-0 lg:w-[70%] 2xl:w-[73%] px-12 py-10 rounded-lg font_urbanist text-left overflow-hidden'>
-                    {router.pathname === '/user/inbox' ? <>
-                        <div className="absolute z-10 w-full h-3/5 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-black flex flex-col items-center justify-center">
-                            <span className='text-white font_urbanist_bold text-lg tracking-[0.5px]'>Find The Latest Updates Here</span>
-                            <span className='text-gray-300 font_urbanist text-sm'>Stay up to date with Urban Fits</span>
-                        </div>
-                        <Image src={inbox_bg} width={1600} height={2000} className='absolute inset-0 w-full h-full object-cover' alt='Inbox' />
-                    </> : null}
                     {props.noNotifications ? <NoNotificationSection /> :
                         props.filteredNotifics?.map((notific, index) => {
                             return <NotificationItem key={index} notific={notific} />
                         })}
-
                 </section>
             </div>
         </main >
@@ -106,23 +97,16 @@ export default function NotificationInbox(props) {
             <h1 className="font_urbanist_medium text-lg">Inbox</h1>
             <i className='w-0 h-0' />
         </section>
-        <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
-            <section className="sticky z-20 top-0 left-0 right-0 w-full px-4 pt-3 flex justify-between items-end">
+        <main className='w-screen min-h-screen bg-white flex flex-col transition-all duration-500'>
+            <section className="bg-white sticky z-20 top-0 left-0 right-0 w-full px-4 pt-3 flex justify-between items-end">
                 <MblOption unseen={notifications.some(notific => !notific.seen && notific.category === "primary")} href="/user/inbox/primary">Primary</MblOption>
                 <MblOption unseen={notifications.some(notific => !notific.seen && notific.category === "account")} href="/user/inbox/account">Account</MblOption>
                 <MblOption unseen={notifications.some(notific => !notific.seen && notific.category === "order")} href="/user/inbox/orders">Orders</MblOption>
                 <MblOption unseen={notifications.some(notific => !notific.seen && notific.category === "reward")} href="/user/inbox/rewards">Rewards</MblOption>
             </section>
-            {router.pathname === '/user/inbox' ? <div className='relative w-full h-full'>
-                <div className="absolute z-10 w-full h-2/5 left-0 top-0 right-0 bg-gradient-to-b from-white to-transparent flex flex-col items-center justify-center" />
-                <Image src={inbox_bg} width={1600} height={2000} className='absolute inset-0 w-full h-full object-cover' alt='Inbox' />
-                <div className="absolute z-10 w-full h-3/5 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-black flex flex-col items-center justify-center">
-                    <span className='text-white font_urbanist_bold text-lg tracking-[0.5px]'>Find The Latest Updates Here</span>
-                    <span className='text-gray-300 font_urbanist text-sm'>Stay up to date with Urban Fits</span>
-                </div>
-            </div> : props.noNotifications ? <NoNotificationSection /> : <section className="w-full h-full p-4">
+            {props.noNotifications ? <NoNotificationSection /> : <section className="w-full p-4">
                 {props.filteredNotifics?.map((notific, index) => {
-                    return <NotificationItem key={index} notific={notific} />
+                    return <NotificationItem marginClass={props.filteredNotifics.length == index + 1 && "mb-16"} key={index} notific={notific} />
                 })}
             </section>}
         </main>
