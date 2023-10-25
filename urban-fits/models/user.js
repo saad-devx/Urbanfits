@@ -68,18 +68,15 @@ const UserSchema = new mongoose.Schema({
     uf_wallet: {
         card_number: {
             type: String,
-            required: true,
-            immutable: true
+            required: true
         },
         bar_code: {
             type: String,
             required: true
         },
         last_uf_spin: Date,
-        spin_count: {
-            type: Number,
-            default: 0
-        }
+        next_uf_spin: Date,
+        last_spin_reward: Number,
     },
     last_seen: {
         type: Date,

@@ -18,7 +18,7 @@ export default function Footer() {
     }
     if (!Exception) return <>
         <Newsletter show={modal2} toggleModal={toggleModal} />
-        <footer className="border-t w-full pt-10 font_urbanist_light text-gotham-black bg-white">
+        <footer className="border-t w-full max-w-[2000px] mx-auto pt-10 font_urbanist_light text-gotham-black bg-white">
             <section className="pt-10 md:p-5 lg:p-24 lg:pt-16 lg:pb-16 md:pb-7">
                 <section className="w-full h-2/6 pb-7 px-6 md:pb-16 lg:px-[5%] border-b border-b-gray-200 flex flex-row flex-wrap justify-between items-start">
                     <div className="w-full lg:w-1/2 flex justify-around items-start">

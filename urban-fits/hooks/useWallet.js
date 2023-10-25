@@ -54,6 +54,29 @@ const useWallet = create(persist((set, get) => ({
         set(() => ({ walletLoading: false }))
     },
 
+    spinUfWheel: async () => {
+        const { user, updateUser } = useUser.getState()
+        if (!user) return
+        set(() => ({ walletLoading: true }))
+        try {
+            const { data } = await axios.post(`${process.env.HOST}/api/user/uf-wallet/spin-wheel?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            set(() => ({ walletLoading: false }))
+            console.log(data)
+            await updateUser({
+                ...user,
+                uf_wallet: {
+                    ...user.uf_wallet,
+                    last_uf_spin: data.last_uf_spin,
+                    last_spin_reward: data.last_spin_reward,
+                    ...(data.next_uf_spin && { next_uf_spin: data.next_uf_spin })
+                }
+            }, true, true)
+            get().getUfBalance()
+            return data
+        } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
+        set(() => ({ walletLoading: false }))
+    },
+
     getExchangeRate: async (to = get().currency, amount = 1) => {
         set(() => ({ walletLoading: true }))
         try {

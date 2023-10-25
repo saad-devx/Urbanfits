@@ -75,16 +75,16 @@ export default function UFwallet() {
                     </div>
                     {walletLoading && <div className="w-full my-5 flex justify-center"><BounceLoader /></div>}
                     {groupedRecords ? groupedRecords.map((recordObj, index) => {
-                        return <section key={index} className="group outline-none accordion-section mb-7" tabIndex={1} >
+                        return <section key={index} className={`group outline-none accordion-section ${groupedRecords.length === index + 1 ? "mb-20" : "mb-7"}`} tabIndex={1} >
                             <nav className="group flex justify-between py-3 items-center border-b border-b-gray-300 transition ease duration-500 cursor-pointer pr-10 relative">
-                                <h2 className="group-focus:text-black font_urbanist_medium text-sm transition ease duration-500">{recordObj.month}&nbsp;{recordObj.year}</h2>
+                                <h2 className="group-focus:text-black font_urbanist_medium text-sm capitalize transition ease duration-500">{recordObj.month}&nbsp;{recordObj.year}</h2>
                                 <i className={`group-focus:-rotate-180 absolute top-1/2 -translate-y-1/2 right-0 mb-auto ml-auto mt-2 mr-2 transform transition ease duration-500`}>
                                     <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
                                     </svg>
                                 </i>
                             </nav>
-                            <nav className="group-focus:max-h-screen max-h-0 rounded overflow-hidden duration-500">
+                            <nav className="group-focus:max-h-[50vh] max-h-0 rounded overflow-x-hidden overflow-y-auto duration-500">
                                 {recordObj.records.map((record, i) => <section key={i} className=" bg-white border-b border-b-gray-300 grid grid-cols-4 text-xs">
                                     <div className="w-full flex items-center">
                                         <span className="py-3 flex flex-col text-xs">
@@ -94,7 +94,7 @@ export default function UFwallet() {
                                     </div>
                                     <span className="w-full flex justify-center items-center">+{record.earned}</span>
                                     <span className="w-full flex justify-center items-center">-{record.spent}</span>
-                                    <span className="w-full flex justify-end items-center">{record.balance}</span>
+                                    <span className="w-full flex justify-center items-center">{record.balance}</span>
                                 </section>)}
                             </nav>
                         </section>
@@ -114,7 +114,7 @@ export default function UFwallet() {
                 </div>
                 <div className="flex flex-col">
                     Balance
-                    <span className="font_urbanist_bold text-[22px] text-yellow-600">{points} UF pts ({points * process.env.UF_POINT_RATE} USD)</span>
+                    <span className="font_urbanist_bold text-[22px] text-yellow-600">{points} UF pts ({formatPrice(points * process.env.UF_POINT_RATE)})</span>
                 </div>
             </section>
             <div className="w-full py-5 flex justify-end">
@@ -131,14 +131,14 @@ export default function UFwallet() {
                 {groupedRecords ? groupedRecords.map((recordObj, index) => {
                     return <section key={index} className="group outline-none accordion-section mb-7" tabIndex={1} >
                         <nav className="group flex justify-between py-3 items-center border-b border-b-gray-300 transition ease duration-500 cursor-pointer pr-10 relative">
-                            <h2 className="group-focus:text-black font_urbanist_medium transition ease duration-500">{recordObj.month}&nbsp;{recordObj.year}</h2>
+                            <h2 className="group-focus:text-black font_urbanist_medium capitalize transition ease duration-500">{recordObj.month}&nbsp;{recordObj.year}</h2>
                             <i className={`group-focus:-rotate-180 absolute top-1/2 -translate-y-1/2 right-0 mb-auto ml-auto mt-2 mr-2 transform transition ease duration-500`}>
                                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
                                 </svg>
                             </i>
                         </nav>
-                        <nav className="group-focus:max-h-screen max-h-0 rounded overflow-hidden duration-500">
+                        <nav className="group-focus:max-h-[50vh] max-h-0 rounded overflow-x-hidden overflow-y-auto duration-500">
                             {recordObj.records.map((record, i) => <section key={i} className=" bg-white border-b border-b-gray-300 grid grid-cols-5 text-sm">
                                 <div className="col-span-2 w-full flex items-center">
                                     <span className="mr-8 py-4 flex flex-col text-xs">
@@ -149,7 +149,7 @@ export default function UFwallet() {
                                 </div>
                                 <span className="w-full flex justify-center items-center">+{record.earned}</span>
                                 <span className="w-full flex justify-center items-center">-{record.spent}</span>
-                                <span className="w-full flex justify-end items-center">{record.balance}</span>
+                                <span className="w-full flex justify-center items-center">{record.balance}</span>
                             </section>)}
                         </nav>
                     </section>
