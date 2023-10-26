@@ -52,12 +52,12 @@ export default function EarnUfPoints() {
     function spinAndStopAtValue(value, msg) {
         console.log(typeof value, value)
         const pathElements = {
-            "10": document.querySelector('path[name="50"]'),
+            "10": document.querySelector('path[name="10"]'),
             "50": document.querySelector('path[name="50"]'),
             "100": document.querySelector('path[name="100"]'),
-            "200": document.querySelector('path[name="1000"]'),
+            "200": document.querySelector('path[name="200"]'),
             "400": document.querySelector('path[name="400"]'),
-            "500": document.querySelector('path[name="200"]'),
+            "500": document.querySelector('path[name="500"]'),
             "0": document.querySelector('path[name="0"]')
         };
         const rotationAngles = {
@@ -91,10 +91,10 @@ export default function EarnUfPoints() {
         }
     }
 
-    const calculateTimeLeft = () => {
+    const calculateTimeLeft = (targetDate) => {
         // const targetDate = new Date(new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay()))).setHours(0, 0, 0))
+        // const targetDate = user.uf_wallet.next_uf_spin
         if (!user || !user.uf_wallet.next_uf_spin) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
-        const targetDate = user.uf_wallet.next_uf_spin
         const now = new Date().getTime();
         const targetTime = new Date(targetDate).getTime();
         const timeDiff = targetTime - now;
@@ -152,12 +152,12 @@ export default function EarnUfPoints() {
         return checkedinDays?.length || 0
     }
 
-    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(user.uf_wallet.next_uf_spin));
 
     useEffect(() => {
         getWeeklyCheckinHistory(setWeeklyHistory)
         const timer = setInterval(() => {
-            setTimeLeft(calculateTimeLeft());
+            setTimeLeft(calculateTimeLeft(user.uf_wallet.next_uf_spin));
         }, 1000);
         getUfHistory(setHistory)
 
@@ -167,7 +167,7 @@ export default function EarnUfPoints() {
     const spinPrizeWheel = async () => {
         setLoading(true)
         const data = await spinUfWheel()
-        if(data?.reward === undefined) return console.log("some error occured as the spin value was undefined.")
+        if (data?.reward === undefined) return console.log("some error occured as the spin value was undefined.")
         spinAndStopAtValue(data.reward.toString(), data?.msg)
         setLoading(false)
     }
