@@ -25,7 +25,7 @@ const AddUFpoints = async (req, res) => {
                     ...(expiration_date && { expiration_date })
                 })
                 await sendNotification(user._id, notific_params, { notify: true, notifySilently: true })
-                await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: points, spent: duducted })
+                await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: points, spent: duducted, source })
             }
 
             res.status(200).json({

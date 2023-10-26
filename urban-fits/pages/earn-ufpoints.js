@@ -50,7 +50,7 @@ export default function EarnUfPoints() {
     const [history, setHistory] = useState(null)
 
     function spinAndStopAtValue(value, msg) {
-        console.log(value)
+        console.log(typeof value, value)
         const pathElements = {
             "10": document.querySelector('path[name="50"]'),
             "50": document.querySelector('path[name="50"]'),
@@ -167,7 +167,8 @@ export default function EarnUfPoints() {
     const spinPrizeWheel = async () => {
         setLoading(true)
         const data = await spinUfWheel()
-        spinAndStopAtValue(`${data?.reward}`, data?.msg)
+        if(data?.reward === undefined) return console.log("some error occured as the spin value was undefined.")
+        spinAndStopAtValue(data.reward.toString(), data?.msg)
         setLoading(false)
     }
 
