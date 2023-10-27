@@ -155,7 +155,7 @@ export default function EarnUfPoints() {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(user?.uf_wallet?.next_uf_spin));
 
     useEffect(() => {
-        if(!user) return ()=>{}
+        if (!user) return () => { }
         getWeeklyCheckinHistory(setWeeklyHistory)
         const timer = setInterval(() => {
             setTimeLeft(calculateTimeLeft(user.uf_wallet.next_uf_spin));
@@ -174,7 +174,7 @@ export default function EarnUfPoints() {
     }
 
     return <>
-        <main className="bg-gray-100 w-full max-w-[2000px] mx-auto py-10 lg:pt-16 px-5 md:px-7 lg:px-8 xl:px-10 font_urbanist gap-4 lg:gap-6 scroll-smooth">
+        <main className="bg-gray-100 w-full max-w-[2000px] mx-auto py-10 lg:pt-16 px-5 md:px-10 xl:px-14 font_urbanist gap-4 lg:gap-6 scroll-smooth">
             <section className="w-full mb-4 lg:mb-6 flex flex-col lg:flex-row gap-4">
                 <nav className="bg-white w-full lg:w-1/2 min-h-[20rem] px-4 py-4 mid:px-20 mid:py-4 lg:p-6 lg:px-8 flex flex-col justify-between rounded-lg">
                     <section className="w-full">
@@ -200,13 +200,17 @@ export default function EarnUfPoints() {
                     </> :
                         <div className="hidden lg:flex w-full flex-col justify-center items-center gap-y-4">
                             <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl">Sign Up now and get 500 UF-Points ({formatPrice(500 * process.env.UF_POINT_RATE)})</h1>
-                            <LinkBtn href="/auth/signup" classes="w-3/5">Sign Up</LinkBtn>
+                            <div className="w-full flex flex-col justify-center items-center">
+                                <LinkBtn href="/auth/signup" classes="w-3/5" my="my-2">Sign Up</LinkBtn>
+                                or
+                                <LinkBtn href="/auth/login" classes="w-3/5" text="black" bg="bg-gray-100" my="my-2">Log in</LinkBtn>
+                            </div>
                         </div>
                     }
                 </nav>
-                <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 flex flex-col lg:flex-row rounded-lg gap-3">
+                <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 xl:py-6 flex flex-col lg:flex-row rounded-lg gap-3">
                     <div className="w-full lg:w-1/2 h-full lg:h-auto flex flex-col justify-center items-center gap-y-4">
-                        <div className="relative w-full mid:w-3/5 lg:w-full aspect-square rounded-full shadow-lg">
+                        <div className="relative w-full mid:w-3/5 lg:w-11/12 aspect-square rounded-full shadow-lg">
                             <span className="bg-white absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 aspect-square flex justify-center items-center rounded-full font_urbanist_bold text-10px lg:text-xs tracking-1 shadow-md"><p className="translate-x-px">{user && new Date() > new Date(user.uf_wallet?.next_uf_spin) ? "SPIN" : <i className="fa-solid fa-lock text-sm" />}</p></span>
                             <i className="absolute z-[8] top-[59%] md:top-[60%] 2xl:top-[58%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-x-[9px] lg:border-x-[12.5px] border-x-transparent border-t-[18px] lg:border-t-[25px] border-t-black"></i>
                             <svg id='prize_wheel' className="w-full h-full transition-all duration-700" width="260" height="260" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -395,7 +399,7 @@ export default function EarnUfPoints() {
             </section>
             {user?.email && <section className="bg-white w-full mb-4 lg:mb-6 px-4 py-4 mid:px-6 mid:py-4 lg:p-6 lg:px-8 rounded-lg gap-4">
                 <h1 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h1>
-                <div className="w-full mb-4 flex justify-between items-center font_urbanist_bold">
+                <div className="w-full mb-4 flex justify-between items-center text-xs lg:text-base font_urbanist_bold">
                     <span className="w-1/3">Transactions</span>
                     <span>Points earned</span>
                     <span>Points used</span>
@@ -413,13 +417,14 @@ export default function EarnUfPoints() {
                             </i>
                         </nav>
                         <nav className="group-focus:max-h-[50vh] max-h-0 rounded overflow-x-hidden overflow-y-auto duration-500">
-                            {recordObj.records.map((record, i) => <section key={i} className=" bg-white border-b border-b-gray-300 grid grid-cols-5 text-sm">
-                                <div className="col-span-2 w-full flex items-center">
+                            {recordObj.records.map((record, i) => <section key={i} className=" bg-white border-b border-b-gray-300 grid grid-cols-4 md:grid-cols-5 text-xs lg:text-sm">
+                                <div className="md:col-span-2 w-full flex items-center">
                                     <span className="mr-8 py-4 flex flex-col text-xs">
-                                        <h6 className="font_copper text-sm">UF-Points</h6>
-                                        Urban Fits
+                                        <h6 className="font_copper text-10px md:text-sm">UF-Points</h6>
+                                        <p className="hidden lg:block">Urban Fits</p>
+                                        <p className="lg:hidden text-10px">{new Date(record.createdAt).getDate() + "/" + (new Date(record.createdAt).getMonth() + 1) + "/" + new Date(record.createdAt).getFullYear()}</p>
                                     </span>
-                                    {new Date(record.createdAt).getDate() + "/" + (new Date(record.createdAt).getMonth() + 1) + "/" + new Date(record.createdAt).getFullYear()}
+                                    <p className='hidden lg:block'>{new Date(record.createdAt).getDate() + "/" + (new Date(record.createdAt).getMonth() + 1) + "/" + new Date(record.createdAt).getFullYear()}</p>
                                 </div>
                                 <span className="w-full flex justify-center items-center">+{record.earned}</span>
                                 <span className="w-full flex justify-center items-center">-{record.spent}</span>

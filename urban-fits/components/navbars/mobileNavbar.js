@@ -53,7 +53,7 @@ function MobileNavbar({ user, cart, setCart, logout, setLogout, totalUniqueItems
                 <MobileListItem toggleMenu={toggleMenu} key={1} name="Earn UF points" subLinks={[
                     { name: "Dashboard", href: "/user/myaccount" },
                     { name: "UF Points History", href: "/user/uf-points" },
-                    { name: "How to earn UF Points?", href: "/user/uf-points" }
+                    { name: "How to earn UF Points?", href: "/user/earn-ufpoints" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={2} name="Sale offers" subLinks={[
                     { name: "Up to 50% off", href: "#" },
