@@ -57,7 +57,7 @@ export default function CheckoutCalcSection(props) {
                     <h4>Total</h4>
                     <h4>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span className='flex'><p className="line-through text-10px xl:text-sm">{TotalOrderPrice}</p>&nbsp;{discountPriceWithPoints}</span> : TotalOrderPrice}</h4>
                 </div>
-                <div className="w-full mt-4 p-2 border rounded-lg">
+                {user && <div className="w-full mt-4 p-2 border rounded-lg">
                     <h4 className="mb-3 font_urbanist_bold text-lg">Apply UF-Points</h4>
                     <span className="w-full flex justify-between items-center">
                         Your UF Balance: <p>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span>{points} - {props.values.points_to_use} = {points - props.values.points_to_use}</span> : points} pts</p>
@@ -69,7 +69,7 @@ export default function CheckoutCalcSection(props) {
                         }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition rounded-lg outline-none`} />
                         <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     )
