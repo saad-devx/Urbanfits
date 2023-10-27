@@ -96,18 +96,6 @@ ProductSchema.pre('save', function (next) {
         const totalQuantity = variant.sizes.reduce((total, size) => total + size.quantity, 0);
         variant.stock = totalQuantity;
     });
-    let { price, uf_points } = this
-    if (!this.sale_price) {
-        if (price >= 1 && price < 50) uf_points = 40
-        else if (price >= 50 && price < 100) uf_points = 80
-        else if (price >= 100 && price < 150) uf_points = 120
-        else if (price >= 150 && price < 200) uf_points = 160
-        else if (price >= 200 && price < 300) uf_points = 200
-        else if (price >= 300 && price < 400) uf_points = 250
-        else if (price >= 400 && price < 500) uf_points = 300
-        else if (price > 499) uf_points = 350
-        else uf_points = 0
-    }
     next();
 });
 

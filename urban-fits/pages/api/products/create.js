@@ -20,7 +20,7 @@ const CreateProduct = async (req, res) => {
             if (product) return res.status(400).json({ success: false, msg: "Product already exists with this name or slug." })
 
             let uf_points = req.body.uf_points
-            const {price} = req.body
+            const { price } = req.body
             if (!uf_points && !req.body.sale_price) {
                 if (price >= 1 && price < 50) uf_points = 40
                 else if (price >= 50 && price < 100) uf_points = 80
@@ -32,6 +32,7 @@ const CreateProduct = async (req, res) => {
                 else if (price > 499) uf_points = 350
                 else uf_points = 0
             }
+            console.log({ ...req.body, uf_points })
 
             product = await Product.create({ ...req.body, uf_points })
             res.status(200).json({
