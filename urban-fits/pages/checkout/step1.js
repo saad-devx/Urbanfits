@@ -27,7 +27,7 @@ export default function Checkout1() {
     const router = useRouter()
     const { address, getAddress } = useAddress()
     const { user, guestUser, country } = useUser()
-    const { currency, getShippingRates, formatPrice } = useWallet()
+    const { points, currency, getShippingRates, formatPrice } = useWallet()
     const { cartTotal, isEmpty, items } = useCart()
     const [shippingRates, setShippingRates] = useState(null)
     const [langModal, setLangModal] = useState(false)
@@ -72,13 +72,14 @@ export default function Checkout1() {
             phone_number: address && address[type] ? address[type].phone_number : ''
         }
     }
-    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues, setFieldValue } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues, setFieldValue, setFieldError } = useFormik({
         initialValues: {
             currency,
             country: country.country,
             name: user && user.firstname ? (user?.firstname + ' ' + user?.lastname) : "",
             email: user?.email,
             delivery_option: 'standard_shipping',
+            points_to_use: 0,
             shipping_address: addressFieldsValues("shipping_address"),
             billing_address: addressFieldsValues("billing_address")
         },
@@ -88,6 +89,7 @@ export default function Checkout1() {
             name: Yup.string().min(2).required("Please enter your Full Name"),
             email: Yup.string().email().required("Please enter your email address"),
             delivery_option: Yup.string().required("Please select your prefered language"),
+            points_to_use: Yup.number().lessThan(points, "You can't apply more points than you have.").max(points, "You can't apply more points than you have."),
             shipping_address: Yup.object().shape(addressFieldsValidation),
             billing_address: Yup.object().shape(addressFieldsValidation)
         }),
@@ -97,7 +99,7 @@ export default function Checkout1() {
                 const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, {
                     user_id: user?._id || guestUser?._id,
                     is_guest: user && user?._id ? false : true,
-                    shipping_info: values,
+                    shipping_info: { ...values, card_number: user.uf_wallet.card_number },
                     order_items: items
                 })
                 router.push(data.url)
@@ -377,7 +379,18 @@ export default function Checkout1() {
                 </form>
             </section>
             <section className="w-full lg:w-[42%] max-w-[850px] flex flex-col gap-y-5">
-                <CheckoutCalcSection shippingRates={shippingRates} calculateTotolShippingFee={calculateTotolShippingFee} selectedShippingOption={values.delivery_option} />
+                <CheckoutCalcSection
+                    shippingRates={shippingRates}
+                    calculateTotolShippingFee={calculateTotolShippingFee}
+                    selectedShippingOption={values.delivery_option}
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                    handleBlur={handleBlur}
+                    handleChange={handleChange}
+                    setFieldError={setFieldError}
+                    setFieldValue={setFieldValue}
+                />
                 <Accordians />
             </section>
         </main>

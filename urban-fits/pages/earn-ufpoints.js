@@ -331,9 +331,9 @@ export default function EarnUfPoints() {
                             </span>
                         </div> : <LinkBtn href="/auth/signup" bg="bg-gray-100" my="my-4" text="black" classes="lg:hidden w-full" font='font_urbanist_medium'>Sign Up to spin</LinkBtn>}
                     </div>
-                    <div className="w-full lg:w-1/2 h-full lg:h-auto">
-                        <h2 className="font_urbanist_bold text-xl mt-7 md:mt-0 mb-2">Weekly Fortune Spinner</h2>
+                    <div className="w-full lg:w-1/2 h-full lg:h-auto flex flex-col justify-between ">
                         <ol className='text-[13px]'>
+                            <h2 className="font_urbanist_bold text-xl mt-7 md:mt-0 mb-2">Weekly Fortune Spinner</h2>
                             <li>1. Only available on URBAN FITS website <Link href="https://www.urbanfits.ae">https://www.urbanfits.ae</Link></li>
                             <li>2. 10 Points cost per spin</li>
                             <li>3. Available only 3 days in a week after cooldown (each).</li>
@@ -341,15 +341,8 @@ export default function EarnUfPoints() {
                             <li>5. Your UF-Points and vouchers will be automatically added yo your account wallet.</li>
                             <li>6. On getting a "Try Again", you can do extra spin free of cost.</li>
                         </ol>
-                        {user && <><LinkBtn href="#points_history" bg="bg-gray-100" my="my-4" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
-                            <Button loading={loading} disabled={new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward === 0 ? "Free Lucky Draw" : "Lucky Draw (-10 pts)"}</Button></>}
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("10")}>Get 10 Pts</button>
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("50")}>Get 50 Pts</button>
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("100")}>Get 100 Pts</button>
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("200")}>Get 200 Pts</button>
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("400")}>Get 400 Pts</button>
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("500")}>Get 500 Pts</button>
-                        <button className='text-10px mx-1 p-1 rounded-full bg-gray-200' onClick={() => spinAndStopAtValue("0")}>Try again</button>
+                        {user && <div className='w-full'><LinkBtn href="#points_history" bg="bg-gray-100" my="my-4" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
+                            <Button loading={loading} disabled={new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward === 0 ? "Free Lucky Draw" : "Lucky Draw (-10 pts)"}</Button></div>}
                     </div>
                 </nav>
             </section>

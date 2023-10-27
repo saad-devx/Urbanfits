@@ -83,7 +83,7 @@ export default function Navbar() {
     useEffect(() => {
         getNotifications()
         if (!address) getAddress()
-        if (!points) getUfBalance()
+        getUfBalance()
     }, [])
 
     const getDisplayAddress = () => {

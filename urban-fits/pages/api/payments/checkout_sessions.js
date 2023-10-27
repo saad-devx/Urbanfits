@@ -21,7 +21,21 @@ export default async function handler(req, res) {
             else if (!countries.includes(shipping_info.country)) return res.status(400).json({ success: false, msg: "We only ship in the following countries: " + countries })
             else if (!currencies.includes(shipping_info.currency)) return res.status(400).json({ success: false, msg: "Invalid Currency, Available currencies: " + currencies })
             else if (!shippingMethods.includes(shipping_info.delivery_option)) return res.status(400).json({ success: false, msg: "Invalid shipping method, Available method args: " + shippingMethods })
+            if (shipping_info.points_to_use && shipping_info.points_to_use !== 0 && !shipping_info.card_number) return res.status(400).json({ success: false, msg: "user uf card number is required with " })
             await ConnectDB()
+            let discountByPoints = 0
+            if (shipping_info.points_to_use && shipping_info.points_to_use !== 0 && shipping_info.card_number) {
+                const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": shipping_info.card_number })
+                if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" })
+                const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${shipping_info.card_number}`)
+                if (shipping_info.points_to_use > data.balance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
+                // axios.put(`${process.env.HOST}/api/user/uf-wallet/deduct-points`, {
+                //     user_id: user._id,
+                //     card_number: user.uf_wallet.card_number,
+                //     points_to_deduct: shipping_info.points_to_use
+                // })
+                discountByPoints = shipping_info.points_to_use * process.env.UF_POINT_RATE
+            }
 
             // getting exchnge rates
             const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`)
@@ -110,7 +124,8 @@ export default async function handler(req, res) {
                 price_details: {
                     total_price: totalPrice,
                     shipping_fees: finalShippingFees,
-                    currency: shipping_info.currency
+                    currency: shipping_info.currency,
+                    points_to_use: discountByPoints
                 }
             })
 
@@ -139,6 +154,13 @@ export default async function handler(req, res) {
                     }
                 ],
                 line_items: finalOrderItems.map((product, index) => {
+                    let unitAmount = 0;
+                    if (product.price > discountByPoints) {
+                        unitAmount = Math.floor(product.price * 100) - Math.floor(discountByPoints * 100)
+                        discountByPoints = product.price - ((unitAmount / 100) - discountByPoints)
+                        console.log(discountByPoints)
+                    }
+                    else discountByPoints = discountByPoints - product.price
                     return {
                         price_data: {
                             currency: shipping_info?.currency?.toLowerCase() || "aed",
@@ -146,7 +168,7 @@ export default async function handler(req, res) {
                                 name: product.name,
                                 images: [product.image]
                             },
-                            unit_amount: Math.floor(product.price * rate * 100),
+                            unit_amount: unitAmount * rate,
                         },
                         quantity: product.quantity
                     }

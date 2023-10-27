@@ -7,11 +7,12 @@ import Image from 'next/image';
 export default function CheckoutCalcSection(props) {
     const { user } = useUser()
     const { totalUniqueItems, items, cartTotal } = useCart()
-    const { formatPrice } = useWallet()
+    const { points, formatPrice } = useWallet()
     const { shippingRates, calculateTotolShippingFee, selectedShippingOption } = props
     const totalUfPoints = items.reduce((total, item) => total + (item?.uf_points || 0), 0)
 
     const TotalOrderPrice = formatPrice(cartTotal + calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption))
+    const discountPriceWithPoints = formatPrice((cartTotal + calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption)) - parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE)
 
     return (
         <div className="bg-white w-full p-4 md:p-5 lg:p-7 space-y-3 rounded-xl">
@@ -48,9 +49,26 @@ export default function CheckoutCalcSection(props) {
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{0}%</span></div>
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption)) || "We don't ship here"}</span></div>
                 </div>
-                <div className="w-full py-2 flex justify-between font_urbanist_bold border-t border-t-gray-200">
-                    <h4 className="text-lg">Total</h4>
-                    <h4 className="text-lg">{TotalOrderPrice}</h4>
+                {props.values.points_to_use ? parseFloat(props.values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base200">
+                    <h4>Saved</h4>
+                    <h4>{formatPrice(cartTotal + calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption) - ((cartTotal + calculateTotolShippingFee(shippingRates?.price || 0, selectedShippingOption)) - parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE))}</h4>
+                </div>: null}
+                <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
+                    <h4>Total</h4>
+                    <h4>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span className='flex'><p className="line-through text-10px xl:text-sm">{TotalOrderPrice}</p>&nbsp;{discountPriceWithPoints}</span> : TotalOrderPrice}</h4>
+                </div>
+                <div className="w-full mt-4 p-2 border rounded-lg">
+                    <h4 className="mb-3 font_urbanist_bold text-lg">Apply UF-Points</h4>
+                    <span className="w-full flex justify-between items-center">
+                        Your UF Balance: <p>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span>{points} - {props.values.points_to_use} = {points - props.values.points_to_use}</span> : points} pts</p>
+                    </span>
+                    <div className="w-full relative flex flex-col">
+                        <input name='points_to_use' id='points_to_use' type='number' onChange={(e) => {
+                            const value = parseFloat(e.target.value)
+                            value > points ? props.setFieldError("points_to_use", "You can't apply more points than your actual balance.") : props.setFieldValue("points_to_use", value)
+                        }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition rounded-lg outline-none`} />
+                        <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
+                    </div>
                 </div>
             </div>
         </div>

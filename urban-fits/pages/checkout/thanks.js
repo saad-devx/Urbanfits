@@ -15,7 +15,7 @@ import { pusherClient } from '@/utils/pusher';
 export default function Thanks() {
     const router = useRouter()
     const { user, guestUser } = useUser()
-    const { formatPrice } = useWallet()
+    const { getUfBalance, formatPrice } = useWallet()
     const { emptyCart } = useCart()
     const [negativeState, setNegativeState] = useState(<Loader />)
     const [orderData, setOrderData] = useState(null)
@@ -35,6 +35,8 @@ export default function Thanks() {
         const timeOutId = setTimeout(() => {
             setNegativeState(<AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or request timed out. Please check your Account Dashboard or your email inbox to see your order updates." />)
         }, 60000);
+        if (user) getUfBalance()
+
         return () => {
             clearTimeout(timeOutId)
             paymentChannel.unbind('payment-succeeded')

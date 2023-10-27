@@ -78,7 +78,7 @@ const UserSchema = new mongoose.Schema({
         next_uf_spin: Date,
         last_spin_reward: Number,
     },
-    last_seen: {
+    last_checkin: {
         type: Date,
         default: new Date()
     },
