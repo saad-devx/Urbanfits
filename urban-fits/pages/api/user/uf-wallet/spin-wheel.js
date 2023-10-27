@@ -74,7 +74,14 @@ const SpinUfWheel = async (req, res) => {
                 });
             };
 
-            // if (!user.last_uf_spin && !user.last_spin_reward) return spinUfWheel(null, false)
+            if (!user.last_uf_spin && !user.last_spin_reward) {
+                let nextUfSpinForNewUser = null;
+                if (today >= currentWeekStart && today < secondSpinTimeAvailability) nextUfSpinForNewUser = secondSpinTimeAvailability
+                else if (today >= secondSpinTimeAvailability && today < thirdSpinTimeAvailability) nextUfSpinForNewUser = thirdSpinTimeAvailability
+                else if (today >= thirdSpinTimeAvailability) nextUfSpinForNewUser = new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay() + 1) % 7))
+                return spinUfWheel(nextUfSpinForNewUser, false)
+            }
+
             console.log(new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay() + 1) % 7)))
             if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(null, false)
             else if (today >= currentWeekStart && today < secondSpinTimeAvailability) {
