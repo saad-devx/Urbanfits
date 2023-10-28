@@ -74,7 +74,7 @@ const SpinUfWheel = async (req, res) => {
                 });
             };
 
-            if (!user.last_uf_spin && !user.last_spin_reward) {
+            if (!user.uf_wallet.last_uf_spin && !user.uf_wallet.last_spin_reward) {
                 let nextUfSpinForNewUser = null;
                 if (today >= currentWeekStart && today < secondSpinTimeAvailability) nextUfSpinForNewUser = secondSpinTimeAvailability
                 else if (today >= secondSpinTimeAvailability && today < thirdSpinTimeAvailability) nextUfSpinForNewUser = thirdSpinTimeAvailability

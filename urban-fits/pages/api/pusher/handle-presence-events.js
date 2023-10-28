@@ -16,7 +16,7 @@ const HandlePresenceEvents = async (req, res) => {
                     if (event.user_id.endsWith('_isguest')) return res.status(200).json({ message: 'Webhook received successfully' });
 
                     await ConnectDB()
-                    await User.findByIdAndUpdate(event.user_id, { is_active: true, last_checkin: new Date() })
+                    await User.findByIdAndUpdate(event.user_id, { is_active: true })
 
                     const currentDate = new Date()
                     const user = await User.findById(event.user_id)
@@ -41,6 +41,7 @@ const HandlePresenceEvents = async (req, res) => {
                             message: `Welcome back! ${reward} UF-Points are added to your UF-wallet, they will expire after 7 days and shall be deducted from your wallet. Keep coming everyday and win exciting rewards.`
                         }, { notify: true })
                         await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: reward })
+                        await User.findByIdAndUpdate(event.user_id, { last_checkin: new Date() })
                     }
                 }
                 else if (event.name === 'member_removed') {

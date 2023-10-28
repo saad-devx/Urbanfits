@@ -168,7 +168,10 @@ export default function EarnUfPoints() {
     const spinPrizeWheel = async () => {
         setLoading(true)
         const data = await spinUfWheel()
-        if (data?.reward === undefined) return console.log("some error occured as the spin value was undefined.")
+        if (data?.reward === undefined) {
+            setLoading(false)
+            return console.log("some error occured as the spin value was undefined.")
+        }
         spinAndStopAtValue(data.reward.toString(), data?.msg)
         setLoading(false)
     }
@@ -347,7 +350,7 @@ export default function EarnUfPoints() {
                             <li>6. On getting a "Try Again", you can do extra spin free of cost.</li>
                         </ol>
                         {user && <div className='w-full'><LinkBtn href="#points_history" bg="bg-gray-100" my="my-4" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
-                            <Button loading={loading} disabled={new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{!user.uf_wallet?.last_spin_reward || user.uf_wallet?.last_spin_reward === 0 ? "Free Lucky Draw" : "Lucky Draw (-10 pts)"}</Button></div>}
+                            <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>}
                     </div>
                 </nav>
             </section>
