@@ -21,7 +21,7 @@ const CreateProduct = async (req, res) => {
 
             let uf_points = req.body.uf_points
             const { price } = req.body
-            if (!uf_points && !req.body.sale_price) {
+            if (!req.body.uf_points && !req.body.sale_price) {
                 if (price >= 1 && price < 50) uf_points = 40
                 else if (price >= 50 && price < 100) uf_points = 80
                 else if (price >= 100 && price < 150) uf_points = 120

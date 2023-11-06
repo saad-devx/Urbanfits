@@ -94,7 +94,7 @@ function CartItem(props) {
 }
 
 export default function Cart(props) {
-    const { isEmpty, items, cartTotal, emptyCart } = useCart()
+    const { isEmpty, items, cartTotal, removeItem, emptyCart } = useCart()
     const [shippingRates, setShippingRates] = useState(null)
     const { formatPrice, getShippingRates } = useWallet()
 
@@ -108,6 +108,14 @@ export default function Cart(props) {
         const additionalWeight = totalWeight - 5100
         const additionalCharges = (additionalWeight / 1000) * (shippingRates?.additionalKgCharges || 1)
         return fees + additionalCharges
+    }
+
+    const giftCardBgs = {
+        "giftcard_bronze": {bg: "bronze_metal_bg", display_name: "bronze"},
+        "giftcard_silver": {bg: "silver_metal_bg", display_name: "silver"},
+        "giftcard_gold": {bg: "gold_metal_bg", display_name: "gold"},
+        "giftcard_platinum": {bg: "platinum_metal_bg", display_name: "platinum"},
+        "giftcard_diamond": {bg: "diamond_metal_bg", display_name: "diamond"},
     }
 
     return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
@@ -138,7 +146,21 @@ export default function Cart(props) {
                                 <span className='text-gray-300'>UNITS</span>
                                 <span className='w-[10%] text-gray-300'>AMOUNT</span>
                             </div>
-                            {items.map((product) => {
+                            {items.map((product, index) => {
+                                if (product.id.startsWith("giftcard_")) return <li key={index} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
+                                    <div className={`${giftCardBgs[product.id].bg} w-[100px] h-20 lg:w-[129px] lg:h-20 mr-5 flex justify-center items-center rounded-xl font_montserat_bold text-sm text-white uppercase tracking-1 overflow-hidden`}>{giftCardBgs[product.id].display_name}</div>
+                                    {/* to be displayed from md breakpoint */}
+                                    <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_urbanist_medium">
+                                        <Link onClick={props.toggleCart} href="/giftcards" className="w-[145px] font_urbanist_bold text-black transition-all duration-700">{product.name}</Link>
+                                        <h3 className="font_urbanist_bold self-center text-xs">{formatPrice(product.price)}</h3>
+                                        <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_urbanist_medium text-xs tracking-widest"></button>
+                                    </div>
+                                    {/* to be displayed in mobile */}
+                                    <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
+                                        <Link onClick={props.toggleCart} href="/giftcards" className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200" /></Link>
+                                        <h3 className="font_urbanist_medium self-start text-xs">{formatPrice(product.price)}</h3>
+                                    </div>
+                                </li>
                                 return <CartItem key={product.id} toggleCart={() => {
                                     document.body.style.overflowY = props.cart ? null : 'hidden'
                                     props.setCart(false)

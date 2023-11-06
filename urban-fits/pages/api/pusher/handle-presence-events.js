@@ -16,15 +16,17 @@ const HandlePresenceEvents = async (req, res) => {
                     if (event.user_id.endsWith('_isguest')) return res.status(200).json({ message: 'Webhook received successfully' });
 
                     await ConnectDB()
-                    await User.findByIdAndUpdate(event.user_id, { is_active: true })
+                    User.findByIdAndUpdate(event.user_id, { is_active: true })
 
                     const currentDate = new Date()
                     const user = await User.findById(event.user_id)
                     const last_checkin = new Date(user.last_checkin)
-                    // currentDate.setHours(0, 0, 0, 0);
-                    // last_seen.setHours(0, 0, 0, 0);
+                    currentDate.setHours(0, 0, 0, 0);
+                    last_checkin.setHours(0, 0, 0, 0);
+                    console.log(user, last_checkin)
                     const expiryDate = new Date(new Date().setDate(new Date().getDate() + 7))
-                    if (currentDate.getDate() > last_checkin.getDate() && new Date(user.createdAt).getDate() < currentDate.getDate()) {
+                    console.log(currentDate.getDate(), last_checkin.getDate(), "here is the condition: ", currentDate.getDate() > last_checkin.getDate())
+                    if ((currentDate > last_checkin) && (new Date(user.createdAt) < currentDate)) {
                         const reward = generateRandomInt(20, 50)
                         await UFpoints.create({
                             user_id: user._id,
@@ -42,6 +44,7 @@ const HandlePresenceEvents = async (req, res) => {
                         }, { notify: true })
                         await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: reward })
                         await User.findByIdAndUpdate(event.user_id, { last_checkin: new Date() })
+                        console.log(event.user_id)
                     }
                 }
                 else if (event.name === 'member_removed') {

@@ -80,7 +80,9 @@ const useWallet = create(persist((set, get) => ({
     getExchangeRate: async (to = get().currency, amount = 1) => {
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${to}&have=${process.env.BASE_CURRENCY}&amount=${amount}`)
+            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${to}&have=${process.env.BASE_CURRENCY}&amount=${amount}`, {
+                headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
+            })
             set(() => ({ exchange_rate: data.new_amount, walletLoading: false }))
             console.log(data)
             return data.new_amount

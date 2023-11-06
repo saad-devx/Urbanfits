@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 const HomeCarousel = dynamic(() => import('@/components/carousels/homeCarousel'));
@@ -7,15 +7,28 @@ import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
 import OfferCard from "@/components/cards/offerCard";
 import Shoppingcard from "@/components/cards/shoppingcard";
-import useUser from "@/hooks/useUser";
+import axios from "axios";
+import ReturnsRefund from "./customerservices/returns&refund";
 
 export default function Home() {
+    const [indexContent, setIndexContent] = useState(null)
     // temporary product object for shopping card
-    const product = {
-        name: 'Sample Product name',
-        price: '76.99',
-        variants: [1, 2, 3, 4]
+    // const product = {
+    //     name: 'Sample Product name',
+    //     price: '76.99',
+    //     variants: [1, 2, 3, 4]
+    // }
+
+    const getIndexContent = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/get-index-content`);
+            setIndexContent(data);
+        } catch (error) { console.log(error); }
     }
+    useEffect(() => {
+        getIndexContent();
+        return () => setIndexContent(null)
+    }, [])
 
     return <>
         <Head><title>Urban Fits</title></Head>
@@ -28,13 +41,15 @@ export default function Home() {
                 <section>
                     <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">New Collection</h2>
-                        <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">See all Collection</Link>
+                        <Link href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">See all Collection</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
+                        {indexContent?.newCollection.map((product, index) => {
+                            console.log(window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches)
+                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (index > 3) return
+                            return <Shoppingcard margin='0' product={product} />
+                        })}
                     </div>
                 </section>
 
@@ -52,42 +67,48 @@ export default function Home() {
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Women</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
+                        {indexContent?.womenCollection.map((product, index) => {
+                            console.log(window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches)
+                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (index > 3) return
+                            return <Shoppingcard margin='0' product={product} />
+                        })}
                     </div>
                 </section>
 
                 <HomeCarousel2 />
 
                 {/* Men Collection Section */}
-                <section>
+                {indexContent?.menCollection.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Men Collection</h2>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Men</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
+                        {indexContent?.menCollection.map((product, index) => {
+                            console.log(window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches)
+                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (index > 3) return
+                            return <Shoppingcard margin='0' product={product} />
+                        })}
                     </div>
-                </section>
+                </section> : null}
 
                 {/* Kids Collection Section */}
-                <section>
+                {indexContent?.kidsCollection.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-8 xl:px-10 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Kids Collection</h2>
                         <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Kids</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-8 xl:px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
-                        <Shoppingcard margin='0' product={product} />
+                        {indexContent?.kidsCollection.map((product, index) => {
+                            console.log(window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches)
+                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (index > 3) return
+                            return <Shoppingcard margin='0' product={product} />
+                        })}
                     </div>
-                </section>
+                </section> : null}
             </main>
             <ListingShopSection classes="mt-7 lg:mt-10" whiteTheme />
         </main>
