@@ -45,7 +45,6 @@ export default function Home() {
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                         {indexContent?.newCollection.map((product, index) => {
-                            console.log(window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches)
                             if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 3) return
                             return <Shoppingcard margin='0' product={product} />

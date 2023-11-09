@@ -3,6 +3,8 @@ import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
+import useProduct from '@/hooks/useProduct';
+import BounceLoader from '@/components/loaders/bounceLoader';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import Head from 'next/head';
@@ -19,6 +21,8 @@ export default function Product(props) {
     const [product, setProduct] = useState(productData.variants[0])
     const [sizevalue, setSizevalue] = useState(product.sizes[0].size)
     const [quantity, setQuantity] = useState(1)
+    const [similarProducts, setSimilarProducts] = useState([])
+    const { getSimilarProducts, productLoading } = useProduct()
 
     useEffect(() => {
         const { color } = router.query
@@ -32,6 +36,7 @@ export default function Product(props) {
     }, [router.query.color])
 
     useEffect(() => {
+        getSimilarProducts(productData.id, (arg) => setSimilarProducts(arg))
         setRecentItems({
             id: product._id,
             href: router.asPath,
@@ -43,11 +48,11 @@ export default function Product(props) {
     // size value channge funciton
     const onSizeChange = (e) => {
         setQuantity(1)
-        setSizevalue(e.target.value)
+        setSizevalue(e.target.name)
     }
     const onColorChange = (e) => {
         setQuantity(1)
-        router.push(`/products/product/${productData.id}?color=${e.target.value}`)
+        router.push(`/products/product/${productData.id}?color=${e.target.name}`)
     }
     const getFilteredQuantity = () => {
         let selectedSizeObj = product.sizes.filter((obj) => {
@@ -123,26 +128,32 @@ export default function Product(props) {
 
                             <div className="w-full gap-2 lg:gap-4 lg:gap-y-8 flex flex-wrap justify-between">
                                 <div className="flex flex-col max-w-[320px] w-48pr">
-                                    <div className='relative w-full h-9 lg:h-[52px] border'>
-                                        <span className="select_container after:right-[10%]"></span>
-                                        <select type="select" value={sizevalue} onChange={onSizeChange} className="select_element relative cursor-pointer w-full h-full px-5 font_urbanist_bold tracking-widest text-xs outline-none">
-                                            {product.sizes.map(obj => {
+                                    <button className='group relative uppercase w-full h-9 lg:h-[52px] px-5 font_urbanist_bold text-xs flex justify-between items-center border'>
+                                        {sizevalue}
+                                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
+                                        </svg>
+                                        <div className="absolute w-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto left-0 right-0 top-[105%] flex flex-col bg-white equillibrium_shadow rounded-md min-h-[2rem] overflow-hidden transition-all">
+                                            {product.sizes.map((obj, index) => {
                                                 const { size } = obj
-                                                return <option value={size}>{size}</option>
+                                                return <button onClick={onSizeChange} name={size} key={index} className={`w-full px-4 py-1 md:py-1.5 border-b hover:bg-gray-100 hover:text-gotham-black ${sizevalue === size ? "bg-[#FF4A60] text-white" : "text-black"} transition`}>{size}</button>
                                             })}
-                                        </select>
-                                    </div>
+                                        </div>
+                                    </button>
                                     {/* <button onClick={toggleModal} name="modal4" className="hidden lg:block my-2 font_urbanist_bold italic text-left text-xs text-gray-300 tracking-[0.15em]">OR CUSTOMIZED SIZE</button> */}
                                 </div>
-                                <div className='relative max-w-[320px] w-48pr h-9 lg:h-[52px] border'>
-                                    <span className="select_container after:right-[10%]"></span>
-                                    <select type="select" defaultValue={router.query.color || productData.variants.color_name} onChange={onColorChange} className="select_element relative cursor-pointer w-full h-full px-5 font_urbanist_bold tracking-widest text-xs outline-none">
-                                        {productData.variants.map(variant => {
+                                <button className='group relative uppercase w-48pr h-9 lg:h-[52px] px-5 font_urbanist_bold text-xs flex justify-between items-center border'>
+                                    {router.query.color || productData.variants.color_name}
+                                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
+                                    </svg>
+                                    <div className="absolute  w-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto left-0 right-0 top-[105%] flex flex-col bg-white equillibrium_shadow rounded-md min-h-[2rem] overflow-hidden transition-all">
+                                        {productData.variants.map((variant, index) => {
                                             let { color, color_name } = variant
-                                            return <option value={color_name}>{color_name.toUpperCase()}</option>
+                                            return <button onClick={onColorChange} name={color_name} key={index} className={`w-full px-4 py-1 md:py-1.5 border-b hover:bg-gray-100 hover:text-gotham-black ${router.query.color === color_name ? "bg-[#FF4A60] text-white" : "text-black"} transition`}>{color_name}</button>
                                         })}
-                                    </select>
-                                </div>
+                                    </div>
+                                </button>
                                 <span className="max-w-[320px] w-48pr h-9 lg:h-[52px] px-5 font_urbanist border flex justify-between items-center">
                                     <span onClick={(e) => { changeQuantity(e) }} name="decrement" className="text-lg cursor-pointer transition-all text-gray-300 select-none">-</span>
                                     <input type="number" readOnly className='w-3/5 h-auto font_urbanist text-center border-none outline-none pointer-events-none' value={quantity} />
@@ -171,14 +182,15 @@ export default function Product(props) {
                         </div>
                     </div>
 
-                    <div className="hidden md:block w-full mt-36">
+                    <div className="w-full mt-36">
                         <h3 className="text-lg md:text-xl lg:text-2xl font_urbanist_bold">Similar Items</h3>
                         <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-5 2xl:gap-12">
-                            {[0, 1, 2, 3].map(i => {
-                                if (window.matchMedia('(max-width: 1024px)').matches && i === 3) return
-                                if (i === 4) return
-                                return <Shoppingcard product={si_product} />
-                            })}
+                            {productLoading ? <div className="w-full h-[30vh] col-span-full flex justify-center items-center"><BounceLoader /></div>
+                                : similarProducts.map((product, index) => {
+                                    if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                                    else if (index > 3) return
+                                    return <Shoppingcard margin='0' product={product} />
+                                })}
                         </div>
                     </div>
                 </section>

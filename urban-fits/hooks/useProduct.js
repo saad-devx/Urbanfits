@@ -40,6 +40,20 @@ const useProduct = create((set, get) => ({
         }))
     },
 
+    getSimilarProducts: async (product_id, callback) => {
+        set(() => ({ productLoading: true }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/products/get-relative-products?product_id=${product_id}`)
+            set(() => ({productLoading: false}))
+            callback(data.relative_products)
+            return data.relative_products
+        } catch (error) {
+            console.log(error)
+            toaster("error", error.response.data.msg)
+        }
+        return set(() => ({productLoading: false}))
+    },
+
     getOneProduct: async (product_id) => {
         set(() => ({
             productLoading: true
@@ -63,7 +77,7 @@ const useProduct = create((set, get) => ({
         set(() => ({ productLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/products/get/sales?page=${page}`)
-            set(() => ({productLoading: false}))
+            set(() => ({ productLoading: false }))
             callback(data.products)
             return data.products
         } catch (error) {

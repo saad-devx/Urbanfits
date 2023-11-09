@@ -23,7 +23,7 @@ import {
 
 const ListItem = (props) => {
     const router = useRouter()
-    if (props.categories) return <Link onClick={() => props.setCart(false)} {...props} className="group flex flex-col">
+    if (props.categories) return <Link {...props} className="group flex flex-col">
         <div className="flex items-center gap-x-4">
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.566709 6.14375L0.566709 6.14375L0.567045 6.14441C0.612783 6.23422 0.65045 6.28362 0.687623 6.32028C0.725975 6.35809 0.782047 6.4003 0.885451 6.45568L0.972253 6.5H3.51431H6.05646L6.15624 6.4491L6.1569 6.44876C6.24686 6.40303 6.29634 6.36537 6.33304 6.32822C6.37087 6.28992 6.41309 6.23393 6.46849 6.13069L6.51273 6.0442V3.50481V0.965417L6.4685 0.878953C6.41309 0.77569 6.37088 0.719701 6.33304 0.681395C6.29634 0.64425 6.24686 0.606586 6.1569 0.560857L6.15624 0.56052L6.05567 0.509214L3.55707 0.500823C2.6733 0.498627 2.01112 0.500835 1.56001 0.507367C1.33391 0.510641 1.16456 0.514952 1.04826 0.520116C0.999508 0.522281 0.96343 0.524455 0.938169 0.526441C0.743945 0.610951 0.584784 0.787259 0.525972 0.959131C0.525145 0.97156 0.521384 1.01193 0.517665 1.09655C0.512561 1.21268 0.508381 1.37873 0.505381 1.60075C0.499394 2.04395 0.498274 2.69643 0.50267 3.59017C0.50267 3.59021 0.50267 3.59024 0.502671 3.59028L0.515261 6.04309L0.566709 6.14375ZM0.902272 0.530108C0.902414 0.530142 0.90474 0.529868 0.908821 0.529187C0.90417 0.529735 0.90213 0.530075 0.902272 0.530108Z" stroke="black" />
@@ -49,17 +49,17 @@ const SecondaryNavbar = (props) => {
     }
 
     if (window.matchMedia('(min-width: 760px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full max-w-[2000px] mx-auto h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
-        <ListItem setCart={props.setCart} key={1} href='/products/category/all-categories' categories>All Categories</ListItem>
-        <ListItem setCart={props.setCart} key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
-        <ListItem setCart={props.setCart} key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
-        <ListItem setCart={props.setCart} key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>Men</ListItem>
-        <ListItem setCart={props.setCart} key={5} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>Kids</ListItem>
-        <ListItem setCart={props.setCart} key={6} href='/products/category/64d4dfa643c643cc9c60c672?name=baby+products' classes="group hidden 2xl:flex flex-col">Baby Products</ListItem>
-        <ListItem setCart={props.setCart} key={7} href='/products/category/sale'>Sales</ListItem>
-        <ListItem setCart={props.setCart} key={8} href='/giftcard' classes="group hidden xl:flex flex-col">Gifts</ListItem>
-        <ListItem setCart={props.setCart} key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
-        <ListItem setCart={props.setCart} key={10} href='/earn-ufpoints' classes="group hidden lg:flex flex-col">Earn Uf Points</ListItem>
-        <ListItem setCart={props.setCart} key={11} href='/products/category/wishlist'>Wishlist</ListItem>
+        <ListItem onClick={props.closeCart} key={1} href='/products/category/all-categories' categories>All Categories</ListItem>
+        <ListItem onClick={props.closeCart} key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
+        <ListItem onClick={props.closeCart} key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
+        <ListItem onClick={props.closeCart} key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>Men</ListItem>
+        <ListItem onClick={props.closeCart} key={5} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>Kids</ListItem>
+        <ListItem onClick={props.closeCart} key={6} href='/products/category/64d4dfa643c643cc9c60c672?name=baby+products' classes="group hidden 2xl:flex flex-col">Baby Products</ListItem>
+        <ListItem onClick={props.closeCart} key={7} href='/products/category/sale'>Sales</ListItem>
+        <ListItem onClick={props.closeCart} key={8} href='/giftcard' classes="group hidden xl:flex flex-col">Gifts</ListItem>
+        <ListItem onClick={props.closeCart} key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
+        <ListItem onClick={props.closeCart} key={10} href='/earn-ufpoints' classes="group hidden lg:flex flex-col">Earn Uf Points</ListItem>
+        <ListItem onClick={props.closeCart} key={11} href='/products/category/wishlist'>Wishlist</ListItem>
         <span className="hidden lg:flex mb-2 flex-col justify-center items-center text-sm">
             Minimum Order
             <p className="font_urbanist_bold text-[13px]">{calculateMinOrder()}</p>
@@ -91,6 +91,11 @@ export default function Navbar() {
         return address.shipping_address.address
     }
 
+    const closeCart = () => {
+        document.body.style.overflowY = 'visible'
+        setCart(false)
+    }
+
     if (!Exception) return <>
         <Cart cart={cart} setCart={setCart} />
         <Logout show={logout} setLogout={setLogout} />
@@ -117,14 +122,14 @@ export default function Navbar() {
                     </div>
                     <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
                     <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
-                        <Link onClick={() => setCart(false)} href="/user/uf-wallet" className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
+                        <Link onClick={closeCart} href="/user/uf-wallet" className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
                             <span className="font_copper text-base">UF-Points</span>
                             <p className='font_urbanist_medium'>{points}</p>
                         </Link>
-                        <Link onClick={() => setCart(false)} href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
-                        <Link onClick={() => setCart(false)} href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
-                        <Link onClick={() => setCart(false)} href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link>
-                        <Link onClick={() => setCart(false)} href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
+                        <Link onClick={closeCart} href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
+                        <Link onClick={closeCart} href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
+                        <Link onClick={closeCart} href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link>
+                        <Link onClick={closeCart} href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
                         <button onClick={() => setLogout(!logout)} className="w-full px-4 hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</button>
                     </div>
                 </>
@@ -158,7 +163,7 @@ export default function Navbar() {
         <SecondaryNavbar
             user={user}
             cart={cart}
-            setCart={setCart}
+            closeCart={closeCart}
             logout={logout}
             setLogout={setLogout}
             currency={currency}
