@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic';
 import axios from 'axios';
 import useUser from '@/hooks/useUser';
-const CatalogueCarousel = dynamic(() => import('@/components/carousels/catalogueCarousel'));
 import Shoppingcard from '@/components/cards/shoppingcard';
 import Spinner from '@/components/loaders/spinner';
 import BounceLoader from '@/components/loaders/bounceLoader';
@@ -63,7 +61,7 @@ export default function WisthList() {
                     <Link href='/' className="font_urbanist mt-2 text-sm bg-gray-100 px-4 py-1 rounded-full">Go Shopping</Link>
                 </section>
                     :
-                    <><CatalogueCarousel />
+                    <>
                         <section className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_urbanist text-left' >
                             <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                                 <h1 className="col-span-full font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">My Wishlist&nbsp;</h1>

@@ -23,10 +23,10 @@ const CheckShell = ({ dayCode, day, history }) => {
     })[0] : null
 
     return <div key={dayCode} className="relative flex flex-col items-center gap-y-2">
-        {respectedDayHistory && <span className="absolute left-1/2 -translate-x-1/2 -top-5 lg:-top-7 font_urbanist_medium text-[8px] md:text-10px lg:text-xs text-black">+ {respectedDayHistory.points}</span>}
+        {respectedDayHistory && <span className="absolute left-1/2 -translate-x-1/2 -top-5 lg:-top-7 font_urbanist_medium text-[8px] md:text-10px lg:text-xs text-[#FF4A60]">+ {respectedDayHistory.points}</span>}
         <span className="w-8 md:w-10 lg:w-16">
             {respectedDayHistory ? <svg className='w-full' width="149" viewBox="0 0 149 117" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M86.6013 12.306C97.5903 3.937 109.61 9.38 111.47 22.509C124.516 16.923 132.928 24.893 129.536 38.45C141.123 37.947 151.497 44.564 146.21 54.179C138.061 69 127.144 89.918 112.818 98.184C112.814 122.112 36.9403 122.313 36.9363 97.981C22.7503 89.787 11.7104 66.5 1.21037 54.179C-4.07663 44.564 8.98051 37.947 20.5685 38.45C17.1765 24.892 25.5883 16.922 38.6343 22.509C40.4943 9.381 52.5143 3.938 63.5033 12.306C66.2723 -4.102 83.8333 -4.102 86.6013 12.306Z" fill="url(#paint0_linear_4376_392)" />
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M86.6013 12.306C97.5903 3.937 109.61 9.38 111.47 22.509C124.516 16.923 132.928 24.893 129.536 38.45C141.123 37.947 151.497 44.564 146.21 54.179C138.061 69 127.144 89.918 112.818 98.184C112.814 122.112 36.9403 122.313 36.9363 97.981C22.7503 89.787 11.7104 66.5 1.21037 54.179C-4.07663 44.564 8.98051 37.947 20.5685 38.45C17.1765 24.892 25.5883 16.922 38.6343 22.509C40.4943 9.381 52.5143 3.938 63.5033 12.306C66.2723 -4.102 83.8333 -4.102 86.6013 12.306Z" fill="pink" />
                 <defs>
                     <linearGradient id="paint0_linear_4376_392" x1="73.8141" y1="0" x2="73.8141" y2="116.18" gradientUnits="userSpaceOnUse">
                         <stop stop-color="#B3903E" />
@@ -177,11 +177,11 @@ export default function EarnUfPoints() {
     }
 
     return <>
-        <main className="bg-gray-100 w-full max-w-[2000px] mx-auto py-10 lg:pt-16 px-5 md:px-10 xl:px-14 font_urbanist gap-4 lg:gap-6 scroll-smooth">
+        <main className="bg-gray-100 w-full max-w-[2000px] mx-auto p-5 md:px-7 lg:px-14 xl:px-20 py-16 font_urbanist gap-4 lg:gap-6 scroll-smooth">
             <section className="w-full mb-4 lg:mb-6 flex flex-col lg:flex-row gap-4">
                 <nav className="bg-white w-full lg:w-1/2 min-h-[20rem] px-4 py-4 mid:px-20 mid:py-4 lg:p-6 lg:px-8 flex flex-col justify-between rounded-lg">
                     <section className="w-full">
-                        <div className="bg-gray-100 w-full flex justify-center py-1 mid:py-2 text-sm lg:text-base font_urbanist_medium rounded-lg">Every 100 UF-Points are equal to {formatPrice(process.env.UF_POINT_RATE * 100)}</div>
+                        <div className="bg-gray-100 w-full flex justify-center py-1 mid:py-2 text-sm lg:text-base text-[#FF4A60] font_urbanist_medium rounded-lg">Every 100 UF-Points are equal to {formatPrice(process.env.UF_POINT_RATE * 100)}</div>
                         {user && <div className="w-full mt-7">
                             <span className="px-4 py-2 text-sm lg:text-base border rounded-lg">My UF-Points: {points}</span>
                         </div>}
@@ -217,13 +217,13 @@ export default function EarnUfPoints() {
                             <span className="bg-white absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 aspect-square flex justify-center items-center rounded-full font_urbanist_bold text-10px lg:text-xs tracking-1 shadow-md"><p className="translate-x-px">{user && new Date() > new Date(user.uf_wallet?.next_uf_spin) ? "SPIN" : <i className="fa-solid fa-lock text-sm" />}</p></span>
                             <i className="absolute z-[8] top-[59%] md:top-[60%] 2xl:top-[58%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-x-[9px] lg:border-x-[12.5px] border-x-transparent border-t-[18px] lg:border-t-[25px] border-t-black"></i>
                             <svg id='prize_wheel' className="w-full h-full transition-all duration-700" width="260" height="260" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path name="50" d="M131.038 0.960935C148.11 0.960935 165.015 4.32348 180.787 10.8566C196.559 17.3897 210.89 26.9654 222.962 39.0371L131.038 130.961V0.960935Z" fill="url(#paint0_linear_4367_385)" />
+                                <path name="50" d="M131.038 0.960935C148.11 0.960935 165.015 4.32348 180.787 10.8566C196.559 17.3897 210.89 26.9654 222.962 39.0371L131.038 130.961V0.960935Z" fill="#FF4A60" />
                                 <path name="100" d="M222.924 39.0019C234.995 51.0735 244.571 65.4046 251.104 81.1769C257.637 96.9493 261 113.854 261 130.926L131 130.926L222.924 39.0019Z" fill="#FAFAFA" />
-                                <path name="0" d="M0.999998 130.926C0.999998 113.854 4.36255 96.9493 10.8957 81.1769C17.4288 65.4046 27.0045 51.0735 39.0761 39.0019L131 130.926H0.999998Z" fill="url(#paint1_linear_4367_385)" />
+                                <path name="0" d="M0.999998 130.926C0.999998 113.854 4.36255 96.9493 10.8957 81.1769C17.4288 65.4046 27.0045 51.0735 39.0761 39.0019L131 130.926H0.999998Z" fill="#FF4A60" />
                                 <path name="0" d="M222.924 222.924C210.852 234.995 196.521 244.571 180.749 251.104C164.977 257.637 148.072 261 131 261L131 131L222.924 222.924Z" fill="#FAFAFA" />
-                                <path name="200" d="M261 131C261 148.072 257.637 164.977 251.104 180.749C244.571 196.521 234.995 210.852 222.924 222.924L131 131H261Z" fill="url(#paint2_linear_4367_385)" />
+                                <path name="200" d="M261 131C261 148.072 257.637 164.977 251.104 180.749C244.571 196.521 234.995 210.852 222.924 222.924L131 131H261Z" fill="#FF4A60" />
                                 <path name="500" d="M38.9999 222.924C26.9283 210.852 17.3526 196.521 10.8195 180.749C4.28638 164.977 0.923827 148.072 0.923828 131L130.924 131L38.9999 222.924Z" fill="#FAFAFA" />
-                                <path name="400" d="M130.924 261C113.852 261 96.9473 257.637 81.175 251.104C65.4027 244.571 51.0716 234.995 38.9999 222.924L130.924 131V261Z" fill="url(#paint3_linear_4367_385)" />
+                                <path name="400" d="M130.924 261C113.852 261 96.9473 257.637 81.175 251.104C65.4027 244.571 51.0716 234.995 38.9999 222.924L130.924 131V261Z" fill="#FF4A60" />
                                 <path name="10" d="M38.9999 39.0019C51.0716 26.9303 65.4026 17.3546 81.175 10.8214C96.9473 4.28833 113.852 0.925781 130.924 0.925781L130.924 130.926L38.9999 39.0019Z" fill="#FAFAFA" />
                                 <path d="M172.29 153.025L173.245 150.719L170.939 149.764L171.325 148.833L173.631 149.788L174.586 147.482L175.518 147.868L174.562 150.174L176.868 151.129L176.482 152.06L174.176 151.105L173.221 153.411L172.29 153.025Z" fill="white" />
                                 <path d="M176.185 155.288L176.527 154.462C176.917 154.325 177.355 154.173 177.84 154.006C178.326 153.835 178.816 153.651 179.31 153.452C179.808 153.252 180.276 153.043 180.713 152.825C181.149 152.608 181.521 152.385 181.827 152.157C182.136 151.925 182.337 151.695 182.432 151.466C182.545 151.193 182.582 150.916 182.543 150.635C182.504 150.351 182.401 150.094 182.232 149.864C182.067 149.635 181.848 149.464 181.574 149.351C181.301 149.237 181.021 149.202 180.736 149.244C180.453 149.287 180.197 149.395 179.965 149.567C179.738 149.738 179.569 149.959 179.455 150.233L178.524 149.847C178.712 149.393 178.993 149.028 179.367 148.754C179.741 148.477 180.156 148.307 180.611 148.244C181.067 148.177 181.517 148.236 181.96 148.42C182.404 148.603 182.761 148.879 183.033 149.247C183.309 149.617 183.479 150.031 183.544 150.491C183.61 150.947 183.55 151.401 183.363 151.852C183.256 152.11 183.078 152.363 182.828 152.611C182.58 152.854 182.282 153.088 181.933 153.312C181.585 153.535 181.206 153.751 180.796 153.957C180.387 154.16 179.965 154.354 179.529 154.537C179.094 154.72 178.666 154.891 178.245 155.05L181.582 156.433L181.196 157.364L176.185 155.288Z" fill="white" />
@@ -349,7 +349,7 @@ export default function EarnUfPoints() {
                             <li>5. Your UF-Points and vouchers will be automatically added yo your account wallet.</li>
                             <li>6. On getting a "Try Again", you can do extra spin free of cost.</li>
                         </ol>
-                        {user && <div className='w-full'><LinkBtn href="#points_history" bg="bg-gray-100" my="my-4" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
+                        {user && <div className='w-full'><LinkBtn href="/user/inbox/rewards" bg="bg-gray-100" my="my-4" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
                             <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>}
                     </div>
                 </nav>

@@ -1,10 +1,11 @@
 import React from 'react'
 import { useCart } from 'react-use-cart'
 import useWallet from '@/hooks/useWallet'
+import toaster from '@/utils/toast_function'
 
 export default function Giftcard() {
     const { formatPrice } = useWallet()
-    const { addItem } = useCart()
+    const { addItem, inCart } = useCart()
     return <>
         <main className='w-full max-w-[2000px] mx-auto p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 bg-white grid grid-cols-1 mid:grid-cols-2 transition-all gap-7 lg:gap-y-10 lg:gap-x-28 xl:gap-y-16 xl:gap-x-40 overflow-hidden'>
             <h1 className="col-span-full font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">Gift Cards</h1>
@@ -14,7 +15,7 @@ export default function Giftcard() {
                 <section className="w-full h-3/4 p-4 md:p-7 flex flex-col bronze_metal_bg border-b-2 border-[#bb8e47]">
                     <div className="w-full flex justify-between items-center">
                         <h2 className="gradient_text text-xs md:text-sm font_urbanist_bold">UF-GiftCard</h2>
-                        <button onClick={() => addItem({ id: "giftcard_bronze", name: "Bronze UF-Giftcard", price: 100 })} className="fa-solid fa-cart-plus text-sm md:text-base text-white" />
+                        <button onClick={() => {if(inCart("giftcard_bronze")) return toaster("info", "You can buy only one Giftcard per checkout."); addItem({ id: "giftcard_bronze", name: "Bronze UF-Giftcard", d_name: "Bronze", bg: "bronze_metal_bg", price: 100 }); toaster("success", "Bronze Giftcard added to the cart.") }} className="fa-solid fa-cart-plus text-sm md:text-base text-white" />
                     </div>
                     <span className="mx-auto my-auto flex flex-col justify-center items-center font_montserrat_bold text-white text-xl lg:text-3xl tracking-2 group-hover:tracking-3 text-opacity-80 transition-all duration-1000">BRONZE CARD</span>
                 </section>
@@ -32,7 +33,7 @@ export default function Giftcard() {
                 <section className="w-full h-3/4 p-4 md:p-7 flex flex-col silver_metal_bg border-b-2 border-gray-400">
                     <div className="w-full flex justify-between items-center">
                         <h2 className="gradient_text text-xs md:text-sm font_urbanist_bold">UF-GiftCard</h2>
-                        <button onClick={() => addItem({ id: "giftcard_silver", name: "Silver UF-Giftcard", price: 200 })} className="fa-solid fa-cart-plus text-white" />
+                        <button onClick={() => {if(inCart("giftcard_silver")) return toaster("info", "You can buy only one Giftcard per checkout."); addItem({ id: "giftcard_silver", name: "Silver UF-Giftcard", d_name: "Silver", bg: "silver_metal_bg", price: 200 }); toaster("success", "Silver Giftcard added to the cart.") }} className="fa-solid fa-cart-plus text-white" />
                     </div>
                     <span className="mx-auto my-auto flex flex-col justify-center items-center font_montserrat_bold text-white text-xl lg:text-3xl tracking-2 group-hover:tracking-3 text-opacity-80 transition-all duration-1000">SILVER CARD</span>
                 </section>
@@ -50,7 +51,7 @@ export default function Giftcard() {
                 <section className="w-full h-3/4 p-4 md:p-7 flex flex-col gold_metal_bg border-b-2 border-[#bb8e47]">
                     <div className="w-full flex justify-between items-center">
                         <h2 className="gradient_text text-xs md:text-sm font_urbanist_bold">UF-GiftCard</h2>
-                        <button onClick={() => addItem({ id: "giftcard_gold", name: "Gold UF-Giftcard", price: 300 })} className="fa-solid fa-cart-plus text-white" />
+                        <button onClick={() => {if(inCart("giftcard_gold")) return toaster("info", "You can buy only one Giftcard per checkout."); addItem({ id: "giftcard_gold", name: "Gold UF-Giftcard", d_name: "Gold", bg: "gold_metal_bg", price: 300 }); toaster("success", "Gold Giftcard added to the cart.") }} className="fa-solid fa-cart-plus text-white" />
                     </div>
                     <span className="mx-auto my-auto flex flex-col justify-center items-center font_montserrat_bold text-white text-xl lg:text-3xl tracking-2 group-hover:tracking-3 text-opacity-80 transition-all duration-1000">GOLD CARD</span>
                 </section>
@@ -68,7 +69,7 @@ export default function Giftcard() {
                 <section className="w-full h-3/4 p-4 md:p-7 flex flex-col platinum_metal_bg border-b-2 border-gray-600">
                     <div className="w-full flex justify-between items-center">
                         <h2 className="gradient_text text-xs md:text-sm font_urbanist_bold">UF-GiftCard</h2>
-                        <button className="fa-solid fa-cart-plus text-white" />
+                        <button onClick={() => {if(inCart("giftcard_platinum")) return toaster("info", "You can buy only one Giftcard per checkout."); addItem({ id: "giftcard_platinum", name: "Platinum UF-Giftcard", d_name: "Platinum", bg: "platinum_metal_bg", price: 400 }); toaster("success", "Platinum Giftcard added to the cart.") }} className="fa-solid fa-cart-plus text-white" />
                     </div>
                     <span className="mx-auto my-auto flex flex-col justify-center items-center font_montserrat_bold text-white text-xl lg:text-3xl tracking-2 group-hover:tracking-3 text-opacity-80 transition-all duration-1000">PLATINUM CARD</span>
                 </section>
@@ -86,7 +87,7 @@ export default function Giftcard() {
                 <section className="w-full h-3/4 p-4 md:p-7 flex flex-col diamond_metal_bg border-b-2 border-purple-700">
                     <div className="w-full flex justify-between items-center">
                         <h2 className="gradient_text text-xs md:text-sm font_urbanist_bold">UF-GiftCard</h2>
-                        <button className="fa-solid fa-cart-plus text-white" />
+                        <button onClick={() => {if(inCart("giftcard_diamond")) return toaster("info", "You can buy only one Giftcard per checkout."); addItem({ id: "giftcard_diamond", name: "Diamond UF-Giftcard", d_name: "Diamond", bg: "diamond_metal_bg", price: 500 }); toaster("success", "Diamond Giftcard added to the cart.") }} className="fa-solid fa-cart-plus text-white" />
                     </div>
                     <span className="mx-auto my-auto flex flex-col justify-center items-center font_montserrat_bold text-white text-xl lg:text-3xl tracking-2 group-hover:tracking-3 text-opacity-80 transition-all duration-1000">DIAMOND CARD</span>
                 </section>

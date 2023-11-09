@@ -68,7 +68,7 @@
 }
 
 *::selection {
-  background-color: rgb(216, 213, 49);
+  background-color: rgb(219, 40, 130);
   color: #ffff;
 }
 
@@ -101,11 +101,11 @@ select {
 }
 
 .bg_btn_gold {
-  background: linear-gradient(92.79deg, #FAE892 0.08%, #B3903E 100.08%);
+  background: #FF4A60;
 }
 
 .bg_btn_gold_2 {
-  background: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+  background: #FF4A60;
 }
 
 .bg_404 {
@@ -114,13 +114,13 @@ select {
 }
 
 .gradient_background {
-  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+  background: #FF4A60;
 }
 
 .gradient_txt {
   font-style: normal;
   line-height: 50px;
-  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+  background: linear-gradient(90deg, pink 0.1%, #FF4A60 100.1%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -128,7 +128,7 @@ select {
 }
 
 .gradient_txt_2 {
-  background: linear-gradient(90deg, #FAE892 0.1%, #B3903E 100.1%);
+  background: linear-gradient(90deg, #FFFFFF 0.1%, #FF4A60 100.1%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -136,7 +136,7 @@ select {
 }
 
 .data_field:has(input:focus) {
-  border-color: rgb(161 98 7);
+  border-color: pink;
 }
 
 .marginx_auto {
@@ -203,7 +203,7 @@ input[type="checkbox"]::before {
 
 input[type="checkbox"]:checked {
   color: #fff;
-  background: linear-gradient(92.79deg, #FAE892 0.08%, #B3903E 100.08%);
+  background: #FF4A60
 }
 
 input[type="checkbox"]:checked::before {
@@ -225,7 +225,7 @@ input[type="radio"] {
   position: relative;
   width: 15px;
   height: 15px;
-  color: #FAE892;
+  color: pink;
   border: 1px solid #bdc1c6;
   appearance: none;
   outline: 0;
@@ -250,7 +250,7 @@ input[type="checkbox"]::before {
 
 input[type="radio"]:checked {
   color: #fff;
-  background: linear-gradient(92.79deg, #FAE892 0.08%, #B3903E 100.08%);
+  background: #FF4A60
 }
 
 input[type="radio"]:checked::before {
@@ -264,7 +264,7 @@ input[type="radio"]:checked {
 
 /* gradient border css here */
 .border_gradient span {
-  background: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+  background: linear-gradient(180deg, pink 0%, #FF4A60 100%);
   transition: all .3s;
   opacity: 0;
 }
@@ -316,7 +316,7 @@ input[type="radio"]:checked {
 }
 
 input:checked+.slider {
-  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+  background: linear-gradient(90deg, pink 0%, #FF4A60 100%);
 }
 
 input:checked+.slider:before {
@@ -375,7 +375,7 @@ input:checked+.slider:before {
 
 ::-webkit-scrollbar-thumb {
   position: absolute;
-  background: linear-gradient(180deg, #FAE892 0%, #B3903E 100%);
+  background: linear-gradient(180deg, #FF4A60, pink);
   border-radius: 3px;
 }
 
@@ -398,7 +398,7 @@ input:checked+.slider:before {
 }
 
 .scrollbar_x::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+  background: linear-gradient(180deg, #FF4A60 100%, pink 0%);
 }
 
 /* height css for layout accordint to the navbar height in pixels */
@@ -445,7 +445,7 @@ input:checked+.slider:before {
 }
 
 .border_gradient_2 {
-  border-image: linear-gradient(180deg, #FAE892 0%, #B3903E 100%) 20;
+  border-image: linear-gradient(180deg, pink 0%, #FF4A60 100%) 20;
 }
 
 /* About Page animation */
@@ -477,7 +477,7 @@ input:checked+.slider:before {
 
 /* CSS for Customer Services */
 .active_bg {
-  background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+  background: #FF4A60;
 }
 
 @media screen and (min-width: 1024px) {

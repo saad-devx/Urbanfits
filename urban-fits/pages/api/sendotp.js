@@ -1,11 +1,14 @@
 import ConnectDB from "@/utils/connect_db"
+import { generateGiftCode } from "@/utils/generatePassword"
 import sendSMS from "@/utils/sendSMS"
 
 const SendOtp = async (req, res) => {
     try {
-        if (req.method === 'PUT') {
-            const { msg, to } = req.body
-            const response = await sendSMS(to, msg)
+        if (req.method === 'GET') {
+            await ConnectDB()
+            // const { msg, to } = req.body
+            const response = await generateGiftCode(10)
+
             res.status(200).json({
                 success: true,
                 response

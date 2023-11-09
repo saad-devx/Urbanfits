@@ -43,7 +43,7 @@ export default function UFwallet() {
                     transitionSpeed={1500}
                     tiltMaxAngleX={10}
                     tiltMaxAngleY={10}>
-                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]">
+                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#FF4A60]">
                         <div className="w-full flex justify-between">
                             <span style={{ transform: "translateZ(25px)" }} className="font_copper font-thin text-xl">Points</span>
                             <span className="font_urbanist_bold text-xl">{get3dpNumber(points)}</span>
@@ -90,7 +90,7 @@ export default function UFwallet() {
                     transitionSpeed={1500}
                     tiltMaxAngleX={10}
                     tiltMaxAngleY={10}>
-                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#B3903E]">
+                    <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#FF4A60]">
                         <div className="translate_z w-full flex justify-between">
                             <span className="font_copper font-thin text-xl">Points</span>
                             <span className="font_urbanist_bold text-xl">{get3dpNumber(points)}</span>
@@ -110,7 +110,7 @@ export default function UFwallet() {
                 <nav className="h-full flex flex-col justify-between">
                     <div className="flex flex-col">
                         <span className="font_copper">{user.uf_wallet.card_number}</span>
-                        <Link href="/earn-ufpoints" className="font_urbanist_bold text-yellow-700">Find out more about UF-Points</Link>
+                        <Link href="/earn-ufpoints" className="font_urbanist_bold text-[#FF4A60]">Find out more about UF-Points</Link>
                     </div>
                     <Link href="/user/uf-wallet/history" className="underline underline-offset-1">View Points History</Link>
                 </nav>

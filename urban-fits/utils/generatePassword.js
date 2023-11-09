@@ -1,3 +1,6 @@
+import Giftcard from "@/models/giftcard"
+import ConnectDB from "./connect_db";
+
 export const generateRandomInt = (from, to) => {
     let randint = Math.floor(Math.random() * (to - from + 1)) + from;
     return randint
@@ -36,15 +39,23 @@ const generatePassword = (email) => {
     }
     return password
 }
-export const generateRandString = (length) => {
-    const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
-    let password = "";
+export const generateGiftCode = async (length) => {
+    const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`;
 
-    // Generate a random password of the specified length
-    for (let i = 0; i < length; i++) {
-        const randomIndex = generateRandomInt(0, key.length)
-        password += key.charAt(randomIndex)
+    await ConnectDB()
+    let codeExists = true
+    let code = "";
+    while (codeExists) {
+        // Generate a random password of the specified length
+        for (let i = 0; i < length; i++) {
+            const randomIndex = generateRandomInt(0, key.length)
+            code += key.charAt(randomIndex)
+        }
+        const giftCard = await Giftcard.find({ gift_code: code })
+        if (!giftCard.length) codeExists = false
+        else code = ''
     }
-    return password
+    console.log(code)
+    return code
 }
 export default generatePassword

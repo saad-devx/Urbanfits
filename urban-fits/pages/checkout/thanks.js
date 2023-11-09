@@ -12,6 +12,13 @@ import Image from 'next/image';
 import mongoose from 'mongoose';
 import { pusherClient } from '@/utils/pusher';
 
+const giftCardPrices = {
+    "giftcard_bronze": "bronze_metal_bg",
+    "giftcard_silver": "silver_metal_bg",
+    "giftcard_gold": "gold_metal_bg",
+    "giftcard_platinum": "platinum_metal_bg",
+    "giftcard_diamond": "diamond_metal_bg",
+}
 export default function Thanks() {
     const router = useRouter()
     const { user, guestUser } = useUser()
@@ -46,7 +53,7 @@ export default function Thanks() {
 
     const date = new Date()
     if (!router.query.o_session_id || !mongoose.Types.ObjectId.isValid(router.query.o_session_id)) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
-    if (orderData && orderData._id) return <>
+    if (orderData) return <>
         <Head>
             <title>Thanks - Urban Fits</title>
             <meta name="description" content="Customer Order" />
@@ -76,6 +83,15 @@ export default function Thanks() {
                                     <h1 className="text-base lg:text-xl font_urbanist_medium">{item.name}</h1>
                                     <h2 className="text-sm md:text-base font_urbanist_medium capitalize">{item.color}</h2>
                                     <span className="font_gotam_light space-x-5"> <small>Qty:{item.quantity}</small> <small>{formatPrice(item.price)}</small> </span>
+                                </span>
+                            </div>
+                        })}
+                        {orderData.gift_cards?.map((item) => {
+                            return <div className="w-full my-5 flex justify-between items-center">
+                                <div className={`w-1/4 md:w-1/4 uppercase font_montserrat_bold text-white text-xs tracking-1 flex justify-center items-center rounded-xl aspect-video ${giftCardPrices[item.id]}`}>{item.d_name}</div>
+                                <span className="flex flex-col items-end">
+                                    <h1 className="text-base lg:text-xl font_urbanist_medium">{item.name}</h1>
+                                    <small>{formatPrice(item.price)}</small>
                                 </span>
                             </div>
                         })}

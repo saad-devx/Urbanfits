@@ -124,6 +124,21 @@ export default function Invoice({ order, show, setInvoice }, props) {
                         {order.order_items.map((item, index) => {
                             return <OrderItem key={index} index={index + 1} item={item} />
                         })}
+                        {order.gift_cards.map((item, index) => {
+                            return <div className={`w-full flex items-center py-3 px-1 border-b font_urbanist text-[10px] md:text-xs ${index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
+                                <span className="w-[10%] pl-2">{index + 1}</span>
+                                <div className="w-[15%]">
+                                    <span className={`${item.bg} w-3/5 mx-auto aspect-video flex justify-center items-center text-xs text-white font_montserrat_bold tracking-1 uppercase rounded-xl overflow-hidden`}>
+                                        {item.d_name}
+                                    </span>
+                                </div>
+                                <span className="w-[20%]">{item.name}</span>
+                                <span className="w-[29%]"></span>
+                                <span className="w-[7.66%] pl-2"></span>
+                                <span className="w-[9.66%]"></span>
+                                <span className="w-[8.66%]">{formatPrice(item.price)}</span>
+                            </div>
+                        })}
                     </div>
 
                     <div className="w-full pt-10 flex flex-col items-end">

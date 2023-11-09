@@ -67,8 +67,8 @@ export default function Checkout1() {
             address: address && address[type] ? address[type].address : '',
             apt_suite: address && address[type] ? address[type].apt_suite : '',
             city: address && address[type] ? address[type].city : '',
-            country: address && address[type] ? address[type].country : '',
-            phone_prefix: address && address[type] ? address[type].phone_prefix : '',
+            country: address && address[type] ? address[type].country : country.country,
+            phone_prefix: address && address[type] ? address[type].phone_prefix : country.code,
             phone_number: address && address[type] ? address[type].phone_number : ''
         }
     }
@@ -120,15 +120,16 @@ export default function Checkout1() {
             address: obj ? obj.address : '',
             apt_suite: obj ? obj.apt_suite : '',
             city: obj ? obj.city : '',
-            country: obj ? obj.country : 'Country',
-            phone_prefix: obj ? obj.phone_prefix : 'Select Country Code',
+            country: obj ? obj.country : country.country,
+            phone_prefix: obj ? obj.phone_prefix : country.code,
             phone_number: obj ? obj.phone_number : ''
         }
     }
 
-    const calculateTotolShippingFee = (fees, shippingMethod = values?.delivery_option) => {
+    const calculateTotalShippingFee = (fees, shippingMethod = values?.delivery_option) => {
         if (shippingMethod === "free_shipping") return 0
-        const totalWeight = items.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
+        const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
+        const totalWeight = filteredItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
         if (totalWeight <= 5100) return fees
         const additionalWeight = totalWeight - 5100
         const additionalCharges = (additionalWeight / 1000) * (shippingRates?.additionalKgCharges || 1)
@@ -155,19 +156,20 @@ export default function Checkout1() {
 
     useEffect(() => {
         setFieldValue("currency", currency)
-        setFieldValue("country", country.country)
         setFieldValue("delivery_option", "standard_shipping")
-        return async () => {
+        setFieldValue("shipping_address.country", country.country)
+        setFieldValue("billing_address.country", country.country)
+        setFieldValue("shipping_address.phone_prefix", country.code)
+        setFieldValue("billing_address.phone_prefix", country.code)
+        const initialAddressSetup = async () => {
             setLoader(<Loader />)
             if (user) {
-                if (!address) await getAddress()
+                if(!address) await getAddress()
                 if (!address) return setLoader(null)
                 setValues({
-                    name: ifExists(user.firstname) + ' ' + ifExists(user.lastname),
-                    email: ifExists(user.email),
-                    delivery_option: 'express',
-                    shipping_address: getValuesToBeSet(address.shipping_address),
-                    billing_address: getValuesToBeSet(address.billing_address)
+                    ...values,
+                    ...(address.shipping_address && { shipping_address: getValuesToBeSet(address.shipping_address) }),
+                    ...(address.billing_address && { billing_address: getValuesToBeSet(address.billing_address) }),
                 })
             }
             const filledAddressInfo = sessionStorage.getItem("this_order_data")
@@ -183,6 +185,7 @@ export default function Checkout1() {
             }
             setLoader(null)
         }
+        initialAddressSetup()
     }, [user, address])
 
     const toggleBillingForm = (e) => {
@@ -223,14 +226,14 @@ export default function Checkout1() {
                     <span className=" mb-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>1. Contact Information</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
                     <span className="flex flex-col mb-6">
                         <label className='font_urbanist_medium md:text-lg' htmlFor="name">Name</label>
-                        <div className="relative w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full data_field flex justify-between items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                             {touched.name && errors.name ? <Tooltip classes="form-error" content={errors.name} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.name} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button type='button' onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="name">edit_square</i></button>
                         </div>
                     </span>
                     <span className="flex flex-col">
                         <label className='font_urbanist_medium md:text-lg' htmlFor="email">Email</label>
-                        <div className="relative w-full data_field flex justify-between items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                        <div className="relative w-full data_field flex justify-between items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                             {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="johndoe.123@gmail.com" /><button type='button' onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="email">edit_square</i></button>
                         </div>
@@ -257,54 +260,57 @@ export default function Checkout1() {
                         </div>
                         <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">Enter Your Shipping Address</h1>
                         <section className="w-full space-y-10">
-                            <div className="relative w-full data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                 {touched.shipping_address && touched.shipping_address.address_title && errors.shipping_address && errors.shipping_address.address_title ? <Tooltip classes="form-error" content={errors.shipping_address.address_title} /> : null}
-                                <input className="w-full bg-transparent outline-none border-none" type="text" name="shipping_address.address_title" id="address_title" value={values.shipping_address.address_title} onBlur={handleBlur} onChange={handleChange} placeholder="Address Title*" />
+                                <select value={values.shipping_address.address_title} name='shipping_address.address_title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                    <option value="Home">Home</option>
+                                    <option value="Office">Office</option>
+                                </select>
                             </div>
                             <div className="flex justify-between w-full ">
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.firstname && errors.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.shipping_address.firstname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="shipping_address.firstname" id="firstname" value={values.shipping_address.firstname} onBlur={handleBlur} onChange={handleChange} placeholder="First Name" />
                                 </div>
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.lastname && errors.shipping_address && errors.shipping_address.lastname ? <Tooltip classes="form-error" content={errors.shipping_address.lastname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="shipping_address.lastname" id="lastname" value={values.shipping_address.lastname} onBlur={handleBlur} onChange={handleChange} placeholder="Last Name" />
                                 </div>
                             </div>
-                            <div className="relative w-full data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                 {touched.shipping_address && touched.shipping_address.address && errors.shipping_address && errors.shipping_address.address ? <Tooltip classes="form-error" content={errors.shipping_address.address} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="text" name="shipping_address.address" id="address" value={values.shipping_address.address} onBlur={handleBlur} onChange={handleChange} placeholder="Address 1*" />
                             </div>
-                            <div className="relative w-full data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                 {touched.shipping_address && touched.shipping_address.apt_suite && errors.shipping_address && errors.shipping_address.apt_suite ? <Tooltip classes="form-error" content={errors.shipping_address.apt_suite} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="text" name="shipping_address.apt_suite" id="apt_suite" value={values.shipping_address.apt_suite} onBlur={handleBlur} onChange={handleChange} placeholder="Apt or Suite (optional)" />
                             </div>
                             <div className="flex justify-between w-full ">
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.city && errors.shipping_address && errors.shipping_address.city ? <Tooltip classes="form-error" content={errors.shipping_address.city} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="shipping_address.city" id="city" value={values.shipping_address.city} onBlur={handleBlur} onChange={handleChange} placeholder="City*" />
                                 </div>
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.country && errors.shipping_address && errors.shipping_address.country ? <Tooltip classes="form-error" content={errors.shipping_address.country} /> : null}
                                     <select value={values.shipping_address.country} name='shipping_address.country' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                        {countryCodes.map((item) => {
-                                            if (!item.code) return <option disabled>{item.name}</option>
-                                            return <option value={item.name}>{item.name}</option>
+                                        {countryCodes.map((item, index) => {
+                                            // if (!item.code) return <option key={index} value=''>{item.name}</option>
+                                            return <option key={index} value={item.country}>{item.name}</option>
                                         })}
                                     </select>
                                 </div>
                             </div>
                             <div className="flex justify-between w-full">
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.phone_prefix && errors.shipping_address && errors.shipping_address.phone_prefix ? <Tooltip classes="form-error" content={errors.shipping_address.phone_prefix} /> : null}
                                     <select value={values.shipping_address.phone_prefix} name='shipping_address.phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                        {countryCodes.map((item) => {
-                                            if (!item.code) return <option disabled>{item.name}</option>
-                                            return <option value={item.code}>{item.name} {item.code}</option>
+                                        {[{ name: "Select country code" }, ...countryCodes].map((item, index) => {
+                                            if (!item.code) return <option key={index} value=''>{item.name}</option>
+                                            return <option key={index} value={item.code}>{item.name} {item.code}</option>
                                         })}
                                     </select>
                                 </div>
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.shipping_address && touched.shipping_address.phone_number && errors.shipping_address && errors.shipping_address.phone_number ? <Tooltip classes="form-error" content={errors.shipping_address.phone_number} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="tel" name="shipping_address.phone_number" id="phone_number" size="15" maxLength={15} value={values.shipping_address.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                                 </div>
@@ -321,54 +327,57 @@ export default function Checkout1() {
                             </div>
                         </div>
                         <section className={`w-full ${billingForm} overflow-hidden space-y-10`}>
-                            <div className="relative w-full data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                 {touched.billing_address && touched.billing_address.address_title && errors.billing_address && errors.billing_address.address_title ? <Tooltip classes="form-error" content={errors.billing_address.address_title} /> : null}
-                                <input className="w-full bg-transparent outline-none border-none" type="text" name="billing_address.address_title" id="address_title" value={values.billing_address.address_title} onBlur={handleBlur} onChange={handleChange} placeholder="Address Title*" />
+                                <select value={values.billing_address.address_title} name='billing_address.address_title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                    <option value="Home">Home</option>
+                                    <option value="Office">Office</option>
+                                </select>
                             </div>
                             <div className="flex justify-between w-full ">
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.firstname && errors.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.billing_address.firstname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="billing_address.firstname" id="firstname" value={values.billing_address.firstname} onBlur={handleBlur} onChange={handleChange} placeholder="First Name" />
                                 </div>
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.lastname && errors.billing_address && errors.billing_address.lastname ? <Tooltip classes="form-error" content={errors.billing_address.lastname} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="billing_address.lastname" id="lastname" value={values.billing_address.lastname} onBlur={handleBlur} onChange={handleChange} placeholder="Last Name" />
                                 </div>
                             </div>
-                            <div className="relative w-full data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                 {touched.billing_address && touched.billing_address.address && errors.billing_address && errors.billing_address.address ? <Tooltip classes="form-error" content={errors.billing_address.address} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="text" name="billing_address.address" id="address" value={values.billing_address.address} onBlur={handleBlur} onChange={handleChange} placeholder="Address 1*" />
                             </div>
-                            <div className="relative w-full data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                            <div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                 {touched.billing_address && touched.billing_address.apt_suite && errors.billing_address && errors.billing_address.apt_suite ? <Tooltip classes="form-error" content={errors.billing_address.apt_suite} /> : null}
                                 <input className="w-full bg-transparent outline-none border-none" type="text" name="billing_address.apt_suite" id="apt_suite" value={values.billing_address.apt_suite} onBlur={handleBlur} onChange={handleChange} placeholder="Apt or Suite (optional)" />
                             </div>
                             <div className="flex justify-between w-full ">
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.city && errors.billing_address && errors.billing_address.city ? <Tooltip classes="form-error" content={errors.billing_address.city} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="text" name="billing_address.city" id="city" value={values.billing_address.city} onBlur={handleBlur} onChange={handleChange} placeholder="City*" />
                                 </div>
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.country && errors.billing_address && errors.billing_address.country ? <Tooltip classes="form-error" content={errors.billing_address.country} /> : null}
-                                    <select value={values.billing_address.phone_prefix} name='billing_address.country' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                        {countryCodes.map((item) => {
-                                            if (!item.code) return <option disabled>{item.name}</option>
-                                            return <option value={item.name}>{item.name}</option>
+                                    <select placeholder='Country' value={values.billing_address.country} name='billing_address.country' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
+                                        {countryCodes.map((item, index) => {
+                                            // if (!item.code) return <option key={index} value=''>{item.name}</option>
+                                            return <option key={index} value={item.country}>{item.name}</option>
                                         })}
                                     </select>
                                 </div>
                             </div>
                             <div className="flex justify-between w-full">
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.phone_prefix && errors.billing_address && errors.billing_address.phone_prefix ? <Tooltip classes="form-error" content={errors.billing_address.phone_prefix} /> : null}
                                     <select placeholder='Select country code' value={values.billing_address.phone_prefix} name='billing_address.phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                        {[{ name: "Select country code" }, ...countryCodes].map((item, index) => {
-                                            if (!item.code) return <option key={index} value=''>{item.name}</option>
+                                        {countryCodes.map((item, index) => {
+                                            // if (!item.code) return <option key={index} value=''>{item.name}</option>
                                             return <option key={index} value={item.code}>{item.name} {item.code}</option>
                                         })}
                                     </select>
                                 </div>
-                                <div className="relative w-48pr data_field flex items-center border-b focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
+                                <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                     {touched.billing_address && touched.billing_address.phone_number && errors.billing_address && errors.billing_address.phone_number ? <Tooltip classes="form-error" content={errors.billing_address.phone_number} /> : null}
                                     <input className="w-full bg-transparent outline-none border-none" type="tel" name="billing_address.phone_number" id="phone_number" size="15" maxLength={15} value={values.billing_address.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                                 </div>
@@ -381,7 +390,7 @@ export default function Checkout1() {
             <section className="w-full lg:w-[42%] max-w-[850px] flex flex-col gap-y-5">
                 <CheckoutCalcSection
                     shippingRates={shippingRates}
-                    calculateTotolShippingFee={calculateTotolShippingFee}
+                    calculateTotalShippingFee={calculateTotalShippingFee}
                     selectedShippingOption={values.delivery_option}
                     values={values}
                     errors={errors}

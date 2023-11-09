@@ -21,7 +21,7 @@ export default function ProductCatalogueCategory({ products, category, name }) {
     return <>
         <main className="w-full pb-20 bg-white font_urbanist overflow-hidden">
             <CatalogueCarousel />
-            <section className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_urbanist text-left' >
+            <section className='w-full p-5 md:px-7 lg:px-14 xl:px-20 py-16 h-full font_urbanist text-left' >
                 <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
                     <div className="w-full col-span-full flex items-center justify-between">
                         <h1 className="font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">{name}&nbsp;</h1>

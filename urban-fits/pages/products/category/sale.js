@@ -21,9 +21,9 @@ export default function SaleCatalogue() {
     return <>
         <main className="w-full pb-20 bg-white font_urbanist overflow-hidden">
             <CatalogueCarousel />
-            <section className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_urbanist text-left' >
+            <section className='w-full p-5 md:px-7 lg:px-14 xl:px-20 py-16 h-full font_urbanist text-left' >
                 <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
-                    <h1 className="col-span-full font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">My Wishlist&nbsp;</h1>
+                    <h1 className="col-span-full font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">Sales&nbsp;</h1>
                     {products.map((product, index) => (
                         <Shoppingcard key={index} margin='0' product={product} />
                     ))}

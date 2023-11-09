@@ -12,6 +12,13 @@ import CorsMiddleware from "@/utils/cors-config"
 const currencies = ["AED", "SAR", "PKR"]
 const shippingMethods = ["standard_shipping", "express_shipping", "free_shipping"]
 const countries = ["pk", "sa", "ae"]
+const giftCardPrices = {
+    "giftcard_bronze": 100,
+    "giftcard_silver": 200,
+    "giftcard_gold": 300,
+    "giftcard_platinum": 400,
+    "giftcard_diamond": 500,
+}
 export default async function handler(req, res) {
     try {
         await CorsMiddleware(req, res)
@@ -29,20 +36,21 @@ export default async function handler(req, res) {
                 if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" })
                 const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${shipping_info.card_number}`)
                 if (shipping_info.points_to_use > data.balance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
-                // axios.put(`${process.env.HOST}/api/user/uf-wallet/deduct-points`, {
-                //     user_id: user._id,
-                //     card_number: user.uf_wallet.card_number,
-                //     points_to_deduct: shipping_info.points_to_use
-                // })
                 discountByPoints = shipping_info.points_to_use * process.env.UF_POINT_RATE
             }
 
             // getting exchnge rates
-            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`)
+            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`, {
+                headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
+            })
             const rate = data.new_amount;
 
+            const orderItemsToProcess = order_items.filter(item => !item.id.startsWith("giftcard_"))
+            const giftCardItems = order_items.filter(item => item.id.startsWith("giftcard_"))
+            console.log(orderItemsToProcess, giftCardItems)
+
             let finalOrderItems = []
-            for (const orderItem of order_items) {
+            for (const orderItem of orderItemsToProcess) {
                 const dbProduct = await Product.findById(orderItem.product_id)
                 if (!dbProduct) return res.status(400).json({ success: false, msg: "Either specified product IDs does not exist or the product IDs were tempered." })
                 if (!orderItem.original_id) return res.status(400).json({ success: false, msg: "Each order item must have a `original_id` property with the value of its unique variant id." })
@@ -66,7 +74,8 @@ export default async function handler(req, res) {
 
             const shippingRates = await Shipping_rates.findById("652a79afd889b69c655d903b")
 
-            let totalPrice = 0;
+            let totalPrice = giftCardItems.length ? giftCardItems.reduce((accum, item) => accum + giftCardPrices[item.id], 0) : 0;
+            console.log(totalPrice)
             for (const item of finalOrderItems) {
                 const itemPrice = item.price * item.quantity
                 totalPrice += itemPrice
@@ -119,13 +128,14 @@ export default async function handler(req, res) {
                 name: shipping_info.name,
                 email: shipping_info.email,
                 order_items: finalOrderItems,
+                ...(giftCardItems.length ? { gift_cards: giftCardItems } : {}),
                 shipping_address: shipping_info.shipping_address,
                 billing_address: shipping_info.billing_address,
                 price_details: {
                     total_price: totalPrice,
                     shipping_fees: finalShippingFees,
                     currency: shipping_info.currency,
-                    points_to_use: discountByPoints
+                    points_to_use: shipping_info?.points_to_use || 0
                 }
             })
 
@@ -153,26 +163,36 @@ export default async function handler(req, res) {
                         }
                     }
                 ],
-                line_items: finalOrderItems.map((product, index) => {
-                    let unitAmount = 0;
-                    if (product.price > discountByPoints) {
-                        unitAmount = Math.floor(product.price * 100) - Math.floor(discountByPoints * 100)
-                        discountByPoints = product.price - ((unitAmount / 100) - discountByPoints)
-                        console.log(discountByPoints)
-                    }
-                    else discountByPoints = discountByPoints - product.price
-                    return {
+                // line_items: finalOrderItems.map((product, index) => {
+                //     let unitAmount = 0;
+                //     if (product.price > discountByPoints) {
+                //         unitAmount = Math.floor(product.price * 100) - Math.floor(discountByPoints * 100)
+                //         discountByPoints = product.price - ((unitAmount / 100) - discountByPoints)
+                //         console.log(discountByPoints)
+                //     }
+                //     else discountByPoints = discountByPoints - product.price
+                //     return {
+                //         price_data: {
+                //             currency: shipping_info?.currency?.toLowerCase() || "aed",
+                //             product_data: {
+                //                 name: product.name,
+                //                 images: [product.image]
+                //             },
+                //             unit_amount: unitAmount * rate,
+                //         },
+                //         quantity: product.quantity
+                //     }
+                // }),
+                line_items: [
+                    {
                         price_data: {
                             currency: shipping_info?.currency?.toLowerCase() || "aed",
-                            product_data: {
-                                name: product.name,
-                                images: [product.image]
-                            },
-                            unit_amount: unitAmount * rate,
+                            unit_amount: Math.floor((totalPrice - discountByPoints) * rate * 100),
+                            product_data: { name: "Amount" }
                         },
-                        quantity: product.quantity
-                    }
-                }),
+                        quantity: 1,
+                    },
+                ],
                 payment_intent_data: {
                     receipt_email: shipping_info.email,
                     metadata: { order_session_id: orderSession._id.toString() }

@@ -26,7 +26,7 @@ const AddUFpoints = async (req, res) => {
                     await pointsDoc.save();
 
                     deductedPoints += points_to_deduct;
-                    break; // Exit the loop, as we deducted the desired points
+                    break;
                 } else if (remainingPoints > 0) {
                     // Deduct remaining points from this document and update it
                     pointsDoc.points -= remainingPoints;

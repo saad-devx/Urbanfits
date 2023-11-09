@@ -21,7 +21,7 @@ const OrderSchema = new mongoose.Schema({
     order_status: {
         type: String,
         enum: ['pending', 'shipped', 'readytoship', 'returned', 'delivered'],
-        default: 'Pending',
+        default: 'pending',
     },
     order_items: [
         {
@@ -50,6 +50,7 @@ const OrderSchema = new mongoose.Schema({
             weight: String
         },
     ],
+    gift_cards: [],
     shipping_address: addressObject,
     billing_address: addressObject,
     price_details: {
