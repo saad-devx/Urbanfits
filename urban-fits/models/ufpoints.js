@@ -17,7 +17,8 @@ const UFpointsSchema = new mongoose.Schema({
     worth: Number,
     source: {
         type: String,
-        required: true
+        required: true,
+        enum: ["daily_checkin", "prize_wheel", "signup", "place_order", "additional_reward"]
     },
     expiration_date: Date,
 }, { timestamps: true });

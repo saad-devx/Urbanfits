@@ -45,6 +45,10 @@ module.exports = {
       },
       colors: {
         'gotham-black': '#383838',
+        'pinky': "#FF4A60"
+      },
+      backgroundImage: {
+        "pinky": "linear-gradient(90deg, #FF4A60 46%, #C850C0 80%)"
       },
       backgroundColor: {
         'gold': "#FF4A60",

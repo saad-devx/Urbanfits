@@ -50,28 +50,38 @@ export default function HomeCarousel() {
         </div>
 
         {/* Buttons for next, prev slide and to pause the carousel */}
-        <div className="splide__arrows absolute flex items-center gap-x-5 left-1/2 -translate-x-1/2 bottom-[25%] lg:bottom-[15%]">
-            {/* <button className="splide__arrow--prev hover:bg-gray-500 flex justify-center items-center w-8 h-8 rounded-full bg-white rotate-180 transition-all duration-500" >
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.4689 22.4366C15.9575 22.1485 16.1328 21.6349 15.8823 21.2215C15.8197 21.115 14.8551 20.1066 13.7464 18.9854L11.7295 16.9372L17.2979 16.9247C23.3798 16.9059 23.0729 16.9247 23.3548 16.5426C23.455 16.411 23.4863 16.2732 23.4863 15.9976C23.4863 15.722 23.455 15.5842 23.3548 15.4527C23.0729 15.0706 23.3798 15.0894 17.2979 15.0706L11.7295 15.0581L13.7464 13.0099C14.8551 11.8887 15.8197 10.8803 15.8823 10.7738C16.1141 10.3917 15.995 9.94699 15.5816 9.62755C15.2747 9.38953 14.924 9.38953 14.5857 9.62128C14.4542 9.71524 13.0574 11.0807 11.479 12.6591C9.14265 15.008 8.61024 15.5717 8.56014 15.7659C8.42234 16.2732 8.39102 16.2357 11.479 19.3361C13.0574 20.9146 14.4417 22.2738 14.5669 22.3615C14.8926 22.587 15.1682 22.612 15.4689 22.4366Z" fill="black" />
-                </svg>
-            </button> */}
-            <button className="splide__arrow--prev font_copper px-3 py-1.5 skew-x-12 rounded text-[8px] md:text-10px tracking-2 bg-white hover:bg-black hover:text-white transition-all duration-300">PREV</button>
+        <div className="splide__arrows absolute flex items-center gap-x-5 right-[3%] bottom-[12%] lg:bottom-[10%]">
+            <button className="splide__arrow--prev hover:bg-pink-200 flex justify-center items-center w-8 h-8 rounded-full bg-white rotate-180 transition-all duration-500" >
+                <span className="w-3 md:w-5 aspect-square">
+                    <svg className='w-full' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.75 12.0001C1.75 12.4143 2.08579 12.7501 2.5 12.7501L21.5 12.7501C21.9142 12.7501 22.25 12.4143 22.25 12.0001C22.25 11.5858 21.9142 11.2501 21.5 11.2501L2.5 11.2501C2.08579 11.2501 1.75 11.5858 1.75 12.0001Z" fill="#BFBFBF" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.75 12.0001C1.75 12.199 1.82902 12.3897 1.96967 12.5304L8.96967 19.5304C9.26256 19.8233 9.73744 19.8233 10.0303 19.5304C10.3232 19.2375 10.3232 18.7626 10.0303 18.4697L3.56066 12.0001L10.0303 5.53039C10.3232 5.2375 10.3232 4.76262 10.0303 4.46973C9.73744 4.17684 9.26256 4.17684 8.96967 4.46973L1.96967 11.4697C1.82902 11.6104 1.75 11.8011 1.75 12.0001Z" fill="black" />
+                    </svg>
+                </span>
+            </button>
+            {/* <button className="splide__arrow--prev font_copper px-3 py-1.5 skew-x-12 rounded text-[8px] md:text-10px tracking-2 bg-white hover:bg-black hover:text-white transition-all duration-300">PREV</button> */}
 
-            <button onClick={togglePlay} className="splide__toggle hover:bg-gray-500 flex justify-center items-center w-8 h-8 rounded-full bg-white  transition-all duration-500" >
-                {play === false ? <i className="material-symbols-rounded fill">play_arrow</i>
+            <button onClick={togglePlay} className="splide__toggle hover:bg-pink-200 flex justify-center items-center w-8 h-8 rounded-full bg-white  transition-all duration-500" >
+                {play === false ? <span className="w-3 lg:w-5 aspect-square">
+                    <svg className='w-full' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8751 14.1986C18.3751 13.3326 18.3751 11.1675 16.8751 10.3015L9.37506 5.97134C7.87506 5.10532 6.00006 6.18785 6.00006 7.9199L6.00006 16.5802C6.00006 18.3122 7.87506 19.3947 9.37506 18.5287L16.8751 14.1986ZM17.6251 9.00243C20.1251 10.4458 20.1251 14.0542 17.6251 15.4976L10.1251 19.8277C7.62506 21.2711 4.50006 19.4669 4.50006 16.5802L4.50006 7.9199C4.50006 5.03315 7.62506 3.22893 10.1251 4.67231L17.6251 9.00243Z" fill="black" />
+                    </svg>
+                </span>
                     : <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="1.25" y1="12" x2="1.25" stroke="black" strokeWidth="1.5" />
                         <line x1="7.25" y1="12" x2="7.25" stroke="black" strokeWidth="1.5" />
                     </svg>}
             </button>
 
-            <button className="splide__arrow--next font_copper px-3 py-1.5 -skew-x-12 rounded text-[8px] md:text-10px tracking-2 bg-white hover:bg-black hover:text-white transition-all duration-300">NEXT</button>
-            {/* <button className="splide__arrow--next hover:bg-gray-500 flex justify-center items-center w-8 h-8 rounded-full bg-white transition-all duration-500" >
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.531 9.56336C16.0425 9.85149 15.8671 10.3651 16.1176 10.7785C16.1803 10.885 17.1449 11.8934 18.2535 13.0146L20.2704 15.0628L14.7021 15.0753C8.62009 15.0941 8.92701 15.0753 8.64515 15.4574C8.54493 15.589 8.51361 15.7268 8.51361 16.0024C8.51361 16.278 8.54493 16.4158 8.64515 16.5473C8.92701 16.9294 8.62009 16.9106 14.7021 16.9294L20.2704 16.9419L18.2535 18.9901C17.1449 20.1113 16.1803 21.1197 16.1176 21.2262C15.8859 21.6083 16.0049 22.053 16.4183 22.3725C16.7252 22.6105 17.076 22.6105 17.4142 22.3787C17.5457 22.2848 18.9425 20.9193 20.521 19.3409C22.8573 16.992 23.3897 16.4283 23.4398 16.2341C23.5776 15.7268 23.6089 15.7643 20.521 12.6639C18.9425 11.0854 17.5583 9.72622 17.433 9.63853C17.1073 9.41304 16.8317 9.38798 16.531 9.56336Z" fill="black" />
-                </svg>
-            </button> */}
+            {/* <button className="splide__arrow--next font_copper px-3 py-1.5 -skew-x-12 rounded text-[8px] md:text-10px tracking-2 bg-white hover:bg-black hover:text-white transition-all duration-300">NEXT</button> */}
+            <button className="splide__arrow--next hover:bg-pink-200 flex justify-center items-center w-8 h-8 rounded-full bg-white transition-all duration-500" >
+                <span className="w-3 md:w-5 aspect-square">
+                    <svg className='w-full' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M22.25 12.0001C22.25 12.4143 21.9142 12.7501 21.5 12.7501L2.5 12.7501C2.08579 12.7501 1.75 12.4143 1.75 12.0001C1.75 11.5859 2.08579 11.2501 2.5 11.2501L21.5 11.2501C21.9142 11.2501 22.25 11.5858 22.25 12.0001Z" fill="#BFBFBF" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M22.25 12.0001C22.25 12.199 22.171 12.3897 22.0303 12.5304L15.0303 19.5304C14.7374 19.8233 14.2626 19.8233 13.9697 19.5304C13.6768 19.2375 13.6768 18.7626 13.9697 18.4697L20.4393 12.0001L13.9697 5.53039C13.6768 5.2375 13.6768 4.76263 13.9697 4.46973C14.2626 4.17684 14.7374 4.17684 15.0303 4.46973L22.0303 11.4697C22.171 11.6104 22.25 11.8011 22.25 12.0001Z" fill="black" />
+                    </svg>
+                </span>
+            </button>
         </div>
     </Splide>
 }

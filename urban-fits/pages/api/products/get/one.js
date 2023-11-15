@@ -1,5 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
+import Category from "@/models/category"
 const mongoose = require('mongoose')
 import { pusherServer } from "@/utils/pusher"
 import CorsMiddleware from "@/utils/cors-config"
@@ -17,7 +18,9 @@ const GetSingleProduct = async (req, res) => {
             }
             await ConnectDB()
 
-            let product = await Product.findById(id).populate('bundle_items')
+            let product = await Product.findById(id)
+            .populate('categories')
+            .populate('bundle_items')
             if (!product) return res.status(404).json({
                 success: false,
                 msg: "Product not found with corresponding id",

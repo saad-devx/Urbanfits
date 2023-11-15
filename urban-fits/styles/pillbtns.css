@@ -20,13 +20,13 @@
 }
 
 .pill-container input[type=checkbox]:checked+label {
-    background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+    background: linear-gradient(90deg, #FF4A60 46%, #FFCC70 100%);
     border: 1px solid white;
     color: white;
 }
 
 .pill-container input[type=radio]:checked+label {
-    background: linear-gradient(90deg, #FAE892 0%, #B3903E 100%);
+    background: linear-gradient(90deg, #FF4A60 46%, #FFCC70 100%);
     border: 1px solid white;
     color: white;
 }

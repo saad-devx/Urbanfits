@@ -28,10 +28,10 @@ export default function MoreToExplore() {
         <section className="w-full">
             {loading ? <span className="self-center w-full h-[225px] md:h-[290px] lg:h-[430px] flex justify-center items-center font_urbanist_bold text-gray-500 text-[10px] md:text-base tracking-1">Loading...</span> :
                 <div className="w-full h-auto md:h-[290px] lg:h-[380px] xl:h-[430px] 2xl:h-[470px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 lg:gap-3 xl:gap-8 2xl:gap-14">
-                    {[1, 2, 3, 4].map((items, i) => {
+                    {/* {[1, 2, 3, 4].map((items, i) => {
                         if (window.matchMedia('(min-width: 640px) and (max-width: 967px)').matches && i >= 3) return
                         else return <Shoppingcard key={i} product={product} />
-                    })}
+                    })} */}
                 </div>}
         </section>
     </div>

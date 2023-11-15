@@ -32,8 +32,7 @@ const AddUFpoints = async (req, res) => {
                 success: true,
                 msg: `Points added successfully.`,
             })
-        }
-        else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: POST" })
+        }else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: POST" })
     }
     catch (error) {
         console.log(error)

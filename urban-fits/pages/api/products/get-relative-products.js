@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 const mongoose = require('mongoose')
-import { pusherServer } from "@/utils/pusher"
+import Category from "@/models/category";
 import CorsMiddleware from "@/utils/cors-config"
 
 const GetSingleProduct = async (req, res) => {
@@ -20,14 +20,13 @@ const GetSingleProduct = async (req, res) => {
             const { categories } = product
             let relativeProducts = []
             for (const category of categories) {
-                const relativeProduct = await Product.find({ categories: { $in: [category] } })
+                const relativeProduct = await Product.find({ categories: { $in: [category] } }).populate("categories")
                 relativeProducts = relativeProducts.concat(relativeProduct)
-                if (relativeProducts.length > 4) break
+                if (relativeProducts.length > 5) break
             }
 
-            const filteredRelativeProducts = relativeProducts.filter(product => product._id !== product_id).slice(0, 4)
+            const filteredRelativeProducts = relativeProducts.filter(product => product._id !== product_id).slice(0, 5)
 
-            console.log(filteredRelativeProducts.length)
             res.status(200).json({
                 success: true,
                 msg: '',

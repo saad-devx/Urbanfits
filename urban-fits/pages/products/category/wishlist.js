@@ -63,19 +63,17 @@ export default function WisthList() {
                     :
                     <>
                         <section className='w-full p-5 md:p-7 lg:p-14 xl:p-16 2xl:p-24 h-full font_urbanist text-left' >
-                            <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
+                            <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-8">
                                 <h1 className="col-span-full font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">My Wishlist&nbsp;</h1>
-                                {products.map((product, index) => (
-                                    <Shoppingcard key={index} margin='0' product={product} />
-                                ))}
+                                {products.map((product, index) => <Shoppingcard key={index} margin='0' product={product} />)}
                             </div>
 
                             <button disabled={loading} onClick={fetchMoreWishListProducts} className={`${loading && 'pointer-events-none'} lg:mt-20 group flex items-center mx-auto font_copper text-xs md:text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300`}>
-                                <i className="w-16 group-hover:w-28 h-0.5 mx-1 bg-black transition-all"></i>
-                                <i className="w-5 group-hover:w-0 h-0.5 mx-1 bg-black transition-all"></i>
+                                <i className="w-16 group-hover:w-28 h-0.5 mx-1 bg-black transition-all" />
+                                <i className="w-5 group-hover:w-0 h-0.5 mx-1 bg-black transition-all" />
                                 {loader ? <BounceLoader /> : <p>&nbsp;MORE</p>}
-                                <i className="w-5 group-hover:w-0 h-0.5 mx-1 bg-black transition-all"></i>
-                                <i className="w-16 group-hover:w-28 h-0.5 mx-1 bg-black transition-all"></i>
+                                <i className="w-5 group-hover:w-0 h-0.5 mx-1 bg-black transition-all" />
+                                <i className="w-16 group-hover:w-28 h-0.5 mx-1 bg-black transition-all" />
                             </button>
                         </section></>}
         </main>

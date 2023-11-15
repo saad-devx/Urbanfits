@@ -56,15 +56,15 @@ export default function UFwallet() {
                 <section className="w-full mb-4 py-5 text-xs flex justify-between items-center border-y border-gray-50">
                     <div className="w-1/2 flex flex-col">
                         Linked Card number
-                        <span className="font_urbanist_bold text-base text-yellow-600">{user.uf_wallet.card_number}</span>
+                        <span className="font_urbanist_bold text-base text-[#FF4A60]">{user.uf_wallet.card_number}</span>
                     </div>
                     <div className="w-1/2 flex flex-col">
                         Balance
-                        <span className="font_urbanist_bold text-base text-yellow-600">{points} UF pts ({formatPrice(points * process.env.UF_POINT_RATE)})</span>
+                        <span className="font_urbanist_bold text-base text-[#FF4A60]">{points} UF pts ({formatPrice(points * process.env.UF_POINT_RATE)})</span>
                     </div>
                 </section>
                 <div className="w-full py-5 flex justify-end text-10px">
-                    <button onClick={() => getUfHistory(setHistory)} disabled={walletLoading} className="px-4 py-1 text-white bg-black rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate ${walletLoading && "fa-spin"}`} /></button>
+                    <button onClick={() => getUfHistory(setHistory)} disabled={walletLoading} className="px-4 py-1 text-white bg-[#FF4A60] rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate ${walletLoading && "fa-spin"}`} /></button>
                 </div>
                 <section className="w-full gap-y-4">
                     <div className="w-full mb-4 flex justify-between items-center text-xs font_urbanist_bold">

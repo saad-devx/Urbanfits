@@ -3,6 +3,10 @@ import { useCart } from "react-use-cart";
 import useWallet from '@/hooks/useWallet';
 import useUser from '@/hooks/useUser';
 import Image from 'next/image';
+import BounceLoader from './loaders/bounceLoader';
+import Button from './buttons/simple_btn';
+import toaster from '@/utils/toast_function';
+import axios from 'axios';
 
 export default function CheckoutCalcSection(props) {
     const { user } = useUser()
@@ -10,9 +14,39 @@ export default function CheckoutCalcSection(props) {
     const { points, formatPrice } = useWallet()
     const { shippingRates, calculateTotalShippingFee, selectedShippingOption } = props
     const totalUfPoints = items.reduce((total, item) => total + (item?.uf_points || 0), 0)
+    const [giftCard, setGiftCard] = React.useState(null)
+    const [giftCode, setGiftCode] = React.useState(null)
+    const [giftLoading, setGiftLoading] = React.useState(false)
+    const TotalOrderPrice = cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption) //in AED
 
-    const TotalOrderPrice = formatPrice(cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption))
-    const discountPriceWithPoints = formatPrice((cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption)) - parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE)
+    const checkGiftCard = async (gift_code) => {
+        setGiftLoading(true)
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/verify-giftcode?gift_code=${gift_code}`)
+            setGiftCard(data.gift_card)
+        } catch (error) {
+            console.log(error)
+            if (error.response) toaster("error", error.response.data.msg)
+        }
+        setGiftLoading(false)
+    }
+
+    const getTotalAmount = (returnDiscount = false) => {
+        const pointsDiscount = parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE || 0 //in AED
+        const giftcardDiscount = parseFloat(props.values.gift_code && giftCard ? giftCard?.price : 0)
+        const finalTotalAmount = TotalOrderPrice - (pointsDiscount + giftcardDiscount)
+        if (returnDiscount) return (100 - (finalTotalAmount / TotalOrderPrice * 100)).toFixed(2)
+        if (TotalOrderPrice !== finalTotalAmount) return <span className='flex gap-x-2'><p className="line-through text-gray-400 text-10px xl:text-sm">{formatPrice(TotalOrderPrice)}</p>&nbsp;{formatPrice(finalTotalAmount)}</span>
+        else return formatPrice(finalTotalAmount)
+    }
+
+    const giftCardBgs = {
+        "100": "bronze_metal_bg",
+        "200": "silver_metal_bg",
+        "300": "gold_metal_bg",
+        "400": "platinum_metal_bg",
+        "500": "diamond_metal_bg",
+    }
 
     return (
         <div className="bg-white w-full p-4 md:p-5 lg:p-7 space-y-3 rounded-xl">
@@ -57,16 +91,16 @@ export default function CheckoutCalcSection(props) {
                     {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Card Number</span> <span>xxx-xxxxxxxxxxxxx-{user.uf_wallet.card_number.slice(-4)}</span></div>}
                     {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-red-500'>Earned UF-Points</span> <span>{totalUfPoints}</span></div>}
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></div>
-                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{0}%</span></div>
+                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{getTotalAmount(true)}%</span></div>
                     <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption)) || "We don't ship here"}</span></div>
                 </div>
-                {props.values.points_to_use ? parseFloat(props.values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base200">
+                {props.values.points_to_use ? parseFloat(props.values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
                     <h4>Saved</h4>
                     <h4>{formatPrice(cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption) - ((cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption)) - parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE))}</h4>
                 </div> : null}
                 <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
                     <h4>Total</h4>
-                    <h4>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span className='flex'><p className="line-through text-10px xl:text-sm">{TotalOrderPrice}</p>&nbsp;{discountPriceWithPoints}</span> : TotalOrderPrice}</h4>
+                    <h4>{getTotalAmount()}</h4>
                 </div>
                 {user && <div className="w-full mt-4 p-2 border rounded-lg">
                     <h4 className="mb-3 font_urbanist_bold text-lg">Apply UF-Points</h4>
@@ -77,22 +111,24 @@ export default function CheckoutCalcSection(props) {
                         <input name='points_to_use' id='points_to_use' type='number' onChange={(e) => {
                             const value = parseFloat(e.target.value)
                             value > points ? props.setFieldError("points_to_use", "You can't apply more points than your actual balance.") : props.setFieldValue("points_to_use", value)
-                        }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition rounded-lg outline-none`} />
+                        }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 transition rounded-lg outline-none`} />
                         <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
                     </div>
                 </div>}
                 <div className="w-full mt-4 p-2 border rounded-lg">
                     <h4 className="mb-3 font_urbanist_bold text-lg">Apply Gift Code</h4>
-                    <span className="w-full flex justify-between items-center">
-                    <p>You have <span className="font_urbanist_bold text-red-500">{formatPrice(500)}</span> of discount.</p>
-                    </span>
-                    <div className="w-full relative flex flex-col">
-                        <input name='points_to_use' id='points_to_use' type='number' onChange={(e) => {
-                            const value = parseFloat(e.target.value)
-                            value > points ? props.setFieldError("points_to_use", "You can't apply more points than your actual balance.") : props.setFieldValue("points_to_use", value)
-                        }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition rounded-lg outline-none`} />
+                    {giftLoading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
+                    {giftCard ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
+                        <span className={`px-6 py-4 rounded-lg font_montserrat_bold text-xs lg:text-sm text-white tracking-1 uppercase ${giftCardBgs[`${giftCard?.price}`]}`}>{giftCard.name}</span>
+                        <p>You have <span className="font_urbanist_bold text-red-500">{formatPrice(giftCard.price)}</span> of discount.</p>
+                    </span> : null}
+                    <div className="w-full relative flex justify-between items-center">
+                        <input name='gift_code' id='gift_code' onChange={(e) => setGiftCode(e.target.value)} onBlur={props.handleChange} value={giftCode} className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
+                        <button onClick={() => checkGiftCard(giftCode)} disabled={giftLoading} className="bg-[#FF4A60] h-11 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
                         <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
                     </div>
+                    {!props.values?.gift_code ? <Button disabled={giftCard?._id ? (!giftCode || giftCode.length < 8 || giftCode.length > 10) : true} onClick={() => props.setFieldValue("gift_code", giftCode)} my="mt-2" classes="w-full">Apply</Button> :
+                        <Button onClick={() => props.setFieldValue("gift_code", null)} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button>}
                 </div>
             </div>
         </div>

@@ -86,7 +86,7 @@ export default function Security() {
                 Two-factor authentication is a method for protection your web account. When it is activated you need to enter not only your password, but also a special code. <br />
                 You can receive this code by in mobile app. Even if third person will find your password, then can't access with that code.
             </div>
-            {user.two_fa_activation_date ? null : <LinkBtn my='0' href="/user/security/register-2fa" classes="w-full">Enable 2FA</LinkBtn>}
+            {user.two_fa_activation_date ? null : <LinkBtn my='mb-20' href="/user/security/register-2fa" classes="w-full">Enable 2FA</LinkBtn>}
         </section>
     </main>
     else return <>

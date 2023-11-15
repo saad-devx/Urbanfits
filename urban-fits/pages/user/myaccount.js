@@ -168,9 +168,12 @@ export default function Personalinfo() {
                 <button onClick={() => setGenderModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Gender<span className="flex items-center gap-x-2 font_urbanist capitalize">{user.gender ? user.gender : "Set your gender"} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>
-                <Link href="/user/emailaddress" className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
-                    Email<span className="flex items-center gap-x-2 font_urbanist"><p className="max-w-[16rem] truncate">{user.email}</p> <i className="fa-solid fa-chevron-right text-xs"></i></span>
-                </Link>
+                {user.register_provider !== "urbanfits" ? <Link href="/user/emailaddress" className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                    Email<span className="flex items-center gap-x-2 font_urbanist"><p className="max-w-[16rem] truncate">{user.email}</p> <i className="fa-solid fa-chevron-right text-xs" /></span>/
+                </Link> :
+                    <span className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
+                        Email<span className="flex items-center gap-x-2 font_urbanist"><p className="max-w-[16rem] truncate">{user.email}</p></span>
+                    </span>}
                 <button onClick={() => setCoutnryModal(true)} className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist_bold">
                     Country<span className="flex items-center gap-x-2 font_urbanist capitalize">{country.name || "Set your name"} <i className="fa-solid fa-chevron-right text-xs"></i></span>
                 </button>

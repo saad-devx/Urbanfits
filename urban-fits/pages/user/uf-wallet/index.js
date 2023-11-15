@@ -63,7 +63,7 @@ export default function UFwallet() {
                 <nav className="w-full flex justify-between">
                     <div className="flex flex-col">
                         <span className="font_copper text-sm">{user.uf_wallet.card_number}</span>
-                        <Link href="/earn-ufpoints" className="font_urbanist_bold text-sm text-yellow-700">Find out more about UF-Points</Link>
+                        <Link href="/earn-ufpoints" className="font_urbanist_bold text-sm text-[#FF4A60]">Find out more about UF-Points</Link>
                     </div>
                     <Link href="/user/uf-wallet/history" className="underline underline-offset-1 text-sm">View Points History</Link>
                 </nav>

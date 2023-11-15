@@ -15,6 +15,7 @@ import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/languagemodal';
 import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
+import CryptoJS from 'crypto-js';
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -80,6 +81,7 @@ export default function Checkout1() {
             email: user?.email,
             delivery_option: 'standard_shipping',
             points_to_use: 0,
+            gift_code: null,
             shipping_address: addressFieldsValues("shipping_address"),
             billing_address: addressFieldsValues("billing_address")
         },
@@ -90,23 +92,27 @@ export default function Checkout1() {
             email: Yup.string().email().required("Please enter your email address"),
             delivery_option: Yup.string().required("Please select your prefered language"),
             points_to_use: Yup.number().lessThan(points, "You can't apply more points than you have.").max(points, "You can't apply more points than you have."),
+            gift_code: Yup.string().nullable(),
             shipping_address: Yup.object().shape(addressFieldsValidation),
             billing_address: Yup.object().shape(addressFieldsValidation)
         }),
         onSubmit: async (values) => {
             setLoader(<Loader />)
             try {
-                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, {
+                const payload = {
                     user_id: user?._id || guestUser?._id,
                     is_guest: user && user?._id ? false : true,
-                    shipping_info: { ...values, card_number: user.uf_wallet.card_number },
+                    shipping_info: { ...values, card_number: user?.uf_wallet?.card_number },
                     order_items: items
-                })
+                }
+                const encryptedPayload = CryptoJS.AES.encrypt(JSON.stringify(payload), process.env.SECRET_KEY).toString();
+                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { payload: encryptedPayload })
+                console.log(data)
                 router.push(data.url)
             }
             catch (e) {
                 console.log(e)
-                toaster("error", e.response.data.msg)
+                if (e.response) toaster("error", e.response.data.msg)
             }
             setLoader(null)
         }
@@ -129,6 +135,7 @@ export default function Checkout1() {
     const calculateTotalShippingFee = (fees, shippingMethod = values?.delivery_option) => {
         if (shippingMethod === "free_shipping") return 0
         const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
+        if(!filteredItems.length) return 0
         const totalWeight = filteredItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
         if (totalWeight <= 5100) return fees
         const additionalWeight = totalWeight - 5100
@@ -164,7 +171,7 @@ export default function Checkout1() {
         const initialAddressSetup = async () => {
             setLoader(<Loader />)
             if (user) {
-                if(!address) await getAddress()
+                if (!address) await getAddress()
                 if (!address) return setLoader(null)
                 setValues({
                     ...values,

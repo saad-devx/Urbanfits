@@ -1,5 +1,6 @@
 import Giftcard from "@/models/giftcard"
 import ConnectDB from "./connect_db";
+const CryptoJS = require("crypto-js")
 
 export const generateRandomInt = (from, to) => {
     let randint = Math.floor(Math.random() * (to - from + 1)) + from;
@@ -38,6 +39,10 @@ const generatePassword = (email) => {
         password += key.charAt(randomIndex)
     }
     return password
+}
+export const HashValue = (value) => {
+    const hashed = CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex)
+    return hashed
 }
 export const generateGiftCode = async (length) => {
     const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`;

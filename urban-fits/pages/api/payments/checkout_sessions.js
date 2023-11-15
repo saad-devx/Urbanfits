@@ -2,11 +2,14 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import OrderSession from "@/models/order_session";
+import Giftcard from "@/models/giftcard";
 import Shipping_rates from "@/models/shipping_rates"
 import User from "@/models/user";
 import GuestUser from "@/models/guest_user";
 import mongoose from "mongoose";
+import { HashValue } from "@/utils/generatePassword";
 import axios from "axios";
+import CryptoJS from "crypto-js";
 import CorsMiddleware from "@/utils/cors-config"
 
 const currencies = ["AED", "SAR", "PKR"]
@@ -23,14 +26,19 @@ export default async function handler(req, res) {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
-            const { user_id, is_guest, shipping_info, order_items } = req.body
+            const decryptedData = JSON.parse(CryptoJS.AES.decrypt(req.body.payload, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8))
+            const { user_id, is_guest, shipping_info, order_items } = decryptedData
             if (!user_id || !shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id" })
             else if (!countries.includes(shipping_info.country)) return res.status(400).json({ success: false, msg: "We only ship in the following countries: " + countries })
             else if (!currencies.includes(shipping_info.currency)) return res.status(400).json({ success: false, msg: "Invalid Currency, Available currencies: " + currencies })
             else if (!shippingMethods.includes(shipping_info.delivery_option)) return res.status(400).json({ success: false, msg: "Invalid shipping method, Available method args: " + shippingMethods })
             if (shipping_info.points_to_use && shipping_info.points_to_use !== 0 && !shipping_info.card_number) return res.status(400).json({ success: false, msg: "user uf card number is required with " })
+            if (shipping_info.gift_code && (shipping_info.gift_code.length < 8 || shipping_info.gift_code.length > 10)) return res.status(400).json({ success: false, msg: "Invalid Gift Code format." })
             await ConnectDB()
-            let discountByPoints = 0
+            // initializing discounts by UF-points and Giftcodes if exists
+            let discountByPoints = 0;
+            let discountByGiftcode = 0;
+            let appliedGiftCard = null;
             if (shipping_info.points_to_use && shipping_info.points_to_use !== 0 && shipping_info.card_number) {
                 const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": shipping_info.card_number })
                 if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" })
@@ -38,12 +46,28 @@ export default async function handler(req, res) {
                 if (shipping_info.points_to_use > data.balance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
                 discountByPoints = shipping_info.points_to_use * process.env.UF_POINT_RATE
             }
+            if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {
+                const hashedGiftcode = HashValue(shipping_info.gift_code)
+                const giftCard = await Giftcard.findOne({ gift_code: hashedGiftcode })
+                if (!giftCard) return res.status(400).json({ success: false, msg: "Either Gift code expired or doesn't exists." })
+                else {
+                    discountByGiftcode = giftCard.price
+                    appliedGiftCard = JSON.parse(JSON.stringify(giftCard))
+                    console.log(appliedGiftCard)
+                }
+            }
+            // Calculating overall discount
+            const overallDiscount = discountByPoints + discountByGiftcode
+
 
             // getting exchnge rates
-            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`, {
-                headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
-            })
-            const rate = data.new_amount;
+            let rate = 1;
+            if (shipping_info.currency !== process.env.BASE_CURRENCY) {
+                const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`, {
+                    headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
+                })
+                rate = data.new_amount;
+            }
 
             const orderItemsToProcess = order_items.filter(item => !item.id.startsWith("giftcard_"))
             const giftCardItems = order_items.filter(item => item.id.startsWith("giftcard_"))
@@ -91,6 +115,8 @@ export default async function handler(req, res) {
 
             const getTotalShippingFee = () => {
                 if (shipping_info.delivery_option === "free_shipping") return 0
+                const weighingItem = finalOrderItems.find((item) => item.weight && item.weight !== undefined)
+                if (!weighingItem) return 0
                 const shippingData = shippingRates[shipping_info.delivery_option];
                 const totalWeight = finalOrderItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0);
                 let countryShipRate = 1;
@@ -131,13 +157,18 @@ export default async function handler(req, res) {
                 ...(giftCardItems.length ? { gift_cards: giftCardItems } : {}),
                 shipping_address: shipping_info.shipping_address,
                 billing_address: shipping_info.billing_address,
+                ...(appliedGiftCard && { gift_card_id: appliedGiftCard._id }),
                 price_details: {
                     total_price: totalPrice,
                     shipping_fees: finalShippingFees,
                     currency: shipping_info.currency,
-                    points_to_use: shipping_info?.points_to_use || 0
+                    points_to_use: shipping_info?.points_to_use || 0,
+                    ...(appliedGiftCard && { gift_card_discount: appliedGiftCard.price })
                 }
             })
+
+            let finalPayableAmount = totalPrice - overallDiscount
+            if (finalPayableAmount < 0) finalPayableAmount = 0
 
             // Create Checkout Sessions from body params.
             const session = await stripe.checkout.sessions.create({
@@ -187,8 +218,8 @@ export default async function handler(req, res) {
                     {
                         price_data: {
                             currency: shipping_info?.currency?.toLowerCase() || "aed",
-                            unit_amount: Math.floor((totalPrice - discountByPoints) * rate * 100),
-                            product_data: { name: "Amount" }
+                            unit_amount: Math.floor(finalPayableAmount * rate * 100),
+                            product_data: { name: "Payable Amount" }
                         },
                         quantity: 1,
                     },

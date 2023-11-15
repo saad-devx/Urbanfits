@@ -96,8 +96,13 @@ export default function Navbar() {
         setCart(false)
     }
 
+    const toggleCart = () => {
+        document.body.style.overflowY = cart ? null : 'hidden'
+        setCart(!cart)
+    }
+
     if (!Exception) return <>
-        <Cart cart={cart} setCart={setCart} />
+        <Cart cart={cart} toggleCart={toggleCart} setCart={setCart} />
         <Logout show={logout} setLogout={setLogout} />
         <LanguageModal show={langModal} setLangModal={setLangModal} />
         <ToTopBtn />
@@ -141,14 +146,11 @@ export default function Navbar() {
                     <DropDownIcon />
                 </button>
                 {user ? <Link href='/user/inbox/primary' className='relative'>
-                    {notifications && notifications.some(notific => !notific.seen) ? <span className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[10%] lg:translate-y-[-30%] w-2 h-2 lg:w-4 lg:h-4 flex justify-center items-center text-[10px] border border-white aspect-square rounded-full bg-black"><p className='hidden lg:block text-white'>{unseenNotificCount}</p></span> : null}
+                    {notifications && notifications.some(notific => !notific.seen) ? <span className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[10%] lg:translate-y-[-30%] w-2 h-2 lg:w-4 lg:h-4 flex justify-center items-center text-[10px] border border-white aspect-square rounded-full bg-[#FF4A60]"><p className='hidden lg:block text-white'>{unseenNotificCount}</p></span> : null}
                     <button className="fa-regular fa-envelope text-[24px] translate-y-[8%] lg:translate-y-[15%] text-[#4d4d4d]"></button>
                 </Link> : null}
-                <button onClick={() => {
-                    document.body.style.overflowY = cart ? null : 'hidden'
-                    setCart(!cart)
-                }} className="hidden md:block relative">
-                    {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-black">{totalUniqueItems}</span> : null}
+                <button onClick={toggleCart} className="hidden md:block relative">
+                    {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-[#FF4A60]">{totalUniqueItems}</span> : null}
                     <Image src={bag} />
                 </button>
                 {user && window.matchMedia('(max-width: 760px)').matches ? <Link href='/earn-ufpoints'>
@@ -164,6 +166,7 @@ export default function Navbar() {
             user={user}
             cart={cart}
             closeCart={closeCart}
+            toggleCart={toggleCart}
             logout={logout}
             setLogout={setLogout}
             currency={currency}
@@ -171,11 +174,11 @@ export default function Navbar() {
         />
     </>
     else return <>
-        <Cart cart={cart} setCart={setCart} />
+        <Cart cart={cart} toggleCart={toggleCart} setCart={setCart} />
         <MobileNavbar
             user={user}
             cart={cart}
-            setCart={setCart}
+            toggleCart={toggleCart}
             logout={logout}
             setLogout={setLogout}
             totalUniqueItems={totalUniqueItems}

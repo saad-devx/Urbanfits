@@ -137,13 +137,13 @@ export default function Address() {
     if (window.matchMedia('(max-width: 760px)').matches) return <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
             <Link href="/user/myaccount" className='fa-solid fa-chevron-left text-xl'></Link>
-            <div className="flex flex-col justify-center items-center font_urbanist text-xs text-gray-400">
+            <div className="flex flex-col justify-center items-center font_urbanist text-xs">
                 <h1 className="font_urbanist_medium text-lg">Add a new Address</h1>
                 All data will be encrypted
             </div>
             <i className='w-0 h-0' />
         </div>
-        <section className="w-full p-4">
+        <section className="w-full p-4 pb-20">
             {loading ? <div className="w-full h-screen flex justify-center items-center text-base md:text-xl font_urbanist_medium tracking-widest">LOADING...</div> :
                 <>
                     <AddressForm loading={updatelLoad} address={address} type="shipping_address" heading="Add or change the Shipping Address" onsubmit={onsubmit} />

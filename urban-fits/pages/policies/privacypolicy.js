@@ -21,8 +21,8 @@ const MenuLink = (props) => {
 export default function PrivacyPolicy() {
     return (
         <PoliciesPage>
-            <main className="w-full lg:flex scroll-smooth">
-                <section className={`max-w-[2000px] lg:w-1/4 lg:h-auto lg:max-h-none rounded-2xl lg:rounded-none transition-all duration-500 overflow-x-scroll overflow-y-hidden lg:overflow-visible hide_scrollbar`}>
+            <main className="w-full max-w-[2000px] mx-auto lg:flex scroll-smooth">
+                <section className={`lg:w-1/4 lg:h-auto lg:max-h-none rounded-2xl lg:rounded-none transition-all duration-500 overflow-x-scroll overflow-y-hidden lg:overflow-visible hide_scrollbar`}>
                     <div id='menu_container' className="lg:sticky lg:top-16 lg:left-0 lg:right-0 w-auto lg:w-full py-8 2xl:py-10 lg:px-7 gap-y-4 flex lg:flex-col lg:bg-gray-50 font_urbanist rounded-2xl">
                         <h1 className="hidden lg:block mb-3 2xl:mb-5 font_urbanist_bold">Quick Links</h1>
                         <MenuLink href='question1' >1. Responsibility of your Personal Data</MenuLink>
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
                         <MenuLink href='question8' >8. Data transferred outside of European Union</MenuLink>
                     </div>
                 </section>
-                <section className="w-full lg:w-3/4 md:px-4 lg:px-10 text-xs md:text-sm scroll-smooth">
+                <section className="w-full lg:w-3/4 md:px-4 lg:pl-10 xl:pl-16 text-xs md:text-sm scroll-smooth">
                     <h1 className="font_urbanist_bold text-xl mb-7">Privacy Policy</h1>
                     <small className="text-gray-600 italic" >Effective Date: 1-3-2024</small> <br /> <br />
                     URBAN FITS attaches great importance to the protection of your privacy.<br />

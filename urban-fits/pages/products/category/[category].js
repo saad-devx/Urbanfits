@@ -22,14 +22,10 @@ export default function ProductCatalogueCategory({ products, category, name }) {
         <main className="w-full pb-20 bg-white font_urbanist overflow-hidden">
             <CatalogueCarousel />
             <section className='w-full p-5 md:px-7 lg:px-14 xl:px-20 py-16 h-full font_urbanist text-left' >
-                <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-3 xl:gap-8 2xl:gap-14">
+                <div className="w-full my-4 md:my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-8">
                     <div className="w-full col-span-full flex items-center justify-between">
                         <h1 className="font_urbanist_bold capitalize text-lg md:text-xl lg:text-2xl">{name}&nbsp;</h1>
                         <nav className="flex items-center gap-x-2">
-                            <button className="border px-3 py-0.5 rounded-full flex items-center font_urbanist text-xs md:text-[15px] cursor-pointer">
-                                <span className="material-symbols-outlined mr-2 hover:shadow-md rotate-180">event_list</span>
-                                Sort
-                            </button>
                             <button className="border px-3 py-0.5 rounded-full flex items-center font_urbanist text-xs md:text-[15px] cursor-pointer">
                                 <span className="material-symbols-outlined mr-2 hover:shadow-md">filter_list</span>
                                 Filters
@@ -37,8 +33,8 @@ export default function ProductCatalogueCategory({ products, category, name }) {
                         </nav>
                     </div>
                     {catalogueProducts.length !== 0 ? catalogueProducts.map((product, index) => {
-                        if (index == 4) return <>
-                            <ListingShopSection classes='my-12 col-span-2 md:col-span-3 lg:col-span-4' />
+                        if (index == 5) return <>
+                            <ListingShopSection classes='my-12 col-span-full' />
                             <Shoppingcard key={`${index}-listing sections`} margin='0' product={product} />
                         </>
                         return <Shoppingcard key={index} margin='0' product={product} />

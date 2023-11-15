@@ -104,6 +104,7 @@ export default function Cart(props) {
 
     const calculateTotolShippingFee = (fees) => {
         const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
+        if(!filteredItems.length) return 0
         const totalWeight = filteredItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
         if (totalWeight <= 5100) return fees
         const additionalWeight = totalWeight - 5100
@@ -111,17 +112,14 @@ export default function Cart(props) {
         return fees + additionalCharges
     }
 
-    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart === true ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
+    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
         <div className="w-full flex justify-center">
             {isEmpty ?
                 <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
                     <Image width={200} height={200} src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                     <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
                     <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">Looks like you have not added anything to your cart. Go ahead & explore top categories.</p>
-                    <Button onClick={() => {
-                        document.body.style.overflowY = props.cart ? null : 'hidden'
-                        props.setCart(false)
-                    }} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
+                    <Button onClick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64" >Back to Shope</Button>
                 </section>
                 :
                 <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
@@ -154,10 +152,7 @@ export default function Cart(props) {
                                         <h3 className="font_urbanist_medium self-start text-xs">{formatPrice(product.price)}</h3>
                                     </div>
                                 </li>
-                                return <CartItem key={product.id} toggleCart={() => {
-                                    document.body.style.overflowY = props.cart ? null : 'hidden'
-                                    props.setCart(false)
-                                }} product={product} />
+                                return <CartItem key={product.id} toggleCart={props.toggleCart} product={product} />
                             })}
                             <button onClick={emptyCart} className="text-xs md:text-sm">Delete All <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
@@ -169,10 +164,7 @@ export default function Cart(props) {
                                 <br />
                                 <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>{formatPrice(cartTotal + calculateTotolShippingFee(shippingRates?.price || 0))}</span></span>
                             </div>
-                            <LinkBtn href="/checkout/step1" onClick={() => {
-                                document.body.style.overflowY = props.cart ? null : 'hidden'
-                                props.setCart(false)
-                            }} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
+                            <LinkBtn href="/checkout/step1" onClick={props.toggleCart} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14 mb-20">

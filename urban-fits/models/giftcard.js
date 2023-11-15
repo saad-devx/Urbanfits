@@ -13,6 +13,11 @@ const GiftcardSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    reserved: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     type: {
         type: String,
         required: true,
@@ -22,7 +27,7 @@ const GiftcardSchema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     }
 }, { timestamps: true })

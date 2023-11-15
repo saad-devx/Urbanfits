@@ -10,6 +10,7 @@ import { generateGiftCode } from "@/utils/generatePassword";
 import mongoose from "mongoose";
 import axios from "axios";
 import { pusherServer } from '@/utils/pusher';
+import { HashValue } from "@/utils/generatePassword";
 
 const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 const giftCardPrices = {
@@ -30,6 +31,7 @@ const CreateOrder = async (req, res) => {
             const orderSession = JSON.parse(JSON.stringify(orderSessionData))
             const date = new Date()
 
+            // Deducting used uf-points by user
             const user = await User.findById(orderSession.user_id)
             if (user && orderSession.price_details.points_to_use) {
                 await axios.put(`${process.env.HOST}/api/user/uf-wallet/deduct-points`, {
@@ -37,14 +39,15 @@ const CreateOrder = async (req, res) => {
                     card_number: user.uf_wallet.card_number,
                     points_to_deduct: orderSession.price_details.points_to_use
                 })
-                console.log("yo points are deducted as well", orderSession.price_details.points_to_use)
             }
+            // Saving Order Data
             delete orderSession._id
             const newOrder = await Order.create({
                 ...orderSession,
                 year: date.getFullYear(),
                 month: months[date.getMonth()]
             })
+            // Generating bught Gift Cards codes and saving to DB
             if (orderSession?.gift_cards && orderSession.gift_cards[0].id.startsWith("giftcard_")) {
                 let dbGiftCards = []
                 for (const giftCard of orderSession.gift_cards) {
@@ -54,16 +57,19 @@ const CreateOrder = async (req, res) => {
                         order_id: newOrder._id,
                         customer_email: newOrder.email,
                         type: giftCard.id,
-                        gift_code: generatedGiftCode,
+                        gift_code: HashValue(generatedGiftCode),
                         price: giftCardPrices[giftCard.id]
                     })
                     dbGiftCards.push(dbGiftcard)
                 }
+                // Sending confidential Gift code email to respected user customer email
                 const giftCardTemplate = GiftcardEmail(orderSession.name, dbGiftCards)
                 sendEmail({ to: orderSession.email, subject: "Claim your UF-Giftcard" }, giftCardTemplate)
             }
+            // Sending confirmation email to customer
             let template = OrderConfirmed(orderSession.name)
             await sendEmail({ to: orderSession.email, subject: "Your order has been placed." }, template)
+            // Dispatching customer specific notifications and saving in DB
             pusherServer.trigger(`payments-user_${orderSession.user_id}`, 'payment-succeeded', {
                 order_session: orderSession,
                 success: true,
@@ -75,6 +81,12 @@ const CreateOrder = async (req, res) => {
                 msg: "A new order has been received!",
                 order_data: newOrder
             })
+            // Deducting the quantity of purchased variant of the specific product
+            // const orderedItems = orderSessionData.order_items
+            // for (const orderedItem of orderedItems){
+
+            // }
+            // Finally deleting the respected order sessoin from DB
             await OrderSession.findByIdAndDelete(order_session_id)
             res.status(200).json({ success: true, msg: "New order creation completed successfully." })
 

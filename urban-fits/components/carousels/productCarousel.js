@@ -19,7 +19,7 @@ export default function ProductCarousel(props) {
 
   if (window.matchMedia('(min-width: 1000px)').matches) return (
     <>
-      <div className="layout_height flex justify-center items-center gap-4">
+      <div className="lg:sticky top-20 layout_height flex justify-center items-center gap-4">
         <Splide className='w-[85%] h-fulloverflow-hidden bg-white' ref={slider1} options={{
           autoplay: true,
           type: 'fade',

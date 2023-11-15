@@ -22,28 +22,19 @@ const CheckShell = ({ dayCode, day, history }) => {
         }
     })[0] : null
 
-    return <div key={dayCode} className="relative flex flex-col items-center gap-y-2">
+    return <div key={dayCode} className="relative flex flex-col justify-center items-center gap-y-2">
         {respectedDayHistory && <span className="absolute left-1/2 -translate-x-1/2 -top-5 lg:-top-7 font_urbanist_medium text-[8px] md:text-10px lg:text-xs text-[#FF4A60]">+ {respectedDayHistory.points}</span>}
         <span className="w-8 md:w-10 lg:w-16">
-            {respectedDayHistory ? <svg className='w-full' width="149" viewBox="0 0 149 117" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M86.6013 12.306C97.5903 3.937 109.61 9.38 111.47 22.509C124.516 16.923 132.928 24.893 129.536 38.45C141.123 37.947 151.497 44.564 146.21 54.179C138.061 69 127.144 89.918 112.818 98.184C112.814 122.112 36.9403 122.313 36.9363 97.981C22.7503 89.787 11.7104 66.5 1.21037 54.179C-4.07663 44.564 8.98051 37.947 20.5685 38.45C17.1765 24.892 25.5883 16.922 38.6343 22.509C40.4943 9.381 52.5143 3.938 63.5033 12.306C66.2723 -4.102 83.8333 -4.102 86.6013 12.306Z" fill="pink" />
-                <defs>
-                    <linearGradient id="paint0_linear_4376_392" x1="73.8141" y1="0" x2="73.8141" y2="116.18" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#B3903E" />
-                        <stop offset="1" stop-color="#FAE892" />
-                    </linearGradient>
-                </defs>
-            </svg> :
-                <svg className='w-full' width="149" viewBox="0 0 149 117" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M87.3908 12.306C98.3798 3.937 110.4 9.38 112.26 22.509C125.306 16.923 133.718 24.893 130.326 38.45C141.913 37.947 152.287 44.564 147 54.179C138.85 69 127.934 89.918 113.608 98.184C113.604 122.112 37.7298 122.313 37.7258 97.981C23.5398 89.787 12.4999 66.5 1.99992 54.179C-3.28708 44.564 9.77006 37.947 21.3581 38.45C17.9661 24.892 26.3778 16.922 39.4238 22.509C41.2838 9.381 53.3038 3.938 64.2928 12.306C67.0618 -4.102 84.6228 -4.102 87.3908 12.306Z" fill="#EAEAEA" />
-                </svg>}
+            <svg className='w-full' xmlns="http://www.w3.org/2000/svg" width="52" height="51" viewBox="0 0 52 51" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M30.3849 5.52656C34.1532 1.92482 38.2751 4.26731 38.9129 9.91759C43.3866 7.51356 46.2712 10.9436 45.108 16.7781C49.0814 16.5616 52.6388 19.4093 50.8258 23.5473C48.0312 29.9258 44.2878 38.9282 39.3751 42.4856C39.3738 52.7834 13.3554 52.8699 13.354 42.3982C8.48941 38.8718 4.70366 28.8499 1.10304 23.5473C-0.709952 19.4093 3.76755 16.5616 7.74125 16.7781C6.57808 10.9432 9.46261 7.51313 13.9363 9.91759C14.5741 4.26774 18.6959 1.92525 22.4642 5.52656C23.4138 -1.5349 29.4357 -1.5349 30.3849 5.52656Z" fill={respectedDayHistory ? "#FEDCDE" : "#F5F5F5"} />
+            </svg>
         </span>
-        <p className="text-10px md:text-xs lg:text-sm text-gray-400 font_urbanist_medium">{day}</p>
+        <p className={`text-10px md:text-xs lg:text-sm ${new Date().getDay() === dayCode ? "font_urbanist_medium text-black" : "text-gray-400"} font_urbanist_medium`}>{day}</p>
     </div>
 }
 
 export default function EarnUfPoints() {
-    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfHistory } = useWallet()
+    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfHistory } = useWallet()
     const { user } = useUser()
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
@@ -174,6 +165,7 @@ export default function EarnUfPoints() {
         }
         spinAndStopAtValue(data.reward.toString(), data?.msg)
         setLoading(false)
+        getUfBalance()
     }
 
     return <>
@@ -181,40 +173,31 @@ export default function EarnUfPoints() {
             <section className="w-full mb-4 lg:mb-6 flex flex-col lg:flex-row gap-4">
                 <nav className="bg-white w-full lg:w-1/2 min-h-[20rem] px-4 py-4 mid:px-20 mid:py-4 lg:p-6 lg:px-8 flex flex-col justify-between rounded-lg">
                     <section className="w-full">
-                        <div className="bg-gray-100 w-full flex justify-center py-1 mid:py-2 text-sm lg:text-base text-[#FF4A60] font_urbanist_medium rounded-lg">Every 100 UF-Points are equal to {formatPrice(process.env.UF_POINT_RATE * 100)}</div>
-                        {user && <div className="w-full mt-7">
-                            <span className="px-4 py-2 text-sm lg:text-base border rounded-lg">My UF-Points: {points}</span>
-                        </div>}
+                        <div className="bg-gray-100 w-full flex justify-center py-1.5 mid:py-2 text-sm lg:text-base text-[#FF4A60] font_urbanist_medium rounded-lg">Every 100 UF-Points are equal to {formatPrice(process.env.UF_POINT_RATE * 100)}</div>
+                        <div className="w-full mt-4 lg:mt-10 flex justify-between items-center">
+                            <span className="text-lg lg:text-[26px] font_urbanist_bold text-gotham-black">Daily check-in Rewards</span>
+                            {!user && <button className='font_urbanist_medium text-xs md:text-sm px-4 py-1 lg:py-2 lg:px-5 rounded-full bg-gray-50'><Link href="/auth/login">Login</Link> / <Link href="/auth/signup">Signup</Link></button>}
+                        </div>
                     </section>
-                    {user ? <>
-                        <div className="w-full flex justify-between">
-                            <CheckShell history={weeklyHistory} dayCode={1} day="Mon" />
-                            <CheckShell history={weeklyHistory} dayCode={2} day="Tue" />
-                            <CheckShell history={weeklyHistory} dayCode={3} day="Wed" />
-                            <CheckShell history={weeklyHistory} dayCode={4} day="Thu" />
-                            <CheckShell history={weeklyHistory} dayCode={5} day="Fri" />
-                            <CheckShell history={weeklyHistory} dayCode={6} day="Sat" />
-                            <CheckShell history={weeklyHistory} dayCode={0} day="Sun" />
-                        </div>
-                        <div className="w-full flex justify-between items-center font_urbanist_medium text-sm lg:text-base">
-                            Checked in {getCheckedinDays()} days
-                            <label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' /><span className="slider"></span></label>
-                        </div>
-                    </> :
-                        <div className="hidden lg:flex w-full flex-col justify-center items-center gap-y-4">
-                            <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl">Sign Up now and get 500 UF-Points ({formatPrice(500 * process.env.UF_POINT_RATE)})</h1>
-                            <div className="w-full flex flex-col justify-center items-center">
-                                <LinkBtn href="/auth/signup" classes="w-3/5" my="my-2">Sign Up</LinkBtn>
-                                or
-                                <LinkBtn href="/auth/login" classes="w-3/5" text="black" bg="bg-gray-100" my="my-2">Log in</LinkBtn>
-                            </div>
-                        </div>
-                    }
+                    <div className="w-full flex justify-between">
+                        <CheckShell history={weeklyHistory} dayCode={1} day="Mon" />
+                        <CheckShell history={weeklyHistory} dayCode={2} day="Tue" />
+                        <CheckShell history={weeklyHistory} dayCode={3} day="Wed" />
+                        <CheckShell history={weeklyHistory} dayCode={4} day="Thu" />
+                        <CheckShell history={weeklyHistory} dayCode={5} day="Fri" />
+                        <CheckShell history={weeklyHistory} dayCode={6} day="Sat" />
+                        <CheckShell history={weeklyHistory} dayCode={0} day="Sun" />
+                    </div>
+                    <hr />
+                    <div className="w-full flex justify-between items-center font_urbanist_medium text-sm lg:text-base">
+                        Checked in {getCheckedinDays()} days
+                        <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label>
+                    </div>
                 </nav>
                 <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 xl:py-6 flex flex-col lg:flex-row rounded-lg gap-3">
                     <div className="w-full lg:w-1/2 h-full lg:h-auto flex flex-col justify-center items-center gap-y-4">
-                        <div className="relative w-full mid:w-3/5 lg:w-11/12 aspect-square rounded-full shadow-lg">
-                            <span className="bg-white absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 aspect-square flex justify-center items-center rounded-full font_urbanist_bold text-10px lg:text-xs tracking-1 shadow-md"><p className="translate-x-px">{user && new Date() > new Date(user.uf_wallet?.next_uf_spin) ? "SPIN" : <i className="fa-solid fa-lock text-sm" />}</p></span>
+                        <div className="relative w-full mid:w-3/5 lg:w-11/12 aspect-square rounded-full shadow-lg overflow-clip">
+                            <span className="bg-white absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 aspect-square flex justify-center items-center rounded-full font_urbanist_bold text-10px lg:text-xs tracking-1 shadow-md"><p className="translate-x-px">{user && new Date() > new Date(user.uf_wallet?.next_uf_spin) ? "SPIN" : <i className="fa-solid fa-lock text-sm" />}</p></span>
                             <i className="absolute z-[8] top-[59%] md:top-[60%] 2xl:top-[58%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-x-[9px] lg:border-x-[12.5px] border-x-transparent border-t-[18px] lg:border-t-[25px] border-t-black"></i>
                             <svg id='prize_wheel' className="w-full h-full transition-all duration-700" width="260" height="260" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path name="50" d="M131.038 0.960935C148.11 0.960935 165.015 4.32348 180.787 10.8566C196.559 17.3897 210.89 26.9654 222.962 39.0371L131.038 130.961V0.960935Z" fill="#FF4A60" />
@@ -319,25 +302,24 @@ export default function EarnUfPoints() {
                                 </defs>
                             </svg>
                         </div>
-                        {user && <span className="text-sm font_urbanist_medium text-center">Next Spin in:</span>}
-                        {user ? <div className="w-full flex justify-around items-center">
+                        <div className={`${!user && "opacity-50"} w-full flex justify-around items-center`}>
                             <span className="flex flex-col items-center font_urbanist_medium text-xs">
-                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2.5 rounded-lg text-sm lg:text-base">{timeLeft.days}</span>
+                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2 font_urbanist_medium text-sm lg:text-base">{timeLeft.days || "00"}</span>
                                 Days
                             </span>
                             <span className="flex flex-col items-center font_urbanist_medium text-xs">
-                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2.5 rounded-lg text-sm lg:text-base">{timeLeft.hours}</span>
+                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2 font_urbanist_medium text-sm lg:text-base">{timeLeft.hours || "00"}</span>
                                 Hours
                             </span>
                             <span className="flex flex-col items-center font_urbanist_medium text-xs">
-                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2.5 rounded-lg text-sm lg:text-base">{timeLeft.minutes}</span>
+                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2 font_urbanist_medium text-sm lg:text-base">{timeLeft.minutes || "00"}</span>
                                 Mins
                             </span>
                             <span className="flex flex-col items-center font_urbanist_medium text-xs">
-                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2.5 rounded-lg text-sm lg:text-base">{timeLeft.seconds}</span>
+                                <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2 font_urbanist_medium text-sm lg:text-base">{timeLeft.seconds || "00"}</span>
                                 Secs
                             </span>
-                        </div> : <LinkBtn href="/auth/signup" bg="bg-gray-100" my="my-4" text="black" classes="lg:hidden w-full" font='font_urbanist_medium'>Sign Up to spin</LinkBtn>}
+                        </div>
                     </div>
                     <div className="w-full lg:w-1/2 h-full lg:h-auto flex flex-col justify-between ">
                         <ol className='text-[13px]'>
@@ -349,13 +331,18 @@ export default function EarnUfPoints() {
                             <li>5. Your UF-Points and vouchers will be automatically added yo your account wallet.</li>
                             <li>6. On getting a "Try Again", you can do extra spin free of cost.</li>
                         </ol>
-                        {user && <div className='w-full'><LinkBtn href="/user/inbox/rewards" bg="bg-gray-100" my="my-4" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
-                            <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>}
+                        {user ? <div className='w-full'><LinkBtn href="/user/inbox/rewards" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
+                            <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>
+                            : <>
+                                <LinkBtn href="/auth/login" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>Log in</LinkBtn>
+                                <LinkBtn href="/auth/signup" classes="w-full" my="0">Sign up</LinkBtn>
+                            </>
+                        }
                     </div>
                 </nav>
             </section>
 
-            <section className="bg-white w-full mb-4 lg:mb-6 px-4 py-4 mid:px-6 mid:py-4 lg:p-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
+            <section className="bg-white w-full mb-4 lg:mb-6 px-4 py-6 mid:px-6 mid:p-6 lg:py-10 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
                 <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Complete tasks to win more UF-Points</h1>
                 <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
                     <span className="flex flex-col text-sm lg:text-base text-gray-400">
@@ -400,7 +387,7 @@ export default function EarnUfPoints() {
                     <Link href="/user/security" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
                 </div>
             </section>
-            {user?.email && <section className="bg-white w-full mb-4 lg:mb-6 px-4 py-4 mid:px-6 mid:py-4 lg:p-6 lg:px-8 rounded-lg gap-4">
+            {user?.email && <section className="bg-white w-full mb-4 lg:mb-6 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4">
                 <h1 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h1>
                 <div className="w-full mb-4 flex justify-between items-center text-xs lg:text-base font_urbanist_bold">
                     <span className="w-1/3">Transactions</span>
@@ -436,8 +423,7 @@ export default function EarnUfPoints() {
                         </nav>
                     </section>
                 }) : null}
-            </section>}
-            <section className="w-full mt-5">
+            </section>}<section className="bg-white w-full mb-4 lg:mb-6 px-4 py-6 mid:p-6 lg:py-10 lg:px-8 rounded-lg">
                 <h1 className="col-span-full mb-4 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Rules for Check-in</h1>
                 <ol>
                     <li>1. Sign in on the “Urban Fits” page on the website every day to receive UF-Points, the UF-Points accumulates over the week and automatically expires each Sunday at 24:00. You can check your UF-Points expiration date in “My Account”. Remember to use your UF-Points before it expires!</li>
@@ -445,7 +431,6 @@ export default function EarnUfPoints() {
                     <li>3. Check Your UF-Points <Link href="/user/uf-wallet" className='underline'>here</Link>.</li>
                 </ol>
             </section>
-
         </main>
     </>
 }
