@@ -78,15 +78,28 @@ const useWallet = create(persist((set, get) => ({
     },
 
     getExchangeRate: async (to = get().currency, amount = 1) => {
+        if (to === "AED") {
+            set(() => ({ exchange_rate: 1, walletLoading: false }))
+            return 1
+        }
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${to}&have=${process.env.BASE_CURRENCY}&amount=${amount}`, {
                 headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
             })
             set(() => ({ exchange_rate: data.new_amount, walletLoading: false }))
-            console.log(data)
             return data.new_amount
-        } catch (error) { console.log(error); }
+        } catch (error) {
+            console.log(error);
+            if (to === "PKR") {
+                set(() => ({ exchange_rate: 77.6, walletLoading: false }))
+                return 77.6
+            }
+            else if (to === "SAR") {
+                set(() => ({ exchange_rate: 1.02, walletLoading: false }))
+                return 1.02
+            }
+        }
         set(() => ({ walletLoading: false }))
     },
 
@@ -136,8 +149,14 @@ const useWallet = create(persist((set, get) => ({
         const format = currencyFormats[currency];
         const price = amount * rate;
 
-        if (format.position === 'left') return `${format.symbol} ${Number.isInteger(price) ? price : price.toFixed(3)}`;
-        else return `${Number.isInteger(price) ? price : price.toFixed(3)} ${format.symbol}`;
+        if (format.position === 'left') return `${format.symbol} ${Number.isInteger(price) ? price : price.toFixed(3).replace(/\.?0+$/, '')}`;
+        else return `${Number.isInteger(price) ? price : price.toFixed(3).replace(/\.?0+$/, '')} ${format.symbol}`;
+    },
+
+    formatPriceNum: (amount = 0, currency = get().currency, rate = get().exchange_rate) => {
+        if (!currencies.includes(currency)) return toaster("error", "Currency conversion failed. Invalid currency!")
+        const price = amount * rate;
+        return price.toFixed(3).replace(/\.?0+$/, '')
     }
 
 }), { name: "wallet" }

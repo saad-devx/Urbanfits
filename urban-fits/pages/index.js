@@ -69,7 +69,7 @@ export default function Home() {
                 <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Women Collection</h2>
-                        <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Women</Link>
+                        <Link href='/products/category/64a59d5816b4c91fa1967b2e?name=women' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Women</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.womenCollection.map((product, index) => {
@@ -87,7 +87,7 @@ export default function Home() {
                 {indexContent?.menCollection.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Men Collection</h2>
-                        <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Men</Link>
+                        <Link href='/products/category/649b292762a7c100cfb7207f?name=men' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Men</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.menCollection.map((product, index) => {
@@ -103,7 +103,7 @@ export default function Home() {
                 {indexContent?.kidsCollection.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">Urban Fits Kids Collection</h2>
-                        <Link href='#' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Kids</Link>
+                        <Link href='/products/category/64d4dfa643c643cc9c60c672?name=kids' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">Shop Kids</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.kidsCollection.map((product, index) => {

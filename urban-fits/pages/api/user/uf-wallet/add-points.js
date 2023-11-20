@@ -4,6 +4,7 @@ import User from "@/models/user"
 import UFpoints from "@/models/ufpoints"
 import sendNotification from "@/utils/send_notification";
 import SavePointsHistory from "@/utils/save_points_history";
+import { EncrytOrDecryptData } from "@/utils/generatePassword";
 import CorsMiddleware from "@/utils/cors-config"
 
 const AddUFpoints = async (req, res) => {
@@ -11,7 +12,9 @@ const AddUFpoints = async (req, res) => {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
             const { card_number, user_id, source, secret_key, points, duducted, expiration_date, notific_params } = req.body
-            if (!card_number || !mongoose.Types.ObjectId.isValid(user_id) || !source || secret_key !== process.env.SECRET_KEY) return res.status(403).json({ success: false, msg: "Invalid arguments." })
+            if (!card_number || !mongoose.Types.ObjectId.isValid(user_id) || !source || !secret_key) return res.status(403).json({ success: false, msg: "Invalid arguments." })
+            const decryptedSecetKey = EncrytOrDecryptData(secret_key, false)
+            if (decryptedSecetKey !== process.env.SECRET_KEY) return res.status(403).json({ success: false, msg: "Invalid Secret Key." })
             await ConnectDB()
 
             const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": card_number })
@@ -32,7 +35,7 @@ const AddUFpoints = async (req, res) => {
                 success: true,
                 msg: `Points added successfully.`,
             })
-        }else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: POST" })
+        } else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: POST" })
     }
     catch (error) {
         console.log(error)

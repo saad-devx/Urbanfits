@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db";
 import mongoose from "mongoose";
 import User from "@/models/user"
-import { generateRandIntWithProbabilities } from "@/utils/generatePassword";
+import { generateRandIntWithProbabilities, EncrytOrDecryptData } from "@/utils/generatePassword";
 import axios from "axios";
 import CorsMiddleware from "@/utils/cors-config"
 
@@ -43,7 +43,7 @@ const SpinUfWheel = async (req, res) => {
                         user_id: user._id,
                         card_number: user.uf_wallet.card_number,
                         source: "prize_wheel",
-                        secret_key: process.env.SECRET_KEY,
+                        secret_key: EncrytOrDecryptData(process.env.SECRET_KEY),
                         points: generatedReward,
                         duducted: 10,
                         expiration_date: new Date(new Date().setDate(new Date().getDate() + 7)),

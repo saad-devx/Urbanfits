@@ -77,8 +77,8 @@ const useProduct = create((set, get) => ({
         set(() => ({ productLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/products/get/sales?page=${page}`)
-            set(() => ({ productLoading: false }))
             callback(data.products)
+            set(() => ({ productLoading: false }))
             return data.products
         } catch (error) {
             console.log(error)

@@ -32,7 +32,7 @@ export default function CatalogueCarousel() {
         })
     }
 
-    return <Splide onPaginationMounted={onPGMounted} className="catalogue_carousel w-screen layout_height relative transition-all duration-1000" hasTrack={false}
+    return <Splide onPaginationMounted={onPGMounted} className="catalogue_carousel w-full layout_height relative transition-all duration-1000" hasTrack={false}
         options={{
             type: 'fade',
             rewind: true,
