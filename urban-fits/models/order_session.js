@@ -30,7 +30,9 @@ const OrderSessionSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true,
             },
+            variant_id: mongoose.Schema.ObjectId,
             variant: String,
+            size: String,
             name: {
                 type: String,
                 required: true,

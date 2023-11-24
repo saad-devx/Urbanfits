@@ -168,7 +168,7 @@ export default function Cart(props) {
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14 mb-20">
-                        <MoreToExplore />
+                        <MoreToExplore categoryId={items[0]? items[0]?.category_id : "64a59d5816b4c91fa1967b2e"} />
                     </div>
                 </section>}
         </div>

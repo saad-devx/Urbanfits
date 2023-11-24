@@ -3,52 +3,31 @@ import useWallet from "@/hooks/useWallet";
 import Button from "./buttons/simple_btn";
 import toaster from "@/utils/toast_function";
 
-export default function FilterBar({ show, setFilterBar, array, onFilter }) {
+export default function FilterBar({ show, setFilterBar, array = [], minPrice = 0, maxPrice = 0, availableColors = [], availableSizes = [], onFilter }) {
     const { formatPriceNum, exchange_rate } = useWallet()
 
-    const minPrice = !array.length ? 0 : formatPriceNum(array.reduce((min, product) => (product.price < min ? product.price : min), array[0].price));
-    const maxPrice = !array.length ? 0 : formatPriceNum(array.reduce((max, product) => (product.price > max ? product.price : max), array[0].price));
-    const [min, setMin] = useState(minPrice)
-    const [max, setMax] = useState(maxPrice)
+    const [min, setMin] = useState(formatPriceNum(minPrice))
+    const [max, setMax] = useState(formatPriceNum(maxPrice))
     const [selectedColors, setSelectedColors] = useState([])
     const [selectedSizes, setSelectedSizes] = useState([])
     const closeFilterBar = (e) => { if (e.target.id === "filter_offcanvas") return setFilterBar(false) }
 
-    const allAvailableColors = (array.flatMap(product => product.variants.map(variant => ({ color: variant.color, color_name: variant.color_name }))))
-    const availableColors = []
-    allAvailableColors.forEach((colorObj) => {
-        const matchedColor = availableColors.find(obj => obj.color_name?.toLowerCase() === colorObj?.color_name?.toLowerCase())
-        if (!matchedColor) availableColors.push(colorObj)
-    })
-    const allAvailableSizes = array.flatMap(product => product.variants.flatMap(variant => variant.sizes.map(size => ({ size: size.size, quantity: size.quantity }))))
-    const availableSizes = []
-    allAvailableSizes.forEach((sizeObj) => {
-        const matchedSize = availableSizes.find(size => size?.toLowerCase() === sizeObj?.size?.toLowerCase() && sizeObj.quantity > 0)
-        if (!matchedSize) availableSizes.push(sizeObj.size)
-    })
-
-
     const selectColor = ({ color_name }) => { if (selectedColors.includes(color_name?.toLowerCase())) return setSelectedColors(selectedColors.filter(c => c !== color_name.toLowerCase())); setSelectedColors(prevState => [...prevState, color_name.toLowerCase()]) }
     const selectSize = (size) => { if (selectedSizes.includes(size)) return setSelectedSizes(selectedSizes.filter(s => s !== size)); setSelectedSizes(prevState => [...prevState, size]) }
-
-    const reverseConvertPrice = (price) => {
-        const reversedPrice = (price / exchange_rate).toFixed(3).replace(/\.?0+$/, '')
-        return reversedPrice
-    }
-    const appliedFilters = {
-        priceFilters: min !== minPrice || max !== maxPrice ? true : false,
-        colorFilters: selectedColors.length ? true : false,
-        sizeFilters: selectedSizes.length ? true : false,
-    }
+    const reverseConvertPrice = (price) => (price / exchange_rate).toFixed(3).replace(/\.?0+$/, '')
+    // const appliedFilters = {
+    //     priceFilters: Math.floor(min) !== Math.floor(formatPriceNum(minPrice)) || Math.floor(max) !== Math.floor(formatPriceNum(maxPrice)) ? true : false,
+    //     colorFilters: selectedColors.length ? true : false,
+    //     sizeFilters: selectedSizes.length ? true : false,
+    // }
     const clearFilters = () => {
-        setMin(minPrice)
-        setMax(maxPrice)
+        setMin(formatPriceNum(minPrice))
+        setMax(formatPriceNum(maxPrice))
         setSelectedColors([])
         setSelectedSizes([])
         onFilter({
             array,
-            dropSpecificFilter: ()=>{},
-            appliedFilters
+            dropSpecificFilter: () => { }
         })
         setFilterBar(false)
     }
@@ -70,27 +49,23 @@ export default function FilterBar({ show, setFilterBar, array, onFilter }) {
 
         onFilter({
             array: filteredBySizes,
-            dropSpecificFilter,
-            appliedFilters
+            dropSpecificFilter
         })
         setFilterBar(false)
     }
 
     const dropSpecificFilter = (name) => {
         if (name === "price_filter") {
-            setMin(minPrice)
-            setMax(maxPrice)
-            console.log("i am condition number 1")
+            setMin(formatPriceNum(minPrice))
+            setMax(formatPriceNum(maxPrice))
             applyFilters(minPrice, maxPrice)
         }
         else if (name === "color_filter") {
             setSelectedColors([])
-            console.log("i am condition number 2")
             applyFilters(min, max, [])
         }
         else if (name === "size_filter") {
             setSelectedSizes([])
-            console.log("i am condition number 3")
             applyFilters(min, max, selectedColors, [])
         }
         setFilterBar(false)
@@ -99,9 +74,10 @@ export default function FilterBar({ show, setFilterBar, array, onFilter }) {
     useEffect(() => {
         onFilter({
             array: array,
-            dropSpecificFilter,
-            appliedFilters
+            dropSpecificFilter
         })
+        setMin(formatPriceNum(minPrice))
+        setMax(formatPriceNum(maxPrice))
     }, [array])
 
     return <main id="filter_offcanvas" onClick={closeFilterBar} className={`${show ? null : "opacity-0 pointer-events-none"} fixed z-[200] inset-0 bg-gradient-to-br from-black/25 to-pink-600/25 w-full h-full transition-all duration-300`}>
@@ -115,7 +91,7 @@ export default function FilterBar({ show, setFilterBar, array, onFilter }) {
             <section className="w-full p-4 md:p-6">
                 <div className="w-full flex justify-between items-center">
                     <h2 className="font_urbanist_bold text-sm lg:text-base">Price range</h2>
-                    {min !== minPrice || max !== maxPrice ? <button onClick={() => dropSpecificFilter("price_filter")} className="flex items-center text-10px lg:text-xs bg-red-500 text-white px-4 py-1.5 rounded-full gap-x-1.5"><i className="fa-solid fa-xmark" /> Drop Filter</button> : null}
+                    {Math.floor(min) !== Math.floor(formatPriceNum(minPrice)) || Math.floor(max) !== Math.floor(formatPriceNum(maxPrice)) ? <button onClick={() => dropSpecificFilter("price_filter")} className="flex items-center text-10px lg:text-xs bg-red-500 text-white px-4 py-1.5 rounded-full gap-x-1.5"><i className="fa-solid fa-xmark" /> Drop Filter</button> : null}
                 </div>
                 <div className="w-full mt-4 flex justify-between items-center">
                     <input type="number" value={min} onChange={(e) => setMin(e.target.value)} className="w-24 px-4 py-1 font_urbanist_mdeium text-center text-sm hover:shadow-lg focus:bg-pinky focus:text-white outline-none border border-pinky rounded-full transition-all" />

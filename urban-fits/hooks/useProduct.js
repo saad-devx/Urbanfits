@@ -8,18 +8,17 @@ const useProduct = create((set, get) => ({
     productLoading: false,
     totalProducts: 0,
 
-    getProducts: async (page = 1, category_id = null) => {
-        set(() => ({
-            productLoading: true
-        }))
+    getProducts: async (page = 1, category_id = null, minPrice = null, maxPrice = null, callback, limit = 30) => {
+        set(() => ({ productLoading: true }))
         try {
             if (category_id) {
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}`)
+                const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}&min_price=${minPrice}&max_price=${maxPrice}?limit=${limit}`)
                 set(() => ({
                     products: data.products,
                     totalProducts: data.totalProducts,
                     productLoading: false
                 }))
+                callback(data)
                 return data.products
             }
             else {
@@ -29,6 +28,7 @@ const useProduct = create((set, get) => ({
                     totalProducts: data.totalProducts,
                     productLoading: false
                 }))
+                callback(data)
                 return data.products
             }
         } catch (error) {
@@ -44,14 +44,14 @@ const useProduct = create((set, get) => ({
         set(() => ({ productLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.HOST}/api/products/get-relative-products?product_id=${product_id}`)
-            set(() => ({productLoading: false}))
+            set(() => ({ productLoading: false }))
             callback(data.relative_products)
             return data.relative_products
         } catch (error) {
             console.log(error)
             toaster("error", error.response.data.msg)
         }
-        return set(() => ({productLoading: false}))
+        return set(() => ({ productLoading: false }))
     },
 
     getOneProduct: async (product_id) => {
@@ -73,11 +73,11 @@ const useProduct = create((set, get) => ({
         }))
     },
 
-    getSaleProducts: async (page = 1, callback) => {
+    getSaleProducts: async (page = 1, minPrice = null, maxPrice = null, callback) => {
         set(() => ({ productLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/products/get/sales?page=${page}`)
-            callback(data.products)
+            const { data } = await axios.get(`${process.env.HOST}/api/products/get/sales?page=${page}&min_price=${minPrice}&max_price=${maxPrice}`)
+            callback(data)
             set(() => ({ productLoading: false }))
             return data.products
         } catch (error) {

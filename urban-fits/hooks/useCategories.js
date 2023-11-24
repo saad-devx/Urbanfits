@@ -19,6 +19,20 @@ const useCategories = create((set, get) => ({
             toaster("error", error.response.data.msg)
         }
         return set(() => ({ categLoading: false }))
+    },
+
+    getRelativeCategories: async (category_id, callback) => {
+        set(() => ({ categLoading: true }))
+        try {
+            const { data } = await axios.get(`${process.env.HOST}/api/categories/recommends/get-relative-categories?category_id=${category_id}`)
+            callback(data)
+            set(() => ({ categLoading: false }))
+            return data
+        } catch (error) {
+            console.log(error)
+            toaster("error", error?.response?.data?.msg || "Network error")
+        }
+        set(() => ({ categLoading: false }))
     }
 
 }))

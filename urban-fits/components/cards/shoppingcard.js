@@ -19,14 +19,14 @@ export default function Shoppingcard({ product }, props) {
     const { user, wishList, addToWishList, removeFromWishList, inWishList } = useUser()
     const [addToListModal, setAddToListModal] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [activeVariant, setActiveVariant] = useState(product?.variants[0])
+    const [activeVariant, setActiveVariant] = useState(product?.variants? product?.variants[0]: null)
     const splideRef = useRef(null)
 
     const addToCart = () => {
         if (inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
         addItem({
             product_id: product._id,
-            original_id: activeVariant._id,
+            variant_id: activeVariant._id,
             id: `${activeVariant._id}${activeVariant.sizes[0].size}`,
             name: product.name,
             price: product.price,
@@ -64,7 +64,7 @@ export default function Shoppingcard({ product }, props) {
                 </svg>
             </button>}
             <div className='w-full h-full'>
-                <Link href={props.link || `/products/product/${product._id}?color=${activeVariant.color_name}`} className="relative w-full h-[70%] xl:h-[72%] flex justify-center items-start overflow-clip">
+                <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="relative w-full h-[70%] xl:h-[72%] flex justify-center items-start overflow-clip">
                     <ImgLoader loading={loading} />
                     <Splide className='w-full h-full group-hover:scale-105 transition-all duration-1000' ref={splideRef} options={{
                         type: "fade",
@@ -76,7 +76,7 @@ export default function Shoppingcard({ product }, props) {
                         pagination: false,
                         arrows: false
                     }} >
-                        {product.variants.map((variant) => {
+                        {product?.variants?.map((variant) => {
                             return <SplideSlide>
                                 <ImgLoader loading={loading} />
                                 <Image className={loading ? 'w-0 h-0' : ''} onLoad={() => setLoading(false)} priority={true} width={650} height={860} src={variant?.images[0] || DemoImg} alt="Urban images" />
@@ -85,7 +85,7 @@ export default function Shoppingcard({ product }, props) {
                     </Splide>
                 </Link>
                 <div className="w-full h-[30%] md:h-1/5 text-black flex flex-col">
-                    <Link href={props.link || `/products/product/${product._id}?color=${activeVariant.color_name}`} className="w-full font_urbanist_medium text-sm lg:text-base">
+                    <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="w-full font_urbanist_medium text-sm lg:text-base">
                         <p className="truncate">{product.name}</p>
                     </Link>
                     <div className="w-full flex flex-col lg:flex-row lg:items-center">
@@ -130,8 +130,9 @@ export function SmallShoppingcard({ product }, props) {
         if (inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
         addItem({
             product_id: product._id,
-            original_id: activeVariant._id,
+            variant_id: activeVariant._id,
             id: `${activeVariant._id}${activeVariant.sizes[0].size}`,
+            category_id: product.categories[0],
             name: product.name,
             price: product.price,
             uf_points: product.sale_price || product.uf_points,

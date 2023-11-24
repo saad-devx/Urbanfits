@@ -30,6 +30,7 @@ const OrderSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true,
             },
+            variant_id: mongoose.Schema.ObjectId,
             variant: String,
             name: {
                 type: String,
@@ -39,6 +40,7 @@ const OrderSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
             },
+            size: String,
             quantity: {
                 type: Number,
                 required: true,

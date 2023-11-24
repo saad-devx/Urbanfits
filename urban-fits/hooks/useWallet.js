@@ -67,8 +67,8 @@ const useWallet = create(persist((set, get) => ({
                 uf_wallet: {
                     ...user.uf_wallet,
                     last_uf_spin: data.last_uf_spin,
-                    last_spin_reward: data.last_spin_reward,
-                    ...(data.next_uf_spin && { next_uf_spin: data.next_uf_spin })
+                    last_spin_reward: data.reward,
+                    ...(data.next_uf_spin ? { next_uf_spin: data.next_uf_spin }:{})
                 }
             }, true, true)
             get().getUfBalance()

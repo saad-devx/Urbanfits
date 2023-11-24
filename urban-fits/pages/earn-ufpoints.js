@@ -35,7 +35,7 @@ const CheckShell = ({ dayCode, day, history }) => {
 
 export default function EarnUfPoints() {
     const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfHistory } = useWallet()
-    const { user } = useUser()
+    const { user, updateUser } = useUser()
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
     const [history, setHistory] = useState(null)

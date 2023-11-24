@@ -62,7 +62,7 @@ const SpinUfWheel = async (req, res) => {
                         bar_code: user.uf_wallet.bar_code,
                         last_uf_spin: new Date(),
                         last_spin_reward: generatedReward,
-                        ...(nextSpinTime && { next_uf_spin: nextSpinTime })
+                        ...(nextSpinTime ? { next_uf_spin: nextSpinTime } : {})
                     }
                 })
                 return res.status(200).json({
@@ -70,7 +70,7 @@ const SpinUfWheel = async (req, res) => {
                     msg: generatedReward === 0 ? "Oops! no points But you gained a free change to try your luck again!" : `Congratulations! You have won ${generatedReward} UF-Points.`,
                     reward: generatedReward,
                     last_uf_spin: new Date(),
-                    ...(nextSpinTime && { next_uf_spin: nextSpinTime })
+                    ...(nextSpinTime ? { next_uf_spin: nextSpinTime } : {})
                 });
             };
 
@@ -79,7 +79,7 @@ const SpinUfWheel = async (req, res) => {
                 if (today >= currentWeekStart && today < secondSpinTimeAvailability) nextUfSpinForNewUser = secondSpinTimeAvailability
                 else if (today >= secondSpinTimeAvailability && today < thirdSpinTimeAvailability) nextUfSpinForNewUser = thirdSpinTimeAvailability
                 else if (today >= thirdSpinTimeAvailability) nextUfSpinForNewUser = new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay() + 1) % 7))
-                return spinUfWheel(nextUfSpinForNewUser, false)
+                return await spinUfWheel(nextUfSpinForNewUser, false)
             }
 
             console.log(new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay() + 1) % 7)))
@@ -89,14 +89,14 @@ const SpinUfWheel = async (req, res) => {
                     return await spinUfWheel(secondSpinTimeAvailability)
                 }
                 else if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(secondSpinTimeAvailability, false)
-                else return res.status(403).json({ success: false, msg: "You can't spin yet, wait for the cooldown. 1" })
+                else return res.status(403).json({ success: false, msg: "You can't spin yet, wait for the cooldown." })
             }
             else if (today >= secondSpinTimeAvailability && today < thirdSpinTimeAvailability) {
                 if (user.uf_wallet.last_uf_spin < secondSpinTimeAvailability) {
                     return await spinUfWheel(thirdSpinTimeAvailability)
                 }
                 else if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(thirdSpinTimeAvailability, false)
-                else return res.status(403).json({ success: false, msg: "You can't spin yet, wait for the cooldown. 2" })
+                else return res.status(403).json({ success: false, msg: "You can't spin yet, wait for the cooldown." })
             }
             else if (today >= thirdSpinTimeAvailability && user.uf_wallet.last_uf_spin < thirdSpinTimeAvailability) {
                 if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay() + 1) % 7)), false)

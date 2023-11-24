@@ -75,8 +75,9 @@ export default function Product(props) {
         if (inCart(`${product._id}${sizevalue}`)) return toaster('info', 'This item is already in the cart!')
         addItem({
             product_id: productData.id,
-            original_id: product._id,
+            variant_id: product._id,
             id: `${product._id}${sizevalue}`,
+            category_id: productData.categories[0],
             name: productData.name,
             price: productData.price,
             uf_points: product.uf_points,

@@ -77,16 +77,17 @@ export default async function handler(req, res) {
             for (const orderItem of orderItemsToProcess) {
                 const dbProduct = await Product.findById(orderItem.product_id)
                 if (!dbProduct) return res.status(400).json({ success: false, msg: "Either specified product IDs does not exist or the product IDs were tempered." })
-                if (!orderItem.original_id) return res.status(400).json({ success: false, msg: "Each order item must have a `original_id` property with the value of its unique variant id." })
-                const filteredArray = dbProduct.variants.filter(variant => variant._id.toString() === orderItem.original_id.toString())
-                if (!filteredArray || !filteredArray.length) return res.status(400).json({ success: false, msg: "Either specified product IDs does not exist or the product IDs were tempered." })
-
-                const filteredProduct = filteredArray[0]
+                const respectedVariant = dbProduct.variants.find(variant => variant._id.toString() === orderItem?.variant_id || '')
+                if (!respectedVariant) return res.status(400).json({ success: false, msg: "Each order item must have a vaild existing `variant_id`." })
+                const respectedSize = respectedVariant.sizes.find(sizeObj => sizeObj.size.toLowerCase() === orderItem.size.toLowerCase())
+                if (!respectedSize || respectedSize.quantity < orderItem.quantity) return res.status(400).json({ success: false, msg: `Selected size of ${dbProduct.name}'s ${respectedVariant.color_name} variant is currently unavailable.` })
+                
                 const finalProduct = {
                     product_id: dbProduct._id,
+                    variant_id: orderItem.variant_id,
                     name: dbProduct.name,
                     price: dbProduct.price,
-                    image: filteredProduct.images[0],
+                    image: respectedVariant.images[0],
                     variant: orderItem?.color || '',
                     uf_points: orderItem?.uf_points || 0,
                     size: orderItem.size,

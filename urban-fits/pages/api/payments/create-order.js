@@ -4,6 +4,7 @@ import User from "@/models/user"
 import Order from "@/models/orders"
 import OrderSession from '@/models/order_session';
 import OrderConfirmed from '@/email templates/order_confirm';
+import Product from "@/models/product"
 import GiftcardEmail from "@/email templates/giftcard_email";
 import Giftcard from "@/models/giftcard"
 import { generateGiftCode } from "@/utils/generatePassword";
@@ -82,10 +83,25 @@ const CreateOrder = async (req, res) => {
                 order_data: newOrder
             })
             // Deducting the quantity of purchased variant of the specific product
-            // const orderedItems = orderSessionData.order_items
-            // for (const orderedItem of orderedItems){
-
-            // }
+            const orderedItems = orderSessionData.order_items
+            for (const orderedItem of orderedItems) {
+                await Product.updateOne(
+                    {
+                        _id: mongoose.Types.ObjectId(orderedItem.product_id)
+                    },
+                    {
+                        $inc: {
+                            "variants.$[v].sizes.$[s].quantity": -orderedItem.quantity
+                        }
+                    },
+                    {
+                        arrayFilters: [
+                            { "v._id": mongoose.Types.ObjectId(orderedItem.variant_id) },
+                            { "s.size": orderedItem.size.toUpperCase() }
+                        ]
+                    }
+                )
+            }
             // Finally deleting the respected order sessoin from DB
             await OrderSession.findByIdAndDelete(order_session_id)
             res.status(200).json({ success: true, msg: "New order creation completed successfully." })

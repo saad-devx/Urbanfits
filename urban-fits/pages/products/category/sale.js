@@ -10,20 +10,27 @@ import toaster from '@/utils/toast_function';
 
 export default function SaleCatalogue() {
     const { getSaleProducts, productLoading } = useProduct()
+    const [fRecourses, setFRecourses] = useState({ minPrice:0, maxPrice:0, availableColors:[], availableSizes:[] })
     const [products, setProducts] = useState([])
     const [filteredData, setFilteredData] = useState(products)
     const [page, setPage] = useState(1)
     const [filterBar, setFilterBar] = useState(false)
 
     useEffect(() => {
-        getSaleProducts(page, (newProducts) => {
-            setProducts(newProducts)
-            setFilteredData(newProducts)
+        getSaleProducts(page, null, null, (data) => {
+            setProducts(data.products)
+            setFilteredData(data.products)
+            setFRecourses({
+                minPrice: data.min_price,
+                maxPrice: data.max_price,
+                availableColors: data.available_colors,
+                availableSizes: data.available_sizes
+            })
         })
     }, [])
 
     return <>
-        <FilterBar show={filterBar} setFilterBar={setFilterBar} array={products || []} onFilter={(filterData) => setFilteredData(filterData)} />
+    <FilterBar show={filterBar} setFilterBar={setFilterBar} array={products} minPrice={fRecourses.minPrice} maxPrice={fRecourses.maxPrice} availableColors={fRecourses.availableColors} availableSizes={fRecourses.availableSizes} onFilter={(filterData) => setFilteredData(filterData)} />
         <main className="w-full pb-20 bg-white font_urbanist">
             <CatalogueCarousel />
             <section className='w-full p-5 md:px-7 lg:px-14 xl:px-20 py-16 h-full font_urbanist text-left' >
@@ -47,13 +54,26 @@ export default function SaleCatalogue() {
                         : <div className='w-full col-span-full flex justify-center items-center h-[20vh] font_urbanist_medium text-base md:text-lg lg:text-xl'>No Products found for this Category :(</div>}
                 </div>
 
-                <button disabled={productLoading} onClick={() => {
-                    getSaleProducts(page + 1, (newProducts) => {
-                        if (newProducts.length == 0) return toaster('info', "No more products available")
-                        setProducts([products.concat(newProducts)])
+                <button disabled={productLoading} onClick={() =>
+                    getSaleProducts(page + 1, fRecourses.minPrice, fRecourses.maxPrice, (data) => {
+                        if (!data?.products?.length) return toaster('info', "No more products available")
+                        setFRecourses(prev => {
+                            const availableColorsSet = []
+                            const allAvailableColors = [...prev.availableColors, ...data.available_colors]
+                            allAvailableColors.forEach(colorObj => {
+                                const matchedColor = availableColorsSet.find(newColorObj => newColorObj?.color_name?.toLowerCase() === colorObj?.color_name?.toLowerCase())
+                                if (!matchedColor) availableColorsSet.push(colorObj)
+                            });
+                            return {
+                                minPrice: data.min_price,
+                                maxPrice: data.max_price,
+                                availableColors: availableColorsSet,
+                                availableSizes: Array.from(new Set([...prev.availableSizes, ...data.available_sizes]))
+                            }
+                        })
+                        setProducts([products.concat(data.products)].flat())
                         return setPage(page + 1)
-                    })
-                }} className={`${productLoading && 'pointer-events-none'} lg:mt-20 group flex items-center mx-auto font_copper text-xs md:text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300`}>
+                    })} className={`${productLoading && 'pointer-events-none'} lg:mt-20 group flex items-center mx-auto font_copper text-xs md:text-sm tracking-expand md:tracking-[1.5em] md:hover:tracking-[1em] transition-all duration-300`}>
                     <i className="w-16 group-hover:w-28 h-0.5 mx-1 bg-black transition-all" />
                     <i className="w-5 group-hover:w-0 h-0.5 mx-1 bg-black transition-all" />
                     {productLoading ? <BounceLoader /> : <p>&nbsp;MORE</p>}
