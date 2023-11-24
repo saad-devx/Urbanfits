@@ -29,7 +29,6 @@ const GetRelativeCategories = async (req, res) => {
 
 
             if (countOccurrences(respectedCategory.path, "/") === 1) {
-                console.log("yes its a root level category")
                 const rootCategories = await Category.find({}).limit(5)
                 relativeCategories = relativeCategories.concat(rootCategories.map(c => c._id))
             }
@@ -44,7 +43,6 @@ const GetRelativeCategories = async (req, res) => {
 
             const relativeCategsSet = new Set(relativeCategories)
             const relativeCategsSetArray = Array.from(relativeCategsSet).filter(c => c.toString() !== category_id)
-            console.log(relativeCategsSetArray)
             const finalRelativeCategories = await Category.find({ _id: { $in: relativeCategsSetArray } })
 
             const latestArrivals = await Product.find({})
