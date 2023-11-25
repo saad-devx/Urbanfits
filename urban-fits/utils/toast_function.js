@@ -7,7 +7,7 @@ export default function toaster(type, msg, position = "top-left") {
             borderRadius: "100px"
         },
         bodyStyle: {
-            fontFamily: 'urbanist',
+            // fontFamily: 'urbanist',
             fontSize: "14px",
             fontWeight: "500",
             color: "black"

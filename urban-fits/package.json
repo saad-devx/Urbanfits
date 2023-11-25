@@ -28,7 +28,7 @@
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
     "mongoose": "^6.9.1",
-    "next": "^14.0.3",
+    "next": "^14.0.1",
     "next-auth": "^4.0.0-beta.7",
     "nodemailer": "^6.9.1",
     "postcss": "^8.4.21",
