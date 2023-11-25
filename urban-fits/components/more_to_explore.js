@@ -37,7 +37,9 @@ export default function MoreToExplore({ categoryId = "64a59d5816b4c91fa1967b2e" 
 
     console.log(categoryId)
     useEffect(() => {
-        if (categoryId) getRelativeCategories(categoryId, (data) => {
+        let category_id = categoryId
+        if (typeof categoryId === "object") category_id = categoryId._id
+        if (categoryId) getRelativeCategories(category_id, (data) => {
             setExploreData(data)
             setDisplayProducts(data.latest_arrivals)
         })

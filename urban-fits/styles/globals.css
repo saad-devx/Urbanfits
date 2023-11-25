@@ -36,27 +36,22 @@
 
 /* Urbanist Font Family */
 .font_urbanist_light {
-  font-family: 'Urbanist', sans-serif;
   font-weight: 300;
 }
 
 .font_urbanist {
-  font-family: 'Urbanist', sans-serif;
   font-weight: 400;
 }
 
 .font_urbanist_medium {
-  font-family: 'Urbanist', sans-serif;
   font-weight: 500;
 }
 
 .font_urbanist_bold {
-  font-family: 'Urbanist', sans-serif;
   font-weight: 600;
 }
 
 .font_urbanist_extra_bold {
-  font-family: 'Urbanist', sans-serif;
   font-weight: 700;
 }
 

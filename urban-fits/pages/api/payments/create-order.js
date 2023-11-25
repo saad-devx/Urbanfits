@@ -49,7 +49,7 @@ const CreateOrder = async (req, res) => {
                 month: months[date.getMonth()]
             })
             // Generating bught Gift Cards codes and saving to DB
-            if (orderSession?.gift_cards && orderSession.gift_cards[0].id.startsWith("giftcard_")) {
+            if (orderSession?.gift_cards?.length && orderSession.gift_cards[0].id.startsWith("giftcard_")) {
                 let dbGiftCards = []
                 for (const giftCard of orderSession.gift_cards) {
                     const generatedGiftCode = await generateGiftCode(10)

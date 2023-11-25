@@ -17,6 +17,7 @@ import toaster from "@/utils/toast_function";
 import axios from 'axios'
 import { pusherClient } from '@/utils/pusher'
 import PusherClient from 'pusher-js'
+import { urbanist } from '@/fonts'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter()
@@ -97,7 +98,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
-  return <>
+  return <main className={`${urbanist.className} antialiased`}>
     <LoadingBar color='linear-gradient(90deg, #FF4A60 46%, #C850C0 100%)' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className="toast" />
     <SessionProvider session={session}>
@@ -107,6 +108,6 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         <Footer />
       </CartProvider>
     </SessionProvider>
-  </>
+  </main>
 }
 export default dynamic(() => Promise.resolve(App), { ssr: false })
