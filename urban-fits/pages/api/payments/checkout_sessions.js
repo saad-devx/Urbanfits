@@ -9,7 +9,7 @@ import GuestUser from "@/models/guest_user";
 import mongoose from "mongoose";
 import { HashValue } from "@/utils/generatePassword";
 import axios from "axios";
-import CryptoJS from "crypto-js";
+// import CryptoJS from "crypto-js";
 import CorsMiddleware from "@/utils/cors-config"
 
 const currencies = ["AED", "SAR", "PKR"]
@@ -26,8 +26,8 @@ export default async function handler(req, res) {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
-            const decryptedData = JSON.parse(CryptoJS.AES.decrypt(req.body.payload, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8))
-            const { user_id, is_guest, shipping_info, order_items } = decryptedData
+            // const decryptedData = JSON.parse(CryptoJS.AES.decrypt(req.body.payload, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8))
+            const { user_id, is_guest, shipping_info, order_items } = req.body.payload
             if (!user_id || !shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id" })
             else if (!countries.includes(shipping_info.country)) return res.status(400).json({ success: false, msg: "We only ship in the following countries: " + countries })
             else if (!currencies.includes(shipping_info.currency)) return res.status(400).json({ success: false, msg: "Invalid Currency, Available currencies: " + currencies })
@@ -81,7 +81,7 @@ export default async function handler(req, res) {
                 if (!respectedVariant) return res.status(400).json({ success: false, msg: "Each order item must have a vaild existing `variant_id`." })
                 const respectedSize = respectedVariant.sizes.find(sizeObj => sizeObj.size.toLowerCase() === orderItem.size.toLowerCase())
                 if (!respectedSize || respectedSize.quantity < orderItem.quantity) return res.status(400).json({ success: false, msg: `Selected size of ${dbProduct.name}'s ${respectedVariant.color_name} variant is currently unavailable.` })
-                
+
                 const finalProduct = {
                     product_id: dbProduct._id,
                     variant_id: orderItem.variant_id,

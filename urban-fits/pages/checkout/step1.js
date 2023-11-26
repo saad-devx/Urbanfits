@@ -15,7 +15,7 @@ import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/languagemodal';
 import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
-import CryptoJS from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -105,8 +105,8 @@ export default function Checkout1() {
                     shipping_info: { ...values, card_number: user?.uf_wallet?.card_number },
                     order_items: items
                 }
-                const encryptedPayload = CryptoJS.AES.encrypt(JSON.stringify(payload), process.env.SECRET_KEY).toString();
-                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { payload: encryptedPayload })
+                // const encryptedPayload = CryptoJS.AES.encrypt(JSON.stringify(payload), process.env.SECRET_KEY).toString();
+                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { payload })
                 console.log(data)
                 router.push(data.url)
             }
