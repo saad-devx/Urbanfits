@@ -14,7 +14,7 @@ const AuthOtpAndChangeEmail = async (req, res) => {
             const dbOtp = await OTP.findById(otp_id)
             if (!dbOtp) return res.status(401).json({ success: false, msg: "OTP has expired." })
             if (otp !== dbOtp.otp) return res.status(401).json({ success: false, msg: "Incorrect OTP" })
-            const newPassword = CryptoJS.AES.encrypt(dbOtp.new_password, process.env.SECRET_KEY).toString()
+            const newPassword = CryptoJS.AES.encrypt(dbOtp.new_password, process.env.NEXT_PUBLIC_SECRET_KEY).toString()
             await User.findByIdAndUpdate(dbOtp.user_id, {
                 password: newPassword
             }, { new: true })

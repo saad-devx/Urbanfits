@@ -8,10 +8,10 @@ const GetSignedS3Url = async (req, res) => {
             const { folder, fileName } = req.query
             if (!folder || !fileName) return res.status(403).json({ success: false, msg: "All parameters are required. Query parameters: folder, fileName" })
             const s3 = new S3({
-                region: process.env.AWS_REGION,
+                region: process.env.NEXT_PUBLIC_AWS_REGION,
                 credentials: {
-                    accessKeyId: process.env.S3_ACCESS_KEY,
-                    secretAccessKey: process.env.S3_SECRET_KEY,
+                    accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY,
+                    secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_KEY,
                 },
                 signatureVersion: 'v4'
             })

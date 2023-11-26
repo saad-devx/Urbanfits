@@ -20,7 +20,7 @@ export default function WisthList() {
     const fetchMoreWishListProducts = async () => {
         setLoader(true)
         try {
-            const { data } = await axios.put(`${process.env.HOST}/api/products/get/byids?page=${page + 1}`, { productIds: wishList })
+            const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/byids?page=${page + 1}`, { productIds: wishList })
             if (!data.products || data.products.length === 0) {
                 setLoader(false)
                 return toaster("info", "No more products available.")
@@ -36,7 +36,7 @@ export default function WisthList() {
     const fetchWishListProducts = async (currentPage, idsArray) => {
         setLoading(true)
         try {
-            const { data } = await axios.put(`${process.env.HOST}/api/products/get/byids?page=${currentPage}`, { productIds: idsArray })
+            const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/byids?page=${currentPage}`, { productIds: idsArray })
             if (!data.products) return setLoading(false)
             setProducts(data.products)
             return setLoading(false)

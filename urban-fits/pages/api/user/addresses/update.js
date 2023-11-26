@@ -18,7 +18,7 @@ const UpdateAddress = async (req, res) => {
             // let addresses = await Addresses.findOne({ user_id: user._id })
             // if (!addresses) {
             //     const createdAddress = await Addresses.create({ ...req.body, user_id: user._id })
-            //     const payload = jwt.sign({ ...createdAddress }, process.env.SECRET_KEY)
+            //     const payload = jwt.sign({ ...createdAddress }, process.env.NEXT_PUBLIC_SECRET_KEY)
             //     return res.status(200).json({
             //         success: true,
             //         msg: "Your Address updated successfully",
@@ -27,7 +27,7 @@ const UpdateAddress = async (req, res) => {
             // }
             // if (addresses) {
             const updatedAddress = await Addresses.findOneAndUpdate({ user_id }, req.body, { new: true, upsert: true })
-            const payload = jwt.sign({ ...updatedAddress }, process.env.SECRET_KEY)
+            const payload = jwt.sign({ ...updatedAddress }, process.env.NEXT_PUBLIC_SECRET_KEY)
             return res.status(200).json({
                 success: true,
                 msg: "Your Address updated successfully",

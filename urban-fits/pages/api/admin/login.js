@@ -16,7 +16,7 @@ const Login = async (req, res) => {
             let user = await User.findOne().or([{ email }, { username: email }])
             if (!user) return res.status(404).json({ success: false, msg: "User not found, please create an account" })
             if (user.role !== "administrator") return res.status(403).json({ success: false, msg: `Access not allowed. Only for admins` })
-            const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
+            const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
             const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
             if (password !== originalPassword) return res.status(403).json({ success: false, msg: "Your password is incorrect" })
 
@@ -28,7 +28,7 @@ const Login = async (req, res) => {
                 })
             }
             if (!user.two_fa_enabled) {
-                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 pusherServer.trigger("admin-channel", "login", {
                     msg: `An admin ${user.username} just logged in.`,
                     user_id: user._id

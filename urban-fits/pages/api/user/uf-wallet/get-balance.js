@@ -18,7 +18,7 @@ const GetUFBalance = async (req, res) => {
                 success: true,
                 msg: '',
                 balance: totalPoints,
-                worth: totalPoints * process.env.UF_POINT_RATE
+                worth: totalPoints * process.env.NEXT_PUBLIC_UF_POINT_RATE
             })
 
         } else res.status(405).json({ success: false, msg: "Method not allowed. Allowed methods: GET" })

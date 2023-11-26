@@ -28,7 +28,7 @@ export default function ForgotPassword() {
     const signInWithGoogle = async (values, x, oAuthQuery) => {
         try {
             setLoading(true)
-            const res = await axios.post(`${process.env.HOST}/api/user/login${oAuthQuery ? oAuthQuery : ''}`, values)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/login${oAuthQuery ? oAuthQuery : ''}`, values)
             if (res.data.success && res.data.payload) {
                 const { data } = res
                 await updateUser(data.payload, true)
@@ -85,7 +85,7 @@ export default function ForgotPassword() {
         onSubmit: async (values) => {
             try {
                 setLoading(true)
-                const { data } = await axios.post(`${process.env.HOST}/api/user/forgotpassword`, values)
+                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/forgotpassword`, values)
                 if (data.success && data.otp_id) {
                     setOtpId(data.otp_id)
                     setResendOption(<span className='w-full flex justify-between items-center text-xs md:text-sm text-gray-400'> Didn't get the email? <button type='submit' className="border-b border-b-yellow-700">Resend Code</button></span>)
@@ -109,7 +109,7 @@ export default function ForgotPassword() {
         if (!otpId) return;
         setLoading(true)
         try {
-            const { data } = await axios.put(`${process.env.HOST}/api/user/auth-otp-and-reset-password`, {
+            const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/auth-otp-and-reset-password`, {
                 otp_id: otpId,
                 otp
             })

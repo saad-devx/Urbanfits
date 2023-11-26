@@ -93,7 +93,7 @@ export default function ProductCatalogueCategory({ products, minPrice, maxPrice,
 export async function getServerSideProps(context) {
     const { category, name } = await context.query
     try {
-        const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category}`)
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/bycategory?id=${category}`)
         return {
             props: {
                 products: data.products,

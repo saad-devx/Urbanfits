@@ -22,7 +22,7 @@ import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 import Button from '@/components/buttons/simple_btn';
 
-loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function Checkout1() {
     const router = useRouter()
@@ -105,8 +105,8 @@ export default function Checkout1() {
                     shipping_info: { ...values, card_number: user?.uf_wallet?.card_number },
                     order_items: items
                 }
-                // const encryptedPayload = CryptoJS.AES.encrypt(JSON.stringify(payload), process.env.SECRET_KEY).toString();
-                const { data } = await axios.post(`${process.env.HOST}/api/payments/checkout_sessions`, { payload })
+                // const encryptedPayload = CryptoJS.AES.encrypt(JSON.stringify(payload), process.env.NEXT_PUBLIC_SECRET_KEY).toString();
+                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/payments/checkout_sessions`, { payload })
                 console.log(data)
                 router.push(data.url)
             }

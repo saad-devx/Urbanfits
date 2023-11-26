@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import OrderSession from "@/models/order_session";
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
-            // const decryptedData = JSON.parse(CryptoJS.AES.decrypt(req.body.payload, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8))
+            // const decryptedData = JSON.parse(CryptoJS.AES.decrypt(req.body.payload, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8))
             const { user_id, is_guest, shipping_info, order_items } = req.body.payload
             if (!user_id || !shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id" })
             else if (!countries.includes(shipping_info.country)) return res.status(400).json({ success: false, msg: "We only ship in the following countries: " + countries })
@@ -42,9 +42,9 @@ export default async function handler(req, res) {
             if (shipping_info.points_to_use && shipping_info.points_to_use !== 0 && shipping_info.card_number) {
                 const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": shipping_info.card_number })
                 if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" })
-                const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${shipping_info.card_number}`)
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${shipping_info.card_number}`)
                 if (shipping_info.points_to_use > data.balance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
-                discountByPoints = shipping_info.points_to_use * process.env.UF_POINT_RATE
+                discountByPoints = shipping_info.points_to_use * process.env.NEXT_PUBLIC_UF_POINT_RATE
             }
             if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {
                 const hashedGiftcode = HashValue(shipping_info.gift_code)
@@ -62,9 +62,9 @@ export default async function handler(req, res) {
 
             // getting exchnge rates
             let rate = 1;
-            if (shipping_info.currency !== process.env.BASE_CURRENCY) {
-                const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.BASE_CURRENCY}&amount=${1}`, {
-                    headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
+            if (shipping_info.currency !== process.env.NEXT_PUBLIC_BASE_CURRENCY) {
+                const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.NEXT_PUBLIC_BASE_CURRENCY}&amount=${1}`, {
+                    headers: { "X-Api-Key": process.env.NEXT_PUBLIC_NINJA_CURRENCY_KEY }
                 })
                 rate = data.new_amount;
             }
@@ -232,8 +232,8 @@ export default async function handler(req, res) {
                 customer_email: shipping_info.email,
                 client_reference_id: shipping_info.name,
                 mode: 'payment',
-                success_url: `${process.env.HOST}/checkout/thanks?o_session_id=${orderSession._id}`,
-                cancel_url: `${process.env.HOST}/checkout/step1?payment=false`
+                success_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/thanks?o_session_id=${orderSession._id}`,
+                cancel_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/step1?payment=false`
             });
             const { url } = session
             res.json({

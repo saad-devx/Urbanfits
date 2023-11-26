@@ -20,7 +20,7 @@ const AuthEmailByOtp = async (req, res) => {
             user = await User.findOne({ email: old_email })
             if (!user) return res.status(404).json({ success: false, msg: "User not found, the email you want to change is not registered." })
 
-            const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
+            const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
             const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
             if (password !== originalPassword) return res.status(401).json({ success: false, msg: "Your password is incorrect" })
 

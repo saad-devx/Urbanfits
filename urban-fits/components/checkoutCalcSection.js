@@ -22,7 +22,7 @@ export default function CheckoutCalcSection(props) {
     const checkGiftCard = async (gift_code) => {
         setGiftLoading(true)
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/verify-giftcode?gift_code=${gift_code}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/verify-giftcode?gift_code=${gift_code}`)
             setGiftCard(data.gift_card)
         } catch (error) {
             console.log(error)
@@ -32,7 +32,7 @@ export default function CheckoutCalcSection(props) {
     }
 
     const getTotalAmount = (returnDiscount = false) => {
-        const pointsDiscount = parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE || 0 //in AED
+        const pointsDiscount = parseFloat(props.values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE || 0 //in AED
         const giftcardDiscount = parseFloat(props.values.gift_code && giftCard ? giftCard?.price : 0)
         const finalTotalAmount = TotalOrderPrice - (pointsDiscount + giftcardDiscount)
         if (returnDiscount) return (100 - (finalTotalAmount / TotalOrderPrice * 100)).toFixed(2)
@@ -96,7 +96,7 @@ export default function CheckoutCalcSection(props) {
                 </div>
                 {props.values.points_to_use ? parseFloat(props.values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
                     <h4>Saved</h4>
-                    <h4>{formatPrice(cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption) - ((cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption)) - parseFloat(props.values.points_to_use) * process.env.UF_POINT_RATE))}</h4>
+                    <h4>{formatPrice(cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption) - ((cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption)) - parseFloat(props.values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE))}</h4>
                 </div> : null}
                 <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
                     <h4>Total</h4>

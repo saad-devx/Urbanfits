@@ -7,7 +7,7 @@ const GeoLocation = async (req, res) => {
             try {
                 const userIPAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
                 console.log(userIPAddress)
-                const { data } = await axios.get(`https://ipinfo.io/${userIPAddress}?token=${process.env.IPINFO_ACCESS_TOKEN}`)
+                const { data } = await axios.get(`https://ipinfo.io/${userIPAddress}?token=${process.env.NEXT_PUBLIC_IPINFO_ACCESS_TOKEN}`)
                 return res.status(200).json({
                     success: true,
                     geo_meta: data,

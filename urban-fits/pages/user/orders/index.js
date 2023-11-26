@@ -6,6 +6,7 @@ import Error403 from '@/pages/403';
 import OrderItem from '@/components/orderItem';
 import BounceLoader from '@/components/loaders/bounceLoader';
 import Link from 'next/link'
+import toaster from '@/utils/toast_function';
 import User from '..';
 import axios from 'axios';
 import Image from 'next/image';
@@ -40,7 +41,7 @@ export default function OrdersPage(props) {
         if (!user) return
         setOrderLoading(true)
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/user/orders/get-user-orders?user_id=${user._id}${status ? `&status=${status}` : ''}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/orders/get-user-orders?user_id=${user._id}${status ? `&status=${status}` : ''}`)
             setOrders(data.orders)
         } catch (error) {
             console.log(error)

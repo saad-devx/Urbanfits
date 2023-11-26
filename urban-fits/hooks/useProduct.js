@@ -12,7 +12,7 @@ const useProduct = create((set, get) => ({
         set(() => ({ productLoading: true }))
         try {
             if (category_id) {
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/bycategory?id=${category_id}&page=${page}&min_price=${minPrice}&max_price=${maxPrice}?limit=${limit}`)
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/bycategory?id=${category_id}&page=${page}&min_price=${minPrice}&max_price=${maxPrice}?limit=${limit}`)
                 set(() => ({
                     products: data.products,
                     totalProducts: data.totalProducts,
@@ -22,7 +22,7 @@ const useProduct = create((set, get) => ({
                 return data.products
             }
             else {
-                const { data } = await axios.get(`${process.env.HOST}/api/products/get/many?page=${page}`)
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/many?page=${page}`)
                 set(() => ({
                     products: data.products,
                     totalProducts: data.totalProducts,
@@ -43,7 +43,7 @@ const useProduct = create((set, get) => ({
     getSimilarProducts: async (product_id, callback) => {
         set(() => ({ productLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/products/get-relative-products?product_id=${product_id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get-relative-products?product_id=${product_id}`)
             set(() => ({ productLoading: false }))
             callback(data.relative_products)
             return data.relative_products
@@ -59,7 +59,7 @@ const useProduct = create((set, get) => ({
             productLoading: true
         }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/products/get/one?id=${product_id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/one?id=${product_id}`)
             set(() => ({
                 productLoading: false
             }))
@@ -76,7 +76,7 @@ const useProduct = create((set, get) => ({
     getSaleProducts: async (page = 1, minPrice = null, maxPrice = null, callback) => {
         set(() => ({ productLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/products/get/sales?page=${page}&min_price=${minPrice}&max_price=${maxPrice}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/sales?page=${page}&min_price=${minPrice}&max_price=${maxPrice}`)
             callback(data)
             set(() => ({ productLoading: false }))
             return data.products

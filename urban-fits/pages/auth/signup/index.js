@@ -28,7 +28,7 @@ export default function Signup() {
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
             setLoading(true)
-            const { data } = await axios.post(`${process.env.HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
             if (data.success && data.payload && oAuthQuery) {
                 await updateUser(data.payload, true)
                 setGuestUser(null)

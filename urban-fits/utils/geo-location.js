@@ -8,7 +8,7 @@ const getGeoLocation = async () => {
     const { setCurrency, getExchangeRate, currency_selected_by_user } = useWallet.getState()
     if (geo_selected_by_user || currency_selected_by_user) return
     else try {
-        const { data } = await axios.get(`${process.env.HOST}/api/geolocation`)
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/geolocation`)
         const filteredCountry = countryCodes.filter(country => country.country === data?.geo_meta?.country?.toLowerCase())[0]
         if (filteredCountry) {
             setCountry(filteredCountry)

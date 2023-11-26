@@ -16,7 +16,7 @@ const getNewsletters = async (req, res) => {
             if (id) {
                 const letter = await Newsletter.findOne({ user: mongoose.Types.ObjectId(id) })
                 if (!letter) return res.status(404).json({ success: false, msg: "Newsletter not registered with this id." })
-                const payload = jwt.sign({ ...letter }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...letter }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 return res.status(200).json({
                     success: true,
                     payload,
@@ -26,7 +26,7 @@ const getNewsletters = async (req, res) => {
             if (email) {
                 const letter = await Newsletter.findOne({ email })
                 if (!letter) return res.status(404).json({ success: false, msg: "Newsletter not registered with this id" })
-                const payload = jwt.sign({ ...letter }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...letter }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 return res.status(200).json({
                     success: true,
                     payload,

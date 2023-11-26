@@ -7,8 +7,8 @@ const sendSMS = async (to, msg) => {
         const snsClient = new SNSClient({
             region: 'eu-north-1',
             credentials: {
-                accessKeyId: process.env.AWS_ACCESS_KEY,
-                secretAccessKey: process.env.AWS_SECRET_KEY
+                accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
+                secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY
             }
         });
         const response = await snsClient.send(

@@ -24,7 +24,7 @@ const Update2FA = async (req, res) => {
                 token: totp_code,
             });
 
-            const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
+            const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
             const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
             if (originalPassword !== password) return res.status(401).json({ success: false, msg: "Your password is incorrect." })
 
@@ -32,7 +32,7 @@ const Update2FA = async (req, res) => {
                 delete user.two_fa_secret
                 delete user.password
                 const updatedUser = await User.findByIdAndUpdate(user_id, { two_fa_enabled }, { new: true })
-                const payload = jwt.sign({ ...updatedUser }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...updatedUser }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 res.status(200).json({
                     success: true,
                     msg: `Your 2FA has been ${updatedUser.two_fa_enabled ? "enabled" : "disabled"} successfully.`,

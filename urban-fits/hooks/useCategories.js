@@ -9,7 +9,7 @@ const useCategories = create((set, get) => ({
     getCategories: async (callback) => {
         set(() => ({ categLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/categories/get?populate_parents=false`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/categories/get?populate_parents=false`)
             set(() => (
                 { categories: data.categories }
             ))
@@ -24,7 +24,7 @@ const useCategories = create((set, get) => ({
     getRelativeCategories: async (category_id, callback) => {
         set(() => ({ categLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/categories/recommends/get-relative-categories?category_id=${category_id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/categories/recommends/get-relative-categories?category_id=${category_id}`)
             callback(data)
             set(() => ({ categLoading: false }))
             return data

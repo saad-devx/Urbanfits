@@ -32,18 +32,18 @@ const SpinUfWheel = async (req, res) => {
             const spinUfWheel = async (nextSpinTime, deductSpinFee = true) => {
                 const generatedReward = generateRandIntWithProbabilities(rewards, probabilities);
                 if (deductSpinFee) {
-                    axios.put(`${process.env.HOST}/api/user/uf-wallet/deduct-points`, {
+                    axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/deduct-points`, {
                         user_id: user._id,
                         card_number: user.uf_wallet.card_number,
                         points_to_deduct: 10
                     })
                 }
                 if (generatedReward !== 0) {
-                    axios.post(`${process.env.HOST}/api/user/uf-wallet/add-points`, {
+                    axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/add-points`, {
                         user_id: user._id,
                         card_number: user.uf_wallet.card_number,
                         source: "prize_wheel",
-                        secret_key: EncrytOrDecryptData(process.env.SECRET_KEY),
+                        secret_key: EncrytOrDecryptData(process.env.NEXT_PUBLIC_SECRET_KEY),
                         points: generatedReward,
                         duducted: 10,
                         expiration_date: new Date(new Date().setDate(new Date().getDate() + 7)),

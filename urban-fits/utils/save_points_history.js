@@ -15,7 +15,7 @@ const SavePointsHistory = async (user_id, card_number, update) => {
             'september', 'october', 'november', 'december'
         ];
 
-        const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${card_number}`)
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${card_number}`)
         console.log(data)
 
         const currentDate = new Date();

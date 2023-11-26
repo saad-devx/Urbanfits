@@ -5,8 +5,8 @@ import OrderSession from '@/models/order_session';
 import { pusherServer } from '@/utils/pusher';
 import axios from 'axios';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+const webhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
 
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -44,7 +44,7 @@ const webhookHandler = async (req, res) => {
                 const paymentIntent = event.data.object;
                 console.log(`PaymentIntent status: ${paymentIntent.status}`);
                 const orderSessionId = paymentIntent.metadata.order_session_id;
-                axios.post(`${process.env.HOST}/api/payments/create-order?order_session_id=${orderSessionId}`)
+                axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/payments/create-order?order_session_id=${orderSessionId}`)
                 break;
             }
             case 'payment_intent.payment_failed': {

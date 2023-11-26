@@ -24,7 +24,7 @@ const CreateUser2FA = async (req, res) => {
                     two_fa_enabled: true,
                     two_fa_activation_date: new Date()
                 }, { new: true });
-                const payload = jwt.sign({ ...updatedUser }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...updatedUser }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 return res.status(200).json({
                     success: true,
                     msg: "2 Factor Authentication is Enabled",

@@ -15,7 +15,7 @@ const UpdateUser = async (req, res) => {
             // authenticating user password if authpassword query exists
             if (req.query.authpassword) {
                 let user = await User.findById(req.query.id)
-                const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
+                const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
                 const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
                 if (req.query.authpassword !== originalPassword) return res.status(404).json({ success: false, msg: "Your password is incorrect" })
             }
@@ -32,7 +32,7 @@ const UpdateUser = async (req, res) => {
             user = await User.findByIdAndUpdate(id, req.body, { new: true })
             delete user.password
 
-            const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+            const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
             res.status(200).json({
                 success: true,
                 msg: `Your data has been updated successfully`,

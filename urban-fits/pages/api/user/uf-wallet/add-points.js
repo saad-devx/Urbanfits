@@ -14,7 +14,7 @@ const AddUFpoints = async (req, res) => {
             const { card_number, user_id, source, secret_key, points, duducted, expiration_date, notific_params } = req.body
             if (!card_number || !mongoose.Types.ObjectId.isValid(user_id) || !source || !secret_key) return res.status(403).json({ success: false, msg: "Invalid arguments." })
             const decryptedSecetKey = EncrytOrDecryptData(secret_key, false)
-            if (decryptedSecetKey !== process.env.SECRET_KEY) return res.status(403).json({ success: false, msg: "Invalid Secret Key." })
+            if (decryptedSecetKey !== process.env.NEXT_PUBLIC_SECRET_KEY) return res.status(403).json({ success: false, msg: "Invalid Secret Key." })
             await ConnectDB()
 
             const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": card_number })

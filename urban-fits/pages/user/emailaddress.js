@@ -32,7 +32,7 @@ export default function EmailPassword() {
         onSubmit: async (values) => {
             setLoading(true)
             try {
-                const { data } = await axios.put(`${process.env.HOST}/api/user/emailauth-via-otp`, values)
+                const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/emailauth-via-otp`, values)
                 if (data.otp_id && mongoose.Types.ObjectId.isValid(data.otp_id)) {
                     setOtpId(data.otp_id)
                     toaster("info", data.msg)

@@ -14,7 +14,7 @@ export default function Home() {
 
     const getIndexContent = async () => {
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/get-index-content`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
             setIndexContent(data);
         } catch (error) { console.log(error); }
     }

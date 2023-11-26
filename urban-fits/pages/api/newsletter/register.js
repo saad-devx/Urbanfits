@@ -28,7 +28,7 @@ const CreateNewsletter = async (req, res) => {
                 if (letter) return res.status(400).json({ success: false, msg: "This email has already subscribed our Newsletter" })
             }
             const sendTokenRes = async (letter) => {
-                const payload = jwt.sign({ ...letter }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...letter }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 return res.status(200).json({
                     success: true,
                     msg: "You have successfully subscribed to our newsletter!",

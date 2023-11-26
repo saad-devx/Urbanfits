@@ -35,7 +35,7 @@ const CreateOrder = async (req, res) => {
             // Deducting used uf-points by user
             const user = await User.findById(orderSession.user_id)
             if (user && orderSession.price_details.points_to_use) {
-                await axios.put(`${process.env.HOST}/api/user/uf-wallet/deduct-points`, {
+                await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/deduct-points`, {
                     user_id: user._id,
                     card_number: user.uf_wallet.card_number,
                     points_to_deduct: orderSession.price_details.points_to_use

@@ -173,7 +173,7 @@ export default function EarnUfPoints() {
             <section className="w-full mb-4 lg:mb-6 flex flex-col lg:flex-row gap-4">
                 <nav className="bg-white w-full lg:w-1/2 min-h-[20rem] px-4 py-4 mid:px-20 mid:py-4 lg:p-6 lg:px-8 flex flex-col justify-between rounded-lg">
                     <section className="w-full">
-                        <div className="bg-gray-100 w-full flex justify-center py-1.5 mid:py-2 text-sm lg:text-base text-[#FF4A60] font_urbanist_medium rounded-lg">Every 100 UF-Points are equal to {formatPrice(process.env.UF_POINT_RATE * 100)}</div>
+                        <div className="bg-gray-100 w-full flex justify-center py-1.5 mid:py-2 text-sm lg:text-base text-[#FF4A60] font_urbanist_medium rounded-lg">Every 100 UF-Points are equal to {formatPrice(process.env.NEXT_PUBLIC_UF_POINT_RATE * 100)}</div>
                         <div className="w-full mt-4 lg:mt-10 flex justify-between items-center">
                             <span className="text-lg lg:text-[26px] font_urbanist_bold text-gotham-black">Daily check-in Rewards</span>
                             {!user && <button className='font_urbanist_medium text-xs md:text-sm px-4 py-1 lg:py-2 lg:px-5 rounded-full bg-gray-50'><Link href="/auth/login">Login</Link> / <Link href="/auth/signup">Signup</Link></button>}

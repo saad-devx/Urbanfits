@@ -71,7 +71,7 @@ export async function getServerSideProps(context) {
         },
     };
     try {
-        const { data } = await axios.get(`${process.env.HOST}/api/user/shopping-list/populate-list?list_id=${list_id}`)
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/shopping-list/populate-list?list_id=${list_id}`)
         return { props: { shoppinglist: data.shoppinglist } }
     }
     catch (error) {

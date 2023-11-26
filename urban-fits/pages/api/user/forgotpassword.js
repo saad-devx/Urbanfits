@@ -17,10 +17,10 @@ const forgotPassword = async (req, res) => {
             let user = await User.findOne().or([{ email }, { username: email }])
             if (!user) return res.status(404).json({ success: false, msg: "You don't have an account with this Email or Username!" })
             if (user.register_provider != "urbanfits") return res.status(404).json({ success: false, msg: "This email is linked with Google." })
-            const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
+            const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
             const currentPassword = bytes.toString(CryptoJS.enc.Utf8)
             if (currentPassword === new_password) return res.status(400).json({ success: false, msg: "New password can't be the old password, please choose a strong password." })
-            // const token = jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '5m' })
+            // const token = jwt.sign({ email: user.email }, process.env.NEXT_PUBLIC_SECRET_KEY, { expiresIn: '5m' })
 
             let dbOtp = await OTP.findOne({ email: user.email })
             if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'reset password' session, try after 5 minutes." })

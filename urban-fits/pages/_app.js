@@ -25,9 +25,9 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
   const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
-  const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.PUSHER_KEY, {
-    cluster: process.env.PUSHER_CLUSTER,
-    authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+  const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
     auth: {
       params: {
         user_id: user?._id,
@@ -42,20 +42,20 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       presenceInstance = pusherPresenceClient;
     }
     else if (guestUser && guestUser._id) {
-      presenceInstance = new PusherClient(process.env.PUSHER_KEY, {
-        cluster: process.env.PUSHER_CLUSTER,
-        authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+      presenceInstance = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+        authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
         auth: { params: { user_id: `${guestUser._id}_isguest` } }
       });
       setPusherPresenceClient(presenceInstance);
     } else {
       try {
-        const { data } = await axios.post(`${process.env.HOST}/api/user/guest/create-session`, {});
+        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/guest/create-session`, {});
         setGuestUser(data.user);
         console.log(data.user);
-        presenceInstance = new PusherClient(process.env.PUSHER_KEY, {
-          cluster: process.env.PUSHER_CLUSTER,
-          authEndpoint: `${process.env.HOST}/api/pusher/auth`,
+        presenceInstance = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+          cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+          authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
           auth: { params: { user_id: `${data.user._id}_isguest` } }
         });
         setPusherPresenceClient(presenceInstance);

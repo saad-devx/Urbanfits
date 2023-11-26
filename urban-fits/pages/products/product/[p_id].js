@@ -170,7 +170,7 @@ export default function Product(props) {
 export async function getServerSideProps(context) {
     const { p_id } = await context.query
     try {
-        const { data } = await axios.get(`${process.env.HOST}/api/products/get/one?id=${p_id}`)
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/one?id=${p_id}`)
         return { props: { resProduct: data.product, p_id } }
     }
     catch (error) {

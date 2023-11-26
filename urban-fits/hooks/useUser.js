@@ -20,7 +20,7 @@ const useUser = create(persist((set, get) => ({
         const user = get().user
         if (!user) return
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/user/notifications/get?user_id=${user._id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/notifications/get?user_id=${user._id}`)
             set(() => ({
                 notifications: data.notification_data.notifications
             }))
@@ -88,7 +88,7 @@ const useUser = create(persist((set, get) => ({
         }
         else {
             try {
-                const { data } = await axios.put(`${process.env.HOST}/api/user/update?id=${get().user._id}`, valuesObj)
+                const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/update?id=${get().user._id}`, valuesObj)
                 const userData = jwt.decode(data.payload)?._doc
                 delete userData.password
                 set(() => ({ user: userData }))
@@ -116,7 +116,7 @@ const useUser = create(persist((set, get) => ({
     },
     matchOtpAndUpdate: async (values) => {
         try {
-            const { data } = await axios.put(`${process.env.HOST}/api/user/auth-otp-and-change-email`, values)
+            const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/auth-otp-and-change-email`, values)
             const userData = jwt.decode(data.payload)?._doc
             delete userData.password
             set(() => ({ user: userData }))

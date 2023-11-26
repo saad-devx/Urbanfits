@@ -28,7 +28,7 @@ const VerfiyTotp = async (req, res) => {
             if (verified) {
                 delete user.two_fa_secret
                 delete user.password
-                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 pusherServer.trigger("admin-channel", "login", {
                     msg: `An admin ${user.username} just logged in.`,
                     user_id: user._id

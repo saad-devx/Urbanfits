@@ -32,7 +32,7 @@ const SignupCallback = async (req, res) => {
                 const ufCardData = await createUFcard()
                 user = await User.create({
                     ...credentials,
-                    password: CryptoJS.AES.encrypt(credentials.password, process.env.SECRET_KEY).toString(),
+                    password: CryptoJS.AES.encrypt(credentials.password, process.env.NEXT_PUBLIC_SECRET_KEY).toString(),
                     uf_wallet: ufCardData
                 })
                 await UFpoints.create({
@@ -41,7 +41,7 @@ const SignupCallback = async (req, res) => {
                     points: 500,
                     source: "signup"
                 })
-                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 await sendNotification(user._id, {
                     category: "reward",
                     heading: "Signup Bonus",

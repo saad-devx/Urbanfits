@@ -17,7 +17,7 @@ const GetAddress = async (req, res) => {
             if (!user) return res.status(404).json({ success: false, msg: "User not found with corresponding user_id." })
             let addresses = await Addresses.findOne({ user_id })
             if (!addresses) return res.status(404).json({ success: false, msg: "No address record found for this user." })
-            const payload = jwt.sign({ ...addresses }, process.env.SECRET_KEY)
+            const payload = jwt.sign({ ...addresses }, process.env.NEXT_PUBLIC_SECRET_KEY)
             res.status(200).json({
                 success: true,
                 payload

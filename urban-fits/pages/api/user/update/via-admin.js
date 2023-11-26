@@ -31,7 +31,7 @@ const UpdateUser = async (req, res) => {
                 msg: `${user.username}'s data has been updated successfully`,
                 user
             })
-            const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+            const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
             await sendNotification(user._id, {
                 category: "account",
                 heading: "User Data Updated",

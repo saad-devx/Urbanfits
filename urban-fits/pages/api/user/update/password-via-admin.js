@@ -13,13 +13,13 @@ const UpdateUserPasswordViaAdmin = async (req, res) => {
             await ConnectDB()
             let admin = await User.findById(admin_id)
             if (!admin || admin.role !== "administrator") return res.status(403).json({ success: false, msg: "Only admin users can access and perform operations on this data." })
-            const originalAdminPassword = CryptoJS.AES.decrypt(admin.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8)
+            const originalAdminPassword = CryptoJS.AES.decrypt(admin.password, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8)
             if (admin_password !== originalAdminPassword) return res.status(403).json({ success: false, msg: "Your password is incorrect." })
 
             let user = await User.findById(user_id)
             if (!user) return res.status(404).json({ success: false, msg: "User not found" })
             if (user.register_provider !== "urbanfits") return res.status(404).json({ success: false, msg: "This user signed up with google therefore the password cannot be assigned." })
-            const newUserPassword = CryptoJS.AES.encrypt(confirm_password, process.env.SECRET_KEY).toString()
+            const newUserPassword = CryptoJS.AES.encrypt(confirm_password, process.env.NEXT_PUBLIC_SECRET_KEY).toString()
             await User.findByIdAndUpdate(user_id, {
                 password: newUserPassword
             })

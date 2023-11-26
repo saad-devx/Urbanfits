@@ -23,7 +23,7 @@ export default function Security() {
             if (qrUrl && qrSecret) return
             setLoading(true)
             try {
-                const { data } = await axios.get(`${process.env.HOST}/api/2fa/get-qr-code?user_id=${user._id}`)
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/2fa/get-qr-code?user_id=${user._id}`)
                 if (data.qrSecret && data.qrCodeUrl) {
                     setQrUrl(data.qrCodeUrl)
                     setQrSecret(data.qrSecret)
@@ -41,7 +41,7 @@ export default function Security() {
         setLoading(true)
         try {
             if (!totp || totp === '') return toaster("error", "Please enter the TOTP code from Google Authenticator.")
-            const { data } = await axios.post(`${process.env.HOST}/api/2fa/create-user-2fa`, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/2fa/create-user-2fa`, {
                 user_id: user._id,
                 qr_secret: qrSecret,
                 totp_code: totp

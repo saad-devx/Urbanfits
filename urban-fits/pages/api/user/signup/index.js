@@ -32,7 +32,7 @@ const Signup = async (req, res) => {
                     points: 500,
                     source: "signup"
                 })
-                const payload = jwt.sign({ ...user }, process.env.SECRET_KEY)
+                const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 await sendNotification(user._id, {
                     category: "reward",
                     heading: "Signup Bonus",

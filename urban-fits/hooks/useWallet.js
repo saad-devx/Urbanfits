@@ -7,7 +7,7 @@ import axios from 'axios';
 const currencies = ["AED", "SAR", "PKR"]
 const useWallet = create(persist((set, get) => ({
     points: 0,
-    currency: process.env.BASE_CURRENCY,
+    currency: process.env.NEXT_PUBLIC_BASE_CURRENCY,
     currency_selected_by_user: false,
     exchange_rate: 1,
     walletLoading: false,
@@ -22,7 +22,7 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-balance?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
             set(() => ({ points: data.balance }))
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
         set(() => ({ walletLoading: false }))
@@ -33,7 +33,7 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
             if (setCallbackState) setCallbackState(data.history)
             set(() => ({ walletLoading: false }))
             return data.history
@@ -46,7 +46,7 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/user/uf-wallet/get-weekly-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-weekly-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
             if (setCallbackState) setCallbackState(data.history)
             set(() => ({ walletLoading: false }))
             return data.history
@@ -59,7 +59,7 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.post(`${process.env.HOST}/api/user/uf-wallet/spin-wheel?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/spin-wheel?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
             set(() => ({ walletLoading: false }))
             console.log(data)
             await updateUser({
@@ -84,8 +84,8 @@ const useWallet = create(persist((set, get) => ({
         }
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${to}&have=${process.env.BASE_CURRENCY}&amount=${amount}`, {
-                headers: { "X-Api-Key": process.env.NINJA_CURRENCY_KEY }
+            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${to}&have=${process.env.NEXT_PUBLIC_BASE_CURRENCY}&amount=${amount}`, {
+                headers: { "X-Api-Key": process.env.NEXT_PUBLIC_NINJA_CURRENCY_KEY }
             })
             set(() => ({ exchange_rate: data.new_amount, walletLoading: false }))
             return data.new_amount
@@ -106,7 +106,7 @@ const useWallet = create(persist((set, get) => ({
     getShippingRates: async (callback, shippingMethod = "standard_shipping") => {
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/get-shipping-rates`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-shipping-rates`)
             set(() => ({ walletLoading: false }))
             console.log(data)
 

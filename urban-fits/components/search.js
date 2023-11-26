@@ -15,7 +15,7 @@ export default function Search(props) {
         setQuery(value)
         if (value === '') return
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/search?q=${value}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/search?q=${value}`)
             setResults(data)
         } catch (error) {
             console.log(error)

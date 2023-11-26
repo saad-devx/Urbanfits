@@ -12,7 +12,7 @@ const useNewsletter = create(persist((set) => ({
         if (!user) return
 
         try {
-            const { data } = await axios.get(`${process.env.HOST}/api/newsletter/get?id=${user._id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/newsletter/get?id=${user._id}`)
             const decodedData = jwt.decode(data.payload)?._doc
             delete decodedData._id;
             delete decodedData.user;
@@ -26,7 +26,7 @@ const useNewsletter = create(persist((set) => ({
         const { user } = useUser.getState()
         if (sendRequest) {
             try {
-                const { data } = await axios.put(`${process.env.HOST}/api/newsletter/update?id=${user._id}`, valuesObj)
+                const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/newsletter/update?id=${user._id}`, valuesObj)
                 toaster("success", data.msg)
                 const decodedData = jwt.decode(data.payload)?._doc
                 delete decodedData._id;

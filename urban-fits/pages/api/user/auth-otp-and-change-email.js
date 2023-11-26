@@ -18,7 +18,7 @@ const AuthOtpAndChangeEmail = async (req, res) => {
                 email: dbOtp.new_email
             }, { new: true })
 
-            const payload = jwt.sign({ ...updatedUser }, process.env.SECRET_KEY)
+            const payload = jwt.sign({ ...updatedUser }, process.env.NEXT_PUBLIC_SECRET_KEY)
             res.status(200).json({
                 success: true,
                 msg: "Your email has been updated!",

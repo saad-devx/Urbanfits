@@ -65,7 +65,7 @@ export default function Personalinfo() {
     const getPfp = () => {
         if (!user) return
         if (user.image) return user.image
-        else return process.env.DEFAULT_PFP
+        else return process.env.NEXT_PUBLIC_DEFAULT_PFP
     }
     const [photo, setPhoto] = useState(getPfp)
     const onFileChange = async (e) => {

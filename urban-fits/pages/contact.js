@@ -36,7 +36,7 @@ export default function Contact() {
         onSubmit: async (values) => {
             console.log(values)
             setLoader(<Loader />)
-            let response = await fetch(`${process.env.HOST}/api/contact`, {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/contact`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values)

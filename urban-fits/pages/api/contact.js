@@ -11,7 +11,7 @@ const Contact = async (req, res) => {
             let mail = req.body
 
             let template = ContactTemplate(mail)
-            let info = await sendEmail({senderName: mail.firstname, from: mail.email, to: process.env.SMTP_SENDER_EMAIL, subject: mail.subject}, template)
+            let info = await sendEmail({senderName: mail.firstname, from: mail.email, to: process.env.NEXT_PUBLIC_SMTP_SENDER_EMAIL, subject: mail.subject}, template)
             res.status(200).json({
                 success: true,
                 msg: "Your mail sent successfully !",

@@ -20,7 +20,7 @@ export default function VerifyOtp() {
         console.log(otpId)
         setLoading(true)
         try {
-            const { data } = await axios.post(`${process.env.HOST}/api/user/signup/callback`, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/signup/callback`, {
                 otp_id: otpId,
                 otp
             })

@@ -64,7 +64,7 @@ export default function Newsletter(props) {
             let registerData = user ? { ...values, user: id } : values
             setLoading(true);
             try {
-                let { data } = await axios.post(`${process.env.HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, registerData)
+                let { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, registerData)
                 await updateNewsletterData(data.payload, false)
                 toaster("success", data.msg)
                 props.toggleModal(false)
