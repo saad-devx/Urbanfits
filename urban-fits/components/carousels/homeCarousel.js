@@ -4,12 +4,12 @@ import '@splidejs/react-splide/css';
 import Link from 'next/link';
 
 import Image from 'next/image';
-import image1 from '../../public/carousel imgs/carousel img1.jpg'
-import image2 from '../../public/carousel imgs/carousel img2.jpg'
-import image3 from '../../public/carousel imgs/carousel img3.jpg'
-import image4 from '../../public/carousel imgs/carousel img4.jpg'
-import image5 from '../../public/carousel imgs/carousel img5.jpg'
-import image6 from '../../public/carousel imgs/carousel img6.jpg'
+import image1 from '@/public/carousel imgs/carousel img1.webp'
+import image2 from '@/public/carousel imgs/carousel img2.webp'
+import image3 from '@/public/carousel imgs/carousel img3.webp'
+import image4 from '@/public/carousel imgs/carousel img4.webp'
+import image5 from '@/public/carousel imgs/carousel img5.webp'
+import image6 from '@/public/carousel imgs/carousel img6.webp'
 
 export default function HomeCarousel() {
     const [play, setPlay] = useState(true)
@@ -38,7 +38,7 @@ export default function HomeCarousel() {
             {[image1, image2, image3, image4, image5, image6].map((img, index) => {
                 return <SplideSlide key={index} className="w-full h-full">
                     <Link className="w-full h-full" href="#">
-                        <Image className='w-full h-full object-cover' src={img} alt="Urban images" />
+                        <Image className='w-full h-full object-cover' src={img} priority placeholder='blur' alt="Urban images" />
                     </Link>
                 </SplideSlide>
             })}

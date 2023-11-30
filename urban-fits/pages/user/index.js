@@ -13,7 +13,7 @@ import ifExists from '@/utils/if_exists'
 // image imports
 import Image from 'next/image';
 import Spinner from '@/components/loaders/spinner'
-const giantSearchIcon = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/giant-search.jpg?timestamp=123"
+const giantSearchIcon = process.env.NEXT_PUBLIC_BASE_IMG_URL +  "/website-copyrights/giant-search.jpg?timestamp=123"
 // Icons imports
 import {
     AccountIcon,
@@ -327,7 +327,7 @@ export default function User(props) {
                             <i className="fa-solid fa-camera text-white" />Upload
                         </span>
                         {imgSpinner}
-                        <Image className="w-full h-full object-cover" width={150} height={150} src={photo + '?timestamp=123'} alt="avatar" />
+                        <Image className="w-full h-full object-cover" width={150} height={150} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=123'} alt="avatar" />
                     </label>
                     <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                     <p className='text-sm lg:text-base'><p className="font_urbanist_medium">Welcome {ifExists(user.firstname)} !</p>Save your address details and phone number here for easy and fast in delivery process in the future.</p>

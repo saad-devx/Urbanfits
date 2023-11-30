@@ -7,7 +7,7 @@ import useWallet from '@/hooks/useWallet';
 // Image imports
 import Image from 'next/image'
 import EmptyCartVector from "../public/emptyCart.svg"
-const CartBg = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/cartbg.jpg'
+const CartBg = process.env.NEXT_PUBLIC_BASE_IMG_URL +  '/website-copyrights/cartbg.webp'
 import Link from 'next/link';
 
 // Cart item function
@@ -45,7 +45,7 @@ function CartItem(props) {
 
     return <li {...props} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
         <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center rounded-xl overflow-hidden">
-            <Image width={129} height={160} src={product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
+            <Image width={129} height={160} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>
         </div>
         {/* to be displayed from md breakpoint */}
         <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_urbanist_medium">

@@ -45,7 +45,7 @@ export default function OrderCard(props) {
             <div className="w-full h-full flex justify-between items-center text-xs md:text-sm">
                 <div className="w-full md:w-3/4 h-full flex items-center">
                     {order.order_items[0] ? <span className='w-24 md:w-28 aspect-square rounded-xl overflow-hidden mr-10'>
-                        <Image width={250} height={250} alt={order._id} src={order.order_items[0]?.image} className="w-full h-full object-top object-cover" />
+                        <Image width={250} height={250} alt={order._id} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + order.order_items[0]?.image} className="w-full h-full object-top object-cover" />
                     </span> : <span className={`${order.gift_cards[0]?.bg} w-24 md:w-28 aspect-video rounded-xl flex justify-center items-center font_montserrat_bold text-white text-xs tracking-1 uppercase overflow-hidden mr-10`}>{order.gift_cards[0]?.d_name}</span>}
                     <div className="flex flex-col space-y-2">
                         <h3 className="font_urbanist_bold text-sm md:text-base">{order.order_items[0]?.name || order.gift_cards[0]?.name}</h3>

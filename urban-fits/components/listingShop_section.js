@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import blackThemeBg from '@/public/listing banners/listingbg1.jpg'
-import whiteThemeBg from '@/public/listing banners/listingbg2.jpg'
+import blackThemeBg from '@/public/listing banners/listingbg1.webp'
+import whiteThemeBg from '@/public/listing banners/listingbg2.webp'
 
 export default function ListingShopSection(props) {
     return <div className={`w-full h-60 lg:h-[430px] flex relative justify-between ${props.classes}`}>
@@ -11,7 +11,7 @@ export default function ListingShopSection(props) {
             <button className={`w-28 lg:w-40 py-2 lg:py-4 border ${props.whiteTheme ? 'border-black text-black' : 'border-white text-white'} font_urbanist_bold text-xs lg:text-sm rounded-full`}>SHOP NOW</button>
         </div>
         <div className="absolute top-0 right-0 lg:w-3/5 h-full">
-            <Image width={1000} height={450} src={props.whiteTheme ? whiteThemeBg : blackThemeBg} alt='shopping section cover image' className='h-full float-right object-cover object-right' />
+            <Image placeholder='blur' width={1000} height={450} src={props.whiteTheme ? whiteThemeBg : blackThemeBg} alt='shopping section cover image' className='h-full float-right object-cover object-right' />
         </div>
     </div>
 }

@@ -5,7 +5,7 @@ import { generateRandIntWithProbabilities, EncrytOrDecryptData } from "@/utils/g
 import axios from "axios";
 import CorsMiddleware from "@/utils/cors-config"
 
-const rewards = [0, 0, 10, 50, 100, 200, 400, 500]
+const rewards = [0, 0, 50, 100, 200, 300, 400, 500]
 const probabilities = [0.18, 0.18, 0.18, 0.18, 0.12, 0.08, 0.04, 0.04]
 const SpinUfWheel = async (req, res) => {
     try {

@@ -6,15 +6,15 @@ import Link from "next/link";
 import Aos from "aos";
 import 'aos/dist/aos.css';
 import Image from "next/image";
-const hero_bg = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/cartbg.jpg'
-import img1 from '@/public/stories/img1.jpg'
-import img2 from '@/public/stories/img3.jpg'
-import img3 from '@/public/stories/img4.jpg'
-import img4 from '@/public/stories/img2.jpg'
-import img5 from '@/public/stories/img5.jpg'
-import img6 from '@/public/stories/img6.jpg'
-import img7 from '@/public/stories/img7.jpg'
-import img8 from '@/public/stories/img8.jpg'
+const hero_bg = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/cartbg.webp'
+import img1 from '@/public/stories/img1.webp'
+import img2 from '@/public/stories/img3.webp'
+import img3 from '@/public/stories/img4.webp'
+import img4 from '@/public/stories/img2.webp'
+import img5 from '@/public/stories/img5.webp'
+import img6 from '@/public/stories/img6.webp'
+import img7 from '@/public/stories/img7.webp'
+import img8 from '@/public/stories/img8.webp'
 
 
 export default function Storeis() {
@@ -29,7 +29,7 @@ export default function Storeis() {
     }
 
     const StoryImage = (props) => {
-        return <Image onClick={toggleStoryCarousel} width={1400} height={500} alt="story image" data-aos-duration='1000' data-aos-once={props.once} data-aos-delay={props.data_aos_delay ? props.data_aos_delay : null} data-aos={props.data_aos} src={props.src} className="w-full h-full object-cover cursor-pointer" />
+        return <Image onClick={toggleStoryCarousel} width={1400} height={500} alt="story image" data-aos-duration='1000' data-aos-once={props.once} data-aos-delay={props.data_aos_delay ? props.data_aos_delay : null} data-aos={props.data_aos} src={props.src} placeholder='blur' className="w-full h-full object-cover cursor-pointer" />
     }
 
     useEffect(() => {

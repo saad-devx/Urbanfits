@@ -28,7 +28,7 @@ export default function StoryCarousel(props) {
             }}>
             {props.slideData.map((img, index) => {
                 return <SplideSlide key={index}>
-                    <div className='w-full h-full'><Image width={500} height={280} className='w-full h-full object-cover object-top' src={img} alt="Urban images" /></div>
+                    <div className='w-full h-full'><Image width={500} height={280} placeholder='blur' className='w-full h-full object-cover object-top' src={img} alt="Urban images" /></div>
                 </SplideSlide>
             })}
         </Splide>

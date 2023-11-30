@@ -13,6 +13,7 @@ import useWallet from '@/hooks/useWallet';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 const { formatPrice } = useWallet.getState()
+// const ImgDataUri = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAAAAAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAGAAoDASEAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABwj/xAAiEAABAwMDBQAAAAAAAAAAAAABAgMRAAQFBgcSEyEiMUL/xAAVAQEBAAAAAAAAAAAAAAAAAAAFB//EACERAAEEAQMFAAAAAAAAAAAAAAECAwQRAAUhMVFhcYGR/9oADAMBAAIRAxEAPwCNtrNMYjMbN6hyd4hAurVm9eaIYCuoW2QvyVyBTEyIBk++1CS3ZWowkST8CrLMS0YMdSU7kG734r5j2uOuITGbUAAGkEUOQeve7v14z//Z"
 
 export default function Shoppingcard({ product }, props) {
     const { addItem, inCart } = useCart()
@@ -65,7 +66,6 @@ export default function Shoppingcard({ product }, props) {
             </button>}
             <div className='w-full h-full'>
                 <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="relative w-full h-[70%] xl:h-[72%] flex justify-center items-start overflow-clip">
-                    <ImgLoader loading={loading} />
                     <Splide className='w-full h-full group-hover:scale-105 transition-all duration-1000' ref={splideRef} options={{
                         type: "fade",
                         width: "100%",
@@ -78,8 +78,8 @@ export default function Shoppingcard({ product }, props) {
                     }} >
                         {product?.variants?.map((variant) => {
                             return <SplideSlide>
-                                <ImgLoader loading={loading} />
-                                <Image className={loading ? 'w-0 h-0' : ''} onLoad={() => setLoading(false)} priority={true} width={650} height={860} src={variant?.images[0] || DemoImg} alt="Urban images" />
+                                <ImgLoader loading={loading} classes="w-full py-20" />
+                                <Image className={loading ? 'w-0 h-0' : ''} onLoad={() => setLoading(false)} width={650} height={860} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + variant?.images[0] || DemoImg} alt="Urban images" />
                             </SplideSlide>
                         })}
                     </Splide>
@@ -184,7 +184,7 @@ export function SmallShoppingcard({ product }, props) {
                         {product.variants.map((variant) => {
                             return <SplideSlide>
                                 <ImgLoader loading={loading} />
-                                <Image className={loading ? 'w-0 h-0' : ''} onLoad={() => setLoading(false)} priority={true} width={650} height={860} src={variant?.images[0] || DemoImg} alt="Urban images" />
+                                <Image className={loading ? 'w-0 h-0' : ''} onLoad={() => setLoading(false)} priority={true} width={650} height={860} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + variant?.images[0] || DemoImg} alt="Urban images" />
                             </SplideSlide>
                         })}
                     </Splide>

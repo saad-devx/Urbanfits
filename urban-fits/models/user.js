@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/default-pfp.jpg"
+        default: "/website-copyrights/default-pfp.webp"
     },
     phone_prefix: {
         type: String

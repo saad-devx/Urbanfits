@@ -44,7 +44,7 @@ export default async function handler(req, res) {
                 if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" })
                 const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${shipping_info.card_number}`)
                 if (shipping_info.points_to_use > data.balance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
-                discountByPoints = shipping_info.points_to_use * process.env.NEXT_PUBLIC_UF_POINT_RATE
+                discountByPoints = shipping_info.points_to_use * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)
             }
             if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {
                 const hashedGiftcode = HashValue(shipping_info.gift_code)

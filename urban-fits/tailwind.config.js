@@ -48,7 +48,7 @@ module.exports = {
         'pinky': "#FF4A60"
       },
       backgroundImage: {
-        "pinky": "linear-gradient(90deg, #FF4A60 46%, #C850C0 80%)"
+        "pinky": "#FF4A60"
       },
       backgroundColor: {
         'gold': "#FF4A60",

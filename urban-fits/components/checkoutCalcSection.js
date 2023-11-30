@@ -69,7 +69,7 @@ export default function CheckoutCalcSection(props) {
                             <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
                             <div key={i} className="w-full mb-2 flex justify-between xl:items-center">
                                 <div className="w-20 h-20 rounded-md md:rounded-lg overflow-hidden">
-                                    <Image width={640} height={640} src={item.images[0]} alt={item.name} className="w-full h-full object-cover object-top" />
+                                    <Image width={640} height={640} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.images[0]} alt={item.name} className="w-full h-full object-cover object-top" />
                                 </div>
                                 <aside className="flex-1 flex lg:flex-col xl:flex-row items-start justify-between md:justify-start lg:justify-between ml-4 mid:ml-6 lg:ml-3 gap-x-2 md:gap-x-10 lg:gap-y-2.5 xl:gap-x-4 text-10px md:text-[13px]">
                                     <div className="lg:w-full xl:w-1/2 lg:my-0 flex flex-col gap-y-2.5">

@@ -14,7 +14,7 @@ const OrderItem = ({ item, index }) => {
         <div className={`w-full flex items-center py-3 px-1 border-b font_urbanist text-[10px] md:text-xs ${index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
             <span className="w-[10%] pl-2">{index}</span>
             <span className="w-[15%]">
-                <Image width={100} height={100} src={item.image} className='w-11 h-11 rounded-lg object-cover object-top' alt={item.name} />
+                <Image width={100} height={100} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.image} className='w-11 h-11 rounded-lg object-cover object-top' alt={item.name} />
             </span>
             <span className="w-[20%]">{item.name}</span>
             <span className="w-[29%]">Leather Shoe high sole, 12 days replacement warrenty</span>

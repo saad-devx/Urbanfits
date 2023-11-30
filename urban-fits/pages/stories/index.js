@@ -2,15 +2,15 @@ import React from 'react'
 import Link from 'next/link'
 import StoryCarousel from '@/components/carousels/storyCarousel'
 import Image from 'next/image'
-import img1 from '@/public/stories/img9.jpg'
-import img2 from '@/public/stories/img10.jpg'
-import img3 from '@/public/stories/img11.jpg'
-import img4 from '@/public/stories/img2.jpg'
-import img5 from '@/public/stories/img12.jpg'
+import img1 from '@/public/stories/img9.webp'
+import img2 from '@/public/stories/img10.webp'
+import img3 from '@/public/stories/img11.webp'
+import img4 from '@/public/stories/img2.webp'
+import img5 from '@/public/stories/img12.webp'
 // images for carousel component
-import img6 from '@/public/stories/img13.png'
-import img7 from '@/public/stories/img14.jpg'
-import img8 from '@/public/stories/img15.jpg'
+import img6 from '@/public/stories/img13.webp'
+import img7 from '@/public/stories/img14.webp'
+import img8 from '@/public/stories/img15.webp'
 
 const StoryHeading = (props) => {
     return <>
@@ -51,7 +51,7 @@ export default function Story() {
             <div className="mb-12 lg:mb-0 grid grid-cols-2 md:grid-cols-3 gap-x-4 2xl:gap-x-6">
                 <StoryHeading href='/stories/tailoring' >TAILORING</StoryHeading>
                 <Link href='/stories/tailoring' className='group relative w-full col-start-2 md:col-start-3 xl:translate-y-[-10%]' >
-                    <div className='w-full overflow-hidden' ><Image alt='story image' src={img2} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
+                    <div className='w-full overflow-hidden' ><Image alt='story image' src={img2} placeholder='blur' className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
                     <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 md:translate-y-0 md:top-[35%] left-0 translate-x-[-110%] md:translate-x-[-80%] flex-col items-start">
                         <h2 className="font_copper text-lg md:text-3xl lg:text-5xl 2xl:text-[52px] text-black whitespace-nowrap tracking-[0.15em] group-hover:tracking-[15px] transition-all duration-[1.6s]">TAILORING</h2>
                         <span className="hidden md:block md:mt-3 xl:mt-4 font_urbanist text-xs xl:text-sm text-black">Spring Summer. Man 2019.</span>
@@ -61,7 +61,7 @@ export default function Story() {
 
             <div className="mb-12 lg:mb-0 xl:mt-12 xl:mb-16 grid grid-cols-2 md:grid-cols-3 gap-x-4 2xl:gap-x-6">
                 <Link href='/stories/the tuorist' className='group relative w-full md:col-start-2' >
-                    <div className='w-full overflow-hidden'><Image alt='story image' src={img3} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
+                    <div className='w-full overflow-hidden'><Image placeholder='blur' alt='story image' src={img3} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
                     <div className="hidden md:flex pt-4 flex-col items-center">
                         <h2 className="font_copper text-lg md:text-3xl lg:text-5xl 2xl:text-[52px] text-black whitespace-nowrap tracking-[0.15em] group-hover:tracking-[15px] transition-all duration-[1.6s]">THE TUORIST</h2>
                         <span className="hidden md:block md:mt-3 xl:mt-4 font_urbanist text-xs xl:text-sm text-black">Spring Summer. Woman 2019.</span>
@@ -73,7 +73,7 @@ export default function Story() {
             <div className="mb-12 lg:mb-0 grid grid-cols-2 md:grid-cols-3 gap-x-4 2xl:gap-x-6">
                 <StoryHeading href='/stories/eyond nature' >BEYOND NATURE</StoryHeading>
                 <Link href='/stories/beyond nature' className='group relative w-full col-start-2 md:col-start-1' >
-                    <div className='w-full overflow-hidden' ><Image alt='story image' src={img4} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
+                    <div className='w-full overflow-hidden' ><Image placeholder='blur' alt='story image' src={img4} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
                     <div className="hidden md:flex absolute top-[60%] right-0 translate-x-[80%] flex-col items-end">
                         <h2 className="font_copper text-lg md:text-3xl lg:text-5xl 2xl:text-[52px] text-black whitespace-nowrap tracking-[0.15em] group-hover:tracking-[15px] transition-all duration-[1.6s]">BEYOND NATURE</h2>
                         <span className="hidden md:block md:mt-3 xl:mt-4 font_urbanist text-xs xl:text-sm text-black">Spring Summer. TRF 2019.</span>
@@ -83,7 +83,7 @@ export default function Story() {
 
             <div className="mb-12 lg:mb-0 xl:my-14 grid grid-cols-2 md:grid-cols-3 gap-x-4 2xl:gap-x-6">
                 <Link href='/stories/traveler' className='group relative w-full md:col-start-2' >
-                    <div className='w-full overflow-hidden' ><Image alt='story image' src={img5} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
+                    <div className='w-full overflow-hidden' ><Image placeholder='blur' alt='story image' src={img5} className='w-full object-cover object-top group-hover:scale-105 transition-all duration-[1.2s]' /></div>
                     <div className="hidden md:flex absolute top-[35%] left-0 -translate-x-[70%] flex-col items-start">
                         <h2 className="font_copper text-lg md:text-3xl lg:text-5xl 2xl:text-[52px] text-black whitespace-nowrap tracking-[0.15em] group-hover:tracking-[15px] transition-all duration-[1.6s]">TRAVELER</h2>
                         <span className="hidden md:block md:mt-3 xl:mt-4 font_urbanist text-xs xl:text-sm text-black">Spring Summer. Man 2019.</span>

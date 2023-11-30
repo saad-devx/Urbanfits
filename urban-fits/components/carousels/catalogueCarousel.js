@@ -4,12 +4,12 @@ import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css'; // Default theme
 import Image from 'next/image';
 import Logo from '@/public/logos/logo_black.svg'
-import displayImg1 from '@/public/catalogueCarousel imgs/display_img1.png'
-import displayImg2 from '@/public/catalogueCarousel imgs/display_img2.png'
-import displayImg3 from '@/public/catalogueCarousel imgs/display_img3.png'
-import pairImg1 from '@/public/catalogueCarousel imgs/img1.png'
-import pairImg2 from '@/public/catalogueCarousel imgs/img2.png'
-import pairImg3 from '@/public/catalogueCarousel imgs/img3.png'
+import displayImg1 from '@/public/catalogueCarousel imgs/display_img1.webp'
+import displayImg2 from '@/public/catalogueCarousel imgs/display_img2.webp'
+import displayImg3 from '@/public/catalogueCarousel imgs/display_img3.webp'
+import pairImg1 from '@/public/catalogueCarousel imgs/img1.webp'
+import pairImg2 from '@/public/catalogueCarousel imgs/img2.webp'
+import pairImg3 from '@/public/catalogueCarousel imgs/img3.webp'
 
 export default function CatalogueCarousel() {
     const slideData = [{ img: displayImg1, pairImg: pairImg1 }, { img: displayImg2, pairImg: pairImg2 }, { img: displayImg3, pairImg: pairImg3 }, { img: displayImg1, pairImg: pairImg1 }, { img: displayImg2, pairImg: pairImg2 }]
@@ -55,7 +55,7 @@ export default function CatalogueCarousel() {
                     <section className="flex justify-center items-center w-full h-full bg-white">
                         <div className="w-full lg:w-1/2 h-full flex justify-center items-center">
                             <Link href='/products/Carousel Item' className='w-3/5 h-[45%] md:h-3/5 lg:w-[42%] lg:h-[68%] z-20 flex flex-col justify-center items-center bg-gray-100 overflow-hidden' >
-                                <Image src={pair.pairImg} alt='product image' className='w-4/5' />
+                                <Image src={pair.pairImg} priority placeholder='blur' alt='product image' className='w-4/5' />
                                 <span className="w-36 my-4 justify-self-end font_urbanist_medium text-[10px] tracking-widest">
                                     SATIN FINISH PLAYSUIT DRESS <br />
                                     $26
@@ -63,7 +63,7 @@ export default function CatalogueCarousel() {
                             </Link>
                         </div>
                         <div className="absolute top-0 left-0 z-[5] opacity-10 lg:opacity-100 lg:static pointer-events-none lg:pointer-events-auto w-full lg:w-1/2 h-full">
-                            <Image className='h-full object-cover' src={pair.img} alt="Urban images" />
+                            <Image className='h-full object-cover' priority placeholder='blur' src={pair.img} alt="Urban images" />
                         </div>
                     </section>
                     <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_urbanist_bold tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >BUY</Link>

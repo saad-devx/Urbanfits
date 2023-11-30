@@ -20,10 +20,6 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         maxlength: [10, "Price can't be more than 10 figures"]
     },
-    gift_code: {
-        type: Boolean,
-        default: false,
-    },
     description: {
         type: String,
         required: [true, "Please enter a description for your product"],

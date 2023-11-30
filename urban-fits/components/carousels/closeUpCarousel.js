@@ -24,7 +24,7 @@ export default function CloseUpCarousel(props) {
                 {props.slideData.map((img, index) => {
                     return <SplideSlide className='w-full h-full' key={index}>
                         <div className='w-full h-full'>
-                            <Image className='w-full h-full object-contain object-center' src={img} alt="Urban images" />
+                            <Image className='w-full h-full object-contain object-center' src={img} placeholder='blur' alt="Urban images" />
                         </div>
                     </SplideSlide>
                 })}
