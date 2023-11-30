@@ -76,13 +76,12 @@ const ProductSchema = new mongoose.Schema({
     seo_details: {
         title: { type: String, required: true },
         description: { type: String, required: true },
-        meta_keywords: { type: String, required: true },
+        meta_keywords: { type: String, required: true }
     },
     shipping_details: {
         width: { type: String, required: true },
         height: { type: String, required: true },
-        weight: { type: Number, required: true },
-        fees: { type: Number, required: true },
+        weight: { type: Number, required: true }
     }
 
 }, { timestamps: true })
