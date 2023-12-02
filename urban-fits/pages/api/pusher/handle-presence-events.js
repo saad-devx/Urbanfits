@@ -16,7 +16,7 @@ const HandlePresenceEvents = async (req, res) => {
                     if (event.user_id.endsWith('_isguest')) return res.status(200).json({ message: 'Webhook received successfully' });
 
                     await ConnectDB()
-                    User.findByIdAndUpdate(event.user_id, { is_active: true })
+                    await User.findByIdAndUpdate(event.user_id, { is_active: true })
 
                     const currentDate = new Date()
                     const user = await User.findById(event.user_id)

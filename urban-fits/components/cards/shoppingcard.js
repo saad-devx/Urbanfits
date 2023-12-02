@@ -20,7 +20,7 @@ export default function Shoppingcard({ product }, props) {
     const { user, wishList, addToWishList, removeFromWishList, inWishList } = useUser()
     const [addToListModal, setAddToListModal] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [activeVariant, setActiveVariant] = useState(product?.variants? product?.variants[0]: null)
+    const [activeVariant, setActiveVariant] = useState(product?.variants ? product?.variants[0] : null)
     const splideRef = useRef(null)
 
     const addToCart = () => {
@@ -67,12 +67,12 @@ export default function Shoppingcard({ product }, props) {
             <div className='w-full h-full'>
                 <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="relative w-full h-[70%] xl:h-[72%] flex justify-center items-start overflow-clip">
                     <Splide className='w-full h-full group-hover:scale-105 transition-all duration-1000' ref={splideRef} options={{
-                        type: "fade",
+                        type: 'fade',
+                        speed: 1200,
                         width: "100%",
                         fixedWidth: "100%",
                         height: "100%",
                         fixedHeight: "100%",
-                        speed: 1500,
                         pagination: false,
                         arrows: false
                     }} >
