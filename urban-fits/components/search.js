@@ -32,7 +32,7 @@ export default function Search(props) {
             {results.map((result, index) => {
                 if (result.cover_image) return <Link key={index} onClick={() => setQuery('')} className={`${results.length === index + 1 ? null : "border-b"} w-full h-10 flex items-center font-urbanist text-xs capitalize`} href={`/products/product/${result._id}`}>
                     <span className="w-7 aspect-square rounded-md mr-2 overflow-hidden">
-                        <Image src={result.cover_image} width={50} height={50} alt='p img' className='w-full h-full object-cover' />
+                        <Image src={process.env.NEXT_PUBLIC_BASE_IMG_URL + result.cover_image} width={50} height={50} alt='p img' className='w-full h-full object-cover' />
                     </span>
                     {result.name}
                 </Link>

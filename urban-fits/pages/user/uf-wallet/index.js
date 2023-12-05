@@ -55,7 +55,7 @@ export default function UFwallet() {
                     </div>
                     <div className="w-full h-1/2 p-5 flex justify-center items-center">
                         <span className="w-full h-full">
-                            <Image width={1000} height={1000} className="w-full h-full object-cover" src={user.uf_wallet.bar_code} alt="barcode" />
+                            <Image width={1000} height={1000} className="w-full h-full object-cover" src={process.env.NEXT_PUBLIC_BASE_IMG_URL + user.uf_wallet.bar_code} alt="barcode" />
                         </span>
                     </div>
                 </Tilt>
@@ -102,7 +102,7 @@ export default function UFwallet() {
                     </div>
                     <div className="w-full h-1/2 p-6 bg-gray-50 flex justify-center items-center">
                         <span className="w-full h-full">
-                            <Image width={1000} height={1000} className="w-full h-full object-cover" src={user.uf_wallet.bar_code} alt="barcode" />
+                            <Image width={1000} height={1000} className="w-full h-full object-cover" src={process.env.NEXT_PUBLIC_BASE_IMG_URL + user.uf_wallet.bar_code} alt="barcode" />
                         </span>
                     </div>
                 </Tilt>

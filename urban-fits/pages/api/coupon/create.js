@@ -1,44 +1,34 @@
 import ConnectDB from "@/utils/connect_db"
-import Coupon from "@/models/product"
+import Coupon from "@/models/coupon"
 import User from "@/models/user";
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
+import { HashValue } from "@/utils/generatePassword";
 
 // Only accessable by Admin 
-const CreateProduct = async (req, res) => {
+const CreateCoupon = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
+            console.log(req.body)
             const { admin_id } = req.query
             if (!admin_id || !mongoose.Types.ObjectId.isValid(admin_id)) return res.status(403).json({ success: false, msg: "A valid admin id is required." })
 
             await ConnectDB()
-            let user = await User.findById(id)
+            let user = await User.findById(admin_id)
             if (!user || user.role !== "administrator") return res.status(403).json({ success: false, msg: "The user with corresponding id must exist and should be administrator create categories" })
 
-            let product = await Coupon.findOne().or([{ name: req.body.name }, { slug: req.body.slug }])
-            if (product) return res.status(400).json({ success: false, msg: "Product already exists with this name or slug." })
+            const hashedCouponCode = HashValue(req.body.coupon_code)
+            console.log(hashedCouponCode)
 
-            let uf_points = req.body.uf_points
-            const { price } = req.body
-            if (!req.body.uf_points && !req.body.sale_price) {
-                if (price >= 1 && price < 50) uf_points = 40
-                else if (price >= 50 && price < 100) uf_points = 80
-                else if (price >= 100 && price < 150) uf_points = 120
-                else if (price >= 150 && price < 200) uf_points = 160
-                else if (price >= 200 && price < 300) uf_points = 200
-                else if (price >= 300 && price < 400) uf_points = 250
-                else if (price >= 400 && price < 500) uf_points = 300
-                else if (price > 499) uf_points = 350
-                else uf_points = 0
-            }
-            console.log({ ...req.body, uf_points })
+            let coupon = await Coupon.findOne().or([{ name: req.body.name }, { coupon_code: hashedCouponCode }])
+            if (coupon) return res.status(400).json({ success: false, msg: "Coupon already exists with this name or code. Both should be unique." })
 
-            product = await Product.create({ ...req.body, uf_points })
+
+            coupon = await Coupon.create({ ...req.body, coupon_code: hashedCouponCode })
             res.status(200).json({
                 success: true,
-                msg: "Success !",
-                product
+                msg: `Coupon created with id ${coupon._id} successfully.`
             })
         }
         else return res.status(405).json({ success: false, msg: "Method not Allowed, you are using wrong request method!" })
@@ -49,4 +39,4 @@ const CreateProduct = async (req, res) => {
     }
 }
 
-export default CreateProduct
+export default CreateCoupon

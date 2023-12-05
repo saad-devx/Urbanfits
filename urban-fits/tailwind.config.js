@@ -37,7 +37,7 @@ module.exports = {
         '3': '5.2px'
       },
       fontFamily: {
-        urbanist: ['Urbanist', 'sans']
+        urbanist: ['var(--urbanist)']
       },
       fontSize: {
         '10px': '10px',
