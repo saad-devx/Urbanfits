@@ -1,5 +1,5 @@
 import ConnectDB from "@/utils/connect_db"
-import Product from "@/models/product"
+import Coupon from "@/models/product"
 import User from "@/models/user";
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
@@ -9,14 +9,14 @@ const CreateProduct = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
-            const { id } = req.query
-            if (!id || !mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
+            const { admin_id } = req.query
+            if (!admin_id || !mongoose.Types.ObjectId.isValid(admin_id)) return res.status(403).json({ success: false, msg: "A valid admin id is required." })
 
             await ConnectDB()
             let user = await User.findById(id)
             if (!user || user.role !== "administrator") return res.status(403).json({ success: false, msg: "The user with corresponding id must exist and should be administrator create categories" })
 
-            let product = await Product.findOne().or([{ name: req.body.name }, { slug: req.body.slug }])
+            let product = await Coupon.findOne().or([{ name: req.body.name }, { slug: req.body.slug }])
             if (product) return res.status(400).json({ success: false, msg: "Product already exists with this name or slug." })
 
             let uf_points = req.body.uf_points

@@ -5,7 +5,7 @@ import Shoppingcard from './cards/shoppingcard'
 import Button from './buttons/simple_btn'
 import Link from 'next/link'
 import Image from 'next/image';
-const EmtpyOrderImg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/empty-order.png"
+const EmtpyOrderImg = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/empty-order.webp"
 
 export const NoProductsSection = () => {
     return <section className="col-span-full w-full flex flex-col items-center gap-y-4 pt-[40%] md:pt-[30%] lg:pt-[16%]">
@@ -35,7 +35,6 @@ export default function MoreToExplore({ categoryId = "64a59d5816b4c91fa1967b2e" 
         }, 5)
     }
 
-    console.log(categoryId)
     useEffect(() => {
         let category_id = categoryId
         if (typeof categoryId === "object") category_id = categoryId._id

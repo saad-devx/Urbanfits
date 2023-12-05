@@ -100,7 +100,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 
   return <main className={`${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
-    <ToastContainer className="toast" />
+    <ToastContainer className={`toast ${urbanist.className} antialiased`} />
     <SessionProvider session={session}>
       <CartProvider>
         <Navbar />

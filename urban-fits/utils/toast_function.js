@@ -4,12 +4,10 @@ export default function toaster(type, msg, position = "top-left") {
     toast(msg, {
         position,
         style: {
-            borderRadius: "100px"
+            borderRadius: "100px",
         },
         bodyStyle: {
-            // fontFamily: 'urbanist',
             fontSize: "14px",
-            fontWeight: "500",
             color: "black"
         },
         closeButton: false,

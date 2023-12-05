@@ -337,9 +337,8 @@ input:checked+.slider:before {
   display: none;
 }
 
-/* Toast css */
-.toast {
-  font-family: 'Futura LT Pro' !important;
+.toast{
+  font-family: var(--urbanist) !important;
 }
 
 @media only screen and (max-width: 600px) {

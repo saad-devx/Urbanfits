@@ -13,7 +13,7 @@ import ifExists from '@/utils/if_exists'
 // image imports
 import Image from 'next/image';
 import Spinner from '@/components/loaders/spinner'
-const giantSearchIcon = process.env.NEXT_PUBLIC_BASE_IMG_URL +  "/website-copyrights/giant-search.jpg?timestamp=123"
+const giantSearchIcon = process.env.NEXT_PUBLIC_BASE_IMG_URL +  "/website-copyrights/giant-search.webp?timestamp=123"
 // Icons imports
 import {
     AccountIcon,
