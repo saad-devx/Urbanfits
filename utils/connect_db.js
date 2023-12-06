@@ -4,11 +4,8 @@ const ConnectDB = async () => {
   if (mongoose.connections[0].readyState) return console.log("Success! Connection already exists\n");
   mongoose.set('strictQuery', false);
   try {
-    mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      dbName: "Urbanfits"
-    });
+    console.log("Connecting to the database...\n");
+    await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URI + process.env.NEXT_PUBLIC_DB_NAME + "?tls=true");
     console.log("Connected to the MongoDB successfully!\n");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
