@@ -1,16 +1,17 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user";
 import Order from "@/models/orders";
-import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 // Only accessable by Admin 
 const DeleteOrders = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
-            const { admin_id, orders } = req.body
-            if (!mongoose.Types.ObjectId.isValid(admin_id)) return res.status(403).json({ success: false, msg: "A valid admin id and array of order IDs required." })
+            const admin_id = verifyAdminToken(req, res)
+            const { orders } = req.body
+            if (!orders.length) return res.status(403).json({ success: false, msg: "A valid array of order IDs required." })
 
             await ConnectDB()
             let user = await User.findById(admin_id)

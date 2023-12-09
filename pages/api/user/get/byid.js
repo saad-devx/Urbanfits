@@ -2,13 +2,16 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user";
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 const getManyUsers = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
-            const { admin_id, user_to_get } = req.query
-            if (!admin_id || !user_to_get || !mongoose.Types.ObjectId(admin_id)) return res.status(400).json({ success: false, msg: "A valid user id required. Query parameters: admin_id, user_to_get" })
+            const admin_id = verifyAdminToken(req, res)
+            const { user_to_get } = req.query
+            if (!mongoose.Types.ObjectId(user_to_get)) return res.status(400).json({ success: false, msg: "A valid user id required. Query parameters: user_to_get" })
+
             await ConnectDB()
             let admin = await User.findById(admin_id)
             if (!admin || admin.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })

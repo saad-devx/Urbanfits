@@ -6,20 +6,20 @@ import Newsletter from "@/models/newsletter";
 import Notification from "@/models/notification";
 import Shoppinglist from "@/models/shoppinglist";
 import Order from "@/models/orders";
-import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 // Only accessable by Admin 
 const DeleteUsers = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
-            const { user_id } = req.query
+            const admin_id = verifyAdminToken(req, res)
             const { users } = req.body
-            if (!user_id || !mongoose.Types.ObjectId(user_id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
+            if (!users?.length) return res.status(403).json({ success: false, msg: "A valid array of user IDs required with at least one user id." })
 
             await ConnectDB()
-            let user = await User.findById(user_id)
+            let user = await User.findById(admin_id)
             if (!user || user.role !== "administrator") return res.status(403).json({ success: false, msg: "The user with corresponding id must exist and should be administrator create categories" })
 
             if (!users || users.length === 0) return res.status(400).json({ success: false, msg: "Products array is required with atleast one valid id." })

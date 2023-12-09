@@ -3,16 +3,18 @@ import Category from "@/models/category"
 import User from "@/models/user";
 import mongoose from "mongoose";
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 const getCategories = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
-            const { id } = req.query
-            if (!id || !mongoose.Types.ObjectId(id)) return res.status(400).json({ success: false, msg: "A valid user id required." })
+            const admin_id = verifyAdminToken(req, res)
+            // const { id } = req.query
+            // if (!id || !mongoose.Types.ObjectId(id)) return res.status(400).json({ success: false, msg: "A valid user id required." })
 
             await ConnectDB()
-            let user = await User.findById(id)
+            let user = await User.findById(admin_id)
             if (!user || user.role !== "administrator") return res.status(400).json({ success: false, msg: "The user with corresponding id must exist and should be administrator to access this data." })
 
             const getObjToUpdate = async () => {

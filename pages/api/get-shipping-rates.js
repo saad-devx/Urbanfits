@@ -2,7 +2,7 @@ import Shipping_rates from "@/models/shipping_rates"
 import ConnectDB from "@/utils/connect_db"
 import CorsMiddleware from "@/utils/cors-config"
 
-const UpdateShippingRates = async (req, res) => {
+const GetShippingRates = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
@@ -21,4 +21,4 @@ const UpdateShippingRates = async (req, res) => {
         res.status(500).json({ success: false, error, msg: "Internal server error, please try again later" })
     }
 }
-export default UpdateShippingRates
+export default GetShippingRates

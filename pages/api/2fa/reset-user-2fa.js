@@ -2,13 +2,15 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 import sendNotification from "@/utils/send_notification"
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 const RsetUser2fa = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
-            const { admin_id, user_id } = req.query
-            if (!admin_id || !user_id) return res.status(403).json({ success: false, msg: "User and Admin id is required. Query parameters: user_id, admin_id" })
+            const admin_id = verifyAdminToken(req, res)
+            // const { admin_id, user_id } = req.query
+            // if (!admin_id || !user_id) return res.status(403).json({ success: false, msg: "User and Admin id is required. Query parameters: user_id, admin_id" })
             await ConnectDB()
             let admin = await User.findById(admin_id)
             if (!admin || admin.role !== "administrator") return res.status(403).json({ success: false, msg: "Only admin users can access and perform operations." })

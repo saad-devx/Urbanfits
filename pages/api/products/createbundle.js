@@ -3,19 +3,21 @@ import User from "@/models/user"
 import Product from "@/models/product"
 import mongoose from "mongoose"
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 // Only accessable by Admin 
 const CreateBundle = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'POST') {
-            const { id } = req.query
+            const admin_id = verifyAdminToken(req, res)
+            // const { id } = req.query
+            // if (!id || !mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
             const { products } = req.body
-            if (!id || !mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({ success: false, msg: "A valid user id required." })
             if (!products || products.length <= 1) return res.status(400).json({ success: false, msg: "A 'products' array with atleast 2 product IDs is required." })
 
             await ConnectDB()
-            let user = await User.findById(id)
+            let user = await User.findById(admin_id)
             if (!user || user.role !== "administrator") return res.status(403).json({ success: false, msg: "The user with corresponding id must exist and should be administrator create categories" })
 
             for (const id of products) {

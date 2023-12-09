@@ -13,7 +13,7 @@ const useUser = create(persist((set, get) => ({
     recentItems: [],
     wishList: [],
     notifications: [],
-    country: { name: "United Arab Emirates", code: "+971", country: "ae", src: "https://urban-fits.s3.eu-north-1.amazonaws.com/country-flags/AE.jpg" },
+    country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" },
     geo_selected_by_user: false,
     setNotification: (newNotifications) => set(() => ({ notifications: newNotifications })),
     getNotifications: async () => {

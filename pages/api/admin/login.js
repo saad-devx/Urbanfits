@@ -28,7 +28,7 @@ const Login = async (req, res) => {
                 })
             }
             if (!user.two_fa_enabled) {
-                const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
+                const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY, { expiresIn: '1w' })
                 pusherServer.trigger("admin-channel", "login", {
                     msg: `An admin ${user.username} just logged in.`,
                     user_id: user._id

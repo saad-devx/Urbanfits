@@ -2,14 +2,17 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 const CryptoJS = require("crypto-js")
 import CorsMiddleware from "@/utils/cors-config"
+import verifyAdminToken from "@/utils/verify_admin";
 
 const UpdateUserPasswordViaAdmin = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'PUT') {
-            const { admin_id, user_id, admin_password, new_password, confirm_password } = req.body
-            if (!admin_id || !user_id || !admin_password || !new_password || !confirm_password) return res.status(403).json({ success: false, msg: "All valid body parameters are required. Query parameters: admin_id, user_id, admin_password, new_password, confirm_password" })
+            const admin_id = verifyAdminToken(req, res)
+            const { user_id, admin_password, new_password, confirm_password } = req.body
+            if ( !user_id || !admin_password || !new_password || !confirm_password) return res.status(403).json({ success: false, msg: "All valid body parameters are required. Query parameters: user_id, admin_password, new_password, confirm_password" })
             else if (new_password !== confirm_password) return res.status(400).json({ success: false, msg: "new_password and confirm_password parameters must be same." })
+
             await ConnectDB()
             let admin = await User.findById(admin_id)
             if (!admin || admin.role !== "administrator") return res.status(403).json({ success: false, msg: "Only admin users can access and perform operations on this data." })
