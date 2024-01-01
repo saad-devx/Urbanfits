@@ -30,14 +30,16 @@ export default function Shoppingcard({ product }, props) {
             variant_id: activeVariant._id,
             id: `${activeVariant._id}${activeVariant.sizes[0].size}`,
             name: product.name,
-            price: product.price,
+            price: product.sale_price || product.price,
+            ...(product.price ? { sale_price: product.price } : {}),
             uf_points: product.sale_price || product.uf_points,
             weight: product.shipping_details.weight,
             stock: activeVariant.stock,
             size: activeVariant.sizes[0].size,
             sizes: activeVariant.sizes,
             color: activeVariant.color_name,
-            images: activeVariant.images
+            images: activeVariant.images,
+            categories: product.categories
         }, 1); toaster('success', "Your item is added to the Cart")
     }
     const addToWishlist = () => {

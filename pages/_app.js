@@ -110,4 +110,4 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     </SessionProvider>
   </main>
 }
-export default dynamic(() => Promise.resolve(App), { ssr: false })
+// export default dynamic(() => Promise.resolve(App), { ssr: false })

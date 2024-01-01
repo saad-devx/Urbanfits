@@ -70,6 +70,7 @@ export default function Product(props) {
         if (name === "increment") return setQuantity(quantity + 1)
     }
     const { addItem, inCart } = useCart()
+    console.log(productData.categories.map(category => category._id))
     const addToCart = () => {
         if (getFilteredQuantity() < 1) return toaster('info', 'This item is out of stock right now')
         if (inCart(`${product._id}${sizevalue}`)) return toaster('info', 'This item is already in the cart!')
@@ -79,14 +80,16 @@ export default function Product(props) {
             id: `${product._id}${sizevalue}`,
             category_id: productData.categories[0],
             name: productData.name,
-            price: productData.price,
+            price: productData.sale_price || productData.price,
+            ...(productData.price ? { sale_price: productData.sale_price } : {}),
             uf_points: product.uf_points,
             weight: productData.shipping_details.weight,
             stock: product.stock,
             size: sizevalue,
             sizes: product.sizes,
             color: product.color_name,
-            images: product.images
+            images: product.images,
+            categories: productData.categories.map(category => category._id)
         }, quantity);
         toaster('success', 'Your items has been added to the cart')
     }
