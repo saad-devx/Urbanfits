@@ -82,6 +82,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   useEffect(() => {
+    makeItDown()
     getExchangeRate()
     getGeoLocation()
 
@@ -98,7 +99,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
-  return <main className={`${urbanist.className} antialiased`}>
+  return <main className={`${urbanist.className} antialiased !opacity-0 !hidden`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
     <SessionProvider session={session}>
@@ -110,4 +111,4 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     </SessionProvider>
   </main>
 }
-// export default dynamic(() => Promise.resolve(App), { ssr: false })
+export default dynamic(() => Promise.resolve(App), { ssr: false })
