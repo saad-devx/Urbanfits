@@ -8,7 +8,7 @@ import ListingShopSection from '@/components/listingShop_section';
 import toaster from '@/utils/toast_function';
 import Link from 'next/link';
 import Image from 'next/image';
-const emptyWishlist = 'https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/emptyWishlist.jpg';
+const emptyWishlist = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/emptyWishlist.webp';
 
 export default function WisthList() {
     const { wishList } = useUser()

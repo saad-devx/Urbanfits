@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image';
 import useUser from '@/hooks/useUser'
 import useWallet from '@/hooks/useWallet'
 import Button from '@/components/buttons/simple_btn'
 import BounceLoader from '@/components/loaders/bounceLoader'
 import toaster from '@/utils/toast_function'
 import LinkBtn from '@/components/buttons/link_btn'
+const emptyWishlist = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/emptyWishlist.webp';
 
 const CheckShell = ({ dayCode, day, history }) => {
     const today = new Date();
@@ -34,11 +36,12 @@ const CheckShell = ({ dayCode, day, history }) => {
 }
 
 export default function EarnUfPoints() {
-    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfHistory } = useWallet()
+    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfHistory, getWheelHistory } = useWallet()
     const { user, updateUser } = useUser()
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
     const [history, setHistory] = useState(null)
+    const [wheelhistory, setWheelHistory] = useState([])
 
     function spinAndStopAtValue(value, msg) {
         // console.log(typeof value, value)
@@ -107,30 +110,6 @@ export default function EarnUfPoints() {
         };
     }
 
-    const groupHistoryByYearAndMonth = (history) => {
-        if (!history) return null
-        const groupedHistory = {};
-
-        history.forEach((record) => {
-            const { year, month } = record;
-            const key = `${year}-${month}`;
-
-            if (!groupedHistory[key]) {
-                groupedHistory[key] = {
-                    year,
-                    month,
-                    records: [],
-                };
-            }
-            groupedHistory[key].records.push(record);
-        });
-
-        const groupedRecords = Object.values(groupedHistory);
-        return groupedRecords;
-    };
-
-    const groupedRecords = groupHistoryByYearAndMonth(history)
-
     const getCheckedinDays = () => {
         const today = new Date();
         const currentWeekStart = new Date(today);
@@ -146,14 +125,18 @@ export default function EarnUfPoints() {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(user?.uf_wallet?.next_uf_spin));
 
     useEffect(() => {
-        if (!user) return () => { }
+        if (!user) { return }
         getWeeklyCheckinHistory(setWeeklyHistory)
         const timer = setInterval(() => {
             setTimeLeft(calculateTimeLeft(user.uf_wallet.next_uf_spin));
         }, 1000);
-        getUfHistory(setHistory)
+        getUfHistory(setHistory);
+        getWheelHistory((history) => setWheelHistory(history))
 
-        return () => clearInterval(timer);
+        return () => {
+            clearInterval(timer)
+            setWheelHistory([])
+        };
     }, []);
 
     const spinPrizeWheel = async () => {
@@ -194,10 +177,10 @@ export default function EarnUfPoints() {
                         <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label>
                     </div>
                 </nav>
-                <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 xl:py-6 flex flex-col lg:flex-row rounded-lg gap-3">
-                    <div className="w-full lg:w-1/2 h-full lg:h-auto flex flex-col justify-center items-center gap-y-4">
-                        <div className="relative w-full mid:w-3/5 lg:w-11/12 aspect-square rounded-full shadow-lg overflow-clip">
-                            <span className="bg-white absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 aspect-square flex justify-center items-center rounded-full font_urbanist_bold text-[8px] lg:text-10px tracking-1 shadow-md"><p className="translate-x-px">{user && new Date() > new Date(user.uf_wallet?.next_uf_spin) ? "SPIN" : <i className="fa-solid fa-lock text-sm" />}</p></span>
+                <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 xl:py-6 flex flex-col lg:flex-row rounded-lg gap-3 mid:gap-8">
+                    <div className="w-full lg:w-1/2 h-full lg:h-auto flex flex-col justify-center items-center gap-y-4 mid:gap-y-6">
+                        <div className="relative w-4/5 mid:w-1/2 lg:w-11/12 aspect-square rounded-full shadow-lg overflow-clip">
+                            <span className="bg-white absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 lg:w-9 aspect-square flex justify-center items-center rounded-full font_urbanist_bold text-[8px] lg:text-10px tracking-1 shadow-md"><p className="translate-x-px">{user && new Date() > new Date(user.uf_wallet?.next_uf_spin) ? "SPIN" : <i className="fa-solid fa-lock text-sm" />}</p></span>
                             <i className="absolute z-[8] top-[59%] md:top-[58.5%] 2xl:top-[58%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-x-[9px] lg:border-x-[12.5px] border-x-transparent border-t-[18px] lg:border-t-[25px] border-t-black"></i>
 
                             <svg id='prize_wheel' className="w-full h-full transition-all duration-700" width="260" height="260" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -220,7 +203,7 @@ export default function EarnUfPoints() {
                             </svg>
 
                         </div>
-                        <div className={`${!user && "opacity-50"} w-full flex justify-around items-center`}>
+                        <div className={`${!user && "opacity-50"} w-full mid:w-3/5 lg:w-full flex justify-around items-center`}>
                             <span className="flex flex-col items-center font_urbanist_medium text-xs">
                                 <span className="bg-gray-100 w-9 flex justify-center mb-1 py-2 font_urbanist_medium text-sm lg:text-base">{timeLeft.days || "00"}</span>
                                 Days
@@ -249,7 +232,7 @@ export default function EarnUfPoints() {
                             <li>5. Your UF-Points and vouchers will be automatically added yo your account wallet.</li>
                             <li>6. On getting a "Try Again", you can do extra spin free of cost.</li>
                         </ol>
-                        {user ? <div className='w-full'><LinkBtn href="/user/inbox/rewards" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
+                        {user ? <div className='w-full'><LinkBtn href="#prize_wheel_history" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
                             <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>
                             : <>
                                 <LinkBtn href="/auth/login" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>Log in</LinkBtn>
@@ -305,42 +288,33 @@ export default function EarnUfPoints() {
                     <Link href="/user/security" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
                 </div>
             </section>
-            {user?.email && <section className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4">
+            {user?.email && <section id='prize_wheel_history' className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4 overflow-x-auto scrollbar_x">
                 <h2 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h2>
-                <div className="w-full mb-4 flex justify-between items-center text-xs lg:text-base font_urbanist_bold">
-                    <span className="w-1/3">Transactions</span>
-                    <span>Points earned</span>
-                    <span>Points used</span>
-                    <span>Total Balance</span>
-                </div>
                 {walletLoading && <div className="w-full my-8 flex justify-center"><BounceLoader /></div>}
-                {groupedRecords ? groupedRecords.map((recordObj, index) => {
-                    return <section key={index} className="group outline-none accordion-section mb-7" tabIndex={1} >
-                        <nav className="group flex justify-between py-3 items-center border-b border-b-gray-300 transition ease duration-500 cursor-pointer pr-10 relative">
-                            <h2 className="group-focus:text-black font_urbanist_medium capitalize transition ease duration-500">{recordObj.month}&nbsp;{recordObj.year}</h2>
-                            <i className={`group-focus:-rotate-180 absolute top-1/2 -translate-y-1/2 right-0 mb-auto ml-auto mt-2 mr-2 transform transition ease duration-500`}>
-                                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.718574 1.26652C0.471471 0.976974 0.475731 0.51076 0.729225 0.226124C0.852776 0.0862599 1.01361 0.0163273 1.1755 0.0163274C1.34166 0.0163274 1.50675 0.0899399 1.63136 0.238392L4.99708 4.20367L8.44587 0.231032C8.6951 -0.0536042 9.09984 -0.054831 9.35014 0.232259C9.59831 0.520576 9.59831 0.985564 9.34907 1.27388L5.44336 5.77162C5.323 5.90903 5.1611 5.98633 4.99175 5.98633L4.98749 5.98633C4.81708 5.9851 4.65305 5.90535 4.53483 5.76426L0.718574 1.26652Z" fill="#C4C4C4" />
-                                </svg>
-                            </i>
-                        </nav>
-                        <nav className="group-focus:max-h-[50vh] max-h-0 rounded overflow-x-hidden overflow-y-auto duration-500">
-                            {recordObj.records.map((record, i) => <section key={i} className=" bg-white border-b border-b-gray-300 grid grid-cols-4 md:grid-cols-5 text-xs lg:text-sm">
-                                <div className="md:col-span-2 w-full flex items-center">
-                                    <span className="mr-8 py-4 flex flex-col text-xs">
-                                        <h6 className="font_copper text-10px md:text-sm">UF-Points</h6>
-                                        <p className="hidden lg:block">Urban Fits</p>
-                                        <p className="lg:hidden text-10px">{new Date(record.createdAt).getDate() + "/" + (new Date(record.createdAt).getMonth() + 1) + "/" + new Date(record.createdAt).getFullYear()}</p>
-                                    </span>
-                                    <p className='hidden lg:block'>{new Date(record.createdAt).getDate() + "/" + (new Date(record.createdAt).getMonth() + 1) + "/" + new Date(record.createdAt).getFullYear()}</p>
-                                </div>
-                                <span className="w-full flex justify-center items-center">+{record.earned}</span>
-                                <span className="w-full flex justify-center items-center">-{record.spent}</span>
-                                <span className="w-full flex justify-center items-center">{record.balance}</span>
-                            </section>)}
-                        </nav>
-                    </section>
-                }) : null}
+                {wheelhistory?.length ? <div className="w-[150%] md:w-full mb-4 grid grid-cols-5 text-xs lg:text-base font_urbanist_bold">
+                    <span className="col-span-2">Last 5 Transactions</span>
+                    <span>Points earned</span>
+                    <span>Costs</span>
+                    <span>Total Balance</span>
+                </div> : null}
+
+                {wheelhistory?.length ? wheelhistory.map((history, index) => {
+                    const startDate = new Date(history.createdAt)
+                    const endDate = new Date(history.expiration_date)
+                    return <div key={index} className={`${wheelhistory.length ? "w-[150%]" : "w-full"} md:w-full grid grid-cols-5 py-3 border-b text-xs lg:text-base`}>
+                        <div className="col-span-2 flex flex-col">
+                            <span className="text-sm lg:text-base font-semibold">Lucky Wheel Prize</span>
+                            <p className="text-[8px] md:text-[10px] lg:text-xs text-gray-400">Validity: {startDate.getDate() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getFullYear()} {startDate.getHours() + ":" + startDate.getMinutes()} to {endDate.getDate() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getFullYear()} {endDate.getHours() + ":" + endDate.getMinutes()}</p>
+                        </div>
+                        <span className='text-green-400'>+ {history.points}</span>
+                        <span className='text-red-400'>-10</span>
+                        <span>{history.balance}</span>
+                    </div>
+                }) : <div id='prize_wheel_history' className='w-full h-[50vh] col-span-full flex flex-col items-center justify-center gap-4 text-xs lg:text-sm font-semibold'>
+                    <Image width={200} height={200} className="w-1/5 lg:w-1/6" src={emptyWishlist} alt="Empty Transaction" />
+                    No Transation history found
+                </div>}
+
             </section>}<section className="bg-white w-full mb-4 lg:mb-6 px-4 py-6 mid:p-6 lg:py-10 lg:px-8 rounded-lg">
                 <h4 className="col-span-full mb-4 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Rules for Check-in</h4>
                 <ol>

@@ -6,12 +6,14 @@ import { HashValue } from "@/utils/generatePassword"
 const getCoupon = async (req, res) => {
     try {
         const { coupon_code } = req.query
+        if (!coupon_code || coupon_code.length < 8) res.status(500).json({ success: false, msg: "Invalid coupon code." })
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
             await ConnectDB()
 
             const hashedCouponCode = HashValue(coupon_code)
-            let coupon = await Coupon.finOne({ coupon_code: hashedCouponCode })
+            let coupon = await Coupon.findOne({ coupon_code: hashedCouponCode })
+            if (!coupon) return res.status(500).json({ success: false, msg: "Invalid coupon code." })
             delete coupon._id
             delete coupon.coupon_code
             res.status(200).json({

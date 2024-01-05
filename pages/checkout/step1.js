@@ -81,7 +81,8 @@ export default function Checkout1() {
             email: user?.email,
             delivery_option: 'standard_shipping',
             points_to_use: 0,
-            gift_code: null,
+            gift_code: '',
+            coupon_code: '',
             shipping_address: addressFieldsValues("shipping_address"),
             billing_address: addressFieldsValues("billing_address")
         },
@@ -92,7 +93,8 @@ export default function Checkout1() {
             email: Yup.string().email().required("Please enter your email address"),
             delivery_option: Yup.string().required("Please select your prefered language"),
             points_to_use: Yup.number().lessThan(points, "You can't apply more points than you have.").max(points, "You can't apply more points than you have."),
-            gift_code: Yup.string().nullable(),
+            gift_code: Yup.string(),
+            coupon_code: Yup.string(),
             shipping_address: Yup.object().shape(addressFieldsValidation),
             billing_address: Yup.object().shape(addressFieldsValidation)
         }),
@@ -132,10 +134,11 @@ export default function Checkout1() {
         }
     }
 
-    const calculateTotalShippingFee = (fees, shippingMethod = values?.delivery_option) => {
-        if (shippingMethod === "free_shipping") return 0
+    const calculateTotalShippingFee = (fees, shippingMethod = values?.delivery_option, coupon) => {
+        if (shippingMethod === "free_shipping") return 0;
+        if (coupon && coupon.coupon_config?.free_shipping) return 0;
         const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
-        if(!filteredItems.length) return 0
+        if (!filteredItems.length) return 0
         const totalWeight = filteredItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
         if (totalWeight <= 5100) return fees
         const additionalWeight = totalWeight - 5100
@@ -221,7 +224,7 @@ export default function Checkout1() {
         else return null
     }
 
-    if (isEmpty) return <AlertPage type="error" heading="Oh! There's nothing Checkout" message="You currently have nothing to checkout in your cart, please visit our store and select something to purchase" />
+    if (isEmpty) return <AlertPage type="error" heading="Oh! There's nothing to Checkout with" message="You currently have nothing to checkout in your cart, please visit our store and select something to purchase" />
     if (!isEmpty) return <>
         <Head><title>Checkout - Urban Fits</title></Head>
         {loader}
