@@ -56,11 +56,11 @@ export default function UFwallet() {
                 <section className="w-full mb-4 py-5 text-xs flex justify-between items-center border-y border-gray-50">
                     <div className="w-1/2 flex flex-col">
                         Linked Card number
-                        <span className="font_urbanist_bold text-base text-[#FF4A60]">{user.uf_wallet.card_number}</span>
+                        <span className="font_urbanist_bold text-base text-pinky">{user.uf_wallet.card_number}</span>
                     </div>
                     <div className="w-1/2 flex flex-col">
                         Balance
-                        <span className="font_urbanist_bold text-base text-[#FF4A60]">{points} UF pts ({formatPrice(points * process.env.NEXT_PUBLIC_UF_POINT_RATE)})</span>
+                        <span className="font_urbanist_bold text-base text-pinky">{points} UF pts ({formatPrice(points * process.env.NEXT_PUBLIC_UF_POINT_RATE)})</span>
                     </div>
                 </section>
                 <div className="w-full py-5 flex justify-end text-10px">
@@ -110,11 +110,11 @@ export default function UFwallet() {
             <section className="mb-7 py-10 flex justify-between items-center border-y border-gray-50">
                 <div className="flex flex-col">
                     Linked Card number
-                    <span className="font_urbanist_bold text-[22px] text-yellow-600">{user.uf_wallet.card_number}</span>
+                    <span className="font_urbanist_bold text-[22px] text-pinky">{user.uf_wallet.card_number}</span>
                 </div>
                 <div className="flex flex-col">
                     Balance
-                    <span className="font_urbanist_bold text-[22px] text-yellow-600">{points} UF pts ({formatPrice(points * process.env.NEXT_PUBLIC_UF_POINT_RATE)})</span>
+                    <span className="font_urbanist_bold text-[22px] text-pinky">{points} UF pts ({formatPrice(points * process.env.NEXT_PUBLIC_UF_POINT_RATE)})</span>
                 </div>
             </section>
             <div className="w-full py-5 flex justify-end">

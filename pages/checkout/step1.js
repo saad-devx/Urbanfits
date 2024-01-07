@@ -15,7 +15,6 @@ import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/languagemodal';
 import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
-// import CryptoJS from 'crypto-js';
 // imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'

@@ -41,18 +41,6 @@ const useWallet = create(persist((set, get) => ({
         set(() => ({ walletLoading: false }))
     },
 
-    getWheelHistory: async (callback) => {
-        const { user } = useUser.getState()
-        if (!user) return
-        set(() => ({ walletLoading: true }))
-        try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-wheel-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
-            callback ? callback(data.history) : null
-            set(() => ({ walletLoading: false }))
-            return data.history
-        } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-    },
-
     getWeeklyCheckinHistory: async (setCallbackState) => {
         const { user } = useUser.getState()
         if (!user) return
@@ -80,7 +68,7 @@ const useWallet = create(persist((set, get) => ({
                     ...user.uf_wallet,
                     last_uf_spin: data.last_uf_spin,
                     last_spin_reward: data.reward,
-                    ...(data.next_uf_spin ? { next_uf_spin: data.next_uf_spin } : {})
+                    ...(data.next_uf_spin ? { next_uf_spin: data.next_uf_spin }:{})
                 }
             }, true, true)
             get().getUfBalance()

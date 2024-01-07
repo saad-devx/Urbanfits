@@ -54,6 +54,7 @@ export default function CheckoutCalcSection(props) {
 
     const TotalOrderPrice = cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon) //in AED
 
+    console.log(items)
     const getCouponDiscount = (Coupon) => {
         if (Coupon && Coupon.coupon_value > 0) {
             if (typeof Coupon.coupon_config.coupon_usage_limit === "number" && Coupon.coupon_config.coupon_usage_limit < 1) return 0
@@ -68,8 +69,8 @@ export default function CheckoutCalcSection(props) {
             console.log("coupon entry point 3", eligibleProducts)
 
             if (config.exclude_sales) eligibleProducts = items.filter(p => !p.sale_price)
+            console.log("coupon entry point 4", eligibleProducts)
             if (config.exclude_products?.length) eligibleProducts = eligibleProducts.filter(p => !config.exclude_products.includes(p.product_id))
-            console.log("coupon entry point 3", eligibleProducts)
             if (config.exclude_categories?.length) eligibleProducts = eligibleProducts.filter(p => !p.categories.some(categ => config.exclude_categories.includes(categ)))
             console.log(eligibleProducts)
 
@@ -196,7 +197,7 @@ export default function CheckoutCalcSection(props) {
                         </div>
                         {props.values?.coupon_code ?
                             <Button type="button" onClick={() => props.setFieldValue("coupon_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
-                            <Button type="button" disabled={coupon.coupon?._id ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (giftCard.code.length > 7) { props.setFieldValue("coupon_code", coupon.code) } }} my="mt-2" classes="w-full">Apply</Button>}
+                            <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (giftCard.code.length > 7) { props.setFieldValue("coupon_code", coupon.code) } }} my="mt-2" classes="w-full">Apply</Button>}
                     </div>
 
                     <div className={`w-1/2 mt-4 p-2 border rounded-lg transition-all duration-500 ${checkedSection === 1 ? "opacity-0" : ''}`}>
