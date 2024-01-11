@@ -106,7 +106,7 @@ export default function Navbar() {
         <Logout show={logout} setLogout={setLogout} />
         <LanguageModal show={langModal} setLangModal={setLangModal} />
         <ToTopBtn />
-        <nav className="sticky z-50 font_urbanist w-full max-w-[2000px] mx-auto h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
+        <nav className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
             <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1 leading-none'><h1>URBAN FITS</h1></Link>
             <Search classes="hidden md:flex" />
             <Link href={user && user.email ? '/user/address' : "#"} className="hidden lg:flex items-center text-black">

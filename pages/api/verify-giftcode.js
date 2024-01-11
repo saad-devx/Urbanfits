@@ -4,9 +4,9 @@ import { HashValue } from "@/utils/generatePassword"
 
 const VerifyGiftcode = async (req, res) => {
     try {
-        if (req.method === 'GET') {
+        if (req.method === 'POST') {
             await ConnectDB()
-            const { gift_code } = req.query
+            const { gift_code } = req.body
             if (!gift_code || gift_code.length < 8 || gift_code.length > 10) return res.status(400).json({ success: false, msg: "Invalid Giftcode. Query parameters: gift_code (must be of length 9 - 10)" })
             const hashedGiftcode = HashValue(gift_code)
             const giftCard = await Giftcard.findOne({ gift_code: hashedGiftcode })

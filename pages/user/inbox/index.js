@@ -15,7 +15,7 @@ import {
     HeartNotifyIcon
 } from '@/public/accountIcons'
 import Image from 'next/image'
-const EmptyInboxImg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/empty-inbox.png"
+const EmptyInboxImg = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/empty-inbox.webp"
 
 const NoNotificationSection = () => {
     return <section className="w-full h-full flex flex-col mid:items-center mid:justify-center items-center gap-y-4 pt-[40%] mid:pt-0">

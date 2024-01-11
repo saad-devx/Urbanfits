@@ -78,12 +78,11 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         if (data.notify) toaster("info", data.notification_data.notifications[0].mini_msg)
       })
     }
-    return () => pusherPresenceClient && pusherPresenceClient.unsubscribe('presence-urbanfits');
-  }, []);
 
-  useEffect(() => {
-    getExchangeRate()
-    getGeoLocation()
+    (async () => {
+      await getGeoLocation()
+      getExchangeRate()
+    })()
 
     const igniteSession = () => {
       setGuestUser(null)
@@ -91,14 +90,18 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       if (sessionValid === true) logOut()
     }
     window.addEventListener("beforeunload", igniteSession)
-    return () => window.removeEventListener("beforeunload", igniteSession)
+    
+    return () => {
+      pusherPresenceClient && pusherPresenceClient.unsubscribe('presence-urbanfits')
+      window.removeEventListener("beforeunload", igniteSession)
+    }
   }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => setProgress(77))
     router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
-  return <main className={`${urbanist.className} antialiased`}>
+  return <main className={`max-w-[2000px] mx-auto ${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
     <SessionProvider session={session}>

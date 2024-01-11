@@ -63,15 +63,13 @@ export default async function handler(req, res) {
             // getting exchnge rates
             let rate = 1;
             if (shipping_info.currency !== process.env.NEXT_PUBLIC_BASE_CURRENCY) {
-                const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${shipping_info.currency}&have=${process.env.NEXT_PUBLIC_BASE_CURRENCY}&amount=${1}`, {
-                    headers: { "X-Api-Key": process.env.NEXT_PUBLIC_NINJA_CURRENCY_KEY }
-                })
-                rate = data.new_amount;
+                const { data } = await axios.get(`https://api.fastforex.io/fetch-one?api_key=${process.env.NEXT_PUBLIC_CURRENCY_API_KEY}&from=${process.env.NEXT_PUBLIC_BASE_CURRENCY}&to=${shipping_info.currency}`)
+                rate = data.result[shipping_info.currency];
             }
 
             const orderItemsToProcess = order_items.filter(item => !item.id.startsWith("giftcard_"))
             const giftCardItems = order_items.filter(item => item.id.startsWith("giftcard_"))
-            console.log(orderItemsToProcess, giftCardItems)
+            // console.log(orderItemsToProcess, giftCardItems)
 
             let finalOrderItems = []
             for (const orderItem of orderItemsToProcess) {
@@ -100,7 +98,7 @@ export default async function handler(req, res) {
             const shippingRates = await Shipping_rates.findById("652a79afd889b69c655d903b")
 
             let totalPrice = giftCardItems.length ? giftCardItems.reduce((accum, item) => accum + giftCardPrices[item.id], 0) : 0;
-            console.log(totalPrice)
+            // console.log(totalPrice)
             for (const item of finalOrderItems) {
                 const itemPrice = item.price * item.quantity
                 totalPrice += itemPrice

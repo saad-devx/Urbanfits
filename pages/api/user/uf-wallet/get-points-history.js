@@ -7,14 +7,14 @@ const GetUFPointsHistory = async (req, res) => {
     try {
         await CorsMiddleware(req, res)
         if (req.method === 'GET') {
-            const { user_id, card_number } = req.query
+            const { user_id, card_number, limit = 150 } = req.query
             if (!mongoose.Types.ObjectId(user_id) || card_number.length < 18) return res.status(403).json({ success: false, msg: "Valid user id and card number are required. Query parameters: user_id, card_number" })
             await ConnectDB()
 
             const historyDocs = await UFpointsHistory.find({
                 user_id,
                 card_number
-            }).sort({ createdAt: -1 })
+            }).sort({ createdAt: -1 }).limit(limit)
 
             res.status(200).json({
                 success: true,

@@ -5,10 +5,10 @@ import { HashValue } from "@/utils/generatePassword"
 
 const getCoupon = async (req, res) => {
     try {
-        const { coupon_code } = req.query
+        const { coupon_code } = req.body
         if (!coupon_code || coupon_code.length < 8) return res.status(500).json({ success: false, msg: "Invalid coupon code." })
         await CorsMiddleware(req, res)
-        if (req.method === 'GET') {
+        if (req.method === 'POST') {
             await ConnectDB()
 
             const hashedCouponCode = HashValue(coupon_code)

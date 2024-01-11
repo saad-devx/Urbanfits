@@ -9,6 +9,7 @@ const CryptoJS = require("crypto-js")
 const jwt = require("jsonwebtoken")
 import { pusherServer } from "@/utils/pusher"
 import CorsMiddleware from "@/utils/cors-config"
+import axios from "axios"
 
 const SignupCallback = async (req, res) => {
     try {
@@ -41,6 +42,7 @@ const SignupCallback = async (req, res) => {
                     points: 500,
                     source: "signup"
                 })
+                axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/signup/create-tasks-record?user_id=${user._id}`)
                 const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 await sendNotification(user._id, {
                     category: "reward",

@@ -13,6 +13,8 @@ const ProductCarousel = dynamic(() => import('@/components/carousels/productCaro
 import toaster from '@/utils/toast_function';
 import Button from '@/components/buttons/simple_btn';
 import Link from 'next/link';
+// Share buttons imports
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, PinterestShareButton } from 'react-share'
 
 export default function Product(props) {
     const productData = { ...props.resProduct, id: props.resProduct._id }
@@ -70,7 +72,6 @@ export default function Product(props) {
         if (name === "increment") return setQuantity(quantity + 1)
     }
     const { addItem, inCart } = useCart()
-    console.log(productData.categories.map(category => category._id))
     const addToCart = () => {
         if (getFilteredQuantity() < 1) return toaster('info', 'This item is out of stock right now')
         if (inCart(`${product._id}${sizevalue}`)) return toaster('info', 'This item is already in the cart!')
@@ -81,8 +82,8 @@ export default function Product(props) {
             category_id: productData.categories[0],
             name: productData.name,
             price: productData.sale_price || productData.price,
-            ...(productData.price ? { sale_price: productData.sale_price } : {}),
-            uf_points: product.uf_points,
+            sale_price: productData.sale_price || 0,
+            uf_points: product.uf_points || 0,
             weight: productData.shipping_details.weight,
             stock: product.stock,
             size: sizevalue,
@@ -95,7 +96,11 @@ export default function Product(props) {
     }
     return <>
         <Head>
-            <title className='capitalize' >{`${productData.name} - UF`}</title>
+            <title className='capitalize' >{productData.name}</title>
+            <meta property="og:title" content={productData.name} />
+            <meta property="og:description" content={productData.description} />
+            <meta property="og:image" content={productData.cover_image} />
+            <meta property="og:url" content={router.asPath} />
         </Head>
         <main className="bg-white w-full max-w-[2000px] mx-auto h-full font_urbanist transition-all duration-700">
             <div className="w-full pb-20 flex justify-center">
@@ -138,6 +143,21 @@ export default function Product(props) {
                                     <button onClick={addToCart} className="group hidden lg:flex bg-gold hover:rounded-none max-w-[320px] w-48pr lg:w-1/3 h-9 lg:h-[52px] px-5 justify-between items-center rounded-xl font_urbanist_bold text-white text-sm transition-all duration-300"><p className="group-hover:translate-x-3 transition-all duration-300">Add to Cart </p><i className="fas fa-plus text-white group-hover:rotate-45 transition-all duration-300" /></button>
                                     <Button onClick={addToCart} classes='w-full lg:hidden' my='my-1' bg='bg-gold' fontSize='text-[10px]' text='white' >ADD TO CART | {formatPrice(productData.price)}</Button>
                                 </>}
+                            <h5 className="mt-5 mb-2 text-sm lg:text-base font-semibold text-gray-500">Share on Social Media</h5>
+                            <div className="flex items-center lg:text-lg text-gray-400 gap-x-4">
+                                <FacebookShareButton url={router.asPath}>
+                                    <i className="fa-brands fa-facebook" />
+                                </FacebookShareButton>
+                                <LinkedinShareButton url={router.asPath}>
+                                    <i className="fa-brands fa-linkedin-in" />
+                                </LinkedinShareButton>
+                                <TwitterShareButton url={router.asPath}>
+                                    <i className="fa-brands fa-x-twitter" />
+                                </TwitterShareButton>
+                                <PinterestShareButton url={router.asPath}>
+                                    <i className="fa-brands fa-pinterest" />
+                                </PinterestShareButton>
+                            </div>
 
                             {productData.bundle_items && productData.bundle_items.length !== 0 ?
                                 <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">

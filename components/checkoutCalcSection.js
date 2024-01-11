@@ -31,7 +31,7 @@ export default function CheckoutCalcSection(props) {
     const checkGiftCard = async (gift_code) => {
         setGiftState('loading', true)
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/verify-giftcode?gift_code=${gift_code}`)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/verify-giftcode`, { gift_code })
             setGiftState('card', data.gift_card)
         } catch (error) {
             console.log(error)
@@ -43,7 +43,7 @@ export default function CheckoutCalcSection(props) {
     const checkCoupon = async (coupon_code) => {
         setCoupontState('loading', true)
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/coupon/get/one?coupon_code=${coupon_code}`)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/coupon/get/one`, { coupon_code })
             setCoupontState('coupon', data.coupon)
         } catch (error) {
             console.log(error)
@@ -54,25 +54,22 @@ export default function CheckoutCalcSection(props) {
 
     const TotalOrderPrice = cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon) //in AED
 
-    console.log(items)
-    const getCouponDiscount = (Coupon) => {
-        if (Coupon && Coupon.coupon_value > 0) {
+    const getCouponDiscount = (Coupon, couponCode) => {
+        if (couponCode && Coupon && Coupon.coupon_value > 0) {
             if (typeof Coupon.coupon_config.coupon_usage_limit === "number" && Coupon.coupon_config.coupon_usage_limit < 1) return 0
             const config = Coupon.coupon_config
-            console.log("coupon entry point 1")
+
             if (config.allowed_emails.length && !config.allowed_emails.includes(user.email)) return 0
             if ((config.minimum_spend && cartTotal < config.minimum_spend) || (config.maximum_spend && cartTotal > config.maximum_spend)) return 0
-            console.log("coupon entry point 2")
+
             let eligibleProducts = structuredClone(items)
             if (config.allowed_products.length) eligibleProducts = items.filter(p => config.allowed_products.includes(p.product_id))
             if (config.allowed_categories?.length) eligibleProducts = eligibleProducts.filter(p => p.categories.some(categ => config.allowed_categories.includes(categ)))
-            console.log("coupon entry point 3", eligibleProducts)
 
             if (config.exclude_sales) eligibleProducts = items.filter(p => !p.sale_price)
-            console.log("coupon entry point 4", eligibleProducts)
+
             if (config.exclude_products?.length) eligibleProducts = eligibleProducts.filter(p => !config.exclude_products.includes(p.product_id))
             if (config.exclude_categories?.length) eligibleProducts = eligibleProducts.filter(p => !p.categories.some(categ => config.exclude_categories.includes(categ)))
-            console.log(eligibleProducts)
 
             const eligibleProductsPrice = eligibleProducts.reduce((acc, p) => acc + p.price, 0)
             if (eligibleProductsPrice >= Coupon.coupon_value) return Coupon.coupon_value
@@ -81,8 +78,8 @@ export default function CheckoutCalcSection(props) {
         } else return 0
     }
 
-    const couponDiscount = getCouponDiscount(coupon.coupon)
-    console.log("here is the Coupon discount amount yayyyyy: ", couponDiscount)
+    const couponDiscount = getCouponDiscount(coupon.coupon, props.values.coupon_code)
+    console.log("calculated Coupon discount: ", couponDiscount)
 
     const getTotalAmount = (returnDiscount = false) => {
         const pointsDiscount = parseFloat(props.values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE || 0 //in AED
@@ -134,7 +131,7 @@ export default function CheckoutCalcSection(props) {
                                     <div className="lg:w-full xl:w-1/2 lg:my-0 flex flex-col gap-y-2.5">
                                         {item.uf_points ? <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-red-500'>UF Points:</span> <span>{item.uf_points}</span></div> : null}
                                         <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Price:</span> <span>{formatPrice(item.price)}</span></div>
-                                        <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Sale Price:</span> <span>{formatPrice(item.price * item.quantity)}</span></div>
+                                        <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Total Price:</span> <span>{formatPrice(item.price * item.quantity)}</span></div>
                                     </div>
                                 </aside>
                             </div>
@@ -183,7 +180,7 @@ export default function CheckoutCalcSection(props) {
                 </div>
 
                 <section className={`w-[200%] flex justify-self-start transition-all duration-500 ${checkedSection === 2 && "-translate-x-1/2"}`}>
-                    <div className={`w-1/2 mt-4 p-2 border rounded-lg transition-all duration-500 ${checkedSection === 2 && "opacity-0"}`}>
+                    <div className={`w-1/2 mt-4 p-4 border rounded-xl transition-all duration-500 ${checkedSection === 2 && "opacity-0"}`}>
                         <h4 className="mb-3 font_urbanist_bold text-lg">Coupon Code</h4>
                         {coupon.loading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
                         {coupon.coupon ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
@@ -197,10 +194,10 @@ export default function CheckoutCalcSection(props) {
                         </div>
                         {props.values?.coupon_code ?
                             <Button type="button" onClick={() => props.setFieldValue("coupon_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
-                            <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (giftCard.code.length > 7) { props.setFieldValue("coupon_code", coupon.code) } }} my="mt-2" classes="w-full">Apply</Button>}
+                            <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (coupon.code.length > 7) props.setFieldValue("coupon_code", coupon.code) }} my="mt-2" classes="w-full">Apply</Button>}
                     </div>
 
-                    <div className={`w-1/2 mt-4 p-2 border rounded-lg transition-all duration-500 ${checkedSection === 1 ? "opacity-0" : ''}`}>
+                    <div className={`w-1/2 mt-4 p-4 border rounded-xl transition-all duration-500 ${checkedSection === 1 ? "opacity-0" : ''}`}>
                         <h4 className="mb-3 font_urbanist_bold text-lg">Gift Code</h4>
                         {giftCard.loading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
                         {giftCard.card ? <span className="w-full flex flex-col justify-between items-center gap-y-4">

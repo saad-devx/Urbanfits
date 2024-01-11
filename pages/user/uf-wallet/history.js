@@ -36,7 +36,7 @@ export default function UFwallet() {
     const groupedRecords = groupHistoryByYearAndMonth(history)
 
     React.useEffect(() => {
-        getUfHistory(setHistory)
+        getUfHistory((history_docs) => setHistory(history_docs))
     }, [])
 
     if (!user || !user.email) return <Error403 />
@@ -64,7 +64,7 @@ export default function UFwallet() {
                     </div>
                 </section>
                 <div className="w-full py-5 flex justify-end text-10px">
-                    <button onClick={() => getUfHistory(setHistory)} disabled={walletLoading} className="px-4 py-1 text-white bg-[#FF4A60] rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate ${walletLoading && "fa-spin"}`} /></button>
+                    <button onClick={() => getUfHistory((history_docs) => setHistory(history_docs))} disabled={walletLoading} className="px-4 py-1 text-white bg-[#FF4A60] rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate ${walletLoading && "fa-spin"}`} /></button>
                 </div>
                 <section className="w-full gap-y-4">
                     <div className="w-full mb-4 flex justify-between items-center text-xs font_urbanist_bold">
@@ -118,7 +118,7 @@ export default function UFwallet() {
                 </div>
             </section>
             <div className="w-full py-5 flex justify-end">
-                <button onClick={() => getUfHistory(setHistory)} disabled={walletLoading} className="px-4 py-1 text-xs lg:text-sm text-white bg-black rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate text-xs ${walletLoading && "fa-spin"}`} /></button>
+                <button onClick={() => getUfHistory((history_docs) => setHistory(history_docs))} disabled={walletLoading} className="px-4 py-1 text-xs lg:text-sm text-white bg-black rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate text-xs ${walletLoading && "fa-spin"}`} /></button>
             </div>
             <section className="w-full gap-y-4">
                 <div className="w-full mb-4 flex justify-between items-center font_urbanist_bold">

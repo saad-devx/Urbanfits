@@ -12,20 +12,19 @@ import axios from "axios";
 export default function Home() {
     const [indexContent, setIndexContent] = useState(null)
 
-    const getIndexContent = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
-            setIndexContent(data);
-        } catch (error) { console.log(error); }
-    }
     useEffect(() => {
-        getIndexContent();
+        (async () => {
+            try {
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
+                setIndexContent(data);
+            } catch (error) { console.log(error); }
+        })()
         return () => setIndexContent(null)
     }, [])
 
     return <>
         <Head><title>Urban Fits</title></Head>
-        <main className="w-full max-w-[2000px] mx-auto h-full">
+        <main className="w-full">
             <main className='w-full bg-white flex flex-col transition-all gap-y-7 lg:gap-y-10 overflow-hidden' >
                 <section className="w-full layout_height mb-4 flex justify-center items-center transition-all duration-700 ease-linear overflow-hidden">
                     <HomeCarousel />

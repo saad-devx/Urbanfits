@@ -31,8 +31,8 @@ export default function Shoppingcard({ product }, props) {
             id: `${activeVariant._id}${activeVariant.sizes[0].size}`,
             name: product.name,
             price: product.sale_price || product.price,
-            ...(product.price ? { sale_price: product.price } : {}),
-            uf_points: product.sale_price || product.uf_points,
+            sale_price: product.sale_price || 0,
+            uf_points: product.uf_points || 0,
             weight: product.shipping_details.weight,
             stock: activeVariant.stock,
             size: activeVariant.sizes[0].size,
@@ -87,7 +87,7 @@ export default function Shoppingcard({ product }, props) {
                     </Splide>
                 </Link>
                 <div className="w-full h-[30%] md:h-1/5 text-black flex flex-col">
-                    <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="w-full font_urbanist_medium text-sm lg:text-base">
+                    <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="w-full xl:mt-2 2xl:mt-4 font_urbanist_medium text-sm lg:text-base">
                         <p className="truncate">{product.name}</p>
                     </Link>
                     <div className="w-full flex flex-col lg:flex-row lg:items-center">

@@ -28,17 +28,19 @@ const useWallet = create(persist((set, get) => ({
         set(() => ({ walletLoading: false }))
     },
 
-    getUfHistory: async (setCallbackState) => {
+    getUfHistory: async (callback, limit = 150) => {
         const { user } = useUser.getState()
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
-            if (setCallbackState) setCallbackState(data.history)
-            set(() => ({ walletLoading: false }))
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}${limit ? "&limit=" + limit : ''}`)
+            callback ? callback(data.history) : null
             return data.history
-        } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        set(() => ({ walletLoading: false }))
+        } catch (e) {
+            console.log(e);
+            if (e.response) toaster("error", e.response.data.msg)
+            else toaster("error", "Network error.")
+        } finally { set(() => ({ walletLoading: false })) }
     },
 
     getWeeklyCheckinHistory: async (setCallbackState) => {
@@ -68,7 +70,7 @@ const useWallet = create(persist((set, get) => ({
                     ...user.uf_wallet,
                     last_uf_spin: data.last_uf_spin,
                     last_spin_reward: data.reward,
-                    ...(data.next_uf_spin ? { next_uf_spin: data.next_uf_spin }:{})
+                    ...(data.next_uf_spin ? { next_uf_spin: data.next_uf_spin } : {})
                 }
             }, true, true)
             get().getUfBalance()
@@ -77,30 +79,24 @@ const useWallet = create(persist((set, get) => ({
         set(() => ({ walletLoading: false }))
     },
 
-    getExchangeRate: async (to = get().currency, amount = 1) => {
+    getExchangeRate: async (to = get().currency) => {
         if (to === "AED") {
             set(() => ({ exchange_rate: 1, walletLoading: false }))
             return 1
         }
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?want=${to}&have=${process.env.NEXT_PUBLIC_BASE_CURRENCY}&amount=${amount}`, {
-                headers: { "X-Api-Key": process.env.NEXT_PUBLIC_NINJA_CURRENCY_KEY }
-            })
-            set(() => ({ exchange_rate: data.new_amount, walletLoading: false }))
-            return data.new_amount
+            const { data } = await axios.get(`https://api.fastforex.io/fetch-one?api_key=${process.env.NEXT_PUBLIC_CURRENCY_API_KEY}&from=${process.env.NEXT_PUBLIC_BASE_CURRENCY}&to=${to}`)
+            set(() => ({ exchange_rate: data.result[to] }))
+            return data.result[to]
         } catch (error) {
             console.log(error);
-            if (to === "PKR") {
-                set(() => ({ exchange_rate: 77.6, walletLoading: false }))
-                return 77.6
-            }
-            else if (to === "SAR") {
-                set(() => ({ exchange_rate: 1.02, walletLoading: false }))
-                return 1.02
-            }
-        }
-        set(() => ({ walletLoading: false }))
+            let fallbackRate = 1;
+            if (to === "PKR") fallbackRate = 77.6;
+            else if (to === "SAR") fallbackRate = 1.02;
+            set(() => ({ exchange_rate: fallbackRate }))
+            return fallbackRate
+        } finally { set(() => ({ walletLoading: false })) }
     },
 
     getShippingRates: async (callback, shippingMethod = "standard_shipping") => {

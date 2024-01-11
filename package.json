@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.485.0",
     "@aws-sdk/client-sns": "^3.418.0",
     "@aws-sdk/s3-request-presigner": "^3.421.0",
     "@splidejs/react-splide": "^0.7.12",
@@ -23,6 +24,7 @@
     "formik": "^2.2.9",
     "gsap": "^3.11.5",
     "html2canvas": "^1.4.1",
+    "jazzcash-checkout": "^1.0.0",
     "jsonwebtoken": "8.5.1",
     "jspdf": "^2.5.1",
     "micro": "^10.0.1",
@@ -39,6 +41,7 @@
     "react-data-table-component": "^7.5.3",
     "react-dom": "18.2.0",
     "react-parallax-tilt": "^1.7.169",
+    "react-share": "^5.0.3",
     "react-toastify": "^9.1.1",
     "react-top-loading-bar": "^2.3.1",
     "react-use-cart": "^1.13.0",

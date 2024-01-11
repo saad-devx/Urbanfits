@@ -135,7 +135,7 @@ export default function Checkout1() {
 
     const calculateTotalShippingFee = (fees, shippingMethod = values?.delivery_option, coupon) => {
         if (shippingMethod === "free_shipping") return 0;
-        if (coupon && coupon.coupon_config?.free_shipping) return 0;
+        if (values.coupon_code && coupon && coupon.coupon_config?.free_shipping) return 0;
         const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
         if (!filteredItems.length) return 0
         const totalWeight = filteredItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)

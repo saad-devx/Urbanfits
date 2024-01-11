@@ -12,17 +12,27 @@ const UfTasksSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            description: String,
-            completed: {
-                type: Boolean,
-                default: false,
+            title: {
+                type: String,
                 required: true
+            },
+            description: String,
+            type: {
+                type: String,
+                default: 'in_app',
+                enum: ['in_app', 'social']
             },
             reward: Number,
             image: String,
             need_image: {
                 type: Boolean,
                 default: false
+            },
+            link: String,
+            completed: {
+                type: Boolean,
+                default: false,
+                required: true
             }
         }
     ]
