@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware'
 import useUser from './useUser';
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
+import uploadImage from '@/utils/uploadImage';
+import { shippingRates } from '@/uf.config';
 
 const currencies = ["AED", "SAR", "PKR"]
 const useWallet = create(persist((set, get) => ({
@@ -79,6 +81,22 @@ const useWallet = create(persist((set, get) => ({
         set(() => ({ walletLoading: false }))
     },
 
+    uploadUfTaskImg: async (taskName, file, callback) => {
+        const { user } = useUser.getState()
+        if (!user) return
+        try {
+            const ssUrl = await uploadImage(file, `uf-tasks/${user._id}/${taskName}`)
+            if (!ssUrl) return toaster("error", "Screenshot couldn't be uploaded, please retry.")
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/tasks/fulfill-task`, {
+                user_id: user._id,
+                task_name: taskName,
+                image: ssUrl
+            })
+            toaster("success", data.msg)
+            return callback ? callback(ssUrl) : ssUrl
+        } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
+    },
+
     getExchangeRate: async (to = get().currency) => {
         if (to === "AED") {
             set(() => ({ exchange_rate: 1, walletLoading: false }))
@@ -99,40 +117,31 @@ const useWallet = create(persist((set, get) => ({
         } finally { set(() => ({ walletLoading: false })) }
     },
 
-    getShippingRates: async (callback, shippingMethod = "standard_shipping") => {
-        set(() => ({ walletLoading: true }))
-        try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-shipping-rates`)
-            set(() => ({ walletLoading: false }))
-            console.log(data)
-
-            const { shipping_rates } = data
-            const { country } = useUser.getState()
-            let price = 0
-            let additionalKgCharges = 0
-            if (country.country === "sa") {
-                price = shipping_rates[shippingMethod].ksa_rate;
-                additionalKgCharges = shipping_rates[shippingMethod].additional_kg_charge.ksa
-            }
-            else if (country.country === "ae") {
-                price = shipping_rates[shippingMethod].uae_rate;
-                additionalKgCharges = shipping_rates[shippingMethod].additional_kg_charge.uae
-            }
-            else if (country.country === "pk") {
-                price = shipping_rates[shippingMethod].pk_rate;
-                additionalKgCharges = shipping_rates[shippingMethod].additional_kg_charge.pk
-            }
-            const getTimeSpan = (shippingMethod) => {
-                const shippingData = shipping_rates[shippingMethod]
-                if (country.country === "sa") return shippingData.shipping_timespan.ksa_shipping
-                else if (country.country === "ae") return shippingData.shipping_timespan.uae_shipping
-                else if (country.country === "pk") return shippingData.shipping_timespan.pk_shipping
-            }
-            callback({ price, getTimeSpan, additionalKgCharges, shipping_rates })
-            return { price, getTimeSpan, additionalKgCharges, shipping_rates }
-
-        } catch (error) { console.log(error); }
-        set(() => ({ walletLoading: false }))
+    getShippingRates: (callback, shippingMethod = "standard_shipping") => {
+        const { country } = useUser.getState()
+        let price = 0
+        let additionalKgCharges = 0
+        if (country.country === "sa") {
+            price = shippingRates[shippingMethod].ksa_rate;
+            additionalKgCharges = shippingRates[shippingMethod].additional_kg_charge.ksa
+        }
+        else if (country.country === "ae") {
+            price = shippingRates[shippingMethod].uae_rate;
+            additionalKgCharges = shippingRates[shippingMethod].additional_kg_charge.uae
+        }
+        else if (country.country === "pk") {
+            price = shippingRates[shippingMethod].pk_rate;
+            additionalKgCharges = shippingRates[shippingMethod].additional_kg_charge.pk
+        }
+        const getTimeSpan = (shippingMethod) => {
+            const shippingData = shippingRates[shippingMethod]
+            if (country.country === "sa") return shippingData.shipping_timespan.ksa_shipping
+            else if (country.country === "ae") return shippingData.shipping_timespan.uae_shipping
+            else if (country.country === "pk") return shippingData.shipping_timespan.pk_shipping
+        }
+        const returnRates = { price, getTimeSpan, additionalKgCharges, shipping_rates: shippingRates }
+        callback ? callback(returnRates) : null
+        return returnRates
     },
 
     formatPrice: (amount = 0, currency = get().currency, rate = get().exchange_rate) => {

@@ -76,7 +76,7 @@ export default function UFwallet() {
         <User profileNull>
             <div className="w-full flex justify-between items-center">
                 <h1 className="text-2xl font_urbanist_bold">UF Wallet</h1>
-                <Button disabled={walletLoading} my="0" onClick={getUfBalance} fontSize="text-sm">Refresh&nbsp;&nbsp; <i className={`fa-solid fa-arrows-rotate text-sm ${walletLoading && "fa-spin"}`} /></Button>
+                <Button disabled={walletLoading} my="0" onClick={getUfBalance} fontSize="text-sm">Refresh&nbsp;&nbsp; <i className={`fa-solid fa-rotate-right text-sm ${walletLoading && "fa-spin"}`} /></Button>
             </div>
             <section className="w-full h-[13rem] my-10 flex items-center gap-x-5">
 

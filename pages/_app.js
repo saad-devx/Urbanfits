@@ -15,7 +15,7 @@ import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
 import toaster from "@/utils/toast_function";
 import axios from 'axios'
-import { pusherClient } from '@/utils/pusher'
+import { pusherClient, initBeamsClient } from '@/utils/pusher'
 import PusherClient from 'pusher-js'
 import { urbanist } from '@/fonts'
 
@@ -27,7 +27,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
   const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-    authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
+    authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth/channel`,
     auth: {
       params: {
         user_id: user?._id,
@@ -71,6 +71,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
     if (lastPresenceChannel) lastPresenceChannel.unsubscribe('presence-urbanfits')
     subscribeToPresence();
+    initBeamsClient()
     if (user) {
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
       userChannel.bind('new-notification', (data) => {
@@ -90,7 +91,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       if (sessionValid === true) logOut()
     }
     window.addEventListener("beforeunload", igniteSession)
-    
+
     return () => {
       pusherPresenceClient && pusherPresenceClient.unsubscribe('presence-urbanfits')
       window.removeEventListener("beforeunload", igniteSession)

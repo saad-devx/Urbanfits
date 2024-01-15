@@ -1,6 +1,6 @@
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import CorsMiddleware from "@/utils/cors-config";
 import mongoose from "mongoose"
+import CorsMiddleware from "@/utils/cors-config";
 
 const DeleteS3Object = async (req, res) => {
     try {

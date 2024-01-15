@@ -27,6 +27,7 @@ export const DefaultTasks = [
         description: "Follow and win 100 points.",
         reward: 100,
         need_image: true,
+        image_submitted: false,
         link: "https://www.facebook.com"
     },
     {
@@ -36,6 +37,7 @@ export const DefaultTasks = [
         description: "Follow and win 100 points.",
         reward: 100,
         need_image: true,
+        image_submitted: false,
         link: "https://www.instagram.com"
     },
     {
@@ -45,6 +47,7 @@ export const DefaultTasks = [
         description: "Follow and win 100 points.",
         reward: 100,
         need_image: true,
+        image_submitted: false,
         link: "https://www.tiktok.com/"
     },
     {
@@ -53,6 +56,7 @@ export const DefaultTasks = [
         description: "Follow and win 100 points.",
         reward: 100,
         need_image: true,
+        image_submitted: false,
         link: "/"
     },
     {
@@ -67,3 +71,43 @@ export const DefaultTasks = [
         description: "Get 500 points."
     }
 ]
+
+export const shippingRates = {
+    "standard_shipping": {
+        "uae_rate": 16,
+        "ksa_rate": 65,
+        "pk_rate": 40,
+        "additional_kg_charge": {
+            "uae": 2,
+            "ksa": 10,
+            "pk": 8
+        },
+        "shipping_timespan": {
+            "uae_shipping": "1 - 2 days",
+            "ksa_shipping": "5 - 7 days",
+            "pk_shipping": "5 - 7 days"
+        }
+    },
+    "express_shipping": {
+        "ksa_rate": 95,
+        "pk_rate": 70,
+        "additional_kg_charge": {
+            "ksa": 10,
+            "pk": 8
+        },
+        "shipping_timespan": {
+            "ksa_shipping": "2 - 4 days",
+            "pk_shipping": "2 - 4 days"
+        }
+    },
+    "free_shipping": {
+        "uae_order_rate": 300,
+        "ksa_order_rate": 500,
+        "pk_order_rate": 500,
+        "shipping_timespan": {
+            "uae_shipping": "1 - 2 days",
+            "ksa_shipping": "5 - 7 days",
+            "pk_shipping": "5 - 7 days"
+        }
+    }
+}

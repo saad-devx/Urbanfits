@@ -100,9 +100,10 @@ export default function CheckoutCalcSection(props) {
     }
 
     return (
-        <div className="bg-white w-full p-4 md:p-5 lg:p-7 space-y-3 rounded-xl">
-            <h3 className="text-xl md:text-2xl font_urbanist_bold text-center mb-3">Order Summary ({totalUniqueItems})</h3>
-            <div className="flex relative mb-3 w-full flex-col justify-between rounded-lg md:rounded-2xl overflow-x-hidden">
+        <div className="bg-white w-full p-4 md:p-5 lg:p-7 flex flex-col items-center rounded-xl">
+            <h3 className="text-xl md:text-2xl font-bold mb-3">Order Summary ({totalUniqueItems})</h3>
+
+            <div className="w-full max-h-[25rem] flex flex-col overflow-auto">
                 {items.map((item, i) => {
                     if (item.id.startsWith("giftcard_")) return <section className="w-full mb-4 md:mb-6 p-4 border rounded-lg">
                         <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
@@ -138,84 +139,82 @@ export default function CheckoutCalcSection(props) {
                         </section>
                     </>
                 })}
-                <div className="w-full h-auto flex flex-col my-5 md:my-3 font_urbanist_bold text-sm md:text-base gap-y-3 md:gap-y-4">
-                    {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Card Number</span> <span>xxx-xxxxxxxxxxxxx-{user.uf_wallet.card_number.slice(-4)}</span></div>}
-                    {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-red-500'>Earned UF-Points</span> <span>{totalUfPoints}</span></div>}
-                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></div>
-                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{getTotalAmount(true)}%</span></div>
-                    <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon)) || "We don't ship here"}</span></div>
+            </div>
+            <div className="w-full h-auto flex flex-col my-5 md:my-3 font_urbanist_bold text-sm md:text-base gap-y-3 md:gap-y-4">
+                {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Card Number</span> <span>xxx-xxxxxxxxxxxxx-{user.uf_wallet.card_number.slice(-4)}</span></div>}
+                {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-red-500'>Earned UF-Points</span> <span>{totalUfPoints}</span></div>}
+                <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></div>
+                <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{getTotalAmount(true)}%</span></div>
+                <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon)) || "We don't ship here"}</span></div>
+            </div>
+            {props.values.points_to_use ? parseFloat(props.values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
+                <h4>Saved</h4>
+                <h4>{formatPrice(cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon) - ((cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon)) - parseFloat(props.values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE))}</h4>
+            </div> : null}
+            <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
+                <h4>Total</h4>
+                <h4>{getTotalAmount()}</h4>
+            </div>
+            {user && <div className="w-full mt-4 p-2 border rounded-lg">
+                <h4 className="mb-3 font_urbanist_bold text-lg">Apply UF-Points</h4>
+                <span className="w-full flex justify-between items-center">
+                    Your UF Balance: <p>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span>{points} - {props.values.points_to_use} = {points - props.values.points_to_use}</span> : points} pts</p>
+                </span>
+                <div className="w-full relative flex flex-col">
+                    <input name='points_to_use' id='points_to_use' type='number' onChange={(e) => {
+                        const value = parseFloat(e.target.value)
+                        value > points ? props.setFieldError("points_to_use", "You can't apply more points than your actual balance.") : props.setFieldValue("points_to_use", value)
+                    }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 transition rounded-lg outline-none`} />
+                    <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
                 </div>
-                {props.values.points_to_use ? parseFloat(props.values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
-                    <h4>Saved</h4>
-                    <h4>{formatPrice(cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon) - ((cartTotal + calculateTotalShippingFee(shippingRates?.price || 0, selectedShippingOption, coupon.coupon)) - parseFloat(props.values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE))}</h4>
-                </div> : null}
-                <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
-                    <h4>Total</h4>
-                    <h4>{getTotalAmount()}</h4>
+            </div>}
+
+            <span className="my-6 text-xl md:text-2xl font_urbanist_bold">More Discount by</span>
+            <div className="w-full flex justify-center items-center text-sm gap-x-4">
+                <button className={`${checkedSection == 1 && "font-semibold"} px-2 flex flex-col justify-between items-center`} onClick={() => { setCheckedSection(1); setCoupon({ card: null, code: '', loading: false }) }}>
+                    Coupon Code
+                    <span className={`${checkedSection == 1 ? "w-full" : 'w-0'} h-0.5 lg:h-1 mt-0.5 lg:mt-1 bg-gold-land rounded-md transition-all duration-300`} />
+                </button>
+                <button className={`${checkedSection == 2 && "font-semibold"} px-2 flex flex-col justify-between items-center`} onClick={() => { setCheckedSection(2); setGiftCard({ coupon: null, code: '', loading: false }) }}>
+                    Gift Code
+                    <span className={`${checkedSection == 2 ? "w-full" : 'w-0'} h-0.5 lg:h-1 mt-0.5 lg:mt-1 bg-gold-land rounded-md transition-all duration-300`} />
+                </button>
+            </div>
+
+            {checkedSection === 1 ? <div className="w-full mt-4 p-4 border rounded-xl transition-all duration-500">
+                <h4 className="mb-3 font_urbanist_bold text-lg">Coupon Code</h4>
+                {coupon.loading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
+                {coupon.coupon ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
+                    <span className={`px-6 py-4 rounded-lg font-bold text-sm lg:text-base`}>{coupon.coupon.name}</span>
+                    <p>You have <span className="font-bold text-red-500">{formatPrice(coupon.coupon.coupon_value)}</span> of discount.</p>
+                </span> : null}
+                <div className="w-full relative flex justify-between items-center">
+                    <input onChange={(e) => setCoupontState('code', e.target.value)} value={coupon.code} className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
+                    <button type='button' onClick={() => checkCoupon(coupon.code)} disabled={coupon.loading} className="bg-[#FF4A60] h-11 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
+                    <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
                 </div>
-                {user && <div className="w-full mt-4 p-2 border rounded-lg">
-                    <h4 className="mb-3 font_urbanist_bold text-lg">Apply UF-Points</h4>
-                    <span className="w-full flex justify-between items-center">
-                        Your UF Balance: <p>{props.values.points_to_use && parseFloat(props.values.points_to_use) > 0 ? <span>{points} - {props.values.points_to_use} = {points - props.values.points_to_use}</span> : points} pts</p>
-                    </span>
-                    <div className="w-full relative flex flex-col">
-                        <input name='points_to_use' id='points_to_use' type='number' onChange={(e) => {
-                            const value = parseFloat(e.target.value)
-                            value > points ? props.setFieldError("points_to_use", "You can't apply more points than your actual balance.") : props.setFieldValue("points_to_use", value)
-                        }} onBlur={props.handleChange} value={props.values.points_to_use} placeholder='Points to use' className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 transition rounded-lg outline-none`} />
+                {props.values?.coupon_code ?
+                    <Button type="button" onClick={() => props.setFieldValue("coupon_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
+                    <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (coupon.code.length > 7) props.setFieldValue("coupon_code", coupon.code) }} my="mt-2" classes="w-full">Apply</Button>}
+            </div> :
+
+                <div className="w-full mt-4 p-4 border rounded-xl transition-all duration-500">
+                    <h4 className="mb-3 font_urbanist_bold text-lg">Gift Code</h4>
+                    {giftCard.loading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
+                    {giftCard.card ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
+                        <span className={`px-6 py-4 rounded-lg font-bold text-sm lg:text-base text-white tracking-1 uppercase ${giftCardBgs[`${giftCard.card?.price}`]}`}>{giftCard.card.name}</span>
+                        <p>You have <span className="font_urbanist_bold text-red-500">{formatPrice(giftCard.card.price)}</span> of discount.</p>
+                    </span> : null}
+                    <div className="w-full relative flex justify-between items-center">
+                        <input onChange={(e) => setGiftState('code', e.target.value)} value={giftCard.code} className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
+                        <button type='button' onClick={() => checkGiftCard(giftCard.code)} disabled={giftCard.loading} className="bg-[#FF4A60] h-11 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
                         <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
                     </div>
+                    {props.values?.gift_code ?
+                        <Button type="button" onClick={() => props.setFieldValue("gift_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
+                        <Button type="button" disabled={giftCard.card?._id ? (!giftCard.code || giftCard.code.length < 8 || giftCard.code.length > 10) : true} onClick={() => { if (giftCard.code.length > 8 && giftCard.code.length < 11) { props.setFieldValue("gift_code", giftCard.code) } }} my="mt-2" classes="w-full">Apply</Button>}
                 </div>}
 
-                <span className="my-6 text-xl md:text-2xl font_urbanist_bold">More Discount by</span>
-                <div className="w-full flex justify-center items-center text-sm gap-x-4">
-                    <button className={`${checkedSection == 1 && "font-semibold"} px-2 flex flex-col justify-between items-center`} onClick={() => { setCheckedSection(1); setCoupon({ card: null, code: '', loading: false }) }}>
-                        Coupon Code
-                        <span className={`${checkedSection == 1 ? "w-full" : 'w-0'} h-0.5 lg:h-1 mt-0.5 lg:mt-1 bg-gold-land rounded-md transition-all duration-300`} />
-                    </button>
-                    <button className={`${checkedSection == 2 && "font-semibold"} px-2 flex flex-col justify-between items-center`} onClick={() => { setCheckedSection(2); setGiftCard({ coupon: null, code: '', loading: false }) }}>
-                        Gift Code
-                        <span className={`${checkedSection == 2 ? "w-full" : 'w-0'} h-0.5 lg:h-1 mt-0.5 lg:mt-1 bg-gold-land rounded-md transition-all duration-300`} />
-                    </button>
-                </div>
-
-                <section className={`w-[200%] flex justify-self-start transition-all duration-500 ${checkedSection === 2 && "-translate-x-1/2"}`}>
-                    <div className={`w-1/2 mt-4 p-4 border rounded-xl transition-all duration-500 ${checkedSection === 2 && "opacity-0"}`}>
-                        <h4 className="mb-3 font_urbanist_bold text-lg">Coupon Code</h4>
-                        {coupon.loading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
-                        {coupon.coupon ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
-                            <span className={`px-6 py-4 rounded-lg font-bold text-sm lg:text-base`}>{coupon.coupon.name}</span>
-                            <p>You have <span className="font-bold text-red-500">{formatPrice(coupon.coupon.coupon_value)}</span> of discount.</p>
-                        </span> : null}
-                        <div className="w-full relative flex justify-between items-center">
-                            <input onChange={(e) => setCoupontState('code', e.target.value)} value={coupon.code} className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
-                            <button type='button' onClick={() => checkCoupon(coupon.code)} disabled={coupon.loading} className="bg-[#FF4A60] h-11 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
-                            <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
-                        </div>
-                        {props.values?.coupon_code ?
-                            <Button type="button" onClick={() => props.setFieldValue("coupon_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
-                            <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (coupon.code.length > 7) props.setFieldValue("coupon_code", coupon.code) }} my="mt-2" classes="w-full">Apply</Button>}
-                    </div>
-
-                    <div className={`w-1/2 mt-4 p-4 border rounded-xl transition-all duration-500 ${checkedSection === 1 ? "opacity-0" : ''}`}>
-                        <h4 className="mb-3 font_urbanist_bold text-lg">Gift Code</h4>
-                        {giftCard.loading && <div className="w-full col-span-full flex justify-center items-center"><BounceLoader /></div>}
-                        {giftCard.card ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
-                            <span className={`px-6 py-4 rounded-lg font-bold text-sm lg:text-base text-white tracking-1 uppercase ${giftCardBgs[`${giftCard.card?.price}`]}`}>{giftCard.card.name}</span>
-                            <p>You have <span className="font_urbanist_bold text-red-500">{formatPrice(giftCard.card.price)}</span> of discount.</p>
-                        </span> : null}
-                        <div className="w-full relative flex justify-between items-center">
-                            <input onChange={(e) => setGiftState('code', e.target.value)} value={giftCard.code} className={`w-full mt-3 h-11 px-4 py-2.5 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
-                            <button type='button' onClick={() => checkGiftCard(giftCard.code)} disabled={giftCard.loading} className="bg-[#FF4A60] h-11 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
-                            <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{props.errors && props.errors.point_to_use}</p>
-                        </div>
-                        {props.values?.gift_code ?
-                            <Button type="button" onClick={() => props.setFieldValue("gift_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
-                            <Button type="button" disabled={giftCard.card?._id ? (!giftCard.code || giftCard.code.length < 8 || giftCard.code.length > 10) : true} onClick={() => { if (giftCard.code.length > 8 && giftCard.code.length < 11) { props.setFieldValue("gift_code", giftCard.code) } }} my="mt-2" classes="w-full">Apply</Button>}
-                    </div>
-                </section>
-
-            </div>
         </div>
     )
 }

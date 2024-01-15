@@ -10,25 +10,36 @@ const UfTasksSchema = new mongoose.Schema({
         {
             name: {
                 type: String,
-                required: true
+                required: true,
+                immutable: true
             },
             title: {
                 type: String,
-                required: true
+                required: true,
+                immutable: true
             },
             description: String,
             type: {
                 type: String,
                 default: 'in_app',
-                enum: ['in_app', 'social']
+                enum: ['in_app', 'social'],
+                immutable: true
             },
-            reward: Number,
+            reward: {
+                type: Number,
+                immutable: true
+            },
             image: String,
+            image_submitted: Boolean,
             need_image: {
                 type: Boolean,
-                default: false
+                default: false,
+                immutable: true
             },
-            link: String,
+            link: {
+                type: String,
+                immutable: true
+            },
             completed: {
                 type: Boolean,
                 default: false,

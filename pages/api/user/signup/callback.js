@@ -42,7 +42,7 @@ const SignupCallback = async (req, res) => {
                     points: 500,
                     source: "signup"
                 })
-                axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/signup/create-tasks-record?user_id=${user._id}`)
+                axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/create-tasks-record?user_id=${user._id}`)
                 const payload = jwt.sign({ ...user }, process.env.NEXT_PUBLIC_SECRET_KEY)
                 await sendNotification(user._id, {
                     category: "reward",

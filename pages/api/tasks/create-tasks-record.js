@@ -7,7 +7,7 @@ const CreateTasksRecord = async (req, res) => {
     try {
         if (req.method === 'POST') {
             const { user_id } = req.query
-            if (mongoose.Types.ObjectId.isValid(user_id)) return res.status(401).json({
+            if (!mongoose.Types.ObjectId.isValid(user_id)) return res.status(401).json({
                 success: false,
                 msg: "A valid user_id is required."
             })

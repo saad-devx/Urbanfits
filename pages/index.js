@@ -37,7 +37,7 @@ export default function Home() {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard margin='0' product={product} />
+                            return <Shoppingcard key={"latest_arrivals" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section> : null}
@@ -52,7 +52,7 @@ export default function Home() {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard margin='0' product={product} />
+                            return <Shoppingcard key={"new_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section>
@@ -75,7 +75,7 @@ export default function Home() {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard margin='0' product={product} />
+                            return <Shoppingcard key={"women_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section>
@@ -93,7 +93,7 @@ export default function Home() {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard margin='0' product={product} />
+                            return <Shoppingcard key={"men_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section> : null}
@@ -109,7 +109,7 @@ export default function Home() {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard margin='0' product={product} />
+                            return <Shoppingcard key={"kids_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section> : null}

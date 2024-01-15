@@ -38,17 +38,29 @@ const CheckShell = ({ dayCode, day, history }) => {
 
 const TaskComp = ({ task }) => {
     const { user } = useUser()
-    const { name, type, title, description, reward, link, need_image } = task
+    const { uploadUfTaskImg } = useWallet()
+    const { name, type, title, description, link, need_image, image_submitted } = task
     const disableAction = user && name == "sign_up" ? true : (!user && name !== "sign_up" ? true : false)
+    const [ssLoading, setSsLoading] = useState(false)
+
+    const onUploadSS = async (e) => {
+        const file = e.target.files[0]
+        setSsLoading(true)
+        if (file) uploadUfTaskImg(name, file, () => setSsLoading(false))
+    }
+
     return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
         <span className="flex flex-col text-sm lg:text-base text-gray-400">
             <h6 className="font_urbanist_bold text-black">{title}</h6>
             {description}
         </span>
-        <div disabled={disableAction} className={`${disableAction && "opacity-60 pointer-events-none"} flex items-center gap-2 md:gap-3`}>
-            {user && need_image ? <button title='Upload Screen Shot' className="px-3 py-2 text-xs lg:text-sm text-gotham-black bg-gray-100 rounded-md"><i className="fa-solid fa-upload" /></button> : null}
+        {!image_submitted ? <div disabled={disableAction || ssLoading} className={`${disableAction || ssLoading && "opacity-60 pointer-events-none"} flex items-center gap-2 md:gap-3`}>
+            {user && need_image ? <label htmlFor={name} title='Upload Screen Shot' className="px-3 py-2 text-xs lg:text-sm text-gotham-black bg-gray-100 rounded-md cursor-pointer">
+                {ssLoading ? <span className='inline-block w-5 aspect-square border-r-2 border-gotham-black rounded-3xl animate-spin' /> : <i className="fa-solid fa-upload" />}
+                <input onChange={onUploadSS} className='appearance-none hidden' type="file" accept="image/*" name={name} id={name} />
+            </label> : null}
             <Link target={type == "social" ? "_blank" : ''} href={link || '#'} className={`p-2 ${name == "sign_up" ? "bg-gold-land text-white" : "bg-gray-100 text-black"} text-sm lg:text-base rounded-md`}>{user && name == "sign_up" ? <i className="fa-solid fa-check mx-1.5 text-sm" /> : (!user && name !== "sign_up" ? <i className="fa-solid fa-lock text-gotham-black mx-1.5 text-sm" /> : "Go")}</Link>
-        </div>
+        </div> : <span title='approval pending...' className='p-2 px-3 bg-pinky text-white text-sm lg:text-base rounded-md'><i className="fa-regular fa-clock" /></span>}
     </div>
 }
 

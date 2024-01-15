@@ -33,7 +33,7 @@ const Login = async (req, res) => {
                         type: "login",
                         mini_msg: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
                         message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
-                    }, { notify: true, notifySilently: true })
+                    }, { notify: true })
                     res.status(200).json({
                         success: true,
                         msg: "You are Logged in successfully !",

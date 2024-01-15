@@ -2,7 +2,6 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import Category from "@/models/category"
 const mongoose = require('mongoose')
-import { pusherServer } from "@/utils/pusher"
 import CorsMiddleware from "@/utils/cors-config"
 
 const GetSingleProduct = async (req, res) => {
@@ -26,10 +25,6 @@ const GetSingleProduct = async (req, res) => {
                 msg: "Product not found with corresponding id",
             })
 
-            pusherServer.trigger('urban-fits', 'server-update', {
-                success: true,
-                pusher_msg: "Product fetched to the client successfully. (socket event)"
-            })
             res.status(200).json({
                 success: true,
                 msg: `Product found with the id ${id}`,

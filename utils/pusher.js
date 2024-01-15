@@ -1,6 +1,11 @@
-import PusherServer from 'pusher'
-import PusherClient from 'pusher-js'
+import PusherServer from 'pusher';
+import PusherClient from 'pusher-js';
+import PushNotifications from "@pusher/push-notifications-server"; // For Server side
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+import useUser from '@/hooks/useUser';
+const { user } = useUser.getState()
 
+// Pusher Channel intialization
 const pusherServer = new PusherServer({
     appId: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
     key: process.env.NEXT_PUBLIC_PUSHER_KEY,
@@ -13,4 +18,27 @@ const pusherClient = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
 });
 
-export { pusherServer, pusherClient }
+// Pusher Beams initialization
+let beamsServer = new PushNotifications({
+    instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID,
+    secretKey: process.env.NEXT_PUBLIC_PUSHER_PRIMARY_KEY
+});
+
+const initBeamsClient = async () => {
+    const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+        url: process.env.NEXT_PUBLIC_HOST + "/api/pusher/auth/beam",
+        queryParams: {
+            user_id: user._id,
+        }
+    });
+    const beamsClient = new PusherPushNotifications.Client({
+        instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID,
+    });
+    beamsClient
+        .start()
+        .then(() => beamsClient.setUserId(user._id, beamsTokenProvider))
+        .then(() => console.log("user registered with beams successfully."))
+        .catch(console.error);
+}
+
+export { pusherServer, pusherClient, beamsServer, initBeamsClient }
