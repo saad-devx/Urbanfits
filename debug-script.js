@@ -25,7 +25,7 @@ const listContents = (directory) => {
 
                 fs.writeFile(packageJsonPath, updatedContent, 'utf-8', (writeErr) => {
                     if (writeErr) console.error(`Error writing to package.json: ${writeErr.message}`);
-                    else console.log(`Content added successfully to ${packageJsonPath}`);
+                    else console.log(`Content added successfully to ${packageJsonPath}. Here is the updated content ==== ${updatedContent}`);
                 });
             } else console.log('Content already exists in package.json. No changes made.');
         })

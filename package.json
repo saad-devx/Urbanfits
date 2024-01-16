@@ -42,7 +42,6 @@
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
     "react-dom": "18.2.0",
-    "react-parallax-tilt": "^1.7.169",
     "react-share": "^5.0.3",
     "react-toastify": "^9.1.1",
     "react-top-loading-bar": "^2.3.1",
