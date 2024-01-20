@@ -1,14 +1,7 @@
-// list-directory.js
 const fs = require('fs');
 
-console.log("the post install script trying to execute...")
-const listContents = (directory) => {
+const listContents = () => {
     try {
-        const contents = fs.readdirSync(directory);
-        console.log('YOOOO Niggaa Contents of the directory:');
-        contents.forEach((item) => {
-            console.log(item);
-        });
         const packageJsonPath = 'node_modules/@pusher/push-notifications-web/package.json';
 
         fs.readFile(packageJsonPath, 'utf-8', (err, data) => {
@@ -34,5 +27,4 @@ const listContents = (directory) => {
     }
 };
 
-// Replace '.' with the path to your desired directory
-listContents('./node_modules');
+listContents();

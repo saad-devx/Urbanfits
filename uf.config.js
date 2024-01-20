@@ -111,3 +111,14 @@ export const shippingRates = {
         }
     }
 }
+
+export const currencies = ["AED", "SAR", "PKR"];
+export const shippingMethods = ["standard_shipping", "express_shipping", "free_shipping"]
+export const giftCardPrices = {
+    giftcard_bronze: 100,
+    giftcard_silver: 200,
+    giftcard_gold: 300,
+    giftcard_platinum: 400,
+    giftcard_diamond: 500
+}
+export const adminRoles = ['administrator', 'editor', 'author']

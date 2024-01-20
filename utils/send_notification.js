@@ -1,8 +1,8 @@
 import Notification from "@/models/notification";
+import AdminNotific from "@/models/admin_notifications";
 import { pusherServer, beamsServer } from "./pusher";
 
-const adminRoles = ['administrator', 'editor', 'author']
-const sendNotification = async (user_id, params, options = {}) => {
+export const sendNotification = async (user_id, params, options = {}) => {
     const {
         notify = true,
         notifySilently = false,
@@ -34,19 +34,41 @@ const sendNotification = async (user_id, params, options = {}) => {
         title: params.heading,
         body: params.mini_msg || params.message,
     }
-    const beamRes = await beamsServer.publishToUsers([user_id], {
+    await beamsServer.publishToInterests([user_id], {
         web: {
             notification: {
                 ...notificObj,
-                deep_link: params.deep_link || "http://localhost:3000",
-            },
-        },
-        apns: {
-            aps: { alert: notificObj }
-        },
-        fcm: { notification: notificObj }
+                deep_link: params.deep_link || process.env.NEXT_PUBLIC_HOST,
+            }
+        }
+        // apns: {
+        //     aps: { alert: notificObj }
+        // },
+        // fcm: { notification: notificObj }
     })
-
 }
 
-export default sendNotification
+export const sendAdminNotification = async (notific_data) => {
+
+    const totalAdminNotifics = await AdminNotific.countDocuments();
+    (async () => {
+        if (totalAdminNotifics > 99) {
+            const oldestNotification = await AdminNotific.find().sort({ createdAt: -1 }).limit(1)[0]
+            await AdminNotific.findByIdAndDelete(oldestNotification._id)
+        }
+    })()
+    const newNotification = await AdminNotific.create(notific_data);
+
+    pusherServer.trigger("admin-channel", "new-notification", newNotification)
+
+    await beamsServer.publishToInterests(["@_urbanfits_admin_notifications"], {
+        web: {
+            notification: {
+                title: newNotification.data?.title,
+                body: newNotification.data?.msg,
+                deep_link: newNotification.data?.href || "https://admin.urbanfits.ae",
+            }
+        }
+    })
+    console.log(`Notification with id : ${newNotification._id} sent to the Admins.`)
+}

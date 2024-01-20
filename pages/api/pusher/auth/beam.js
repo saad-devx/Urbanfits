@@ -13,11 +13,9 @@ export default async function BeamAuth(req, res) {
         await ConnectDB()
         const user = await User.findById(user_id)
         if (!user) return res.status(401).send(null)
-        else {
             const beamToken = beamsServer.generateToken(user_id)
             res.send(beamToken);
-        }
-
+            console.log("User authenticated for beams pushes.")
     } catch (error) {
         console.error(error)
         res.status(500).json({ success: false, error, msg: "Internal Server Error occurred. Please retry later." })

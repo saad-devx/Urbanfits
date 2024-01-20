@@ -1,70 +1,75 @@
-// import Jazzcash from 'jazzcash-checkout';
-const Jazzcash = require('jazzcash-checkout')
-import CorsMiddleware from "@/utils/cors-config";
 import axios from "axios"
+import CryptoJS from "crypto-js";
+import StandardApi from "@/middlewares/standard_api";
 
-const JazzCheckoutSession = async (req, res) => {
-    try {
-        if (req.method === "POST") {
-            await CorsMiddleware(req, res)
-            // Jazzcash.credentials({
-            //     config: {
-            //         merchantId: "MC70232",
-            //         password: "c61u689ws3",
-            //         hashKey: "98415a74zw",
-            //     },
-            //     environment: 'sandbox'
-            // });
+const JazzCheckoutSession = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
+    const apiUrl = 'https://sandbox.jazzcash.com.pk/ApplicationAPI/API/Payment/DoTransaction';
 
-            // Jazzcash.setData({
-            //     pp_Version: '1.1',
-            //     pp_DiscountedAmount: '',
-            //     pp_DiscountBank: '',
-            //     pp_Amount: '1000',
-            //     pp_TxnCurrency: 'PKR',
-            //     pp_MobileNumber: "03123456789",
-            //     pp_BillReference: 'billRef123',
-            //     pp_Description: 'Description of transaction',
-            // });
+    const currentDate = new Date();
 
-            // // REQUEST TYPES(PAY, WALLET, INQUIRY, REFUND)
-            // const data = await Jazzcash.createRequest("WALLET")
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 
-            const apiUrl = 'https://sandbox.jazzcash.com.pk/ApplicationAPI/API/4.0/purchase/domwallettransactionviatoken';
+    const formattedDateTime = `${currentDate.getFullYear()}${month}${day}${hours}${minutes}${seconds}`;
 
-            // Parameters for Wallet Payment
-            const paymentData = {
-                pp_MerchantID: "MC70232",
-                pp_Password: "c61u689ws3",
-                pp_SubMerchantID: "",
-                pp_TxnRefNo: "T20210830104840",
-                pp_MobileNumber: "03362160806",
-                // pp_CNIC: "4210112345678",
-                pp_MPIN: "4444",
-                pp_Amount: "10000",
-                // pp_DiscountedAmount: "",
-                pp_TxnDateTime: "20210830104840",
-                pp_BillReference: "bill red",
-                pp_Description: "a test payment made in sandbox",
-                pp_TxnExpiryDateTime: "20210930104840",
-                pp_SecureHash: "",
-                pp_PaymentToken: ""
-            };
-
-            const { data } = await axios.post(apiUrl, paymentData)
-
-
-            return res.status(200).json({
-                success: true,
-                msg: "something wokred at least",
-                data
-            })
-
-        } else return res.status(405).json({ success: false, msg: "Method not allowed, Allowed methods: 'POST'" })
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ success: false, msg: "Internal Server Error occurred, please trey again in a while.", error })
+    const paymentData = {
+        "pp_Version": "1.1",
+        "pp_TxnType": "MWALLET",
+        "pp_Language": "EN",
+        "pp_MerchantID": process.env.NEXT_PUBLIC_JAZZ_MERCHANT_ID,
+        "pp_Password": process.env.NEXT_PUBLIC_JAZZ_PASSWORD,
+        "pp_TxnRefNo": `T${formattedDateTime}`,
+        "pp_Amount": "10000",
+        "pp_TxnCurrency": "PKR",
+        "pp_TxnDateTime": formattedDateTime,
+        "pp_BillReference": "billref",
+        "pp_Description": "Description of transaction",
+        "pp_TxnExpiryDateTime": formattedDateTime,
+        "pp_ReturnURL": "https://st.urbanfits.ae",
+        "ppmpf_1": "03123456789"
     }
-}
 
-export default JazzCheckoutSession
+    const voidData = {
+        "pp_SubMerchantID": "",
+        "pp_BankID": "",
+        "pp_ProductID": "",
+        "ppmpf_2": "",
+        "ppmpf_3": "",
+        "ppmpf_4": "",
+        "ppmpf_5": ""
+    }
+
+    const concatenatedString = Object.keys(paymentData)
+        .filter(key => key.startsWith("pp"))
+        .sort()
+        .map(key => paymentData[key])
+        .join("&");
+
+    const prependedConcatString = (process.env.NEXT_PUBLIC_JAZZ_INTEGRITY_SALT + "&" + concatenatedString);
+    console.log("Here is the prepended concatenated payment string: ", prependedConcatString)
+    // const prependedBytes = CryptoJS.enc.Utf8.parse(prependedConcatString);
+    // const iso88591String = CryptoJS.enc.Latin1.stringify(prependedBytes);
+    const pp_SecureHash = CryptoJS.HmacSHA256(prependedConcatString, process.env.NEXT_PUBLIC_JAZZ_INTEGRITY_SALT).toString(CryptoJS.enc.Hex).toUpperCase();
+
+    // const finalPaymentPayload = {
+    //     ...paymentData,
+    //     ...voidData,
+    //     pp_SecureHash
+    // }
+    console.log("\n", pp_SecureHash)
+    const { data } = await axios.post(apiUrl, { ...paymentData, pp_SecureHash, ...voidData })
+
+    return res.status(200).json({
+        success: true,
+        pp_SecureHash,
+        data
+        // finalPaymentPayload,
+        // tartgetHash: "550507F47B16B0FBBFE31F0D6FF47AEE5F15AA139427D5F71867B97A42FAD61F",
+        // tartgetAchieved: "550507F47B16B0FBBFE31F0D6FF47AEE5F15AA139427D5F71867B97A42FAD61F" === pp_SecureHash
+    })
+
+})
+export default JazzCheckoutSession;
