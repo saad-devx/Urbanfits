@@ -22,9 +22,9 @@ const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method:
             const last_checkin = new Date(user.last_checkin)
             currentDate.setHours(0, 0, 0, 0);
             last_checkin.setHours(0, 0, 0, 0);
-            console.log(user, last_checkin)
+            // console.log(user, last_checkin)
             const expiryDate = new Date(new Date().setDate(new Date().getDate() + 7))
-            console.log(currentDate.getDate(), last_checkin.getDate(), "here is the condition: ", currentDate.getDate() > last_checkin.getDate())
+            // console.log(currentDate.getDate(), last_checkin.getDate(), "here is the condition: ", currentDate.getDate() > last_checkin.getDate())
             if ((currentDate > last_checkin) && (new Date(user.createdAt) < currentDate)) {
                 const reward = generateRandomInt(20, 50)
                 await UFpoints.create({

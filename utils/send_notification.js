@@ -34,7 +34,7 @@ export const sendNotification = async (user_id, params, options = {}) => {
         title: params.heading,
         body: params.mini_msg || params.message,
     }
-    await beamsServer.publishToInterests([user_id], {
+    await beamsServer.publishToInterests([user_id.toString()], {
         web: {
             notification: {
                 ...notificObj,
