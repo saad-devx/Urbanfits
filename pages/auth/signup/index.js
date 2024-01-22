@@ -21,7 +21,7 @@ export default function Signup() {
     const { data: session } = useSession()
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-    const { user, updateUser, setGuestUser } = useUser()
+    const { user, updateUser } = useUser()
     const [showPass, setShowPass] = useState(false)
     const passRef = useRef()
 
@@ -31,7 +31,7 @@ export default function Signup() {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/signup${oAuthQuery ? oAuthQuery : ''}`, values)
             if (data.success && data.payload && oAuthQuery) {
                 await updateUser(data.payload, true)
-                setGuestUser(null)
+                useUser.setState({ guestUser: null });
                 router.push('/')
                 toaster("success", data.msg)
             }

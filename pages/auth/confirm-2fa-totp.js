@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import Error404 from '../404'
 
 export default function Login() {
-    const { user, updateUser, setGuestUser } = useUser()
+    const { user, updateUser } = useUser()
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [totp, setTotp] = useState('')
@@ -22,7 +22,7 @@ export default function Login() {
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/2fa/verify-totp?user_id=${user_id}&totp_code=${totp}`)
             await updateUser(data.payload, true)
-            setGuestUser(null)
+            useUser.setState({ guestUser: null });
             window.location.href = "/"
             // router.push('/')
             toaster("success", data.msg)

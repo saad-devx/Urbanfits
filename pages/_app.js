@@ -14,63 +14,17 @@ import { CartProvider } from "react-use-cart";
 import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar'
 import toaster from "@/utils/toast_function";
-import axios from 'axios'
 import { pusherClient, initBeamsClient } from '@/utils/pusher'
-import PusherClient from 'pusher-js'
 import { urbanist } from '@/fonts'
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter()
-  const { user, guestUser, setGuestUser, setNotification, logOut } = useUser()
+  const { user, setNotification, emitPresenceEvent, logOut } = useUser()
   const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
-  const [lastPresenceChannel, setLastPresenceChannel] = useState(null)
-  const [pusherPresenceClient, setPusherPresenceClient] = useState(new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-    authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth/channel`,
-    auth: {
-      params: {
-        user_id: user?._id,
-        email: user?.email
-      }
-    }
-  }))
-
-  const subscribeToPresence = async () => {
-    let presenceInstance;
-    if (user && user._id) {
-      presenceInstance = pusherPresenceClient;
-    }
-    else if (guestUser && guestUser._id) {
-      presenceInstance = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-        authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
-        auth: { params: { user_id: `${guestUser._id}_isguest` } }
-      });
-      setPusherPresenceClient(presenceInstance);
-    } else {
-      try {
-        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/guest/create-session`, {});
-        setGuestUser(data.user);
-        console.log(data.user);
-        presenceInstance = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-          cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-          authEndpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
-          auth: { params: { user_id: `${data.user._id}_isguest` } }
-        });
-        setPusherPresenceClient(presenceInstance);
-      } catch (e) { console.log(e) }
-    }
-
-    if (presenceInstance) {
-      const channel = presenceInstance.subscribe('presence-urbanfits');
-      setLastPresenceChannel(channel);
-    }
-  };
 
   useEffect(() => {
-    if (lastPresenceChannel) lastPresenceChannel.unsubscribe('presence-urbanfits')
-    subscribeToPresence();
+    emitPresenceEvent();
     initBeamsClient()
     if (user) {
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
@@ -86,15 +40,15 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
     })()
 
     const igniteSession = () => {
-      setGuestUser(null)
+      emitPresenceEvent("user_left");
+      useUser.setState({ guestUser: null });
       const sessionValid = localStorage.getItem('remember_me')
-      if (sessionValid === true) logOut()
+      if (sessionValid !== "true") logOut()
     }
     window.addEventListener("beforeunload", igniteSession)
 
     return () => {
-      pusherPresenceClient && pusherPresenceClient.unsubscribe('presence-urbanfits')
-      window.removeEventListener("beforeunload", igniteSession)
+      window.removeEventListener("beforeunload", igniteSession);
     }
   }, [])
   useEffect(() => {

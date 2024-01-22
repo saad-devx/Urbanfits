@@ -11,7 +11,7 @@ const pusherServer = new PusherServer({
     key: process.env.NEXT_PUBLIC_PUSHER_KEY,
     secret: process.env.NEXT_PUBLIC_PUSHER_SECRET,
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-    useTLS: true,
+    useTLS: true
 });
 
 const pusherClient = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
@@ -25,20 +25,9 @@ let beamsServer = new PushNotifications({
 });
 
 const initBeamsClient = async () => {
-    // const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
-    //     url: process.env.NEXT_PUBLIC_HOST + "/api/pusher/auth/beam",
-    //     queryParams: {
-    //         user_id: user._id,
-    //     }
-    // });
     const beamsClient = new PusherPushNotifications.Client({
         instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID,
     });
-    // beamsClient
-    //     .start()
-    //     .then(() => beamsClient.setUserId(user._id, beamsTokenProvider))
-    //     .then(() => console.log("user registered with beams successfully."))
-    //     .catch(console.error);
     beamsClient.start()
         .then(() => beamsClient.addDeviceInterest(user._id))
         .then(() => console.log('User subscribed to the beams successfully!'))

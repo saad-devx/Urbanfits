@@ -50,13 +50,13 @@ export const sendNotification = async (user_id, params, options = {}) => {
 
 export const sendAdminNotification = async (notific_data) => {
 
-    const totalAdminNotifics = await AdminNotific.countDocuments();
-    (async () => {
-        if (totalAdminNotifics > 99) {
-            const oldestNotification = await AdminNotific.find().sort({ createdAt: -1 }).limit(1)[0]
-            await AdminNotific.findByIdAndDelete(oldestNotification._id)
-        }
-    })()
+    // const totalAdminNotifics = await AdminNotific.countDocuments();
+    // (async () => {
+    //     if (totalAdminNotifics > 99) {
+    //         const oldestNotification = await AdminNotific.find().sort({ createdAt: -1 }).limit(1)[0]
+    //         await AdminNotific.findByIdAndDelete(oldestNotification._id)
+    //     }
+    // })()
     const newNotification = await AdminNotific.create(notific_data);
 
     pusherServer.trigger("admin-channel", "new-notification", newNotification)

@@ -99,9 +99,20 @@ const useUser = create(persist((set, get) => ({
             }
         }
     },
-    setGuestUser: async (userData) => {
-        // const userData = jwt.decode(token)?._doc
-        set(() => ({ guestUser: userData }))
+    emitPresenceEvent: async (event_name = "user_joined") => {
+        const { user, guestUser } = get()
+        let user_id;
+        if (guestUser?._id) user_id = guestUser._id + "_isguest"
+        else if (user?._id) user_id = user._id
+        else return
+        try {
+            axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/presence`, {
+                event: {
+                    name: event_name,
+                    user_id
+                }
+            })
+        } catch (e) { console.log("Error emitting presence event: ", e) }
     },
     logOut: (redirect) => {
         const { clearNewsletterData } = useNewsletter.getState()

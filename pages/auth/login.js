@@ -23,7 +23,7 @@ export default function Login() {
     const { data: session } = useSession()
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-    const { user, updateUser, setGuestUser } = useUser()
+    const { user, updateUser } = useUser()
     const [showPass, setShowPass] = useState(false)
 
     const passRef = useRef()
@@ -35,13 +35,13 @@ export default function Login() {
             if (data.redirect_url && !data.payload) router.push(data.redirect_url)
             else if (data.payload) {
                 await updateUser(data.payload, true)
-                setGuestUser(null)
+                useUser.setState({ guestUser: null });
                 window.location.href = "/"
                 // router.push('/')
                 toaster("success", data.msg)
             }
             else {
-                const { data } = res.response
+                const { data } = data.response
                 toaster("error", data.msg)
             }
         }
