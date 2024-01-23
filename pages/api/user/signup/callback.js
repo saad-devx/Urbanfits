@@ -27,6 +27,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
         let user = await User.findOne().or([{ email: credentials.email }, { username: credentials.username }])
         if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
         const ufCardData = await createUFcard()
+        console.log(ufCardData)
         user = await User.create({
             ...credentials,
             password: CryptoJS.AES.encrypt(credentials.password, process.env.NEXT_PUBLIC_SECRET_KEY).toString(),

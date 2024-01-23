@@ -63,7 +63,7 @@ const UserSchema = new mongoose.Schema({
     country: String,
     is_active: {
         type: Boolean,
-        default: false
+        default: true
     },
     uf_wallet: {
         card_number: {
