@@ -36,17 +36,17 @@ const CheckShell = ({ dayCode, day, history }) => {
     </div>
 }
 
-const TaskComp = ({ task }) => {
-    const { user } = useUser()
-    const { uploadUfTaskImg } = useWallet()
+const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
     const { name, type, title, description, link, need_image, image_submitted } = task
     const disableAction = user && name == "sign_up" ? true : (!user && name !== "sign_up" ? true : false)
     const [ssLoading, setSsLoading] = useState(false)
 
     const onUploadSS = async (e) => {
-        const file = e.target.files[0]
+        const { name } = e.target;
+        const file = e.target.files[0];
         setSsLoading(true)
-        if (file) uploadUfTaskImg(name, file, () => setSsLoading(false))
+        if (file) uploadUfTaskImg(name, file, (data) => { setTasks(data.tasks.tasks); setSsLoading(false) })
+        else toaster("info", "Please upload a valid image.")
     }
 
     return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
@@ -65,11 +65,12 @@ const TaskComp = ({ task }) => {
 }
 
 export default function EarnUfPoints() {
-    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfHistory, getWheelHistory } = useWallet()
+    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfTasks, getUfHistory, uploadUfTaskImg } = useWallet()
     const { user } = useUser()
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
     const [history, setHistory] = useState([])
+    const [tasks, setTasks] = useState(DefaultTasks)
 
     function spinAndStopAtValue(value, msg) {
         const pathElements = {
@@ -155,6 +156,7 @@ export default function EarnUfPoints() {
         if (!user) { return }
         (async () => {
             await getWeeklyCheckinHistory(setWeeklyHistory)
+            await getUfTasks((data) => setTasks(data.tasks.tasks))
             getUfHistory((history_docs) => setHistory(history_docs), 5);
         })()
         const timer = setInterval(() => {
@@ -273,49 +275,7 @@ export default function EarnUfPoints() {
 
             <section className="bg-white w-full mb-4 px-4 py-6 mid:px-6 mid:p-6 lg:py-10 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
                 <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Complete tasks to win more UF-Points</h1>
-                {DefaultTasks.map(task => <TaskComp task={task} />)}
-                {/* <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-                    <span className="flex flex-col text-sm lg:text-base text-gray-400">
-                        <h6 className="font_urbanist_bold text-black">Sign Up Bonus</h6>
-                        Signup and win 500 points
-                    </span>
-                    <Link href="/auth/signup" disabled={user} className={`${user && "opacity-60 pointer-events-none"} p-2 bg-gold-land text-white text-sm lg:text-base rounded-md`}>{!user ? "Go" : <i className="fa-solid fa-check mx-1.5 text-sm" />}</Link>
-                </div>
-                <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-                    <span className="flex flex-col text-sm lg:text-base text-gray-400">
-                        <h6 className="font_urbanist_bold text-black">Follow us on Facebook</h6>
-                        Follow and win 100 points
-                    </span>
-                    <Link href="https://facebook.com" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
-                </div>
-                <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-                    <span className="flex flex-col text-sm lg:text-base text-gray-400">
-                        <h6 className="font_urbanist_bold text-black">Follow us on Instagram</h6>
-                        Follow and win 100 points
-                    </span>
-                    <Link href="https://instagram.com" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
-                </div>
-                <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-                    <span className="flex flex-col text-sm lg:text-base text-gray-400">
-                        <h6 className="font_urbanist_bold text-black">Place an Order</h6>
-                        Win upto 350 points
-                    </span>
-                    <Link href="/" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
-                </div>
-                <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-                    <span className="flex flex-col text-sm lg:text-base text-gray-400">
-                        <h6 className="font_urbanist_bold text-black">Review a product</h6>
-                        Win 200 points
-                    </span>
-                    <Link href="/" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
-                </div>
-                <div className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-                    <span className="flex flex-col text-sm lg:text-base text-gray-400">
-                        <h6 className="font_urbanist_bold text-black">Enable 2FA</h6>
-                        Win 100 points
-                    </span>
-                    <Link href="/user/security" disabled={!user} className={`${!user && "opacity-60 pointer-events-none"} p-2 bg-gray-100 text-sm lg:text-base rounded-md`}>{user ? "Go" : <i className="fa-solid fa-lock mx-1.5 text-sm" />}</Link>
-                </div> */}
+                {tasks.map(task => <TaskComp user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
             </section>
             <section id='prize_wheel_history' className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4 overflow-x-auto scrollbar_x">
                 <h2 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h2>

@@ -23,8 +23,24 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
 
+  const igniteSession = () => {
+    emitPresenceEvent("user_left");
+    useUser.setState({ guestUser: null });
+    // const sessionValid = localStorage.getItem('remember_me')
+    // if (!sessionValid || sessionValid !== "true") logOut()
+  }
+
   useEffect(() => {
     emitPresenceEvent();
+    getGeoLocation().then(getExchangeRate)
+    window.addEventListener("beforeunload", igniteSession)
+
+    return () => {
+      window.removeEventListener("beforeunload", igniteSession);
+    }
+  }, [])
+
+  useEffect(() => {
     initBeamsClient()
     if (user) {
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
@@ -33,24 +49,8 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         if (data.notify) toaster("info", data.notification_data.notifications[0].mini_msg)
       })
     }
+  }, [user])
 
-    (async () => {
-      await getGeoLocation()
-      getExchangeRate()
-    })()
-
-    const igniteSession = () => {
-      emitPresenceEvent("user_left");
-      useUser.setState({ guestUser: null });
-      const sessionValid = localStorage.getItem('remember_me')
-      if (sessionValid !== "true") logOut()
-    }
-    window.addEventListener("beforeunload", igniteSession)
-
-    return () => {
-      window.removeEventListener("beforeunload", igniteSession);
-    }
-  }, [])
   useEffect(() => {
     router.events.on("routeChangeStart", () => setProgress(77))
     router.events.on("routeChangeComplete", () => setProgress(100))

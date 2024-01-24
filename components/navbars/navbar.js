@@ -84,10 +84,10 @@ export default function Navbar() {
         getNotifications()
         if (!address) getAddress()
         getUfBalance()
-    }, [])
+    }, [user])
 
     const getDisplayAddress = () => {
-        if (!address || !address.shipping_address) return <Link href='/user/address'>Set your Address</Link>
+        if (!address || !address.shipping_address) return "Set your Address"
         return address.shipping_address.address
     }
 
@@ -135,7 +135,7 @@ export default function Navbar() {
                         <Link onClick={closeCart} href="/user/orders/orders" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
                         <Link onClick={closeCart} href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link>
                         <Link onClick={closeCart} href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
-                        <button onClick={() => setLogout(!logout)} className="w-full px-4 hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</button>
+                        <span onClick={() => setLogout(!logout)} className="w-full px-4 cursor-pointer hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</span>
                     </div>
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
@@ -149,7 +149,7 @@ export default function Navbar() {
                     {notifications && notifications.some(notific => !notific.seen) ? <span className="absolute top-0 right-0 z-10 translate-x-1/2 translate-y-[10%] lg:translate-y-[-30%] w-2 h-2 lg:w-4 lg:h-4 flex justify-center items-center text-[10px] border border-white aspect-square rounded-full bg-[#FF4A60]"><p className='hidden lg:block text-white'>{unseenNotificCount}</p></span> : null}
                     <button className="fa-regular fa-envelope text-[24px] translate-y-[8%] lg:translate-y-[15%] text-[#4d4d4d]"></button>
                 </Link> : null}
-                <button onClick={toggleCart} className="hidden md:block relative">
+                <button onClick={()=>{toggleCart(); scrollTo(0, 0)}} className="hidden md:block relative">
                     {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-[#FF4A60]">{totalUniqueItems}</span> : null}
                     <Image src={bag} />
                 </button>

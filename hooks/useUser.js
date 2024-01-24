@@ -114,10 +114,10 @@ const useUser = create(persist((set, get) => ({
             })
         } catch (e) { console.log("Error emitting presence event: ", e) }
     },
-    logOut: (redirect) => {
+    logOut: (redirect='/') => {
         const { clearNewsletterData } = useNewsletter.getState()
         localStorage.clear()
-        window.location.href = redirect || '/'
+        window.location.href = redirect
         clearNewsletterData()
         get().setNotification([])
         if (get().user.register_provider !== "urbanfits") signOut()

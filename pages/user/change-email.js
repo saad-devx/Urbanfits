@@ -12,7 +12,7 @@ import axios from 'axios';
 import mongoose from 'mongoose';
 
 export default function ChangeEmail() {
-    const { user, matchOtpAndUpdate, logOut } = useUser()
+    const { user, matchOtpAndUpdate } = useUser()
     const [showPass, setShowPass] = useState(false)
     const passRef = useRef()
     const [otpId, setOtpId] = useState(null)

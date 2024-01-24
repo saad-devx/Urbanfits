@@ -22,7 +22,7 @@ const TestApiHandler = (req, res) => StandardApi(req, res, {}, async () => {
     //         type: "info"
     //     }
     // })
-    console.log("Yo  bro before unload event did the shit we WANTED!!!")
+    console.log("Yo BROO here is the sessio valid request body: ", req.body)
 
     res.status(200).json({
         success: true,

@@ -30,6 +30,17 @@ const useWallet = create(persist((set, get) => ({
         set(() => ({ walletLoading: false }))
     },
 
+    getUfTasks: async (callback) => {
+        const { user } = useUser.getState()
+        if (!user) return
+        set(() => ({ walletLoading: true }))
+        try {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/get/user-tasks?user_id=${user._id}`)
+            if (callback) callback(data)
+        } catch (e) { console.log(e); toaster("error", e.response.data.msg || "Oops! something went wrong, please retry.") }
+        finally { set(() => ({ walletLoading: false })) }
+    },
+
     getUfHistory: async (callback, limit = 150) => {
         const { user } = useUser.getState()
         if (!user) return
@@ -87,13 +98,14 @@ const useWallet = create(persist((set, get) => ({
         try {
             const ssUrl = await uploadImage(file, `uf-tasks/${user._id}/${taskName}`)
             if (!ssUrl) return toaster("error", "Screenshot couldn't be uploaded, please retry.")
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/tasks/fulfill-task`, {
+            const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/fulfill-task`, {
                 user_id: user._id,
                 task_name: taskName,
-                image: ssUrl
+                image_url: ssUrl
             })
             toaster("success", data.msg)
-            return callback ? callback(ssUrl) : ssUrl
+            if (callback) callback(data, ssUrl)
+            else return ssUrl
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
     },
 

@@ -37,8 +37,8 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
                 message: `Welcome back! ${reward} UF-Points are added to your UF-wallet, they will expire after 7 days and shall be deducted from your wallet. Keep coming everyday and win exciting rewards.`
             }, { notify: true })
             await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: reward })
+            await User.findByIdAndUpdate(user_id, { last_checkin: new Date(new Date().setHours(59, 59, 59, 999)) })
         }
-        await User.findByIdAndUpdate(user_id, { last_checkin: new Date(new Date().setHours(59, 59, 59, 999)) })
         console.log("user_joined handled successfully.")
     }
     else if (name === 'user_left') {

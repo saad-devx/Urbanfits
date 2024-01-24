@@ -6,6 +6,7 @@ import Newsletter from "@/models/newsletter";
 import Notification from "@/models/notification";
 import Shoppinglist from "@/models/shoppinglist";
 import Order from "@/models/orders";
+import UfTasks from "@/models/uf-tasks";
 import StandardApi from "@/middlewares/standard_api";
 
 // Only accessable by Admin 
@@ -16,13 +17,15 @@ const DeleteUsers = async (req, res) => StandardApi(req, res, { method: "PUT", v
 
     if (!users || users.length === 0) return res.status(400).json({ success: false, msg: "Products array is required with atleast one valid id." })
     else {
-        await User.deleteMany({ _id: { $in: users } })
-        await Addresses.deleteMany({ user_id: { $in: users } })
-        await Newsletter.deleteMany({ user: { $in: users } })
-        await Notification.deleteMany({ user_id: { $in: users } })
-        await Order.deleteMany({ user_id: { $in: users } })
-        await Shoppinglist.deleteMany({ user_id: { $in: users } })
-        await UFpoints.deleteMany({ user_id: { $in: users } })
+        const query = { _id: { $in: users } }
+        await User.deleteMany(query)
+        await Addresses.deleteMany(query)
+        await Newsletter.deleteMany(query)
+        await Notification.deleteMany(query)
+        await Order.deleteMany(query)
+        await Shoppinglist.deleteMany(query)
+        await UFpoints.deleteMany(query)
+        await UfTasks.deleteMany(query)
         res.status(200).json({
             success: true,
             msg: `${users.length} users deleted successfully`

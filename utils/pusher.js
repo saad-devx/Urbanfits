@@ -25,6 +25,7 @@ let beamsServer = new PushNotifications({
 });
 
 const initBeamsClient = async () => {
+    if (!user?._id) return
     const beamsClient = new PusherPushNotifications.Client({
         instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID,
     });
