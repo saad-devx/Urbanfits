@@ -6,15 +6,17 @@ const TestApiHandler = (req, res) => StandardApi(req, res, { method: "PUT", veri
     const { notifications } = req.body;
     if (!notifications.length) return res.status(400).json({ success: false, msg: "A valid 'notification' arrya of notificaion IDs query parameter is required." })
     await ConnectDB();
-    const notification = await AdminNotific.updateMany({ _id: { $in: notifications } }, {
-        $set: {
-            seen: true,
-            seen_by: {
-                admin_id: req.admin._id,
-                name: req.admin.username
+    const notification = await AdminNotific.updateMany(
+        { _id: { $in: notifications }, seen: false },
+        {
+            $set: {
+                seen: true,
+                seen_by: {
+                    admin_id: req.admin._id,
+                    name: req.admin.username
+                }
             }
-        }
-    });
+        });
     res.status(200).json({
         success: true,
         msg: "Notification marked read.",

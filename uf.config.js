@@ -16,7 +16,8 @@ export const DefaultTasks = [
     {
         name: "review_product",
         title: "Review a Product",
-        description: "Win upto 350 points.",
+        description: "Review and win upto 350 points.",
+        reward: 350,
         disabled: true,
         link: "/"
     },
@@ -68,6 +69,7 @@ export const DefaultTasks = [
     {
         name: "download_app",
         title: "Download mobile app",
+        reward: 500,
         description: "Get 500 points."
     }
 ]
