@@ -55,8 +55,7 @@ export const NotificationItem = ({ notific, key, marginClass }) => {
 
 export const updateNotificationStatus = async (user_id, category) => {
     try {
-        const { data } = await axios.put(`${process.env.HOST}/api/user/notifications/update-status?user_id=${user_id}&category=${category}`)
-        console.log(data)
+        await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/notifications/update-status?user_id=${user_id}&category=${category}`)
     } catch (error) { console.log(error) }
 }
 

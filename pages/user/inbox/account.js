@@ -8,9 +8,9 @@ export default function Account() {
     const filteredNotifics = notifications.filter(notific => notific.category === "account")
     const otherNotifics = notifications.filter(notific => notific.category !== "account")
     React.useEffect(() => {
+        if (filteredNotifics.some(notific => !notific.seen)) updateNotificationStatus(user._id, "account")
         const newNotifications = [...otherNotifics, ...filteredNotifics.map(notific => ({ ...notific, seen: true }))]
         setNotification(newNotifications)
-        if (filteredNotifics.some(notific => !notific.seen)) updateNotificationStatus(user._id, "account")
     }, [])
     return <NotificationInbox noNotifications={filteredNotifics.length ? false : true} filteredNotifics={filteredNotifics} />
 }

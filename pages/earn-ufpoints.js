@@ -37,7 +37,7 @@ const CheckShell = ({ dayCode, day, history }) => {
 }
 
 const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
-    const { name, type, title, description, link, need_image, image_submitted } = task
+    const { name, type, title, description, link, need_image, image_submitted, completed } = task
     const disableAction = user && name == "sign_up" ? true : (!user && name !== "sign_up" ? true : false)
     const [ssLoading, setSsLoading] = useState(false)
 
@@ -48,19 +48,34 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
         if (file) uploadUfTaskImg(name, file, (data) => { setTasks(data.tasks.tasks); setSsLoading(false) })
         else toaster("info", "Please upload a valid image.")
     }
+    const actionBtnValue = name !== "sign_up" ? <i className="fa-solid fa-lock text-gotham-black mx-1.5 text-sm" /> : "Go"
 
-    return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
-        <span className="flex flex-col text-sm lg:text-base text-gray-400">
+    if (user?._id) return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
+        <div className="flex flex-col text-sm lg:text-base text-gray-400">
             <h6 className="font_urbanist_bold text-black">{title}</h6>
             {description}
+        </div>
+        {image_submitted && !completed ? <span title='approval pending...' className='p-2 px-3 bg-pinky text-white text-sm lg:text-base rounded-md'><i className="fa-regular fa-clock" /></span> :
+            <div disabled={disableAction || ssLoading} className={`${disableAction || ssLoading && "opacity-60 pointer-events-none"} flex items-center gap-2 md:gap-3`}>
+                {need_image && !completed ? <label htmlFor={name} title='Upload Screen Shot' className="px-3 py-2 text-xs lg:text-sm text-gotham-black bg-gray-100 rounded-md cursor-pointer">
+                    {ssLoading ? <span className='inline-block w-5 aspect-square border-r-2 border-gotham-black rounded-3xl animate-spin' /> : <i className="fa-solid fa-upload" />}
+                    <input onChange={onUploadSS} className='appearance-none hidden' type="file" accept="image/*" name={name} id={name} />
+                </label> : null}
+                <span className={`p-2 ${completed || name == "sign_up" ? "bg-gold-land text-white" : "bg-gray-100 text-black"} text-sm lg:text-base rounded-md`}>
+                    {completed || name === "sign_up" ? <i title='completed' className="fa-solid fa-check mx-1.5 text-sm" /> : <Link target={type == "social" ? "_blank" : ''} href={link || '#'}>Go</Link>}
+                </span>
+            </div>}
+    </div>
+    else return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
+        <div className="flex flex-col text-sm lg:text-base text-gray-400">
+            <h6 className="font_urbanist_bold text-black">{title}</h6>
+            {description}
+        </div>
+        <span className={`px-3 py-2 ${name == "sign_up" ? "bg-gold-land text-white" : "bg-gray-100 text-black"} text-sm lg:text-base rounded-md`}>
+            {name == "sign_up" ? <Link target="_blank" href={link}>
+                {actionBtnValue}
+            </Link> : <i className="fa-solid fa-lock text-sm text-gray-700 mx-0.5" />}
         </span>
-        {!image_submitted ? <div disabled={disableAction || ssLoading} className={`${disableAction || ssLoading && "opacity-60 pointer-events-none"} flex items-center gap-2 md:gap-3`}>
-            {user && need_image ? <label htmlFor={name} title='Upload Screen Shot' className="px-3 py-2 text-xs lg:text-sm text-gotham-black bg-gray-100 rounded-md cursor-pointer">
-                {ssLoading ? <span className='inline-block w-5 aspect-square border-r-2 border-gotham-black rounded-3xl animate-spin' /> : <i className="fa-solid fa-upload" />}
-                <input onChange={onUploadSS} className='appearance-none hidden' type="file" accept="image/*" name={name} id={name} />
-            </label> : null}
-            <Link target={type == "social" ? "_blank" : ''} href={link || '#'} className={`p-2 ${name == "sign_up" ? "bg-gold-land text-white" : "bg-gray-100 text-black"} text-sm lg:text-base rounded-md`}>{user && name == "sign_up" ? <i className="fa-solid fa-check mx-1.5 text-sm" /> : (!user && name !== "sign_up" ? <i className="fa-solid fa-lock text-gotham-black mx-1.5 text-sm" /> : "Go")}</Link>
-        </div> : <span title='approval pending...' className='p-2 px-3 bg-pinky text-white text-sm lg:text-base rounded-md'><i className="fa-regular fa-clock" /></span>}
     </div>
 }
 
@@ -274,6 +289,7 @@ export default function EarnUfPoints() {
             </section>
 
             <section className="bg-white w-full mb-4 px-4 py-6 mid:px-6 mid:p-6 lg:py-10 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
+                <button onClick={() => getUfTasks((data) => setTasks(data.tasks.tasks))} className="p-2 bg-black text-sm rounded-3xl">Refresh Tasks</button>
                 <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Complete tasks to win more UF-Points</h1>
                 {tasks.map(task => <TaskComp user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
             </section>
