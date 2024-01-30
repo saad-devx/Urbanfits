@@ -53,7 +53,7 @@ export const sendAdminNotification = async (notific_data) => {
     const totalAdminNotifics = await AdminNotific.countDocuments();
     (async () => {
         if (totalAdminNotifics > 99) {
-            const oldestNotification = await AdminNotific.find().sort({ createdAt: -1 }).limit(1)[0]
+            const oldestNotification = (await AdminNotific.find().sort({ createdAt: -1 }).limit(1))[0];
             await AdminNotific.findByIdAndDelete(oldestNotification._id)
         }
     })()

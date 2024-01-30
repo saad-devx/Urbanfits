@@ -289,7 +289,6 @@ export default function EarnUfPoints() {
             </section>
 
             <section className="bg-white w-full mb-4 px-4 py-6 mid:px-6 mid:p-6 lg:py-10 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
-                <button onClick={() => getUfTasks((data) => setTasks(data.tasks.tasks))} className="p-2 bg-black text-sm rounded-3xl">Refresh Tasks</button>
                 <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Complete tasks to win more UF-Points</h1>
                 {tasks.map(task => <TaskComp user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
             </section>

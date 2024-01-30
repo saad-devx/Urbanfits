@@ -13,16 +13,14 @@ const TestApiHandler = (req, res) => StandardApi(req, res, {}, async () => {
     //     message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
     // }, { notify: true })
 
-    // await sendAdminNotification({
-    //     category: "system",
-    //     data: {
-    //         title: "Notification Intro",
-    //         msg: `This is "info" type of notification. Read the Description`,
-    //         description: "All notifications are setup is done, everytime any important event such as A user contacts you by email, an order being placed etc. And if any type of error occurs in Urban Fits server, the system will automatically send a notification here telling you what was the error.",
-    //         type: "info"
-    //     }
-    // })
-    console.log("Yo BROO here is the sessio valid request body: ", req.body)
+    await sendAdminNotification({
+        category: "system",
+        data: {
+            title: "Notification limit check",
+            msg: `Test notification to test the system limit.`,
+            type: "info"
+        }
+    })
 
     res.status(200).json({
         success: true,

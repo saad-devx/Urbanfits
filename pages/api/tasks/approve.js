@@ -6,6 +6,7 @@ import UfTasks from "@/models/uf-tasks";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import SavePointsHistory from "@/utils/save_points_history";
 import StandardApi from "@/middlewares/standard_api";
+import axios from "axios";
 
 const ApproveUfTask = async (req, res) => StandardApi(req, res, { method: "PUT", verify_admin: true }, async () => {
     const { user_id, task_name } = req.body;
@@ -22,6 +23,9 @@ const ApproveUfTask = async (req, res) => StandardApi(req, res, { method: "PUT",
         { new: true }
     ).populate("user_id")
 
+    const respectedTask = tasksDoc.tasks.find(task => task.name === task_name);
+    const objDeletion = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/S3/delete-object?object_url=${respectedTask.image}`)
+    console.log(objDeletion);
     const { uf_wallet, username } = tasksDoc.user_id;
     const approvedTask = tasksDoc.tasks.find(task => task.name === task_name)
     await UFpoints.create({
