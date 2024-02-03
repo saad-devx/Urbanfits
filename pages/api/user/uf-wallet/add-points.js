@@ -4,7 +4,7 @@ import User from "@/models/user"
 import UFpoints from "@/models/ufpoints"
 import { sendNotification } from "@/utils/send_notification";
 import SavePointsHistory from "@/utils/save_points_history";
-import { EncrytOrDecryptData } from "@/utils/generatePassword";
+import { EncrytOrDecryptData } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
 const AddUFpoints = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {

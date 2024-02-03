@@ -2,7 +2,7 @@ import '@/styles/globals.css'
 import '@/styles/pillbtns.css'
 import '@/styles/carousels.css'
 import React, { useState, useEffect } from 'react'
-import { SessionProvider } from "next-auth/react"
+// import { SessionProvider } from "next-auth/react"
 import Navbar from '@/components/navbars/navbar'
 import Footer from '@/components/footer'
 import dynamic from 'next/dynamic';
@@ -17,7 +17,7 @@ import toaster from "@/utils/toast_function";
 import { pusherClient, initBeamsClient } from '@/utils/pusher'
 import { urbanist } from '@/fonts'
 
-function App({ Component, pageProps: { session, ...pageProps } }) {
+function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter()
   const { user, setNotification, emitPresenceEvent, logOut } = useUser()
   const { getExchangeRate } = useWallet()
@@ -59,13 +59,13 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   return <main className={`max-w-[2000px] mx-auto ${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
-    <SessionProvider session={session}>
+    {/* <SessionProvider session={session}> */}
       <CartProvider>
         <Navbar />
         <Component {...pageProps} />
         <Footer />
       </CartProvider>
-    </SessionProvider>
+    {/* </SessionProvider> */}
   </main>
 }
 export default dynamic(() => Promise.resolve(App), { ssr: false })

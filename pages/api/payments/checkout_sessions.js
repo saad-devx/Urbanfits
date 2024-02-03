@@ -7,7 +7,7 @@ import { shippingRates } from "@/uf.config";
 import User from "@/models/user";
 import GuestUser from "@/models/guest_user";
 import mongoose from "mongoose";
-import { HashValue } from "@/utils/generatePassword";
+import { HashValue } from "@/utils/cyphers.js";
 import { currencies, shippingMethods, giftCardPrices } from "@/uf.config";
 import axios from "axios";
 import StandardApi from "@/middlewares/standard_api";

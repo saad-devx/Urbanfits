@@ -1,6 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import Coupon from "@/models/coupon"
-import { HashValue } from "@/utils/generatePassword"
+import { HashValue } from "@/utils/cyphers.js"
 import StandardApi from "@/middlewares/standard_api"
 
 const getCoupon = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {

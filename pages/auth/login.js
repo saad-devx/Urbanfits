@@ -8,25 +8,39 @@ import toaster from '@/utils/toast_function'
 import AlertPage from '@/components/alertPage'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useSession, signIn } from "next-auth/react"
+// import { useSession, signIn } from "next-auth/react"
 import useUser from '@/hooks/useUser'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 //Image imports
 import Image from 'next/image'
 import google_logo from '@/public/logos/google-logo.svg'
+import { DeleteCookie } from '@/utils/cyphers'
 
 export const metadata = {
     title: "Urban Fits - Login"
 }
 export default function Login() {
-    const { data: session } = useSession()
+    // const { data: session } = useSession()
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const { user, updateUser } = useUser()
     const [showPass, setShowPass] = useState(false)
-
     const passRef = useRef()
+
+    useEffect(() => {
+        const googleClient = window.google.accounts.id;
+        googleClient.initialize({
+            client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+            callback: async (googleSession) => {
+                console.log(googleSession)
+                const { data } = await axios.post("/api/auth/signup/google", { token: googleSession.credential })
+                console.log(data)
+            }
+        });
+
+        return () => googleClient.cancel()
+    }, []);
 
     const onsubmit = async (values, x, oAuthQuery) => {
         try {
@@ -73,29 +87,45 @@ export default function Login() {
         console.log(name)
         sessionStorage.setItem('oauth', true);
         sessionStorage.setItem('register_provider', name);
-        return signIn(name)
+        // return signIn(name)
     }
 
-    useEffect(() => {
-        if (user && user.email) return
-        const oauth = sessionStorage.getItem('oauth')
-        const register_provider = sessionStorage.getItem('register_provider')
-        if (oauth && session && session.user) {
-            let username = session.user.email.split('@')[0]
-            let name = session.user.name.split(' ')
-            let firstname = name[0]
-            name.shift()
-            let lastname = name.join(' ')
-            const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
-            onsubmit(loginDetails, null, '?auth=google')
-            return sessionStorage.removeItem('oauth')
-        }
-        else return
-    }, [session])
+    // useEffect(() => {
+    //     if (user && user.email) return
+    //     const oauth = sessionStorage.getItem('oauth')
+    //     const register_provider = sessionStorage.getItem('register_provider')
+    //     if (oauth && session && session.user) {
+    //         let username = session.user.email.split('@')[0]
+    //         let name = session.user.name.split(' ')
+    //         let firstname = name[0]
+    //         name.shift()
+    //         let lastname = name.join(' ')
+    //         const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
+    //         onsubmit(loginDetails, null, '?auth=google')
+    //         return sessionStorage.removeItem('oauth')
+    //     }
+    //     else return
+    // }, [session])
 
     const sessionValidity = (e) => {
         const checked = e.target.checked
         localStorage.setItem('remember_me', checked)
+    }
+
+    const handleSignIn = async () => {
+        DeleteCookie("g_state")
+        google.accounts.id.prompt((res) => {
+            console.log(res);
+            if (res.j && res.j == "opt_out_or_no_session") toaster("info", "You dont have any google account to sign in with.")
+        });
+    }
+
+
+    const signOut = () => {
+        const auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(() => {
+            console.log('User signed out.');
+        });
     }
 
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
@@ -141,7 +171,12 @@ export default function Login() {
                         <span className="w-2/5 h-px bg-gray-200"></span>
                     </div>
                     <Link href='/auth/signup' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center'>Create a New Account</h1></Link>
-                    <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
+                    {/* <button type='button' onClick={() => providerSignIn("google")} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
+                        <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
+                        <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>Login with&nbsp;</span>
+                        Google
+                    </button> */}
+                    <button type='button' onClick={handleSignIn} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                         <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
                         <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>Login with&nbsp;</span>
                         Google

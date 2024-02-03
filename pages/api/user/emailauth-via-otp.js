@@ -4,7 +4,7 @@ import ConnectDB from "@/utils/connect_db";
 import sendEmail from "@/utils/sendEmail";
 import changeEmail from "@/email templates/change_email";
 import CryptoJS from "crypto-js"
-import { generateRandomInt } from "@/utils/generatePassword";
+import { generateRandomInt } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
 const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {

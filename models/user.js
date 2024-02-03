@@ -1,4 +1,5 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
+import { SignJwt } from "@/utils/cyphers";
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -26,11 +27,12 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "Please enter a valid email address"],
-        unique: [true, "This email address is already in use"],
+        unique: [true, "This email address is already in use"]
     },
     password: {
         type: String,
-        minLength: [8, "Password should be greater than 8 characters"]
+        minLength: [8, "Password should be greater than 8 characters"],
+        select: false
     },
     two_fa_secret: {
         type: String,
@@ -82,12 +84,12 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    user_agent: {
+        type: String
+    },
     purchases: {
         type: Number,
         default: 0
-    },
-    date_of_birth: {
-        type: String
     }
 }, { timestamps: true })
 

@@ -1,5 +1,5 @@
 import User from "@/models/user"
-import { generateRandomInt } from "./generatePassword"
+import { generateRandomInt } from "./cyphers.js"
 import uploadImage from "./uploadImage";
 import bwipjs from 'bwip-js';
 

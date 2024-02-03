@@ -115,6 +115,10 @@ export const shippingRates = {
 }
 
 export const currencies = ["AED", "SAR", "PKR"];
+export const jwtExpiries = {
+    default: "7days",
+    extended: "30days"
+}
 export const shippingMethods = ["standard_shipping", "express_shipping", "free_shipping"]
 export const giftCardPrices = {
     giftcard_bronze: 100,

@@ -1,30 +1,32 @@
 import ConnectDB from "@/utils/connect_db";
-import speakeasy from 'speakeasy';
 import User from "@/models/user";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import { SignJwt, SetSessionCookie } from "@/utils/cyphers";
+import { EncrytOrDecryptData } from "@/utils/cyphers";
 import { jwtExpiries } from "@/uf.config";
 import StandardApi from "@/middlewares/standard_api";
+import UAParser from "ua-parser-js";
 
-const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
-    const { user_id, totp_code } = req.query
-    if (!user_id || !totp_code) return res.status(401).json({ success: false, msg: "All valid parameters required. Query Parameters: user_id, totp_code" })
+const Login = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
+    const { email, password, remember_me } = req.body;
+    if (!email || !password || !password.length > 7) return res.status(400).json({ success: false, msg: 'You email or password is invalid.' })
 
     await ConnectDB()
-    let user = await User.findById(user_id).select('+two_fa_secret')
-    if (!user) return res.status(404).json({ success: false, msg: "User does not exist." })
-    if (!user.two_fa_secret || !user.two_fa_enabled) return res.status(400).json({ success: false, msg: "This user does not have 2FA enabled." })
-
-    const verified = speakeasy.totp.verify({
-        secret: user.two_fa_secret,
-        encoding: 'base32',
-        token: totp_code,
-    });
-
-    if (verified) {
-        const parser = new UAParser(req.headers['user-agent']);
-        delete user.two_fa_secret
-        delete user.password
+    const currentUserAgent = req.headers['user-agent'];
+    const parser = new UAParser(currentUserAgent);
+    let user = await User.findOneAndUpdate({ $or: [{ email }, { username: email }] }, { user_agent: SignJwt(currentUserAgent) }, { new: true }).select("+password")
+    if (!user) return res.status(404).json({ success: false, msg: "User not found, please create an account" })
+    if (user.register_provider !== req.body.register_provider) return res.status(409).json({ success: false, msg: `This account is associated with ${user.register_provider}` })
+    const originalPassword = EncrytOrDecryptData(user.password, false)
+    if (password !== originalPassword) return res.status(401).json({ success: false, msg: "Your password is incorrect" })
+    if (user.two_fa_activation_date && user.two_fa_enabled) {
+        return res.json({
+            success: true,
+            msg: "",
+            redirect_url: `/auth/confirm-2fa-totp?user_id=${user._id}`,
+        })
+    }
+    else if (!user.two_fa_enabled) {
         SetSessionCookie(res, {
             _id: user._id,
             username: user.username,
@@ -36,10 +38,12 @@ const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", v
             createdAt: user.createdAt,
             ...(user.role && { role: user.role })
         }, (remember_me && remember_me === true) ? jwtExpiries.extended : jwtExpiries.default);
+        delete user.two_fa_secret;
+        delete user.password;
 
         res.status(200).json({
             success: true,
-            msg: "You are signed in successfully!",
+            msg: "You are Logged in successfully !",
             session_token: SignJwt(user)
         })
         const date = new Date()
@@ -59,9 +63,5 @@ const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", v
             }
         })
     }
-    else return res.status(500).json({
-        success: false,
-        msg: "The code is either wrong or expired. Please try again."
-    })
 })
-export default VerfiyTotp
+export default Login

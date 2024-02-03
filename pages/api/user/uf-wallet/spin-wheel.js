@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db";
 import mongoose from "mongoose";
 import User from "@/models/user"
-import { generateRandIntWithProbabilities, EncrytOrDecryptData } from "@/utils/generatePassword";
+import { generateRandIntWithProbabilities, EncrytOrDecryptData } from "@/utils/cyphers.js";
 import axios from "axios";
 import StandardApi from "@/middlewares/standard_api";
 

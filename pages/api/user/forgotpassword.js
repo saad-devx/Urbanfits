@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 import OTP from "@/models/otp";
-import { generateRandomInt } from "@/utils/generatePassword"
+import { generateRandomInt } from "@/utils/cyphers.js"
 import CryptoJS from "crypto-js"
 import sendEmail from "@/utils/sendEmail"
 import resetPassTemplate from "@/email templates/resetpass_template"

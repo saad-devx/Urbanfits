@@ -1,19 +1,19 @@
 import Giftcard from "@/models/giftcard"
 import ConnectDB from "./connect_db";
-const CryptoJS = require("crypto-js")
+import CryptoJS from "crypto-js";
+import jwt from "jsonwebtoken";
+import { serialize } from "cookie";
+import { jwtExpiries } from "@/uf.config";
 
-export const generateRandomInt = (from, to) => {
-    let randint = Math.floor(Math.random() * (to - from + 1)) + from;
-    return randint
-}
+export const generateRandomInt = (from, to) => Math.floor(Math.random() * (to - from + 1)) + from;
+export const HashValue = (value) => CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);
+export const SignJwt = (data, expiry) => jwt.sign(data, process.env.NEXT_PUBLIC_SECRET_KEY, expiry ? { expiresIn: expiry } : {});
+export const DeleteCookie = (name) => document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+
 export const generateRandIntWithProbabilities = (numbers, probabilities) => {
-    if (numbers.length !== probabilities.length) {
-        throw new Error("Arrays 'numbers' and 'probabilities' must have the same length.");
-    }
-
+    if (numbers.length !== probabilities.length) throw new Error("Arrays 'numbers' and 'probabilities' must have the same length.");
     // Calculate the total probability sum
     const totalProbability = probabilities.reduce((sum, probability) => sum + probability, 0);
-
     // Generate a random value between 0 and the total probability sum
     const randomValue = Math.random() * totalProbability;
     let cumulativeProbability = 0;
@@ -32,7 +32,6 @@ const generatePassword = (email) => {
     const length = generateRandomInt(8, 11);
     const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZ${email}abcdefghijklmnopqrstuvwxyz0123456789`;
     let password = "";
-
     // Generate a random password of the specified length
     for (let i = 0; i < length; i++) {
         const randomIndex = generateRandomInt(0, key.length)
@@ -41,18 +40,21 @@ const generatePassword = (email) => {
     return password
 }
 
-export const HashValue = (value) => {
-    const hashed = CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex)
-    return hashed
-}
-
 export const EncrytOrDecryptData = (data, encrypt = true) => {
     if (typeof data !== "string") throw new Error("Encryption error: The data must be of type string.")
     if (encrypt) return CryptoJS.AES.encrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY).toString()
-    else {
-        const bytes = CryptoJS.AES.decrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY)
-        return bytes.toString(CryptoJS.enc.Utf8)
-    }
+    else return CryptoJS.AES.decrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8)
+}
+
+export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.default) => {
+    res.setHeader(
+        'Set-Cookie',
+        serialize('session-token', SignJwt(sessionData, expiresAt), {
+            httpOnly: true,
+            sameSite: false,
+            secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
+        })
+    );
 }
 
 export const generateGiftCode = async (length) => {

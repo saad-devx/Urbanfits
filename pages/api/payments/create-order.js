@@ -7,12 +7,12 @@ import OrderConfirmed from '@/email templates/order_confirm';
 import Product from "@/models/product"
 import GiftcardEmail from "@/email templates/giftcard_email";
 import Giftcard from "@/models/giftcard"
-import { generateGiftCode } from "@/utils/generatePassword";
+import { generateGiftCode } from "@/utils/cyphers.js";
 import mongoose from "mongoose";
 import axios from "axios";
 import { pusherServer } from '@/utils/pusher';
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
-import { HashValue } from "@/utils/generatePassword";
+import { HashValue } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
 const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]

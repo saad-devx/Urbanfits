@@ -4,7 +4,7 @@ import UFpoints from "@/models/ufpoints";
 import GuestUser from "@/models/guest_user";
 import SavePointsHistory from "@/utils/save_points_history";
 import { sendNotification } from "@/utils/send_notification";
-import { generateRandomInt } from "@/utils/generatePassword";
+import { generateRandomInt } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
 const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {

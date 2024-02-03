@@ -5,7 +5,7 @@ import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
 import createUFcard from "@/utils/create-ufcard"
-import { generateRandomInt } from "@/utils/generatePassword";
+import { generateRandomInt } from "@/utils/cyphers.js";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
 import jwt from "jsonwebtoken";
 import axios from "axios"
@@ -56,7 +56,7 @@ const Signup = async (req, res) => StandardApi(req, res, { method: "POST" }, asy
     else {
         if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policies" })
         let user = await User.findOne().or([{ email }, { username }])
-        if (user) return res.status(400).json({ success: false, msg: "This Email or Username already in use." })
+        if (user) return res.status(409).json({ success: false, msg: "This Email or Username already in use." })
         if (!req.body.accept_policies) return res.status(403).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })
 
         let dbOtp = await OTP.findOne({ email })
