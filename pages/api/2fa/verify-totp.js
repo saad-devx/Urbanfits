@@ -40,7 +40,7 @@ const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", v
         res.status(200).json({
             success: true,
             msg: "You are signed in successfully!",
-            session_token: SignJwt(user)
+            payload: SignJwt(user)
         })
         const date = new Date()
         sendNotification(user._id, {

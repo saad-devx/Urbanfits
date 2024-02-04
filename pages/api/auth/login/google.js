@@ -25,23 +25,30 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
     const parser = new UAParser(currentUserAgent)
     let user = await User.findOneAndUpdate({ email }, { image: picture, user_agent: SignJwt(currentUserAgent) }, { new: true });
     if (!user) return res.status(404).json({ success: false, msg: "User not found, please signup for a new account." });
-
-    SetSessionCookie(res, {
+    else if (user.two_fa_activation_date && user.two_fa_enabled) return res.json({
+        success: true,
+        msg: "",
+        redirect_url: `/auth/confirm-2fa-totp?user_id=${user._id}`,
+    })
+    else SetSessionCookie(res, {
         _id: user._id,
         username: user.username,
         email: user.email,
         register_provider: user.register_provider,
         user_agent: user.user_agent,
+        two_fa_enabled: user.two_fa_enabled,
         uf_wallet: user.uf_wallet,
         last_checkin: user.last_checkin,
         createdAt: user.createdAt,
+        ...(user.two_fa_activation_date && { two_fa_activation_date: user.two_fa_activation_date }),
         ...(user.role && { role: user.role })
     });
 
+    delete user._id
     res.status(200).json({
         success: true,
         msg: "You are Resgistered successfully !",
-        session_token: SignJwt(user)
+        payload: SignJwt(user)
     })
     const date = new Date()
     sendNotification(user._id, {

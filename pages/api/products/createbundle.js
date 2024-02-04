@@ -5,7 +5,7 @@ import StandardApi from "@/middlewares/standard_api"
 
 // Only accessable by Admin 
 const CreateBundle = async (req, res) => StandardApi(req, res, { method: "POST", verify_admin: true }, async () => {
-    const { products } = req.body
+    const { products } = req.body;
     if (!products || products.length <= 1) return res.status(400).json({ success: false, msg: "A 'products' array with atleast 2 product IDs is required." })
 
     await ConnectDB()

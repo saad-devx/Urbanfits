@@ -2,8 +2,8 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product";
 import StandardApi from "@/middlewares/standard_api";
 
-const getProductsByIds = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
-    const { productIds } = req.body
+const getProductsByIds = async (req, res) => StandardApi(req, res, { method: "PUT", verify_user: false }, async () => {
+    const { productIds } = req.body;
     if (!productIds || productIds.length === 0) return res.status(400).json({ success: false, msg: "No products to get, product id array wasn't specified. Body parameters: productIds (array)" })
 
     await ConnectDB()

@@ -1,11 +1,11 @@
-import ConnectDB from "@/utils/connect_db"
-import Product from "@/models/product"
-const mongoose = require('mongoose')
+import ConnectDB from "@/utils/connect_db";
+import Product from "@/models/product";
+import mongoose from 'mongoose';
 import Category from "@/models/category";
 import StandardApi from "@/middlewares/standard_api";
 
-const GetSingleProduct = async (req, res) => StandardApi(req, res, {}, async () => {
-    const { product_id } = req.query
+const GetSingleProduct = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
+    const { product_id } = req.query;
     if (!mongoose.Types.ObjectId.isValid(product_id)) return res.status(400).json({ success: false, msg: "A valid product id is required. Query parameters: product_id" })
     await ConnectDB()
 

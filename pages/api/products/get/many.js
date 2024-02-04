@@ -3,7 +3,7 @@ import Product from "@/models/product";
 import Category from "@/models/category";
 import StandardApi from "@/middlewares/standard_api";
 
-const getManyProducts = async (req, res) => StandardApi(req, res, {}, async () => {
+const getManyProducts = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
     await ConnectDB()
     const LIMIT = 50;
     let totalProducts = await Product.countDocuments();

@@ -1,7 +1,7 @@
 import axios from "axios"
 import StandardApi from "@/middlewares/standard_api";
 
-const GeoLocation = async (req, res) => StandardApi(req, res, {}, async () => {
+const GeoLocation = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
     try {
         const userIPAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         console.log(userIPAddress)

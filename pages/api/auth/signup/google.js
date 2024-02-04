@@ -60,16 +60,19 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         email: user.email,
         register_provider: user.register_provider,
         user_agent: user.user_agent,
+        two_fa_enabled: user.two_fa_enabled,
         uf_wallet: user.uf_wallet,
         last_checkin: user.last_checkin,
         createdAt: user.createdAt,
+        ...(user.two_fa_activation_date && { two_fa_activation_date: user.two_fa_activation_date }),
         ...(user.role && { role: user.role })
     });
 
+    delete user._id;
     res.status(200).json({
         success: true,
         msg: "You are Resgistered successfully !",
-        session_token: SignJwt(user)
+        payload: SignJwt(user)
     })
     sendNotification(user._id, {
         category: "reward",

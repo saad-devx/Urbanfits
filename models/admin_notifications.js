@@ -37,4 +37,4 @@ const AdminNotificationsSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-module.exports = mongoose.models["admin-notifications"] || mongoose.model("admin-notifications", AdminNotificationsSchema)
+export default mongoose.models["admin-notifications"] || mongoose.model("admin-notifications", AdminNotificationsSchema)

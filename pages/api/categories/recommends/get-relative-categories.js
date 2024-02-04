@@ -4,7 +4,7 @@ import Product from "@/models/product"
 import mongoose from "mongoose"
 import StandardApi from "@/middlewares/standard_api"
 
-const GetRelativeCategories = async (req, res) => StandardApi(req, res, {}, async () => {
+const GetRelativeCategories = async (req, res) => StandardApi(req, res, { verify_admin: false, verify_user: false }, async () => {
     const { category_id } = req.query
     if (!mongoose.Types.ObjectId.isValid(category_id)) return res.status(405).json({ success: false, msg: "Category id must be a valid one. Query parameters: category_id" })
     await ConnectDB()

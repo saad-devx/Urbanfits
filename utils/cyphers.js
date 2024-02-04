@@ -52,9 +52,16 @@ export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.defau
         serialize('session-token', SignJwt(sessionData, expiresAt), {
             httpOnly: true,
             sameSite: false,
+            path: "/",
             secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
         })
     );
+    res.setHeader('Set-Cookie', serialize('is_logged_in', true, {
+        httpOnly: false,
+        sameSite: false,
+        path: "/",
+        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
+    }))
 }
 
 export const generateGiftCode = async (length) => {

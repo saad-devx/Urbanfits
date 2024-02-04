@@ -23,7 +23,7 @@ const giftCardPrices = {
     "giftcard_platinum": 400,
     "giftcard_diamond": 500,
 }
-const CreateOrder = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
+const CreateOrder = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
     const { order_session_id } = req.query
     if (!mongoose.Types.ObjectId(order_session_id)) return res.status(403).json({ success: false, msg: "A valid order session id is required. Query parameters: order_session_id" })
     await ConnectDB()

@@ -1,19 +1,19 @@
 import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import User from "@/models/user";
-import jwt from 'jsonwebtoken';
-const CryptoJS = require("crypto-js")
 import { sendNotification } from "@/utils/send_notification";
+import { SignJwt, EncrytOrDecryptData, SetSessionCookie, DeleteCookie } from "@/utils/cyphers";
 import StandardApi from "@/middlewares/standard_api";
 
 const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
-    const { user_id, totp_code, two_fa_enabled, password } = req.body
-    if (!user_id || !totp_code || two_fa_enabled === undefined || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Query Parameters: user_id, totp_code, two_fa_enabled (boolean to be set)" })
+    const { totp_code, two_fa_enabled, password } = req.body;
+    const user_id = req.user._id;
+    if (!totp_code || two_fa_enabled === undefined || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Query Parameters: user_id, totp_code, two_fa_enabled (boolean to be set)" })
 
     await ConnectDB()
     let user = await User.findById(user_id).select('+two_fa_secret')
-    if (!user) return res.status(404).json({ success: false, msg: "User with provided user_id does not exist." })
-    if (!user.two_fa_secret || !user.two_fa_activation_date) return res.status(400).json({ success: false, msg: "This user does not have registered 2FA." })
+    if (!user) { DeleteCookie('session-token'); DeleteCookie('is_logged_in'); return res.status(404).json({ success: false, msg: "User with provided user_id does not exist." }) }
+    if (!user.two_fa_secret || !user.two_fa_activation_date) return res.status(400).json({ success: false, msg: "This user does not have registered the 2FA." })
 
     const verified = speakeasy.totp.verify({
         secret: user.two_fa_secret,
@@ -21,21 +21,35 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
         token: totp_code,
     });
 
-    const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
-    const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
+    const originalPassword = EncrytOrDecryptData(user.password, false)
     if (originalPassword !== password) return res.status(401).json({ success: false, msg: "Your password is incorrect." })
 
     if (verified && originalPassword === password) {
-        delete user.two_fa_secret
-        delete user.password
-        const updatedUser = await User.findByIdAndUpdate(user_id, { two_fa_enabled }, { new: true })
-        const payload = jwt.sign({ ...updatedUser }, process.env.NEXT_PUBLIC_SECRET_KEY)
+        const updatedUser = await User.findByIdAndUpdate(user_id, { two_fa_enabled: !res.user.two_fa_enabled }, { new: true })
+
+        SetSessionCookie(res, {
+            _id: updatedUser._id,
+            username: updatedUser.username,
+            email: updatedUser.email,
+            register_provider: updatedUser.register_provider,
+            user_agent: updatedUser.user_agent,
+            two_fa_enabled: updatedUser.two_fa_enabled,
+            two_fa_activation_date: updatedUser.two_fa_activation_date,
+            uf_wallet: updatedUser.uf_wallet,
+            last_checkin: updatedUser.last_checkin,
+            createdAt: updatedUser.createdAt,
+            ...(updatedUser.role && { role: updatedUser.role })
+        }, res.user.exp);
+        delete user.two_fa_secret;
+        delete user.password;
+        delete user._id;
+
         res.status(200).json({
             success: true,
             msg: `Your 2FA has been ${updatedUser.two_fa_enabled ? "enabled" : "disabled"} successfully.`,
-            payload
+            payload: SignJwt(updatedUser)
         })
-        await sendNotification(updatedUser._id, {
+        sendNotification(updatedUser._id, {
             category: "account",
             heading: updatedUser.two_fa_enabled ? "2FA Enabled" : "2FA Disabled",
             type: "2fa",

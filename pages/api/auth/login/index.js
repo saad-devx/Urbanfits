@@ -33,18 +33,21 @@ const Login = async (req, res) => StandardApi(req, res, { method: "POST", verify
             email: user.email,
             register_provider: user.register_provider,
             user_agent: user.user_agent,
+            two_fa_enabled: user.two_fa_enabled,
             uf_wallet: user.uf_wallet,
             last_checkin: user.last_checkin,
             createdAt: user.createdAt,
+            ...(user.two_fa_activation_date && { two_fa_activation_date: user.two_fa_activation_date }),
             ...(user.role && { role: user.role })
         }, (remember_me && remember_me === true) ? jwtExpiries.extended : jwtExpiries.default);
         delete user.two_fa_secret;
         delete user.password;
+        delete user._id;
 
         res.status(200).json({
             success: true,
             msg: "You are Logged in successfully !",
-            session_token: SignJwt(user)
+            payload: SignJwt(user)
         })
         const date = new Date()
         sendNotification(user._id, {

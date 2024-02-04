@@ -3,8 +3,8 @@ import Product from "@/models/product";
 import Category from "@/models/category";
 import StandardApi from "@/middlewares/standard_api";
 
-const getSaleProducts = async (req, res) => StandardApi(req, res, {}, async () => {
-    const { min_price, max_price } = req.query
+const getSaleProducts = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
+    const { min_price, max_price } = req.query;
     await ConnectDB()
     const LIMIT = 50;
     let totalProducts = await Product.countDocuments({ sale_price: { $exists: true, $type: 'number', $ne: 0 } });

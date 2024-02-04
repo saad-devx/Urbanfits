@@ -3,7 +3,7 @@ import Coupon from "@/models/coupon"
 import { HashValue } from "@/utils/cyphers.js"
 import StandardApi from "@/middlewares/standard_api"
 
-const getCoupon = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
+const getCoupon = async (req, res) => StandardApi(req, res, { method: "POST", verify_admin: false, verify_user: false }, async () => {
     const { coupon_code } = req.body
     if (!coupon_code || coupon_code.length < 8) return res.status(500).json({ success: false, msg: "Invalid coupon code." })
     await ConnectDB()

@@ -18,7 +18,6 @@ const getCategories = async (req, res) => StandardApi(req, res, { method: "PUT",
         else return req.body
     }
     const objToUpdate = await getObjToUpdate()
-    console.log(objToUpdate)
 
     const category = await Category.findByIdAndUpdate(req.body._id, objToUpdate, { new: true })
     const restCategories = await Category.find().populate('parent')

@@ -1,7 +1,7 @@
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import StandardApi from "@/middlewares/standard_api";
 
-const DeleteS3Object = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
+const DeleteS3Object = async (req, res) => StandardApi(req, res, { method: "PUT", verify_user: false }, async () => {
     const { object_url } = req.query;
     if (!object_url) return res.status(400).json({ success: false, msg: "A valid `object_url` query parameter for object deletion is required." })
 

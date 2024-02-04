@@ -26,4 +26,4 @@ const UFpointsHistorySchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.models.UFpoints_history || mongoose.model('UFpoints_history', UFpointsHistorySchema);
+export default mongoose.models.UFpoints_history || mongoose.model('UFpoints_history', UFpointsHistorySchema);

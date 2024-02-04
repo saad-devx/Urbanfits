@@ -4,7 +4,7 @@ import Product from "@/models/product";
 import Category from "@/models/category";
 import StandardApi from "@/middlewares/standard_api";
 
-const GetProductByCategory = async (req, res) => StandardApi(req, res, {}, async () => {
+const GetProductByCategory = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
     const { id, min_price, max_price, limit = 30 } = req.query;
 
     if (!id || !mongoose.Types.ObjectId.isValid(id))

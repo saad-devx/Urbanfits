@@ -49,17 +49,20 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             email: user.email,
             register_provider: user.register_provider,
             user_agent: user.user_agent,
+            two_fa_enabled: user.two_fa_enabled,
             uf_wallet: user.uf_wallet,
             last_checkin: user.last_checkin,
             createdAt: user.createdAt,
+            ...(user.two_fa_activation_date && { two_fa_activation_date: user.two_fa_activation_date }),
             ...(user.role && { role: user.role })
         });
-
         axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/create-tasks-record?user_id=${user._id}`)
+
+        delete user._id;
         res.status(200).json({
             success: true,
             msg: "You're Resgistered successfully !",
-            session_token: SignJwt(user),
+            payload: SignJwt(user),
         })
         sendNotification(user._id, {
             category: "reward",

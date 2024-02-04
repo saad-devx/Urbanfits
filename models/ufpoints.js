@@ -32,4 +32,4 @@ UFpointsSchema.pre('save', function (next) {
 
 UFpointsSchema.index({ expiration_date: 1 }, { expireAfterSeconds: 0 });
 
-module.exports = mongoose.models.UFpoints || mongoose.model('UFpoints', UFpointsSchema);
+export default mongoose.models.UFpoints || mongoose.model('UFpoints', UFpointsSchema);

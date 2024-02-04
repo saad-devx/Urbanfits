@@ -5,7 +5,8 @@ import { sendNotification, sendAdminNotification } from "@/utils/send_notificati
 import StandardApi from "@/middlewares/standard_api";
 
 const FulfillUfTask = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
-    const { user_id, task_name, image_url } = req.body;
+    const { task_name, image_url } = req.body;
+    const user_id = req.user._id;
     if (!mongoose.Types.ObjectId.isValid(user_id) || !task_name || !image_url) return res.status(405).json({ success: false, msg: "All valid body parameters: user_id, task_name and image_url are required." })
     await ConnectDB()
 

@@ -4,9 +4,9 @@ import ContactTemplate from "@/email templates/contact_template"
 import StandardApi from "@/middlewares/standard_api"
 import { sendAdminNotification } from "@/utils/send_notification"
 
-const Contact = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
+const Contact = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
     await ConnectDB()
-    let mail = req.body
+    let mail = req.body;
 
     let template = ContactTemplate(mail)
     let info = await sendEmail({ senderName: mail.firstname, from: mail.email, to: process.env.NEXT_PUBLIC_SMTP_SENDER_EMAIL, subject: mail.subject }, template)

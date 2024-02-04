@@ -84,6 +84,11 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    timezone: {
+        type: String,
+        required: true,
+        immutable: true
+    },
     user_agent: {
         type: String
     },
@@ -93,4 +98,4 @@ const UserSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-module.exports = mongoose.models.User || mongoose.model("User", UserSchema)
+export default mongoose.models.User || mongoose.model("User", UserSchema)

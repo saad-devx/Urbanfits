@@ -10,7 +10,7 @@ import axios from "axios";
 
 const ApproveUfTask = async (req, res) => StandardApi(req, res, { method: "PUT", verify_admin: true }, async () => {
     const { user_id, task_name } = req.body;
-    const { admin } = req;
+    const admin = req.user;
     if (!mongoose.Types.ObjectId.isValid(user_id) || !task_name) return res.status(405).json({ success: false, msg: "All valid body parameters: user_id and task_name are required." })
     await ConnectDB()
 

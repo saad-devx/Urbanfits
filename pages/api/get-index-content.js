@@ -3,7 +3,7 @@ import Category from "@/models/category"
 import Product from "@/models/product"
 import StandardApi from "@/middlewares/standard_api"
 
-const GetIndexContent = async (req, res) => StandardApi(req, res, {}, async () => {
+const GetIndexContent = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
     const homeCollectionSlugs = ["women/", "men/", "kids/", "latest-arrival/", "new-collection/"]
     await ConnectDB()
     const homeCollectionCategories = await Category.find({ slug: { $in: homeCollectionSlugs } })

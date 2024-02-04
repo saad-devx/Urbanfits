@@ -4,6 +4,8 @@ import { sendNotification } from "@/utils/send_notification"
 import StandardApi from "@/middlewares/standard_api";
 
 const RsetUser2fa = async (req, res) => StandardApi(req, res, { method: "PUT", verify_admin: true }, async () => {
+    const { user_id } = req.query;
+    if (!user_id || !user_id.length > 10) return res.status(400).json({ success: false, msg: "A valid user id is required." })
     await ConnectDB()
     let user = await User.findById(user_id)
     if (!user) return res.status(404).json({ success: false, msg: "User not found" })

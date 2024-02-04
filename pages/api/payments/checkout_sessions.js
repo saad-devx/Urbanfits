@@ -13,7 +13,7 @@ import axios from "axios";
 import StandardApi from "@/middlewares/standard_api";
 
 const countries = ["pk", "sa", "ae"]
-const handler = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
+const handler = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
     // const decryptedData = JSON.parse(CryptoJS.AES.decrypt(req.body.payload, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8))
     const { user_id, is_guest, shipping_info, order_items } = req.body.payload
     if (!user_id || !shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array), user_id" })

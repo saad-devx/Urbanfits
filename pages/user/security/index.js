@@ -21,9 +21,8 @@ const Update2FA = ({ user, updateUser, show, setTfaModal, setLoading }) => {
         setLoading(true)
         try {
             const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/2fa/update-user-2fa`, {
-                user_id: user._id,
-                totp_code: totp,
                 password,
+                totp_code: totp,
                 two_fa_enabled: !user.two_fa_enabled
             })
             updateUser({ ...user, two_fa_enabled: !user.two_fa_enabled }, true, true)

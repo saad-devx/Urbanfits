@@ -5,7 +5,7 @@ import { DefaultTasks } from "@/uf.config"
 import StandardApi from "@/middlewares/standard_api"
 
 const CreateTasksRecord = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
-    const { user_id } = req.query
+    const { user_id } = req.query;
     if (!mongoose.Types.ObjectId.isValid(user_id)) return res.status(401).json({
         success: false,
         msg: "A valid user_id is required."
