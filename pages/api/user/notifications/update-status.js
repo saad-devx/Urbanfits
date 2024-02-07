@@ -1,11 +1,11 @@
 import ConnectDB from "@/utils/connect_db"
 import Notification from "@/models/notification";
-import mongoose from "mongoose";
 import StandardApi from "@/middlewares/standard_api";
 
 const updateNotificationStatus = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
-    const { user_id, category } = req.query;
-    if (!mongoose.Types.ObjectId.isValid(user_id)) return res.status(400).json({ success: false, msg: "A valid user id and category (of which notifications are to be updated) are required. Query parameters: user_id, category, status (if not provided then will be assumed 'true')" })
+    const { category } = req.query;
+    const user_id = req.user._id;
+    if (!category || !category.length > 2) return res.status(400).json({ success: false, msg: "A valid category (of which notifications are to be updated) is required. Query parameters: category" })
     await ConnectDB()
     await Notification.updateMany(
         {

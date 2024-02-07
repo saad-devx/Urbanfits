@@ -9,7 +9,6 @@ import Newsletter from '@/components/modals/newsletter';
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import uploadImage from '@/utils/uploadImage'
-import ifExists from '@/utils/if_exists'
 // image imports
 import Image from 'next/image';
 import Spinner from '@/components/loaders/spinner'
@@ -333,7 +332,7 @@ export default function User(props) {
                         <Image className="w-full h-full object-cover" width={150} height={150} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()} alt="avatar" />
                     </label>
                     <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
-                    <p className='text-sm lg:text-base'><p className="font_urbanist_medium">Welcome {ifExists(user.firstname)} !</p>Save your address details and phone number here for easy and fast in delivery process in the future.</p>
+                    <p className='text-sm lg:text-base'><p className="font_urbanist_medium">Welcome {user.firstname || user.username} !</p>Save your address details and phone number here for easy and fast in delivery process in the future.</p>
                 </div>
             </nav>
             {props.children}

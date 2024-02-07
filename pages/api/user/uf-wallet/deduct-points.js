@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import UFpoints from "@/models/ufpoints"
 import StandardApi from "@/middlewares/standard_api";
 
-const AddUFpoints = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
+const AddUFpoints = async (req, res) => StandardApi(req, res, { method: "PUT", verify_user: false }, async () => {
     const { card_number, user_id, points_to_deduct } = req.body
     if (!card_number || !mongoose.Types.ObjectId.isValid(user_id) || !points_to_deduct) return res.status(403).json({ success: false, msg: "Invalid or incomplete arguments. Required Body parameters: card_number, user_id, points_to_deduct" })
     await ConnectDB()

@@ -9,6 +9,14 @@ export const generateRandomInt = (from, to) => Math.floor(Math.random() * (to - 
 export const HashValue = (value) => CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);
 export const SignJwt = (data, expiry) => jwt.sign(data, process.env.NEXT_PUBLIC_SECRET_KEY, expiry ? { expiresIn: expiry } : {});
 export const DeleteCookie = (name) => document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+export const getDateOfTimezone = (timeZone) => new Date(new Date().toLocaleDateString('en-US', { timeZone }))
+
+export const isValidTimeZone = (timeZone) => {
+    try {
+        new Date().toLocaleString('en', { timeZone });
+        return true;
+    } catch (error) { return false }
+}
 
 export const generateRandIntWithProbabilities = (numbers, probabilities) => {
     if (numbers.length !== probabilities.length) throw new Error("Arrays 'numbers' and 'probabilities' must have the same length.");
@@ -40,28 +48,26 @@ const generatePassword = (email) => {
     return password
 }
 
-export const EncrytOrDecryptData = (data, encrypt = true) => {
+export const EncryptOrDecryptData = (data, encrypt = true) => {
     if (typeof data !== "string") throw new Error("Encryption error: The data must be of type string.")
     if (encrypt) return CryptoJS.AES.encrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY).toString()
     else return CryptoJS.AES.decrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8)
 }
 
 export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.default) => {
-    res.setHeader(
-        'Set-Cookie',
-        serialize('session-token', SignJwt(sessionData, expiresAt), {
-            httpOnly: true,
-            sameSite: false,
-            path: "/",
-            secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
-        })
-    );
-    res.setHeader('Set-Cookie', serialize('is_logged_in', true, {
+    const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
+        httpOnly: true,
+        sameSite: false,
+        path: "/",
+        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
+    })
+    const isLoggedInCookie = serialize('is_logged_in', true, {
         httpOnly: false,
         sameSite: false,
         path: "/",
         secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
-    }))
+    })
+    res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie])
 }
 
 export const generateGiftCode = async (length) => {

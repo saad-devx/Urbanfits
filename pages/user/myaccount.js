@@ -3,15 +3,12 @@ import useUser from '@/hooks/useUser';
 import Link from 'next/link'
 import Image from 'next/image';
 import User from '.';
-import jwt from 'jsonwebtoken';
 import uploadImage from '@/utils/uploadImage'
-import ifExists from '@/utils/if_exists';
 import Head from 'next/head';
 import Loader from '@/components/loaders/loader';
 import Error403 from '../403';
 import Newsletter from '@/components/modals/newsletter';
 import useNewsletter from '@/hooks/useNewsletter';
-import useAddress from '@/hooks/useAddress';
 import useWallet from '@/hooks/useWallet'
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
@@ -29,39 +26,33 @@ import { EditIcon } from '@/public/accountIcons';
 
 // Function to show addresses of the user in a container
 const AddressContainer = (props) => {
-    const { type } = props
+    const { type, address } = props
     const addressLink = <Link href='/user/address' id='address' className="w-full px-3 py-4 border border-gray-400 text-sm rounded-md flex justify-between items-center" >Add New Address<i className="material-symbols-outlined">add</i></Link>
-    let address = jwt.decode(localStorage.getItem("addressToken"))
-    if (address) {
-        let userAddress = address._doc
-        if (!userAddress || !userAddress[type]) return addressLink
-        return <div className="w-full p-4 text-sm border border-black flex justify-between items-start rounded-lg bg-white">
-            <div>
-                <span>{userAddress[type].address_title}</span><br />
-                <span>{userAddress[type].firstname} {userAddress[type].lastname}</span><br />
-                <span>{userAddress[type].address}</span><br />
-                <span>{userAddress[type].city}, {userAddress[type].country}</span><br />
-                <span>{userAddress[type].phone_prefix} {userAddress[type].phone_number}</span>
-            </div>
-            <Link href='/user/address' className='text-xs' >Modify<i className="fa-regular fa-pen-to-square mx-2"></i></Link>
+    if (address && address[type]) return <div className="w-full p-4 text-sm border border-black flex justify-between items-start rounded-lg bg-white">
+        <div>
+            <span>{userAddress[type].address_title}</span><br />
+            <span>{userAddress[type].firstname} {userAddress[type].lastname}</span><br />
+            <span>{userAddress[type].address}</span><br />
+            <span>{userAddress[type].city}, {userAddress[type].country}</span><br />
+            <span>{userAddress[type].phone_prefix} {userAddress[type].phone_number}</span>
         </div>
-    }
+        <Link href='/user/address' className='text-xs' >Modify<i className="fa-regular fa-pen-to-square mx-2"></i></Link>
+    </div>
     else return addressLink
 }
 
 export default function Personalinfo() {
-    const { user, updateUser, country } = useUser()
-    const { currency } = useWallet()
-    const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
-    const { address, getAddress } = useAddress()
-    const [imgSpinner, SetImgSpinner] = useState(null)
-    const [loader, setLoader] = useState(false)
-    const [letterModal, setLetterModal] = useState(false)
-    const [genderModal, setGenderModal] = useState(false)
-    const [userInfoModal, setUserInfoModal] = useState(false)
-    const [countryModal, setCoutnryModal] = useState(false)
-    const [languageModal, setLanguageModal] = useState(false)
-    const [currencyModal, setCurrencyModal] = useState(false)
+    const { user, updateUser, country, address, getAddress } = useUser();
+    const { currency } = useWallet();
+    const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter();
+    const [imgSpinner, SetImgSpinner] = useState(null);
+    const [loader, setLoader] = useState(false);
+    const [letterModal, setLetterModal] = useState(false);
+    const [genderModal, setGenderModal] = useState(false);
+    const [userInfoModal, setUserInfoModal] = useState(false);
+    const [countryModal, setCoutnryModal] = useState(false);
+    const [languageModal, setLanguageModal] = useState(false);
+    const [currencyModal, setCurrencyModal] = useState(false);
     const getPfp = () => {
         if (!user) return
         if (user.image) return user.image
@@ -99,24 +90,24 @@ export default function Personalinfo() {
     useEffect(() => {
         if (!user) return
         setValues({
-            title: ifExists(user.title),
-            firstname: ifExists(user.firstname),
-            lastname: ifExists(user.lastname),
-            gender: ifExists(user.gender),
-            phone_prefix: ifExists(user.phone_prefix),
-            phone_number: ifExists(user.phone_number)
+            title: user.title || '',
+            firstname: user.firstname || '',
+            lastname: user.lastname || '',
+            gender: user.gender || '',
+            phone_prefix: user.phone_prefix || '',
+            phone_number: user.phone_number || ''
         })
         if (!newsletterData) return () => getNewsletterData()
     }, [])
 
     useEffect(() => {
-        return async () => {
+        (async () => {
             if (!address) {
                 setLoader(<Loader />)
                 await getAddress()
-                return setLoader(false)
+                setLoader(false)
             }
-        }
+        })()
     }, [address])
 
     const newsletterSubToggle = async (e) => {
@@ -271,7 +262,7 @@ export default function Personalinfo() {
                 <div className='my-14 space-y-5' >
                     <h2 className="text-sm lg:text-base font_urbanist_bold">Email</h2>
                     <div className=" w-full data_field flex justify-between items-center border-b border-b-gray-200 text-sm focus:border-yellow-700 hover:border-yellow-600 transition py-2 mb-4">
-                        <input className="w-full bg-transparent outline-none border-none" readOnly value={ifExists(user.email, "example@gmail.com")} type="email" name="email" id="email" /><Link href='/user/emailaddress' >{user.register_provider === "urbanfits" ? <i className="material-symbols-outlined">edit_square</i> : null}</Link>
+                        <input className="w-full bg-transparent outline-none border-none" readOnly value={user.email} type="email" name="email" id="email" /><Link href='/user/emailaddress' >{user.register_provider === "urbanfits" ? <i className="material-symbols-outlined">edit_square</i> : null}</Link>
                     </div>
                 </div>
                 <div className='my-14 space-y-5' >

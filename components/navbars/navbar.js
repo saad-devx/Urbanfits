@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import useUser from '@/hooks/useUser';
 import useWallet from "@/hooks/useWallet"
-import useAddress from '@/hooks/useAddress';
 import Link from 'next/link'
 import ToTopBtn from '../buttons/toTopBtn';
 import Image from 'next/image';
@@ -69,27 +68,21 @@ const SecondaryNavbar = (props) => {
 }
 
 export default function Navbar() {
-    const { user, country, notifications, getNotifications } = useUser()
-    const { points, getUfBalance, currency } = useWallet()
-    const { address, getAddress } = useAddress()
-    const { totalUniqueItems } = useCart()
-    const [cart, setCart] = useState(false)
-    const [logout, setLogout] = useState(false)
-    const [langModal, setLangModal] = useState(false)
-    const url = useRouter().pathname
+    const { user, country, notifications, getNotifications, address, getAddress } = useUser();
+    const { points, getUfBalance, currency } = useWallet();
+    const { totalUniqueItems } = useCart();
+    const [cart, setCart] = useState(false);
+    const [logout, setLogout] = useState(false);
+    const [langModal, setLangModal] = useState(false);
+    const url = useRouter().pathname;
     const Exception = url.startsWith("/about") || (window.matchMedia('(max-width: 760px)').matches && (url.startsWith('/auth') || (url.startsWith('/user/') && url.length > '/user/'.length)))
     const unseenNotificCount = notifications?.filter(notific => notific.seen === false).length || 0
 
     useEffect(() => {
-        getNotifications()
-        if (!address) getAddress()
-        getUfBalance()
+        getNotifications();
+        if (!address) getAddress();
+        getUfBalance();
     }, [user])
-
-    const getDisplayAddress = () => {
-        if (!address || !address.shipping_address) return "Set your Address"
-        return address.shipping_address.address
-    }
 
     const closeCart = () => {
         document.body.style.overflowY = 'visible'
@@ -113,7 +106,7 @@ export default function Navbar() {
                 <LocationIcon />
                 <div className="flex flex-col justify-center ml-3 items-start text-[13px]">
                     <p className="font_urbanist leading-snug">Deliver to</p>
-                    <p className="font_urbanist_bold truncate max-w-[130px]">{getDisplayAddress()}</p>
+                    <p className="font_urbanist_bold truncate max-w-[130px]">{address?.shipping_address?.address || "Set your Address"}</p>
                 </div>
             </Link>
             <button onClick={() => {

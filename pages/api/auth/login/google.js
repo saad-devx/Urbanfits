@@ -23,7 +23,7 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
     await ConnectDB();
     const currentUserAgent = req.headers['user-agent']
     const parser = new UAParser(currentUserAgent)
-    let user = await User.findOneAndUpdate({ email }, { image: picture, user_agent: SignJwt(currentUserAgent) }, { new: true });
+    let user = await User.findOneAndUpdate({ email }, { image: picture, user_agent: SignJwt(currentUserAgent) }, { new: true, lean: true });
     if (!user) return res.status(404).json({ success: false, msg: "User not found, please signup for a new account." });
     else if (user.two_fa_activation_date && user.two_fa_enabled) return res.json({
         success: true,
@@ -36,6 +36,7 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
         email: user.email,
         register_provider: user.register_provider,
         user_agent: user.user_agent,
+        timezone: user.timezone,
         two_fa_enabled: user.two_fa_enabled,
         uf_wallet: user.uf_wallet,
         last_checkin: user.last_checkin,
@@ -44,7 +45,6 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
         ...(user.role && { role: user.role })
     });
 
-    delete user._id
     res.status(200).json({
         success: true,
         msg: "You are Resgistered successfully !",
@@ -62,7 +62,7 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
         category: "user",
         data: {
             title: "User login",
-            msg: `A user ${user.username} just logged in with google through ${parser.getOS()} - ${parser.getBrowser()}.`,
+            msg: `A user ${user.username} just logged in with google through ${parser.getOS().name}${parser.getOS().version} - ${parser.getBrowser().name}.`,
             href: "/user/userlist"
         }
     })

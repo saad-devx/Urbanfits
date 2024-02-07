@@ -5,9 +5,8 @@ import createUFcard from "@/utils/create-ufcard"
 import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
-import CryptoJS from "crypto-js";
 import axios from "axios"
-import { SignJwt, SetSessionCookie } from "@/utils/cyphers";
+import { SignJwt, SetSessionCookie, EncryptOrDecryptData, getDateOfTimezone } from "@/utils/cyphers";
 import UAParser from "ua-parser-js";
 import StandardApi from "@/middlewares/standard_api";
 
@@ -33,9 +32,10 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
         user = await User.create({
             ...credentials,
             user_agent: SignJwt(currentUserAgent),
-            password: CryptoJS.AES.encrypt(credentials.password, process.env.NEXT_PUBLIC_SECRET_KEY).toString(),
-            uf_wallet: ufCardData
-        })
+            password: EncryptOrDecryptData(credentials.password),
+            uf_wallet: ufCardData,
+            createdAt: getDateOfTimezone(credentials.timezone)
+        }).lean();
         await UFpoints.create({
             user_id: user._id,
             card_number: user.uf_wallet.card_number,
@@ -48,6 +48,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             username: user.username,
             email: user.email,
             register_provider: user.register_provider,
+            timezone: user.timezone,
             user_agent: user.user_agent,
             two_fa_enabled: user.two_fa_enabled,
             uf_wallet: user.uf_wallet,
@@ -58,7 +59,6 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
         });
         axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/create-tasks-record?user_id=${user._id}`)
 
-        delete user._id;
         res.status(200).json({
             success: true,
             msg: "You're Resgistered successfully !",
@@ -75,7 +75,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             category: "user",
             data: {
                 title: "New Signup",
-                msg: `A new user ${user.username} just signed up with urbanfits provider through ${parser.getOS()} - ${parser.getBrowser()}..`,
+                msg: `A new user ${user.username} just signed up with urbanfits provider through ${parser.getOS().name}${parser.getOS().version} - ${parser.getBrowser().name}.`,
                 href: "/user/userlist",
                 type: "success"
             }

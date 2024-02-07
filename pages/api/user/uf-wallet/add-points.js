@@ -4,13 +4,13 @@ import User from "@/models/user"
 import UFpoints from "@/models/ufpoints"
 import { sendNotification } from "@/utils/send_notification";
 import SavePointsHistory from "@/utils/save_points_history";
-import { EncrytOrDecryptData } from "@/utils/cyphers.js";
+import { EncryptOrDecryptData } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
-const AddUFpoints = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
-    const { card_number, user_id, source, secret_key, points, duducted, expiration_date, notific_params } = req.body
+const AddUFpoints = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
+    const { card_number, user_id, source, secret_key, points, duducted, expiration_date, notific_params } = req.body;
     if (!card_number || !mongoose.Types.ObjectId.isValid(user_id) || !source || !secret_key) return res.status(403).json({ success: false, msg: "Invalid arguments." })
-    const decryptedSecetKey = EncrytOrDecryptData(secret_key, false)
+    const decryptedSecetKey = EncryptOrDecryptData(secret_key, false)
     if (decryptedSecetKey !== process.env.NEXT_PUBLIC_SECRET_KEY) return res.status(403).json({ success: false, msg: "Invalid Secret Key." })
     await ConnectDB()
 

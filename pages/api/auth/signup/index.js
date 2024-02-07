@@ -3,12 +3,12 @@ import User from "@/models/user"
 import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import sendEmail from "@/utils/sendEmail"
-import { generateRandomInt } from "@/utils/cyphers.js";
+import { generateRandomInt, isValidTimeZone } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api"
 
 const Signup = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
-    const { username, email, phone_prefix, phone_number, password } = req.body;
-    if (!username || !email || !phone_prefix || !phone_number || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policies" })
+    const { username, email, phone_prefix, phone_number, password, timezone } = req.body;
+    if (!username || !email || !phone_prefix || !phone_number || !password || !isValidTimeZone(timezone)) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: username, email, phone_prefix, phone_number, password, accept_policies, timezone ." })
     await ConnectDB()
     let user = await User.findOne().or([{ email }, { username }])
     if (user) return res.status(409).json({ success: false, msg: "This Email or Username already in use." })

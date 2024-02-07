@@ -32,9 +32,11 @@ const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", v
             register_provider: user.register_provider,
             user_agent: user.user_agent,
             uf_wallet: user.uf_wallet,
+            two_fa_enabled: user.two_fa_enabled,
             last_checkin: user.last_checkin,
             createdAt: user.createdAt,
-            ...(user.role && { role: user.role })
+            ...(user.role && { role: user.role }),
+            ...(user.two_fa_activation_date && { two_fa_activation_date: user.two_fa_activation_date })
         }, (remember_me && remember_me === true) ? jwtExpiries.extended : jwtExpiries.default);
 
         res.status(200).json({
@@ -54,7 +56,7 @@ const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", v
             category: "user",
             data: {
                 title: "User login",
-                msg: `A user ${user.username} just logged in with urbanfits provider through ${parser.getOS()} - ${parser.getBrowser()}.`,
+                msg: `A user ${user.username} just logged in with urbanfits provider through ${parser.getOS().name}${parser.getOS().version} - ${parser.getBrowser().name}.`,
                 href: "/user/userlist"
             }
         })

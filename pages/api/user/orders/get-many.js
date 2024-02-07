@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import Order from "@/models/orders";
 import StandardApi from "@/middlewares/standard_api";
 
-const getManyOrders = async (req, res) => StandardApi(req, res, {}, async () => {
+const getManyOrders = async (req, res) => StandardApi(req, res, { verify_admin: true }, async () => {
     await ConnectDB()
     const LIMIT = 50;
     let totalOrders = await Order.countDocuments();

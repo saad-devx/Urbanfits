@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import User from "@/models/user";
 import { sendNotification } from "@/utils/send_notification";
-import { SignJwt, EncrytOrDecryptData, SetSessionCookie, DeleteCookie } from "@/utils/cyphers";
+import { SignJwt, EncryptOrDecryptData, SetSessionCookie } from "@/utils/cyphers";
 import StandardApi from "@/middlewares/standard_api";
 
 const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
@@ -12,7 +12,7 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
 
     await ConnectDB()
     let user = await User.findById(user_id).select('+two_fa_secret')
-    if (!user) { DeleteCookie('session-token'); DeleteCookie('is_logged_in'); return res.status(404).json({ success: false, msg: "User with provided user_id does not exist." }) }
+    if (!user) { res.clearCookie('session-token'); res.clearCookie('is_logged_in'); return res.status(404).json({ success: false, msg: "User with provided user_id does not exist." }) }
     if (!user.two_fa_secret || !user.two_fa_activation_date) return res.status(400).json({ success: false, msg: "This user does not have registered the 2FA." })
 
     const verified = speakeasy.totp.verify({
@@ -21,11 +21,11 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
         token: totp_code,
     });
 
-    const originalPassword = EncrytOrDecryptData(user.password, false)
+    const originalPassword = EncryptOrDecryptData(user.password, false)
     if (originalPassword !== password) return res.status(401).json({ success: false, msg: "Your password is incorrect." })
 
     if (verified && originalPassword === password) {
-        const updatedUser = await User.findByIdAndUpdate(user_id, { two_fa_enabled: !res.user.two_fa_enabled }, { new: true })
+        const updatedUser = await User.findByIdAndUpdate(user_id, { two_fa_enabled: !res.user.two_fa_enabled }, { new: true, _immutability: "disable", lean: true })
 
         SetSessionCookie(res, {
             _id: updatedUser._id,
@@ -33,6 +33,7 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
             email: updatedUser.email,
             register_provider: updatedUser.register_provider,
             user_agent: updatedUser.user_agent,
+            timezone: user.timezone,
             two_fa_enabled: updatedUser.two_fa_enabled,
             two_fa_activation_date: updatedUser.two_fa_activation_date,
             uf_wallet: updatedUser.uf_wallet,
@@ -42,7 +43,6 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
         }, res.user.exp);
         delete user.two_fa_secret;
         delete user.password;
-        delete user._id;
 
         res.status(200).json({
             success: true,

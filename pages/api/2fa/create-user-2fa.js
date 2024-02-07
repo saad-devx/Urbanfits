@@ -21,7 +21,7 @@ const CreateUser2FA = async (req, res) => StandardApi(req, res, { method: "POST"
             two_fa_secret: qr_secret,
             two_fa_enabled: true,
             two_fa_activation_date: new Date()
-        }, { new: true });
+        }, { new: true, _immutability: "disable", lean: true });
 
         SetSessionCookie(res, {
             _id: user._id,
@@ -29,6 +29,7 @@ const CreateUser2FA = async (req, res) => StandardApi(req, res, { method: "POST"
             email: user.email,
             register_provider: user.register_provider,
             user_agent: user.user_agent,
+            timezone: user.timezone,
             two_fa_enabled: user.two_fa_enabled,
             two_fa_activation_date: user.two_fa_activation_date,
             uf_wallet: user.uf_wallet,
@@ -38,7 +39,6 @@ const CreateUser2FA = async (req, res) => StandardApi(req, res, { method: "POST"
         }, res.user.exp);
         delete user.two_fa_secret;
         delete user.password;
-        delete user._id;
 
         return res.status(201).json({
             success: true,

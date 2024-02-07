@@ -5,13 +5,13 @@ import UFpoints from "@/models/ufpoints"
 import createUFcard from "@/utils/create-ufcard"
 import axios from "axios"
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
-import { SignJwt, SetSessionCookie } from "@/utils/cyphers";
+import { SignJwt, SetSessionCookie, isValidTimeZone, getDateOfTimezone } from "@/utils/cyphers";
 import StandardApi from "@/middlewares/standard_api"
 import UAParser from "ua-parser-js";
 
 const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
-    const { token } = req.body;
-    if (!token || token.length < 20) return res.status(400).json({ success: false, msg: "A valid google token as `credential` is required." })
+    const { token, timezone } = req.body;
+    if (!token || token.length < 20 || !isValidTimeZone(timezone)) return res.status(400).json({ success: false, msg: "A valid google token as `token` and user's time zone as `tiemzone` is required." })
 
     const googleClient = new OAuth2Client(process.env.CLIENT_ID);
     let ticket;
@@ -43,9 +43,11 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         lastname,
         image: picture,
         uf_wallet: ufCardData,
+        timezone,
         user_agent: SignJwt(currentUserAgent),
-        register_provider: "google"
-    })
+        register_provider: "google",
+        createdAt: getDateOfTimezone(timezone)
+    }).lean();
     await UFpoints.create({
         user_id: user._id,
         card_number: user.uf_wallet.card_number,
@@ -59,6 +61,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         username: user.username,
         email: user.email,
         register_provider: user.register_provider,
+        timezone: user.timezone,
         user_agent: user.user_agent,
         two_fa_enabled: user.two_fa_enabled,
         uf_wallet: user.uf_wallet,
@@ -68,7 +71,6 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         ...(user.role && { role: user.role })
     });
 
-    delete user._id;
     res.status(200).json({
         success: true,
         msg: "You are Resgistered successfully !",
@@ -85,7 +87,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         category: "user",
         data: {
             title: "New Signup",
-            msg: `A new user ${user.username} just signed up with google through ${parser.getOS()} - ${parser.getBrowser()}.`,
+            msg: `A new user ${user.username} just signed up with google through ${parser.getOS().name}${parser.getOS().version} - ${parser.getBrowser().name}.`,
             href: "/user/userlist",
             type: "success"
         }

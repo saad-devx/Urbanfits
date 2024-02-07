@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
 import { loadStripe } from '@stripe/stripe-js';
 import useUser from '@/hooks/useUser';
-import useAddress from '@/hooks/useAddress';
 import useWallet from '@/hooks/useWallet';
 import AlertPage from '@/components/alertPage'
 import DiscountBox, { getCouponDiscount } from '@/components/discountBox';
@@ -14,7 +13,6 @@ import Loader from '@/components/loaders/loader';
 import Image from "next/image"
 import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/languagemodal';
-import ifExists from '@/utils/if_exists';
 import toaster from '@/utils/toast_function';
 import axios from 'axios';
 // imports for Schema and validation
@@ -26,8 +24,7 @@ loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function Checkout1() {
     const router = useRouter()
-    const { address, getAddress } = useAddress()
-    const { user, guestUser, country } = useUser()
+    const { user, guestUser, country, address, getAddress } = useUser()
     const { points, currency, getShippingRates, formatPrice } = useWallet()
     const { totalUniqueItems, cartTotal, isEmpty, items } = useCart()
     const [shippingRates, setShippingRates] = useState(null)
@@ -169,7 +166,7 @@ export default function Checkout1() {
         (async () => {
             setLoader(<Loader />)
             if (user) {
-                if (!address) await getAddress()
+                if (!address) await getAddress();
                 if (!address) return setLoader(null)
                 setValues({
                     ...values,
@@ -182,7 +179,7 @@ export default function Checkout1() {
                 const { shipping_info } = JSON.parse(filledAddressInfo)
                 setValues({
                     name: shipping_info.name,
-                    email: ifExists(shipping_info.email),
+                    email: shipping_info.email,
                     delivery_option: 'express',
                     shipping_address: getValuesToBeSet(shipping_info.shipping_address),
                     billing_address: getValuesToBeSet(shipping_info.billing_address)

@@ -3,22 +3,25 @@ import User from "@/models/user";
 import ConnectDB from "@/utils/connect_db";
 import sendEmail from "@/utils/sendEmail";
 import changeEmail from "@/email templates/change_email";
-import CryptoJS from "crypto-js"
-import { generateRandomInt } from "@/utils/cyphers.js";
+import { generateRandomInt, EncryptOrDecryptData} from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
 const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
-    const { new_email, old_email, password } = req.body;
-    if (!new_email || !old_email || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: new_email, old_email, password" })
+    const { new_email, password } = req.body;
+    const old_email = req.user.email;
+    if (!new_email || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: new_email, password" })
     await ConnectDB()
 
     let user = await User.findOne({ email: new_email })
-    if (user) return res.status(401).json({ success: false, msg: "The new email is already registered." })
+    if (user) return res.status(409).json({ success: false, msg: "The new email is already registered." })
     user = await User.findOne({ email: old_email })
-    if (!user) return res.status(404).json({ success: false, msg: "User not found, the email you want to change is not registered." })
+    if (!user) {
+        res.clearCookie("session-token")
+        res.clearCookie("is_logged_in")
+        return res.status(401).json({ success: false, msg: "User not found, the email you want to change is not registered." })
+    }
 
-    const bytes = CryptoJS.AES.decrypt(user.password, process.env.NEXT_PUBLIC_SECRET_KEY)
-    const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
+    const originalPassword = EncryptOrDecryptData(user.password, false);
     if (password !== originalPassword) return res.status(401).json({ success: false, msg: "Your password is incorrect" })
 
     // Creating an opt and sending to new email

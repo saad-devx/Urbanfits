@@ -4,7 +4,7 @@ import Shoppinglist from "@/models/shoppinglist";
 import StandardApi from "@/middlewares/standard_api";
 
 const RenameShoppinglist = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
-    const { list_name, list_id } = req.query
+    const { list_name, list_id } = req.query;
     if (!mongoose.Types.ObjectId(list_id) || !list_name) return res.status(403).json({ success: false, msg: "Valid shoppinglist id and new name is required. Query parameters: list_id, list_name" })
     await ConnectDB()
 

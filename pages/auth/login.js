@@ -6,9 +6,7 @@ import Head from 'next/head'
 import Tooltip from '@/components/tooltip'
 import toaster from '@/utils/toast_function'
 import AlertPage from '@/components/alertPage'
-import axios from 'axios'
 import { useRouter } from 'next/router'
-// import { useSession, signIn } from "next-auth/react"
 import useUser from '@/hooks/useUser'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
@@ -17,14 +15,10 @@ import Image from 'next/image'
 import google_logo from '@/public/logos/google-logo.svg'
 import { DeleteCookie } from '@/utils/cyphers'
 
-export const metadata = {
-    title: "Urban Fits - Login"
-}
+
 export default function Login() {
-    // const { data: session } = useSession()
     const router = useRouter()
-    const [loading, setLoading] = useState(false)
-    const { user, updateUser } = useUser()
+    const { user, signIn, signInWithGoogle, isLoggedIn, userLoading } = useUser();
     const [showPass, setShowPass] = useState(false)
     const passRef = useRef()
 
@@ -32,39 +26,11 @@ export default function Login() {
         const googleClient = window.google.accounts.id;
         googleClient.initialize({
             client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-            callback: async (googleSession) => {
-                console.log(googleSession)
-                const { data } = await axios.post("/api/auth/signup/google", { token: googleSession.credential })
-                console.log(data)
-            }
+            callback: googleSession => signInWithGoogle(googleSession.credential, router)
         });
 
         return () => googleClient.cancel()
     }, []);
-
-    const onsubmit = async (values, x, oAuthQuery) => {
-        try {
-            setLoading(true)
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/login${oAuthQuery ? oAuthQuery : ''}`, values)
-            if (data.redirect_url && !data.payload) router.push(data.redirect_url)
-            else if (data.payload) {
-                await updateUser(data.payload, true)
-                useUser.setState({ guestUser: null });
-                window.location.href = "/"
-                // router.replace('/')
-                toaster("success", data.msg)
-            }
-            else {
-                const { data } = data.response
-                toaster("error", data.msg)
-            }
-        }
-        catch (error) {
-            console.log(error)
-            toaster("error", error.response.data.msg)
-        }
-        setLoading(false)
-    }
 
     const loginSchema = Yup.object({
         email: Yup.mixed().test('valid', 'Invalid email or username', function (value) {
@@ -80,58 +46,21 @@ export default function Login() {
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: initialSignupValues,
         validationSchema: loginSchema,
-        onSubmit: onsubmit
+        onSubmit: values => signIn(values, null, router)
     })
 
-    const providerSignIn = (name) => {
-        console.log(name)
-        sessionStorage.setItem('oauth', true);
-        sessionStorage.setItem('register_provider', name);
-        // return signIn(name)
-    }
-
-    // useEffect(() => {
-    //     if (user && user.email) return
-    //     const oauth = sessionStorage.getItem('oauth')
-    //     const register_provider = sessionStorage.getItem('register_provider')
-    //     if (oauth && session && session.user) {
-    //         let username = session.user.email.split('@')[0]
-    //         let name = session.user.name.split(' ')
-    //         let firstname = name[0]
-    //         name.shift()
-    //         let lastname = name.join(' ')
-    //         const loginDetails = { email: session.user.email, username, firstname, lastname, image: session.user.image, register_provider }
-    //         onsubmit(loginDetails, null, '?auth=google')
-    //         return sessionStorage.removeItem('oauth')
-    //     }
-    //     else return
-    // }, [session])
-
-    const sessionValidity = (e) => {
-        const checked = e.target.checked
-        localStorage.setItem('remember_me', checked)
-    }
-
     const handleSignIn = async () => {
-        DeleteCookie("g_state")
+        DeleteCookie("g_state");
         google.accounts.id.prompt((res) => {
             console.log(res);
             if (res.j && res.j == "opt_out_or_no_session") toaster("info", "You dont have any google account to sign in with.")
         });
     }
 
-
-    const signOut = () => {
-        const auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(() => {
-            console.log('User signed out.');
-        });
-    }
-
-    if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
+    if (isLoggedIn() && user?.email) return <AlertPage type="success" heading="You are already signed in !" />
     return <>
         <Head><title>Urban Fits - Login</title></Head>
-        <AuthPage loading={loading} mblNav="/auth/signup" mblNavName="Register">
+        <AuthPage loading={userLoading} mblNav="/auth/signup" mblNavName="Register">
             <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                 <section className="w-full mb-6 md:mb-0">
                     <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Login</h1>
@@ -154,18 +83,18 @@ export default function Login() {
 
                 <section>
                     <div className="relative w-full mb-2 flex items-center">
-                        {touched.accept_policies && errors.accept_policies ? <Tooltip classes="form-error" content={errors.accept_policies} /> : null}
+                        {touched.remember_me && errors.remember_me ? <Tooltip classes="form-error" content={errors.remember_me} /> : null}
                         <div className="w-full flex justify-between items-center text-gray-400 text-sm">
                             <div className='flex items-center gap-x-2'>
                                 <span>
-                                    <input className='rounded' type="checkbox" id="accept_policies" name="accept_policies" value={values.accept_policies} onChange={(e) => { handleChange(e); sessionValidity(e) }} />
+                                    <input className='rounded' type="checkbox" id="remember_me" name="remember_me" value={values.remember_me} onChange={handleChange} />
                                 </span>
-                                <label htmlFor='accept_policies' className="w-full -translate-y-0.5 cursor-pointer text-gray-400">Remember me</label>
+                                <label htmlFor='remember_me' className="w-full -translate-y-0.5 cursor-pointer text-gray-400">Remember me</label>
                             </div>
                             <Link href="/auth/resetpassword">Forgot Password?</Link>
                         </div>
                     </div>
-                    <Button loading={loading} my="my-4" classes='w-full' type="submit">Login</Button><div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
+                    <Button loading={userLoading} my="my-4" classes='w-full' type="submit">Login</Button><div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
                         <span className="w-2/5 h-px bg-gray-200"></span>
                         login via
                         <span className="w-2/5 h-px bg-gray-200"></span>

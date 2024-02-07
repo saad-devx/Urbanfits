@@ -4,7 +4,8 @@ import Shoppinglist from "@/models/shoppinglist";
 import StandardApi from "@/middlewares/standard_api";
 
 const PopulateShoppinglist = async (req, res) => StandardApi(req, res, { method: "DELETE" }, async () => {
-    const { list_id, user_id } = req.query
+    const { list_id } = req.query;
+    const user_id = req.user._id;
     if (!mongoose.Types.ObjectId(list_id)) return res.status(403).json({ success: false, msg: "Valid shoppinglist id is required. Query parameters: list_id" })
     await ConnectDB()
 

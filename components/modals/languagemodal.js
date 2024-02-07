@@ -12,7 +12,7 @@ import toaster from '@/utils/toast_function';
 
 export default function LanguageModal(props) {
     const { currency, setCurrency, setCurrency_selected_by_user } = useWallet()
-    const { country, setCountry, setGeoSelectedByUser } = useUser()
+    const { country, setCountry } = useUser()
     const [loading, setLoading] = React.useState(false)
     const validatedSchema = Yup.object({
         country: Yup.string().required("Please select your country"),
@@ -54,7 +54,7 @@ export default function LanguageModal(props) {
                                     await setCountry(c)
                                     setLoading(false)
                                     props.setLangModal(false)
-                                    return setGeoSelectedByUser(true)
+                                    useUser.setState({geo_selected_by_user: true})
                                 }} key={index} title={c.country} className={`w-full px-4 ${index == countryCodes.length - 1 ? null : "border-b"} hover:bg-slate-100 flex justify-between items-center py-3 transition-all`}>
                                     <span className="flex items-center gap-x-2 capitalize">
                                         <span className="w-5 h-4 overflow-hidden">
