@@ -44,12 +44,26 @@ const useUser = create(persist((set, get) => ({
         } finally { set(() => ({ userLoading: false })); }
     },
 
+    signUp: async (credentials, router) => {
+        if (get().isLoggedIn()) return toaster("info", "You are already logged in.");
+        set(() => ({ userLoading: true }));
+        try {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, credentials)
+            if (data.redirect_url) router.replace(data.redirect_url)
+            else throw new Error("no redirect url granted.")
+        }
+        catch (error) {
+            console.log(error)
+            toaster("error", error.response?.data.msg || (navigator.onLine ? "Oops! somethign went wrong." : "Network Error"))
+        } finally { set(() => ({ userLoading: false })); }
+    },
+
     signInWithGoogle: async (token, callback, router) => {
         const { isLoggedIn, updateUser } = get();
         if (isLoggedIn()) return toaster("info", "You are already logged in.");
         set(() => ({ userLoading: true }));
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login/google`, { token })
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login/google`, { token, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
             if (data.redirect_url && !data.payload) router.push(data.redirect_url)
             else if (data.payload) {
                 await updateUser(data.payload, true)
@@ -58,6 +72,24 @@ const useUser = create(persist((set, get) => ({
                 toaster("success", data.msg)
                 if (callback) callback(data)
             }
+        }
+        catch (error) {
+            console.log(error)
+            toaster("error", error.response?.data.msg || (navigator.onLine ? "Oops! somethign went wrong." : "Network Error"))
+        } finally { set(() => ({ userLoading: false })); }
+    },
+
+    signUpWithGoogle: async (token, callback, router) => {
+        const { isLoggedIn, updateUser } = get();
+        if (isLoggedIn()) return toaster("info", "You are already logged in.");
+        set(() => ({ userLoading: true }));
+        try {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/signup/google`, { token, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
+            await updateUser(data.payload, true)
+            set(() => ({ guestUser: null }));
+            router.replace("/")
+            toaster("success", data.msg)
+            if (callback) callback(data)
         }
         catch (error) {
             console.log(error)
