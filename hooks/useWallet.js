@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 import useUser from './useUser';
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
@@ -7,7 +6,7 @@ import uploadImage from '@/utils/uploadImage';
 import { shippingRates } from '@/uf.config';
 
 const currencies = ["AED", "SAR", "PKR"]
-const useWallet = create(persist((set, get) => ({
+const useWallet = create((set, get) => ({
     points: 0,
     currency: process.env.NEXT_PUBLIC_BASE_CURRENCY,
     currency_selected_by_user: false,
@@ -17,17 +16,15 @@ const useWallet = create(persist((set, get) => ({
         if (currencies.includes(currency)) set(() => ({ currency }))
         else return toaster("error", "Invalid currency!")
     },
-    setCurrency_selected_by_user: (bool) => set(() => ({ currency_selected_by_user: bool })),
-    setExchangeRate: (rate) => set(() => ({ exchange_rate: rate })),
     getUfBalance: async () => {
         const { user } = useUser.getState()
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?card_number=${user.uf_wallet.card_number}`)
             set(() => ({ points: data.balance }))
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        set(() => ({ walletLoading: false }))
+        finally { set(() => ({ listLoading: false })) }
     },
 
     getUfTasks: async (callback) => {
@@ -35,7 +32,7 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/get/user-tasks?user_id=${user._id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/get/user-tasks`)
             if (callback) callback(data)
         } catch (e) { console.log(e); toaster("error", e.response.data.msg || "Oops! something went wrong, please retry.") }
         finally { set(() => ({ walletLoading: false })) }
@@ -46,7 +43,7 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}${limit ? "&limit=" + limit : ''}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-history?card_number=${user.uf_wallet.card_number}${limit ? "&limit=" + limit : ''}`)
             callback ? callback(data.history) : null
             return data.history
         } catch (e) {
@@ -61,12 +58,12 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-weekly-points-history?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-weekly-points-history?card_number=${user.uf_wallet.card_number}`)
             if (setCallbackState) setCallbackState(data.history)
             set(() => ({ walletLoading: false }))
             return data.history
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        set(() => ({ walletLoading: false }))
+        finally { set(() => ({ listLoading: false })) }
     },
 
     spinUfWheel: async () => {
@@ -74,9 +71,8 @@ const useWallet = create(persist((set, get) => ({
         if (!user) return
         set(() => ({ walletLoading: true }))
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/spin-wheel?user_id=${user._id}&card_number=${user.uf_wallet.card_number}`)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/spin-wheel?card_number=${user.uf_wallet.card_number}`)
             set(() => ({ walletLoading: false }))
-            console.log(data)
             await updateUser({
                 ...user,
                 uf_wallet: {
@@ -89,7 +85,7 @@ const useWallet = create(persist((set, get) => ({
             get().getUfBalance()
             return data
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        set(() => ({ walletLoading: false }))
+        finally { set(() => ({ listLoading: false })) }
     },
 
     uploadUfTaskImg: async (taskName, file, callback) => {
@@ -176,6 +172,5 @@ const useWallet = create(persist((set, get) => ({
         return price.toFixed(3).replace(/\.?0+$/, '')
     }
 
-}), { name: "wallet" }
-))
+}))
 export default useWallet

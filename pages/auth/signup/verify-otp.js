@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AuthPage from '..'
 import Button from '@/components/buttons/simple_btn'
 import Head from 'next/head'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCart } from "react-use-cart";
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -80,8 +80,8 @@ export default function Navbar() {
 
     useEffect(() => {
         getNotifications();
-        if (!address) getAddress();
         getUfBalance();
+        if (!address) getAddress();
     }, [user])
 
     const closeCart = () => {

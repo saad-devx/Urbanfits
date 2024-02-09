@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from '@/styles/scroll-top&logo-load.module.css'
 
 export default function ImgLoader({ loading, classes }) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import useUser from '@/hooks/useUser'
 import countryCodes from '@/static data/countryCodes'

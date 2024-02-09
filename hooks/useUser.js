@@ -23,6 +23,21 @@ const useUser = create(persist((set, get) => ({
         return isLoggedIn && isLoggedIn === "true";
     },
 
+    getMe: async () => {
+        const { isLoggedIn, updateUser } = get();
+        if (!isLoggedIn()) return;
+        set(() => ({ userLoading: true }));
+        try {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/get/me`)
+            await updateUser(data.payload, true)
+            set(() => ({ guestUser: null }));
+        }
+        catch (error) {
+            console.log(error)
+            toaster("error", error.response?.data.msg || (navigator.onLine ? "Oops! somethign went wrong." : "Network Error"))
+        } finally { set(() => ({ userLoading: false })); }
+    },
+
     signIn: async (credentials, callback, router) => {
         const { isLoggedIn, updateUser } = get();
         if (isLoggedIn()) return toaster("info", "You are already logged in.");
@@ -98,11 +113,13 @@ const useUser = create(persist((set, get) => ({
     },
 
     getNotifications: async () => {
-        if (!get().isLoggedIn()) return
+        if (!get().isLoggedIn()) return;
+        set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/notifications/get`)
             set(() => ({ notifications: data.notification_data.notifications }))
-        } catch (error) { console.log(error) }
+        }
+        catch (error) { console.log(error) } finally { set(() => ({ userLoading: false })); }
     },
     setRecentItems: (newItem) => {
         const alreadyInItem = get().recentItems.filter(item => item.id === newItem.id)
@@ -155,6 +172,7 @@ const useUser = create(persist((set, get) => ({
             user: updateDirectly ? valuesObj : jwt.decode(valuesObj)
         }))
         else {
+            set(() => ({ userLoading: true }));
             try {
                 const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/update`, valuesObj)
                 set(() => ({ user: jwt.decode(data.payload) }))
@@ -162,7 +180,7 @@ const useUser = create(persist((set, get) => ({
             } catch (error) {
                 console.log(error)
                 toaster("error", error.response.data.msg)
-            }
+            } finally { set(() => ({ userLoading: false })) }
         }
     },
 
@@ -184,7 +202,7 @@ const useUser = create(persist((set, get) => ({
             sessionStorage.clear()
             window.location.href = redirect
             clearNewsletterData()
-            set(() => ({ user: null, notifications: [] }))
+            set(() => ({ user: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
             toaster("success", "You are signed out !")
         }
     },
@@ -202,19 +220,19 @@ const useUser = create(persist((set, get) => ({
     },
 
     getAddress: async () => {
-        if (!user) return
+        if (!get().isLoggedIn()) return
+        set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/addresses/get`)
-            const address = jwt.decode(data.payload);
-            set(() => ({ address }));
-            return address;
+            set(() => ({ address: jwt.decode(data.payload) }));
         } catch (err) {
             console.log(err.response.data.msg)
             return null
-        }
+        } finally { set(() => ({ userLoading: false })) }
     },
 
     updateAddress: async (values) => {
+        set(() => ({ userLoading: true }));
         try {
             let { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/addresses/update`, values)
             const address = jwt.decode(data.payload)
@@ -226,9 +244,10 @@ const useUser = create(persist((set, get) => ({
             console.log(e)
             toaster("error", e.response.data.msg)
             return null
-        }
+        } finally { set(() => ({ userLoading: false })) }
     },
 }), {
+    name: "user_data",
     partialize: (state) => ({
         geo_selected_by_user: state.geo_selected_by_user,
         country: state.country,

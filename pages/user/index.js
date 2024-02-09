@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import useWallet from '@/hooks/useWallet';
 import useNewsletter from '@/hooks/useNewsletter';
 import Error403 from '@/pages/403';
 import Loader from '@/components/loaders/loader';
+import Spinner from '@/components/loaders/spinner'
 import Newsletter from '@/components/modals/newsletter';
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import uploadImage from '@/utils/uploadImage'
 // image imports
 import Image from 'next/image';
-import Spinner from '@/components/loaders/spinner'
 const giantSearchIcon = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/giant-search.webp?timestamp=123"
 // Icons imports
 import {
@@ -53,8 +53,8 @@ export const Option = (props) => {
 }
 
 
-export default function User(props) {
-    const { user, updateUser, recentItems } = useUser()
+export default function User({ loading, profileNull, children }) {
+    const { user, isLoggedIn, updateUser, recentItems } = useUser()
     const { points } = useWallet()
     const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
     const [imgSpinner, SetImgSpinner] = useState(null)
@@ -284,8 +284,8 @@ export default function User(props) {
             </section>
         </main>
     </>
-    else if (!user) return <Error403 />
-    else return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex flex-col lg:flex-row justify-between font_urbanist`}>
+    else if (!user && !isLoggedIn()) return <Error403 />;
+    else if (user) return <main className={`bg-gray-50 w-full md:px-7 lg:px-14 xl:px-20 py-16 flex flex-col lg:flex-row justify-between font_urbanist`}>
         <Logout show={logout} setLogout={setLogout} />
         <section id='menu_container' className="hidden mid:flex lg:hidden w-full pb-7 px-4 rounded-full overflow-x-scroll hide_scrollbar">
             <Option icon={<AccountIcon />} href='/user/myaccount'>My Account</Option>
@@ -321,7 +321,7 @@ export default function User(props) {
             </div>
         </section>
         <section className='bg-white w-full lg:w-[70%] 2xl:w-[73%] px-12 py-10 rounded-lg font_urbanist text-left overflow-x-hidden overflow-y-scroll' >
-            <nav className={`${props.profileNull ? 'hidden' : null} flex flex-col`}>
+            <nav className={`${profileNull ? 'hidden' : null} flex flex-col`}>
                 <h2 className="text-lg lg:text-2xl font_urbanist_bold mb-6">My Account</h2>
                 <div className="w-3/5 md:w-auto flex items-center gap-x-3">
                     <label htmlFor='pfp' className="group relative md:w-20 aspect-square rounded-full cursor-pointer border-2 border-gray-300 hover:bg-black/50 transition-all overflow-hidden">
@@ -335,7 +335,8 @@ export default function User(props) {
                     <p className='text-sm lg:text-base'><p className="font_urbanist_medium">Welcome {user.firstname || user.username} !</p>Save your address details and phone number here for easy and fast in delivery process in the future.</p>
                 </div>
             </nav>
-            {props.children}
+            {loading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> : children}
         </section>
-    </main >
+    </main>;
+    else return
 }

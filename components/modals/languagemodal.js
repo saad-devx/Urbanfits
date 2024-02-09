@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
 import countryCodes from '@/static data/countryCodes';
@@ -11,9 +11,9 @@ import Tooltip from '../tooltip';
 import toaster from '@/utils/toast_function';
 
 export default function LanguageModal(props) {
-    const { currency, setCurrency, setCurrency_selected_by_user } = useWallet()
+    const { currency, setCurrency } = useWallet()
     const { country, setCountry } = useUser()
-    const [loading, setLoading] = React.useState(false)
+    const [loading, setLoading] = useState(false)
     const validatedSchema = Yup.object({
         country: Yup.string().required("Please select your country"),
         language: Yup.string().required("Please select your prefered language")
@@ -29,8 +29,8 @@ export default function LanguageModal(props) {
     const updateCurrency = (event) => {
         const { value } = event.target
         setCurrency(value)
-        location.reload()
-        setCurrency_selected_by_user(true)
+        location.reload();
+        useWallet.setState({ currency_selected_by_user: true })
         toaster("success", <p>Currency udpated to <span className='font_urbanist_bold'>{value}</span>.</p>)
     }
 
@@ -54,7 +54,7 @@ export default function LanguageModal(props) {
                                     await setCountry(c)
                                     setLoading(false)
                                     props.setLangModal(false)
-                                    useUser.setState({geo_selected_by_user: true})
+                                    useUser.setState({ geo_selected_by_user: true })
                                 }} key={index} title={c.country} className={`w-full px-4 ${index == countryCodes.length - 1 ? null : "border-b"} hover:bg-slate-100 flex justify-between items-center py-3 transition-all`}>
                                     <span className="flex items-center gap-x-2 capitalize">
                                         <span className="w-5 h-4 overflow-hidden">

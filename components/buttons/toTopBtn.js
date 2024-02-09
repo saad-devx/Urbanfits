@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import toTopBtn from '@/styles/scroll-top&logo-load.module.css'
 
 export default function ToTopBtn() {

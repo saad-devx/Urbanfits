@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import '@/styles/pillbtns.css';
 import '@/styles/carousels.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/navbars/navbar';
 import Footer from '@/components/footer';
 import dynamic from 'next/dynamic';
@@ -18,18 +18,17 @@ import { urbanist } from '@/fonts';
 
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter()
-  const { user, emitPresenceEvent, logOut } = useUser()
+  const { getMe, user, isLoggedIn, emitPresenceEvent, getNotifications } = useUser();
   const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
 
   const igniteSession = () => {
     emitPresenceEvent("user_left");
     useUser.setState({ guestUser: null });
-    // const sessionValid = localStorage.getItem('remember_me')
-    // if (!sessionValid || sessionValid !== "true") logOut()
   }
 
   useEffect(() => {
+    getMe();
     emitPresenceEvent();
     getGeoLocation().then(getExchangeRate)
     window.addEventListener("beforeunload", igniteSession)
@@ -41,7 +40,8 @@ function App({ Component, pageProps: { ...pageProps } }) {
 
   useEffect(() => {
     initBeamsClient()
-    if (user) {
+    if (isLoggedIn() && user) {
+      getNotifications()
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
       userChannel.bind('new-notification', (data) => {
         useUser.setState({ notifications: data.notification_data.notifications })
@@ -58,13 +58,12 @@ function App({ Component, pageProps: { ...pageProps } }) {
   return <main className={`max-w-[2000px] mx-auto ${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
-    {/* <SessionProvider session={session}> */}
     <CartProvider>
       <Navbar />
+      <button onClick={getMe} className="fixed z-50 p-2 bg-gray-200">refresh user</button>
       <Component {...pageProps} />
       <Footer />
     </CartProvider>
-    {/* </SessionProvider> */}
   </main>
 }
 export default dynamic(() => Promise.resolve(App), { ssr: false })

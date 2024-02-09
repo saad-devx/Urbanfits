@@ -6,7 +6,7 @@ import UFpoints from "@/models/ufpoints";
 import SavePointsHistory from "@/utils/save_points_history";
 import { sendNotification } from "@/utils/send_notification";
 import { generateRandomInt, SignJwt, getDateOfTimezone } from "@/utils/cyphers.js";
-import { verify } from "jsonwebtoken";
+import { verify, decode } from "jsonwebtoken";
 import StandardApi from "@/middlewares/standard_api";
 import { parse } from "cookie";
 

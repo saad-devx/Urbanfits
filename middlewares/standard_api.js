@@ -5,7 +5,7 @@ import CorsMiddleware from "@/utils/cors-config";
 import { sendAdminNotification } from "@/utils/send_notification";
 import { verify, decode } from "jsonwebtoken"
 import { adminRoles } from "@/uf.config";
-import { parse, serialize } from "cookie";
+import { parse } from "cookie";
 
 export default async function StandardApi(req, res, { method = "GET", verify_user = true, verify_admin = false }, next) {
     try {
@@ -24,12 +24,13 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
                     if (!admin || !adminRoles.includes(admin.role)) throw new Error("invalid session token");
                 }
                 req.user = decodedToken;
+                await next()
             } catch (error) {
                 console.log(error)
                 return res.status(401).json({ success: false, error, msg: "Your session is invalid or expired. Please sign in again." })
             }
+            else await next()
 
-            await next()
         } else return res.status(405).json({ success: false, msg: `Method not allowed, Allowed methods: '${method}'` })
     } catch (error) {
         console.log(error);

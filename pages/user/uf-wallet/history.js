@@ -1,4 +1,4 @@
-import React from "react"
+import { useEffect, useState } from "react"
 import Head from "next/head"
 import Link from "next/link"
 import BounceLoader from "@/components/loaders/bounceLoader"
@@ -7,9 +7,9 @@ import useUser from "@/hooks/useUser"
 import useWallet from "@/hooks/useWallet"
 
 export default function UFwallet() {
-    const { user } = useUser()
+    const { user, isLoggedIn } = useUser()
     const { points, getUfHistory, walletLoading, currency, formatPrice } = useWallet()
-    const [history, setHistory] = React.useState(null)
+    const [history, setHistory] = useState(null)
 
     const groupHistoryByYearAndMonth = (history) => {
         if (!history) return null
@@ -35,12 +35,12 @@ export default function UFwallet() {
 
     const groupedRecords = groupHistoryByYearAndMonth(history)
 
-    React.useEffect(() => {
+    useEffect(() => {
         getUfHistory((history_docs) => setHistory(history_docs))
     }, [])
 
-    if (!user || !user.email) return <Error403 />
-    if (window.matchMedia('(max-width: 760px)').matches) return <>
+    if (!user && !isLoggedIn()) return <Error403 />
+    else if (user && window.matchMedia('(max-width: 760px)').matches) return <>
         <Head><title>UF Wallet History - Uraban Fits</title></Head>
         <main className='w-screen h-screen bg-white flex flex-col transition-all duration-500'>
             <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">

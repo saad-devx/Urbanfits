@@ -1,4 +1,3 @@
-import React from 'react'
 import useUser from '@/hooks/useUser';
 import Button from '../buttons/simple_btn';
 import { useCart } from 'react-use-cart';
@@ -16,7 +15,7 @@ export default function Logout(props) {
                 </div>
                 <div className="w-full mt-7 flex justify-around">
                     <Button onClick={() => props.setLogout(false)} name="modal5" my="my-2" bg="bg-gray-200" text="black" classes="w-48pr" >Cancel</Button>
-                    <Button onClick={() => { logOut(); emptyCart(); props.setLogout(false) }} my="my-2" classes="w-48pr text-sm md:text-base text-center" >Sign Out</Button>
+                    <Button onClick={async () => { await logOut(); emptyCart(); props.setLogout(false) }} my="my-2" classes="w-48pr text-sm md:text-base text-center" >Sign Out</Button>
                 </div>
             </section>
         </div>

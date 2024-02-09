@@ -1,14 +1,13 @@
-import React from 'react'
 import useWallet from '@/hooks/useWallet'
 
 export default function CurrencySelect({ show, setCurrencyModal }) {
-    const { currency, setCurrency, setCurrency_selected_by_user } = useWallet()
+    const { currency, setCurrency } = useWallet()
 
     const updateCurrency = (event) => {
         const { name } = event.target
         setCurrency(name)
         location.reload()
-        setCurrency_selected_by_user(true)
+        useWallet.setState({ currency_selected_by_user: true })
         toaster("success", <p>Currency udpated to <span className='font_urbanist_bold'>{name}</span>.</p>)
     }
 

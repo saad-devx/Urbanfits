@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
 import { loadStripe } from '@stripe/stripe-js';
@@ -15,7 +15,6 @@ import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/languagemodal';
 import toaster from '@/utils/toast_function';
 import axios from 'axios';
-// imports for Schema and validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';

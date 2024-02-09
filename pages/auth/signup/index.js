@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import AuthPage from '..'
 import Link from 'next/link'
 import Head from 'next/head'

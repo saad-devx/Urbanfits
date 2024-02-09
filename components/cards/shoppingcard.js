@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import AddToShopListModal from '../modals/addtoshoppinglist';
 import { useCart } from "react-use-cart";

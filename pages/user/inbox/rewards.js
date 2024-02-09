@@ -1,14 +1,14 @@
-import React from 'react'
+import { useEffect } from 'react'
 import NotificationInbox from '.'
 import useUser from '@/hooks/useUser'
 import { updateNotificationStatus } from '.'
 
 export default function Rewards() {
-    const { user, notifications } = useUser()
+    const { notifications } = useUser()
     const filteredNotifics = notifications.filter(notific => notific.category === "reward")
     const otherNotifics = notifications.filter(notific => notific.category !== "reward")
-    React.useEffect(() => {
-        if (filteredNotifics.some(notific => !notific.seen)) updateNotificationStatus(user._id, "reward")
+    useEffect(() => {
+        if (filteredNotifics.some(notific => !notific.seen)) updateNotificationStatus("reward")
         const newNotifications = [...otherNotifics, ...filteredNotifics.map(notific => ({ ...notific, seen: true }))]
         useUser.setState({ notifications: newNotifications })
     }, [])

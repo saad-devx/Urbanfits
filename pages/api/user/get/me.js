@@ -3,7 +3,7 @@ import User from "@/models/user";
 import StandardApi from "@/middlewares/standard_api";
 import { SignJwt } from "@/utils/cyphers";
 
-const getMyData = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
+const getMyData = async (req, res) => StandardApi(req, res, {}, async () => {
     await ConnectDB()
     const user = await User.findById(req.user._id).lean()
     res.status(200).json({ success: true, payload: SignJwt(user) })

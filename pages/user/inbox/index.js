@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -53,22 +53,22 @@ export const NotificationItem = ({ notific, key, marginClass }) => {
     </div>
 }
 
-export const updateNotificationStatus = async (user_id, category) => {
+export const updateNotificationStatus = async (category) => {
     try {
-        await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/notifications/update-status?user_id=${user_id}&category=${category}`)
+        await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/notifications/update-status?category=${category}`)
     } catch (error) { console.log(error) }
 }
 
 export default function NotificationInbox(props) {
     const router = useRouter()
-    const { user, notifications, getNotifications } = useUser()
+    const { user, isLoggedIn, notifications, getNotifications } = useUser();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!notifications.length) getNotifications()
     }, [])
 
-    if (!user) return <Error403 />
-    if (window.matchMedia('(min-width: 760px)').matches) return <>
+    if (!user && !isLoggedIn()) return <Error403 />
+    if (user && window.matchMedia('(min-width: 760px)').matches) return <>
         <Head><title>Notificatoins Inbox - Urban Fits</title></Head>
         <main className="bg-gray-50 w-full min-h-layout_height md:px-7 lg:px-14 xl:px-20 py-16 font_urbanist">
             <div className="flex flex-col lg:flex-row justify-between">
@@ -91,7 +91,7 @@ export default function NotificationInbox(props) {
             </div>
         </main >
     </>
-    else return <>
+    else if (user) return <>
         <Head><title>Notificatoins Inbox - Urban Fits</title></Head>
         <section className={`w-full p-4 ${router.pathname === "/user/inbox" ? null : "border-b border-gray-50"} flex justify-between items-center`}>
             <button onClick={() => router.back()} className='fa-solid fa-chevron-left text-xl'></button>

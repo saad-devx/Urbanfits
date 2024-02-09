@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import BounceLoader from './loaders/bounceLoader';
 import Button from './buttons/simple_btn';
 import toaster from '@/utils/toast_function';

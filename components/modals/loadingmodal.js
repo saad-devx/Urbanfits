@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import LinkBtn from '../buttons/link_btn';
 import LanguageModal from './languagemodal';
 
