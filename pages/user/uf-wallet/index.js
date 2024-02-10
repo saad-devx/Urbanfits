@@ -6,6 +6,7 @@ import Image from "next/image"
 import User from ".."
 import useUser from "@/hooks/useUser"
 import useWallet from "@/hooks/useWallet"
+import Error403 from "@/pages/403"
 // import div from "react-parallax-tilt"
 
 export default function UFwallet() {

@@ -36,7 +36,7 @@ const CreateNewsletter = async (req, res) => StandardApi(req, res, { method: "PO
     letter = await Newsletter.findOneAndUpdate({ user: user._id }, {
         ...req.body,
         ...(email ? { active_by_email: true } : { active_by_phone: true })
-    }, { new: true, upsert: true })
+    }, { new: true, upsert: true, lean: true })
     req.body.phone ? sendSubConfirmationViaSMS(user.username, req.body.interests) : sendSubConfirmationViaEmail(user.username, req.body.interests)
 
     return res.status(201).json({

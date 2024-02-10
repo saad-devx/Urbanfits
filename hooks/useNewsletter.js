@@ -11,7 +11,7 @@ const useNewsletter = create((set) => ({
         if (!user) return
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/newsletter/get`)
-            const decodedData = jwt.decode(data.payload)?._doc
+            const decodedData = jwt.decode(data.payload)
             delete decodedData._id;
             delete decodedData.user;
             return set(() => ({ newsletterData: decodedData }))

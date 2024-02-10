@@ -8,7 +8,7 @@ import { sendNotification } from "@/utils/send_notification";
 import { generateRandomInt, SignJwt, getDateOfTimezone } from "@/utils/cyphers.js";
 import { verify, decode } from "jsonwebtoken";
 import StandardApi from "@/middlewares/standard_api";
-import { parse } from "cookie";
+import { parse, serialize } from "cookie";
 
 const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT", verify_user: false }, async () => {
     const { name } = req.body.event;
@@ -34,7 +34,6 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
         }
     } else if (name === 'user_joined') {
         const guestUser = await GuestUser.create({});
-        res.clearCookie("is_logged_in")
         res.setHeader('Set-Cookie',
             serialize('guest-session', SignJwt({
                 _id: guestUser._id,

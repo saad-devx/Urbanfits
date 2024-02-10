@@ -5,6 +5,7 @@ import BounceLoader from "@/components/loaders/bounceLoader"
 import User from ".."
 import useUser from "@/hooks/useUser"
 import useWallet from "@/hooks/useWallet"
+import Error403 from "@/pages/403"
 
 export default function UFwallet() {
     const { user, isLoggedIn } = useUser()

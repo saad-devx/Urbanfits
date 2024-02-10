@@ -56,13 +56,13 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
         heading: "Login",
         type: "login",
         mini_msg: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`,
-        message: `You logged in to your Urban Fits account through ${parser.getOS()} - ${parser.getBrowser()} at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
+        message: `You logged in to your Urban Fits account through ${parser.getOS().name}${parser.getOS().version}/${parser.getBrowser().name} at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
     }, { notify: true })
     sendAdminNotification({
         category: "user",
         data: {
             title: "User login",
-            msg: `A user ${user.username} just logged in with google through ${parser.getOS().name}${parser.getOS().version} - ${parser.getBrowser().name}.`,
+            msg: `A user ${user.username} just logged in with google through ${parser.getOS().name}${parser.getOS().version}/${parser.getBrowser().name}.`,
             href: "/user/userlist"
         }
     })

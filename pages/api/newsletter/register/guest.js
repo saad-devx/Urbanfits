@@ -30,11 +30,11 @@ const CreateNewsletter = async (req, res) => StandardApi(req, res, { method: "PO
     if (letter) return res.status(409).json({ success: false, msg: "This email or phone number has already subscribed our Newsletter" })
 
     if (email) {
-        letter = await Newsletter.create({ ...req.body, active_by_email: true })
+        letter = await Newsletter.create({ ...req.body, active_by_email: true }).lean()
         sendSubConfirmationViaEmail(null, req.body.interests)
     }
     else if (phone) {
-        letter = await Newsletter.create({ ...req.body, active_by_phone: true })
+        letter = await Newsletter.create({ ...req.body, active_by_phone: true }).lean()
         sendSubConfirmationViaSMS(null, req.body.interests)
     }
     return res.status(200).json({

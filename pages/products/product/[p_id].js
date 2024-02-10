@@ -97,9 +97,13 @@ export default function Product(props) {
     return <>
         <Head>
             <title className='capitalize' >{productData.name}</title>
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="Urban Fits" />
             <meta property="og:title" content={productData.name} />
             <meta property="og:description" content={productData.description} />
-            <meta property="og:image" content={productData.cover_image} />
+            <meta property="og:image:secure_url" itemprop="image" content={productData.cover_image} />
+            <meta property="og:image" itemprop="image" content={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <meta property="og:image:type" content="image/webp" />
             <meta property="og:url" content={router.asPath} />
         </Head>
         <main className="bg-white w-full max-w-[2000px] mx-auto h-full font_urbanist transition-all duration-700">

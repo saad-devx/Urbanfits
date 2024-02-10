@@ -3,7 +3,7 @@ import User from "@/models/user";
 import ConnectDB from "@/utils/connect_db";
 import sendEmail from "@/utils/sendEmail";
 import changeEmail from "@/email templates/change_email";
-import { generateRandomInt, EncryptOrDecryptData} from "@/utils/cyphers.js";
+import { generateRandomInt, EncryptOrDecryptData, RemoveSessionCookie } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
 const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
@@ -16,8 +16,7 @@ const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT"
     if (user) return res.status(409).json({ success: false, msg: "The new email is already registered." })
     user = await User.findOne({ email: old_email })
     if (!user) {
-        res.clearCookie("session-token")
-        res.clearCookie("is_logged_in")
+        RemoveSessionCookie(res)
         return res.status(401).json({ success: false, msg: "User not found, the email you want to change is not registered." })
     }
 

@@ -192,15 +192,15 @@ const useUser = create(persist((set, get) => ({
         } catch (e) { console.log("Error emitting presence event: ", e) }
     },
 
-    logOut: async (redirect = '/') => {
+    logOut: async (router) => {
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/logout`)
+            await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/logout`);
+            router.replace("/");
         } catch (e) { console.log("Coouldn't log out.", e) }
         finally {
             const { clearNewsletterData } = useNewsletter.getState()
             localStorage.clear()
             sessionStorage.clear()
-            window.location.href = redirect
             clearNewsletterData()
             set(() => ({ user: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
             toaster("success", "You are signed out !")
@@ -249,6 +249,7 @@ const useUser = create(persist((set, get) => ({
 }), {
     name: "user_data",
     partialize: (state) => ({
+        user: state.user,
         geo_selected_by_user: state.geo_selected_by_user,
         country: state.country,
         wishList: state.wishList,

@@ -54,7 +54,7 @@ export const Option = (props) => {
 
 
 export default function User({ loading, profileNull, children }) {
-    const { user, isLoggedIn, updateUser, recentItems } = useUser()
+    const { user, getMe, isLoggedIn, updateUser, recentItems } = useUser()
     const { points } = useWallet()
     const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
     const [imgSpinner, SetImgSpinner] = useState(null)
@@ -98,6 +98,7 @@ export default function User({ loading, profileNull, children }) {
         }
     }
     useEffect(() => {
+        getMe()
         if (!newsletterData) return () => getNewsletterData()
         if (window.matchMedia('(min-width: 760px)').matches) {
             let activeLink = document.querySelector('#menu_container .active')

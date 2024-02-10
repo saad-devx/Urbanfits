@@ -10,7 +10,7 @@ const getNewsletters = async (req, res) => StandardApi(req, res, {}, async () =>
     await ConnectDB()
 
     if (_id) {
-        const letter = await Newsletter.findOne({ user: mongoose.Types.ObjectId(_id) })
+        const letter = await Newsletter.findOne({ user: mongoose.Types.ObjectId(_id) }).lean();
         if (!letter) return res.status(404).json({ success: false, msg: "Newsletter not registered with this id." })
         delete letter.user;
         return res.status(200).json({
@@ -20,7 +20,7 @@ const getNewsletters = async (req, res) => StandardApi(req, res, {}, async () =>
         })
     }
     else if (email) {
-        const letter = await Newsletter.findOne({ email })
+        const letter = await Newsletter.findOne({ email }).lean();
         if (!letter) return res.status(404).json({ success: false, msg: "Newsletter not registered with this email" })
         delete letter.user;
         return res.status(200).json({

@@ -69,13 +69,13 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             heading: "Signup Bonus",
             type: "signup",
             mini_msg: `Congratulations, You won 500 UF Points as a signup bonus!`,
-            message: `Congratulations ! You're a part of Urban Fits now. You got 500 UF Points as a signup bonus, Happy Shopping!`
+            message: `Congratulations ! You're a part of Urban Fits now. You got 500 UF Points as a signup bonus, Happy Shopping! Sign up device: ${parser.getOS().name}${parser.getOS().version}/${parser.getBrowser().name}`
         }, { notify: true })
         sendAdminNotification({
             category: "user",
             data: {
                 title: "New Signup",
-                msg: `A new user ${user.username} just signed up with urbanfits provider through ${parser.getOS().name}${parser.getOS().version} - ${parser.getBrowser().name}.`,
+                msg: `A new user ${user.username} just signed up with urbanfits provider through ${parser.getOS().name}${parser.getOS().version}/${parser.getBrowser().name}.`,
                 href: "/user/userlist",
                 type: "success"
             }

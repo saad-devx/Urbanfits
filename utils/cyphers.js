@@ -2,7 +2,7 @@ import Giftcard from "@/models/giftcard"
 import ConnectDB from "./connect_db";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
-import { serialize } from "cookie";
+import { serialize, } from "cookie";
 import { jwtExpiries } from "@/uf.config";
 
 export const generateRandomInt = (from, to) => Math.floor(Math.random() * (to - from + 1)) + from;
@@ -55,17 +55,38 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
 }
 
 export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.default) => {
+    console.log(expiresAt)
     const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
         httpOnly: true,
         sameSite: false,
         path: "/",
-        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
+        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        maxAge: expiresAt
     })
     const isLoggedInCookie = serialize('is_logged_in', true, {
         httpOnly: false,
         sameSite: false,
         path: "/",
-        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION"
+        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        maxAge: expiresAt
+    })
+    res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie])
+}
+
+export const RemoveSessionCookie = (res) => {
+    const sessionTokenCookie = serialize('session-token', "null", {
+        httpOnly: true,
+        sameSite: false,
+        path: "/",
+        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        maxAge: 0
+    })
+    const isLoggedInCookie = serialize('is_logged_in', false, {
+        httpOnly: false,
+        sameSite: false,
+        path: "/",
+        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        maxAge: 0
     })
     res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie])
 }

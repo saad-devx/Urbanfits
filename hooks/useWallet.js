@@ -24,7 +24,7 @@ const useWallet = create((set, get) => ({
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?card_number=${user.uf_wallet.card_number}`)
             set(() => ({ points: data.balance }))
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        finally { set(() => ({ listLoading: false })) }
+        finally { set(() => ({ walletLoading: false })) }
     },
 
     getUfTasks: async (callback) => {
@@ -63,7 +63,7 @@ const useWallet = create((set, get) => ({
             set(() => ({ walletLoading: false }))
             return data.history
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        finally { set(() => ({ listLoading: false })) }
+        finally { set(() => ({ walletLoading: false })) }
     },
 
     spinUfWheel: async () => {
@@ -85,7 +85,7 @@ const useWallet = create((set, get) => ({
             get().getUfBalance()
             return data
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
-        finally { set(() => ({ listLoading: false })) }
+        finally { set(() => ({ walletLoading: false })) }
     },
 
     uploadUfTaskImg: async (taskName, file, callback) => {
