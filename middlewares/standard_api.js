@@ -34,15 +34,15 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
         } else return res.status(405).json({ success: false, msg: `Method not allowed, Allowed methods: '${method}'` })
     } catch (error) {
         console.log(error);
-        // sendAdminNotification({
-        //     category: "system",
-        //     data: {
-        //         title: "System Error",
-        //         msg: `A system error occurred in "${req.url}" .`,
-        //         description: `Error Message: ${error.message}\n Stack trace: ${error.stack}`,
-        //         type: "error"
-        //     }
-        // })
+        sendAdminNotification({
+            category: "system",
+            data: {
+                title: "System Error",
+                msg: `A system error occurred in "${req.url}" .`,
+                description: `Error Message: ${error.message}\n Stack trace: ${error.stack}`,
+                type: "error"
+            }
+        })
         return res.status(500).json({ success: false, msg: "Internal Server Error occurred, please try again in a while.", error })
     }
 }

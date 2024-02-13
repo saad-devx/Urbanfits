@@ -1,6 +1,7 @@
 import ConnectDB from "@/utils/connect_db";
 import User from "@/models/user";
-import { generateRandIntWithProbabilities, EncryptOrDecryptData, getDateOfTimezone } from "@/utils/cyphers.js";
+import { generateRandIntWithProbabilities, getDateOfTimezone } from "@/utils/cyphers.js";
+import SavePointsHistory from "@/utils/save_points_history";
 import axios from "axios";
 import StandardApi from "@/middlewares/standard_api";
 
@@ -15,7 +16,7 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
     const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": card_number })
     if (!user) return res.status(404).json({ success: false, msg: "Invalid information of user uf-card" })
 
-    const currentDate = new Date(getDateOfTimezone(req.user.timezone).setHours(59, 59, 59, 999));
+    const currentDate = new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59, 999));
     const today = getDateOfTimezone(req.user.timezone);
     const currentWeekStart = new Date(new Date(new Date(today).setDate(today.getDate() - (today.getDay() + 5) % 7)).setHours(0, 0, 0, 0));
     const secondSpinTimeAvailability = new Date(new Date(currentWeekStart).setDate(new Date(currentWeekStart).getDate() + 2));
@@ -32,22 +33,21 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
             })
         }
         if (generatedReward !== 0) {
-            axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/add-points`, {
-                user_id: user._id,
-                card_number: user.uf_wallet.card_number,
-                source: "prize_wheel",
-                secret_key: EncryptOrDecryptData(process.env.NEXT_PUBLIC_SECRET_KEY),
-                points: generatedReward,
-                duducted: 10,
-                expiration_date: new Date(currentDate.setDate(currentDate.getDate() + 7)),
-                notific_params: {
-                    category: "reward",
-                    heading: "Fortune Wheel Prize",
-                    type: "prize_wheel",
-                    mini_msg: '',
-                    message: `Congratulations! You won ${generatedReward} UF-Points in prize wheel spin. They will expire after 7 days and shall be deducted from your wallet. Be active whole week to get chance to spin.`
+            await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone,
+                {
+                    earned: generatedReward,
+                    spent: 10,
+                    source: "prize_wheel",
+                    expirationDate: new Date(currentDate.setDate(currentDate.getDate() + 7))
                 }
-            })
+            );
+            sendNotification(user._id, {
+                category: "reward",
+                heading: "Fortune Wheel Prize",
+                type: "prize_wheel",
+                mini_msg: '',
+                message: `Congratulations! You won ${generatedReward} UF-Points in prize wheel spin. They will expire after 7 days and shall be deducted from your wallet. Be active whole week to get chance to spin.`
+            }, { notify: true })
         }
         await User.findByIdAndUpdate(user._id, {
             uf_wallet: {

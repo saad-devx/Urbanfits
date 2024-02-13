@@ -1,13 +1,13 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
-import UFpoints from "@/models/ufpoints"
 import createUFcard from "@/utils/create-ufcard"
 import OTP from "@/models/otp"
 import Newsletter from "@/models/newsletter"
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
-import axios from "axios"
 import { SignJwt, SetSessionCookie, EncryptOrDecryptData, getDateOfTimezone } from "@/utils/cyphers";
+import axios from "axios"
 import UAParser from "ua-parser-js";
+import SavePointsHistory from "@/utils/save_points_history";
 import StandardApi from "@/middlewares/standard_api";
 
 const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
@@ -36,12 +36,10 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             uf_wallet: ufCardData,
             createdAt: getDateOfTimezone(credentials.timezone)
         }).lean();
-        await UFpoints.create({
-            user_id: user._id,
-            card_number: user.uf_wallet.card_number,
-            points: 500,
+        await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, {
+            earned: 500,
             source: "signup"
-        })
+        });
 
         SetSessionCookie(res, {
             _id: user._id,

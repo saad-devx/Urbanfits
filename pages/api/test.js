@@ -1,57 +1,33 @@
-// import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
+import ConnectDB from "@/utils/connect_db";
+import UFpoints from "@/models/ufpoints"
 import StandardApi from "@/middlewares/standard_api"
-import User from "@/models/user";
-import ConnectDB from "@/utils/connect_db"
-import UAParser from "ua-parser-js";
-// import cookie from "cookie";
-// import jwt from "jsonwebtoken";
 
 const TestApiHandler = (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
-    // const { credential } = req.body;
-    // const decoded = jwt.verify(credential, process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET)
-    // console.log(decoded);
-    const uaString = req.headers['user-agent']
-    const parser = new UAParser(uaString)
-    console.log("Here is the user agent: ", parser.getBrowser(), parser.getOS())
+    await ConnectDB()
 
-    // const {'session-token': sessionToken} = cookie.parse(req.headers.cookie || '')
-    // console.log("here is the session cookie: ", cookies["session-token"])
+    const monthNames = [
+        'january', 'february', 'march', 'april',
+        'may', 'june', 'july', 'august',
+        'september', 'october', 'november', 'december'
+    ];
 
-    // res.setHeader(
-    //     'Set-Cookie',
-    //     cookie.serialize('session-token', "a very scecure session token wich will only be accessible from the server... Hell Yeaahhh!", {
-    //         httpOnly: true,
-    //         secure: false,
-    //         sameSite: false
-    //     })
-    // );
+    console.log("getting all the points docs...")
+    const allPointsDocs = await UFpoints.find();
 
-    // await ConnectDB()
-    // const date = new Date()
-    // await sendNotification("651ab014f10bff23784dd8e8", {
-    //     category: "account",
-    //     heading: "Test notification 2",
-    //     type: "login",
-    //     mini_msg: "This is a test notification...",
-    //     message: `You logged in to your Urban Fits account at ${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} ${date.getHours() + ":" + date.getMinutes()}`
-    // }, { notify: true })
-
-    // await sendAdminNotification({
-    //     category: "system",
-    //     data: {
-    //         title: "Notification limit check",
-    //         msg: `Test notification to test the system limit.`,
-    //         type: "info"
-    //     }
-    // })
+    console.log("iterating over the docs to save respected year and month...")
+    for (let doc of allPointsDocs) {
+        const createdDate = new Date(doc.createdAt);
+        doc.month = monthNames[createdDate.getMonth()];
+        doc.year = createdDate.getFullYear();
+        doc.spent = 0;
+        if (!doc.total_balance) doc.total_balance = 0
+        await doc.save()
+    }
+    console.log("terraforming completed")
 
     res.status(200).json({
         success: true,
-        // msg: "Notification send sucessfully.",
-        // uaString,
-        device: parser.getBrowser(),
-        os: parser.getOS(),
-        // cookies
+        msg: "terrafroming completed successfully"
     })
 })
 

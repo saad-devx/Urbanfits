@@ -1,40 +1,45 @@
-import UFpoints_history from "@/models/ufpoints_history"
+import UFpoints from "@/models/ufpoints";
 import WeeklyCheckinPointsHistory from "@/models/weekly_checkin_history"
-import axios from "axios";
+import { getDateOfTimezone } from "./cyphers";
 
-const SavePointsHistory = async (user_id, card_number, update) => {
+const SavePointsHistory = async (user_id, card_number, timezone, data) => {
     try {
+        const currentDate = getDateOfTimezone(timezone);
         const {
             earned = 0,
             spent = 0,
-            source = "daily_checkin"
-        } = update;
+            source = "daily_checkin",
+            expirationDate
+        } = data;
         const monthNames = [
             'january', 'february', 'march', 'april',
             'may', 'june', 'july', 'august',
             'september', 'october', 'november', 'december'
         ];
 
-        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?user_id=${user_id}&card_number=${card_number}`)
-        console.log(data)
-
-        const currentDate = new Date();
-        const startOfDay = new Date(currentDate).setHours(0, 0, 0, 0);
-        const endOfDay = new Date(currentDate).setHours(23, 59, 59, 999);
-        await UFpoints_history.findOneAndUpdate({
+        const pointsDocs = await UFpoints.find({
             user_id,
             card_number,
-            createdAt: {
-                $gte: startOfDay,
-                $lte: endOfDay,
-            }
-        },
-            {
-                $inc: { earned: earned, spent: spent },
-                month: monthNames[currentDate.getMonth()],
-                year: currentDate.getFullYear(),
-                balance: data.balance,
-            }, { upsert: true })
+            $or: [
+                { expirationDate: { $exists: false } },
+                { expirationDate: { $gt: currentDate } }
+            ]
+        })
+        const totalBalance = pointsDocs.reduce((prevTotal, currentObj) => prevTotal + currentObj.points, 0)
+        console.log(data)
+
+        await UFpoints.create({
+            user_id,
+            card_number,
+            source,
+            spent,
+            points: earned,
+            total_balance: (totalBalance + earned) - spent,
+            createdAt: currentDate,
+            month: monthNames[currentDate.getMonth()],
+            year: currentDate.getFullYear(),
+            ...(expirationDate && { expiration_date: expirationDate }),
+        })
 
         if (source === "daily_checkin") {
             const weeklyPointsHistory = await WeeklyCheckinPointsHistory.create({

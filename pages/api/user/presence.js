@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import ConnectDB from "@/utils/connect_db";
 import User from "@/models/user";
 import GuestUser from "@/models/guest_user"
-import UFpoints from "@/models/ufpoints";
 import SavePointsHistory from "@/utils/save_points_history";
 import { sendNotification } from "@/utils/send_notification";
 import { generateRandomInt, SignJwt, getDateOfTimezone } from "@/utils/cyphers.js";
@@ -14,14 +13,7 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
     const { name } = req.body.event;
 
     const { "session-token": sessionToken, "guest-session": guestSession } = parse(req.headers.cookie || '')
-    if (guestSession) {
-        try {
-            let decodedGuest = verify(guestSession, process.env.NEXT_PUBLIC_SECRET_KEY);
-            if (!mongoose.Types.ObjectId.isValid(decodedGuest._id)) throw new Error();
-            req.user = decodedGuest;
-        } catch (e) { return res.status(401).json({ success: false, msg: "Malicious request detected." }); }
-    }
-    else if (sessionToken) {
+    if (sessionToken) {
         try {
             const decodedToken = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY);
             if (!mongoose.Types.ObjectId.isValid(decodedToken._id)) throw new Error("invalid session token");
@@ -32,6 +24,12 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
             console.log(error)
             return res.status(401).json({ success: false, error, msg: "Your session is invalid or expired. Please sign in again." })
         }
+    } else if (guestSession) {
+        try {
+            let decodedGuest = verify(guestSession, process.env.NEXT_PUBLIC_SECRET_KEY);
+            if (!mongoose.Types.ObjectId.isValid(decodedGuest._id)) throw new Error();
+            req.user = decodedGuest;
+        } catch (e) { return res.status(401).json({ success: false, msg: "Malicious request detected." }); }
     } else if (name === 'user_joined') {
         const guestUser = await GuestUser.create({});
         res.setHeader('Set-Cookie',
@@ -60,17 +58,11 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
 
         const todayDate = getDateOfTimezone(req.user.timezone);
         const currentDate = getDateOfTimezone(req.user.timezone).setHours(0, 0, 0, 0);
-        const last_checkin = new Date(user.last_checkin).setHours(59, 59, 59, 999);
+        const last_checkin = new Date(user.last_checkin).getTime();
         const expiryDate = new Date(todayDate.setDate(todayDate.getDate() + 7));
-        if ((currentDate > last_checkin) && (new Date(user.createdAt).setHours(59, 59, 59, 999) < currentDate)) {
+        if ((currentDate > last_checkin) && (new Date(user.createdAt).setHours(23, 59, 59, 999) < currentDate)) {
             const reward = generateRandomInt(20, 50)
-            await UFpoints.create({
-                user_id: user._id,
-                card_number: user.uf_wallet.card_number,
-                points: reward,
-                source: "daily_checkin",
-                expiration_date: expiryDate
-            })
+            await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, { earned: reward, expirationDate: expiryDate, })
             await sendNotification(user._id, {
                 category: "reward",
                 heading: "Daily Check in Bonus",
@@ -78,8 +70,7 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
                 mini_msg: `Welcome back, you won ${reward} UF-Points today!`,
                 message: `Welcome back! ${reward} UF-Points are added to your UF-wallet, they will expire after 7 days and shall be deducted from your wallet. Keep coming everyday and win exciting rewards.`
             }, { notify: true })
-            await SavePointsHistory(user._id, user.uf_wallet.card_number, { earned: reward })
-            await User.findByIdAndUpdate(user_id, { last_checkin: new Date(getDateOfTimezone(req.user.timezone).setHours(59, 59, 59, 999)) })
+            await User.findByIdAndUpdate(user_id, { last_checkin: new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59, 999)) })
         }
         console.log("user_joined handled successfully.")
     }

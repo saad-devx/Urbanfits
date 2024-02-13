@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db"
 import { OAuth2Client } from 'google-auth-library';
 import User from "@/models/user"
-import UFpoints from "@/models/ufpoints"
+import SavePointsHistory from "@/utils/save_points_history";
 import createUFcard from "@/utils/create-ufcard"
 import axios from "axios"
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
@@ -48,12 +48,10 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         register_provider: "google",
         createdAt: getDateOfTimezone(timezone)
     }).lean();
-    await UFpoints.create({
-        user_id: user._id,
-        card_number: user.uf_wallet.card_number,
-        points: 500,
+    await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, {
+        earned: 500,
         source: "signup"
-    })
+    });
     axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/create-tasks-record?user_id=${user._id}`)
 
     SetSessionCookie(res, {

@@ -96,16 +96,44 @@ export default function Product(props) {
     }
     return <>
         <Head>
-            <title className='capitalize' >{productData.name}</title>
+            <title></title>
+            <meta name="description" content="" />
+
+            <meta property="og:url" content="https://ddc0-116-71-168-213.ngrok-free.app" />
             <meta property="og:type" content="website" />
+            <meta property="og:title" content="" />
+            <meta property="og:description" content="" />
+            <meta property="og:image" content="" />
+
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta property="twitter:domain" content="ddc0-116-71-168-213.ngrok-free.app" />
+            <meta property="twitter:url" content="https://ddc0-116-71-168-213.ngrok-free.app" />
+            <meta name="twitter:title" content="" />
+            <meta name="twitter:description" content="" />
+            <meta name="twitter:image" content="" />
+
+            <title>{productData.name}</title>
+            <link rel="shortcut icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <link rel="apple-touch-icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <link rel="image_src" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <meta property="og:site_name" content="Urban Fits" />
-            <meta property="og:title" content={productData.name} />
-            <meta property="og:description" content={productData.description} />
-            <meta property="og:image:secure_url" itemprop="image" content={productData.cover_image} />
-            <meta property="og:image" itemprop="image" content={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
-            <meta property="og:image:type" content="image/webp" />
-            <meta property="og:url" content={router.asPath} />
+            <meta property="og:image" itemprop="image primaryImageOfPage" content={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:domain" content="stackoverflow.com" />
+            <meta name="twitter:title" property="og:title" itemprop="name" content={productData.name} />
+            <meta name="twitter:description" property="og:description" itemprop="description" content={productData.description} />
+            <meta name="facebook:card" content="summary" />
+            <meta name="facebook:domain" content="stackoverflow.com" />
+            <meta name="facebook:title" property="og:title" itemprop="name" content={productData.name} />
+            <meta name="facebook:description" property="og:description" itemprop="description" content={productData.description} />
         </Head>
+        <link itemprop="thumbnailUrl" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+        <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
+            <link itemprop="url" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+        </span>
         <main className="bg-white w-full max-w-[2000px] mx-auto h-full font_urbanist transition-all duration-700">
             <div className="w-full pb-20 flex justify-center">
                 <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-20 lg:w-[90%] h-full font_urbanist text-left pt-8' >
@@ -149,10 +177,10 @@ export default function Product(props) {
                                 </>}
                             <h5 className="mt-5 mb-2 text-sm lg:text-base font-semibold text-gray-500">Share on Social Media</h5>
                             <div className="flex items-center lg:text-lg text-gray-400 gap-x-4">
-                                <FacebookShareButton url={router.asPath}>
+                                <FacebookShareButton hashtag='#justsomething' url={router.pathname}>
                                     <i className="fa-brands fa-facebook" />
                                 </FacebookShareButton>
-                                <LinkedinShareButton url={router.asPath}>
+                                <LinkedinShareButton url={window.location.href}>
                                     <i className="fa-brands fa-linkedin-in" />
                                 </LinkedinShareButton>
                                 <TwitterShareButton url={router.asPath}>

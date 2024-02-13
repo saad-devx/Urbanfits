@@ -38,7 +38,8 @@ export const sendNotification = async (user_id, params, options = {}) => {
         web: {
             notification: {
                 ...notificObj,
-                deep_link: params.deep_link || process.env.NEXT_PUBLIC_HOST,
+                hide_notification_if_site_has_focus: false,
+                deep_link: params?.deep_link || process.env.NEXT_PUBLIC_HOST,
             }
         }
         // apns: {

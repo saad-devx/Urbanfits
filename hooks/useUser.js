@@ -185,6 +185,7 @@ const useUser = create(persist((set, get) => ({
     },
 
     emitPresenceEvent: async (event_name = "user_joined") => {
+        if (!get().isLoggedIn()) return
         try {
             await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/presence`, {
                 event: { name: event_name }
@@ -202,7 +203,7 @@ const useUser = create(persist((set, get) => ({
             localStorage.clear()
             sessionStorage.clear()
             clearNewsletterData()
-            set(() => ({ user: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
+            set(() => ({ user: null, address: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
             toaster("success", "You are signed out !")
         }
     },

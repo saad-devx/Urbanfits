@@ -29,7 +29,6 @@ function App({ Component, pageProps: { ...pageProps } }) {
 
   useEffect(() => {
     getMe();
-    emitPresenceEvent();
     getGeoLocation().then(getExchangeRate)
     window.addEventListener("beforeunload", igniteSession)
 
@@ -40,6 +39,7 @@ function App({ Component, pageProps: { ...pageProps } }) {
 
   useEffect(() => {
     initBeamsClient()
+    emitPresenceEvent();
     if (isLoggedIn() && user) {
       getNotifications()
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)

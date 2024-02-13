@@ -9,7 +9,7 @@ import StandardApi from "@/middlewares/standard_api";
 import axios from "axios";
 
 const ApproveUfTask = async (req, res) => StandardApi(req, res, { method: "PUT", verify_admin: true }, async () => {
-    const { user_id, task_name } = req.body;
+    const { user_id, task_name, timezone } = req.body;
     const admin = req.user;
     if (!mongoose.Types.ObjectId.isValid(user_id) || !task_name) return res.status(405).json({ success: false, msg: "All valid body parameters: user_id and task_name are required." })
     await ConnectDB()
@@ -28,13 +28,7 @@ const ApproveUfTask = async (req, res) => StandardApi(req, res, { method: "PUT",
     console.log(objDeletion);
     const { uf_wallet, username } = tasksDoc.user_id;
     const approvedTask = tasksDoc.tasks.find(task => task.name === task_name)
-    await UFpoints.create({
-        user_id,
-        card_number: uf_wallet.card_number,
-        points: approvedTask.reward,
-        source: "additional_reward"
-    })
-    await SavePointsHistory(user_id, uf_wallet.card_number, { earned: approvedTask.reward })
+    await SavePointsHistory(user_id, uf_wallet.card_number, timezone, { earned: approvedTask.reward, source: "uf_task" });
 
     sendNotification(user_id, {
         category: "reward",

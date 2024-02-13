@@ -39,7 +39,8 @@ export default function Signup() {
     })
 
     useEffect(() => {
-        const googleClient = window.google.accounts.id;
+        if (!google?.accounts) { return };
+        const googleClient = google.accounts.id;
         googleClient.initialize({
             client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
             callback: googleSession => signUpWithGoogle(googleSession.credential, router)
@@ -49,7 +50,8 @@ export default function Signup() {
     }, []);
 
     const handleSignIn = async () => {
-        if (!isLoggedIn()) return toaster("info", "You are already singned in")
+        if (!google?.accounts) return
+        if (isLoggedIn()) return toaster("info", "You are already singned in")
         DeleteCookie("g_state");
         google.accounts.id.prompt((res) => {
             console.log(res);

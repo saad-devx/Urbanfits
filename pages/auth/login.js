@@ -23,7 +23,8 @@ export default function Login() {
     const passRef = useRef()
 
     useEffect(() => {
-        const googleClient = window.google.accounts.id;
+        if (!google?.accounts) { return };
+        const googleClient = google.accounts.id;
         googleClient.initialize({
             client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
             callback: googleSession => signInWithGoogle(googleSession.credential, router)
@@ -50,6 +51,8 @@ export default function Login() {
     })
 
     const handleSignIn = async () => {
+        if (!google?.accounts) return;
+        if (isLoggedIn()) return toaster("info", "You are already singned in");
         DeleteCookie("g_state");
         google.accounts.id.prompt((res) => {
             console.log(res);
