@@ -5,10 +5,10 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Please enter a username"],
-        immutable: immutableCondition,
         maxLength: [30, "Username cannot exceed 30 characters"],
         minLength: [4, "Username should have more than 4 characters"],
-        unique: [true, "This username is already in use"]
+        unique: [true, "This username is already in use"],
+        immutable: immutableCondition
     },
     register_provider: {
         type: String,
@@ -75,11 +75,13 @@ const UserSchema = new mongoose.Schema({
     uf_wallet: {
         card_number: {
             type: String,
-            required: true
+            required: true,
+            immutable: immutableCondition
         },
         bar_code: {
             type: String,
-            required: true
+            required: true,
+            immutable: immutableCondition
         },
         last_uf_spin: Date,
         next_uf_spin: Date,

@@ -17,7 +17,7 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
                 if (!sessionToken) return res.status(401).json("invalid session token");
                 const decodedToken = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY);
                 if (!mongoose.Types.ObjectId.isValid(decodedToken._id)) throw new Error("invalid session token");
-                if (decode(decodedToken.user_agent) !== req.headers['user-agent']) throw new Error("invalid session token");
+                // if (decode(decodedToken.user_agent) !== req.headers['user-agent']) throw new Error("invalid session token");
                 if (verify_admin) {
                     await ConnectDB()
                     let admin = await User.findById(admin_id)

@@ -11,7 +11,7 @@ const GetUFPointsHistory = async (req, res) => StandardApi(req, res, {}, async (
     const historyDocs = await UFpoints.find({
         user_id,
         card_number
-    }).sort({ createdAt: -1 }).limit(limit)
+    }).sort({ _id: -1 }).limit(limit)
 
     res.status(200).json({
         success: true,

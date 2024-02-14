@@ -10,6 +10,7 @@ export const HashValue = (value) => CryptoJS.SHA256(value).toString(CryptoJS.enc
 export const SignJwt = (data, expiry) => jwt.sign(data, process.env.NEXT_PUBLIC_SECRET_KEY, expiry ? { expiresIn: expiry } : {});
 export const DeleteCookie = (name) => document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 export const getDateOfTimezone = (timeZone) => new Date(new Date().toLocaleDateString('en-US', { timeZone }))
+const getDateOfTimezoneIntl = (timeZone) => new Date(new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: 'numeric', day: 'numeric' }).format(new Date()))
 
 export const isValidTimeZone = (timeZone) => {
     try {
@@ -58,14 +59,18 @@ export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.defau
     console.log(expiresAt)
     const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
         httpOnly: true,
-        sameSite: false,
+        sameSite: "none",
+        priority: "high",
+        domain: "localhost",
         path: "/",
         secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
         maxAge: expiresAt
     })
     const isLoggedInCookie = serialize('is_logged_in', true, {
         httpOnly: false,
-        sameSite: false,
+        sameSite: "none",
+        priority: "high",
+        domain: "localhost",
         path: "/",
         secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
         maxAge: expiresAt

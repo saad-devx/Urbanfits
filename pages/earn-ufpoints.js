@@ -11,6 +11,7 @@ import { DefaultTasks } from '@/uf.config';
 const emptyWishlist = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/emptyWishlist.webp';
 import axios from "axios";
 
+const UfPointsNames = { daily_checkin: "Daily Checkin", prize_wheel: "Prize Wheel", signup: "Sign Up", place_order: "Place Order", uf_task: "UF Task", additional_reward: "Other", deduction: "Deduction" };
 const CheckShell = ({ dayCode, day, history }) => {
     const today = new Date();
     const currentWeekStart = new Date(today);
@@ -290,35 +291,42 @@ export default function EarnUfPoints() {
             </section>
 
             <section className="bg-white w-full mb-4 px-4 py-6 mid:px-6 mid:p-6 lg:py-10 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
-                <button onClick={async () => {
-                    console.log("loading bro..")
-                    const { data } = await axios.get("/api/test")
-                    console.log(data)
-                }} className="p-2 border rounded-3xl">get user agent</button>
                 <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Complete tasks to win more UF-Points</h1>
                 {tasks.map(task => <TaskComp user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
             </section>
             <section id='prize_wheel_history' className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4 overflow-x-auto scrollbar_x">
                 <h2 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h2>
                 {walletLoading && <div className="w-full my-8 flex justify-center"><BounceLoader /></div>}
-                {history?.length ? <div className="w-[150%] md:w-full mb-4 grid grid-cols-5 text-xs lg:text-base font_urbanist_bold">
-                    <span className="col-span-2">Last 5 Transactions</span>
-                    <span>Points earned</span>
-                    <span>Costs</span>
+                {history?.length ? <div className="w-[150%] md:w-full mb-4 grid grid-cols-5 place-items-center text-xs lg:text-base font_urbanist_bold">
+                    <span className="place-self-start">Last 5 Transactions</span>
+                    <span>Earned</span>
+                    <span>Spent</span>
+                    <span>Expires At</span>
                     <span>Total Balance</span>
                 </div> : null}
 
-                {user?.email && history?.length ? history.map((record, index) => <section key={index} className={`w-[150%] lg:w-full bg-white border-b border-b-gray-300 grid grid-cols-5 text-xs`}>
-                    <div className="col-span-2 w-full flex items-center">
-                        <span className="py-3 flex flex-col text-xs">
-                            <h6 className="font_copper text-sm">UF-Points</h6>
-                            {new Date(record.createdAt).getDate() + "/" + (new Date(record.createdAt).getMonth() + 1) + "/" + new Date(record.createdAt).getFullYear()}
-                        </span>
-                    </div>
-                    <span className="w-full flex items-center text-green-400">+{record.earned}</span>
-                    <span className="w-full flex items-center text-red-500">-{record.spent}</span>
-                    <span className="w-full flex items-center">{record.balance}</span>
-                </section>) : <div id='prize_wheel_history' className='w-full h-[50vh] col-span-full flex flex-col items-center justify-center gap-4 text-xs lg:text-sm font-semibold'>
+                {user?.email && history?.length ? history.map((record, index) => {
+                    const createdDate = new Date(record.createdAt);
+                    const expiryDate = record.expiration_date ? new Date(record.expiration_date) : null;
+                    const expiryText = () => {
+                        if (expiryDate) {
+                            if (new Date().getTime() < expiryDate.getTime()) return <span className="px-2 py-px bg-green-100 text-green-600 text-[10px] lg:text-xs rounded-3xl">{expiryDate.getDate() + "/" + (expiryDate.getMonth() + 1) + "/" + expiryDate.getFullYear()}</span>;
+                            else return <span className="px-2 py-px rounded-3xl bg-gray-200 text-gotham-black text-[10px] lg:text-xs">expired</span>;
+                        } else return <i className="fa-solid fa-infinity text-sm text-gotham-black" />
+                    }
+                    return <section key={index} className=" bg-white border-b border-b-gray-300 grid grid-cols-5 text-sm">
+                        <div className="w-full flex items-center">
+                            <span className="mr-8 py-4 flex flex-col text-xs">
+                                <h6 className="font_copper text-sm capitalize">{UfPointsNames[record.source]}</h6>
+                                {createdDate.getDate() + "/" + (createdDate.getMonth() + 1) + "/" + createdDate.getFullYear()}
+                            </span>
+                        </div>
+                        <span className="w-full flex justify-center items-center text-green-400">+{record.points}</span>
+                        <span className="w-full flex justify-center items-center text-red-400">-{record.spent}</span>
+                        <span className="w-full flex justify-center items-center">{expiryText()}</span>
+                        <span className="w-full flex justify-center items-center">{record.total_balance}</span>
+                    </section>
+                }) : <div id='prize_wheel_history' className='w-full h-[50vh] col-span-full flex flex-col items-center justify-center gap-4 text-xs lg:text-sm font-semibold'>
                     <Image width={200} height={200} className="w-1/5 lg:w-1/6" src={emptyWishlist} alt="Empty Transaction" />
                     No Transation history found
                 </div>}

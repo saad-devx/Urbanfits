@@ -45,7 +45,6 @@ const useWallet = create((set, get) => ({
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-transactions?card_number=${user.uf_wallet.card_number}${limit ? "&limit=" + limit : ''}`)
             callback ? callback(data.history) : null
-            console.log("here is the history: ", data.history)
             return data.history
         } catch (e) {
             console.log(e);

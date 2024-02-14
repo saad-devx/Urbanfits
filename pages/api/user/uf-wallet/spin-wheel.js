@@ -1,12 +1,12 @@
 import ConnectDB from "@/utils/connect_db";
 import User from "@/models/user";
+import { sendNotification } from "@/utils/send_notification";
 import { generateRandIntWithProbabilities, getDateOfTimezone } from "@/utils/cyphers.js";
 import SavePointsHistory from "@/utils/save_points_history";
-import axios from "axios";
 import StandardApi from "@/middlewares/standard_api";
 
-const rewards = [0, 0, 50, 100, 200, 300, 400, 500]
-const probabilities = [0.18, 0.18, 0.18, 0.18, 0.12, 0.08, 0.04, 0.04]
+const rewards = [0, 0, 50, 100, 200, 300, 400, 500];
+const probabilities = [0.18, 0.18, 0.18, 0.18, 0.12, 0.08, 0.04, 0.04];
 const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
     const { card_number } = req.query;
     const user_id = req.user._id;
@@ -21,22 +21,23 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
     const currentWeekStart = new Date(new Date(new Date(today).setDate(today.getDate() - (today.getDay() + 5) % 7)).setHours(0, 0, 0, 0));
     const secondSpinTimeAvailability = new Date(new Date(currentWeekStart).setDate(new Date(currentWeekStart).getDate() + 2));
     const thirdSpinTimeAvailability = new Date(new Date(secondSpinTimeAvailability).setDate(new Date(secondSpinTimeAvailability).getDate() + 2));
-    // console.log("today: ", today, "\ncurrent start of week: ", new Date(currentWeekStart), "\nsecond spin time: ", new Date(secondSpinTimeAvailability), "\nthird spin time: ", new Date(thirdSpinTimeAvailability));
 
-    const spinUfWheel = async (nextSpinTime, deductSpinFee = true) => {
+    const spinUfWheel = async (nextSpinTime = null, deductSpinFee = true) => {
+        console.log("the next time of spin : ", nextSpinTime)
         const generatedReward = generateRandIntWithProbabilities(rewards, probabilities);
         if (deductSpinFee) {
-            axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/deduct-points`, {
-                user_id: user._id,
-                card_number: user.uf_wallet.card_number,
-                points_to_deduct: 10
-            })
+            await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone,
+                {
+                    earned: 0,
+                    spent: 10,
+                    source: "deduction",
+                }
+            );
         }
         if (generatedReward !== 0) {
             await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone,
                 {
                     earned: generatedReward,
-                    spent: 10,
                     source: "prize_wheel",
                     expirationDate: new Date(currentDate.setDate(currentDate.getDate() + 7))
                 }
@@ -47,23 +48,19 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
                 type: "prize_wheel",
                 mini_msg: '',
                 message: `Congratulations! You won ${generatedReward} UF-Points in prize wheel spin. They will expire after 7 days and shall be deducted from your wallet. Be active whole week to get chance to spin.`
-            }, { notify: true })
+            }, { notify: true, notifySilently: true })
         }
         await User.findByIdAndUpdate(user._id, {
-            uf_wallet: {
-                card_number: user.uf_wallet.card_number,
-                bar_code: user.uf_wallet.bar_code,
-                last_uf_spin: currentDate,
-                last_spin_reward: generatedReward,
-                ...(nextSpinTime ? { next_uf_spin: nextSpinTime } : {})
-            }
+            "uf_wallet.last_uf_spin": currentDate,
+            "uf_wallet.last_spin_reward": generatedReward,
+            ...(nextSpinTime && { "uf_wallet.next_uf_spin": nextSpinTime })
         })
         return res.status(200).json({
             success: true,
             msg: generatedReward === 0 ? "Oops! no points But you gained a free change to try your luck again!" : `Congratulations! You have won ${generatedReward} UF-Points.`,
             reward: generatedReward,
             last_uf_spin: currentDate,
-            ...(nextSpinTime ? { next_uf_spin: nextSpinTime } : {})
+            ...(nextSpinTime && { next_uf_spin: nextSpinTime })
         });
     };
 
