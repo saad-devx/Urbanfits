@@ -48,7 +48,7 @@ const useUser = create(persist((set, get) => ({
             else if (data.payload) {
                 await updateUser(data.payload, true)
                 set(() => ({ guestUser: null }));
-                // router.replace("/")
+                router.replace("/")
                 toaster("success", data.msg)
                 if (callback) callback(data)
             }

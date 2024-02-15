@@ -22,11 +22,11 @@ export default function CurrencySelect({ show, setCurrencyModal }) {
                 AED (د.إ)
                 {currency === "AED" && <i name='AED' className="fa-solid fa-check text-black text-lg z-50" />}
             </button>
-            <button onClick={updateCurrency} name='SAR' className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
+            <button disabled name='SAR' className="opacity-40 pointer-events-none w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
                 SAR (﷼)
                 {currency === "SAR" && <i name='SAR' className="fa-solid fa-check text-black text-lg z-50" />}
             </button>
-            <button onClick={updateCurrency} name='PKR' className="w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
+            <button disabled name='PKR' className="opacity-40 pointer-events-none w-full py-4 flex justify-between items-center border-b border-gray-50 font_urbanist text-base">
                 PKR (₨)
                 {currency === "PKR" && <i name='PKR' className="fa-solid fa-check text-black text-lg z-50" />}
             </button>

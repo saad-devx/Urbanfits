@@ -83,7 +83,7 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
 
 export default function EarnUfPoints() {
     const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfTasks, getUfHistory, uploadUfTaskImg } = useWallet()
-    const { user } = useUser()
+    const { user, isLoggedIn } = useUser()
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
     const [history, setHistory] = useState([])
@@ -131,8 +131,6 @@ export default function EarnUfPoints() {
     }
 
     const calculateTimeLeft = (targetDate) => {
-        // const targetDate = new Date(new Date(new Date().setDate(new Date().getDate() + (7 - new Date().getDay()))).setHours(0, 0, 0))
-        // const targetDate = user.uf_wallet.next_uf_spin
         if (!user || !user.uf_wallet.next_uf_spin) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
         const now = new Date().getTime();
         const targetTime = new Date(targetDate).getTime();
@@ -295,7 +293,13 @@ export default function EarnUfPoints() {
                 {tasks.map(task => <TaskComp user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
             </section>
             <section id='prize_wheel_history' className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4 overflow-x-auto scrollbar_x">
-                <h2 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h2>
+                <div className="w-full mb-6 flex justify-between items-center">
+                    <h2 id='points_history' className="col-span-full font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h2>
+                    {isLoggedIn() ? <div className="flex gap-x-2">
+                        <Link href="/user/uf-wallet/history" className="px-2 lg:px-4 py-0.5 lg:py-1 text-xs lg:text-sm text-gotham-black bg-gray-100 rounded-full">View full history</Link>
+                        <button onClick={() => getUfHistory((history_docs) => setHistory(history_docs), 5)} disabled={walletLoading} className="px-2 lg:px-4 py-0.5 lg:py-1 text-[10px] md:text-xs lg:text-sm text-white bg-pinky rounded-full">Refresh history&nbsp;&nbsp; <i className={`fa-solid fa-rotate-right text-xs ${walletLoading && "fa-spin"}`} /></button>
+                    </div> : null}
+                </div>
                 {walletLoading && <div className="w-full my-8 flex justify-center"><BounceLoader /></div>}
                 {history?.length ? <div className="w-full mb-4 grid grid-cols-5 place-items-center text-[10px] md:text-xs lg:text-base font_urbanist_bold">
                     <span className="place-self-start hidden lg:inline">Last 5 Transactions</span>
