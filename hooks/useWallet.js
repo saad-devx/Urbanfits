@@ -17,8 +17,8 @@ const useWallet = create((set, get) => ({
         else return toaster("error", "Invalid currency!")
     },
     getUfBalance: async () => {
-        const { user } = useUser.getState()
-        if (!user) return
+        const { user, isLoggedIn } = useUser.getState()
+        if (!user || !isLoggedIn()) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-balance?card_number=${user.uf_wallet.card_number}`)
@@ -28,8 +28,8 @@ const useWallet = create((set, get) => ({
     },
 
     getUfTasks: async (callback) => {
-        const { user } = useUser.getState()
-        if (!user) return
+        const { isLoggedIn } = useUser.getState()
+        if (!isLoggedIn()) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/get/user-tasks`)
@@ -39,8 +39,8 @@ const useWallet = create((set, get) => ({
     },
 
     getUfHistory: async (callback, limit = 150) => {
-        const { user } = useUser.getState()
-        if (!user) return
+        const { user, isLoggedIn } = useUser.getState()
+        if (!user || !isLoggedIn()) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-points-transactions?card_number=${user.uf_wallet.card_number}${limit ? "&limit=" + limit : ''}`)
@@ -54,8 +54,8 @@ const useWallet = create((set, get) => ({
     },
 
     getWeeklyCheckinHistory: async (setCallbackState) => {
-        const { user } = useUser.getState()
-        if (!user) return
+        const { user, isLoggedIn } = useUser.getState()
+        if (!user, !isLoggedIn()) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/get-weekly-points-history?card_number=${user.uf_wallet.card_number}`)
@@ -67,8 +67,8 @@ const useWallet = create((set, get) => ({
     },
 
     spinUfWheel: async () => {
-        const { user, updateUser } = useUser.getState()
-        if (!user) return
+        const { user, isLoggedIn, updateUser } = useUser.getState()
+        if (!user, !isLoggedIn()) return
         set(() => ({ walletLoading: true }))
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/uf-wallet/spin-wheel?card_number=${user.uf_wallet.card_number}`)
@@ -89,8 +89,8 @@ const useWallet = create((set, get) => ({
     },
 
     uploadUfTaskImg: async (taskName, file, callback) => {
-        const { user } = useUser.getState()
-        if (!user) return
+        const { user, isLoggedIn } = useUser.getState()
+        if (!user, !isLoggedIn()) return
         try {
             const ssUrl = await uploadImage(file, `uf-tasks/${user._id}/${taskName}`)
             if (!ssUrl) return toaster("error", "Screenshot couldn't be uploaded, please retry.")

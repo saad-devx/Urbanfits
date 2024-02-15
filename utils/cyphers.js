@@ -57,22 +57,23 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
 
 export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.default) => {
     console.log(expiresAt)
+    const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
     const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: "localhost",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         path: "/",
-        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        secure: isProdEnv,
         maxAge: expiresAt
     })
     const isLoggedInCookie = serialize('is_logged_in', true, {
         httpOnly: false,
-        sameSite: "none",
+        sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: "localhost",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         path: "/",
-        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        secure: isProdEnv,
         maxAge: expiresAt
     })
     res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie])

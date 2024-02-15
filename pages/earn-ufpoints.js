@@ -297,8 +297,9 @@ export default function EarnUfPoints() {
             <section id='prize_wheel_history' className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4 overflow-x-auto scrollbar_x">
                 <h2 id='points_history' className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">Points History</h2>
                 {walletLoading && <div className="w-full my-8 flex justify-center"><BounceLoader /></div>}
-                {history?.length ? <div className="w-[150%] md:w-full mb-4 grid grid-cols-5 place-items-center text-xs lg:text-base font_urbanist_bold">
-                    <span className="place-self-start">Last 5 Transactions</span>
+                {history?.length ? <div className="w-full mb-4 grid grid-cols-5 place-items-center text-[10px] md:text-xs lg:text-base font_urbanist_bold">
+                    <span className="place-self-start hidden lg:inline">Last 5 Transactions</span>
+                    <span className="place-self-start md:hidden">Last 5</span>
                     <span>Earned</span>
                     <span>Spent</span>
                     <span>Expires At</span>
@@ -310,14 +311,14 @@ export default function EarnUfPoints() {
                     const expiryDate = record.expiration_date ? new Date(record.expiration_date) : null;
                     const expiryText = () => {
                         if (expiryDate) {
-                            if (new Date().getTime() < expiryDate.getTime()) return <span className="px-2 py-px bg-green-100 text-green-600 text-[10px] lg:text-xs rounded-3xl">{expiryDate.getDate() + "/" + (expiryDate.getMonth() + 1) + "/" + expiryDate.getFullYear()}</span>;
-                            else return <span className="px-2 py-px rounded-3xl bg-gray-200 text-gotham-black text-[10px] lg:text-xs">expired</span>;
-                        } else return <i className="fa-solid fa-infinity text-sm text-gotham-black" />
+                            if (new Date().getTime() < expiryDate.getTime()) return <span className="px-2 py-px bg-green-100 text-green-600 text-[8px] lg:text-xs rounded-3xl">{expiryDate.getDate() + "/" + (expiryDate.getMonth() + 1) + "/" + expiryDate.getFullYear()}</span>;
+                            else return <span className="px-2 py-px rounded-3xl bg-gray-200 text-gotham-black text-[8px] lg:text-xs">expired</span>;
+                        } else return <i className="fa-solid fa-infinity text-xs lg:text-sm text-gotham-black" />
                     }
-                    return <section key={index} className=" bg-white border-b border-b-gray-300 grid grid-cols-5 text-sm">
+                    return <section key={index} className="bg-white border-b border-b-gray-300 grid grid-cols-5 text-[10px] md:text-sm">
                         <div className="w-full flex items-center">
-                            <span className="mr-8 py-4 flex flex-col text-xs">
-                                <h6 className="font_copper text-sm capitalize">{UfPointsNames[record.source]}</h6>
+                            <span className="mr-8 py-4 flex flex-col text-[8px] lg:text-xs">
+                                <h6 className="font_copper text-xs lg:text-sm capitalize">{UfPointsNames[record.source]}</h6>
                                 {createdDate.getDate() + "/" + (createdDate.getMonth() + 1) + "/" + createdDate.getFullYear()}
                             </span>
                         </div>
