@@ -30,7 +30,7 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
         msg: "",
         redirect_url: `/auth/confirm-2fa-totp?user_id=${user._id}`,
     })
-    else SetSessionCookie(res, {
+    SetSessionCookie(req, res, {
         _id: user._id,
         username: user.username,
         email: user.email,

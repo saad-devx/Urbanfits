@@ -195,16 +195,18 @@ const useUser = create(persist((set, get) => ({
 
     logOut: async (router) => {
         try {
+            set(() => ({ userLoading: true }));
             await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/logout`);
             router.replace("/");
         } catch (e) { console.log("Coouldn't log out.", e) }
         finally {
             const { clearNewsletterData } = useNewsletter.getState()
+            set(() => ({ user: null, address: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
             localStorage.clear()
             sessionStorage.clear()
             clearNewsletterData()
-            set(() => ({ user: null, address: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
             toaster("success", "You are signed out !")
+            set(() => ({ userLoading: false }));
         }
     },
 

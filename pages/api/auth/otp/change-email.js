@@ -16,7 +16,7 @@ const AuthOtpAndChangeEmail = async (req, res) => StandardApi(req, res, { method
         email: dbOtp.new_email
     }, { new: true, _immutability: "disable", lean: true })
 
-    SetSessionCookie(res, {
+    SetSessionCookie(req, res, {
         _id: updatedUser._id,
         username: updatedUser.username,
         email: updatedUser.email,

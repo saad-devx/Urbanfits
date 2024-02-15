@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import User from "@/models/user";
 import CorsMiddleware from "@/utils/cors-config";
 import { sendAdminNotification } from "@/utils/send_notification";
-import { verify, decode } from "jsonwebtoken"
+import { verify } from "jsonwebtoken"
 import { adminRoles } from "@/uf.config";
 import { parse } from "cookie";
 
@@ -11,6 +11,7 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
     try {
         await CorsMiddleware(req, res)
         if (req.method === method) {
+            console.log(req.headers.host)
 
             if (verify_user || verify_admin) try {
                 const { "session-token": sessionToken } = parse(req.headers.cookie || '')

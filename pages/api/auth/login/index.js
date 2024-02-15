@@ -27,7 +27,7 @@ const Login = async (req, res) => StandardApi(req, res, { method: "POST", verify
         })
     }
     else if (!user.two_fa_enabled) {
-        SetSessionCookie(res, {
+        SetSessionCookie(req, res, {
             _id: user._id,
             username: user.username,
             email: user.email,

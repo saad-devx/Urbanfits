@@ -4,6 +4,7 @@ import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
 import { serialize, } from "cookie";
 import { jwtExpiries } from "@/uf.config";
+const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
 
 export const generateRandomInt = (from, to) => Math.floor(Math.random() * (to - from + 1)) + from;
 export const HashValue = (value) => CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);
@@ -55,14 +56,14 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
     else return CryptoJS.AES.decrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8)
 }
 
-export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.default) => {
-    console.log(expiresAt)
-    const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
+export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.default) => {
+    console.log(req.headers.host)
+    const domain = req.headers.host.includes("localhost") ? "localhost" : "urbanfits.ae";
     const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain,
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
@@ -71,30 +72,37 @@ export const SetSessionCookie = (res, sessionData, expiresAt = jwtExpiries.defau
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain,
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
     })
-    res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie])
+    res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie]);
 }
 
 export const RemoveSessionCookie = (res) => {
     const sessionTokenCookie = serialize('session-token', "null", {
         httpOnly: true,
-        sameSite: false,
+        sameSite: isProdEnv ? "none" : "lax",
         path: "/",
-        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        secure: isProdEnv,
         maxAge: 0
     })
     const isLoggedInCookie = serialize('is_logged_in', false, {
         httpOnly: false,
-        sameSite: false,
+        sameSite: isProdEnv ? "none" : "lax",
         path: "/",
-        secure: process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION",
+        secure: isProdEnv,
         maxAge: 0
     })
-    res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie])
+    const guestSessionCooie = serialize('guest-session', false, {
+        httpOnly: true,
+        sameSite: isProdEnv ? "none" : "lax",
+        path: "/",
+        secure: isProdEnv,
+        maxAge: 0
+    })
+    res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie, guestSessionCooie])
 }
 
 export const generateGiftCode = async (length) => {

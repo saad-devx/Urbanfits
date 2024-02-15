@@ -41,7 +41,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             source: "signup"
         });
 
-        SetSessionCookie(res, {
+        SetSessionCookie(req, res, {
             _id: user._id,
             username: user.username,
             email: user.email,

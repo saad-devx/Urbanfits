@@ -54,7 +54,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
     });
     axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/create-tasks-record?user_id=${user._id}`)
 
-    SetSessionCookie(res, {
+    SetSessionCookie(req, res, {
         _id: user._id,
         username: user.username,
         email: user.email,

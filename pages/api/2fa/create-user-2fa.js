@@ -23,7 +23,7 @@ const CreateUser2FA = async (req, res) => StandardApi(req, res, { method: "POST"
             two_fa_activation_date: new Date()
         }, { new: true, _immutability: "disable", lean: true });
 
-        SetSessionCookie(res, {
+        SetSessionCookie(req, res, {
             _id: user._id,
             username: user.username,
             email: user.email,

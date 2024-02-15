@@ -27,7 +27,7 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
     if (verified && originalPassword === password) {
         const updatedUser = await User.findByIdAndUpdate(user_id, { two_fa_enabled: !res.user.two_fa_enabled }, { new: true, _immutability: "disable", lean: true })
 
-        SetSessionCookie(res, {
+        SetSessionCookie(req, res, {
             _id: updatedUser._id,
             username: updatedUser.username,
             email: updatedUser.email,

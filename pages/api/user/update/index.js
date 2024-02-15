@@ -9,7 +9,7 @@ const UpdateUser = async (req, res) => StandardApi(req, res, { method: "PUT" }, 
     await ConnectDB()
     let user = await User.findByIdAndUpdate(id, req.body, { new: true, lean: true });
 
-    SetSessionCookie(res, {
+    SetSessionCookie(req, res, {
         _id: user._id,
         username: user.username,
         email: user.email,
