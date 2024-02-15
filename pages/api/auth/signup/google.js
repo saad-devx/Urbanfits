@@ -36,7 +36,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
     const currentUserAgent = req.headers['user-agent']
     const parser = new UAParser(currentUserAgent)
     const ufCardData = await createUFcard()
-    user = await User.create({
+    user = (await User.create({
         email,
         username,
         firstname,
@@ -47,7 +47,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
         user_agent: SignJwt(currentUserAgent),
         register_provider: "google",
         createdAt: getDateOfTimezone(timezone)
-    }).lean();
+    })).toObject();
     await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, {
         earned: 500,
         source: "signup"

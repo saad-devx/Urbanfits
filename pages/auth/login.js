@@ -27,7 +27,7 @@ export default function Login() {
         const googleClient = google.accounts.id;
         googleClient.initialize({
             client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-            callback: googleSession => signInWithGoogle(googleSession.credential, router)
+            callback: googleSession => signInWithGoogle(googleSession.credential, null, router)
         });
 
         return () => googleClient.cancel()

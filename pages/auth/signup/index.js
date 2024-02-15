@@ -7,9 +7,9 @@ import Tooltip from '@/components/tooltip'
 import toaster from '@/utils/toast_function'
 import AlertPage from '@/components/alertPage'
 import countryCodes from '@/static data/countryCodes'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
+import { DeleteCookie } from '@/utils/cyphers'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 //Image imports
@@ -43,7 +43,7 @@ export default function Signup() {
         const googleClient = google.accounts.id;
         googleClient.initialize({
             client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-            callback: googleSession => signUpWithGoogle(googleSession.credential, router)
+            callback: googleSession => signUpWithGoogle(googleSession.credential, null, router)
         });
 
         return () => googleClient.cancel()

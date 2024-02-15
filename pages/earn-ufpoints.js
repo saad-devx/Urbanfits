@@ -322,7 +322,7 @@ export default function EarnUfPoints() {
                     return <section key={index} className="bg-white border-b border-b-gray-300 grid grid-cols-5 text-[10px] md:text-sm">
                         <div className="w-full flex items-center">
                             <span className="mr-8 py-4 flex flex-col text-[8px] lg:text-xs">
-                                <h6 className="font_copper text-xs lg:text-sm capitalize">{UfPointsNames[record.source]}</h6>
+                                <h6 className="font_copper uppercase text-xs lg:text-sm">{UfPointsNames[record.source]}</h6>
                                 {createdDate.getDate() + "/" + (createdDate.getMonth() + 1) + "/" + createdDate.getFullYear()}
                             </span>
                         </div>

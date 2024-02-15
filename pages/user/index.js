@@ -106,6 +106,8 @@ export default function User({ loading, profileNull, children }) {
         }
     }, [])
 
+    const profileImage = user?.image?.includes("google") ? user.image : process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()
+
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
@@ -330,7 +332,7 @@ export default function User({ loading, profileNull, children }) {
                             <i className="fa-solid fa-camera text-white" />Upload
                         </span>
                         {imgSpinner}
-                        <Image className="w-full h-full object-cover" width={150} height={150} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()} alt="avatar" />
+                        <Image className="w-full h-full object-cover" width={150} height={150} src={profileImage} alt="avatar" />
                     </label>
                     <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                     <p className='text-sm lg:text-base'><p className="font_urbanist_medium">Welcome {user.firstname || user.username} !</p>Save your address details and phone number here for easy and fast in delivery process in the future.</p>

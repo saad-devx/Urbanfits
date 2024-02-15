@@ -63,7 +63,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain,
+        // domain,
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
@@ -72,7 +72,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain,
+        // domain,
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt

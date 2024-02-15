@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import AuthPage from '.'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from '@/components/buttons/simple_btn'
 import Image from 'next/image'
 import Tooltip from '@/components/tooltip'
 import toaster from '@/utils/toast_function'
 import useUser from '@/hooks/useUser'
+import { DeleteCookie } from '@/utils/cyphers'
 import axios from 'axios'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import google_logo from '@/public/logos/google-logo.svg'
-import { useRouter } from 'next/router'
 
 export default function ForgotPassword() {
     const router = useRouter();
