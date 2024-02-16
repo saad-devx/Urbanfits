@@ -11,7 +11,8 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
     try {
         await CorsMiddleware(req, res)
         if (req.method === method) {
-            console.log(req.headers.host)
+            // console.log(req.headers)
+            let isUserAuthorized = false;
 
             if (verify_user || verify_admin) try {
                 const { "session-token": sessionToken } = parse(req.headers.cookie || '')
@@ -21,16 +22,18 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
                 // if (decode(decodedToken.user_agent) !== req.headers['user-agent']) throw new Error("invalid session token");
                 if (verify_admin) {
                     await ConnectDB()
-                    let admin = await User.findById(admin_id)
+                    let admin = await User.findById(decodedToken._id)
                     if (!admin || !adminRoles.includes(admin.role)) throw new Error("invalid session token");
                 }
                 req.user = decodedToken;
-                await next()
+                isUserAuthorized = true;
             } catch (error) {
                 console.log(error)
                 return res.status(401).json({ success: false, error, msg: "Your session is invalid or expired. Please sign in again." })
             }
-            else await next()
+            else await next();
+
+            if (isUserAuthorized) await next();
 
         } else return res.status(405).json({ success: false, msg: `Method not allowed, Allowed methods: '${method}'` })
     } catch (error) {
