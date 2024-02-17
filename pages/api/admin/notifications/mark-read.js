@@ -12,8 +12,8 @@ const TestApiHandler = (req, res) => StandardApi(req, res, { method: "PUT", veri
             $set: {
                 seen: true,
                 seen_by: {
-                    admin_id: req.admin._id,
-                    name: req.admin.username
+                    admin_id: req.user._id,
+                    name: req.user.username
                 }
             }
         });

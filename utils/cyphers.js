@@ -57,7 +57,6 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
 }
 
 export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.default) => {
-    console.log(req.headers.host)
     // const domain = req.headers.host.includes("localhost") ? "localhost" : "urbanfits.ae";
     const sessionTokenCookie = serialize('session-token', SignJwt({ ...sessionData, exp: expiresAt }), {
         httpOnly: true,

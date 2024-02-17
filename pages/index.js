@@ -3,6 +3,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 const HomeCarousel = dynamic(() => import('@/components/carousels/homeCarousel'));
 // const HomeCarousel2 = dynamic(() => import('@/components/carousels/homeCarousel2'));
+import SkeletonRow from "@/components/cards/card-skeleton";
 import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
 import OfferCard from "@/components/cards/offerCard";
@@ -10,14 +11,15 @@ import Shoppingcard from "@/components/cards/shoppingcard";
 import axios from "axios";
 
 export default function Home() {
-    const [indexContent, setIndexContent] = useState(null)
+    const [indexContent, setIndexContent] = useState(null);
+    const [indexLoading, setIndexLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
             try {
                 const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
                 setIndexContent(data);
-            } catch (error) { console.log(error); }
+            } catch (error) { console.log(error); } finally { setIndexLoading(false) }
         })()
         return () => setIndexContent(null)
     }, [])
@@ -40,7 +42,7 @@ export default function Home() {
                             return <Shoppingcard key={"latest_arrivals" + product._id} margin='0' product={product} />
                         })}
                     </div>
-                </section> : null}
+                </section> : (indexLoading && <SkeletonRow />)}
                 {/* Collection Section */}
                 <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
@@ -96,7 +98,7 @@ export default function Home() {
                             return <Shoppingcard key={"men_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
-                </section> : null}
+                </section> : (indexLoading && <SkeletonRow />)}
 
                 {/* Kids Collection Section */}
                 {indexContent?.kidsCollection.length ? <section>
@@ -112,7 +114,7 @@ export default function Home() {
                             return <Shoppingcard key={"kids_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
-                </section> : null}
+                </section> : (indexLoading && <SkeletonRow />)}
             </main>
             <ListingShopSection classes="mt-7 lg:mt-10" whiteTheme />
         </main>

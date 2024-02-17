@@ -60,8 +60,10 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
         const currentDate = getDateOfTimezone(req.user.timezone).setHours(0, 0, 0, 0);
         const last_checkin = new Date(user.last_checkin).getTime();
         const expiryDate = new Date(todayDate.setDate(todayDate.getDate() + 7));
+        console.log("reached here")
         if ((currentDate > last_checkin) && (new Date(user.createdAt).setHours(23, 59, 59, 999) < currentDate)) {
             const reward = generateRandomInt(20, 50)
+            console.log("the reward rewarded: ", reward)
             await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, { earned: reward, expirationDate: expiryDate, })
             await sendNotification(user._id, {
                 category: "reward",
