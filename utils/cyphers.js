@@ -58,12 +58,12 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
 
 export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.default) => {
     console.log(req.headers.host)
-    const domain = req.headers.host.includes("localhost") ? "localhost" : "urbanfits.ae";
+    // const domain = req.headers.host.includes("localhost") ? "localhost" : "urbanfits.ae";
     const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        // domain,
+        domain: isProdEnv ? "st.urbanfits.ae" : "localhost",
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
@@ -72,7 +72,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        // domain,
+        domain: isProdEnv ? "st.urbanfits.ae" : "localhost",
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
