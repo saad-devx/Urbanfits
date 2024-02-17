@@ -1,5 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user";
+import Notification from "@/models/notification";
 import UFpoints from "@/models/ufpoints";
 import { isValidObjectId } from "mongoose";
 import { getDateOfTimezone } from "@/utils/cyphers";
@@ -12,6 +13,8 @@ const getUserById = async (req, res) => StandardApi(req, res, { verify_admin: tr
     await ConnectDB()
     const userToGet = await User.findById(user_to_get).lean();
     if (!userToGet) return res.status(404).json({ success: false, msg: "The user with corresponding id does not exist." })
+
+    const userNotifications = await Notification.findOne({ user_id: userToGet._id });
 
     const currentDate = getDateOfTimezone(userToGet.timezone);
     const pointsDocs = await UFpoints.find({
@@ -31,7 +34,11 @@ const getUserById = async (req, res) => StandardApi(req, res, { verify_admin: tr
 
     res.status(200).json({
         success: true,
-        user: { ...userToGet, uf_balance: totalPoints },
+        user: {
+            ...userToGet,
+            notifications: userNotifications || [],
+            uf_balance: totalPoints
+        },
         points_history: historyDocs
     })
 })
