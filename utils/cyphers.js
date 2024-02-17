@@ -59,11 +59,11 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
 export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.default) => {
     console.log(req.headers.host)
     // const domain = req.headers.host.includes("localhost") ? "localhost" : "urbanfits.ae";
-    const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, expiresAt), {
+    const sessionTokenCookie = serialize('session-token', SignJwt({ ...sessionData, exp: expiresAt }), {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: isProdEnv ? "st.urbanfits.ae" : "localhost",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
@@ -72,7 +72,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: isProdEnv ? "st.urbanfits.ae" : "localhost",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         path: "/",
         secure: isProdEnv,
         maxAge: expiresAt
@@ -85,6 +85,7 @@ export const RemoveSessionCookie = (res) => {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         path: "/",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         secure: isProdEnv,
         maxAge: 0
     })
@@ -92,6 +93,7 @@ export const RemoveSessionCookie = (res) => {
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         path: "/",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         secure: isProdEnv,
         maxAge: 0
     })
@@ -99,6 +101,7 @@ export const RemoveSessionCookie = (res) => {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         path: "/",
+        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         secure: isProdEnv,
         maxAge: 0
     })
