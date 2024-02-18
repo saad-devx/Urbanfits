@@ -29,13 +29,13 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
         const ufCardData = await createUFcard()
         const currentUserAgent = req.headers['user-agent'];
         const parser = new UAParser(currentUserAgent);
-        user = await User.create({
+        user = (await User.create({
             ...credentials,
             user_agent: SignJwt(currentUserAgent),
             password: EncryptOrDecryptData(credentials.password),
             uf_wallet: ufCardData,
             createdAt: getDateOfTimezone(credentials.timezone)
-        }).lean();
+        })).toObject();
         await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, {
             earned: 500,
             source: "signup"
