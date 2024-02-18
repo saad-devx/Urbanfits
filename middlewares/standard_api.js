@@ -12,7 +12,7 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
         await CorsMiddleware(req, res)
         if (req.method === method) {
 
-            const callNextHandler = null;
+            let callNextHandler = null;
             if (verify_user || verify_admin) try {
                 const { "session-token": sessionToken } = parse(req.headers.cookie || '')
                 if (!sessionToken) return res.status(401).json("invalid session token");
