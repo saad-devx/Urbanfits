@@ -7,10 +7,10 @@ import Footer from '@/components/footer';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser';
-import useWallet from '@/hooks/useWallet';
+// import useWallet from '@/hooks/useWallet';
 import { useRouter } from 'next/router';
 import { CartProvider } from "react-use-cart";
-import getGeoLocation from '@/utils/geo-location'
+// import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar';
 import toaster from "@/utils/toast_function";
 import { pusherClient, initBeamsClient } from '@/utils/pusher';
@@ -19,7 +19,7 @@ import { urbanist } from '@/fonts';
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter()
   const { getMe, user, isLoggedIn, emitPresenceEvent, getNotifications } = useUser();
-  const { getExchangeRate } = useWallet()
+  // const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
 
   const igniteSession = () => {
@@ -29,17 +29,17 @@ function App({ Component, pageProps: { ...pageProps } }) {
 
   useEffect(() => {
     getMe();
-    getGeoLocation().then(getExchangeRate)
-    window.addEventListener("beforeunload", igniteSession)
+    // getGeoLocation().then(getExchangeRate)
+    // window.addEventListener("beforeunload", igniteSession)
 
-    return () => {
-      window.removeEventListener("beforeunload", igniteSession);
-    }
+    // return () => {
+    //   window.removeEventListener("beforeunload", igniteSession);
+    // }
   }, [])
 
   useEffect(() => {
     initBeamsClient()
-    emitPresenceEvent();
+    // emitPresenceEvent();
     if (isLoggedIn() && user) {
       getNotifications()
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)

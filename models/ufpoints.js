@@ -12,6 +12,12 @@ const UFpointsSchema = new mongoose.Schema({
         required: true,
         immutable: true
     },
+    actual_points: {
+        type: Number,
+        required: true,
+        immutalbe: true,
+        default: 0
+    },
     points: {
         type: Number,
         required: true,
@@ -34,7 +40,6 @@ const UFpointsSchema = new mongoose.Schema({
     month: {
         type: String,
         required: true,
-
     },
     year: {
         type: Number,

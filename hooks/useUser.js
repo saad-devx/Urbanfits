@@ -63,7 +63,7 @@ const useUser = create(persist((set, get) => ({
         if (get().isLoggedIn()) return toaster("info", "You are already logged in.");
         set(() => ({ userLoading: true }));
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, credentials)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/signup`, credentials)
             if (data.redirect_url) router.replace(data.redirect_url)
             else throw new Error("no redirect url granted.")
         }

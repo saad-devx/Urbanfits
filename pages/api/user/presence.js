@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import ConnectDB from "@/utils/connect_db";
 import User from "@/models/user";
 import GuestUser from "@/models/guest_user"
-import SavePointsHistory from "@/utils/save_points_history";
+import { AddPoints } from "@/utils/uf-points";
 import { sendNotification } from "@/utils/send_notification";
 import { generateRandomInt, SignJwt, getDateOfTimezone } from "@/utils/cyphers.js";
 import { verify, decode } from "jsonwebtoken";
@@ -64,7 +64,7 @@ const HandlePresence = async (req, res) => StandardApi(req, res, { method: "PUT"
         if ((currentDate > last_checkin) && (new Date(user.createdAt).setHours(23, 59, 59, 999) < currentDate)) {
             const reward = generateRandomInt(20, 50)
             console.log("the reward rewarded: ", reward)
-            await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, { earned: reward, expirationDate: expiryDate, })
+            await AddPoints(user._id, user.uf_wallet.card_number, user.timezone, { earned: reward, expirationDate: expiryDate, })
             await sendNotification(user._id, {
                 category: "reward",
                 heading: "Daily Check in Bonus",

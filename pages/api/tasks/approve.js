@@ -4,7 +4,7 @@ import User from "@/models/user";
 import UFpoints from "@/models/ufpoints"
 import UfTasks from "@/models/uf-tasks";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
-import SavePointsHistory from "@/utils/save_points_history";
+import { AddPoints } from "@/utils/uf-points";
 import StandardApi from "@/middlewares/standard_api";
 import axios from "axios";
 
@@ -28,7 +28,7 @@ const ApproveUfTask = async (req, res) => StandardApi(req, res, { method: "PUT",
     console.log(objDeletion);
     const { uf_wallet, username } = tasksDoc.user_id;
     const approvedTask = tasksDoc.tasks.find(task => task.name === task_name)
-    await SavePointsHistory(user_id, uf_wallet.card_number, timezone, { earned: approvedTask.reward, source: "uf_task" });
+    await AddPoints(user_id, uf_wallet.card_number, timezone, { earned: approvedTask.reward, source: "uf_task" });
 
     sendNotification(user_id, {
         category: "reward",

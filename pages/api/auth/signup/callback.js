@@ -1,13 +1,13 @@
-import ConnectDB from "@/utils/connect_db"
-import User from "@/models/user"
-import createUFcard from "@/utils/create-ufcard"
-import OTP from "@/models/otp"
-import Newsletter from "@/models/newsletter"
-import { sendNotification, sendAdminNotification } from "@/utils/send_notification"
+import ConnectDB from "@/utils/connect_db";
+import User from "@/models/user";
+import createUFcard from "@/utils/create-ufcard";
+import OTP from "@/models/otp";
+import Newsletter from "@/models/newsletter";
+import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import { SignJwt, SetSessionCookie, EncryptOrDecryptData, getDateOfTimezone } from "@/utils/cyphers";
-import axios from "axios"
+import axios from "axios";
 import UAParser from "ua-parser-js";
-import SavePointsHistory from "@/utils/save_points_history";
+import { AddPoints } from "@/utils/uf-points";
 import StandardApi from "@/middlewares/standard_api";
 
 const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
@@ -18,7 +18,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
     })
     await ConnectDB()
 
-    const dbOtp = await OTP.findById(otp_id)
+    const dbOtp = await OTP.findById(otp_id).lean();
     if (!dbOtp) return res.status(401).json({ success: false, msg: "The OTP has expired, please try again." })
     if (dbOtp.otp !== otp) return res.status(401).json({ success: false, msg: "The OTP is incorrect." })
 
@@ -36,7 +36,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
             uf_wallet: ufCardData,
             createdAt: getDateOfTimezone(credentials.timezone)
         })).toObject();
-        await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone, {
+        await AddPoints(user._id, user.uf_wallet.card_number, user.timezone, {
             earned: 500,
             source: "signup"
         });

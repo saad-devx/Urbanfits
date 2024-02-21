@@ -35,7 +35,7 @@ export default function Signup() {
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit } = useFormik({
         initialValues: initialSignupValues,
         validationSchema: signupuSchema,
-        onSubmit: values => signUp(values, router)
+        onSubmit: values => signUp({ ...values, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }, router)
     })
 
     useEffect(() => {

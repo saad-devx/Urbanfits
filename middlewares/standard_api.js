@@ -10,16 +10,6 @@ import { parse } from "cookie";
 export default async function StandardApi(req, res, { method = "GET", verify_user = true, verify_admin = false }, next) {
     try {
         await CorsMiddleware(req, res)
-        // console.log(req.host, req.headers.host)
-        // if (req.method === "OPTIONS") {
-        //     const { host } = req.headers;
-        //     if (AllowedOrigins.includes(host)) {
-        //         res.setHeader("Access-Control-Allow-Origin", host)
-        //         res.setHeader("Access-Control-Allow-Credentials", true)
-        //         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        //     }
-        //     res.status(200).send("OK")
-        // }
         if (req.method === method) {
             let callNextHandler = null;
             if (verify_user || verify_admin) try {

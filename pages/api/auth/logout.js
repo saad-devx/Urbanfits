@@ -2,7 +2,6 @@ import StandardApi from "@/middlewares/standard_api";
 import { RemoveSessionCookie } from "@/utils/cyphers";
 
 const Logout = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
-    console.log(req.headers.cookie)
     RemoveSessionCookie(res)
     res.status(200).json({
         success: true,

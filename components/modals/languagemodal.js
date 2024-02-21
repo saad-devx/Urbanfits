@@ -75,12 +75,12 @@ export default function LanguageModal(props) {
                     <span className="flex items-center cursor-pointer">
                         <input className='rounded mr-1 mid:mr-2' type="radio" id="aed" name="currency" defaultChecked={currency === "AED"} value="AED" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="aed">AED (د.إ)</label>
                     </span>
-                    <span className="opacity-40 pointer-events-none flex items-center cursor-pointer">
+                    {/* <span className="opacity-40 pointer-events-none flex items-center cursor-pointer">
                         <input disabled className='rounded mr-1 mid:mr-2' type="radio" id="sar" name="currency" defaultChecked={currency === "SAR"} value="SAR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="sar">SAR (﷼)</label>
                     </span>
                     <span className="opacity-40 pointer-events-none flex items-center cursor-pointer">
                         <input disabled className='rounded mr-1 mid:mr-2' type="radio" id="pkr" name="currency" defaultChecked={currency === "PKR"} value="PKR" onChange={updateCurrency} /><label className='cursor-pointer' htmlFor="pkr">PKR (₨)</label>
-                    </span>
+                    </span> */}
                 </div>
 
                 <h3 className='text-sm md:text-base font_urbanist_bold'>Choose your language:</h3>

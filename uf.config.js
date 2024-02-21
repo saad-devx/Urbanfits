@@ -116,8 +116,8 @@ export const shippingRates = {
 
 export const currencies = ["AED", "SAR", "PKR"];
 export const jwtExpiries = {
-    default: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60), // 7 days
-    extended: Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60) // 30 days
+    default: 7, // 7 days
+    extended: 30 // 30 days
 }
 export const shippingMethods = ["standard_shipping", "express_shipping", "free_shipping"]
 export const giftCardPrices = {

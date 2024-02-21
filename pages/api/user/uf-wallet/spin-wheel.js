@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db";
 import User from "@/models/user";
 import { sendNotification } from "@/utils/send_notification";
 import { generateRandIntWithProbabilities, getDateOfTimezone } from "@/utils/cyphers.js";
-import SavePointsHistory from "@/utils/save_points_history";
+import { AddPoints, DeductPoints } from "@/utils/uf-points";
 import StandardApi from "@/middlewares/standard_api";
 
 const rewards = [0, 0, 50, 100, 200, 300, 400, 500];
@@ -18,24 +18,20 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
 
     const currentDate = new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59, 999));
     const today = getDateOfTimezone(req.user.timezone);
-    const currentWeekStart = new Date(new Date(new Date(today).setDate(today.getDate() - (today.getDay() + 5) % 7)).setHours(0, 0, 0, 0));
-    const secondSpinTimeAvailability = new Date(new Date(currentWeekStart).setDate(new Date(currentWeekStart).getDate() + 2));
+    const currentWeekStart = new Date(new Date(new Date(today).setDate(today.getDate() - (today.getDay() + 6) % 7)).setHours(0, 0, 0, 0));
+    const secondSpinTimeAvailability = new Date(new Date(currentWeekStart).setDate(new Date(currentWeekStart).getDate() + 3));
     const thirdSpinTimeAvailability = new Date(new Date(secondSpinTimeAvailability).setDate(new Date(secondSpinTimeAvailability).getDate() + 2));
+    console.log(`week start: ${currentWeekStart}, second spin: ${secondSpinTimeAvailability}, third spin: ${thirdSpinTimeAvailability}`)
+    console.log("current date: ", currentDate)
+    console.log("today date: ", today)
 
     const spinUfWheel = async (nextSpinTime = null, deductSpinFee = true) => {
         console.log("the next time of spin : ", nextSpinTime)
         const generatedReward = generateRandIntWithProbabilities(rewards, probabilities);
-        if (deductSpinFee) {
-            await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone,
-                {
-                    earned: 0,
-                    spent: 10,
-                    source: "deduction",
-                }
-            );
-        }
+        if (deductSpinFee) await DeductPoints(user._id, user.uf_wallet.card_number, user.timezone, 10);
+
         if (generatedReward !== 0) {
-            await SavePointsHistory(user._id, user.uf_wallet.card_number, user.timezone,
+            await AddPoints(user._id, user.uf_wallet.card_number, user.timezone,
                 {
                     earned: generatedReward,
                     source: "prize_wheel",
@@ -53,14 +49,14 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
         await User.findByIdAndUpdate(user._id, {
             "uf_wallet.last_uf_spin": currentDate,
             "uf_wallet.last_spin_reward": generatedReward,
-            ...(nextSpinTime && { "uf_wallet.next_uf_spin": nextSpinTime })
+            ...(nextSpinTime && { "uf_wallet.next_uf_spin": new Date(nextSpinTime) })
         })
         return res.status(200).json({
             success: true,
             msg: generatedReward === 0 ? "Oops! no points But you gained a free change to try your luck again!" : `Congratulations! You have won ${generatedReward} UF-Points.`,
             reward: generatedReward,
             last_uf_spin: currentDate,
-            ...(nextSpinTime && { next_uf_spin: nextSpinTime })
+            ...(nextSpinTime && { next_uf_spin: new Date(nextSpinTime) })
         });
     };
 
@@ -72,25 +68,21 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
         return await spinUfWheel(nextUfSpinForNewUser, false)
     }
 
-    console.log(new Date(currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay() + 1) % 7)))
     if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(null, false)
     else if (today >= currentWeekStart && today < secondSpinTimeAvailability) {
-        if (user.uf_wallet.last_uf_spin < currentWeekStart) {
-            return await spinUfWheel(secondSpinTimeAvailability)
-        }
+        if (user.uf_wallet.last_uf_spin < currentWeekStart) return await spinUfWheel(secondSpinTimeAvailability)
         else if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(secondSpinTimeAvailability, false)
         else return res.status(403).json({ success: false, msg: "You can't spin yet, wait for the cooldown." })
     }
     else if (today >= secondSpinTimeAvailability && today < thirdSpinTimeAvailability) {
-        if (user.uf_wallet.last_uf_spin < secondSpinTimeAvailability) {
-            return await spinUfWheel(thirdSpinTimeAvailability)
-        }
+        if (user.uf_wallet.last_uf_spin < secondSpinTimeAvailability) return await spinUfWheel(thirdSpinTimeAvailability)
         else if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(thirdSpinTimeAvailability, false)
         else return res.status(403).json({ success: false, msg: "You can't spin yet, wait for the cooldown." })
     }
     else if (today >= thirdSpinTimeAvailability && user.uf_wallet.last_uf_spin < thirdSpinTimeAvailability) {
-        if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(new Date(currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay() + 1) % 7)), false)
-        else return await spinUfWheel(new Date(currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay() + 1) % 7)))
+        const nextMondayDate = new Date(new Date(currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay() + 1) % 7)).setHours(0, 0, 0, 0));
+        if (user.uf_wallet.last_spin_reward === 0) return await spinUfWheel(nextMondayDate, false)
+        else return await spinUfWheel(nextMondayDate)
     }
     else return res.status(403).json({ success: false, msg: "You have used all 3 spins this week, wait for next week for more spins." })
 })

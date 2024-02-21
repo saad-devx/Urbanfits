@@ -56,16 +56,16 @@ export const EncryptOrDecryptData = (data, encrypt = true) => {
     else return CryptoJS.AES.decrypt(data, process.env.NEXT_PUBLIC_SECRET_KEY).toString(CryptoJS.enc.Utf8)
 }
 
-export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.default) => {
-    // const domain = req.headers.host.includes("localhost") ? "localhost" : "urbanfits.ae";
-    const sessionTokenCookie = serialize('session-token', SignJwt({ ...sessionData, exp: expiresAt }), {
+export const SetSessionCookie = (req, res, sessionData, expiresAfter = jwtExpiries.default) => {
+    const expiryDate = Math.floor(expiresAfter * 24 * 60 * 60);
+    const sessionTokenCookie = serialize('session-token', SignJwt(sessionData, `${expiresAfter} days`), {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
         domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         path: "/",
         secure: isProdEnv,
-        maxAge: expiresAt
+        maxAge: expiryDate
     })
     const isLoggedInCookie = serialize('is_logged_in', true, {
         httpOnly: false,
@@ -74,7 +74,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAt = jwtExpiries.
         domain: isProdEnv ? ".urbanfits.ae" : "localhost",
         path: "/",
         secure: isProdEnv,
-        maxAge: expiresAt
+        maxAge: expiryDate
     })
     res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie]);
 }

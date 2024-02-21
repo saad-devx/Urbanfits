@@ -21,7 +21,7 @@ const AddressForm = (props) => {
             address: '',
             apt_suite: '',
             city: '',
-            country: 'Country',
+            country: 'uae',
             phone_prefix: 'Select Country Code',
             phone_number: ''
         },
@@ -78,9 +78,7 @@ const AddressForm = (props) => {
             {touched.country && errors.country ? <Tooltip classes="form-error" content={errors.country} /> : null}
             <select className="w-full border-none outline-none bg-transparent border-b-gray-800" name='country' value={values.country} onBlur={handleBlur} onChange={handleChange} >
                 <option disabled >Country</option>
-                <option value="uae">UAE</option>
-                <option value="usa">USA</option>
-                <option value="pk">Pakistan</option>
+                <option value="uae" selected>UAE (United Arab Emirates)</option>
             </select>
         </div>
         <div className="flex justify-between w-full">
