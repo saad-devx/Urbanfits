@@ -89,7 +89,7 @@ export default function EarnUfPoints() {
     const [history, setHistory] = useState([])
     const [tasks, setTasks] = useState(DefaultTasks)
 
-    function spinAndStopAtValue(value, msg) {
+    async function spinAndStopAtValue(value, msg) {
         const pathElements = {
             "50": document.querySelector('path[name="50"]'),
             "100": document.querySelector('path[name="100"]'),
@@ -120,11 +120,14 @@ export default function EarnUfPoints() {
             wheel.style.transition = `transform ${spinDuration * spins}s cubic-bezier(0.5,0.25,0,1)`;
             wheel.style.transform = `rotate(${totalRotation}deg)`;
 
-            setTimeout(() => {
-                wheel.style.transition = 'none';
-                wheel.style.transform = `rotate(${rotationAngle}deg)`;
-                toaster("success", msg || `Congratulations! You won ${value} points.`)
-            }, spinDuration * spins * 1000);
+            await new Promise((res, rej) => {
+                setTimeout(() => {
+                    wheel.style.transition = 'none';
+                    wheel.style.transform = `rotate(${rotationAngle}deg)`;
+                    toaster("success", msg || `Congratulations! You won ${value} points.`)
+                }, spinDuration * spins * 1000);
+                res(1)
+            })
         } else {
             console.log("Invalid value. No corresponding path found.");
         }
@@ -191,7 +194,7 @@ export default function EarnUfPoints() {
             setLoading(false)
             return console.log("some error occured as the spin value was undefined.")
         }
-        spinAndStopAtValue(data.reward.toString(), data?.msg)
+        await spinAndStopAtValue(data.reward.toString(), data?.msg)
         setLoading(false)
         getUfBalance()
     }

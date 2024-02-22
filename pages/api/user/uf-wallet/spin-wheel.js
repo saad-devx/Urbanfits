@@ -16,17 +16,14 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
     const user = await User.findOne({ _id: user_id, "uf_wallet.card_number": card_number })
     if (!user) return res.status(404).json({ success: false, msg: "Invalid information of user uf-card" })
 
-    const currentDate = new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59, 999));
+    console.log("the user's timezone: ", req.user.timezone)
+    const currentDate = new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59));
     const today = getDateOfTimezone(req.user.timezone);
     const currentWeekStart = new Date(new Date(new Date(today).setDate(today.getDate() - (today.getDay() + 6) % 7)).setHours(0, 0, 0, 0));
     const secondSpinTimeAvailability = new Date(new Date(currentWeekStart).setDate(new Date(currentWeekStart).getDate() + 3));
     const thirdSpinTimeAvailability = new Date(new Date(secondSpinTimeAvailability).setDate(new Date(secondSpinTimeAvailability).getDate() + 2));
-    console.log(`week start: ${currentWeekStart}, second spin: ${secondSpinTimeAvailability}, third spin: ${thirdSpinTimeAvailability}`)
-    console.log("current date: ", currentDate)
-    console.log("today date: ", today)
 
     const spinUfWheel = async (nextSpinTime = null, deductSpinFee = true) => {
-        console.log("the next time of spin : ", nextSpinTime)
         const generatedReward = generateRandIntWithProbabilities(rewards, probabilities);
         if (deductSpinFee) await DeductPoints(user._id, user.uf_wallet.card_number, user.timezone, 10);
 
@@ -35,7 +32,7 @@ const SpinUfWheel = async (req, res) => StandardApi(req, res, { method: "POST" }
                 {
                     earned: generatedReward,
                     source: "prize_wheel",
-                    expirationDate: new Date(currentDate.setDate(currentDate.getDate() + 7))
+                    expirationDate: new Date(new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59)).setDate(currentDate.getDate() + 7))
                 }
             );
             sendNotification(user._id, {

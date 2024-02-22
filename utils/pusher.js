@@ -18,6 +18,8 @@ const pusherClient = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
 });
 
+
+
 // Pusher Beams initialization
 let beamsServer = new PushNotifications({
     instanceId: process.env.NEXT_PUBLIC_PUSHER_INSTANCE_ID,

@@ -184,15 +184,6 @@ const useUser = create(persist((set, get) => ({
         }
     },
 
-    emitPresenceEvent: async (event_name = "user_joined") => {
-        if (!get().isLoggedIn()) return
-        try {
-            await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/presence`, {
-                event: { name: event_name }
-            })
-        } catch (e) { console.log("Error emitting presence event: ", e) }
-    },
-
     logOut: async (router) => {
         try {
             set(() => ({ userLoading: true }));

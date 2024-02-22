@@ -7,41 +7,44 @@ import Footer from '@/components/footer';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser';
-// import useWallet from '@/hooks/useWallet';
 import { useRouter } from 'next/router';
 import { CartProvider } from "react-use-cart";
-// import getGeoLocation from '@/utils/geo-location'
 import LoadingBar from 'react-top-loading-bar';
 import toaster from "@/utils/toast_function";
 import { pusherClient, initBeamsClient } from '@/utils/pusher';
+import PusherClient from 'pusher-js';
 import { urbanist } from '@/fonts';
+// import useWallet from '@/hooks/useWallet';
+// import getGeoLocation from '@/utils/geo-location'
 
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter()
-  const { getMe, user, isLoggedIn, emitPresenceEvent, getNotifications } = useUser();
+  const { getMe, user, isLoggedIn, getNotifications } = useUser();
   // const { getExchangeRate } = useWallet()
   const [progress, setProgress] = useState(0)
-
-  const igniteSession = () => {
-    emitPresenceEvent("user_left");
-    useUser.setState({ guestUser: null });
-  }
 
   useEffect(() => {
     getMe();
     // getGeoLocation().then(getExchangeRate)
     // window.addEventListener("beforeunload", igniteSession)
-
-    // return () => {
-    //   window.removeEventListener("beforeunload", igniteSession);
-    // }
   }, [])
 
   useEffect(() => {
-    initBeamsClient()
-    // emitPresenceEvent();
     if (isLoggedIn() && user) {
       getNotifications()
+      initBeamsClient()
+      const presenceInstance = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+        channelAuthorization: {
+          endpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
+          params: {
+            user_id: user?._id,
+            email: user?.email
+          }
+        },
+      });
+      presenceInstance.subscribe("presence-urbanfits")
+
       const userChannel = pusherClient.subscribe(`uf-user_${user._id}`)
       userChannel.bind('new-notification', (data) => {
         useUser.setState({ notifications: data.notification_data.notifications })
