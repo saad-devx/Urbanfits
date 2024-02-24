@@ -13,7 +13,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
     const { token, timezone } = req.body;
     if (!token || token.length < 20 || !isValidTimeZone(timezone)) return res.status(400).json({ success: false, msg: "A valid google token as `token` and user's time zone as `tiemzone` is required." })
 
-    const googleClient = new OAuth2Client(process.env.CLIENT_ID);
+    const googleClient = new OAuth2Client(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
     let ticket;
     try {
         ticket = await googleClient.verifyIdToken({

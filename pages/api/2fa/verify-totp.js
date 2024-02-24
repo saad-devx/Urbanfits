@@ -61,7 +61,7 @@ const VerfiyTotp = async (req, res) => StandardApi(req, res, { method: "POST", v
             }
         })
     }
-    else return res.status(500).json({
+    else return res.status(401).json({
         success: false,
         msg: "The code is either wrong or expired. Please try again."
     })
