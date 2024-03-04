@@ -4,6 +4,7 @@ import LinkBtn from '@/components/buttons/link_btn';
 import Button from './buttons/simple_btn';
 import MoreToExplore from './more_to_explore';
 import useWallet from '@/hooks/useWallet';
+import { shippingRates } from '@/uf.config';
 // Image imports
 import Image from 'next/image'
 import EmptyCartVector from "../public/emptyCart.svg"
@@ -12,11 +13,11 @@ import Link from 'next/link';
 
 // Cart item function
 function CartItem(props) {
-    const { product } = props
-    const { formatPrice } = useWallet()
-    const { updateItemQuantity, removeItem } = useCart()
-    const [quantity, setQuantity] = useState(product.quantity)
-    const [sizevalue, setSizevalue] = useState(product.size)
+    const { product } = props;
+    const { formatPrice } = useWallet();
+    const { updateItemQuantity, removeItem } = useCart();
+    const [quantity, setQuantity] = useState(product.quantity);
+    const [sizevalue, setSizevalue] = useState(product.size);
 
     const onSizeChange = (e) => {
         setQuantity(1)
@@ -94,19 +95,19 @@ function CartItem(props) {
 }
 
 export default function Cart(props) {
-    const { isEmpty, items, cartTotal, removeItem, emptyCart } = useCart()
-    const { formatPrice, getShippingRates } = useWallet()
-    const shippingRates = getShippingRates()
+    const { isEmpty, items, cartTotal, removeItem, emptyCart } = useCart();
+    const { formatPrice } = useWallet();
+    const shippingMethod = shippingRates.standard_shipping;
 
-    const calculateTotolShippingFee = (fees) => {
+    const totolShippingFee = (() => {
         const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
         if (!filteredItems.length) return 0
-        const totalWeight = filteredItems.reduce((accValue, item) => { return accValue + (item.weight * item.quantity) }, 0)
-        if (totalWeight <= 5100) return fees
+        const totalWeight = filteredItems.reduce((accValue, item) => accValue + item.weight * item.quantity, 0)
+        if (totalWeight <= 5100) return shippingMethod.rate;
         const additionalWeight = totalWeight - 5100
-        const additionalCharges = (additionalWeight / 1000) * (shippingRates?.additionalKgCharges || 1)
-        return fees + additionalCharges
-    }
+        const additionalCharges = (additionalWeight / 1000) * shippingMethod.additional_kg_charge;
+        return shippingMethod.rate + additionalCharges;
+    })()
 
     return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
         <div className="w-full flex justify-center">
@@ -156,9 +157,9 @@ export default function Cart(props) {
                             <h3 className="text-center text-sm lg:text-[17px] font_urbanist_bold mb-5">Order Summary</h3>
                             <div className="w-full h-auto p-4 rounded-2xl font_urbanist_bold bg-white items-center border">
                                 <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></span>
-                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Shipping Fee</span> <span>{formatPrice(calculateTotolShippingFee(shippingRates?.price || 0))}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>Shipping Fee</span> <span>{formatPrice(totolShippingFee)}</span></span>
                                 <br />
-                                <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>{formatPrice(cartTotal + calculateTotolShippingFee(shippingRates?.price || 0))}</span></span>
+                                <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>{formatPrice(cartTotal + totolShippingFee)}</span></span>
                             </div>
                             <LinkBtn href="/checkout/step1" onClick={props.toggleCart} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
                         </div>

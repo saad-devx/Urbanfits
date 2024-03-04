@@ -1,16 +1,8 @@
 import mongoose from "mongoose"
+import { shippingRates, paymentOptions } from "@/uf.config";
+import { getDateOfTimezone } from "@/utils/cyphers";
 
-const addressObject = {
-    address_title: String,
-    firstname: String,
-    lastname: String,
-    address: String,
-    apt_suite: String,
-    city: String,
-    country: String,
-    phone_prefix: String,
-    phone_number: String,
-}
+const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 const OrderSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +15,10 @@ const OrderSchema = new mongoose.Schema({
         enum: ['pending', 'shipped', 'readytoship', 'returned', 'delivered'],
         default: 'pending',
     },
+    stage: String,
+    tracking_number: String,
+    tracking_url: String,
+    shipping_label_url: String,
     order_items: [
         {
             product_id: {
@@ -53,29 +49,65 @@ const OrderSchema = new mongoose.Schema({
         },
     ],
     gift_cards: [],
-    shipping_address: addressObject,
-    billing_address: addressObject,
+    shipping_address: {
+        address_title: String,
+        firstname: String,
+        lastname: String,
+        address: String,
+        apt_suite: String,
+        city: String,
+        country: String,
+        phone_prefix: String,
+        phone_number: String,
+    },
+    coupon: Object,
+    gift_card: Object,
+    points_used: Number,
+    shippping_method: {
+        type: String,
+        required: true,
+        enum: Object.keys(shippingRates)
+    },
+    payment_method: {
+        type: String,
+        required: true,
+        enum: Object.keys(paymentOptions)
+    },
+    discounts: {
+        points: { type: Number, default: 0 },
+        coupon: { type: Number, default: 0 },
+        gift_card: { type: Number, default: 0 },
+        payment: { type: Number, default: 0 }
+    },
     price_details: {
         paid_at: Date,
-        currency: String,
-        total_price: {
+        total: {
             type: Number,
-            required: true,
-            default: 0,
+            required: true
+        },
+        sub_total: {
+            type: Number,
+            required: true
         },
         shipping_fees: {
             type: Number,
             required: true,
-            default: 0,
+            default: 0
+        },
+        total_discount: {
+            type: Number,
+            default: 0
         }
     },
     month: {
         type: String,
-        required: true
+        required: true,
+        default: months[getDateOfTimezone().getMonth()]
     },
     year: {
         type: Number,
-        required: true
+        required: true,
+        default: getDateOfTimezone().getFullYear()
     }
 }, { timestamps: true });
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

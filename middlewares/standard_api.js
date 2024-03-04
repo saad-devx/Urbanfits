@@ -4,8 +4,8 @@ import User from "@/models/user";
 import CorsMiddleware from "@/utils/cors-config";
 import { sendAdminNotification } from "@/utils/send_notification";
 import { verify } from "jsonwebtoken"
-import { adminRoles } from "@/uf.config";
 import { parse } from "cookie";
+import { adminRoles } from "@/uf.config";
 
 export default async function StandardApi(req, res, { method = "GET", verify_user = true, verify_admin = false }, next) {
     try {
@@ -13,7 +13,7 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
         if (req.method === method) {
             let callNextHandler = null;
             if (verify_user || verify_admin) try {
-                const { "session-token": sessionToken } = parse(req.headers.cookie || '')
+                const { "session-token": sessionToken } = parse(req.headers.cookie || '');
                 if (!sessionToken) return res.status(401).json("invalid session token");
                 const decodedToken = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY);
                 if (!isValidObjectId(decodedToken._id)) throw new Error("invalid session token");

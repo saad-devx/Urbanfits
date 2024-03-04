@@ -62,7 +62,7 @@ function App({ Component, pageProps: { ...pageProps } }) {
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
     <CartProvider>
-      <div className="sticky z-[100] top-0 left-0 w-full py-0.5 flex justify-center bg-pinky text-white text-[10px] lg:text-xs">Website under Development, You may face some runtime errors. Don't be sad.</div>
+      {/* <div className="sticky z-[100] top-0 left-0 w-full py-0.5 flex justify-center bg-pinky text-white text-[10px] lg:text-xs">Website under Development, You may face some runtime errors. Don't be sad.</div> */}
       <Navbar />
       <Component {...pageProps} />
       <Footer />

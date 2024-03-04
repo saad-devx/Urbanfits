@@ -24,12 +24,14 @@ export default function Shoppingcard({ product }, props) {
     const splideRef = useRef(null)
 
     const addToCart = () => {
+        console.log(activeVariant.sku)
         if (inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
         addItem({
             product_id: product._id,
             variant_id: activeVariant._id,
             id: `${activeVariant._id}${activeVariant.sizes[0].size}`,
             name: product.name,
+            variant_sku: activeVariant.sku,
             price: product.sale_price || product.price,
             sale_price: product.sale_price || 0,
             uf_points: product.uf_points || 0,

@@ -76,41 +76,39 @@ export const DefaultTasks = [
 
 export const shippingRates = {
     "standard_shipping": {
-        "uae_rate": 16,
-        "ksa_rate": 65,
-        "pk_rate": 40,
-        "additional_kg_charge": {
-            "uae": 2,
-            "ksa": 10,
-            "pk": 8
-        },
-        "shipping_timespan": {
-            "uae_shipping": "1 - 2 days",
-            "ksa_shipping": "5 - 7 days",
-            "pk_shipping": "5 - 7 days"
-        }
+        "name": "Standard",
+        "swft_profile": "nextday",
+        "rate": 18,
+        "time_limit": null,
+        "additional_kg_charge": 2,
+        "timespan": "1 - 2 days"
     },
     "express_shipping": {
-        "ksa_rate": 95,
-        "pk_rate": 70,
-        "additional_kg_charge": {
-            "ksa": 10,
-            "pk": 8
-        },
-        "shipping_timespan": {
-            "ksa_shipping": "2 - 4 days",
-            "pk_shipping": "2 - 4 days"
-        }
+        "name": "Express",
+        "swft_profile": "sameday",
+        "rate": 30,
+        "time_limit": new Date().setHours(16, 0, 0, 0),
+        "additional_kg_charge": 2,
+        "timespan": "Today"
     },
-    "free_shipping": {
-        "uae_order_rate": 300,
-        "ksa_order_rate": 500,
-        "pk_order_rate": 500,
-        "shipping_timespan": {
-            "uae_shipping": "1 - 2 days",
-            "ksa_shipping": "5 - 7 days",
-            "pk_shipping": "5 - 7 days"
-        }
+    "express_4h_shipping": {
+        "name": "Express 4h",
+        "swft_profile": "express4h",
+        "rate": 40,
+        "time_limit": new Date().setHours(16, 0, 0, 0),
+        "additional_kg_charge": 2,
+        "timespan": "Today"
+    }
+}
+
+export const paymentOptions = {
+    "cash_on_delivery": {
+        "rate": 3.3,
+        "discount": 0
+    },
+    "online_payment": {
+        "rate": 0,
+        "discount": 2.5
     }
 }
 
@@ -119,7 +117,6 @@ export const jwtExpiries = {
     default: 7, // 7 days
     extended: 30 // 30 days
 }
-export const shippingMethods = ["standard_shipping", "express_shipping", "free_shipping"]
 export const giftCardPrices = {
     giftcard_bronze: 100,
     giftcard_silver: 200,

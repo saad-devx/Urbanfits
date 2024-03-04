@@ -81,9 +81,10 @@ export default function Product(props) {
             id: `${product._id}${sizevalue}`,
             category_id: productData.categories[0],
             name: productData.name,
+            variant_sku: product.sku,
             price: productData.sale_price || productData.price,
             sale_price: productData.sale_price || 0,
-            uf_points: product.uf_points || 0,
+            uf_points: productData.uf_points || 0,
             weight: productData.shipping_details.weight,
             stock: product.stock,
             size: sizevalue,
@@ -113,7 +114,7 @@ export default function Product(props) {
             <meta name="twitter:image" content="" />
 
             <title>{productData.name}</title>
-            <link rel="shortcut icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            {/* <link rel="shortcut icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <link rel="apple-touch-icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <link rel="image_src" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
@@ -128,7 +129,7 @@ export default function Product(props) {
             <meta name="facebook:card" content="summary" />
             <meta name="facebook:domain" content="stackoverflow.com" />
             <meta name="facebook:title" property="og:title" itemprop="name" content={productData.name} />
-            <meta name="facebook:description" property="og:description" itemprop="description" content={productData.description} />
+            <meta name="facebook:description" property="og:description" itemprop="description" content={productData.description} /> */}
         </Head>
         <link itemprop="thumbnailUrl" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
         <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">

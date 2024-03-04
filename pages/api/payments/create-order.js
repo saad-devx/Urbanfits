@@ -15,7 +15,6 @@ import { sendNotification, sendAdminNotification } from "@/utils/send_notificati
 import { HashValue } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api";
 
-const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 const giftCardPrices = {
     "giftcard_bronze": 100,
     "giftcard_silver": 200,
@@ -45,8 +44,6 @@ const CreateOrder = async (req, res) => StandardApi(req, res, { method: "POST", 
     delete orderSession._id
     const newOrder = await Order.create({
         ...orderSession,
-        year: date.getFullYear(),
-        month: months[date.getMonth()]
     })
     // Generating bught Gift Cards codes and saving to DB
     if (orderSession?.gift_cards?.length && orderSession.gift_cards[0].id.startsWith("giftcard_")) {

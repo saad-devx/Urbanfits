@@ -59,9 +59,9 @@ a[x-apple-data-detectors] {
 	 style="display:block;outline:none;border:none;text-decoration:none;margin:0 auto;margin-top:7rem" />
 	  <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:26px;font-size:16px;margin:16px 0">Dear ${username || "User"},</p>
 	  <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:26px;font-size:16px;margin:16px 0">Thanks for shopping with us! We look more forward to you so that we can provide you the best.</p><br><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:26px;font-size:16px;margin:16px 0">You bought the following Gift Card(s):</p><br>
-      ${giftcardData.map((card, index) => {
+      ${giftcardData ? giftcardData.map((card, index) => {
 		return `<p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:26px;display:flex;font-size:18px;margin:16px 0">${index + 1}. ${card.name}. Gift code: <span style="color:#FF4A60">&nbsp;&nbsp;${card.gift_code}</span></p>`
-	})}
+	}) : null}
       <br>
 
       <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:26px;font-size:16px;margin:16px 0">You can use the given Gift Codes on checkout to get the the discounts according to the each card's value.</p>
