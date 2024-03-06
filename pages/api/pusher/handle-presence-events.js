@@ -16,10 +16,10 @@ const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method:
             if (isValidObjectId(user_id)) {
                 console.log("entry point 1")
                 await ConnectDB()
-                const user = await User.findByIdAndUpdate(user_id, { is_active: true }, { new: true })
+                const user = await User.findByIdAndUpdate(user_id, { is_active: true }, { new: true, lean: true })
 
-                const todayDate = getDateOfTimezone(req.user.timezone);
-                const currentDate = getDateOfTimezone(req.user.timezone).setHours(0, 0, 0, 0);
+                const todayDate = getDateOfTimezone(user.timezone);
+                const currentDate = getDateOfTimezone(user.timezone).setHours(0, 0, 0, 0);
                 const last_checkin = new Date(user.last_checkin).getTime();
                 const expiryDate = new Date(todayDate.setDate(todayDate.getDate() + 7));
                 if ((currentDate > last_checkin) && (new Date(user.createdAt).setHours(23, 59, 59, 999) < currentDate)) {
@@ -33,7 +33,7 @@ const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method:
                         mini_msg: `Welcome back, you won ${reward} UF-Points today!`,
                         message: `Welcome back! ${reward} UF-Points are added to your UF-wallet, they will expire after 7 days and shall be deducted from your wallet. Keep coming everyday and win exciting rewards.`
                     }, { notify: true })
-                    await User.findByIdAndUpdate(user_id, { last_checkin: new Date(getDateOfTimezone(req.user.timezone).setHours(23, 59, 59, 999)) })
+                    await User.findByIdAndUpdate(user_id, { last_checkin: new Date(getDateOfTimezone(user.timezone).setHours(23, 59, 59, 999)) })
                 }
                 console.log("user_joined handled successfully.")
             } else return res.status(200).end();

@@ -10,9 +10,9 @@ import Error403 from "@/pages/403"
 const UfPointsNames = { daily_checkin: "Daily Checkin", prize_wheel: "Prize Wheel", signup: "Sign Up", place_order: "Place Order", uf_task: "UF Task", additional_reward: "Other", deduction: "Deduction" }
 
 export default function UFwallet() {
-    const { user, isLoggedIn } = useUser()
-    const { points, getUfHistory, walletLoading, formatPrice } = useWallet()
-    const [history, setHistory] = useState(null)
+    const { user, isLoggedIn } = useUser();
+    const { points, getUfHistory, walletLoading, formatPrice } = useWallet();
+    const [history, setHistory] = useState(null);
 
     const groupHistoryByYearAndMonth = (history) => {
         if (!history) return null
@@ -69,7 +69,7 @@ export default function UFwallet() {
                     </div>
                     <div className="w-1/2 flex flex-col">
                         Balance
-                        <span className="font_urbanist_bold text-base text-pinky">{points} UF pts ({formatPrice(points * process.env.NEXT_PUBLIC_UF_POINT_RATE)})</span>
+                        <span className="font_urbanist_bold text-base text-pinky">{points} UF pts ({formatPrice(parseFloat(points * process.env.NEXT_PUBLIC_UF_POINT_RATE))})</span>
                     </div>
                 </section>
                 <div className="w-full py-5 flex justify-between items-center text-10px">
