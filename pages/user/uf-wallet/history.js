@@ -130,7 +130,7 @@ export default function UFwallet() {
                 </div>
                 <div className="flex flex-col">
                     Balance
-                    <span className="font_urbanist_bold text-[22px] text-pinky">{points} UF pts ({formatPrice(points * process.env.NEXT_PUBLIC_UF_POINT_RATE)})</span>
+                    <span className="font_urbanist_bold text-[22px] text-pinky">{points} UF pts ({formatPrice(parseFloat(points * process.env.NEXT_PUBLIC_UF_POINT_RATE))})</span>
                 </div>
             </section>
             <div className="w-full py-5 flex justify-between items-center">

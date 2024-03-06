@@ -58,7 +58,7 @@ export default function Footer() {
                     <nav className="list-none pb-7 md:pb-3 gap-y-2 lg:gap-y-4 flex flex-col items-start">
                         <h3 className="text-sm lg:text-base font_urbanist_bold">Services</h3>
                         <li>
-                            <Link href='/'>Help</Link>
+                            <Link href='/faq'>Help</Link>
                         </li>
                         <li>
                             <Link href='/contact'>Contact Us</Link>
@@ -66,9 +66,9 @@ export default function Footer() {
                         <li>
                             <Link href='/customerservices/sizeguide'>Size Guides</Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link href='/'>Site Map</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link href='/customerservices/cfproducts'>CF Products</Link>
                         </li>
