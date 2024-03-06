@@ -7,11 +7,14 @@ import sendNotification from "@/utils/send_notification";
 import StandardApi from "@/middlewares/standard_api";
 
 const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
-    const { events } = req.body
+    const { events } = req.body;
+    console.log("got these events params: ", events)
     for (const { name, user_id } of events) {
+        console.log("the each event data: ", name, user_id)
         if (name === 'member_added') {
             console.log("A member just joined with id: " + user_id)
             if (isValidObjectId(user_id)) {
+                console.log("entry point 1")
                 await ConnectDB()
                 const user = await User.findByIdAndUpdate(user_id, { is_active: true }, { new: true })
 

@@ -4,6 +4,7 @@ export default async function PusherWebhooks(req, res) {
     try {
         if (req.method === 'POST') {
             const { events } = req.body;
+            console.log("the webhook api got called with these events: ", events)
             try {
                 axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/pusher/handle-presence-events`, { events })
             } catch (e) { console.log(e) }

@@ -232,111 +232,38 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
                 // }))
             ]
         }
-        console.log("Here is the Swift response: ", swiftOrderData)
 
-        try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_SWFT_BASE_ENDPOINT}/api/direct-integration/orders`,
-                swiftOrderData,
-                {
-                    headers: {
-                        "x-api-key": process.env.NEXT_PUBLIC_SWFT_KEY
-                    }
-                })
+        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_SWFT_BASE_ENDPOINT}/api/direct-integration/orders`,
+            swiftOrderData,
+            {
+                headers: {
+                    "x-api-key": process.env.NEXT_PUBLIC_SWFT_KEY
+                }
+            })
 
-            const shippingLabelData = Buffer.from(data.shippingLabel, 'base64');
-            const shippingLabelUrl = await uploadImage(shippingLabelData, `uf-shipping-labels/${orderData._id.toString()}`)
+        const shippingLabelData = Buffer.from(data.shippingLabel, 'base64');
+        const shippingLabelUrl = await uploadImage(shippingLabelData, `uf-shipping-labels/${orderData._id.toString()}`)
 
-            const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
-                order_status: data.status,
-                stage: data.stage,
-                shipping_label_url: shippingLabelUrl,
-                tracking_number: data.swftboxTracking,
-                tracking_url: data.trackingUrl,
-            }, { lean: true, new: true });
+        const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
+            order_status: data.status,
+            stage: data.stage,
+            shipping_label_url: shippingLabelUrl,
+            tracking_number: data.swftboxTracking,
+            tracking_url: data.trackingUrl,
+        }, { lean: true, new: true });
 
-
-
-            // Sending confirmation email to customer
-            let template = OrderConfirmed(orderSession.name)
-            await sendEmail({ to: orderSession.email, subject: "Your order has been placed." }, template)
-        }
-        catch (e) { console.log(e) }
+        res.status(201).json({
+            success: true,
+            msg: "Checkout successful, the total bill was " + FinalPayableAmount,
+            tracking_number: data.swftboxTracking
+        })
+        // Sending confirmation email to customer
+        let template = OrderConfirmed(finalOrder)
+        sendEmail({ to: orderPayload.email, subject: "Your order has been placed." }, template)
     }
 
-
-    return res.status(201).json({
-        success: true,
-        msg: "Checkout successful, the total bill was " + FinalPayableAmount,
-    })
-
-    // Create Checkout Sessions from body params.
-    const session = await stripe.checkout.sessions.create({
-        shipping_options: [
-            {
-                shipping_rate_data: {
-                    type: 'fixed_amount',
-                    fixed_amount: {
-                        amount: Math.floor(finalShippingFees * rate * 100),
-                        currency: shipping_info?.currency?.toLowerCase() || "aed",
-                    },
-                    display_name: shipping_info.delivery_option,
-                    // delivery_estimate: {
-                    //     minimum: {
-                    //         unit: 'business_day',
-                    //         value: 1,
-                    //     },
-                    //     maximum: {
-                    //         unit: 'business_day',
-                    //         value: 1,
-                    //     },
-                    // },
-                }
-            }
-        ],
-        // line_items: finalOrderItems.map((product, index) => {
-        //     let unitAmount = 0;
-        //     if (product.price > discountByPoints) {
-        //         unitAmount = Math.floor(product.price * 100) - Math.floor(discountByPoints * 100)
-        //         discountByPoints = product.price - ((unitAmount / 100) - discountByPoints)
-        //         console.log(discountByPoints)
-        //     }
-        //     else discountByPoints = discountByPoints - product.price
-        //     return {
-        //         price_data: {
-        //             currency: shipping_info?.currency?.toLowerCase() || "aed",
-        //             product_data: {
-        //                 name: product.name,
-        //                 images: [product.image]
-        //             },
-        //             unit_amount: unitAmount * rate,
-        //         },
-        //         quantity: product.quantity
-        //     }
-        // }),
-        line_items: [
-            {
-                price_data: {
-                    currency: shipping_info?.currency?.toLowerCase() || "aed",
-                    unit_amount: Math.floor(finalPayableAmount * rate * 100),
-                    product_data: { name: "Payable Amount" }
-                },
-                quantity: 1,
-            },
-        ],
-        payment_intent_data: {
-            receipt_email: shipping_info.email,
-            metadata: { order_session_id: orderSession._id.toString() }
-        },
-        customer_email: shipping_info.email,
-        client_reference_id: shipping_info.name,
-        mode: 'payment',
-        success_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/thanks?o_session_id=${orderSession._id}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/step1?payment=false`
-    });
-    const { url } = session
-    res.json({
-        success: true,
-        url
-    })
+    if (shipping_info.payment_option === "cash_on_delivery") await createOrder(orderSession);
+    // else if (shipping_info.payment_option === "online_payment") res.status(400).json({ success: false, msg: "Sorry, this payment options is currently not supported." });
+    else res.status(400).json({ success: false, msg: "Sorry, this payment option is currently not supported." });
 })
 export default handler

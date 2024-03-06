@@ -47,8 +47,9 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
         const { name } = e.target;
         const file = e.target.files[0];
         setSsLoading(true)
-        if (file) uploadUfTaskImg(name, file, (data) => { setTasks(data.tasks.tasks); setSsLoading(false) })
-        else toaster("info", "Please upload a valid image.")
+        if (file) uploadUfTaskImg(name, file, data => setTasks(data.tasks.tasks))
+        else toaster("info", "Please upload a valid image.");
+        setSsLoading(false);
     }
     const actionBtnValue = name !== "sign_up" ? <i className="fa-solid fa-lock text-gotham-black mx-1.5 text-sm" /> : "Go"
 
@@ -325,7 +326,7 @@ export default function EarnUfPoints() {
                     return <section key={index} className="bg-white border-b border-b-gray-300 grid grid-cols-5 text-[10px] md:text-sm">
                         <div className="w-full flex items-center">
                             <span className="mr-8 py-4 flex flex-col text-[8px] lg:text-xs">
-                                <h6 className="font_copper uppercase text-xs lg:text-sm">{UfPointsNames[record.source]}</h6>
+                                <h6 className="font_copper uppercase text-[10px] md:text-xs lg:text-sm">{UfPointsNames[record.source]}</h6>
                                 {createdDate.getDate() + "/" + (createdDate.getMonth() + 1) + "/" + createdDate.getFullYear()}
                             </span>
                         </div>
