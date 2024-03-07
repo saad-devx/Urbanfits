@@ -26,15 +26,14 @@ const OrderConfirmed = (orderData) => {
                     you that your order has been placed and will be on it's way to your door step.</p>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Below is your Order Information:</p><br>
 
-                <div
-                    style="display: grid; grid-template-columns: 0.7fr 1.3fr 1fr; padding: 6px 18px; border: 1px solid whitesmoke; border-radius: 8px;">
-                    <p style="font-size:16px;line-height:26px;margin:16px 0">Order ID:</p>
+                <div style="display: grid; grid-template-columns: 0.7fr 1.3fr 1fr; grid-row-gap: 12px; padding: 18px; border: 1px solid whitesmoke; border-radius: 14px;">
+                    <p style="font-size:16px;line-height:26px;">Order ID:</p>
                     <p style="color: #FF4A60; font-weight: 600;">${orderData._id.toString()}</p>
                     <p> For future order reference.</p>
-                    <p style="font-size:16px;line-height:26px;margin:16px 0">Tracking Number:</p>
+                    <p style="font-size:16px;line-height:26px;">Tracking Number:</p>
                     <p style="color: #FF4A60; font-weight: 600;">${orderData.tracking_number}</p>
                     <p> To track your order.</p>
-                    <p style="font-size:16px;line-height:26px;margin:16px 0">Tracking Url:</p>
+                    <p style="font-size:16px;line-height:26px;">Tracking Url:</p>
                     <p style="color: #FF4A60; font-weight: 600;">${orderData.tracking_url}</p>
                     <p> Directly track your order on one click.</p>
                 </div> <br />

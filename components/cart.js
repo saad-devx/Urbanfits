@@ -161,7 +161,7 @@ export default function Cart(props) {
                                 <br />
                                 <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>Total</span> <span>{formatPrice(cartTotal + totolShippingFee)}</span></span>
                             </div>
-                            <LinkBtn href="/checkout/step1" onClick={props.toggleCart} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
+                            <LinkBtn href="/checkout" onClick={props.toggleCart} font='font_urbanist_bold' classes="w-full">Check Out</LinkBtn>
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14 mb-20">

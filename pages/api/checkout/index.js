@@ -82,7 +82,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             name: dbProduct.name,
             price: dbProduct.sale_price || dbProduct.price,
             image: respectedVariant.images[0],
-            sku: respectedVariant.sku,
+            sku: respectedVariant.sku + "-" + orderItem.size + orderItem.size,
             variant: orderItem?.color || '',
             uf_points: orderItem?.uf_points || 0,
             size: orderItem.size,
@@ -172,7 +172,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             points: discountByPoints,
             coupon: discountByCoupon,
             gift_card: discountByGiftcode,
-            payment: paymentDiscount
+            payment: paymentDiscount > 0 ? 0 : paymentDiscount
         },
         price_details: {
             sub_total: totalPrice,
@@ -214,7 +214,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
                     ...item,
                     weight: parseFloat(item.weight),
                     variantId: item.variant_id,
-                    skuNumber: `${item.sku}-${item.size}${item.size}`,
+                    skuNumber: item.sku,
                     weightUnit: "grams"
                 })),
 
@@ -239,23 +239,54 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
                 headers: {
                     "x-api-key": process.env.NEXT_PUBLIC_SWFT_KEY
                 }
-            })
+            });
+        console.log(data)
+        const swiftRes = data.data[0];
 
-        const shippingLabelData = Buffer.from(data.shippingLabel, 'base64');
+        const shippingLabelData = Buffer.from(swiftRes.shippingLabel, 'base64');
         const shippingLabelUrl = await uploadImage(shippingLabelData, `uf-shipping-labels/${orderData._id.toString()}`)
 
         const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
-            order_status: data.status,
-            stage: data.stage,
+            order_status: swiftRes.status,
+            stage: swiftRes.stage,
             shipping_label_url: shippingLabelUrl,
-            tracking_number: data.swftboxTracking,
-            tracking_url: data.trackingUrl,
+            tracking_number: swiftRes.swftboxTracking,
+            tracking_url: swiftRes.trackingUrl,
         }, { lean: true, new: true });
+        // Subtracting the bought quantity from each of the ordered product
+        // const orderedItems = finalOrder.order_items;
+        // for (const orderedItem of orderedItems) {
+        //     Product.updateOne(
+        //         {
+        //             _id: mongoose.Types.ObjectId(orderedItem.product_id)
+        //         },
+        //         {
+        //             $inc: {
+        //                 "variants.$[v].sizes.$[s].quantity": -orderedItem.quantity
+        //             }
+        //         },
+        //         {
+        //             arrayFilters: [
+        //                 { "v._id": mongoose.Types.ObjectId(orderedItem.variant_id) },
+        //                 { "s.size": orderedItem.size.toUpperCase() }
+        //             ]
+        //         }
+        //     )
+        // }
+        // Sending notifications
+        sendAdminNotification({
+            category: "order",
+            data: {
+                title: "New Order",
+                msg: `A new order just received !`,
+                type: "success"
+            }
+        })
 
         res.status(201).json({
             success: true,
             msg: "Checkout successful, the total bill was " + FinalPayableAmount,
-            tracking_number: data.swftboxTracking
+            order_data: finalOrder
         })
         // Sending confirmation email to customer
         let template = OrderConfirmed(finalOrder)

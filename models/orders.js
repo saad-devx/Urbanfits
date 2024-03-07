@@ -37,6 +37,7 @@ const OrderSchema = new mongoose.Schema({
                 required: true,
             },
             size: String,
+            sku: String,
             quantity: {
                 type: Number,
                 required: true,

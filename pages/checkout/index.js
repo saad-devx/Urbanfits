@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
 import AlertPage from '@/components/alertPage'
@@ -21,7 +21,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 
-loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+// loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const ShipmentOption = ({ method, selected, handleChange, handleBlur }) => {
     const methodObj = shippingRates[method];
@@ -44,11 +44,9 @@ export default function Checkout1() {
     const { totalUniqueItems, cartTotal, isEmpty, items } = useCart();
     const [langModal, setLangModal] = useState(false)
     const [loader, setLoader] = useState(null)
-
-    console.log("THE items hereeeeeeee: ", items)
-    // state and funciton to handle modify input fields
     const name = useRef(null)
     const email = useRef(null)
+
     const [readOnly, setReadOnly] = useState(() => {
         if (user) return true
         if (!user) return false
@@ -114,10 +112,12 @@ export default function Checkout1() {
                     shipping_info: { ...values, card_number: user?.uf_wallet?.card_number },
                     order_items: items
                 }
-                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/payments/checkout`, { payload })
+                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/checkout`, { payload })
                 toaster("success", data.msg)
-                console.log("here is the data of orderrrr: ", data)
-                // router.push(data.url)
+                if (data.order_data.tracking_number) {
+                    sessionStorage.setItem("bought_order_data", JSON.stringify(data.order_data))
+                    router.replace(`/checkout/thanks?tracking_number=${data.order_data.tracking_number}`);
+                }
             }
             catch (e) {
                 console.log(e)
@@ -199,7 +199,6 @@ export default function Checkout1() {
 
     const totalUfPoints = items.reduce((total, item) => total + (item?.uf_points || 0), 0)
     const TotalOrderPrice = cartTotal + totalShippingFee;
-
     const couponDiscount = getCouponDiscount(coupon.coupon, values.coupon_code, items, cartTotal, user)
 
     const totalAmount = (() => {
