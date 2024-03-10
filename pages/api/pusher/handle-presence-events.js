@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db";
 import { isValidObjectId } from "mongoose";
 import User from "@/models/user";
 import { AddPoints } from "@/utils/uf-points";
-import { generateRandomInt, getDateOfTimezone } from "@/utils/cyphers.js";
+import { generateRandomInt, getDateOfTimezone } from "@/utils/cyphers";
 import sendNotification from "@/utils/send_notification";
 import StandardApi from "@/middlewares/standard_api";
 
@@ -16,7 +16,7 @@ const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method:
             if (isValidObjectId(user_id)) {
                 console.log("entry point 1")
                 await ConnectDB()
-                const user = await User.findByIdAndUpdate(user_id, { is_active: true }, { new: true, lean: true })
+                const user = await User.findByIdAndUpdate(user_id, { is_active: true }, { new: true, lean: true });
 
                 const todayDate = getDateOfTimezone(user.timezone);
                 const currentDate = getDateOfTimezone(user.timezone).setHours(0, 0, 0, 0);
@@ -25,7 +25,8 @@ const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method:
                 if ((currentDate > last_checkin) && (new Date(user.createdAt).setHours(23, 59, 59, 999) < currentDate)) {
                     const reward = generateRandomInt(20, 50)
                     console.log("the reward rewarded: ", reward)
-                    await AddPoints(user._id, user.uf_wallet.card_number, user.timezone, { earned: reward, expirationDate: expiryDate, })
+                    await AddPoints(user._id, user.uf_wallet.card_number, user.timezone, { earned: reward, expirationDate: expiryDate })
+                    console.log("entry point 2")
                     await sendNotification(user._id, {
                         category: "reward",
                         heading: "Daily Check in Bonus",
@@ -33,7 +34,9 @@ const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method:
                         mini_msg: `Welcome back, you won ${reward} UF-Points today!`,
                         message: `Welcome back! ${reward} UF-Points are added to your UF-wallet, they will expire after 7 days and shall be deducted from your wallet. Keep coming everyday and win exciting rewards.`
                     }, { notify: true })
-                    await User.findByIdAndUpdate(user_id, { last_checkin: new Date(getDateOfTimezone(user.timezone).setHours(23, 59, 59, 999)) })
+                    console.log("entry point 3")
+                    await User.findByIdAndUpdate(user._id, { last_checkin: new Date(getDateOfTimezone(user.timezone).setHours(23, 59, 59, 999)) })
+                    console.log("entry point 4")
                 }
                 console.log("user_joined handled successfully.")
             } else return res.status(200).end();
