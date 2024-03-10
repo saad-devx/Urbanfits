@@ -387,7 +387,6 @@ export default function Checkout1() {
                     </div>
                     {values.points_to_use ? parseFloat(values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
                         <h4>Saved</h4>
-                        {console.log("Here is the price dataAA: ", cartTotal, totalShippingFee, values.points_to_use, process.env.NEXT_PUBLIC_UF_POINT_RATE)}
                         <h4>{formatPrice(cartTotal + totalShippingFee - ((cartTotal + totalShippingFee) - parseFloat(values.points_to_use) * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)))}</h4>
                     </div> : null}
                     <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">

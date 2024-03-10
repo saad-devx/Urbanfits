@@ -230,8 +230,8 @@ export default function Personalinfo() {
                         <div className="w-1/2 md:w-1/4 flex justify-between">
                             Email<label className="switch w-[45px] md:w-11 h-6 "><input type="checkbox" name='active_by_email' checked={newsletterData?.active_by_email || false} value={newsletterData?.active_by_email} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                         </div>
-                        <div className="w-1/2 md:w-1/4 flex justify-between">
-                            Phone<label className="switch w-[45px] md:w-11 h-6"><input type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
+                        <div className="w-1/2 md:w-1/4 flex justify-between opacity-30 pointer-events-none">
+                            Phone<label className="switch w-[45px] md:w-11 h-6"><input disabled type="checkbox" name='active_by_phone' checked={newsletterData?.active_by_phone || false} value={newsletterData?.active_by_phone} onChange={newsletterSubToggle} /><span className="slider"></span></label>
                         </div>
                     </div>
                     <div className=" w-full space-y-5 font_urbanist_light">
