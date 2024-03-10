@@ -8,7 +8,7 @@ import User from "@/models/user";
 import { verify } from "jsonwebtoken"
 import { parse } from "cookie";
 import { isValidObjectId } from "mongoose";
-import { GetUFBalance, DeductPoints, AddPoints } from "@/utils/uf-points";
+import { GetUFBalance, DeductPoints } from "@/utils/uf-points";
 import { HashValue, getDateOfTimezone } from "@/utils/cyphers.js";
 import { shippingRates, paymentOptions, giftCardPrices } from "@/uf.config";
 import OrderConfirmed from "@/email templates/order_confirm";
@@ -43,6 +43,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     let discountByPoints = 0;
     let discountByGiftcode = 0;
     let discountByCoupon = 0;
+    let earnedPoints = 0;
     let appliedGiftCard = null;
     let appliedCoupon = null;
     if (shipping_info.points_to_use && shipping_info.card_number) {
@@ -50,6 +51,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" });
         const ufBalance = await GetUFBalance(user._id, user.uf_wallet.card_number, user.timezone);
         if (shipping_info.points_to_use > ufBalance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
+        await DeductPoints(user._id, user.uf_wallet.card_number, user.timezone, shipping_info.points_to_use)
         discountByPoints = shipping_info.points_to_use * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)
     }
     if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {
@@ -63,7 +65,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         }
     }
 
-    const rate = 1; // Currency rate i.e. 1 AED
+    // const rate = 1; // Currency rate i.e. 1 AED
     const orderItemsToProcess = order_items.filter(item => !item.id.startsWith("giftcard_"))
     const giftCardItems = order_items.filter(item => item.id.startsWith("giftcard_"))
 
@@ -89,6 +91,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             quantity: orderItem.quantity,
             weight: dbProduct.shipping_details.weight
         }
+        earnedPoints += orderItem.quantity * dbProduct.uf_points || 0;
         finalOrderItems.push(finalProduct)
     }
 
@@ -158,6 +161,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     // const orderSession = await OrderSession.create({
     const orderSession = {
         ...(currentUser ? { user_id: currentUser._id } : { is_guest: true }),
+        ...(currentUser && { earned_points: earnedPoints }),
         name: shipping_info.name,
         email: shipping_info.email,
         order_items: finalOrderItems,

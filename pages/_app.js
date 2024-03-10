@@ -14,8 +14,6 @@ import toaster from "@/utils/toast_function";
 import { pusherClient, initBeamsClient } from '@/utils/pusher';
 import PusherClient from 'pusher-js';
 import { urbanist } from '@/fonts';
-// import useWallet from '@/hooks/useWallet';
-// import getGeoLocation from '@/utils/geo-location'
 
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter()
@@ -26,7 +24,6 @@ function App({ Component, pageProps: { ...pageProps } }) {
   useEffect(() => {
     getMe();
     // getGeoLocation().then(getExchangeRate)
-    // window.addEventListener("beforeunload", igniteSession)
   }, [])
 
   useEffect(() => {

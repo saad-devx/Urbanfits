@@ -188,21 +188,21 @@ export default function Checkout1() {
         const currentMethod = shippingRates[values.delivery_option];
 
         if (values.coupon_code && coupon?.coupon_config?.free_shipping) return 0;
-        const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"))
-        if (!filteredItems.length) return 0
-        const totalWeight = filteredItems.reduce((accValue, item) => accValue + (item.weight * item.quantity), 0)
+        const filteredItems = items.filter(item => !item.id.startsWith("giftcard_"));
+        if (!filteredItems.length) return 0;
+        const totalWeight = filteredItems.reduce((accValue, item) => accValue + (item.weight * item.quantity), 0);
         if (totalWeight <= 5000) return currentMethod.rate;
-        const additionalWeight = totalWeight - 5000
+        const additionalWeight = totalWeight - 5000;
         const additionalCharges = (additionalWeight / 1000) * currentMethod.additional_kg_charge;
-        return currentMethod.rate + additionalCharges
+        return currentMethod.rate + additionalCharges;
     })()
 
-    const totalUfPoints = items.reduce((total, item) => total + (item?.uf_points || 0), 0)
+    const totalUfPoints = items.reduce((total, item) => item.quantity * (total + (item?.uf_points || 0)), 0);
     const TotalOrderPrice = cartTotal + totalShippingFee;
     const couponDiscount = getCouponDiscount(coupon.coupon, values.coupon_code, items, cartTotal, user)
 
     const totalAmount = (() => {
-        const pointsDiscount = parseFloat(values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE || 0;
+        const pointsDiscount = parseFloat(values.points_to_use) * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE) || 0;
         const giftcardDiscount = parseFloat(values.gift_code && giftCard ? giftCard?.price : 0);
         return TotalOrderPrice - (pointsDiscount + giftcardDiscount + couponDiscount)
     })()
@@ -387,7 +387,8 @@ export default function Checkout1() {
                     </div>
                     {values.points_to_use ? parseFloat(values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
                         <h4>Saved</h4>
-                        <h4>{formatPrice(cartTotal + totalShippingFee - ((cartTotal + totalShippingFee) - parseFloat(values.points_to_use) * process.env.NEXT_PUBLIC_UF_POINT_RATE))}</h4>
+                        {console.log("Here is the price dataAA: ", cartTotal, totalShippingFee, values.points_to_use, process.env.NEXT_PUBLIC_UF_POINT_RATE)}
+                        <h4>{formatPrice(cartTotal + totalShippingFee - ((cartTotal + totalShippingFee) - parseFloat(values.points_to_use) * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)))}</h4>
                     </div> : null}
                     <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
                         <h4>Total</h4>

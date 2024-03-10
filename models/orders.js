@@ -62,6 +62,7 @@ const OrderSchema = new mongoose.Schema({
         phone_number: String,
     },
     coupon: Object,
+    earned_points: Number,
     gift_card: Object,
     points_used: Number,
     shippping_method: {
