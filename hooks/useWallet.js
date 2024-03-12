@@ -101,7 +101,7 @@ const useWallet = create((set, get) => ({
             })
             toaster("success", data.msg)
             if (callback) callback(data, ssUrl)
-            else return ssUrl
+            return ssUrl
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }
     },
 

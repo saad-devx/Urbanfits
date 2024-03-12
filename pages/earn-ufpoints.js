@@ -9,7 +9,7 @@ import toaster from '@/utils/toast_function'
 import LinkBtn from '@/components/buttons/link_btn'
 import { DefaultTasks } from '@/uf.config';
 const emptyWishlist = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/emptyWishlist.webp';
-import axios from "axios";
+// import axios from "axios";
 
 const UfPointsNames = { daily_checkin: "Daily Checkin", prize_wheel: "Prize Wheel", signup: "Sign Up", place_order: "Place Order", uf_task: "UF Task", additional_reward: "Other", deduction: "Deduction" };
 const CheckShell = ({ dayCode, day, history }) => {
@@ -47,7 +47,7 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
         const { name } = e.target;
         const file = e.target.files[0];
         setSsLoading(true)
-        if (file) uploadUfTaskImg(name, file, data => setTasks(data.tasks.tasks))
+        if (file) await uploadUfTaskImg(name, file, data => setTasks(data.tasks.tasks))
         else toaster("info", "Please upload a valid image.");
         setSsLoading(false);
     }
@@ -126,12 +126,10 @@ export default function EarnUfPoints() {
                     wheel.style.transition = 'none';
                     wheel.style.transform = `rotate(${rotationAngle}deg)`;
                     toaster("success", msg || `Congratulations! You won ${value} points.`)
+                    res(1)
                 }, spinDuration * spins * 1000);
-                res(1)
             })
-        } else {
-            console.log("Invalid value. No corresponding path found.");
-        }
+        } else console.log("Invalid value. No corresponding path found.");
     }
 
     const calculateTimeLeft = (targetDate) => {
@@ -196,8 +194,8 @@ export default function EarnUfPoints() {
             return console.log("some error occured as the spin value was undefined.")
         }
         await spinAndStopAtValue(data.reward.toString(), data?.msg)
-        setLoading(false)
         getUfBalance()
+        setLoading(false)
     }
 
     return <>
@@ -223,7 +221,7 @@ export default function EarnUfPoints() {
                     <hr />
                     <div className="w-full flex justify-between items-center font_urbanist_medium text-sm lg:text-base">
                         Checked in {getCheckedinDays()} days
-                        <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label>
+                        {/* <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label> */}
                     </div>
                 </nav>
                 <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 xl:py-6 flex flex-col lg:flex-row rounded-lg gap-3 mid:gap-8">
@@ -282,7 +280,7 @@ export default function EarnUfPoints() {
                             <li>6. On getting a "Try Again", you can do extra spin free of cost.</li>
                         </ol>
                         {user ? <div className='w-full'><LinkBtn href="/user/uf-wallet/history" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>My Prize History</LinkBtn>
-                            <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin)} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>
+                            <Button loading={loading} disabled={user?.uf_wallet.last_spin_reward && new Date() < new Date(user.uf_wallet?.next_uf_spin) || loading} onClick={spinPrizeWheel} classes="w-full" my="0">{user.uf_wallet?.last_spin_reward ? "Lucky Draw (-10 pts)" : "Free Lucky Draw"}</Button></div>
                             : <>
                                 <LinkBtn href="/auth/login" bg="bg-gray-100" my="my-3" text="black" classes="w-full" font='font_urbanist_medium'>Log in</LinkBtn>
                                 <LinkBtn href="/auth/signup" classes="w-full" my="0">Sign up</LinkBtn>

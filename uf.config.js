@@ -1,3 +1,5 @@
+export const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
+
 export const DefaultTasks = [
     {
         name: "sign_up",
@@ -97,7 +99,7 @@ export const shippingRates = {
         "rate": 40,
         "time_limit": new Date().setHours(16, 0, 0, 0),
         "additional_kg_charge": 2,
-        "timespan": "Today"
+        "timespan": "Today (withing 4 hours)"
     }
 }
 
@@ -111,6 +113,25 @@ export const paymentOptions = {
         "discount": 2.5
     }
 }
+
+export const orderStatuses = {
+    'REQUESTED': { group: "processing", color: "" },
+    'ASSIGNED': { group: "processing", color: "" },
+    'PICKED UP': { group: "shipped", color: "" },
+    'AT DEPOT': { group: "shipped", color: "" },
+    'DELIVERING': { group: "delivering", color: "" },
+    "DELIVERED": { group: "delivered", color: "" },
+    "ATTEMPTED": { group: "attempted", color: "" },
+    "CANCELLED": { group: "cancelled", color: "" },
+    "RTO INITIATED": { group: "return_in_process", color: "" },
+    "RTO ASSIGNED": { group: "return_in_process", color: "" },
+    "RTO PICKED UP": { group: "return_in_process", color: "" },
+    "RTO COMPLETE": { group: "returned", color: "" },
+    "RTN REQUESTED": { group: "return_in_process", color: "" },
+    "RTN ASSIGNED": { group: "return_in_process", color: "" },
+    "RTN PICKED UP": { group: "return_in_process", color: "" },
+    "RTN COMPLETE": { group: "returned", color: "" }
+};
 
 export const currencies = ["AED", "SAR", "PKR"];
 export const jwtExpiries = {

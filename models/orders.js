@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { shippingRates, paymentOptions } from "@/uf.config";
+import { shippingRates, paymentOptions, orderStatuses } from "@/uf.config";
 import { getDateOfTimezone } from "@/utils/cyphers";
 
 const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
@@ -11,9 +11,12 @@ const OrderSchema = new mongoose.Schema({
     name: String,
     email: String,
     order_status: {
-        type: String,
-        enum: ['pending', 'shipped', 'readytoship', 'returned', 'delivered'],
-        default: 'pending',
+        status: {
+            type: String,
+            enum: Object.keys(orderStatuses),
+            default: Object.keys(orderStatuses)[0]
+        },
+        group: String
     },
     stage: String,
     tracking_number: String,
@@ -112,4 +115,10 @@ const OrderSchema = new mongoose.Schema({
         default: getDateOfTimezone().getFullYear()
     }
 }, { timestamps: true });
+
+OrderSchema.pre("save", (next) => {
+    this.order_status.group = orderStatuses[this.order_status.status];
+    next();
+})
+
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

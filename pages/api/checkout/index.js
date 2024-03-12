@@ -1,4 +1,4 @@
-// const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import Order from "@/models/orders"
@@ -10,11 +10,12 @@ import { parse } from "cookie";
 import { isValidObjectId } from "mongoose";
 import { GetUFBalance, DeductPoints } from "@/utils/uf-points";
 import { HashValue, getDateOfTimezone } from "@/utils/cyphers.js";
-import { shippingRates, paymentOptions, giftCardPrices } from "@/uf.config";
+import { isProdEnv, shippingRates, paymentOptions, giftCardPrices } from "@/uf.config";
 import OrderConfirmed from "@/email templates/order_confirm";
 import sendEmail from "@/utils/sendEmail";
 import uploadImage from "@/utils/uploadImage";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
+import { serialize } from "cookie";
 import axios from "axios";
 import StandardApi from "@/middlewares/standard_api";
 
@@ -186,7 +187,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         }
     }
 
-    const createOrder = async (orderPayload) => {
+    const createOrder = async (orderPayload, shippingMethod) => {
         const orderData = (await Order.create(orderPayload)).toObject();
         const { shipping_address } = shipping_info;
 
@@ -210,7 +211,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             },
 
             paymentAmount: FinalPayableAmount,
-            profileName: shippingRates[shipping_info.delivery_option].swft_profile,
+            profileName: shippingRates[shippingMethod].swft_profile,
             requireCustomerProofSignature: true,
 
             items: [
@@ -244,39 +245,39 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
                     "x-api-key": process.env.NEXT_PUBLIC_SWFT_KEY
                 }
             });
-        console.log(data)
+        // console.log(data)
         const swiftRes = data.data[0];
 
         const shippingLabelData = Buffer.from(swiftRes.shippingLabel, 'base64');
         const shippingLabelUrl = await uploadImage(shippingLabelData, `uf-shipping-labels/${orderData._id.toString()}`)
 
         const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
-            order_status: swiftRes.status,
+            order_status: { status: swiftRes.status },
             stage: swiftRes.stage,
             shipping_label_url: shippingLabelUrl,
             tracking_number: swiftRes.swftboxTracking,
             tracking_url: swiftRes.trackingUrl,
         }, { lean: true, new: true });
         // Subtracting the bought quantity from each of the ordered product
-        // const orderedItems = finalOrder.order_items;
-        // for (const orderedItem of orderedItems) {
-        //     Product.updateOne(
-        //         {
-        //             _id: mongoose.Types.ObjectId(orderedItem.product_id)
-        //         },
-        //         {
-        //             $inc: {
-        //                 "variants.$[v].sizes.$[s].quantity": -orderedItem.quantity
-        //             }
-        //         },
-        //         {
-        //             arrayFilters: [
-        //                 { "v._id": mongoose.Types.ObjectId(orderedItem.variant_id) },
-        //                 { "s.size": orderedItem.size.toUpperCase() }
-        //             ]
-        //         }
-        //     )
-        // }
+        const orderedItems = finalOrder.order_items;
+        for (const orderedItem of orderedItems) {
+            Product.updateOne(
+                {
+                    _id: mongoose.Types.ObjectId(orderedItem.product_id)
+                },
+                {
+                    $inc: {
+                        "variants.$[v].sizes.$[s].quantity": -orderedItem.quantity
+                    }
+                },
+                {
+                    arrayFilters: [
+                        { "v._id": mongoose.Types.ObjectId(orderedItem.variant_id) },
+                        { "s.size": orderedItem.size.toUpperCase() }
+                    ]
+                }
+            )
+        }
         // Sending notifications
         sendAdminNotification({
             category: "order",
@@ -285,6 +286,13 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
                 msg: `A new order just received !`,
                 type: "success"
             }
+        })
+        if (orderData.user_id) sendNotification(orderData.user_id, {
+            category: "order",
+            heading: "Order Placed",
+            mini_msg: "You order have been placed successfully and currently is in PROCESSING status. The order tracking details have been sent on your email. Thanks for you purchase!",
+            type: "order",
+            message: `You order have been placed successfully and currently is in PROCESSING status. Here's your Tracking Number: "${finalOrder.tracking_number}". Further details have been sent on your email. Thanks for you purchase!`,
         })
 
         res.status(201).json({
@@ -298,7 +306,89 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     }
 
     if (shipping_info.payment_option === "cash_on_delivery") await createOrder(orderSession);
-    // else if (shipping_info.payment_option === "online_payment") res.status(400).json({ success: false, msg: "Sorry, this payment options is currently not supported." });
-    else res.status(400).json({ success: false, msg: "Sorry, this payment option is currently not supported." });
+    else if (shipping_info.payment_option === "online_payment") {
+
+        // Create Checkout Sessions from body params.
+        const stripSession = await stripe.checkout.sessions.create({
+            shipping_options: [
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: Math.floor(finalShippingFees * 100),
+                            currency: "aed",
+                        },
+                        display_name: shipping_info.delivery_option,
+                        // delivery_estimate: {
+                        //     minimum: {
+                        //         unit: 'business_day',
+                        //         value: 1,
+                        //     },
+                        //     maximum: {
+                        //         unit: 'business_day',
+                        //         value: 1,
+                        //     },
+                        // },
+                    }
+                }
+            ],
+            // line_items: finalOrderItems.map((product, index) => {
+            //     let unitAmount = 0;
+            //     if (product.price > discountByPoints) {
+            //         unitAmount = Math.floor(product.price * 100) - Math.floor(discountByPoints * 100)
+            //         discountByPoints = product.price - ((unitAmount / 100) - discountByPoints)
+            //         console.log(discountByPoints)
+            //     }
+            //     else discountByPoints = discountByPoints - product.price
+            //     return {
+            //         price_data: {
+            //             currency: shipping_info?.currency?.toLowerCase() || "aed",
+            //             product_data: {
+            //                 name: product.name,
+            //                 images: [product.image]
+            //             },
+            //             unit_amount: unitAmount * rate,
+            //         },
+            //         quantity: product.quantity
+            //     }
+            // }),
+            line_items: [
+                {
+                    price_data: {
+                        currency: shipping_info?.currency?.toLowerCase() || "aed",
+                        unit_amount: Math.floor(FinalPayableAmount * 100),
+                        product_data: { name: "Payable Amount" }
+                    },
+                    quantity: 1,
+                },
+            ],
+            payment_intent_data: {
+                receipt_email: shipping_info.email,
+                // metadata: { order_session_id: orderSession._id.toString() }
+            },
+            customer_email: shipping_info.email,
+            client_reference_id: shipping_info.name,
+            mode: 'payment',
+            success_url: true,
+            cancel_url: false
+        });
+        const payment_success = stripSession.url;
+
+        const orderSessionCookie = serialize('order_session', JSON.stringify(orderSession), {
+            httpOnly: true,
+            sameSite: isProdEnv ? "none" : "lax",
+            domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+            path: "/",
+            secure: isProdEnv,
+            maxAge: expiryDate
+        })
+        res.setHeader('Set-Cookie', orderSessionCookie);
+
+        res.status(201).json({
+            success: true,
+            payment_success,
+            msg: payment_success ? "Payment Successful. Thanks for you purchase!" : "Payment Unsuccessful"
+        })
+    };
 })
 export default handler

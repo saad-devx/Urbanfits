@@ -112,9 +112,9 @@ export default function Footer() {
                     </nav>
                     <nav className="list-none pb-7 md:pb-3 space-y-2 lg:space-y-4 flex flex-col items-start">
                         <h3 className="text-sm lg:text-base font_urbanist_bold">About UFs</h3>
-                        <li>
+                        {/* <li>
                             <Link href='/about'>About Us</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link href='/policies/terms&conditions'>Terms & Conditions</Link>
                         </li>

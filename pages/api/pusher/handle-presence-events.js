@@ -1,9 +1,9 @@
 import ConnectDB from "@/utils/connect_db";
-import { isValidObjectId } from "mongoose";
 import User from "@/models/user";
+import { isValidObjectId } from "mongoose";
 import { AddPoints } from "@/utils/uf-points";
 import { generateRandomInt, getDateOfTimezone } from "@/utils/cyphers";
-import sendNotification from "@/utils/send_notification";
+import { sendNotification } from "@/utils/send_notification";
 import StandardApi from "@/middlewares/standard_api";
 
 const HandlePresenceEvents = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {

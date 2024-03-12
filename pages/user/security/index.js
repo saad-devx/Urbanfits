@@ -14,14 +14,13 @@ const TwoFa = dynamic(() => import('@/components/modals/twoFa'));
 
 const Update2FA = ({ user, updateUser, show, setTfaModal, setLoading }) => {
     const [totp, setTotp] = useState('')
-    const [password, setPassword] = useState('')
+    // const [password, setPassword] = useState('')
     const update2FA = async () => {
-        if (!password || !totp) return toaster("error", "Please fill in your password and TOTP code.")
+        if (!totp) return toaster("error", "Please fill in your password and TOTP code.")
         setTfaModal(false)
         setLoading(true)
         try {
             const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/2fa/update-user-2fa`, {
-                password,
                 totp_code: totp,
                 two_fa_enabled: !user.two_fa_enabled
             })
@@ -46,13 +45,13 @@ const Update2FA = ({ user, updateUser, show, setTfaModal, setLoading }) => {
                 {user.two_fa_enabled && <><span className="text-xs">Note: </span><p className="mb-4 text-xs text-gray-400">After turning off 2 Factor Authentication verification, your account will be at a low security level. Proceed with caution!</p></>}
                 <div className="w-full mb-4 relative flex flex-col" >
                     <label htmlFor="totp" className='font_futura text-sm flex justify-between items-center'>Enter Authenticator Code</label>
-                    <input type='number' name='totp' id='totp' onChange={(e) => setTotp(e.target.value)} className="w-full mt-3 h-11 px-[10px] py-[13.5px] tracking-[8px] border border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition rounded-lg outline-none" />
+                    <input type='number' name='totp' id='totp' onChange={(e) => setTotp(e.target.value)} className="w-full mt-3 h-11 px-[10px] py-[13.5px] tracking-[8px] border border-gray-300 focus:border-pinky hover:border-pink-400 transition rounded-lg outline-none" />
                 </div>
-                <div className="w-full relative flex flex-col" >
+                {/* <div className="w-full relative flex flex-col" >
                     <label htmlFor="totp" className='font_futura text-sm flex justify-between items-center'>Enter Your Password</label>
-                    <input type='password' name='password' id='password' onChange={(e) => setPassword(e.target.value)} className="w-full mt-3 h-11 px-[10px] py-[13.5px] tracking-[8px] border border-gray-300 focus:border-yellow-700 hover:border-yellow-600 transition rounded-lg outline-none" />
-                </div>
-                <Button onClick={update2FA} disabled={!totp || totp.length < 4 || !password || password.length < 8} classes="w-full">{user.two_fa_enabled ? "Disable 2FA" : "Enable 2FA"}</Button>
+                    <input type='password' name='password' id='password' onChange={(e) => setPassword(e.target.value)} className="w-full mt-3 h-11 px-[10px] py-[13.5px] tracking-[8px] border border-gray-300 focus:border-pinky hover:border-pink-400 transition rounded-lg outline-none" />
+                </div> */}
+                <Button onClick={update2FA} disabled={!totp || totp.length < 4} classes="w-full">{user.two_fa_enabled ? "Disable 2FA" : "Enable 2FA"}</Button>
             </div>
         </section>
     </main>

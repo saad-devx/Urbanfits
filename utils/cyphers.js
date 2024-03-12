@@ -2,9 +2,8 @@ import Giftcard from "@/models/giftcard"
 import ConnectDB from "./connect_db";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
-import { serialize, } from "cookie";
-import { jwtExpiries } from "@/uf.config";
-const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
+import { serialize } from "cookie";
+import { jwtExpiries, isProdEnv } from "@/uf.config";
 
 export const generateRandomInt = (from, to) => Math.floor(Math.random() * (to - from + 1)) + from;
 export const HashValue = (value) => CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);

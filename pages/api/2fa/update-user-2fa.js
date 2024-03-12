@@ -37,7 +37,7 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
             last_checkin: updatedUser.last_checkin,
             createdAt: updatedUser.createdAt,
             ...(updatedUser.role && { role: updatedUser.role })
-        }, res.user.exp);
+        }, req.user.exp);
         delete user.two_fa_secret;
         delete user.password;
 
