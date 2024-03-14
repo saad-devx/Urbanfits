@@ -23,17 +23,15 @@ export default function Thanks() {
 
     console.log(orderData)
     useEffect(() => {
-        emptyCart()
+        // emptyCart()
         setOrderData(JSON.parse(sessionStorage.getItem("bought_order_data")));
         getUfBalance()
 
-        return () => {
-            sessionStorage.clear();
-        }
+        // return () => { sessionStorage.clear() }
     }, [])
 
     const date = new Date()
-    if (!router.query.tracking_number) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
+    // if (!router.query.tracking_number) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
     if (orderData) return <>
         <Head>
             <title>Thanks - Urban Fits</title>
@@ -87,8 +85,10 @@ export default function Thanks() {
                     <div className="flex flex-col md:flex-row md:items-end border-t border-t-gray-400">
                         <div className="relative w-full pt-2 flex flex-col">
                             <h4 className="text-xl font-semibold my-4">Tracking Details</h4>
-                            <span className='text-xs lg:text-sm'>Order ID: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?._id}</span></span>
-                            <span className='text-xs lg:text-sm'>Tracking No: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?.tracking_number}</span></span>
+                            {orderData?._id ? <>
+                                <span className='text-xs lg:text-sm'>Order ID: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?._id}</span></span>
+                                <span className='text-xs lg:text-sm'>Tracking No: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?.tracking_number}</span></span>
+                            </> : "The order tracking details have sent to you Email"}
                         </div>
                         <LinkBtn href="/trackorder" my="my-6 md:my-0" font="font_urbanist_medium" fontSize="text-xs md:text-sm" classes="px-5 w-full md:w-80" >Track You Order</LinkBtn>
                     </div>
@@ -96,5 +96,6 @@ export default function Thanks() {
             </section>
         </main>
     </>
-    else return <div className="w-full h-screen"><Loader /></div>
+    // else return <div className="w-full h-screen"><Loader /></div>
+    else return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { useCart } from "react-use-cart";
-// import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
 import AlertPage from '@/components/alertPage'
@@ -21,7 +21,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import Tooltip from '@/components/tooltip';
 
-// loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const ShipmentOption = ({ method, selected, handleChange, handleBlur }) => {
     const methodObj = shippingRates[method];
@@ -112,12 +112,13 @@ export default function Checkout1() {
                     shipping_info: { ...values, card_number: user?.uf_wallet?.card_number },
                     order_items: items
                 }
-                const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/checkout`, { payload })
+                const { data, data: { order_data } } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/checkout`, { payload })
                 toaster("success", data.msg)
-                if (data.order_data.tracking_number) {
-                    sessionStorage.setItem("bought_order_data", JSON.stringify(data.order_data))
-                    router.replace(`/checkout/thanks?tracking_number=${data.order_data.tracking_number}`);
-                }
+                console.log(order_data)
+                sessionStorage.setItem("bought_order_data", JSON.stringify(order_data))
+                if (order_data.payment_method === "online_payment") router.push(data.payment_url);
+                else if (order_data.payment_method === "cash_on_delivery") router.replace(`/checkout/thanks`);
+                else return toaster("error", "Unsupported payment method.")
             }
             catch (e) {
                 console.log(e)

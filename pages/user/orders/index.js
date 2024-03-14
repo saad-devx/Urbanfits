@@ -10,7 +10,7 @@ import toaster from '@/utils/toast_function';
 import User from '..';
 import axios from 'axios';
 import Image from 'next/image';
-const EmtpyOrderImg = "https://urban-fits.s3.eu-north-1.amazonaws.com/website-copyrights/empty-order.png"
+const EmtpyOrderImg = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/empty-order.webp";
 
 const Option = (props) => {
     const route = useRouter().pathname;
