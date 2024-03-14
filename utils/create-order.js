@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Product from "@/models/product"
 import Order from "@/models/orders"
 import { shippingRates } from "@/uf.config";
@@ -9,7 +10,7 @@ import axios from "axios";
 
 const CreateOrder = async (orderPayload) => {
     const orderData = (await Order.create(orderPayload)).toObject();
-    const { shipping_address } = shipping_info;
+    const { shipping_address } = orderData;
 
     const swiftOrderData = {
         reference: orderData._id.toString(),
@@ -19,7 +20,7 @@ const CreateOrder = async (orderPayload) => {
         customerInfo: {
             name: shipping_address.firstname + ' ' + shipping_address.lastname || '',
             phone: shipping_address.phone_prefix + ' ' + shipping_address.phone_number,
-            email: shipping_info.email,
+            email: orderData.email,
             country: "United Arab Emirates",
             city: shipping_address.city,
             countryCode: "ae",
@@ -30,7 +31,7 @@ const CreateOrder = async (orderPayload) => {
             })
         },
 
-        paymentAmount: FinalPayableAmount,
+        paymentAmount: orderData.price_details.total,
         profileName: shippingRates[orderData.shippping_method].swft_profile,
         requireCustomerProofSignature: true,
 

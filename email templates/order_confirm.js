@@ -26,17 +26,21 @@ const OrderConfirmed = (orderData) => {
                     you that your order has been placed and will be on it's way to your door step.</p>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Below is your Order Information:</p><br>
 
-                <div style="display: grid; grid-template-columns: 0.7fr 1.3fr 1fr; grid-row-gap: 12px; padding: 18px; border: 1px solid whitesmoke; border-radius: 14px;">
-                    <p style="font-size:16px;line-height:26px;">Order ID:</p>
-                    <p style="color: #FF4A60; font-weight: 600;">${orderData._id.toString()}</p>
-                    <p> For future order reference.</p>
-                    <p style="font-size:16px;line-height:26px;">Tracking Number:</p>
-                    <p style="color: #FF4A60; font-weight: 600;">${orderData.tracking_number}</p>
-                    <p> To track your order.</p>
-                    <p style="font-size:16px;line-height:26px;">Tracking Url:</p>
-                    <p style="color: #FF4A60; font-weight: 600;">${orderData.tracking_url}</p>
-                    <p> Directly track your order on one click.</p>
-                </div> <br />
+                <table align="center" role="presentation" cellPadding="10" width="100%"
+                style="max-width:37.5em;margin:0 auto;padding: 18px; border: 1px solid #ffff; border-radius: 12px;">
+                <tr>
+                    <td>Order ID:</td>
+                    <td style="color: #FF4A60; font-weight: 600;">${orderData._id.toString()}</td>
+                </tr>
+                <tr>
+                    <td>Tracking Number:</td>
+                    <td style="color: #FF4A60; font-weight: 600;">${orderData.tracking_number}</td>
+                </tr>
+                <tr>
+                    <td>Tracking URL:</td>
+                    <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${orderData.tracking_url}</td>
+                </tr>
+            </table>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Best Regards,<br />The Urban Fits team</p>
                 <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
                 <p style="font-size:12px;line-height:24px;margin:16px 0;color:#8898aa">Urban Fits L.L.C. &copy;

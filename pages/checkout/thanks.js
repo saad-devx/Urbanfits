@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import AlertPage from '@/components/alertPage';
-import Loader from '@/components/loaders/loader';
 import LinkBtn from '@/components/buttons/link_btn';
 import useWallet from '@/hooks/useWallet';
 import { useCart } from 'react-use-cart';
 import Image from 'next/image';
+// import Loader from '@/components/loaders/loader';
 
 const giftCardPrices = {
     "giftcard_bronze": "bronze_metal_bg",
@@ -16,14 +16,14 @@ const giftCardPrices = {
     "giftcard_diamond": "diamond_metal_bg",
 }
 export default function Thanks() {
-    const router = useRouter()
+    // const router = useRouter()
     const { getUfBalance, formatPrice } = useWallet()
     const { emptyCart } = useCart()
     const [orderData, setOrderData] = useState(null)
 
     console.log(orderData)
     useEffect(() => {
-        // emptyCart()
+        emptyCart()
         setOrderData(JSON.parse(sessionStorage.getItem("bought_order_data")));
         getUfBalance()
 
@@ -90,7 +90,7 @@ export default function Thanks() {
                                 <span className='text-xs lg:text-sm'>Tracking No: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?.tracking_number}</span></span>
                             </> : "The order tracking details have sent to you Email"}
                         </div>
-                        <LinkBtn href="/trackorder" my="my-6 md:my-0" font="font_urbanist_medium" fontSize="text-xs md:text-sm" classes="px-5 w-full md:w-80" >Track You Order</LinkBtn>
+                        <LinkBtn href={`/trackorder?order_id=${orderData._id}`} my="my-6 md:my-0" font="font_urbanist_medium" fontSize="text-xs md:text-sm" classes="px-5 w-full md:w-80" >Track You Order</LinkBtn>
                     </div>
                 </div>
             </section>

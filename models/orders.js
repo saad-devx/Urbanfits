@@ -116,7 +116,8 @@ const OrderSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-OrderSchema.pre("save", (next) => {
+OrderSchema.pre("save", function (next) {
+    console.log("here is the document being saved : ", this)
     this.order_status.group = orderStatuses[this.order_status.status];
     next();
 })

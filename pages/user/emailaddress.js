@@ -13,12 +13,13 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 
 export default function EmailPassword() {
-    const { user, isLoggedIn, matchOtpAndUpdate, logOut } = useUser()
-    const [showPass, setShowPass] = useState(false)
-    const passRef = useRef()
-    const [otpId, setOtpId] = useState(null)
-    const [otp, setOtp] = useState("")
-    const [loading, setLoading] = useState(false)
+    const router = useRouter();
+    const { user, isLoggedIn, matchOtpAndUpdate, logOut } = useUser();
+    const [showPass, setShowPass] = useState(false);
+    const passRef = useRef();
+    const [otpId, setOtpId] = useState(null);
+    const [otp, setOtp] = useState("");
+    const [loading, setLoading] = useState(false);
     const validatedSchema = Yup.object({
         old_email: Yup.string().email().required("Please enter your email address"),
         new_email: Yup.string().email().required("Please enter new email address"),
@@ -92,7 +93,7 @@ export default function EmailPassword() {
                     {touched.new_email && errors.new_email ? <Tooltip classes="form-error" content={errors.new_email} /> : null}
                     <input className="w-full bg-transparent outline-none border-none" name="new_email" id="new_email" value={values.new_email} onChange={handleChange} onBlur={handleBlur} placeholder="Confirm Email*" />
                 </div>
-                <div className='w-full flex justify-between items-center text-sm font_urbanist_medium' ><h2>Current Password</h2> <button type='button' onClick={() => { logOut(); useRouter().push("/auth/resetpassword") }} className='text-xs flex items-center' >Change<i className="material-symbols-outlined text-sm ml-2">edit_square</i></button></div>
+                <div className='w-full flex justify-between items-center text-sm font_urbanist_medium' ><h2>Current Password</h2> <button type='button' onClick={() => { logOut(); router.push("/auth/resetpassword") }} className='text-xs flex items-center' >Change<i className="material-symbols-outlined text-sm ml-2">edit_square</i></button></div>
                 <div className={`relative data_field flex items-center border-b ${touched.password && errors.password ? "border-red-500" : "hover:border-pink-300"} transition py-2 mb-4`}>
                     {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
                     <input ref={passRef} className={`w-full outline-none border-none ${values.password && "tracking-2"}`} type={showPass ? "text" : "password"} id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password*' />

@@ -2,8 +2,9 @@ import Stripe from 'stripe';
 import { buffer } from 'micro';
 import Cors from 'micro-cors';
 import OrderSession from '@/models/order_session';
+import CreateOrder from '@/utils/create-order';
 import { pusherServer } from '@/utils/pusher';
-import axios from 'axios';
+import { sendNotification } from '@/utils/send_notification';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 const webhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
@@ -44,7 +45,9 @@ const webhookHandler = async (req, res) => {
                 const paymentIntent = event.data.object;
                 console.log(`PaymentIntent status: ${paymentIntent.status}`);
                 const orderSessionId = paymentIntent.metadata.order_session_id;
-                axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/payments/create-order?order_session_id=${orderSessionId}`)
+
+                const orderSession = await OrderSession.findById(orderSessionId).lean();
+                await CreateOrder(orderSession)
                 break;
             }
             case 'payment_intent.payment_failed': {
@@ -52,10 +55,12 @@ const webhookHandler = async (req, res) => {
                 const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
 
                 console.log(`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`);
-                pusherServer.trigger(`payments-user_${orderSession.user_id.toString()}`, 'payment-failed', {
-                    success: false,
-                    type: "error",
-                    msg: "Your payment was failed!"
+                sendNotification(orderData.user_id, {
+                    category: "order",
+                    heading: "Order Placement Failed",
+                    mini_msg: "Your order couldn't be placed.",
+                    type: "order",
+                    message: `Sorry your payment couldn't approve due some unknown reasone and you order coulnd't be placed. If you payment was still deducted from your account, you will be refunded. Or you can consult with Urban Fits team. Thanks!`,
                 })
                 break;
             }

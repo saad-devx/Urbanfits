@@ -3,6 +3,7 @@ import ConnectDB from "@/utils/connect_db"
 import Product from "@/models/product"
 import Giftcard from "@/models/giftcard";
 import CreateOrder from "@/utils/create-order";
+import OrderSession from "@/models/order_session";
 import Coupon from "@/models/coupon";
 import User from "@/models/user";
 import { verify } from "jsonwebtoken"
@@ -10,8 +11,7 @@ import { parse } from "cookie";
 import { isValidObjectId } from "mongoose";
 import { GetUFBalance, DeductPoints } from "@/utils/uf-points";
 import { HashValue, getDateOfTimezone } from "@/utils/cyphers.js";
-import { isProdEnv, shippingRates, paymentOptions, giftCardPrices } from "@/uf.config";
-import { serialize } from "cookie";
+import { shippingRates, paymentOptions, giftCardPrices } from "@/uf.config";
 import StandardApi from "@/middlewares/standard_api";
 
 const shippingMethods = Object.keys(shippingRates);
@@ -154,8 +154,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     const FinalPayableAmount = amountAfterDiscounts + paymentDiscount;
 
     // Creating order session data
-    // const orderSession = await OrderSession.create({
-    const orderSession = {
+    const orderSession = (await OrderSession.create({
         ...(currentUser ? { user_id: currentUser._id } : { is_guest: true }),
         ...(currentUser && { earned_points: earnedPoints }),
         name: shipping_info.name,
@@ -180,7 +179,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             shipping_fees: finalShippingFees,
             total_discount: discountByPoints + discountByGiftcode + discountByCoupon
         }
-    }
+    })).toObject();
 
     if (shipping_info.payment_option === "cash_on_delivery") {
         const order_data = await CreateOrder(orderSession);
@@ -248,7 +247,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             ],
             payment_intent_data: {
                 receipt_email: shipping_info.email,
-                // metadata: { order_session_id: orderSession._id.toString() }
+                metadata: { order_session_id: orderSession._id.toString() }
             },
             customer_email: shipping_info.email,
             client_reference_id: shipping_info.name,
@@ -256,16 +255,6 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             success_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/thanks`,
             cancel_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/step1`
         });
-
-        const orderSessionCookie = serialize('order_session', JSON.stringify(orderSession), {
-            httpOnly: true,
-            sameSite: isProdEnv ? "none" : "lax",
-            domain: isProdEnv ? ".urbanfits.ae" : "localhost",
-            path: "/",
-            secure: isProdEnv,
-            maxAge: Math.floor(1 * 60 * 60)
-        })
-        res.setHeader('Set-Cookie', orderSessionCookie);
 
         res.status(201).json({
             success: true,
