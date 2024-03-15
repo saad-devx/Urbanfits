@@ -14,7 +14,7 @@ const OrderSchema = new mongoose.Schema({
         status: {
             type: String,
             enum: Object.keys(orderStatuses),
-            default: Object.keys(orderStatuses)[0]
+            // default: Object.keys(orderStatuses)[0]
         },
         group: String
     },
@@ -117,8 +117,14 @@ const OrderSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 OrderSchema.pre("save", function (next) {
-    console.log("here is the document being saved : ", this)
-    this.order_status.group = orderStatuses[this.order_status.status];
+    let orderStatus = structuredClone(this.order_status.status);
+    if (!orderStatus) orderStatus = structuredClone(Object.keys(orderStatuses)[0]);
+    console.log("here is the document being saved : ", this, orderStatus, orderStatuses[orderStatus].group)
+
+    this.order_status = {
+        status: orderStatus,
+        group: orderStatuses[orderStatus].group
+    }
     next();
 })
 

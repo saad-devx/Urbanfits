@@ -113,8 +113,6 @@ export default function Checkout1() {
                     order_items: items
                 }
                 const { data, data: { order_data } } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/checkout`, { payload })
-                toaster("success", data.msg)
-                console.log(order_data)
                 sessionStorage.setItem("bought_order_data", JSON.stringify(order_data))
                 if (order_data.payment_method === "online_payment") router.push(data.payment_url);
                 else if (order_data.payment_method === "cash_on_delivery") router.replace(`/checkout/thanks`);

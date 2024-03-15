@@ -3,7 +3,7 @@ import { buffer } from 'micro';
 import Cors from 'micro-cors';
 import OrderSession from '@/models/order_session';
 import CreateOrder from '@/utils/create-order';
-import { pusherServer } from '@/utils/pusher';
+// import { pusherServer } from '@/utils/pusher';
 import { sendNotification } from '@/utils/send_notification';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
@@ -13,7 +13,7 @@ const webhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
 export const config = {
     api: {
         bodyParser: false,
-    },
+    }
 };
 
 const cors = Cors({
@@ -47,13 +47,13 @@ const webhookHandler = async (req, res) => {
                 const orderSessionId = paymentIntent.metadata.order_session_id;
 
                 const orderSession = await OrderSession.findById(orderSessionId).lean();
-                await CreateOrder(orderSession)
+                await CreateOrder(orderSession);
+                OrderSession.findByIdAndDelete(orderSessionId);
                 break;
             }
             case 'payment_intent.payment_failed': {
                 const paymentIntent = event.data.object;
-                const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
-
+                // const orderSession = await OrderSession.findById(paymentIntent.metadata.order_session_id)
                 console.log(`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`);
                 sendNotification(orderData.user_id, {
                     category: "order",

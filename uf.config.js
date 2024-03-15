@@ -115,22 +115,22 @@ export const paymentOptions = {
 }
 
 export const orderStatuses = {
-    'REQUESTED': { group: "processing", color: "" },
-    'ASSIGNED': { group: "processing", color: "" },
-    'PICKED UP': { group: "shipped", color: "" },
-    'AT DEPOT': { group: "shipped", color: "" },
-    'DELIVERING': { group: "delivering", color: "" },
-    "DELIVERED": { group: "delivered", color: "" },
-    "ATTEMPTED": { group: "attempted", color: "" },
-    "CANCELLED": { group: "cancelled", color: "" },
-    "RTO INITIATED": { group: "return_in_process", color: "" },
-    "RTO ASSIGNED": { group: "return_in_process", color: "" },
-    "RTO PICKED UP": { group: "return_in_process", color: "" },
-    "RTO COMPLETE": { group: "returned", color: "" },
-    "RTN REQUESTED": { group: "return_in_process", color: "" },
-    "RTN ASSIGNED": { group: "return_in_process", color: "" },
-    "RTN PICKED UP": { group: "return_in_process", color: "" },
-    "RTN COMPLETE": { group: "returned", color: "" }
+    'REQUESTED': { group: "processing", bg: "#64748b", text: "#ffff" },
+    'ASSIGNED': { group: "processing", bg: "#64748b", text: "#ffff" },
+    'PICKED UP': { group: "shipped", bg: "#facc15", text: "#ffff" },
+    'AT DEPOT': { group: "shipped", bg: "#facc15", text: "#ffff" },
+    'DELIVERING': { group: "delivering", bg: "#f97316", text: "#ffff" },
+    "DELIVERED": { group: "delivered", bg: "##4ade80", text: "#ffff" },
+    "ATTEMPTED": { group: "attempted", bg: "#fef08a", text: "#0000" },
+    "CANCELLED": { group: "cancelled", bg: "#dc2626", text: "#ffff" },
+    "RTO INITIATED": { group: "return_in_process", bg: "#2dd4bf", text: "#ffff" },
+    "RTO ASSIGNED": { group: "return_in_process", bg: "#2dd4bf", text: "#ffff" },
+    "RTO PICKED UP": { group: "return_in_process", bg: "#14b8a6", text: "#ffff" },
+    "RTO COMPLETE": { group: "returned", bg: "#06b6d4", text: "#ffff" },
+    "RTN REQUESTED": { group: "return_in_process", bg: "#2dd4bf", text: "#ffff" },
+    "RTN ASSIGNED": { group: "return_in_process", bg: "#2dd4bf", text: "#ffff" },
+    "RTN PICKED UP": { group: "return_in_process", bg: "#14b8a6", text: "#ffff" },
+    "RTN COMPLETE": { group: "returned", bg: "#06b6d4", text: "#ffff" }
 };
 
 export const currencies = ["AED", "SAR", "PKR"];

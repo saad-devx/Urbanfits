@@ -73,7 +73,7 @@ const CreateOrder = async (orderPayload) => {
     const shippingLabelUrl = await uploadImage(shippingLabelData, `uf-shipping-labels/${orderData._id.toString()}`)
 
     const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
-        order_status: { status: swiftRes.status },
+        "order_status.status": swiftRes.status,
         stage: swiftRes.stage,
         shipping_label_url: shippingLabelUrl,
         tracking_number: swiftRes.swftboxTracking,
@@ -111,7 +111,7 @@ const CreateOrder = async (orderPayload) => {
     if (orderData.user_id) sendNotification(orderData.user_id, {
         category: "order",
         heading: "Order Placed",
-        mini_msg: "You order have been placed successfully and currently is in PROCESSING status. The order tracking details have been sent on your email. Thanks for you purchase!",
+        mini_msg: "You order have been placed successfully. Thanks for your purchase!",
         type: "order",
         message: `You order have been placed successfully and currently is in PROCESSING status. Here's your Tracking Number: "${finalOrder.tracking_number}". Further details have been sent on your email. Thanks for you purchase!`,
     })

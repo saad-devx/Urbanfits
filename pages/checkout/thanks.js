@@ -23,7 +23,7 @@ export default function Thanks() {
 
     console.log(orderData)
     useEffect(() => {
-        emptyCart()
+        // emptyCart()
         setOrderData(JSON.parse(sessionStorage.getItem("bought_order_data")));
         getUfBalance()
 
@@ -85,10 +85,10 @@ export default function Thanks() {
                     <div className="flex flex-col md:flex-row md:items-end border-t border-t-gray-400">
                         <div className="relative w-full pt-2 flex flex-col">
                             <h4 className="text-xl font-semibold my-4">Tracking Details</h4>
-                            {orderData?._id ? <>
+                            {orderData?.tracking_number ? <>
                                 <span className='text-xs lg:text-sm'>Order ID: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?._id}</span></span>
                                 <span className='text-xs lg:text-sm'>Tracking No: <span className="text-xs text-[#FF4A60] lg:text-sm font-bold">{orderData?.tracking_number}</span></span>
-                            </> : "The order tracking details have sent to you Email"}
+                            </> : "The order tracking details have been sent to your Email"}
                         </div>
                         <LinkBtn href={`/trackorder?order_id=${orderData._id}`} my="my-6 md:my-0" font="font_urbanist_medium" fontSize="text-xs md:text-sm" classes="px-5 w-full md:w-80" >Track You Order</LinkBtn>
                     </div>
