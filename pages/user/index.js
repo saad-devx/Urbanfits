@@ -197,11 +197,11 @@ export default function User({ loading, profileNull, children }) {
                 </div>
                 <h2 className="mt-5 font_urbanist_bold text-base">My Orders</h2>
                 <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
-                    <Link href="/user/orders/orders" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <Link href="/user/orders/delivering" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <OrderListIcon />
                         All Orders
                     </Link>
-                    <Link href="/user/orders/pending" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <Link href="/user/orders/processing" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <ProcessIcon />
                         Porcessing
                     </Link>

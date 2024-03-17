@@ -9,10 +9,12 @@ import Loader from '../loaders/loader';
 
 const OrderItem = ({ item, index }) => {
     const { formatPrice } = useWallet()
-    return <div style={{ display: "grid", gridTemplateColumns: "0.5fr 0.8fr 2.5fr 0.6fr 0.8fr 0.8fr" }} className={`items-center w-full py-3 border-b text-[10px] md:text-sm ${index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
+    return <div style={{ display: "grid", gridTemplateColumns: "0.3fr 0.8fr 2.5fr 0.5fr 0.5fr 0.4fr 0.5fr 0.5fr" }} className={`items-center w-full py-3 border-b text-[10px] md:text-sm ${index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
         <span className=" ml-2">{index}</span>
         <Image width={100} height={100} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.image} className='w-14 aspect-square rounded-lg object-cover object-top' alt={item.name} />
         <span>{item.name}</span>
+        <span>{item.variant}</span>
+        <span>{item.size}</span>
         <span>{item.quantity}</span>
         <span>{formatPrice(item.price)}</span>
         <span>{formatPrice(item.price * item.quantity)}</span>
@@ -106,10 +108,12 @@ export default function Invoice({ order, show, setInvoice }, props) {
                     </div>
 
                     <div className="w-full py-3 px-1 overflow-y-scroll mt-5">
-                        <div style={{ display: "grid", gridTemplateColumns: "0.5fr 0.8fr 2.5fr 0.6fr 0.8fr 0.8fr" }} className="w-full py-2 mb-3 border-b text-gray-400 text-xs">
+                        <div style={{ display: "grid", gridTemplateColumns: "0.3fr 0.8fr 2.5fr 0.5fr 0.5fr 0.4fr 0.5fr 0.5fr" }} className="w-full py-2 mb-3 border-b text-gray-400 text-xs">
                             <span className='ml-2'>#</span>
                             <span>Image</span>
                             <span>Item</span>
+                            <span>Variant</span>
+                            <span>Size</span>
                             <span>Units</span>
                             <span>Unit-Cost</span>
                             <span>Total</span>

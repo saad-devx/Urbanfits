@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import Link from "next/link";
 import useWallet from '@/hooks/useWallet';
-import Invoice from '@/components/modals/invoice'
+import Invoice from '@/components/modals/invoice';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Image from 'next/image'
@@ -22,7 +23,6 @@ export default function OrderCard(props) {
         pdf.addImage(imgData, 'JPEG', 0, 0, pdf.internal.pageSize.width, 0, null, 'FAST');
         pdf.save(`${name}.pdf`);
     }
-    console.log("baby here is the order: ", order)
 
     return <>
         <Invoice key={`invoice-${props.key}`} order={order} setInvoice={setInvoice} show={invoice} />
@@ -49,17 +49,23 @@ export default function OrderCard(props) {
                     <div className="flex-1 h-full md:h-auto flex flex-col md:flex-row justify-between">
                         <div className="flex flex-col">
                             <h3 className="font_urbanist_bold text-sm md:text-base">{order.order_items[0]?.name || order.gift_cards[0]?.name}</h3>
-                            <p className="lg:mt-2 font_urbanist text-[10px] md:text-xs">Return Window Closed on June 23</p>
+                            <p className="lg:mt-2 font_urbanist text-[10px] md:text-xs">Return Window yet to be sepcified</p>
                         </div>
                         <div className='w-full mt-3 md:mt-0 flex justify-between items-center md:hidden text-[10px] gap-x-4'>
                             <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[7px] font-semibold">{order.order_status.status}</span></p>
-                            <button onClick={window.matchMedia('(max-width: 1024px)').matches ? () => { downloadInvoice('invoice') } : toggleInvoice} className="underline cursor-pointer whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
+                            <div className="flex items-center gap-x-2">
+                                <button onClick={() => downloadInvoice('invoice')} className="underline whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
+                                <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='hidden md:flex flex-col items-end justify-self-end text-xs gap-y-2'>
                     <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[8px] lg:text-[10px] font-semibold">{order.order_status.status}</span></p>
-                    <button onClick={window.matchMedia('(max-width: 1024px)').matches ? () => { downloadInvoice('invoice') } : toggleInvoice} className="underline cursor-pointer whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
+                    <div className="flex items-center gap-x-2">
+                        <button onClick={toggleInvoice} className="underline whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
+                        <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link>
+                    </div>
                 </div>
             </nav>
         </div >

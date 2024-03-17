@@ -160,11 +160,11 @@ export default function EarnUfPoints() {
         const currentWeekStart = new Date(today);
         currentWeekStart.setDate(today.getDate() - (today.getDay() + 6) % 7);
 
-        const checkedinDays = weeklyHistory ? weeklyHistory.filter((record) => {
+        const checkedinDays = weeklyHistory ? weeklyHistory.filter(record => {
             const serverDate = new Date(record.createdAt);
             if (serverDate >= currentWeekStart.setHours(0, 0, 0, 0) && serverDate <= today.setHours(23, 59, 59, 999)) return record;
         }) : null
-        return checkedinDays?.length || 0
+        return checkedinDays?.length || 0;
     }
 
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(user?.uf_wallet?.next_uf_spin));
@@ -221,6 +221,7 @@ export default function EarnUfPoints() {
                     <hr />
                     <div className="w-full flex justify-between items-center font_urbanist_medium text-sm lg:text-base">
                         Checked in {getCheckedinDays()} days
+                        <button className="px-4 py-1.5 rounded-3xl text-sm bg-pinky text-white">Check in</button>
                         {/* <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label> */}
                     </div>
                 </nav>
