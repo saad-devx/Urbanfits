@@ -39,7 +39,7 @@ export const sendNotification = async (user_id, params, options = {}) => {
             notification: {
                 ...notificObj,
                 hide_notification_if_site_has_focus: false,
-                deep_link: process.env.NEXT_PUBLIC_HOST + params?.href || process.env.NEXT_PUBLIC_HOST,
+                deep_link: process.env.NEXT_PUBLIC_HOST,
             }
         }
         // apns: {
@@ -67,7 +67,7 @@ export const sendAdminNotification = async (notific_data) => {
             notification: {
                 title: newNotification.data?.title,
                 body: newNotification.data?.msg,
-                deep_link: process.env.NEXT_PUBLIC_HOST + newNotification?.data?.href || process.env.NEXT_PUBLIC_HOST,
+                deep_link: process.env.NEXT_PUBLIC_HOST,
             }
         }
     })
