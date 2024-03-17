@@ -17,7 +17,7 @@ const Option = (props) => {
     return <Link className='h-full group flex flex-col justify-between items-center font_urbanist_medium transition-all' href={props.href}>{props.children}<span className={`bg-gold-land h-1 mt-1 rounded-lg group-hover:w-full ${route === props.href ? 'w-full' : 'w-0'} transition-all duration-300`}></span></Link>
 }
 
-export const MblOption = (props) => <Link href={props.href} className={`${useRouter().pathname === props.href ? "border-b border-b-black text-black font_urbanist_bold" : props.unseen ? "font_urbanist_bold text-black fa-bounce" : "font_urbanist_medium text-gray-500"} ${props.unseen ? "font_urbanist_bold text-black fa-bounce" : null} pb-3 text-base items-center transition-all`}>{props.children}</Link>;
+export const MblOption = (props) => <Link href={props.href} className={`${useRouter().pathname === props.href ? "border-b border-b-black text-black font_urbanist_bold" : props.unseen ? "font_urbanist_bold text-black fa-bounce" : "font_urbanist_medium text-gray-500"} ${props.unseen ? "font_urbanist_bold text-black fa-bounce" : null} pb-2 text-xs items-center transition-all`}>{props.children}</Link>;
 
 const NoOrderSection = () => {
     return <section className="w-full flex flex-col items-center gap-y-4 pt-[40%] md:pt-[30%] lg:pt-[16%]">
@@ -37,7 +37,7 @@ export default function OrdersPage(props) {
         if (!user) return
         setOrderLoading(true)
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/orders/get-user-orders${status ? `?status=${status}` : ''}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/orders/get-user-orders${status ? `?group=${status}` : ''}`)
             setOrders(data.orders)
         } catch (error) {
             console.log(error)
@@ -60,17 +60,16 @@ export default function OrdersPage(props) {
                 <i className='w-0 h-0' />
             </section>
             <section className="bg-white sticky top-0 left-0 right-0 w-full px-4 pt-3 flex justify-between items-end">
-                <MblOption href="/user/orders/orders">All Orders</MblOption>
-                <MblOption href="/user/orders/pending">In Progress</MblOption>
-                <MblOption href="/user/orders/shipped">Shipped</MblOption>
-                <MblOption href="/user/orders/returns">Returns</MblOption>
+                <MblOption href='/user/orders/processing'>Processing</MblOption>
+                <MblOption href='/user/orders/shipped'>Shipped</MblOption>
+                <MblOption href='/user/orders/delivering'>Delivering</MblOption>
+                <MblOption href='/user/orders/delivered'>Delivered</MblOption>
+                <MblOption href='/user/orders/cancelled'>Cancelled</MblOption>
             </section>
-            {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">
-                {orderLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
-                    orders.map((order, index) => {
-                        return <OrderItem marginClass={orders.length == index + 1 && "mb-16 mt-3"} key={index} order={order} />
-                    })}
-            </section>}
+            {orderLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
+                orders.length ? <section className="w-full h-full p-4">
+                    {orders.map((order, index) => <OrderItem marginClass={orders.length == index + 1 && "mb-16 mt-3"} key={index} order={order} />)}
+                </section> : <NoOrderSection />}
         </main>
     </>
     else if (user) return <>
@@ -79,17 +78,18 @@ export default function OrdersPage(props) {
             <h1 className='my-5 text-xl lg:text-2xl font_urbanist_bold'>My Orders</h1>
             <div className="w-full text-sm md:text-base overflow-x-scroll hide_scrollbar">
                 <div className="w-[150%] md:w-full h-full flex justify-between border-b border-b-gray-300 ">
-                    <Option href='/user/orders/orders'>Orders</Option>
-                    <Option href='/user/orders/pending'>In Progress</Option>
+                    <Option href='/user/orders/processing'>Processing</Option>
                     <Option href='/user/orders/shipped'>Shipped</Option>
-                    <Option href='/user/orders/returns'>Returns</Option>
+                    <Option href='/user/orders/delivering'>Delivering</Option>
+                    <Option href='/user/orders/delivered'>Delivered</Option>
+                    <Option href='/user/orders/cancelled'>Cancelled</Option>
                 </div>
             </div>
             <section className="w-full my-5 font_urbanist">
-                {props.noOrders ? <NoOrderSection /> : <section className="w-full h-full p-4">
-                    {orderLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
-                        orders.map((order, index) => <OrderItem key={index} order={order} />)}
-                </section>}
+                {orderLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
+                    orders.length ? <section className="w-full h-full p-4">
+                        {orders.map((order, index) => <OrderItem key={index} order={order} />)}
+                    </section> : <NoOrderSection />}
             </section>
         </User>
     </>

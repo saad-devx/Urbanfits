@@ -10,7 +10,7 @@ import axios from "axios";
 
 const CreateOrder = async (orderPayload) => {
     const orderData = (await Order.create(orderPayload)).toObject();
-    const { shipping_address } = orderData;
+    const { shipping_address, payment_method } = orderData;
 
     const swiftOrderData = {
         reference: orderData._id.toString(),
@@ -31,7 +31,8 @@ const CreateOrder = async (orderPayload) => {
             })
         },
 
-        paymentAmount: orderData.price_details.total,
+        paymentAmount: payment_method === "cash_on_delivery" ? orderData.price_details.total : 0,
+        paymentMode: payment_method === "cash_on_delivery" ? "PAYMENT_ON_DELIVERY" : "PRE_PAID",
         profileName: shippingRates[orderData.shippping_method].swft_profile,
         requireCustomerProofSignature: true,
 

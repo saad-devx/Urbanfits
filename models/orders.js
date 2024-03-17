@@ -21,6 +21,7 @@ const OrderSchema = new mongoose.Schema({
     stage: String,
     tracking_number: String,
     tracking_url: String,
+    shipping_labe_url: String,
     shipping_label_url: String,
     order_items: [
         {
