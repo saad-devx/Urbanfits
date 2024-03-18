@@ -3,7 +3,7 @@ import { isValidObjectId } from "mongoose";
 import User from "@/models/user";
 import { AddPoints } from "@/utils/uf-points";
 import { generateRandomInt, getDateOfTimezone } from "@/utils/cyphers.js";
-import sendNotification from "@/utils/send_notification";
+import { sendNotification } from "@/utils/send_notification";
 
 export default async function PusherWebhooks(req, res) {
     try {
