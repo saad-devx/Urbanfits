@@ -24,6 +24,19 @@ export default function OrderCard(props) {
         pdf.save(`${name}.pdf`);
     }
 
+    const handleReturnWindow = (raw_date) => {
+        let date = new Date(raw_date);
+        const currentDate = new Date();
+        date.setDate(date.getDate() + 30);
+        date = new Date(date);
+        const returnExpiry = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+
+        console.log("Here is the return last date: ", date, returnExpiry);
+        if (currentDate.getTime() > date.getTime()) return "Return window was closed at " + returnExpiry;
+        else return "Return window will close on " + returnExpiry;
+
+    }
+
     return <>
         <Invoice key={`invoice-${props.key}`} order={order} setInvoice={setInvoice} show={invoice} />
         <div key={props.key} className={`w-full h-48 md:h-52 ${props.marginClass || "my-3"} flex flex-col items-start rounded-xl overflow-clip`}>
@@ -49,7 +62,7 @@ export default function OrderCard(props) {
                     <div className="flex-1 h-full md:h-auto flex flex-col md:flex-row justify-between">
                         <div className="flex flex-col">
                             <h3 className="font_urbanist_bold text-sm md:text-base">{order.order_items[0]?.name || order.gift_cards[0]?.name}</h3>
-                            <p className="lg:mt-2 font_urbanist text-[10px] md:text-xs">Return Window yet to be sepcified</p>
+                            <p className="lg:mt-2 font_urbanist text-[10px] md:text-xs">{handleReturnWindow(order.createdAt)}</p>
                         </div>
                         <div className='w-full mt-3 md:mt-0 flex justify-between items-center md:hidden text-[10px] gap-x-4'>
                             <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[7px] font-semibold">{order.order_status.status}</span></p>
