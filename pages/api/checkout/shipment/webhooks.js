@@ -1,3 +1,4 @@
+import ConnectDB from "@/utils/connect_db";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import Order from "@/models/orders";
 
@@ -8,6 +9,7 @@ const shipmentWebhookHandler = async (req, res) => {
         state,
         shippingLabelUrl
     } } = req.body;
+    await ConnectDB()
 
     const order = await Order.findByIdAndUpdate(reference, {
         status,
@@ -16,7 +18,7 @@ const shipmentWebhookHandler = async (req, res) => {
     }, { new: true, lean: true });
 
 
-    sendAdminNotification({
+    await sendAdminNotification({
         category: "order",
         data: {
             title: "Order Status updated",
@@ -25,7 +27,7 @@ const shipmentWebhookHandler = async (req, res) => {
             type: "info"
         }
     })
-    sendNotification(order.user_id, {
+    await sendNotification(order.user_id, {
         category: "order",
         heading: "Order Updated",
         mini_msg: `You order's status just updated to "${status}"!`,
