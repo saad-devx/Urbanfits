@@ -38,6 +38,22 @@ const useUser = create(persist((set, get) => ({
         } finally { set(() => ({ userLoading: false })); }
     },
 
+    checkIn: async () => {
+        const { isLoggedIn, updateUser, user } = get();
+        if (!isLoggedIn() || new Date(user.last_checkin).getTime() > new Date().getTime()) return;
+        set(() => ({ userLoading: true }));
+        try {
+            const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/check-in`);
+            updateUser({ ...user, last_checkin: data.last_checkin }, true);
+            toaster("success", data.msg);
+            useWallet.getState().getUfBalance()
+        }
+        catch (error) {
+            console.log(error)
+            toaster("error", error.response?.data.msg || (navigator.onLine ? "Oops! somethign went wrong." : "Network Error"))
+        } finally { set(() => ({ userLoading: false })); }
+    },
+
     signIn: async (credentials, callback, router) => {
         const { isLoggedIn, updateUser } = get();
         if (isLoggedIn()) return toaster("info", "You are already logged in.");

@@ -18,6 +18,7 @@ export default function Home() {
         (async () => {
             try {
                 const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
+                console.log("Here is the index content: ", data)
                 setIndexContent(data);
             } catch (error) { console.log(error); } finally { setIndexLoading(false) }
         })()
@@ -37,9 +38,9 @@ export default function Home() {
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.latestArrivals.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
-                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard key={"latest_arrivals" + product._id} margin='0' product={product} />
+                            else return <Shoppingcard key={"latest_arrivals" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section> : (indexLoading && <SkeletonRow />)}
@@ -52,9 +53,9 @@ export default function Home() {
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.newCollection.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
-                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard key={"new_collection" + product._id} margin='0' product={product} />
+                            else return <Shoppingcard key={"new_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section>
@@ -75,9 +76,9 @@ export default function Home() {
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.womenCollection.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
-                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard key={"women_collection" + product._id} margin='0' product={product} />
+                            else return <Shoppingcard key={"women_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section>
@@ -93,9 +94,9 @@ export default function Home() {
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.menCollection.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
-                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard key={"men_collection" + product._id} margin='0' product={product} />
+                            else return <Shoppingcard key={"men_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section> : (indexLoading && <SkeletonRow />)}
@@ -109,9 +110,9 @@ export default function Home() {
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.kidsCollection.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
-                            if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
+                            else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
-                            return <Shoppingcard key={"kids_collection" + product._id} margin='0' product={product} />
+                            else return <Shoppingcard key={"kids_collection" + product._id} margin='0' product={product} />
                         })}
                     </div>
                 </section> : (indexLoading && <SkeletonRow />)}

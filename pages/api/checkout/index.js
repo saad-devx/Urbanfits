@@ -20,9 +20,11 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     let currentUser;
     const { "session-token": sessionToken } = parse(req.headers.cookie || '');
     if (!sessionToken) currentUser = null;
-    try { currentUser = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY) }
-    catch (e) { currentUser = null }
-    if (!isValidObjectId(currentUser._id)) return res.status(401).json({ success: false, msg: "Your session is either invalid or expired, please sign in." })
+    try {
+        currentUser = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY)
+        if (!isValidObjectId(currentUser?._id)) return res.status(401).json({ success: false, msg: "Your session is either invalid or expired, please sign in." })
+    } catch (e) { currentUser = null }
+    console.log("entry point 1", currentUser, sessionToken)
 
     const { shipping_info, order_items } = req.body.payload;
     if (!shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array)" })
@@ -33,6 +35,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     await ConnectDB()
     if (currentUser) {
         let foundUser = await User.findById(currentUser._id).lean();
+        console.log("entry point 3")
         if (!foundUser) return res.status(404).json({ success: false, msg: "User does not exist with corresponding identifier." })
     }
     // initializing discounts by UF-points and Giftcodes if exists
@@ -50,6 +53,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         await DeductPoints(user._id, user.uf_wallet.card_number, user.timezone, shipping_info.points_to_use)
         discountByPoints = shipping_info.points_to_use * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)
     }
+    console.log("entry point 4")
     if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {
         const hashedGiftcode = HashValue(shipping_info.gift_code);
         const giftCard = await Giftcard.findOne({ gift_code: hashedGiftcode }).lean();

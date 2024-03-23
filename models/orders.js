@@ -117,16 +117,6 @@ const OrderSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-OrderSchema.pre("save", function (next) {
-    let orderStatus = structuredClone(this.order_status.status);
-    if (!orderStatus) orderStatus = structuredClone(Object.keys(orderStatuses)[0]);
-    console.log("here is the document being saved : ", this, orderStatus, orderStatuses[orderStatus].group)
-
-    this.order_status = {
-        status: orderStatus,
-        group: orderStatuses[orderStatus].group
-    }
-    next();
-})
+export const getOrderStatus = (status) => ({ status, group: orderStatuses[status.toUpperCase()].group });
 
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

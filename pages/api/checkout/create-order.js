@@ -1,7 +1,7 @@
 import ConnectDB from "@/utils/connect_db";
 import sendEmail from "@/utils/sendEmail"
 import User from "@/models/user"
-import Order from "@/models/orders"
+import Order, { getOrderStatus } from "@/models/orders"
 import OrderSession from '@/models/order_session';
 import OrderConfirmed from '@/email templates/order_confirm';
 import Product from "@/models/product"
@@ -44,6 +44,7 @@ const CreateOrder = async (req, res) => StandardApi(req, res, { method: "POST", 
     delete orderSession._id
     const newOrder = await Order.create({
         ...orderSession,
+        order_status: getOrderStatus(orderSession.status)
     })
     // Generating bught Gift Cards codes and saving to DB
     if (orderSession?.gift_cards?.length && orderSession.gift_cards[0].id.startsWith("giftcard_")) {

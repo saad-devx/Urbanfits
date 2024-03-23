@@ -1,8 +1,9 @@
 import ConnectDB from "@/utils/connect_db";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
-import Order from "@/models/orders";
+import Order, { getOrderStatus } from "@/models/orders";
+import StandardApi from "@/middlewares/standard_api";
 
-const shipmentWebhookHandler = async (req, res) => {
+const ShipmentWebhookHandler = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
     const { order: {
         reference,
         status,
@@ -12,11 +13,10 @@ const shipmentWebhookHandler = async (req, res) => {
     await ConnectDB()
 
     const order = await Order.findByIdAndUpdate(reference, {
-        status,
+        order_status: getOrderStatus(status),
         state,
         shippingLabelUrl
     }, { new: true, lean: true });
-
 
     await sendAdminNotification({
         category: "order",
@@ -27,7 +27,7 @@ const shipmentWebhookHandler = async (req, res) => {
             type: "info"
         }
     })
-    await sendNotification(order.user_id, {
+    if (order?.user_id) await sendNotification(order.user_id, {
         category: "order",
         heading: "Order Updated",
         mini_msg: `You order's status just updated to "${status}"!`,
@@ -35,6 +35,6 @@ const shipmentWebhookHandler = async (req, res) => {
         message: `You order's status just updated by our shipping partners to "${status}" of group "${order.order_status.group}"!`,
     })
     res.status(200).send("OK")
-}
+})
 
-export default shipmentWebhookHandler
+export default ShipmentWebhookHandler

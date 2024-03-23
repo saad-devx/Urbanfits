@@ -295,8 +295,7 @@ export default function User({ loading, profileNull, children }) {
             <Option icon={<UfPointsIcon />} href='/user/uf-wallet'>My UF-Wallet</Option>
             {user.register_provider === "urbanfits" ? <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option> : null}
             <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
-            <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
-            <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
+            <Option icon={<OrderPackageIcon />} href='/user/orders/processing'>My Orders</Option>
             <Option icon={<HeartShopListIcon />} href='/user/shopping-lists'>My Shopping List</Option>
             <Option icon={<AddressIcon />} href='/user/address'>My Addresses</Option>
             <Option icon={<PackageBagIcon />} href='/user/orders/single-use-package-fees'>Single use package fees</Option>
@@ -307,8 +306,7 @@ export default function User({ loading, profileNull, children }) {
                 <Option icon={<UfPointsIcon />} href='/user/uf-wallet'>My UF-Wallet</Option>
                 {user.register_provider === "urbanfits" ? <Option icon={<EmailIcon />} href='/user/emailaddress'>Email & Password</Option> : null}
                 <Option icon={<SecurityIcon />} href='/user/security'>Security / 2FA</Option>
-                <Option icon={<OrderPackageIcon />} href='/user/orders/orders'>My Orders</Option>
-                <Option icon={<OrderPackageIcon />} href='/user/orders/returns'>My Returns</Option>
+                <Option icon={<OrderPackageIcon />} href='/user/orders/processing'>My Orders</Option>
                 <Option icon={<HeartShopListIcon />} href='/user/shopping-lists'>My Shopping List</Option>
                 <Option icon={<AddressIcon />} href='/user/address'>My Addresses</Option>
                 <Option icon={<PackageBagIcon />} href='/user/orders/single-use-package-fees'>Single use package fees</Option>

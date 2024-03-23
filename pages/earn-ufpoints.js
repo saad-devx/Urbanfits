@@ -9,7 +9,6 @@ import toaster from '@/utils/toast_function'
 import LinkBtn from '@/components/buttons/link_btn'
 import { DefaultTasks } from '@/uf.config';
 const emptyWishlist = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/emptyWishlist.webp';
-// import axios from "axios";
 
 const UfPointsNames = { daily_checkin: "Daily Checkin", prize_wheel: "Prize Wheel", signup: "Sign Up", place_order: "Place Order", uf_task: "UF Task", additional_reward: "Other", deduction: "Deduction" };
 const CheckShell = ({ dayCode, day, history }) => {
@@ -21,9 +20,7 @@ const CheckShell = ({ dayCode, day, history }) => {
         const serverDate = new Date(record.createdAt);
 
         if (serverDate >= currentWeekStart.setHours(0, 0, 0, 0) && serverDate <= today.setHours(23, 59, 59, 999)) {
-            if (serverDate.getDay() === dayCode) {
-                return record;
-            }
+            if (serverDate.getDay() === dayCode) return record;
         }
     })[0] : null
 
@@ -83,12 +80,13 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
 }
 
 export default function EarnUfPoints() {
-    const { points, formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfTasks, getUfHistory, uploadUfTaskImg } = useWallet()
-    const { user, isLoggedIn } = useUser()
+    const { formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfTasks, getUfHistory, uploadUfTaskImg } = useWallet()
+    const { user, isLoggedIn, checkIn } = useUser()
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
     const [history, setHistory] = useState([])
     const [tasks, setTasks] = useState(DefaultTasks)
+    const checkedIn = !user?._id ? true : new Date(user.last_checkin).getTime() > new Date().getTime();
 
     async function spinAndStopAtValue(value, msg) {
         const pathElements = {
@@ -221,7 +219,7 @@ export default function EarnUfPoints() {
                     <hr />
                     <div className="w-full flex justify-between items-center font_urbanist_medium text-sm lg:text-base">
                         Checked in {getCheckedinDays()} days
-                        <button className="px-4 py-1.5 rounded-3xl text-sm bg-pinky text-white">Check in</button>
+                        {isLoggedIn() && <button onClick={checkIn} className={`px-4 py-1.5 rounded-3xl text-xs lg:text-sm ${checkedIn ? "bg-gray-200 text-black" : "bg-pinky text-white"}`}>{checkedIn ? "Checked in" : "Check in"}</button>}
                         {/* <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label> */}
                     </div>
                 </nav>

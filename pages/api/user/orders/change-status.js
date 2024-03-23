@@ -1,5 +1,5 @@
 import ConnectDB from "@/utils/connect_db"
-import Order from "@/models/orders";
+import Order, { getOrderStatus } from "@/models/orders";
 import StandardApi from "@/middlewares/standard_api";
 import { orderStatuses } from "@/uf.config";
 
@@ -10,10 +10,7 @@ const ChangeOrderStatus = async (req, res) => StandardApi(req, res, { verify_adm
     await ConnectDB()
 
     let order = await Order.findByIdAndUpdate(order_id, {
-        order_status: {
-            status: order_status,
-            group: orderStatuses[order_status].group
-        }
+        order_status: getOrderStatus(order_status)
     }, { new: true, lean: true })
 
     res.status(200).json({

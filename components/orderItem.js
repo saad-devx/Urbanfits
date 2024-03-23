@@ -34,9 +34,8 @@ export default function OrderCard(props) {
         console.log("Here is the return last date: ", date, returnExpiry);
         if (currentDate.getTime() > date.getTime()) return "Return window was closed at " + returnExpiry;
         else return "Return window will close on " + returnExpiry;
-
     }
-
+    console.log(order.shipping_label_url)
     return <>
         <Invoice key={`invoice-${props.key}`} order={order} setInvoice={setInvoice} show={invoice} />
         <div key={props.key} className={`w-full h-48 md:h-52 ${props.marginClass || "my-3"} flex flex-col items-start rounded-xl overflow-clip`}>
@@ -77,7 +76,8 @@ export default function OrderCard(props) {
                     <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[8px] lg:text-[10px] font-semibold">{order.order_status.status}</span></p>
                     <div className="flex items-center gap-x-2">
                         <button onClick={toggleInvoice} className="underline whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
-                        <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link>
+                        {/* <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link> */}
+                        <Link href={order.shipping_label_url} className="underline">Shipping Label</Link>
                     </div>
                 </div>
             </nav>
