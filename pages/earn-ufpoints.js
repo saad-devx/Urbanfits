@@ -81,7 +81,7 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks }) => {
 
 export default function EarnUfPoints() {
     const { formatPrice, walletLoading, getWeeklyCheckinHistory, spinUfWheel, getUfBalance, getUfTasks, getUfHistory, uploadUfTaskImg } = useWallet()
-    const { user, isLoggedIn, checkIn } = useUser()
+    const { user, isLoggedIn, checkIn, userLoading } = useUser();
     const [weeklyHistory, setWeeklyHistory] = useState()
     const [loading, setLoading] = useState(false)
     const [history, setHistory] = useState([])
@@ -219,8 +219,7 @@ export default function EarnUfPoints() {
                     <hr />
                     <div className="w-full flex justify-between items-center font_urbanist_medium text-sm lg:text-base">
                         Checked in {getCheckedinDays()} days
-                        {isLoggedIn() && <button onClick={checkIn} className={`px-4 py-1.5 rounded-3xl text-xs lg:text-sm ${checkedIn ? "bg-gray-200 text-black" : "bg-pinky text-white"}`}>{checkedIn ? "Checked in" : "Check in"}</button>}
-                        {/* <label className={`switch w-[45px] md:w-11 h-6 ${!user && "pointer-events-none opacity-50"}`}><input type="checkbox" name='active_by_email' /><span className="slider"></span></label> */}
+                        {isLoggedIn() && <button type='button' onClick={checkIn} disabled={userLoading} className={`${userLoading && "pointer-events-none animate-pulse"} px-4 py-1.5 rounded-3xl text-xs lg:text-sm ${checkedIn ? "bg-gray-200 text-black" : "bg-pinky text-white"}`}>{checkedIn ? "Checked in" : "Check in"}</button>}
                     </div>
                 </nav>
                 <nav className="bg-white w-full lg:w-1/2 p-4 mid:px-20 lg:px-4 xl:py-6 flex flex-col lg:flex-row rounded-lg gap-3 mid:gap-8">

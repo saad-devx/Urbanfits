@@ -151,7 +151,6 @@ export default function Checkout1() {
 
     useEffect(() => {
         if (items.some(item => item.is_giftcard)) setFieldValue("isGiftCard", true);
-        console.log("I am really working here bro")
         setFieldValue("currency", currency);
         setFieldValue("delivery_option", "standard_shipping");
         setFieldValue("shipping_address.country", country.country);

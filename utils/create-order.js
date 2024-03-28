@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
-import Product from "@/models/product"
-import Order from "@/models/orders"
+import Product from "@/models/product";
+import Order from "@/models/orders";
+import User from "@/models/user";
+import Giftcard from "@/models/giftcard";
 import { shippingRates } from "@/uf.config";
 import GiftCardTemplate from "@/email templates/gift_card";
 import OrderConfirmed from "@/email templates/order_confirm";
 import sendEmail from "@/utils/sendEmail";
-import generatePassword from "./cyphers";
+import generatePassword, { HashValue } from "./cyphers";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import axios from "axios";
 
@@ -13,27 +15,61 @@ const CreateOrder = async (orderPayload) => {
     const orderData = (await Order.create(orderPayload)).toObject();
     const { shipping_address, payment_method } = orderData;
 
-    const includesGiftCard = orderData.gift_cards.some(item => item.is_giftcard);
+    if (orderData.gift_cards?.length) {
+        for (let giftItem of orderData.gift_cards) {
+            const { buy_for } = giftItem;
 
-    if (includesGiftCard) {
-        const giftData = orderData.gift_cards[0];
-        const giftQty = giftData.quantity;
-        let giftCodes = [];
-        for (let i = 0; i < giftQty; i++) {
-            const giftCode = generatePassword(10);
-            giftCodes.push(giftCode);
+            let giftCodes = [];
+            for (let i = 0; i < giftItem.quantity; i++) {
+                const giftCode = generatePassword(10);
+                giftCodes.push(giftCode);
+            }
+            console.log(giftCodes);
+
+            for (const code of giftCodes) {
+                await Giftcard.create({
+                    ...giftItem,
+                    gift_code: HashValue(code)
+                });
+
+                if (buy_for === "self") {
+                    let giftTemplate = GiftCardTemplate(giftItem, giftCodes, true);
+                    sendEmail({ to: orderData.email, subject: "Claim your Giftcard1" }, giftTemplate);
+
+                    if (orderData.user_id) sendNotification(orderData.user_id, {
+                        category: "order",
+                        heading: "Order Placed",
+                        mini_msg: "You order have been placed successfully. Thanks for your purchase!",
+                        type: "order",
+                        message: "You order have been placed and successfully have been delivered to you as a gift. A confirmation email is also have been sent to you. Thanks for you purchase!",
+                    })
+
+                } else if (buy_for === "friend") {
+                    const receiver = await User.findOne({ email: giftItem.receiver.email })
+
+                    let giftTemplate = GiftCardTemplate(giftItem, giftCodes);
+                    sendEmail({ to: receiver.email, subject: "Congratulation, You've got a gift!" }, giftTemplate)
+                    const occassion = giftData.cover.includes("birthday") ? "Happy Birthday" : "Happy Christmas";
+                    sendNotification(receiver._id, {
+                        category: "primary",
+                        heading: "Gift for " + occassion + "!",
+                        mini_msg: "Congratulations, you've received a gift from your friend!",
+                        type: "order",
+                        message: `Congratultions, you have received an E-Giftcard from your friend ${giftItem.sender.name}. They wish you ${occassion} by this gift. You can do ${giftData.quantity * giftData.price} AED worth of shopping on Urban Fits for free. Please refer to you email "${receiver.email}" inbox for Gift Code. Thanks!`,
+                    })
+                    if (orderData.user_id) sendNotification(orderData.user_id, {
+                        category: "order",
+                        heading: "Order Placed",
+                        mini_msg: "You order have been placed successfully. Thanks for your purchase!",
+                        type: "order",
+                        message: "You order have been placed and successfully have been delivered to your friend as a gift. A confirmation email is also have been sent to you. Thanks for you purchase!",
+                    })
+                }
+            }
         }
-        console.log(giftCodes);
-
-        const receiver = await User.findOne({ email: giftData.receiver.email })
-
-        // Sending confirmation email to customer
-        let giftTemplate = GiftCardTemplate(giftData, giftCodes);
-        sendEmail({ to: receiver.email, subject: "Congratulation, You've got a gift!" }, giftTemplate)
-        let orderTemplate = OrderConfirmed(finalOrder)
-        sendEmail({ to: orderData.email, subject: "Your order has been placed." }, orderTemplate)
-
-        // Sending notifications
+        let orderTemplate = OrderConfirmed(orderData, true)
+        sendEmail({ to: orderData.email, subject: "Your order has been placed." }, orderTemplate);
+        // Sending notification to admin panel
         sendAdminNotification({
             category: "order",
             data: {
@@ -41,21 +77,6 @@ const CreateOrder = async (orderPayload) => {
                 msg: "A new order just received !",
                 type: "success"
             }
-        })
-        if (orderData.user_id) sendNotification(orderData.user_id, {
-            category: "order",
-            heading: "Order Placed",
-            mini_msg: "You order have been placed successfully. Thanks for your purchase!",
-            type: "order",
-            message: "You order have been placed and successfully have been delivered to your friend as a gift. A confirmation email is also have been sent to you. Thanks for you purchase!",
-        })
-        const occassion = giftData.cover.includes("birthday") ? "Happy Birthday" : "Happy Christmas";
-        sendNotification(receiver._id, {
-            category: "primary",
-            heading: "Gift for " + occassion + "!",
-            mini_msg: "Congratulations, you've received a gift from your friend!",
-            type: "order",
-            message: `Congratultions, you have received an E-Giftcard from your friend ${giftData.sender.name}. They wish you ${occassion} by this gift. You can do ${giftData.quantity * giftData.price} AED worth of shopping on Urban Fits for free. Please refer to you email "${receiver.email}" inbox for Gift Code. Thanks!`,
         })
     }
     else {

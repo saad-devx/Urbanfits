@@ -32,22 +32,12 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     if (shipping_info.coupon_code && shipping_info.coupon_code.length < 4) return res.status(400).json({ success: false, msg: "Invalid Coupon Code format." })
     // if (shipping_info.points_to_use && !shipping_info.card_number) return res.status(400).json({ success: false, msg: "user uf card number is required." })
 
-    const giftCardData = order_items.find(item => item.is_giftcard);
     await ConnectDB()
     if (currentUser) {
         let foundUser = await User.findById(currentUser._id).lean();
         if (!foundUser) return res.status(404).json({ success: false, msg: "User does not exist with corresponding identifier." })
     }
-    if (giftCardData) {
-        const giftMethod = giftCardData.buy_for.toLowerCase();
-        // console.log("the gift data here: ", giftMethod, currentUser)
-        if (!Object.keys(giftCardMethods).includes(giftMethod)) return res.status(400).json({ success: false, msg: "Invalid Giftcard method." })
-        else if (giftMethod === "self" && !currentUser) return res.status(404).json({ success: false, msg: "User with this email not found" })
-        else if (giftMethod === "friend") {
-            const receiver = await User.findOne({ email: giftCardData.receiver?.email }).lean();
-            if (!receiver?._id) return res.status(404).json({ success: false, msg: "The receiver is not registered on Urban Fits." })
-        }
-    }
+
     // initializing discounts by UF-points and Giftcodes if exists
     let discountByPoints = 0;
     let discountByGiftcode = 0;
@@ -78,8 +68,18 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     const orderItemsToProcess = order_items.filter(item => !item.is_giftcard);
     const giftCardItems = order_items.filter(item => item.is_giftcard);
 
+    for (const giftItem of giftCardItems) {
+        const giftMethod = giftItem.buy_for.toLowerCase();
+        if (!Object.keys(giftCardMethods).includes(giftMethod)) return res.status(400).json({ success: false, msg: "Invalid Giftcard method." })
+        else if (giftMethod === "self" && !currentUser) return res.status(404).json({ success: false, msg: "User with this email not found" })
+        else if (giftMethod === "friend") {
+            const receiver = await User.findOne({ email: giftCardData.receiver?.email }).lean();
+            if (!receiver?._id) return res.status(404).json({ success: false, msg: "The receiver is not registered on Urban Fits." })
+        }
+    }
+
     let finalOrderItems = []
-    for (const orderItem of orderItemsToProcess) {
+    if (!giftCardItems.length) for (const orderItem of orderItemsToProcess) {
         const dbProduct = await Product.findById(orderItem.product_id).lean();
         if (!dbProduct) return res.status(400).json({ success: false, msg: "Either one of the specified product IDs does not exist or the product IDs were tempered." });
         const respectedVariant = dbProduct.variants.find(variant => variant._id.toString() === orderItem?.variant_id || '');
@@ -104,14 +104,11 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         finalOrderItems.push(finalProduct)
     }
 
-    let totalPrice = giftCardItems.length ? giftCardItems.reduce((accum, item) => accum + item.price, 0) : 0;
-    for (const item of finalOrderItems) {
-        const itemPrice = item.price * item.quantity;
-        totalPrice += itemPrice;
-    }
+    let totalPrice = giftCardItems.length ? giftCardItems.reduce((accum, item) => accum + item.price * item.quantity, 0) : 0;
+    for (const item of finalOrderItems) totalPrice += item.price * item.quantity;
 
-    const getTotalShippingFee = () => {
-        if (order_items.some(item => item.is_giftcard)) return 0;
+    let finalShippingFees = (() => {
+        if (giftCardItems.length) return 0;
         const weighingItem = finalOrderItems.find((item) => item.weight && item.weight !== undefined)
         if (!weighingItem) return 0
         const shippingData = shippingRates[shipping_info.delivery_option];
@@ -126,8 +123,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         const additionalWeight = totalWeight - 5100;
         const additionalCharges = (additionalWeight / 1000) * (shippingData.additional_kg_charge);
         return additionalCharges + shippingData.rate;
-    }
-    let finalShippingFees = getTotalShippingFee();
+    })()
 
     // Calculating the coupon discount
     if (shipping_info.coupon_code) {
@@ -160,7 +156,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     const amountAfterDiscounts = Math.abs(totalPrice + finalShippingFees - overallDiscount);
 
     // Calculating the payment method charges
-    const selectedPaymentMethod = giftCardData ? "online_payment" : paymentOptions[shipping_info.payment_option];
+    const selectedPaymentMethod = giftCardItems.length ? paymentOptions.online_payment : paymentOptions[shipping_info.payment_option];
     let paymentDiscount = 0;
     if (selectedPaymentMethod.rate) paymentDiscount = amountAfterDiscounts / 100 * selectedPaymentMethod.rate;
     else if (selectedPaymentMethod.discount) paymentDiscount = -amountAfterDiscounts / 100 * selectedPaymentMethod.discount;

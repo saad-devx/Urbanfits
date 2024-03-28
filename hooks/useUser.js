@@ -44,7 +44,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/check-in`);
-            updateUser({ ...user, last_checkin: data.last_checkin }, true);
+            updateUser({ ...user, last_checkin: data.last_checkin }, true, true);
             toaster("success", data.msg);
             useWallet.getState().getUfBalance()
         }
