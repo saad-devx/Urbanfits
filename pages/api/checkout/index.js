@@ -71,7 +71,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     for (const giftItem of giftCardItems) {
         const giftMethod = giftItem.buy_for.toLowerCase();
         if (!Object.keys(giftCardMethods).includes(giftMethod)) return res.status(400).json({ success: false, msg: "Invalid Giftcard method." })
-        else if (giftMethod === "self" && !currentUser) return res.status(404).json({ success: false, msg: "User with this email not found" })
+        else if (giftMethod === "self" && !currentUser) return res.status(404).json({ success: false, msg: "User with this email not found to buy the Giftcard for." })
         else if (giftMethod === "friend") {
             const receiver = await User.findOne({ email: giftItem.receiver?.email }).lean();
             if (!receiver?._id) return res.status(404).json({ success: false, msg: "The receiver is not registered on Urban Fits." })
@@ -156,10 +156,12 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     const amountAfterDiscounts = Math.abs(totalPrice + finalShippingFees - overallDiscount);
 
     // Calculating the payment method charges
-    const selectedPaymentMethod = giftCardItems.length ? paymentOptions.online_payment : paymentOptions[shipping_info.payment_option];
+    const selectedPaymentMethod = giftCardItems.length ? "online_payment" : shipping_info.payment_option;
+    const paymentMethodObj = paymentOptions[selectedPaymentMethod];
+    console.log(selectedPaymentMethod, paymentOptions.online_payment)
     let paymentDiscount = 0;
-    if (selectedPaymentMethod.rate) paymentDiscount = amountAfterDiscounts / 100 * selectedPaymentMethod.rate;
-    else if (selectedPaymentMethod.discount) paymentDiscount = -amountAfterDiscounts / 100 * selectedPaymentMethod.discount;
+    if (paymentMethodObj.rate) paymentDiscount = amountAfterDiscounts / 100 * paymentMethodObj.rate;
+    else if (paymentMethodObj.discount) paymentDiscount = -amountAfterDiscounts / 100 * paymentMethodObj.discount;
 
     const FinalPayableAmount = amountAfterDiscounts + paymentDiscount;
 

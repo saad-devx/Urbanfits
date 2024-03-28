@@ -1,4 +1,5 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
+import { giftCardMethods } from "@/uf.config";
 
 const requiredStringType = {
     type: String,
@@ -10,18 +11,18 @@ const GiftcardSchema = new mongoose.Schema({
         ref: "Order"
     },
     sender: {
-        name: requiredStringType,
-        email: requiredStringType,
+        name: String,
+        email: String,
         message: String
     },
     receiver: {
-        name: requiredStringType,
-        email: requiredStringType
+        name: String,
+        email: String
     },
     buy_for: {
         type: String,
         default: "self",
-        enum: ["slef", "friend"]
+        enum: Object.keys(giftCardMethods)
     },
     cover_image: String,
     gift_code: requiredStringType,

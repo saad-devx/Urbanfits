@@ -17,9 +17,10 @@ const giftCardPrices = {
 }
 export default function Thanks() {
     // const router = useRouter()
-    const { getUfBalance, formatPrice } = useWallet()
-    const { emptyCart } = useCart()
-    const [orderData, setOrderData] = useState(null)
+    const { getUfBalance, formatPrice } = useWallet();
+    const { emptyCart } = useCart();
+    const [orderData, setOrderData] = useState(null);
+    const includesGiftCard = orderData.gift_cards?.some(item => item.is_giftcard);
 
     console.log(orderData)
     useEffect(() => {
@@ -31,7 +32,6 @@ export default function Thanks() {
     }, [])
 
     const date = new Date()
-    // if (!router.query.tracking_number) return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
     if (orderData) return <>
         <Head>
             <title>Thanks - Urban Fits</title>
@@ -42,14 +42,14 @@ export default function Thanks() {
                 <h1 className="text-2xl font_urbanist_bold">Thanks</h1>
                 <span className="font_urbanist_light">Thank you for doing business with us. We have emailed you the purchases <br /> receipt for the transaction.</span>
                 <h4 className='mt-5 font_urbanist_medium'>By Admin</h4>
-                <span className="w-4/5 font_urbanist_light">Payment to be made upon delivery. <br /> Order status changed from Pending payment to processing. {date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} {date.getHours() + ":" + date.getMinutes()}</span>
-                <div className="w-full py-8 my-7 text-sm border-y border-y-gray-400 flex flex-col justify-start">
+                <div className={`w-4/5 font_urbanist_light ${includesGiftCard && "mb-5 pb-4 border-b border-gotham-black"}`}>{orderData.payment_method === "online_payment" ? "Payment is processing further." : "Payment to be made upon delivery."} <br /> {includesGiftCard ? "Your Giftcard details will be delivered after the final payment approval." : "Order status changed from Pending payment to processing."} {date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()} {date.getHours() + ":" + date.getMinutes()}</div>
+                {!includesGiftCard && <div className="w-full py-8 my-7 text-sm border-y border-y-gray-400 flex flex-col justify-start">
                     <h3 className="text-xl font_urbanist_bold mb-4">Shipping Details</h3>
                     <span>{orderData?.name}</span>
                     <span>{orderData?.shipping_address?.address}</span>
                     <span>{orderData?.shipping_address?.apt_suite}</span>
                     <span>{orderData?.shipping_address?.phone_prefix}&nbsp;{orderData?.shipping_address?.phone_number}</span>
-                </div>
+                </div>}
                 <div>
                     <h4 className="text-base md:text-xl font_urbanist_bold mb-5">Itmes(s) On This Order</h4>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-x-7 lg:gap-x-10 justify-items-stretch">
@@ -67,11 +67,15 @@ export default function Thanks() {
                         })}
                         {orderData?.gift_cards?.map((item) => {
                             return <div className="w-full my-5 flex justify-between items-center">
-                                <div className={`w-1/4 md:w-1/4 uppercase font_montserrat_bold text-white text-xs tracking-1 flex justify-center items-center rounded-xl aspect-video ${giftCardPrices[item.id]}`}>{item.d_name}</div>
-                                <span className="flex flex-col items-end">
-                                    <h1 className="text-base lg:text-xl font_urbanist_medium">{item.name}</h1>
-                                    <small>{formatPrice(item.price)}</small>
-                                </span>
+                                <div className={`w-1/4 md:w-1/4 uppercase text-white flex flex-col justify-center items-center rounded-xl aspect-video bg-pinky text-[10px] lg:text-xs font-semibold`}>
+                                    <span className="font_copper text-xs">UF E-Giftcard</span>
+                                    AED {item.price}
+                                </div>
+                                <div className="flex flex-col items-end">
+                                    <span className="text-base lg:text-lg">UF E-Giftcard</span>
+                                    <span className="text-xs lg:text-sm">For {item.buy_for == "self" ? "Self" : "Friend"}</span>
+                                    <span className="text-xs lg:text-sm">{formatPrice(item.price)}</span>
+                                </div>
                             </div>
                         })}
                     </div>
@@ -96,6 +100,5 @@ export default function Thanks() {
             </section>
         </main>
     </>
-    // else return <div className="w-full h-screen"><Loader /></div>
     else return <AlertPage type="error" heading="Oh Snap! Order Not Found" message="Either your order session expired or your order is not confirmed. You can't confirm your order until you checkout and make a payment." />
 }
