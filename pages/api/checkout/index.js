@@ -73,7 +73,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         if (!Object.keys(giftCardMethods).includes(giftMethod)) return res.status(400).json({ success: false, msg: "Invalid Giftcard method." })
         else if (giftMethod === "self" && !currentUser) return res.status(404).json({ success: false, msg: "User with this email not found" })
         else if (giftMethod === "friend") {
-            const receiver = await User.findOne({ email: giftCardData.receiver?.email }).lean();
+            const receiver = await User.findOne({ email: giftItem.receiver?.email }).lean();
             if (!receiver?._id) return res.status(404).json({ success: false, msg: "The receiver is not registered on Urban Fits." })
         }
     }
