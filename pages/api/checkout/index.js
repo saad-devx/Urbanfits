@@ -11,7 +11,7 @@ import { parse } from "cookie";
 import { isValidObjectId } from "mongoose";
 import { GetUFBalance, DeductPoints } from "@/utils/uf-points";
 import { HashValue, getDateOfTimezone } from "@/utils/cyphers.js";
-import { shippingRates, paymentOptions, giftCardPrices } from "@/uf.config";
+import { shippingRates, paymentOptions, giftCardPrices, giftCardMethods } from "@/uf.config";
 import StandardApi from "@/middlewares/standard_api";
 
 const shippingMethods = Object.keys(shippingRates);
@@ -20,11 +20,10 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     let currentUser;
     const { "session-token": sessionToken } = parse(req.headers.cookie || '');
     if (!sessionToken) currentUser = null;
-    try {
-        currentUser = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY)
+    else try {
+        currentUser = verify(sessionToken, process.env.NEXT_PUBLIC_SECRET_KEY);
         if (!isValidObjectId(currentUser?._id)) return res.status(401).json({ success: false, msg: "Your session is either invalid or expired, please sign in." })
     } catch (e) { currentUser = null }
-    console.log("entry point 1", currentUser, sessionToken)
 
     const { shipping_info, order_items } = req.body.payload;
     if (!shipping_info || !order_items || !order_items.length) return res.status(400).json({ success: false, msg: "All valid shipping information and ordered items are required. Body parameters: shipping_info (object), order_items (array)" })
@@ -32,11 +31,22 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     if (shipping_info.gift_code && (shipping_info.gift_code.length < 8 || shipping_info.gift_code.length > 10)) return res.status(400).json({ success: false, msg: "Invalid Gift Code format." })
     if (shipping_info.coupon_code && shipping_info.coupon_code.length < 4) return res.status(400).json({ success: false, msg: "Invalid Coupon Code format." })
     // if (shipping_info.points_to_use && !shipping_info.card_number) return res.status(400).json({ success: false, msg: "user uf card number is required." })
+
+    const giftCardData = order_items.find(item => item.is_giftcard);
     await ConnectDB()
     if (currentUser) {
         let foundUser = await User.findById(currentUser._id).lean();
-        console.log("entry point 3")
         if (!foundUser) return res.status(404).json({ success: false, msg: "User does not exist with corresponding identifier." })
+    }
+    if (giftCardData) {
+        const giftMethod = giftCardData.buy_for.toLowerCase();
+        // console.log("the gift data here: ", giftMethod, currentUser)
+        if (!Object.keys(giftCardMethods).includes(giftMethod)) return res.status(400).json({ success: false, msg: "Invalid Giftcard method." })
+        else if (giftMethod === "self" && !currentUser) return res.status(404).json({ success: false, msg: "User with this email not found" })
+        else if (giftMethod === "friend") {
+            const receiver = await User.findOne({ email: giftCardData.receiver?.email }).lean();
+            if (!receiver?._id) return res.status(404).json({ success: false, msg: "The receiver is not registered on Urban Fits." })
+        }
     }
     // initializing discounts by UF-points and Giftcodes if exists
     let discountByPoints = 0;
@@ -53,7 +63,6 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         await DeductPoints(user._id, user.uf_wallet.card_number, user.timezone, shipping_info.points_to_use)
         discountByPoints = shipping_info.points_to_use * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)
     }
-    console.log("entry point 4")
     if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {
         const hashedGiftcode = HashValue(shipping_info.gift_code);
         const giftCard = await Giftcard.findOne({ gift_code: hashedGiftcode }).lean();
@@ -66,8 +75,8 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     }
 
     // const rate = 1; // Currency rate i.e. 1 AED
-    const orderItemsToProcess = order_items.filter(item => !item.id.startsWith("giftcard_"))
-    const giftCardItems = order_items.filter(item => item.id.startsWith("giftcard_"))
+    const orderItemsToProcess = order_items.filter(item => !item.is_giftcard);
+    const giftCardItems = order_items.filter(item => item.is_giftcard);
 
     let finalOrderItems = []
     for (const orderItem of orderItemsToProcess) {
@@ -95,13 +104,14 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         finalOrderItems.push(finalProduct)
     }
 
-    let totalPrice = giftCardItems.length ? giftCardItems.reduce((accum, item) => accum + giftCardPrices[item.id], 0) : 0;
+    let totalPrice = giftCardItems.length ? giftCardItems.reduce((accum, item) => accum + item.price, 0) : 0;
     for (const item of finalOrderItems) {
         const itemPrice = item.price * item.quantity;
         totalPrice += itemPrice;
     }
 
     const getTotalShippingFee = () => {
+        if (order_items.some(item => item.is_giftcard)) return 0;
         const weighingItem = finalOrderItems.find((item) => item.weight && item.weight !== undefined)
         if (!weighingItem) return 0
         const shippingData = shippingRates[shipping_info.delivery_option];
@@ -150,7 +160,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     const amountAfterDiscounts = Math.abs(totalPrice + finalShippingFees - overallDiscount);
 
     // Calculating the payment method charges
-    const selectedPaymentMethod = paymentOptions[shipping_info.payment_option];
+    const selectedPaymentMethod = giftCardData ? "online_payment" : paymentOptions[shipping_info.payment_option];
     let paymentDiscount = 0;
     if (selectedPaymentMethod.rate) paymentDiscount = amountAfterDiscounts / 100 * selectedPaymentMethod.rate;
     else if (selectedPaymentMethod.discount) paymentDiscount = -amountAfterDiscounts / 100 * selectedPaymentMethod.discount;
@@ -185,7 +195,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         }
     })).toObject();
 
-    if (shipping_info.payment_option === "cash_on_delivery") {
+    if (selectedPaymentMethod === "cash_on_delivery") {
         const order_data = await CreateOrder(orderSession);
         res.status(201).json({
             success: true,
@@ -193,8 +203,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             msg: "Checkout successful. Thanks for you purchase!"
         })
     }
-    else if (shipping_info.payment_option === "online_payment") {
-
+    else if (selectedPaymentMethod === "online_payment") {
         // Create Checkout Sessions from body params.
         const stripSession = await stripe.checkout.sessions.create({
             shipping_options: [
@@ -205,40 +214,10 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
                             amount: Math.floor(finalShippingFees * 100),
                             currency: "aed",
                         },
-                        display_name: shipping_info.delivery_option,
-                        // delivery_estimate: {
-                        //     minimum: {
-                        //         unit: 'business_day',
-                        //         value: 1,
-                        //     },
-                        //     maximum: {
-                        //         unit: 'business_day',
-                        //         value: 1,
-                        //     },
-                        // },
+                        display_name: shipping_info.delivery_option
                     }
                 }
             ],
-            // line_items: finalOrderItems.map((product, index) => {
-            //     let unitAmount = 0;
-            //     if (product.price > discountByPoints) {
-            //         unitAmount = Math.floor(product.price * 100) - Math.floor(discountByPoints * 100)
-            //         discountByPoints = product.price - ((unitAmount / 100) - discountByPoints)
-            //         console.log(discountByPoints)
-            //     }
-            //     else discountByPoints = discountByPoints - product.price
-            //     return {
-            //         price_data: {
-            //             currency: shipping_info?.currency?.toLowerCase() || "aed",
-            //             product_data: {
-            //                 name: product.name,
-            //                 images: [product.image]
-            //             },
-            //             unit_amount: unitAmount * rate,
-            //         },
-            //         quantity: product.quantity
-            //     }
-            // }),
             line_items: [
                 {
                     price_data: {

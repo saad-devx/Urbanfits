@@ -44,9 +44,9 @@ export const generateRandIntWithProbabilities = (numbers, probabilities) => {
     return numbers[numbers.length - 1];
 }
 
-const generatePassword = (email) => {
-    const length = generateRandomInt(8, 11);
-    const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZ${email}abcdefghijklmnopqrstuvwxyz0123456789`;
+const generatePassword = (passLength) => {
+    const length = passLength || generateRandomInt(8, 11);
+    const key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let password = "";
     // Generate a random password of the specified length
     for (let i = 0; i < length; i++) {

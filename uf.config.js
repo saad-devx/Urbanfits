@@ -138,11 +138,28 @@ export const jwtExpiries = {
     default: 7, // 7 days
     extended: 30 // 30 days
 }
-export const giftCardPrices = {
-    giftcard_bronze: 100,
-    giftcard_silver: 200,
-    giftcard_gold: 300,
-    giftcard_platinum: 400,
-    giftcard_diamond: 500
+
+export const giftCardPrices = [50, 100, 200, 300, 400, 500];
+export const giftCardMethods = {
+    self: {
+        title: "Buy for self"
+    },
+    friend: {
+        title: "Gift a friend"
+    }
+}
+export const giftCardCovers = {
+    birthday_covers: [
+        "/giftcard-covers/birthday1.webp",
+        "/giftcard-covers/birthday2.webp",
+        "/giftcard-covers/birthday3.webp",
+        "/giftcard-covers/birthday4.webp"
+    ],
+    christmas_covers: [
+        "/giftcard-covers/christmas1.webp",
+        "/giftcard-covers/christmas2.webp",
+        "/giftcard-covers/christmas3.webp",
+        "/giftcard-covers/christmas4.webp"
+    ]
 }
 export const adminRoles = ['administrator', 'editor', 'author']

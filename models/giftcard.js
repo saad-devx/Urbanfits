@@ -1,31 +1,30 @@
 import mongoose from "mongoose"
 
+const requiredStringType = {
+    type: String,
+    required: true
+}
 const GiftcardSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     order_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Order"
     },
-    customer_email: {
+    sender: {
+        name: requiredStringType,
+        email: requiredStringType,
+        message: String
+    },
+    receiver: {
+        name: requiredStringType,
+        email: requiredStringType
+    },
+    buy_for: {
         type: String,
-        required: true
+        default: "self",
+        enum: ["slef", "friend"]
     },
-    reserved: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    type: {
-        type: String,
-        required: true,
-    },
-    gift_code: {
-        type: String,
-        required: true
-    },
+    cover_image: String,
+    gift_code: requiredStringType,
     price: {
         type: Number,
         required: true
