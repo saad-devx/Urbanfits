@@ -12,10 +12,14 @@ import { sendNotification, sendAdminNotification } from "@/utils/send_notificati
 import axios from "axios";
 
 const CreateOrder = async (orderPayload) => {
-    const orderData = (await Order.create(orderPayload)).toObject();
-    const { shipping_address, payment_method } = orderData;
+    const orderData = (await Order.create({
+        ...orderPayload,
+        order_status: {
+            status: "DELIVERED",
+            group: "delivered"
+        }
+    })).toObject();
 
-    console.log("Here is the order data: ", orderData)
     if (orderData.gift_cards?.length) {
         for (let giftItem of orderData.gift_cards) {
             const { buy_for } = giftItem;
@@ -25,7 +29,6 @@ const CreateOrder = async (orderPayload) => {
                 const giftCode = generatePassword(10);
                 giftCodes.push(giftCode);
             }
-            console.log(giftCodes);
 
             for (const code of giftCodes) {
                 await Giftcard.create({
@@ -33,9 +36,11 @@ const CreateOrder = async (orderPayload) => {
                     gift_code: HashValue(code)
                 });
 
+                console.log("entry point 1")
                 if (buy_for === "self") {
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes, true);
-                    sendEmail({ to: orderData.email, subject: "Claim your Giftcard1" }, giftTemplate);
+                    sendEmail({ to: orderData.email, subject: "Claim your Giftcard" }, giftTemplate);
+                    console.log("entry point 2")
 
                     if (orderData.user_id) sendNotification(orderData.user_id, {
                         category: "order",
@@ -46,9 +51,11 @@ const CreateOrder = async (orderPayload) => {
                     })
 
                 } else if (buy_for === "friend") {
+                    console.log("entry point 3")
                     const receiver = await User.findOne({ email: giftItem.receiver.email })
 
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes);
+                    console.log("entry point 4", giftTemplate)
                     sendEmail({ to: receiver.email, subject: "Congratulation, You've got a gift!" }, giftTemplate)
                     const occassion = giftData.cover.includes("birthday") ? "Happy Birthday" : "Happy Christmas";
                     sendNotification(receiver._id, {
@@ -68,9 +75,11 @@ const CreateOrder = async (orderPayload) => {
                 }
             }
         }
+        console.log("entry point 5")
         let orderTemplate = OrderConfirmed(orderData, true)
         sendEmail({ to: orderData.email, subject: "Your order has been placed." }, orderTemplate);
         // Sending notification to admin panel
+        console.log("entry point 6")
         sendAdminNotification({
             category: "order",
             data: {
@@ -82,6 +91,8 @@ const CreateOrder = async (orderPayload) => {
         return orderData;
     }
     else {
+        const orderData = (await Order.create(orderPayload)).toObject();
+        const { shipping_address, payment_method } = orderData;
         const swiftOrderData = {
             reference: orderData._id.toString(),
             brandName: "Urban Fits",

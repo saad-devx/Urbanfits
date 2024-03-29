@@ -1,6 +1,5 @@
-const OrderConfirmed = (orderData, isGiftCard) => {
-    if (isGiftCard) {
-
+const OrderConfirmed = (orderData, isGiftCard = false) => {
+    if (isGiftCard)
         return `
     <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -37,7 +36,7 @@ const OrderConfirmed = (orderData, isGiftCard) => {
                         <td>Gift Card(s)</td>
                         <td>For</td>
                     </tr>
-                    ${orderData.gift_items.map(giftCard => `<tr>
+                    ${orderData.gift_cards.map(giftCard => `<tr>
                         <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">AED ${giftCard.price}</td>
                         <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${giftCard.buy_for}</td>
                     </tr>`).join("")}
@@ -51,7 +50,7 @@ const OrderConfirmed = (orderData, isGiftCard) => {
     </table>
 </body>
 </html>
-    `}
+    `
     else return `
     <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
