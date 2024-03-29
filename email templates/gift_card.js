@@ -30,9 +30,9 @@ const GiftCardTemplate = (giftData, giftCodes, isForSelf) => {
                         <td>Code</td>
                     </tr>
                     ${giftCodes.map((code, index) => `<tr>
-                        <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${index}</td>
+                        <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${index + 1}</td>
                         <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${code}</td>
-                    </tr>`)}
+                    </tr>`).join("")}
                 </table>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Best Regards,<br />The Urban Fits team</p>
                 <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
@@ -67,7 +67,7 @@ const GiftCardTemplate = (giftData, giftCodes, isForSelf) => {
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Dear ${giftData.receiver.name || "User"},</p>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Congratulations, you received a ${giftData.price} AED
                     Gift Card from ${giftData.sender.name}</p>
-                <p style="font-size:16px;line-height:26px;margin:16px 0">${giftData.quantity} The Gift Card has been added in your Uban Fits
+                <p style="font-size:16px;line-height:26px;margin:16px 0">${giftData.quantity} Gift Card(s) has been added in your Uban Fits
                     account, you can use the below given code(s) to use this on Urban Fits exclusively for any purchase.
                 </p>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Below is your gift code inforamtion:</p><br>
@@ -83,9 +83,9 @@ const GiftCardTemplate = (giftData, giftCodes, isForSelf) => {
                         <td>Code</td>
                     </tr>
                     ${giftCodes.map((code, index) => `<tr>
-                        <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${index}</td>
+                        <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${index + 1}</td>
                         <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${code}</td>
-                    </tr>`)}
+                    </tr>`).join("")}
                 </table>
                 <p>Please save the gift code in a secure place, you will not be shown the code again as they're end to end encrypted.</p>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Best Regards,<br />The Urban Fits team</p>

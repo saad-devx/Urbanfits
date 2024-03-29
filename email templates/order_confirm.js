@@ -40,7 +40,7 @@ const OrderConfirmed = (orderData, isGiftCard) => {
                     ${orderData.gift_items.map(giftCard => `<tr>
                         <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">AED ${giftCard.price}</td>
                         <td style="color: #FF4A60; font-weight: 600; text-decoration: none;">${giftCard.buy_for}</td>
-                    </tr>`)}
+                    </tr>`).join("")}
                 </table>
                 <p style="font-size:16px;line-height:26px;margin:16px 0">Best Regards,<br />The Urban Fits team</p>
                 <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0" />
