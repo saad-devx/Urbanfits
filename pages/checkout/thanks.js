@@ -6,25 +6,17 @@ import LinkBtn from '@/components/buttons/link_btn';
 import useWallet from '@/hooks/useWallet';
 import { useCart } from 'react-use-cart';
 import Image from 'next/image';
-// import Loader from '@/components/loaders/loader';
 
-const giftCardPrices = {
-    "giftcard_bronze": "bronze_metal_bg",
-    "giftcard_silver": "silver_metal_bg",
-    "giftcard_gold": "gold_metal_bg",
-    "giftcard_platinum": "platinum_metal_bg",
-    "giftcard_diamond": "diamond_metal_bg",
-}
 export default function Thanks() {
     // const router = useRouter()
     const { getUfBalance, formatPrice } = useWallet();
     const { emptyCart } = useCart();
     const [orderData, setOrderData] = useState(null);
-    const includesGiftCard = orderData.gift_cards?.some(item => item.is_giftcard);
+    const includesGiftCard = orderData ? orderData.gift_cards?.some(item => item.is_giftcard) : [];
 
     console.log(orderData)
     useEffect(() => {
-        // emptyCart()
+        emptyCart()
         setOrderData(JSON.parse(sessionStorage.getItem("bought_order_data")));
         getUfBalance()
 

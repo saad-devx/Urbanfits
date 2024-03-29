@@ -15,6 +15,7 @@ const CreateOrder = async (orderPayload) => {
     const orderData = (await Order.create(orderPayload)).toObject();
     const { shipping_address, payment_method } = orderData;
 
+    console.log("Here is the order data: ", orderData)
     if (orderData.gift_cards?.length) {
         for (let giftItem of orderData.gift_cards) {
             const { buy_for } = giftItem;
@@ -78,6 +79,7 @@ const CreateOrder = async (orderPayload) => {
                 type: "success"
             }
         })
+        return orderData;
     }
     else {
         const swiftOrderData = {
