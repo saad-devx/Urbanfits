@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import useNewsletter from './useNewsletter';
 import useWallet from './useWallet';
+import PusherClient from 'pusher-js';
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -126,6 +127,40 @@ const useUser = create(persist((set, get) => ({
             console.log(error)
             toaster("error", error.response?.data.msg || (navigator.onLine ? "Oops! somethign went wrong." : "Network Error"))
         } finally { set(() => ({ userLoading: false })); }
+    },
+
+    recordVisit: async () => {
+        try { axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/visit`) }
+        catch (error) { console.log(error) }
+    },
+
+    emitPresenceEvent: () => {
+        const { user } = get();
+        const presenceInstance = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+            cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+            channelAuthorization: {
+                endpoint: `${process.env.NEXT_PUBLIC_HOST}/api/pusher/auth`,
+                params: {
+                    user_id: user?._id,
+                    email: user?.email
+                }
+            },
+        });
+        presenceInstance.subscribe("presence-urbanfits")
+        return () => presenceInstance.unsubscribe("presence-urbanfits");
+    },
+
+    subscribePersonalChannel: () => {
+        const pusherClient = new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+            cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+        });
+        const channelName = `uf-user_${get().user._id}`
+        const userChannel = pusherClient.subscribe(channelName)
+        userChannel.bind('new-notification', (data) => {
+            useUser.setState({ notifications: data.notification_data.notifications })
+            if (data.notify) toaster("info", data.notification_data.notifications[0].mini_msg)
+        })
+        return () => userChannel.unsubscribe(channelName);
     },
 
     getNotifications: async () => {

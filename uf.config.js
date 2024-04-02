@@ -102,6 +102,11 @@ export const shippingRates = {
         "timespan": "Today (withing 4 hours)"
     }
 }
+export const monthNames = [
+    'january', 'february', 'march', 'april',
+    'may', 'june', 'july', 'august',
+    'september', 'october', 'november', 'december'
+];
 
 export const paymentOptions = {
     "cash_on_delivery": {
