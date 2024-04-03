@@ -2,6 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import Order, { getOrderStatus } from "@/models/orders";
 import StandardApi from "@/middlewares/standard_api";
 import { orderStatuses } from "@/uf.config";
+import axios from "axios";
 
 const ChangeOrderStatus = async (req, res) => StandardApi(req, res, { verify_admin: true }, async () => {
     const { order_id, order_status } = req.query;
@@ -12,6 +13,15 @@ const ChangeOrderStatus = async (req, res) => StandardApi(req, res, { verify_adm
     let order = await Order.findByIdAndUpdate(order_id, {
         order_status: getOrderStatus(order_status)
     }, { new: true, lean: true })
+    if (order_status === "CANCELLED" && order.tracking_number) {
+        try {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_SWFT_BASE_ENDPOINT}/api/direct-integration/orders/${order.tracking_number}/cancel`, {}, {
+                headers: {
+                    "x-api-key": process.env.NEXT_PUBLIC_SWFT_KEY
+                }
+            })
+        } catch (e) { console.log("Error in order cancellation SWFT", e) }
+    }
 
     res.status(200).json({
         success: true,
