@@ -6,7 +6,7 @@ import Category from "@/models/category";
 import StandardApi from "@/middlewares/standard_api";
 import { getDateOfTimezone } from "@/utils/cyphers";
 
-const UserVisit = async (req, res) => StandardApi(req, res, { method: "GET", verify_user: false }, async () => {
+const Metrics = async (req, res) => StandardApi(req, res, { method: "GET", verify_admin: true }, async () => {
     await ConnectDB();
 
     // Signs metrics
@@ -46,4 +46,4 @@ const UserVisit = async (req, res) => StandardApi(req, res, { method: "GET", ver
     }
     res.status(200).json({ success: true, msg: '', metrics })
 })
-export default UserVisit;
+export default Metrics;
