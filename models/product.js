@@ -85,8 +85,8 @@ const ProductSchema = new mongoose.Schema({
         width: { type: String, required: true },
         height: { type: String, required: true },
         weight: { type: Number, required: true }
-    }
-
+    },
+    sales: Number
 }, { timestamps: true })
 
 ProductSchema.pre('save', function (next) {

@@ -71,6 +71,9 @@ const CreateOrder = async (orderPayload) => {
                 }
             }
         }
+
+        if (orderData.user_id) await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } });
+
         let orderTemplate = OrderConfirmed(orderData, true)
         sendEmail({ to: orderData.email, subject: "Your order has been placed." }, orderTemplate);
         // Sending notification to admin panel
@@ -129,9 +132,6 @@ const CreateOrder = async (orderPayload) => {
             });
         const swiftRes = data.data[0];
 
-        // const shippingLabelData = Buffer.from(swiftRes.shippingLabel, 'base64');
-        // const shippingLabelUrl = await uploadImage(shippingLabelData, `uf-shipping-labels/${orderData._id.toString()}`)
-
         const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
             "order_status.status": swiftRes.status,
             stage: swiftRes.stage,
@@ -148,8 +148,9 @@ const CreateOrder = async (orderPayload) => {
                 },
                 {
                     $inc: {
-                        "variants.$[v].sizes.$[s].quantity": -orderedItem.quantity
-                    }
+                        "variants.$[v].sizes.$[s].quantity": -orderedItem.quantity,
+                        sales: +orderedItem.quantity
+                    },
                 },
                 {
                     arrayFilters: [
@@ -173,13 +174,16 @@ const CreateOrder = async (orderPayload) => {
                 type: "success"
             }
         })
-        if (orderData.user_id) sendNotification(orderData.user_id, {
-            category: "order",
-            heading: "Order Placed",
-            mini_msg: "You order have been placed successfully. Thanks for your purchase!",
-            type: "order",
-            message: `You order have been placed successfully and currently is in PROCESSING status. Here's your Tracking Number: "${finalOrder.tracking_number}". Further details have been sent on your email. Thanks for you purchase!`,
-        })
+        if (orderData.user_id) {
+            await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } });
+            sendNotification(orderData.user_id, {
+                category: "order",
+                heading: "Order Placed",
+                mini_msg: "You order have been placed successfully. Thanks for your purchase!",
+                type: "order",
+                message: `You order have been placed successfully and currently is in PROCESSING status. Here's your Tracking Number: "${finalOrder.tracking_number}". Further details have been sent on your email. Thanks for you purchase!`,
+            })
+        }
 
         return finalOrder
     }
