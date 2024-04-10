@@ -91,6 +91,6 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
             type: "success"
         }
     })
-    await SaveSignsMetrics("signups")
+    await SaveSignsMetrics("signup", user._id)
 })
 export default SignupWithGoogle

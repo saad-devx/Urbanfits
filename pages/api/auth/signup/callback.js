@@ -81,7 +81,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
         })
         const userLetter = await Newsletter.findOne({ email: credentials.email, user: "guest" })
         if (userLetter) return userLetter.update({ active: true, user: user._id })
-        await SaveSignsMetrics("signups")
+        await SaveSignsMetrics("signup", user._id)
     }
 })
 export default SignupCallback

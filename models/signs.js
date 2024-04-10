@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
+import { signsTypes } from "@/uf.config";
 
 const SignsSchema = new mongoose.Schema({
-    signups: {
-        type: Number,
-        default: 0
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
-    visits: {
-        type: Number,
-        default: 0
+    type: {
+        type: String,
+        enum: signsTypes,
+        default: signsTypes[0]
     },
     month: String,
     date: String,

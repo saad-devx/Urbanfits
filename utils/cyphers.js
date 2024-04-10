@@ -44,6 +44,14 @@ export const generateRandIntWithProbabilities = (numbers, probabilities) => {
     return numbers[numbers.length - 1];
 }
 
+export const groupBy = (array, key) => {
+    return array.reduce((result, item) => {
+        if (!result[item[key]]) result[item[key]] = [];
+        result[item[key]].push(item);
+        return result;
+    }, {});
+}
+
 const generatePassword = (passLength) => {
     const length = passLength || generateRandomInt(8, 11);
     const key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

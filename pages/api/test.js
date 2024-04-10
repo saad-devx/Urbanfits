@@ -1,209 +1,36 @@
 import ConnectDB from "@/utils/connect_db";
-// import { sendAdminNotification } from "@/utils/send_notification";
-import StandardApi from "@/middlewares/standard_api";
-import axios from "axios";
+import Signs from "@/models/signs";
+import { getDateOfTimezone, groupBy } from "@/utils/cyphers";
+// import StandardApi from "@/middlewares/standard_api";
 
-const TestApiHandler = (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
-    await ConnectDB()
+const TestApiHandler = async (req, res) => {
+    await ConnectDB();
+    const currentDate = getDateOfTimezone();
 
-    await axios.post("http://localhost:3000/api/checkout/shipment/webhooks", {
-        eventTrigger: 'RTN COMPLETE',
-        order: {
-            id: '3398784f-628c-4be6-84d9-0e382e80b96e',
-            createdAt: '2024-03-22T19:27:12.323Z',
-            updatedAt: '2024-03-22T19:27:54.839Z',
-            deletedAt: null,
-            reference: '65fddcf01957a6d01e6e5d88',
-            swftboxTracking: 'PKCML06738',
-            retailerTracking: 'PKCML06738',
-            brandName: 'Urban Fits',
-            retailerId: '5b562c30-2eae-4860-9e59-e856575c35ca',
-            customerId: '1de33ed6-299b-49c8-8a23-3bfcc1367c13',
-            fromLocationId: '9c62d28b-67c2-4123-8485-cacac0c8dc10',
-            toLocationId: '35d13115-a052-4189-bea4-189f49991945',
-            originalOrderId: null,
-            groupId: null,
-            groupType: null,
-            paymentMode: 'PAYMENT_ON_DELIVERY',
-            paymentAmount: '1943.07',
-            dropProfileId: '980fd9ed-12f1-436d-9e5b-03959dc25c96',
-            isReverse: false,
-            requireProofOfId: false,
-            requireOtpOnDelivery: false,
-            isDeliveryOtpVerified: false,
-            shouldLeaveAtTheDoor: false,
-            notes: null,
-            fulfillmentRemarks: null,
-            deliveryNotes: null,
-            attachments: null,
-            proofOfId: null,
-            state: 'RTN COMPLETE',
-            stage: null,
-            status: 'RTN COMPLETE',
-            partnerStatus: 'PICKUP_REQUESTED',
-            shippingFlag: null,
-            failedAttemptCount: 0,
-            packageCount: 1,
-            requireDeliveryNote: false,
-            validationStatus: 'VALIDATING',
-            isExpress: false,
-            integration: 'SWFTBOX',
-            scheduledCustomerSlot: null,
-            allowCustomerProofSignature: false,
-            isBoosted: false,
-            customerProofSignatureUrl: null,
-            scheduledPickupSlot: null,
-            isInternational: false,
-            currency: 'AED',
-            timing: {
-                id: 'd1bc11c8-13ce-4f32-bff3-155bf4ce9caf',
-                createdAt: '2024-03-22T19:27:12.309Z',
-                updatedAt: '2024-03-22T19:27:12.470Z',
-                deletedAt: null,
-                orderId: '3398784f-628c-4be6-84d9-0e382e80b96e',
-                inputDate: '2024-03-22T19:27:12.323Z',
-                deliveryRequestedTime: '2024-03-22T19:27:12.000Z',
-                pushToDispatchTime: null,
-                actualPickupDateStart: null,
-                actualPickupDateEnd: null,
-                actualDropDateStart: null,
-                actualDropDateEnd: null,
-                expectedPickupDateStart: '2024-03-23T06:00:00.000Z',
-                expectedPickupDateEnd: '2024-03-23T14:00:00.000Z',
-                expectedDropDateStart: null,
-                expectedDropDateEnd: null,
-                slaStart: null,
-                slaEnd: null,
-                receivedAtWarehouseTime: null,
-                pickupFromPartnerTime: null,
-                lastFailedAttempt: null,
-                firstFailedAttempt: null
-            },
-            customer: {
-                id: '1de33ed6-299b-49c8-8a23-3bfcc1367c13',
-                createdAt: '2024-03-22T19:02:06.224Z',
-                updatedAt: '2024-03-22T19:02:06.224Z',
-                deletedAt: null,
-                name: 'Faizan Sohail',
-                processedName: 'faizansohail',
-                phone: '+97131643454835',
-                email: 'binarshadsaad6@gmail.com',
-                age: null,
-                gender: null,
-                title: null,
-                retailerId: '5b562c30-2eae-4860-9e59-e856575c35ca',
-                bagsCount: 0
-            },
-            from: {
-                id: '9c62d28b-67c2-4123-8485-cacac0c8dc10',
-                createdAt: '2024-02-23T06:50:14.902Z',
-                updatedAt: '2024-03-04T14:00:48.893Z',
-                deletedAt: null,
-                identifier: '134622',
-                name: 'Urban Fits',
-                country: 'United Arab Emirates',
-                city: 'Dubai',
-                countryCode: 'AE',
-                addressLine1: '776V+XC8 - Al Souq Al Kabeer - Dubai - United Arab Emirates',
-                dispatchZone: 'BB',
-                dispatchCity: 'DXB',
-                addressLine2: '',
-                addressType: null,
-                area: 'Sector 3, Al Souq Al Kabeer',
-                street: null,
-                building: null,
-                landMark: null,
-                coordinates: [Object],
-                entityId: '5b562c30-2eae-4860-9e59-e856575c35ca',
-                entityType: 'RETAILER',
-                isDefault: true,
-                isGeocoded: true,
-                geocodingError: null,
-                isVerified: false,
-                verifiedAt: null,
-                verifiedBy: null,
-                isInternational: false,
-                phone: null
-            },
-            to: {
-                id: '35d13115-a052-4189-bea4-189f49991945',
-                createdAt: '2024-03-22T19:02:06.224Z',
-                updatedAt: '2024-03-22T19:27:23.389Z',
-                deletedAt: null,
-                identifier: '149020',
-                name: null,
-                country: 'United Arab Emirates',
-                city: 'Lahore',
-                countryCode: 'ae',
-                addressLine1: 'street 123, Lahore',
-                dispatchZone: 'Marina',
-                dispatchCity: 'DXB',
-                addressLine2: null,
-                addressType: null,
-                area: 'Sector 3, Al Sufouh First',
-                street: null,
-                building: null,
-                landMark: null,
-                coordinates: [Object],
-                entityId: '1de33ed6-299b-49c8-8a23-3bfcc1367c13',
-                entityType: 'CUSTOMER',
-                isDefault: true,
-                isGeocoded: true,
-                geocodingError: null,
-                isVerified: true,
-                verifiedAt: '2024-03-22T19:27:12.243Z',
-                verifiedBy: null,
-                isInternational: false,
-                phone: null
-            },
-            dropProfileType: 'Next day',
-            items: [[Object], [Object], [Object]],
-            timelines: [[Object], [Object], [Object]],
-            trackingUrl: 'https://t.swftbox.com/PKCML06738',
-            shippingLabelUrl: 'https://cr.swftbox.com/shipping-label/MzM5ODc4NGYtNjI4Yy00YmU2LTg0ZDktMGUzODJlODBiOTZlLFBLQ01MMDY3MzgsNWI1NjJjMzAtMmVhZS00ODYwLTllNTktZTg1NjU3NWMzNWNh',
-            retailer: {
-                id: '5b562c30-2eae-4860-9e59-e856575c35ca',
-                createdAt: '2024-02-23T06:50:14.902Z',
-                updatedAt: '2024-03-07T12:55:47.605Z',
-                deletedAt: null,
-                name: 'Urban Fits',
-                phone: '+971527174508',
-                email: 'admin@urbanfits.ae',
-                emailManifest: 'admin@urbanfits.ae',
-                status: 'ACTIVE',
-                customerLocationMatchingStrategy: 'NONE',
-                ownerUserId: 'a87d657d-8a8e-40ac-a02c-5ecb69c20d85',
-                isMultiLocationAllowed: false,
-                isDraftEnabled: false,
-                isManualPickupEnabled: false,
-                requireProofOfId: false,
-                requireOtpOnDelivery: false,
-                forceExpressReturn: false,
-                allowCustomerProofSignature: false,
-                disableCardOnPayment: false,
-                bagCollection: false,
-                revealOverviewPage: false,
-                isPaymentLinksEnabled: true,
-                isLeaveAtTheDoorEnabled: true,
-                revealInventoryPage: false,
-                categoryIds: [Array],
-                currencyId: null,
-                fulfillmentId: null,
-                timezone: 'Asia/Dubai',
-                logo: null,
-                label: null,
-                shippingLabelSize: 'A6'
-            }
-        },
-        webhookId: '01HSKT4MKAQVQ7K8APEDKTE4PR'
-    })
+    const avgPeriod = 30; // in days
+
+    // Signs metrics
+    const pastMonthDate = new Date(getDateOfTimezone().setDate(currentDate.getDate() - avgPeriod));
+    const signMetrics = await Signs.find({ createdAt: { $gt: pastMonthDate } }).sort({ _id: 1 });
+
+    const dailyVisitsNumbers = [];
+    const dailySignupsNumbers = [];
+    const groupedItems = groupBy(signMetrics, "month");
+    Object.keys(groupedItems).forEach(key => {
+        const dateGrouping = Object.values(groupBy(groupedItems[key], "date"))[0];
+        const signups = dateGrouping.filter(item => item.type == "signup").length;;
+        const visits = dateGrouping.filter(item => item.type == "visit").length;;
+        dailySignupsNumbers.push(signups)
+        dailyVisitsNumbers.push(visits)
+    });
+
+    const avg_signups = dailySignupsNumbers.reduce((acc, value) => acc + value, 0) / avgPeriod;
+    const avg_visits = dailyVisitsNumbers.reduce((acc, value) => acc + value, 0) / avgPeriod;
 
     res.status(200).json({
         success: true,
-        msg: "order creations fucking completed ",
-        // order
-        // balance1, deduct, balance2
+        avg_signups,
+        avg_visits
     })
-})
-
+}
 export default TestApiHandler

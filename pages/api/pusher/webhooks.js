@@ -1,6 +1,7 @@
 import ConnectDB from "@/utils/connect_db";
 import { isValidObjectId } from "mongoose";
 import User from "@/models/user";
+import SaveSignsMetrics from "@/utils/signs-metrics";
 
 export default async function PusherWebhooks(req, res) {
     try {
@@ -12,6 +13,7 @@ export default async function PusherWebhooks(req, res) {
                     if (isValidObjectId(user_id)) {
                         await ConnectDB()
                         User.findByIdAndUpdate(user_id, { is_active: true }, { new: true, lean: true })
+                        SaveSignsMetrics("visit", user_id)
                         console.log("user_joined handled successfully.")
                     } else return
                 }

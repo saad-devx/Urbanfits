@@ -130,6 +130,7 @@ const useUser = create(persist((set, get) => ({
     },
 
     recordVisit: async () => {
+        if (get().isLoggedIn()) return;
         try { axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/user/visit`) }
         catch (error) { console.log(error) }
     },

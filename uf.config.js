@@ -76,6 +76,8 @@ export const DefaultTasks = [
     }
 ]
 
+export const signsTypes = ["visit", "signup"];
+
 export const shippingRates = {
     "standard_shipping": {
         "name": "Standard",

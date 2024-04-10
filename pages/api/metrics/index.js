@@ -4,21 +4,35 @@ import Order from "@/models/orders";
 import Product from "@/models/product";
 import Category from "@/models/category";
 import StandardApi from "@/middlewares/standard_api";
-import { getDateOfTimezone } from "@/utils/cyphers";
+import { getDateOfTimezone, groupBy } from "@/utils/cyphers";
 
 const Metrics = async (req, res) => StandardApi(req, res, { method: "GET", verify_admin: true }, async () => {
     await ConnectDB();
+    const currentDate = getDateOfTimezone();
+
+    const avgPeriod = 30; // in days
 
     // Signs metrics
-    const signMetrics = await Signs.find().sort({ _id: -1 }).limit(180);
-    const signsLength = signMetrics.length;
-    const totalSignUps = signMetrics.reduce((acc, item) => acc + item.signups, 0);
-    const totalVisits = signMetrics.reduce((acc, item) => acc + item.visits, 0);
+    const pastMonthDate = new Date(getDateOfTimezone().setDate(currentDate.getDate() - avgPeriod));
+    const signMetrics = await Signs.find({ createdAt: { $gt: pastMonthDate } }).sort({ _id: 1 });
+
+    const dailyVisitsNumbers = [];
+    const dailySignupsNumbers = [];
+    const groupedItems = groupBy(signMetrics, "month");
+    Object.keys(groupedItems).forEach(key => {
+        const dateGrouping = Object.values(groupBy(groupedItems[key], "date"))[0];
+        const signups = dateGrouping.filter(item => item.type == "signup").length;;
+        const visits = dateGrouping.filter(item => item.type == "visit").length;;
+        dailySignupsNumbers.push(signups)
+        dailyVisitsNumbers.push(visits)
+    });
+
+    const avg_signups = dailySignupsNumbers.reduce((acc, value) => acc + value, 0) / avgPeriod;
+    const avg_visits = dailyVisitsNumbers.reduce((acc, value) => acc + value, 0) / avgPeriod;
 
     // Order metrics
     const total_orders = await Order.countDocuments({ "order_status.group": { $ne: "cancelled" } });
     const cancelled_orders = await Order.countDocuments({ "order_status.group": "cancelled" });
-    const currentDate = getDateOfTimezone("Asia/Dubai");
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const monthlySoldOrders = await Order.find({ "order_status.group": "delivered", updatedAt: { $gt: firstDayOfMonth } }).lean();
     const monthly_sales = monthlySoldOrders.reduce((acc, item) => {
@@ -34,8 +48,8 @@ const Metrics = async (req, res) => StandardApi(req, res, { method: "GET", verif
     const total_category = (await Category.countDocuments()) - 1;
 
     const metrics = {
-        avg_signups: totalSignUps / signsLength,
-        avg_visits: totalVisits / signsLength,
+        avg_signups,
+        avg_visits,
         total_orders,
         cancelled_orders,
         total_products,
