@@ -33,10 +33,11 @@ const MonthsActivity = async (req, res) => StandardApi(req, res, { method: "GET"
         Object.keys(dateGrouping).forEach((date) => {
             const usersSet = new Set(dateGrouping[date]);
             monthActivityCount += usersSet.size;
-            Array.from(usersSet).reduce((acc, user) => registered_users += user.registered_users - acc, 0);
+            Array.from(usersSet).reduce((acc, user) => {
+                registered_users += user.registered_users - acc || 0;
+                return user.registered_users;
+            }, 0);
         })
-        // const { registered_users } = monthGrouping[month][monthGrouping[month].length - 1];
-        console.log("registered_users here: ", registered_users)
         monthsActivityMetrics.push({
             month,
             registered_users,

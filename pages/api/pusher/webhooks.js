@@ -12,7 +12,7 @@ export default async function PusherWebhooks(req, res) {
                     console.log("A member just joined with id: " + user_id)
                     if (isValidObjectId(user_id)) {
                         await ConnectDB()
-                        User.findByIdAndUpdate(user_id, { is_active: true }, { new: true, lean: true })
+                        await User.findByIdAndUpdate(user_id, { is_active: true }, { new: true, lean: true })
                         SaveSignsMetrics("visit", user_id)
                         console.log("user_joined handled successfully.")
                     } else return

@@ -24,9 +24,9 @@ function App({ Component, pageProps: { ...pageProps } }) {
     getMe();
     recordVisit()
 
-    if (sessionStorage.getItem("letter_ad") !== "true") setTimeout(() => {
+    if (localStorage.getItem("letter_ad") !== "true") setTimeout(() => {
       useNewsletter.setState({ show: true })
-      sessionStorage.setItem("letter_ad", "true")
+      localStorage.setItem("letter_ad", "true")
     }, 10000)
   }, [])
 
