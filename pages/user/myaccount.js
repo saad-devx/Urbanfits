@@ -6,7 +6,6 @@ import User from '.';
 import uploadImage from '@/utils/uploadImage'
 import Head from 'next/head';
 import Error403 from '../403';
-import Newsletter from '@/components/modals/newsletter';
 import useNewsletter from '@/hooks/useNewsletter';
 import useWallet from '@/hooks/useWallet'
 import Button from '../../components/buttons/simple_btn';
@@ -43,9 +42,8 @@ const AddressContainer = (props) => {
 export default function Personalinfo() {
     const { user, isLoggedIn, updateUser, country, address, getAddress, userLoading } = useUser();
     const { currency } = useWallet();
-    const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter();
+    const { newsletterData, toggleNewsletterModal, getNewsletterData, updateNewsletterData } = useNewsletter();
     const [imgSpinner, SetImgSpinner] = useState(null);
-    const [letterModal, setLetterModal] = useState(false);
     const [genderModal, setGenderModal] = useState(false);
     const [userInfoModal, setUserInfoModal] = useState(false);
     const [countryModal, setCoutnryModal] = useState(false);
@@ -66,8 +64,6 @@ export default function Personalinfo() {
         SetImgSpinner(null)
     }
 
-    const toggleLetterModal = () => setLetterModal(!letterModal)
-    // getting data from input fields and applying validation
     const validatedSchema = Yup.object({
         title: Yup.string().required("Please enter a title"),
         firstname: Yup.string().min(2).required("Please enter your First name"),
@@ -85,7 +81,7 @@ export default function Personalinfo() {
     const newsletterSubToggle = async (e) => {
         const { name } = e.target
         if (name == "active_by_email") {
-            if (!newsletterData || !newsletterData.email) return toggleLetterModal()
+            if (!newsletterData || !newsletterData.email) return toggleNewsletterModal()
             else {
                 useUser.setState({ userLoading: true });
                 await updateNewsletterData({ active_by_email: !newsletterData.active_by_email })
@@ -93,7 +89,7 @@ export default function Personalinfo() {
             }
         }
         if (name == "active_by_phone") {
-            if (!newsletterData || !newsletterData.phone) return toggleLetterModal()
+            if (!newsletterData || !newsletterData.phone) return toggleNewsletterModal()
             else {
                 useUser.setState({ userLoading: true });
                 await updateNewsletterData({ active_by_phone: !newsletterData.active_by_phone })
@@ -172,7 +168,6 @@ export default function Personalinfo() {
     </>
     return <>
         <Head><title>My Profile</title></Head>
-        <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <User loading={userLoading}>
             <form className="mt-10 font_urbanist gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                 <h1 className='text-sm lg:text-base font_urbanist_bold' >Personal Information</h1>

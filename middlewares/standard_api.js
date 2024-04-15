@@ -7,7 +7,7 @@ import { verify } from "jsonwebtoken"
 import { parse } from "cookie";
 import { adminRoles } from "@/uf.config";
 
-export default async function StandardApi(req, res, { method = "GET", verify_user = true, verify_admin = false }, next) {
+export default async function StandardApi(req, res, { method = "GET", verify_user = true, verify_admin = false } = {}, next) {
     try {
         await CorsMiddleware(req, res)
         if (req.method === method) {

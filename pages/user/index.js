@@ -6,7 +6,6 @@ import useNewsletter from '@/hooks/useNewsletter';
 import Error403 from '@/pages/403';
 import Loader from '@/components/loaders/loader';
 import Spinner from '@/components/loaders/spinner'
-import Newsletter from '@/components/modals/newsletter';
 import Logout from '@/components/modals/logout'
 import Link from 'next/link'
 import uploadImage from '@/utils/uploadImage'
@@ -31,7 +30,6 @@ import {
     OrderListIcon,
     OrderPackageIcon,
     PackageBagIcon,
-    SettingIcon,
     UfPointsIcon
 } from "@/public/accountIcons"
 
@@ -56,12 +54,10 @@ export const Option = (props) => {
 export default function User({ loading, profileNull, children }) {
     const { user, getMe, isLoggedIn, updateUser, recentItems } = useUser()
     const { points } = useWallet()
-    const { newsletterData, getNewsletterData, updateNewsletterData } = useNewsletter()
+    const { newsletterData, toggleNewsletterModal, getNewsletterData, updateNewsletterData } = useNewsletter()
     const [imgSpinner, SetImgSpinner] = useState(null)
     const [loader, setLoader] = useState(false)
     const [logout, setLogout] = useState(false)
-    const [letterModal, setLetterModal] = useState(false)
-    const toggleLetterModal = () => setLetterModal(!letterModal)
     const getPfp = () => {
         if (!user) return
         if (user.image) return user.image
@@ -81,7 +77,7 @@ export default function User({ loading, profileNull, children }) {
     const newsletterSubToggle = async (e) => {
         const { name } = e.target
         if (name == "active_by_email") {
-            if (!newsletterData || !newsletterData.email) return toggleLetterModal()
+            if (!newsletterData || !newsletterData.email) return toggleNewsletterModal()
             else {
                 setLoader(<Loader />)
                 await updateNewsletterData({ active_by_email: !newsletterData.active_by_email })
@@ -89,7 +85,7 @@ export default function User({ loading, profileNull, children }) {
             }
         }
         if (name == "active_by_phone") {
-            if (!newsletterData || !newsletterData.phone) return toggleLetterModal()
+            if (!newsletterData || !newsletterData.phone) return toggleNewsletterModal()
             else {
                 setLoader(<Loader />)
                 await updateNewsletterData({ active_by_phone: !newsletterData.active_by_phone })
@@ -109,7 +105,6 @@ export default function User({ loading, profileNull, children }) {
     const profileImage = user?.image?.includes("google") ? user.image : process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()
 
     if (window.matchMedia('(max-width: 760px)').matches) return <>
-        <Newsletter show={letterModal} toggleModal={toggleLetterModal} />
         <Logout show={logout} setLogout={setLogout} />
         <main className='bg-white w-full min-h-screen p-4 md:p-10 flex flex-col'>
             {loader}

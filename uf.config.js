@@ -110,6 +110,16 @@ export const monthNames = [
     'september', 'october', 'november', 'december'
 ];
 
+export const UAEStates = {
+    "ae-du": "Dubai",
+    "ae-sh": "Sharjah",
+    "ae-az": "Abu Dhabi",
+    "ae-rk": "Ras Al Khaimah",
+    "ae-aj": "Ajman",
+    "ae-uq": "Umm Al-Quwain",
+    "ae-fu": "Fujairah",
+};
+
 export const paymentOptions = {
     "cash_on_delivery": {
         "rate": 3.3,

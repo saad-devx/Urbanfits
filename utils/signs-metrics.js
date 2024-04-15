@@ -1,5 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import Signs from "@/models/signs";
+import User from "@/models/user";
 import { monthNames, signsTypes } from "@/uf.config";
 import { getDateOfTimezone } from "./cyphers";
 
@@ -13,9 +14,11 @@ const SaveSignsMetrics = async (incProp, user_id) => {
         year: date.getFullYear()
     }
 
+    const registered_users = await User.countDocuments();
     await Signs.create({
         ...(isValidObjectId(user_id) ? { user_id } : {}),
         ...dateObj,
+        registered_users,
         type: incProp
     })
     console.log(incProp + " incremented by 1")

@@ -11,6 +11,7 @@ const SignsSchema = new mongoose.Schema({
         enum: signsTypes,
         default: signsTypes[0]
     },
+    registered_users: Number,
     month: String,
     date: String,
     year: String

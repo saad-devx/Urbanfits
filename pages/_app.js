@@ -4,9 +4,11 @@ import '@/styles/carousels.css';
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/navbars/navbar';
 import Footer from '@/components/footer';
+import Newsletter from '@/components/modals/newsletter';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser';
+import useNewsletter from '@/hooks/useNewsletter';
 import { useRouter } from 'next/router';
 import { CartProvider } from "react-use-cart";
 import LoadingBar from 'react-top-loading-bar';
@@ -21,6 +23,11 @@ function App({ Component, pageProps: { ...pageProps } }) {
   useEffect(() => {
     getMe();
     recordVisit()
+
+    if (sessionStorage.getItem("letter_ad") !== "true") setTimeout(() => {
+      useNewsletter.setState({ show: true })
+      sessionStorage.setItem("letter_ad", "true")
+    }, 10000)
   }, [])
 
   useEffect(() => {
@@ -47,6 +54,7 @@ function App({ Component, pageProps: { ...pageProps } }) {
   return <main className={`max-w-[2000px] mx-auto ${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
+    <Newsletter />
     <CartProvider>
       <Navbar />
       <Component {...pageProps} />
