@@ -55,13 +55,13 @@ const CreateOrder = async (orderPayload) => {
 
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes);
                     sendEmail({ to: receiver.email, subject: "Congratulation, You've got a gift!" }, giftTemplate)
-                    const occassion = giftData.cover.includes("birthday") ? "Happy Birthday" : "Happy Christmas";
+                    const occassion = giftItem.cover.includes("birthday") ? "Happy Birthday" : "Happy Christmas";
                     sendNotification(receiver._id, {
                         category: "primary",
                         heading: "Gift for " + occassion + "!",
                         mini_msg: "Congratulations, you've received a gift from your friend!",
                         type: "order",
-                        message: `Congratultions, you have received an E-Giftcard from your friend ${giftItem.sender.name}. They wish you ${occassion} by this gift. You can do ${giftData.quantity * giftData.price} AED worth of shopping on Urban Fits for free. Please refer to you email "${receiver.email}" inbox for Gift Code. Thanks!`,
+                        message: `Congratultions, you have received an E-Giftcard from your friend ${giftItem.sender.name}. They wish you ${occassion} by this gift. You can do ${giftItem.quantity * giftItem.price} AED worth of shopping on Urban Fits for free. Please refer to you email "${receiver.email}" inbox for Gift Code. Thanks!`,
                     })
                     if (orderData.user_id) sendNotification(orderData.user_id, {
                         category: "order",

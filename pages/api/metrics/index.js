@@ -34,7 +34,13 @@ const Metrics = async (req, res) => StandardApi(req, res, { method: "GET", verif
     const total_orders = await Order.countDocuments({ "order_status.group": { $ne: "cancelled" } });
     const cancelled_orders = await Order.countDocuments({ "order_status.group": "cancelled" });
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const monthlySoldOrders = await Order.find({ "order_status.group": "delivered", updatedAt: { $gt: firstDayOfMonth } }).lean();
+    const monthlySoldOrders = await Order.find({
+        "order_status.group": "delivered",
+        $or: [
+            { updatedAt: { $gte: firstDayOfMonth } },
+            { createdAt: { $gte: firstDayOfMonth } }
+        ]
+    }).lean();
     const monthly_sales = monthlySoldOrders.reduce((acc, item) => {
         const totalProducts = item.order_items.reduce((acc, p) => acc + p.quantity, 0);
         const totalGifts = item.gift_cards.reduce((acc, g) => acc + g.quantity, 0)
