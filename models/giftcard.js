@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 import { giftCardMethods } from "@/uf.config";
 
-const requiredStringType = {
-    type: String,
-    required: true
-}
 const GiftcardSchema = new mongoose.Schema({
     order_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -25,7 +21,10 @@ const GiftcardSchema = new mongoose.Schema({
         enum: Object.keys(giftCardMethods)
     },
     cover_image: String,
-    gift_code: requiredStringType,
+    gift_code: {
+        type: String,
+        required: true
+    },
     price: {
         type: Number,
         required: true

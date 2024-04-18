@@ -302,7 +302,7 @@ export default function Checkout1() {
                         </>}
                         {!values.isGiftCard && <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">Enter Your Shipping Address</h1>}
 
-                        {isLoggedIn() && <div className="w-full mb-5 grid grid-cols-3">
+                        {!values.isGiftCard && isLoggedIn() && <div className="w-full mb-5 grid grid-cols-3">
                             {addressMode.available_modes.map((mode, index) =>
                                 <button key={index} onClick={() => changeAddressMode(mode)} className="flex items-center gap-x-2" name={mode}>
                                     <span className={`${addressMode.mode == mode && "bg-pinky"} size-2 lg:size-4 rounded-3xl border`} />
@@ -406,7 +406,7 @@ export default function Checkout1() {
                                         <div className="w-full lg:my-0 flex flex-col gap-y-2.5">
                                             <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Price:</span> <span>{formatPrice(item.price)}</span></div>
                                             <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>For:</span> <span>{item.buy_for === "self" ? "Self" : "Friend"}</span></div>
-                                            <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Validity:</span> <span>12 months</span></div>
+                                            <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Quantity:</span> <span>{item.quantity}</span></div>
                                         </div>
                                     </aside>
                                 </div>

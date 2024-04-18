@@ -37,6 +37,7 @@ const CreateOrder = async (orderPayload) => {
                 });
 
                 if (buy_for === "self") {
+                    console.log("This is gift card bought for Self: ", giftItem);
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes, true);
                     sendEmail({ to: orderData.email, subject: "Claim your Giftcard" }, giftTemplate);
 
@@ -49,6 +50,7 @@ const CreateOrder = async (orderPayload) => {
                     })
 
                 } else if (buy_for === "friend") {
+                    console.log("This is gift card bought for a Friend: ", giftItem);
                     const receiver = await User.findOne({ email: giftItem.receiver.email })
 
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes);
@@ -64,7 +66,7 @@ const CreateOrder = async (orderPayload) => {
                     if (orderData.user_id) sendNotification(orderData.user_id, {
                         category: "order",
                         heading: "Order Placed",
-                        mini_msg: "You order have been placed successfully. Thanks for your purchase!",
+                        mini_msg: "Your order have been placed successfully. Thanks for your purchase!",
                         type: "order",
                         message: "You order have been placed and successfully have been delivered to your friend as a gift. A confirmation email is also have been sent to you. Thanks for you purchase!",
                     })
