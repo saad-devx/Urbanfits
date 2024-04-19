@@ -1,5 +1,7 @@
 export const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
 
+export const locales = ["en", "ar"];
+
 export const DefaultTasks = [
     {
         name: "sign_up",

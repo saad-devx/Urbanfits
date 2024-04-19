@@ -18,7 +18,9 @@ import {
     LocationIcon,
     UserIcon,
     DropDownIcon
-} from "@/public/accountIcons"
+} from "@/public/accountIcons";
+import useLanguage from '@/hooks/useLanguage';
+import { navbar as navLang } from '@/locales';
 
 const ListItem = (props) => {
     const router = useRouter()
@@ -68,6 +70,7 @@ const SecondaryNavbar = (props) => {
 }
 
 export default function Navbar() {
+    const { locale } = useLanguage();
     const { user, country, notifications, getNotifications, address, getAddress } = useUser();
     const { points, getUfBalance, currency } = useWallet();
     const { totalUniqueItems } = useCart();
@@ -83,6 +86,8 @@ export default function Navbar() {
         getUfBalance();
         if (!address) getAddress();
     }, [user])
+
+    const langObj = navLang[locale];
 
     const closeCart = () => {
         document.body.style.overflowY = 'visible'
@@ -101,12 +106,12 @@ export default function Navbar() {
         <ToTopBtn />
         <nav className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
             <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1 leading-none'><h1>URBAN FITS</h1></Link>
-            <Search classes="hidden md:flex" />
+            <Search classes="hidden md:flex" placeholder={langObj.searchProducts} noResultsMsg={langObj.noResults} />
             <Link href={user && user.email ? '/user/address' : "#"} className="hidden lg:flex items-center text-black">
                 <LocationIcon />
                 <div className="flex flex-col justify-center ml-3 items-start text-[13px]">
-                    <p className="font_urbanist leading-snug">Deliver to</p>
-                    <p className="font_urbanist_bold truncate max-w-[130px]">{address?.shipping_address?.address || "Set your Address"}</p>
+                    <p className="font_urbanist leading-snug">{langObj.addressTitle}</p>
+                    <p className="font_urbanist_bold truncate max-w-[130px]">{address?.shipping_address?.address || langObj.addressTip}</p>
                 </div>
             </Link>
             <button onClick={() => {
@@ -115,7 +120,7 @@ export default function Navbar() {
                 <UserIcon />
                 {user && user.email ? <>
                     <div className="flex flex-col justify-center items-start">
-                        <p className="font_urbanist text-[13px]">Welcome Back</p>
+                        <p className="font_urbanist text-[13px]">{langObj.greeting}</p>
                         <p className="font_urbanist_bold text-[13px] truncate max-w-[130px]">{user.firstname || user.username}</p>
                     </div>
                     <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>

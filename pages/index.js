@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 const HomeCarousel = dynamic(() => import('@/components/carousels/homeCarousel'));
-// const HomeCarousel2 = dynamic(() => import('@/components/carousels/homeCarousel2'));
 import SkeletonRow from "@/components/cards/card-skeleton";
 import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
@@ -18,7 +17,6 @@ export default function Home() {
         (async () => {
             try {
                 const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
-                console.log("Here is the index content: ", data)
                 setIndexContent(data);
             } catch (error) { console.log(error); } finally { setIndexLoading(false) }
         })()
