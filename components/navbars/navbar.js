@@ -62,7 +62,7 @@ const SecondaryNavbar = (props) => {
         <ListItem onClick={props.closeCart} key={10} href='/earn-ufpoints' classes="group hidden lg:flex flex-col">Earn Uf Points</ListItem>
         <ListItem onClick={props.closeCart} key={11} href='/products/category/wishlist'>Wishlist</ListItem>
         <span className="hidden lg:flex mb-2 flex-col justify-center items-center text-sm">
-            Minimum Order
+            {props.langObj.minimumOrder}
             <p className="font_urbanist_bold text-[13px]">{calculateMinOrder()}</p>
         </span>
     </nav>
@@ -126,14 +126,14 @@ export default function Navbar() {
                     <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
                     <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                         <Link onClick={closeCart} href="/user/uf-wallet" className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
-                            <span className="font_copper text-base">UF-POINTS</span>
+                            <span className="font_copper text-base">{langObj.accountMenu.item1}</span>
                             <p className='font_urbanist_medium'>{points}</p>
                         </Link>
-                        <Link onClick={closeCart} href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Dashboard</Link>
-                        <Link onClick={closeCart} href="/user/orders/processing" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Orders</Link>
+                        <Link onClick={closeCart} href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item2}</Link>
+                        <Link onClick={closeCart} href="/user/orders/processing" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item3}</Link>
                         {/* <Link onClick={closeCart} href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link> */}
-                        <Link onClick={closeCart} href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">My Shopping Lists</Link>
-                        <span onClick={() => setLogout(!logout)} className="w-full px-4 cursor-pointer hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />Log Out</span>
+                        <Link onClick={closeCart} href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item4}</Link>
+                        <span onClick={() => setLogout(!logout)} className="w-full px-4 cursor-pointer hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />{langObj.accountMenu.item5}</span>
                     </div>
                 </>
                     : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
@@ -167,6 +167,7 @@ export default function Navbar() {
             cart={cart}
             closeCart={closeCart}
             toggleCart={toggleCart}
+            langObj={langObj}
             logout={logout}
             setLogout={setLogout}
             currency={currency}
