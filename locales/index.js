@@ -1,3 +1,19 @@
+export const universal = {
+    en: {
+        saveBtn: 'Save',
+        cancelBtn: 'Cancel',
+        searchProducts: "Search Products",
+        noResults: "No Results Found",
+        accountMenu: {
+            item1: "UF-POINTS",
+            item2: "My Dashboard",
+            item3: "My Orders",
+            item4: "My Shopping Lists",
+            item5: "Log Out"
+        }
+    },
+}
+
 export const navbar = {
     en: {
         addressTitle: "Deliver to",
@@ -36,6 +52,129 @@ export const navbar = {
             item4: "قوائم التسوق الخاصة بي",
             item5: "تسجيل الخروج"
         }
+    }
+}
+
+export const mobileNavMenu = {
+    en: {
+        siteMenu: "Site Menu",
+        searchProducts: "Search Products",
+        noResults: "No Results Found",
+        categoryMenu: {
+            heading: "All categories",
+            item1: "New Collection",
+            item2: "Women",
+            item3: "Men",
+            item4: "Kids",
+            item5: "View All",
+        },
+        ufPointsMenu: {
+            heading: "Earn UF Points",
+            item1: "My Dashboard",
+            item2: "UF Points History",
+            item3: "How to earn UF Points?",
+        },
+        saleMenu: {
+            heading: "Sale Offers",
+            item1: "Up to 50% off",
+            item2: "Women - all under AED 50",
+            item3: "Men - all under AED 50",
+            item4: "Accessories - starts from AED 30"
+        },
+        accessoriesMenu: {
+            heading: "Accessories",
+            item1: "Shoes",
+            item2: "Jewellery",
+            item3: "Toys"
+        },
+        sizeGuideMenu: {
+            heading: "Size Guides",
+            item1: "Men",
+            item2: "Women",
+            item3: "Kids"
+        },
+        orderMenu: {
+            heading: "Order Information",
+            item1: "My Orders",
+            item2: "Track Orders",
+            item3: "Delivery",
+            item4: "Returns & Refunds"
+        },
+        supportMenu: {
+            heading: "Support",
+            item1: "Contact Us",
+            item2: "FAQs"
+        },
+        policyMenu: {
+            heading: "Policies",
+            item1: "Terms & Conditions",
+            item2: "Privacy Policy",
+            item3: "Cookie Policy",
+            item4: "About Us"
+        },
+        stories: "Stories",
+        about: "About Us",
+        signout: "Sign Out"
+    },
+    ar: {
+        siteMenu: "قائمة الموقع",
+        searchProducts: "البحث عن المنتجات",
+        noResults: "لم يتم العثور على نتائج",
+        categoryMenu: {
+            heading: "جميع الفئات",
+            item1: "مجموعة جديدة",
+            item2: "نساء",
+            item3: "رجال",
+            item4: "أطفال",
+            item5: "عرض الكل",
+        },
+        ufPointsMenu: {
+            heading: "كسب نقاط يو إف",
+            item1: "لوحة التحكم",
+            item2: "تاريخ نقاط يو إف",
+            item3: "كيفية كسب نقاط يو إف؟",
+        },
+        saleMenu: {
+            heading: "عروض البيع",
+            item1: "خصومات تصل إلى 50%",
+            item2: "النساء - كل شيء بأقل من 50 د.إ",
+            item3: "الرجال - كل شيء بأقل من 50 د.إ",
+            item4: "الإكسسوارات - تبدأ من 30 د.إ"
+        },
+        accessoriesMenu: {
+            heading: "الإكسسوارات",
+            item1: "الأحذية",
+            item2: "المجوهرات",
+            item3: "الألعاب"
+        },
+        sizeGuideMenu: {
+            heading: "دليل المقاسات",
+            item1: "رجال",
+            item2: "نساء",
+            item3: "أطفال"
+        },
+        orderMenu: {
+            heading: "معلومات الطلب",
+            item1: "طلباتي",
+            item2: "تتبع الطلبات",
+            item3: "التوصيل",
+            item4: "الإرجاع والاسترداد"
+        },
+        supportMenu: {
+            heading: "الدعم",
+            item1: "اتصل بنا",
+            item2: "الأسئلة الشائعة"
+        },
+        policyMenu: {
+            heading: "السياسات",
+            item1: "الشروط والأحكام",
+            item2: "سياسة الخصوصية",
+            item3: "سياسة الكوكيز",
+            item4: "معلومات عنا"
+        },
+        stories: "القصص",
+        about: "من نحن",
+        signout: "تسجيل الخروج"
     }
 }
 
@@ -172,5 +311,91 @@ export const home = {
         menCollection: "مجموعة الرجال",
         kidsCollection: "مجموعة الاطفال",
         visitCollection: "شاهد كل المجموعة",
+    }
+}
+
+export const myAccount = {
+    en: {
+        title: "My Account",
+        welcome: "Welcome",
+        welcomeMsg: "Save your information and address details here for easy and fast delivery process in the future.",
+        menu: {
+            item1: "My Account",
+            item2: "My UF-Wallet",
+            item3: "Email & Password",
+            item4: "Security / 2FA",
+            item5: "My Orders",
+            item6: "My Shopping Lists",
+            item7: "My Addresses",
+            item8: "Single use package fees",
+            item9: "Log Out",
+        }
+    },
+    ar: {
+        title: "حسابي",
+        welcome: "مرحبًا",
+        welcomeMsg: "احفظ معلوماتك وتفاصيل عنوانك هنا لعملية تسليم سريعة وسهلة في المستقبل.",
+        menu: {
+            item1: "حسابي",
+            item2: "محفظتي يوإف",
+            item3: "البريد الإلكتروني وكلمة المرور",
+            item4: "الأمان / المصادقة الثنائية",
+            item5: "طلباتي",
+            item6: "قوائم التسوق الخاصة بي",
+            item7: "عناويني",
+            item8: "رسوم الحزمة للاستخدام الفردي",
+            item9: "تسجيل الخروج",
+        }
+    }
+}
+
+export const accountTab = {
+    en: {
+        personalInfo: "Personal Information",
+        myProfile: "My Profile",
+        newsletterSub: "Nesletter Subscription",
+        consentMsg1: "Urban Fits processes the data collected to enable you to manage your information to facilitate your order. To find out more about how we manage your personal data and exercise your rights please refer to our",
+        privacyPolicy: "privacy policy.",
+        consentMsg2: "Mandatory information : If you choose not to consent to the collection of mandatory data (with an asterisk). You will not be able to manage your information.",
+        saveBtn: 'Save',
+        cancelBtn: 'Cancel',
+        email: "Email",
+        address: "My Address",
+        addAddressMsg: "Add a new address",
+        upload: "Upload",
+        genderMenu: {
+            heading: "Gender",
+            item1: "Male",
+            item2: "Female",
+            item3: "Other"
+        },
+        country: "Country",
+        phone: "Phone No.",
+        language: "Language",
+        currency: "Currency"
+    },
+    ar: {
+        personalInfo: "المعلومات الشخصية",
+        myProfile: "ملفي الشخصي",
+        newsletterSub: "اشتراك النشرة الإخبارية",
+        consentMsg1: "تقوم Urban Fits بمعالجة البيانات المجمعة لتمكينك من إدارة معلوماتك لتسهيل طلبك. لمعرفة المزيد حول كيفية إدارتنا لبياناتك الشخصية وممارسة حقوقك، يرجى الرجوع إلى",
+        privacyPolicy: "سياسة الخصوصية.",
+        consentMsg2: "معلومات إلزامية: إذا اخترت عدم الموافقة على جمع البيانات الإلزامية (مع علامة النجمة). فلن تتمكن من إدارة معلوماتك.",
+        saveBtn: 'حفظ',
+        cancelBtn: 'إلغاء',
+        email: "إيميل",
+        address: "عنواني",
+        addAddressMsg: "إضافة عنوان جديد",
+        upload: "اپلود",
+        genderMenu: {
+            heading: "الجنس",
+            item1: "ذكر",
+            item2: "أنثى",
+            item3: "آخر"
+        },
+        country: "البلد",
+        phone: "رقم الهاتف",
+        language: "اللغة",
+        currency: "العملة"
     }
 }
