@@ -12,7 +12,6 @@ import Logout from '@/components/modals/logout';
 import Link from 'next/link';
 import uploadImage from '@/utils/uploadImage';
 import Image from 'next/image';
-const giantSearchIcon = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/giant-search.webp?timestamp=123";
 import {
     AccountIcon,
     ReviewsIcon,
@@ -32,6 +31,7 @@ import {
     PackageBagIcon,
     UfPointsIcon
 } from "@/public/accountIcons";
+const giantSearchIcon = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/giant-search.webp?timestamp=123";
 
 export const Option = (props) => {
     const router = useRouter()
@@ -103,8 +103,7 @@ export default function User({ loading, profileNull, children }) {
     }, [])
 
     const langObj = accountLang[locale];
-
-    const profileImage = user?.image?.includes("google") ? user.image : process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()
+    const profileImage = user?.image?.includes("google") ? user.image : process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now();
 
     if (window.matchMedia('(max-width: 760px)').matches) return <>
         <Logout show={logout} setLogout={setLogout} />
@@ -120,7 +119,7 @@ export default function User({ loading, profileNull, children }) {
                                 <path d="M13.1347 26.7069C5.96357 26.7069 0.134766 20.8781 0.134766 13.707C0.134766 6.53583 5.96357 0.707031 13.1347 0.707031C20.3058 0.707031 26.1346 6.53583 26.1346 13.707C26.1346 20.8781 20.3058 26.7069 13.1347 26.7069ZM13.1347 2.52097C6.96728 2.52097 1.94871 7.53955 1.94871 13.707C1.94871 19.8744 6.96728 24.8929 13.1347 24.8929C19.3021 24.8929 24.3207 19.8744 24.3207 13.707C24.3207 7.53955 19.3021 2.52097 13.1347 2.52097Z" fill="#383838" />
                             </svg>
                             <span className="flex flex-col">
-                                <p className="font_urbanist text-[13px] leading-snug">Welcome to Urban Fits</p>
+                                <p className="font_urbanist text-[13px] leading-snug">{langObj.mblWelcomeMsg}</p>
                                 <p className="font_urbanist_bold text-base">{user.firstname} {user.lastname}</p>
                             </span>
                         </div>
@@ -129,11 +128,11 @@ export default function User({ loading, profileNull, children }) {
                     <nav className="w-full py-4 border rounded-md flex justify-center items-center font_urbanist text-xs gap-x-[25%]">
                         <span className="flex flex-col items-center gap-2">
                             <span className='font_urbanist_bold text-lg'>{0}</span>
-                            Vouchers
+                            {langObj.vouchers}
                         </span>
                         <span className="flex flex-col items-center gap-2">
                             <span className='font_urbanist_bold text-lg'>{points}</span>
-                            UF-Points
+                            {langObj.ufPoints}
                         </span>
                     </nav>
                 </> :
@@ -143,18 +142,18 @@ export default function User({ loading, profileNull, children }) {
                             <path d="M12.9984 26.9023C9.76795 26.9023 6.68162 25.5367 4.29182 23.0513C4.07566 22.8328 3.97958 22.5051 4.0036 22.191C4.15972 20.5659 5.04839 19.0501 6.52551 17.9303C10.1042 15.2264 15.9046 15.2264 19.4713 17.9303C20.9484 19.0637 21.8371 20.5659 21.9932 22.191C22.0292 22.5187 21.9211 22.8328 21.705 23.0513C19.3151 25.5367 16.2288 26.9023 12.9984 26.9023ZM5.88903 21.9179C7.88253 23.8161 10.3924 24.8539 12.9984 24.8539C15.6043 24.8539 18.1142 23.8161 20.1077 21.9179C19.8916 21.0848 19.3152 20.2791 18.4625 19.6236C15.5083 17.384 10.5005 17.384 7.52226 19.6236C6.66962 20.2791 6.10519 21.0848 5.88903 21.9179Z" fill="#383838" />
                             <path d="M13.1347 26.7069C5.96357 26.7069 0.134766 20.8781 0.134766 13.707C0.134766 6.53583 5.96357 0.707031 13.1347 0.707031C20.3058 0.707031 26.1346 6.53583 26.1346 13.707C26.1346 20.8781 20.3058 26.7069 13.1347 26.7069ZM13.1347 2.52097C6.96728 2.52097 1.94871 7.53955 1.94871 13.707C1.94871 19.8744 6.96728 24.8929 13.1347 24.8929C19.3021 24.8929 24.3207 19.8744 24.3207 13.707C24.3207 7.53955 19.3021 2.52097 13.1347 2.52097Z" fill="#383838" />
                         </svg>
-                        <p> <Link href='/auth/login'>Sign In</Link> / <Link href='/auth/signup'>Register</Link></p>
+                        <p> <Link href='/auth/login'>Sign In</Link> / <Link href='/auth/signup'>{langObj.register}</Link></p>
                     </div>
                 }
             </section>
-            {user && user.email ? <><h2 className="mt-5 font_urbanist_bold text-base">My Account</h2>
+            {user && user.email ? <><h2 className="mt-5 font_urbanist_bold text-base">{langObj.menu.item1}</h2>
                 <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
                     <Link href="/user/myaccount" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <svg width="18" height="18" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="user-solid 1" clip-path="url(#clip0_3451_580)"><path id="Vector" d="M13.1234 5.5C13.1234 7.90273 11.1762 9.85 8.77344 9.85C6.3707 9.85 4.42344 7.90273 4.42344 5.5C4.42344 3.09727 6.3707 1.15 8.77344 1.15C11.1762 1.15 13.1234 3.09727 13.1234 5.5ZM0.673437 19.3398C0.673437 15.8512 3.49961 13.025 6.98828 13.025H10.5586C14.0473 13.025 16.8734 15.8512 16.8734 19.3398C16.8734 19.6215 16.6449 19.85 16.3633 19.85H1.18359C0.901954 19.85 0.673437 19.6215 0.673437 19.3398Z" stroke="black" stroke-width="1.3" /></g>
                             <defs><clipPath id="clip0_3451_580"><rect width="17.5" height="20" fill="white" transform="translate(0.0234375 0.5)" /></clipPath></defs>
                         </svg>
-                        My Profile
+                        {langObj.accountMenu.item1}
                     </Link>
                     <Link href="/products/category/wishlist" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <svg width="18" height="18" viewBox="0 0 24 21" fill="#000000" xmlns="http://www.w3.org/2000/svg">
@@ -162,37 +161,37 @@ export default function User({ loading, profileNull, children }) {
                                 <path id="Vector" d="M5.70654 0.532631C5.61255 0.54438 5.34821 0.597248 5.11912 0.650116C3.20413 1.09655 1.5711 2.37713 0.689969 4.12177C-0.255778 5.99564 -0.226407 8.42756 0.760459 10.3308C1.31851 11.4058 1.60634 11.7054 5.57731 15.4002C7.61566 17.2976 9.57764 19.1245 9.93597 19.4534C10.2884 19.7883 10.6996 20.1407 10.8406 20.2347C11.3986 20.5989 12.0624 20.5872 12.6381 20.2053C12.8026 20.0996 13.3841 19.5886 13.9304 19.0775C19.3641 14.0198 21.4847 12.0285 21.6903 11.7876C22.5949 10.7126 23.0942 9.71401 23.3409 8.46868C23.4701 7.81664 23.4701 6.50082 23.3409 5.84879C22.8768 3.52847 21.3495 1.71922 19.1467 0.890957C18.4536 0.632492 17.9954 0.54438 17.1612 0.509134C15.5811 0.444517 14.3592 0.808718 12.9847 1.76034C12.456 2.12454 12.2152 2.33014 11.9567 2.64147L11.7452 2.89406L11.3986 2.53573C10.447 1.56649 9.00784 0.808718 7.68615 0.579624C7.23971 0.497385 6.16473 0.473888 5.70654 0.532631ZM7.93874 2.10692C9.08421 2.42413 9.86548 2.9528 10.7701 4.02191C11.2107 4.54471 11.4456 4.72094 11.7217 4.72094C12.0213 4.72094 12.2093 4.58583 12.6616 4.05128C13.437 3.14078 14.0009 2.69434 14.8351 2.34776C15.5282 2.05405 15.8689 1.99531 16.8382 1.99531C17.9073 1.99531 18.4007 2.10692 19.2231 2.52399C20.5859 3.21714 21.514 4.40373 21.8782 5.91928C21.9957 6.43033 22.0075 7.75203 21.9017 8.27483C21.6844 9.27932 21.2438 10.1605 20.6035 10.8536C20.4332 11.0357 15.6457 15.506 12.4384 18.4783C12.0977 18.7955 11.7746 19.054 11.7217 19.054C11.6747 19.054 10.0593 17.5972 8.13846 15.8173C2.49922 10.5834 2.58734 10.6656 2.08803 9.76101C1.64746 8.96212 1.47711 8.21609 1.48299 7.09999C1.48886 5.89578 1.71795 5.12039 2.34649 4.18639C3.08664 3.07616 4.26736 2.30077 5.60668 2.04818C6.18235 1.93657 7.43943 1.97181 7.93874 2.10692Z" fill="black" />
                             </g>
                         </svg>
-                        Wishlist
+                        {langObj.accountMenu.item2}
                     </Link>
                     <Link href="/stories" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <CameraIcon />
-                        Stories
+                        {langObj.accountMenu.item3}
                     </Link>
                     <Link href="/products/category/gifts" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <GiftBoxIcon />
-                        Gifts
+                        {langObj.accountMenu.item4}
                     </Link>
                 </div>
-                <h2 className="mt-5 font_urbanist_bold text-base">My Dashboard</h2>
+                <h2 className="mt-5 font_urbanist_bold text-base">{langObj.dashboardMenu.heading}</h2>
                 <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
                     <Link href="/user/uf-wallet" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <UfPointsIcon />
-                        My UF Wallet
+                        {langObj.dashboardMenu.item1}
                     </Link>
                     <Link href="/user/security" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <SecurityIcon />
-                        Security
+                        {langObj.dashboardMenu.item2}
                     </Link>
                     <Link href="/user/emailaddress" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <EmailIcon />
-                        Change Email
+                        {langObj.dashboardMenu.item3}
                     </Link>
                     <Link href="/user/shopping-lists" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <PackageBagIcon />
-                        Shopping Lists
+                        {langObj.dashboardMenu.item4}
                     </Link>
                 </div>
-                <h2 className="mt-5 font_urbanist_bold text-base">My Orders</h2>
+                <h2 className="mt-5 font_urbanist_bold text-base">{langObj.menu.item5}</h2>
                 <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
                     <Link href="/user/orders/delivering" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <OrderListIcon />

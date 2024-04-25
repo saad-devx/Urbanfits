@@ -319,6 +319,7 @@ export const myAccount = {
         title: "My Account",
         welcome: "Welcome",
         welcomeMsg: "Save your information and address details here for easy and fast delivery process in the future.",
+        mblWelcomeMsg: "Welcome to Urban Fits",
         menu: {
             item1: "My Account",
             item2: "My UF-Wallet",
@@ -329,12 +330,42 @@ export const myAccount = {
             item7: "My Addresses",
             item8: "Single use package fees",
             item9: "Log Out",
+        },
+        vouchers: "Vouchers",
+        ufPoints: "UF Points",
+        register: "Register",
+        accountMenu: {
+            item1: "My Profile",
+            item2: "Wishlist",
+            item3: "Stories",
+            item4: "Gifts"
+        },
+        dashboardMenu: {
+            heading: "My Dashboard",
+            item1: "UF-Wallet",
+            item2: "Security",
+            item3: "Change Email",
+            item4: "Shopping Lists",
+        },
+        orderMenu: {
+            item1: "Processing",
+            item2: "Shipped",
+            item3: "Delivering",
+            item4: "Delivered",
+        },
+        services: {
+            heading: "More Services",
+            item1: "Categories",
+            item2: "Track Order",
+            item3: "Contact Us",
+            item4: "FAQ",
         }
     },
     ar: {
         title: "حسابي",
         welcome: "مرحبًا",
         welcomeMsg: "احفظ معلوماتك وتفاصيل عنوانك هنا لعملية تسليم سريعة وسهلة في المستقبل.",
+        mblWelcomeMsg: "مرحبًا بك في Urban Fits",
         menu: {
             item1: "حسابي",
             item2: "محفظتي يوإف",
@@ -345,6 +376,35 @@ export const myAccount = {
             item7: "عناويني",
             item8: "رسوم الحزمة للاستخدام الفردي",
             item9: "تسجيل الخروج",
+        },
+        vouchers: "قسائم",
+        ufPoints: "نقاط يوإف",
+        register: "تسجيل",
+        accountMenu: {
+            item1: "ملفي الشخصي",
+            item2: "قائمة الرغبات",
+            item3: "القصص",
+            item4: "الهدايا"
+        },
+        dashboardMenu: {
+            heading: "لوحة تحكمي",
+            item1: "محفظة يوإف",
+            item2: "الأمان",
+            item3: "الأمان",
+            item4: "قوائم التسوق",
+        },
+        orderMenu: {
+            item1: "قيد المعالجة",
+            item2: "تم الشحن",
+            item3: "قيد التسليم",
+            item4: "تم التوصيل",
+        },
+        services: {
+            heading: "المزيد من الخدمات",
+            item1: "الفئات",
+            item2: "تتبع الطلب",
+            item3: "اتصل بنا",
+            item4: "الأسئلة الشائعة",
         }
     }
 }

@@ -23,12 +23,18 @@ export default function Login() {
     const passRef = useRef()
 
     useEffect(() => {
+        const { google } = window;
         if (!google?.accounts) { return };
         const googleClient = google.accounts.id;
         googleClient.initialize({
             client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+            use_fedcm_for_prompt: true,
             callback: googleSession => signInWithGoogle(googleSession.credential, null, router)
         });
+        google.accounts.id.renderButton(
+            document.getElementById("signin_with_google_btn"),
+            { theme: "outline", size: "large" }  // customization attributes
+        );
 
         return () => googleClient.cancel()
     }, []);
@@ -51,9 +57,12 @@ export default function Login() {
     })
 
     const handleSignIn = async () => {
+        const { google } = window;
+        console.log(google);
         if (!google?.accounts) return;
         if (isLoggedIn()) return toaster("info", "You are already singned in");
         DeleteCookie("g_state");
+
         google.accounts.id.prompt((res) => {
             console.log(res);
             if (res.j && res.j == "opt_out_or_no_session") toaster("info", "You dont have any google account to sign in with.")
@@ -108,11 +117,12 @@ export default function Login() {
                         <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>Login with&nbsp;</span>
                         Google
                     </button> */}
-                    <button type='button' onClick={handleSignIn} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
+                    <button type='button' id="signin_with_google_btn" onClick={handleSignIn} name='google' className="group w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                         <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
                         <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>Login with&nbsp;</span>
                         Google
                     </button>
+                    {/* <div></div> */}
                 </section>
             </form>
         </AuthPage>
