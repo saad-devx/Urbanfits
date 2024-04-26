@@ -24,10 +24,10 @@ function App({ Component, pageProps: { ...pageProps } }) {
     getMe();
     recordVisit()
 
-    if (localStorage.getItem("letter_ad") !== "true") setTimeout(() => {
-      useNewsletter.setState({ show: true })
-      localStorage.setItem("letter_ad", "true")
-    }, 10000)
+    useNewsletter.setState({ show: true })
+    // if (localStorage.getItem("letter_ad") !== "true") setTimeout(() => {
+    //   localStorage.setItem("letter_ad", "true")
+    // }, 10000)
   }, [])
 
   useEffect(() => {

@@ -14,7 +14,6 @@ import Tooltip from '../../components/tooltip';
 import toaster from '@/utils/toast_function';
 
 const AddressForm = ({ type, loading, address, heading, onsubmit }) => {
-    console.log(address);
     const { values, errors, touched, handleChange, handleReset, handleBlur, handleSubmit, setValues } = useFormik({
         initialValues: {
             address_title: '',
@@ -51,7 +50,7 @@ const AddressForm = ({ type, loading, address, heading, onsubmit }) => {
         <h1 className='text-base font_urbanist_bold' >{heading}</h1>
         <div className="relative w-full data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-4">
             {touched.address_title && errors.address_title ? <Tooltip classes="form-error" content={errors.address_title} /> : null}
-            <input className="w-full bg-transparent outline-none border-none" type="text" name="address_title" id="address_title" value={values.address_title} onBlur={handleBlur} onChange={handleChange} placeholder="Address Title*" />
+            <input className="w-full bg-transparent outline-none border-none" type="text" name="address_title" id="address_title" value={values.address_title} onBlur={handleBlur} onChange={handleChange} placeholder="Address Title* e.g Home" />
         </div>
         <div className="flex justify-between w-full ">
             <div className="relative w-48pr data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-4">

@@ -95,7 +95,7 @@ export default function Navbar() {
     }
 
     const toggleCart = () => {
-        document.body.style.overflowY = cart ? null : 'hidden'
+        document.body.style.overflowY = cart ? null : 'hidden';
         setCart(!cart)
     }
 
@@ -104,7 +104,7 @@ export default function Navbar() {
         <Logout show={logout} setLogout={setLogout} />
         <LanguageModal show={langModal} setLangModal={setLangModal} />
         <ToTopBtn />
-        <nav className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
+        <nav name="top_level_navbar" className="sticky z-50 font_urbanist w-full h-[45px] md:h-[65px] flex justify-between items-end md:items-center px-7 lg:px-8 xl:px-10 2xl:px-16 bg-white">
             <Link href='/' className='font_copper text-[22px] lg:text-2xl tracking-1 leading-none'><h1>URBAN FITS</h1></Link>
             <Search classes="hidden md:flex" placeholder={langObj.searchProducts} noResultsMsg={langObj.noResults} />
             <Link href={user && user.email ? '/user/address' : "#"} className="hidden lg:flex items-center text-black">
@@ -120,19 +120,18 @@ export default function Navbar() {
                 <UserIcon />
                 {user && user.email ? <>
                     <div className="flex flex-col justify-center items-start">
-                        <p className="font_urbanist text-[13px]">{langObj.greeting}</p>
-                        <p className="font_urbanist_bold text-[13px] truncate max-w-[130px]">{user.firstname || user.username}</p>
+                        <span className="font_urbanist text-[13px]">{langObj.greeting}</span>
+                        <span className="font_urbanist_bold text-[13px] truncate max-w-[130px]">{user.firstname || user.username}</span>
                     </div>
                     <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
-                    <div className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
-                        <Link onClick={closeCart} href="/user/uf-wallet" className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
+                    <div onClick={closeCart} className="absolute top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white w-48 !p-0 text-sm font_urbanist equillibrium_shadow rounded-lg transition-all overflow-hidden opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+                        <Link href="/user/uf-wallet" className="w-full px-4 border-b hover:bg-slate-100 flex justify-between items-center py-3 transition-all">
                             <span className="font_copper text-base">{langObj.accountMenu.item1}</span>
-                            <p className='font_urbanist_medium'>{points}</p>
+                            <span className='font_urbanist_medium'>{points}</span>
                         </Link>
-                        <Link onClick={closeCart} href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item2}</Link>
-                        <Link onClick={closeCart} href="/user/orders/processing" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item3}</Link>
-                        {/* <Link onClick={closeCart} href="/user/orders/pending" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">Orders in Progress</Link> */}
-                        <Link onClick={closeCart} href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item4}</Link>
+                        <Link href="/user/myaccount" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item2}</Link>
+                        <Link href="/user/orders/processing" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item3}</Link>
+                        <Link href="/user/shopping-lists" className="w-full px-4 border-b hover:bg-slate-100 flex items-center py-3 transition-all">{langObj.accountMenu.item4}</Link>
                         <span onClick={() => setLogout(!logout)} className="w-full px-4 cursor-pointer hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />{langObj.accountMenu.item5}</span>
                     </div>
                 </>
@@ -149,9 +148,9 @@ export default function Navbar() {
                         <path d="M1.46875 4V4.24496L1.66232 4.39509L8.73082 9.8774C9.76266 10.7325 11.2415 10.7325 12.2733 9.87735L19.3378 4.39501L19.5312 4.24488V4V2.66667C19.5312 2.03131 19.0195 1.5 18.375 1.5H2.625C1.98053 1.5 1.46875 2.03131 1.46875 2.66667V4ZM2.27269 5.10298L1.46875 4.48753V5.5V13.3333C1.46875 13.9687 1.98053 14.5 2.625 14.5H18.375C19.0195 14.5 19.5312 13.9687 19.5312 13.3333V5.5V4.48753L18.7273 5.10298L12.1961 10.103L12.1737 10.1201L12.1534 10.1396C11.7444 10.5329 11.1278 10.75 10.4851 10.75C9.84161 10.75 9.23991 10.5328 8.85355 10.1464L8.83018 10.1231L8.80394 10.103L2.27269 5.10298ZM1 2.66667C1 1.97591 1.1331 1.58565 1.33026 1.36451C1.5156 1.15663 1.8475 1 2.5 1H18.375C19.0269 1 19.4031 1.15676 19.6231 1.38154C19.8453 1.60847 20 1.99809 20 2.66667V13.3333C20 14.0019 19.8453 14.3915 19.6231 14.6185C19.4031 14.8432 19.0269 15 18.375 15H2.625C1.97308 15 1.59689 14.8432 1.37686 14.6185C1.15471 14.3915 1 14.0019 1 13.3333V2.66667Z" fill="black" stroke="black" />
                     </svg>
                 </Link> : null}
-                <button onClick={() => { toggleCart(); scrollTo(0, 0) }} className="hidden md:block relative">
+                <button onClick={() => { toggleCart(); scrollTo(0, 0) }} name='desktop_nav_btn' className="hidden md:block relative">
                     {totalUniqueItems !== 0 ? <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex justify-center items-center border border-white text-white text-[10px] aspect-square rounded-full bg-[#FF4A60]">{totalUniqueItems}</span> : null}
-                    <Image src={bag} />
+                    {cart ? <i className="fa-solid fa-xmark text-gotham-black text-2xl align-middle" /> : <Image src={bag} />}
                 </button>
                 {user && window.matchMedia('(max-width: 760px)').matches ? <Link href='/earn-ufpoints'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="21" viewBox="0 0 25 21" fill="none">

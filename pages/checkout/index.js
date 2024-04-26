@@ -37,7 +37,7 @@ const ShipmentOption = ({ method, selected, handleChange, handleBlur }) => {
 }
 
 const addressModes = {
-    shipping_address: "Address 1",
+    address1: "Address 1",
     address2: "Address 2",
     custom: "Custom"
 }
@@ -75,7 +75,7 @@ export default function Checkout1() {
             gift_code: '',
             coupon_code: '',
             shipping_address: {
-                address_title: 'Home',
+                address_title: '',
                 firstname: '',
                 lastname: '',
                 address: '',
@@ -180,9 +180,9 @@ export default function Checkout1() {
                     const newModes = [...prev.available_modes, modeKey];
                     return { mode: modeKey, name: modeName, available_modes: Array.from(new Set(newModes)) }
                 })
-                if (address?.shipping_address) {
-                    addressKey = "shipping_address";
-                    addAddressMode("shipping_address", address.shipping_address.address_title);
+                if (address?.address1) {
+                    addressKey = "address1";
+                    addAddressMode("address1", address.address1.address_title);
                 }
                 if (address?.address2) {
                     addressKey = "address2";
@@ -304,20 +304,18 @@ export default function Checkout1() {
 
                         {!values.isGiftCard && isLoggedIn() && <div className="w-full mb-5 grid grid-cols-3">
                             {addressMode.available_modes.map((mode, index) =>
-                                <button key={index} onClick={() => changeAddressMode(mode)} className="flex items-center gap-x-2" name={mode}>
+                                <button type='button' key={index} onClick={() => changeAddressMode(mode)} className="flex items-center gap-x-2" name={mode}>
                                     <span className={`${addressMode.mode == mode && "bg-pinky"} size-2 lg:size-4 rounded-3xl border`} />
                                     {mode !== "custom" ? address[mode].address_title : addressModes[mode]}
                                 </button>)}
                         </div>}
 
                         <section className="w-full space-y-10">
-                            {!values.isGiftCard && <><div className="relative w-full data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
-                                {touched.shipping_address && touched.shipping_address.address_title && errors.shipping_address && errors.shipping_address.address_title ? <Tooltip classes="form-error" content={errors.shipping_address.address_title} /> : null}
-                                <select value={values.shipping_address.address_title} name='shipping_address.address_title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                                    <option value="Home">Home</option>
-                                    <option value="Office">Office</option>
-                                </select>
-                            </div>
+                            {!values.isGiftCard && <>
+                                <div className="relative w-full data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-4">
+                                    {touched.shipping_address && touched.shipping_address.address_title && errors.shipping_address && errors.shipping_address.address_title ? <Tooltip classes="form-error" content={errors.shipping_address.address_title} /> : null}
+                                    <input className="w-full bg-transparent outline-none border-none" id="address_title" type="text" value={values.shipping_address.address_title} name='shipping_address.address_title' onBlur={handleBlur} onChange={handleChange} placeholder="Address Title* e.g Home" />
+                                </div>
                                 <div className="flex justify-between w-full ">
                                     <div className="relative w-48pr data_field flex items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                                         {touched.shipping_address && touched.shipping_address.firstname && errors.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.shipping_address.firstname} /> : null}

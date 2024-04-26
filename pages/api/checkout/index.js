@@ -234,7 +234,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
             client_reference_id: shipping_info.name,
             mode: 'payment',
             success_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/thanks`,
-            cancel_url: `${process.env.NEXT_PUBLIC_HOST}/checkout/step1`
+            cancel_url: `${process.env.NEXT_PUBLIC_HOST}/checkout`
         });
 
         res.status(201).json({

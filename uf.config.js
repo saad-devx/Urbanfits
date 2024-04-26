@@ -158,6 +158,8 @@ export const jwtExpiries = {
     extended: 30 // 30 days
 }
 
+export const newsletterInterests = ['bags', 'sneakers', 'jackets', 'dresses', 'fashion shows'];
+
 export const giftCardPrices = [50, 100, 200, 300, 400, 500];
 export const giftCardMethods = {
     self: {
