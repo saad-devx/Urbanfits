@@ -6,6 +6,7 @@ import { sendAdminNotification } from "@/utils/send_notification";
 import { verify } from "jsonwebtoken"
 import { parse } from "cookie";
 import { adminRoles } from "@/uf.config";
+import { RemoveSessionCookie } from "@/utils/cyphers";
 
 export default async function StandardApi(req, res, { method = "GET", verify_user = true, verify_admin = false } = {}, next) {
     try {
@@ -26,7 +27,8 @@ export default async function StandardApi(req, res, { method = "GET", verify_use
                 req.user = decodedToken;
                 callNextHandler = next;
             } catch (error) {
-                console.log(error)
+                console.log(error);
+                RemoveSessionCookie(res);
                 return res.status(401).json({ success: false, error, msg: "Your session is invalid or expired. Please sign in again." })
             } else callNextHandler = next;
             if (callNextHandler) await callNextHandler()

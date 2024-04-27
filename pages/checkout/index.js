@@ -14,7 +14,7 @@ import Image from "next/image"
 import { shippingRates, paymentOptions, UAEStates } from '@/uf.config';
 import { get12hFormatTime } from '@/utils/cyphers';
 import countryCodes from '@/static data/countryCodes';
-import LanguageModal from '@/components/modals/languagemodal';
+import LanguageModal from '@/components/modals/language';
 import toaster from '@/utils/toast_function';
 import axios from 'axios';
 import { useFormik } from 'formik';

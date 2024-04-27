@@ -32,6 +32,18 @@ export const navbar = {
             item3: "My Orders",
             item4: "My Shopping Lists",
             item5: "Log Out"
+        },
+        categories: {
+            item1: "All Categories",
+            item2: "New Collection",
+            item3: "Women",
+            item4: "Men",
+            item5: "Kids",
+            item6: "Sales",
+            item7: "Gifts",
+            item8: "Accessories",
+            item9: "Earn Uf Points",
+            item10: "Wishlist",
         }
     },
     ar: {
@@ -51,6 +63,18 @@ export const navbar = {
             item3: "طلباتي",
             item4: "قوائم التسوق الخاصة بي",
             item5: "تسجيل الخروج"
+        },
+        categories: {
+            item1: "جميع الفئات",
+            item2: "مجموعة جديدة",
+            item3: "نساء",
+            item4: "رجال",
+            item5: "أطفال",
+            item6: "تخفيضات",
+            item7: "هدايا",
+            item8: "إكسسوارات",
+            item9: "كسب نقاط يوإف",
+            item10: "قائمة الرغبات",
         }
     }
 }
@@ -334,6 +358,7 @@ export const myAccount = {
         vouchers: "Vouchers",
         ufPoints: "UF Points",
         register: "Register",
+        signIn: "Sign In",
         accountMenu: {
             item1: "My Profile",
             item2: "Wishlist",
@@ -359,7 +384,13 @@ export const myAccount = {
             item2: "Track Order",
             item3: "Contact Us",
             item4: "FAQ",
-        }
+        },
+        newsletterMenu: {
+            heading: "Newsletter Subscription",
+            item1: "Email"
+        },
+        recentView: "Recently Viewed",
+        noViews: "No Recently viewed items"
     },
     ar: {
         title: "حسابي",
@@ -380,6 +411,7 @@ export const myAccount = {
         vouchers: "قسائم",
         ufPoints: "نقاط يوإف",
         register: "تسجيل",
+        signIn: "تسجيل الدخول",
         accountMenu: {
             item1: "ملفي الشخصي",
             item2: "قائمة الرغبات",
@@ -405,7 +437,13 @@ export const myAccount = {
             item2: "تتبع الطلب",
             item3: "اتصل بنا",
             item4: "الأسئلة الشائعة",
-        }
+        },
+        newsletterMenu: {
+            heading: "النشرة الإخبارية",
+            item1: "إيميل"
+        },
+        recentView: "تمت المشاهدة مؤخرًا",
+        noViews: "لا توجد عناصر تمت المشاهدة مؤخرًا"
     }
 }
 
@@ -423,6 +461,7 @@ export const accountTab = {
         address: "My Address",
         addAddressMsg: "Add a new address",
         upload: "Upload",
+        dataEncrypted: "All data will be encrypted",
         genderMenu: {
             heading: "Gender",
             item1: "Male",
@@ -447,6 +486,7 @@ export const accountTab = {
         address: "عنواني",
         addAddressMsg: "إضافة عنوان جديد",
         upload: "اپلود",
+        dataEncrypted: "سيتم تشفير جميع البيانات",
         genderMenu: {
             heading: "الجنس",
             item1: "ذكر",
@@ -457,5 +497,52 @@ export const accountTab = {
         phone: "رقم الهاتف",
         language: "اللغة",
         currency: "العملة"
+    }
+}
+
+export const cart = {
+    en: {
+        title: "Shopping Cart",
+        columns: {
+            item1: "Product",
+            item2: "Color",
+            item3: "Size",
+            item4: "Units",
+            item5: "Amount"
+        },
+        deleteAll: "Delete All",
+        orderSummary: {
+            heading: "Order Summary",
+            item1: "Subtotal",
+            item2: "Shipping Fee",
+            item3: "Total",
+            item4: "Check Out"
+        },
+        emptyCart: {
+            msg: "Looks like you have not added anything to your cart. Go ahead & explore top categories.",
+            btn: "Back to Shope"
+        }
+    },
+    ar: {
+        title: "عربة التسوق",
+        columns: {
+            item1: "المنتج",
+            item2: "اللون",
+            item3: "الحجم",
+            item4: "الوحدات",
+            item5: "المبلغ"
+        },
+        deleteAll: "حذف الكل",
+        orderSummary: {
+            heading: "ملخص الطلب",
+            item1: "المجموع الفرعي",
+            item2: "رسوم الشحن",
+            item3: "المجموع",
+            item4: "الدفع"
+        },
+        emptyCart: {
+            msg: "يبدو أنك لم تقم بإضافة أي شيء إلى عربة التسوق الخاصة بك. تفضل واستكشف الفئات الأعلى.",
+            btn: "العودة إلى المتجر"
+        }
     }
 }

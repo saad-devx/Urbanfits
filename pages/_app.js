@@ -18,19 +18,20 @@ import { urbanist } from '@/fonts';
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter();
   const { getMe, user, isLoggedIn, getNotifications, emitPresenceEvent, subscribePersonalChannel, recordVisit } = useUser();
+  const { newsletterData } = useNewsletter();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     getMe();
     recordVisit()
-
-    useNewsletter.setState({ show: true })
-    // if (localStorage.getItem("letter_ad") !== "true") setTimeout(() => {
-    //   localStorage.setItem("letter_ad", "true")
-    // }, 10000)
   }, [])
 
   useEffect(() => {
+    if (localStorage.getItem("letter_ad") !== "true" && !newsletterData?.email) setTimeout(() => {
+      useNewsletter.setState({ show: true })
+      localStorage.setItem("letter_ad", "true")
+    }, 10000)
+
     let unSubPresence = null;
     let unSubPersonalChannel = null;
     if (isLoggedIn() && user) {

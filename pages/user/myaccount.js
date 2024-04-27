@@ -140,7 +140,7 @@ export default function Personalinfo() {
                 <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                 <button onClick={() => setUserInfoModal(true)} className="flex font_urbanist_bold text-base gap-x-2">{user.firstname} {user.lastname} <EditIcon /></button>
             </section>
-            <GenderSelect user={user} updateUser={updateUser} show={genderModal} setGenderModal={setGenderModal} />
+            <GenderSelect langObj={langObj} user={user} updateUser={updateUser} show={genderModal} setGenderModal={setGenderModal} />
             <UserInfoModal user={user} updateUser={updateUser} show={userInfoModal} setUserInfoModal={setUserInfoModal} />
             <CountrySelection show={countryModal} setCoutnryModal={setCoutnryModal} />
             <LanguageSelect show={languageModal} setLanguageModal={setLanguageModal} />

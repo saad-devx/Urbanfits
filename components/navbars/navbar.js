@@ -8,7 +8,7 @@ import Link from 'next/link'
 import ToTopBtn from '../buttons/toTopBtn';
 import Image from 'next/image';
 import bag from '@/public/bag.svg'
-const LanguageModal = dynamic(() => import('../modals/languagemodal'));;
+const LanguageModal = dynamic(() => import('../modals/language'));;
 const Logout = dynamic(() => import('@/components/modals/logout'));
 const Cart = dynamic(() => import('../cart'));
 const Search = dynamic(() => import('../search'));
@@ -43,6 +43,7 @@ const ListItem = (props) => {
 }
 
 const SecondaryNavbar = (props) => {
+    const { closeCart, langObj } = props;
     const calculateMinOrder = () => {
         const { currency } = props
         const minOrders = { "PKR": "15,000", "AED": "300", "SAR": "300" }
@@ -50,19 +51,18 @@ const SecondaryNavbar = (props) => {
     }
 
     if (window.matchMedia('(min-width: 760px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full max-w-[2000px] mx-auto h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
-        <ListItem onClick={props.closeCart} key={1} href='/products/category/all-categories' categories>All Categories</ListItem>
-        <ListItem onClick={props.closeCart} key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>New Collection</ListItem>
-        <ListItem onClick={props.closeCart} key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>Women</ListItem>
-        <ListItem onClick={props.closeCart} key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>Men</ListItem>
-        <ListItem onClick={props.closeCart} key={5} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>Kids</ListItem>
-        <ListItem onClick={props.closeCart} key={6} href='/products/category/64d4dfa643c643cc9c60c672?name=baby+products' classes="group hidden 2xl:flex flex-col">Baby Products</ListItem>
-        <ListItem onClick={props.closeCart} key={7} href='/products/category/sale'>Sales</ListItem>
-        <ListItem onClick={props.closeCart} key={8} href='/giftcard' classes="group hidden xl:flex flex-col">Gifts</ListItem>
-        <ListItem onClick={props.closeCart} key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">Accessories</ListItem>
-        <ListItem onClick={props.closeCart} key={10} href='/earn-ufpoints' classes="group hidden lg:flex flex-col">Earn Uf Points</ListItem>
-        <ListItem onClick={props.closeCart} key={11} href='/products/category/wishlist'>Wishlist</ListItem>
+        <ListItem onClick={closeCart} key={1} href='/products/category/all-categories' categories>{langObj.categories.item1}</ListItem>
+        <ListItem onClick={closeCart} key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>{langObj.categories.item2}</ListItem>
+        <ListItem onClick={closeCart} key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>{langObj.categories.item3}</ListItem>
+        <ListItem onClick={closeCart} key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>{langObj.categories.item4}</ListItem>
+        <ListItem onClick={closeCart} key={5} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>{langObj.categories.item5}</ListItem>
+        <ListItem onClick={closeCart} key={7} href='/products/category/sale'>{langObj.categories.item6}</ListItem>
+        <ListItem onClick={closeCart} key={8} href='/giftcard' classes="group hidden xl:flex flex-col">{langObj.categories.item7}</ListItem>
+        <ListItem onClick={closeCart} key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">{langObj.categories.item8}</ListItem>
+        <ListItem onClick={closeCart} key={10} href='/earn-ufpoints' classes="group hidden lg:flex flex-col">{langObj.categories.item9}</ListItem>
+        <ListItem onClick={closeCart} key={11} href='/products/category/wishlist'>{langObj.categories.item10}</ListItem>
         <span className="hidden lg:flex mb-2 flex-col justify-center items-center text-sm">
-            {props.langObj.minimumOrder}
+            {langObj.minimumOrder}
             <p className="font_urbanist_bold text-[13px]">{calculateMinOrder()}</p>
         </span>
     </nav>
