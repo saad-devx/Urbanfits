@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import useUser from '@/hooks/useUser';
+import useLanguage from '@/hooks/useLanguage';
+import { addressTab as addressLang } from '@/locales';
 import User from '.';
 import Head from 'next/head';
 import Error403 from '../403';
@@ -13,7 +15,7 @@ import * as Yup from 'yup'
 import Tooltip from '../../components/tooltip';
 import toaster from '@/utils/toast_function';
 
-const AddressForm = ({ type, loading, address, heading, onsubmit }) => {
+const AddressForm = ({ langObj, type, loading, address, heading, onsubmit }) => {
     const { values, errors, touched, handleChange, handleReset, handleBlur, handleSubmit, setValues } = useFormik({
         initialValues: {
             address_title: '',
@@ -107,16 +109,18 @@ const AddressForm = ({ type, loading, address, heading, onsubmit }) => {
                 <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
             </div>
         </div>
-        <p className="font_urbanist text-[13px]">In case your carrier needs to reach you. <br />Your privacy will be well protected, please refer to our <Link href="/policies/privacypolicy" className="underline">privacy policy</Link>.</p>
+        <p className="font_urbanist text-[13px]">{langObj.addressTip.pt1} <br />{langObj.addressTip.pt2} <Link href="/policies/privacypolicy" className="underline">{langObj.addressTip.pt3}</Link>.</p>
         <div className="w-full flex justify-end space-x-4">
-            <Button disabled={loading} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3" >Cancel</Button>
-            <Button loading={loading} type="submit" classes="w-full md:w-1/3" >Save</Button>
+            <Button disabled={loading} type="reset" bg="bg-gray-100" text="black" classes="w-full md:w-1/3" >{langObj.cancelBtn}</Button>
+            <Button loading={loading} type="submit" classes="w-full md:w-1/3" >{langObj.saveBtn}</Button>
         </div>
     </form>
 }
 
 export default function Address() {
     const { user, isLoggedIn, address, updateAddress, getAddress, userLoading } = useUser();
+    const { locale } = useLanguage();
+    const langObj = addressLang[locale];
 
     useEffect(() => {
         getAddress();
@@ -132,24 +136,24 @@ export default function Address() {
         <div className="w-full p-4 border-b border-gray-50 flex justify-between items-center">
             <Link href="/user/myaccount" className='fa-solid fa-chevron-left text-xl'></Link>
             <div className="flex flex-col justify-center items-center font_urbanist text-xs">
-                <h1 className="font_urbanist_medium text-lg">Add a new Address</h1>
-                All data will be encrypted
+                <h1 className="font_urbanist_medium text-lg">{langObj.title}</h1>
+                {langObj.encryptedMsg}
             </div>
             <i className='w-0 h-0' />
         </div>
         <section className="w-full p-4 pb-20">
             {userLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
                 <>
-                    <AddressForm loading={userLoading} address={address} type="address1" heading="Add or change Address 1" onsubmit={onsubmit} />
-                    <AddressForm loading={userLoading} address={address} type="address2" heading="Add or change Address 2" onsubmit={onsubmit} />
+                    <AddressForm langObj={langObj} loading={userLoading} address={address} type="address1" heading={langObj.addOrChangeAddress + "1 "} onsubmit={onsubmit} />
+                    <AddressForm langObj={langObj} loading={userLoading} address={address} type="address2" heading={langObj.addOrChangeAddress + "2 "} onsubmit={onsubmit} />
                 </>}
         </section>
     </main>
     else return <>
         <Head><title>Addresses - UF</title></Head>
         <User loading={userLoading}>
-            <AddressForm loading={userLoading} address={address} type="address1" heading="Add or change Address 1" onsubmit={onsubmit} />
-            <AddressForm loading={userLoading} address={address} type="address2" heading="Add or change Address 2" onsubmit={onsubmit} />
+            <AddressForm langObj={langObj} loading={userLoading} address={address} type="address1" heading={langObj.addOrChangeAddress + "1 "} onsubmit={onsubmit} />
+            <AddressForm langObj={langObj} loading={userLoading} address={address} type="address2" heading={langObj.addOrChangeAddress + "2 "} onsubmit={onsubmit} />
         </User>
     </>
 }

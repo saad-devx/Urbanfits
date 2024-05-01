@@ -500,6 +500,138 @@ export const accountTab = {
     }
 }
 
+export const ufWalletTab = {
+    en: {
+        walletTitle: "UF Wallet",
+        historyTitle: "UF Points History",
+        encryptedMsg: "All data will be encrypted",
+        refresh: "Refresh",
+        points: "Points",
+        aed: "AED",
+        findMoreMsg: "Find out more about UF-Points",
+        viewHistory: "View Points History",
+        tip: "As an Urban Fits member, you can earn point on all your purchases across UF brands and experiences. Points can then be redeemed towards any of your purchases",
+        linkedCard: "Linked Card number",
+        balance: "Balance",
+        transactionsTitle: "Points Transaction History",
+        transactionColumns: {
+            item1: "Source",
+            item2: "Earned",
+            item3: "Spent",
+            item4: "Epired At",
+            item5: "Total Balance"
+        }
+    },
+    ar: {
+        walletTitle: "محفظة يوإف",
+        historyTitle: "تاريخ نقاط يوإف",
+        encryptedMsg: "سيتم تشفير جميع البيانات",
+        refresh: "تحديث",
+        points: "النقاط",
+        aed: "د.إ",
+        findMoreMsg: "اكتشف المزيد حول نقاط يوإف",
+        viewHistory: "عرض تاريخ النقاط",
+        tip: "كعضو في Urban Fits، يمكنك كسب نقاط على جميع مشترياتك في جميع علامات UF وتجاربها. يمكن استخدام النقاط بعد ذلك لتخصيص أي من مشترياتك",
+        linkedCard: "رقم البطاقة المرتبطة",
+        balance: "الرصيد",
+        transactionsTitle: "تاريخ معاملات النقاط",
+        transactionColumns: {
+            item1: "المصدر",
+            item2: "المكتسبة",
+            item3: "المستهلكة",
+            item4: "تاريخ الانتهاء",
+            item5: "الرصيد الإجمالي"
+        }
+    }
+}
+
+export const emailTab = {
+    en: {
+        title: "Change the linked email",
+        encryptedMsg: "All data will be encrypted",
+        currentMail: "Current Email",
+        newMail: "New Email",
+        currentPass: "Current Password",
+        cancelBtn: "Cancel",
+        otpBtn: "Send OTP",
+        change: "Change",
+        emailVerfication: "Email Verification",
+        otpSentMsg: "We just sent you a 5-6 digit code, please check your email and submit the code here. The code will be expired in 5 minutes.",
+        emailTip: "The bound email can be used as a login username and will act as a security verification when authentication is enabled.",
+        gotNoOtp: "Didn't get the email?",
+        resendOtpBtn: "Resend the code"
+    },
+    ar: {
+        title: "تغيير البريد الإلكتروني المرتبط",
+        encryptedMsg: "سيتم تشفير جميع البيانات",
+        currentMail: "البريد الإلكتروني الحالي",
+        newMail: "البريد الإلكتروني الجديد",
+        currentPass: "كلمة المرور الحالية",
+        cancelBtn: "إلغاء",
+        otpBtn: "إرسال رمز التحقق",
+        change: "تغيير",
+        emailVerfication: "التحقق من البريد الإلكتروني",
+        otpSentMsg: "لقد أرسلنا لك رمزًا مكونًا من 5-6 أرقام، يرجى التحقق من بريدك الإلكتروني وإدخال الرمز هنا. سيتم انتهاء الصلاحية للرمز في خلال 5 دقائق.",
+        emailTip: "يمكن استخدام البريد الإلكتروني المرتبط كاسم مستخدم لتسجيل الدخول وسيعمل كتحقق أمان عند تمكين المصادقة.",
+        gotNoOtp: "لم تتلقى البريد الإلكتروني؟",
+        resendOtpBtn: "إعادة إرسال الرمز"
+    }
+}
+
+export const addressTab = {
+    en: {
+        title: "Add a new Address",
+        encryptedMsg: "All data will be encrypted",
+        addressTip: {
+            pt1: "In case your carrier needs to reach you.",
+            pt2: "Your privacy will be well protected, please refer to our",
+            pt3: "Privacy Policy.",
+        },
+        saveBtn: 'Save',
+        cancelBtn: 'Cancel',
+        addOrChangeAddress: "Add or change Address "
+    },
+    ar: {
+        title: "إضافة عنوان جديد",
+        encryptedMsg: "سيتم تشفير جميع البيانات",
+        addressTip: {
+            pt1: "في حال احتاج الناقل الخاص بك للوصول إليك.",
+            pt2: "سيتم حماية خصوصيتك بشكل جيد، يرجى الرجوع إلى",
+            pt3: "سياسة الخصوصية.",
+        },
+        saveBtn: 'حفظ',
+        cancelBtn: 'إلغاء',
+        addOrChangeAddress: "إضافة أو تغيير العنوان"
+    }
+}
+
+export const shoppingListTab = {
+    en: {
+        title: "Shopping Lists",
+        products: "products",
+        createList: "Create a Shoppping List",
+        creationTip: "Generate a comprehensive shopping list for Urban Fits, incorporating the latest trends and essential items.",
+        renameTip: "Generate a comprehensive shopping list for Urban Fits, incorporating the latest trends and essential items.",
+        createListBtn: "Create List",
+        delete: "Delete",
+        rename: "Rename",
+        cancelBtn: 'Cancel',
+        renameBtn: 'Rename List',
+    },
+    ar: {
+        title: "قوائم التسوق",
+        products: "منتجات",
+        createList: "إنشاء قائمة تسوق",
+        creationTip: "إنشاء قائمة تسوق شاملة لـ Urban Fits، تضم أحدث الاتجاهات والعناصر الأساسية.",
+        renameTip: "إنشاء قائمة تسوق شاملة لـ Urban Fits، تضم أحدث الاتجاهات والعناصر الأساسية.",
+        createListBtn: "إنشاء القائمة",
+        delete: "حذف",
+        rename: "إعادة تسمية",
+        cancelBtn: 'إلغاء',
+        renameBtn: 'إعادة تسمية القائمة',
+    }
+}
+
 export const cart = {
     en: {
         title: "Shopping Cart",
@@ -544,5 +676,39 @@ export const cart = {
             msg: "يبدو أنك لم تقم بإضافة أي شيء إلى عربة التسوق الخاصة بك. تفضل واستكشف الفئات الأعلى.",
             btn: "العودة إلى المتجر"
         }
+    }
+}
+
+export const deleteModal = {
+    en: {
+        delete: "Delete",
+        deleteMsg: {
+            pt1: "Please type ",
+            pt2: " here to proceed.",
+        },
+        cancelBtn: 'Cancel',
+    },
+    ar: {
+        delete: "حذف",
+        deleteMsg: {
+            pt1: "الرجاء كتابة ",
+            pt2: " هنا للمتابعة.",
+        },
+        cancelBtn: 'إلغاء',
+    }
+}
+
+export const signOut = {
+    en: {
+        title: "Log Out",
+        confirmationMsg: "Are you sure you want to log out from your account?",
+        cancelBtn: "Cancel",
+        signOutBtn: "Sign Out"
+    },
+    ar: {
+        title: "تسجيل الخروج",
+        confirmationMsg: "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟",
+        cancelBtn: "إلغاء",
+        signOutBtn: "تسجيل الخروج"
     }
 }
