@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { orderStatuses } from '@/uf.config';
 import toaster from '@/utils/toast_function';
 
-export default function OrderCard({ key, order, marginClass }) {
+export default function OrderCard({ key, order, marginClass, langObj }) {
     const [invoice, setInvoice] = useState(false);
     const { formatPrice } = useWallet();
     const date = new Date(order.createdAt)
@@ -30,9 +30,8 @@ export default function OrderCard({ key, order, marginClass }) {
         date = new Date(date);
         const returnExpiry = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
 
-        console.log("Here is the return last date: ", date, returnExpiry);
-        if (currentDate.getTime() > date.getTime()) return "Return window was closed at " + returnExpiry;
-        else return "Return window will close on " + returnExpiry;
+        if (currentDate.getTime() > date.getTime()) return langObj.returnWindow.closeMsg + returnExpiry;
+        else return langObj.returnWindow.willCloseMsg + returnExpiry;
     }
     const haveGiftCard = order?.gift_cards?.length && order?.gift_cards?.some(item => item.is_giftcard);
 
@@ -42,15 +41,15 @@ export default function OrderCard({ key, order, marginClass }) {
         <div key={key} className={`w-full h-48 md:h-52 ${marginClass || "my-3"} flex flex-col items-start rounded-xl overflow-clip`}>
             <nav className="bg-gray-50 w-full h-[30%] px-2 md:px-5 py-2 font_urbanist_light text-[10px] md:text-xs grid grid-cols-3">
                 <div className='flex flex-col gap-y-2' >
-                    <span className='font_urbanist_medium'>Order Placed</span>
+                    <span className='font_urbanist_medium'>{langObj.orderPlaced}</span>
                     <span className='font_gotam_light'>{date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</span>
                 </div>
                 <div className='flex flex-col gap-y-2' >
-                    <span className='font_urbanist_medium'>Total Price</span>
+                    <span className='font_urbanist_medium'>{langObj.totalPrice}</span>
                     <span className='font_gotam_light' >{formatPrice(order.price_details.total)}</span>
                 </div>
                 <div className='flex flex-col gap-y-2 items-start' >
-                    <span className='font_urbanist_medium'>Order Reference #</span>
+                    <span className='font_urbanist_medium'>{langObj.orderReference}</span>
                     <button onClick={() => { navigator.clipboard.writeText(order._id); toaster("success", "Order Reference copied!") }} className='font-semibold'>{order._id}</button>
                 </div>
             </nav>
@@ -80,7 +79,6 @@ export default function OrderCard({ key, order, marginClass }) {
                     <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[8px] lg:text-[10px] font-semibold">{order.order_status.status}</span></p>
                     <div className="flex items-center gap-x-2">
                         <button onClick={toggleInvoice} className="underline whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
-                        {/* <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link> */}
                         {!haveGiftCard && <Link href={order.shipping_label_url} className="underline">Shipping Label</Link>}
                     </div>
                 </div>

@@ -632,6 +632,56 @@ export const shoppingListTab = {
     }
 }
 
+export const ordersTab = {
+    en: {
+        title: "My Orders",
+        orderMenu: {
+            item1: "Processing",
+            item2: "Shipped",
+            item3: "Delivering",
+            item4: "Delivered",
+            item5: "Cancelled"
+        },
+        orderPlaced: "Order Placed",
+        totalPrice: "Total Price",
+        orderReference: "Order Reference #",
+        returnWindow: {
+            nullMsg: "No return window available",
+            closedMsg: "Return window was closed at ",
+            willCloseMsg: "Return window will close on "
+        },
+        noOrders: {
+            title: "No orders to display",
+            msg: "You can track and review your orders",
+            msgLink: "here.",
+            btn: "Go Shopping"
+        }
+    },
+    ar: {
+        title: "طلباتي",
+        orderMenu: {
+            item1: "قيد المعالجة",
+            item2: "تم الشحن",
+            item3: "قيد التسليم",
+            item4: "تم التوصيل",
+            item5: "تم الإلغاء"
+        },
+        orderPlaced: "تم تقديم الطلب",
+        totalPrice: "السعر الإجمالي",
+        orderReference: "المرجع الخاص بالطلب",
+        returnWindow: {
+            nullMsg: "لا توجد نافذة للإرجاع متاحة",
+            closedMsg: "تم إغلاق نافذة الإرجاع في ",
+            willCloseMsg: "ستغلق نافذة الإرجاع في "
+        },
+        noOrders: {
+            title: "لا يوجد طلبات لعرضها",
+            msg: "يمكنك تتبع ومراجعة طلباتك هنا",
+            btn: "تسوق الآن"
+        }
+    }
+}
+
 export const cart = {
     en: {
         title: "Shopping Cart",
