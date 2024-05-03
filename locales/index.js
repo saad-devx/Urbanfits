@@ -682,6 +682,53 @@ export const ordersTab = {
     }
 }
 
+export const securityTab = {
+    en: {
+        title: "Security / 2FA",
+        encryptedMsg: "All data will be encrypted",
+        enable2fa: "Enable 2FA",
+        disable2fa: "Disable 2FA",
+        enableOrDisable: "Enable / Disable 2FA",
+        enableGoogleAuth: "Enable Google Authenticator",
+        securityVerification: "Security Verification",
+        securityMsg: "Two-factor authentication is a method for protection your web account. When it is activated you need to enter not only your password, but also a special code. You can receive this code by in mobile app. Even if third person will find your password, then can't access with that code.",
+        close: "close",
+        enterAuthCode: "Enter Authenticater Code",
+        status: "Current Status: ",
+        enabled: "Enabled",
+        disabled: "Disabled",
+        registerMethods: {
+            msg1: "Step 1: install 'Google Authenticator' app from Google Play or App Store",
+            msg2: "Step 2: Scan the QR Code by your Google Authenticator app, or you can add account manually.",
+            msg3: "If you are unable to scan the QR code, please enter thiscode manually into the app.",
+        },
+        enterCodePlaceholder: "Enter the code to verify",
+        confirm: "Confirm"
+    },
+    ar: {
+        title: "الأمان / المصادقة الثنائية",
+        encryptedMsg: "سيتم تشفير جميع البيانات",
+        enable2fa: "تمكين المصادقة الثنائية",
+        enableOrDisable: "تمكين / تعطيل المصادقة الثنائية",
+        disable2fa: "تعطيل المصادقة الثنائية",
+        enableGoogleAuth: "تمكين المصادقة بواسطة جوجل",
+        securityVerification: "التحقق من الأمان",
+        securityMsg: "المصادقة الثنائية هي طريقة لحماية حساب الويب الخاص بك. عند تفعيلها، ستحتاج إلى إدخال كلمة المرور الخاصة بك وكذلك رمز خاص. يمكنك استلام هذا الرمز عبر تطبيق الجوال. حتى لو وجد شخص ثالث كلمة المرور الخاصة بك، فلن يتمكنوا من الوصول باستخدام هذا الرمز.",
+        close: "إغلاق",
+        enterAuthCode: "أدخل رمز المصادقة",
+        status: "الحالة الحالية: ",
+        enabled: "ممكّن",
+        disabled: "معطل",
+        registerMethods: {
+            msg1: "الخطوة 1: قم بتثبيت تطبيق 'Google Authenticator' من Google Play أو App Store",
+            msg2: "الخطوة 2: قم بمسح رمز الاستجابة السريعة باستخدام تطبيق Google Authenticator الخاص بك، أو يمكنك إضافة الحساب يدويًا.",
+            msg3: "إذا لم تتمكن من مسح رمز الاستجابة السريعة، يرجى إدخال هذا الرمز يدويًا إلى التطبيق.",
+        },
+        enterCodePlaceholder: "أدخل الرمز للتحقق",
+        confirm: "تأكيد"
+    }
+}
+
 export const cart = {
     en: {
         title: "Shopping Cart",
