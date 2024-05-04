@@ -729,6 +729,46 @@ export const securityTab = {
     }
 }
 
+export const categoryPage = {
+    en: {
+        filters: "Filters",
+        wishlist: "My Wishlist",
+        wishlistEmptyTitle: "Your Wishlist is Empty",
+        wishlistEmptyMsg: "Add items by clicking on the little heart",
+        goShopping: "Go Shopping",
+        more: "More"
+    },
+    ar: {
+        filters: "الفلاتر",
+        wishlist: "قائمة الرغبات الخاصة بي",
+        wishlistEmptyTitle: "قائمة الرغبات الخاصة بك فارغة",
+        wishlistEmptyMsg: "أضف عناصر عن طريق النقر على القلب الصغير",
+        goShopping: "تسوق الآن",
+        more: "المزيد"
+    }
+}
+
+export const productPage = {
+    en: {
+        home: "Home",
+        catalogue: "Catalogue",
+        color: "Color",
+        size: "Size",
+        addToCart: "Add to Cart",
+        inStock: "in Stock",
+        shareOnSocial: "Share on Social Media",
+    },
+    ar: {
+        home: "الرئيسية",
+        catalogue: "الكتالوج",
+        color: "اللون",
+        size: "الحجم",
+        addToCart: "أضف إلى العربة",
+        inStock: "غير متوفر",
+        shareOnSocial: "مشاركة على وسائل التواصل الاجتماعي",
+    }
+}
+
 export const cart = {
     en: {
         title: "Shopping Cart",
