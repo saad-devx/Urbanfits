@@ -99,8 +99,7 @@ export default function Product(props) {
             images: product.images,
             categories: productData.categories.map(category => category._id)
         }, quantity);
-        addToCartToast(productData.name, productData.cover_image)
-        // toaster('success', 'Your items has been added to the cart')
+        addToCartToast(productData.name, product.images[0], "cart")
     }
     return <>
         <Head>

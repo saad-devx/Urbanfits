@@ -772,6 +772,7 @@ export const productPage = {
 export const cart = {
     en: {
         title: "Shopping Cart",
+        emptyTitle: "Your Cart Is Empty",
         columns: {
             item1: "Product",
             item2: "Color",
@@ -794,6 +795,7 @@ export const cart = {
     },
     ar: {
         title: "عربة التسوق",
+        emptyTitle: "سلة التسوق الخاصة بك فارغة",
         columns: {
             item1: "المنتج",
             item2: "اللون",

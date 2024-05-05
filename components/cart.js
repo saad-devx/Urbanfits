@@ -122,7 +122,7 @@ export default function Cart(props) {
             {isEmpty ?
                 <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
                     <Image width={200} height={200} src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
-                    <h4 className="text-3xl text-center">Your Cart Is Empty</h4>
+                    <h4 className="text-3xl text-center">{langObj.emptyTitle}</h4>
                     <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">{langObj.emptyCart.msg}</p>
                     <Button onClick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64">{langObj.emptyCart.btn}</Button>
                 </section>

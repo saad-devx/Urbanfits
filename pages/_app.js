@@ -17,13 +17,14 @@ import { urbanist } from '@/fonts';
 
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter();
-  const { getMe, user, isLoggedIn, getNotifications, emitPresenceEvent, subscribePersonalChannel, recordVisit } = useUser();
+  const { getMe, user, isLoggedIn, notifyIfNotCheckedIn, getNotifications, emitPresenceEvent, subscribePersonalChannel, recordVisit } = useUser();
   const { newsletterData } = useNewsletter();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     getMe();
-    recordVisit()
+    recordVisit();
+    notifyIfNotCheckedIn()
   }, [])
 
   useEffect(() => {
