@@ -1,20 +1,17 @@
 import ConnectDB from "@/utils/connect_db";
-import Addresses from "@/models/addresses";
-import { getDateOfTimezone, groupBy } from "@/utils/cyphers";
-// import StandardApi from "@/middlewares/standard_api";
+import { sendAdminNotification } from "@/utils/send_notification";
 
 const TestApiHandler = async (req, res) => {
     await ConnectDB();
-    await Addresses.updateMany({}, {
-        $rename: {
-            "shipping_address": "address1",
-            "billing_address": "address2"
-        },
-        // $unset: {
-        //     stockDate: 1,
-        //     manufacturer: 1,
-        //     vendors: 1
-        // }
+
+    sendAdminNotification({
+        category: "system",
+        data: {
+            title: "System info",
+            msg: `this is notification is triggered for testing.`,
+            description: "Some kind of description here......",
+            type: "info"
+        }
     })
 
     res.status(200).json({

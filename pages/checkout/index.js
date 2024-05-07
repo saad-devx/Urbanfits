@@ -352,7 +352,7 @@ export default function Checkout1() {
                                     </div>
                                     <div className="relative w-48pr data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-4">
                                         {touched.state && errors.state ? <Tooltip classes="form-error" content={errors.state} /> : null}
-                                        <select className="w-full border-none outline-none bg-transparent border-b-gray-800" name='state' value={values.state} onBlur={handleBlur} onChange={handleChange} >
+                                        <select className="w-full border-none outline-none bg-transparent border-b-gray-800" name='shipping_address.state' value={values.state} onBlur={handleBlur} onChange={handleChange} >
                                             <option disabled selected value='' >State</option>
                                             {Object.keys(UAEStates).map(state => <option value={state}>{UAEStates[state]}</option>)}
                                         </select>

@@ -135,7 +135,7 @@ export default function Navbar() {
                         <span onClick={() => setLogout(!logout)} className="w-full px-4 cursor-pointer hover:bg-slate-100 flex items-center py-3 transition-all gap-x-2"><LogoutIcon />{langObj.accountMenu.item5}</span>
                     </div>
                 </>
-                    : <><Link href='/auth/login'>Login</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>Register</Link></>}
+                    : <><Link href='/auth/login'>{langObj.login}</Link> &nbsp;/&nbsp;<Link href='/auth/signup'>{langObj.register}</Link></>}
             </button>
             <section className="w-auto lg:ml-5 gap-x-7 xl:gap-x-9 flex items-center justify-end">
                 <button onClick={() => setLangModal(!langModal)} className="flex items-center gap-x-1.5">

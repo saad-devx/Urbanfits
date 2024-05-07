@@ -1,24 +1,10 @@
-export const universal = {
-    en: {
-        saveBtn: 'Save',
-        cancelBtn: 'Cancel',
-        searchProducts: "Search Products",
-        noResults: "No Results Found",
-        accountMenu: {
-            item1: "UF-POINTS",
-            item2: "My Dashboard",
-            item3: "My Orders",
-            item4: "My Shopping Lists",
-            item5: "Log Out"
-        }
-    },
-}
-
 export const navbar = {
     en: {
         addressTitle: "Deliver to",
         addressTip: "Set your address",
         greeting: "Welcome Back",
+        register: "Register",
+        login: "Log in",
         searchProducts: "Search Products",
         noResults: "No Results Found",
         countryLangHeading: "Country and Language",
@@ -50,6 +36,8 @@ export const navbar = {
         addressTitle: "يسلم إلى",
         addressTip: "حدد عنوانك",
         greeting: "مرحبًا بعودتك",
+        register: "التسجيل",
+        login: "تسجيل الدخول",
         searchProducts: "البحث عن المنتجات",
         noResults: "لم يتم العثور على نتائج",
         countryLangHeading: "البلد واللغة",
@@ -766,6 +754,116 @@ export const productPage = {
         addToCart: "أضف إلى العربة",
         inStock: "غير متوفر",
         shareOnSocial: "مشاركة على وسائل التواصل الاجتماعي",
+    }
+}
+
+export const earnPointsPage = {
+    en: {
+        checkinRewards: "Daily check-in Rewards",
+        pointsWorth: "Every 100 UF-Points are equal to 5د.إ",
+        signup: "Sign up",
+        login: "Log in",
+        weekDays: {
+            day1: "Mon",
+            day2: "Tue",
+            day3: "Wed",
+            day4: "Thu",
+            day5: "Fri",
+            day6: "Sat",
+            day7: "Sun"
+        },
+        timeUnits: {
+            days: "Days",
+            hours: "Hours",
+            mins: "Mins",
+            secs: "Secs",
+        },
+        checkedin: "Checked in ",
+        checkinBtn: "Check in",
+        prizeWheelTitle: "Weekly Fortune Spinner",
+        prizeWheelRules: [
+            "1. Only available on URBAN FITS website https://www.urbanfits.ae",
+            "2. 10 Points cost per spin",
+            "3. Available only 3 days in a week after cooldown (each).",
+            "4. Each spin reward is only valid for 7 days.",
+            "5. Your UF-Points and vouchers will be automatically added yo your account wallet.",
+            '6. On getting a "Try Again", you can do extra spin free of cost',
+        ],
+        prizeHistoryBtn: "My Prize History",
+        freeLuckyDrawBtn: "Free Lucky Draw",
+        luckyDrawBtn: "Lucky Draw (-10 pts)",
+        ufTaskTitle: "Complete tasks to win more UF-Points",
+        ptsHistoryTitle: "Points History",
+        viewHistoryBtn: "View full history",
+        refreshHistoryBtn: "Refresh history",
+        transactionColumns: {
+            item1: "Last 5 Transactions",
+            item2: "Earned",
+            item3: "Spent",
+            item4: "Epired At",
+            item5: "Total Balance"
+        },
+        noTransHistory: "No Transation history found",
+        checkinRulesTitle: "Rules for Check-in",
+        checkinRules: {
+            rule1: "1. Sign in on the “Urban Fits” page on the website every day to receive UF-Points, the UF-Points accumulates over the week and automatically expires each Sunday at 24:00. You can check your UF-Points expiration date in “My Account”. Remember to use your UF-Points before it expires!",
+            rule2: "2. Limitations of UF-Points Usage: On the phone user interface and the web interface, the UF-Points received in a designated region can only be used for orders in that same region.",
+            rule3_1: "3. Check Your UF-Points ",
+            rule3_2: "here"
+        }
+    },
+    ar: {
+        checkinRewards: "مكافآت الدخول اليومية",
+        pointsWorth: "كل 100 نقطة UF تساوي 5د.إ",
+        signup: "التسجيل",
+        login: "تسجيل الدخول",
+        weekDays: {
+            day1: "الاثنين",
+            day2: "الثلاثاء",
+            day3: "الأربعاء",
+            day4: "الخميس",
+            day5: "الجمعة",
+            day6: "السبت",
+            day7: "الأحد"
+        },
+        timeUnits: {
+            days: "أيام",
+            hours: "ساعات",
+            mins: "دقائق",
+            secs: "ثواني",
+        },
+        checkedin: "تم تسجيل الدخول لمدة ",
+        checkinBtn: "تسجيل الدخول",
+        prizeWheelTitle: "المسابقة الأسبوعية",
+        prizeWheelRules: [
+            "1. متاحة فقط على موقع URBAN FITS https://www.urbanfits.ae",
+            "2. 10 نقاط مقابل الدورة الواحدة",
+            "3. متاحة فقط لمدة 3 أيام في الأسبوع بعد فترة تبريد (كل يوم).",
+            "4. كل جائزة من الدورة صالحة لمدة 7 أيام فقط.",
+            "5. سيتم إضافة نقاط UF وقسائمك تلقائيًا إلى محفظة حسابك.",
+            '6. في حالة الحصول على "جرب مرة أخرى"، يمكنك القيام بدورة إضافية مجانًا',
+        ],
+        prizeHistoryBtn: "تاريخ الجوائز الخاصة بي",
+        freeLuckyDrawBtn: "سحب مجاني",
+        luckyDrawBtn: "السحب (-10 نقاط)",
+        ufTaskTitle: "أكمل المهام لكسب المزيد من نقاط UF",
+        ptsHistoryTitle: "تاريخ النقاط",
+        viewHistoryBtn: "عرض التاريخ الكامل",
+        refreshHistoryBtn: "تحديث التاريخ",
+        transactionColumns: {
+            item1: "آخر 5 معاملات",
+            item2: "مكتسبة",
+            item3: "مستهلكة",
+            item4: "تنتهي في",
+            item5: "الرصيد الإجمالي"
+        },
+        noTransHistory: "لم يتم العثور على سجل معاملات",
+        checkinRulesTitle: "قواعد التسجيل اليومي",
+        checkinRules: {
+            rule1: "1. سجل الدخول إلى صفحة \"Urban Fits\" على الموقع الإلكتروني يوميًا لتلقي نقاط UF، وتتراكم نقاط UF خلال الأسبوع وتنتهي تلقائيًا كل يوم أحد في الساعة 24:00. يمكنك التحقق من تاريخ انتهاء صلاحية نقاط UF الخاصة بك في \"حسابي\". تذكر استخدام نقاط UF قبل انتهاء صلاحيتها!",
+            rule2: "2. قيود استخدام نقاط UF: يمكن استخدام النقاط UF التي تم الحصول عليها في منطقة محددة فقط للطلبات في نفس المنطقة.",
+            rule3_1: "3. تحقق من نقاط UF الخاصة بك ",
+        }
     }
 }
 
