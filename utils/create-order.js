@@ -12,15 +12,17 @@ import { sendNotification, sendAdminNotification } from "@/utils/send_notificati
 import axios from "axios";
 
 const CreateOrder = async (orderPayload) => {
-    const orderData = (await Order.create({
-        ...orderPayload,
-        order_status: {
-            status: "DELIVERED",
-            group: "delivered"
-        }
-    })).toObject();
 
-    if (orderData.gift_cards?.length) {
+    if (orderPayload.gift_cards?.length) {
+        console.log("Entry point 1")
+        const orderData = (await Order.create({
+            ...orderPayload,
+            order_status: {
+                status: "DELIVERED",
+                group: "delivered"
+            }
+        })).toObject();
+        console.log("Entry point 2")
         for (let giftItem of orderData.gift_cards) {
             const { buy_for } = giftItem;
 
@@ -90,7 +92,9 @@ const CreateOrder = async (orderPayload) => {
         return orderData;
     }
     else {
+        console.log("Entry point 3")
         const orderData = (await Order.create(orderPayload)).toObject();
+        console.log("Entry point 4")
         const { shipping_address, payment_method } = orderData;
         const swiftOrderData = {
             reference: orderData._id.toString(),
@@ -134,6 +138,7 @@ const CreateOrder = async (orderPayload) => {
             });
         const swiftRes = data.data[0];
 
+        console.log("Entry point 5")
         const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
             "order_status.status": swiftRes.status,
             stage: swiftRes.stage,
@@ -141,6 +146,7 @@ const CreateOrder = async (orderPayload) => {
             tracking_number: swiftRes.swftboxTracking,
             tracking_url: swiftRes.trackingUrl,
         }, { lean: true, new: true });
+        console.log("Entry point 6")
         // Subtracting the bought quantity from each of the ordered product
         const orderedItems = finalOrder.order_items;
         for (const orderedItem of orderedItems) {

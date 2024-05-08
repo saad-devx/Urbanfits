@@ -35,6 +35,7 @@ export default function OrderCard({ key, order, marginClass, langObj }) {
     }
     const haveGiftCard = order?.gift_cards?.length && order?.gift_cards?.some(item => item.is_giftcard);
 
+    console.log("Shipping label url here: ", order.shipping_label_url)
 
     return <>
         <Invoice key={`invoice-${key}`} order={order} setInvoice={setInvoice} show={invoice} />
@@ -70,7 +71,7 @@ export default function OrderCard({ key, order, marginClass, langObj }) {
                             <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[7px] font-semibold">{order.order_status.status}</span></p>
                             <div className="flex items-center gap-x-2">
                                 <button onClick={() => downloadInvoice('invoice')} className="underline whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
-                                {!haveGiftCard && <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link>}
+                                {!haveGiftCard && order.shipping_label_url && <Link href={order.shipping_label_url} target='_blank' className="underline">Shipping Label</Link>}
                             </div>
                         </div>
                     </div>
@@ -79,7 +80,7 @@ export default function OrderCard({ key, order, marginClass, langObj }) {
                     <p className="font-light flex items-center">Order Status:&nbsp;<span style={{ background: orderStatuses[order.order_status.status].bg, color: orderStatuses[order.order_status.status].text }} className="px-2 py-px lg:py-0.5 rounded-2xl text-[8px] lg:text-[10px] font-semibold">{order.order_status.status}</span></p>
                     <div className="flex items-center gap-x-2">
                         <button onClick={toggleInvoice} className="underline whitespace-nowrap">{window.matchMedia('(max-width: 1024px)').matches ? "Download Invoice" : "View Invoice"}</button>
-                        {!haveGiftCard && <Link href={order.shipping_label_url} className="underline">Shipping Label</Link>}
+                        {!haveGiftCard && order.shipping_label_urla && <Link href={order.shipping_label_url} className="underline">Shipping Label</Link>}
                     </div>
                 </div>
             </nav>

@@ -13,10 +13,12 @@ const OrderSchema = new mongoose.Schema({
     order_status: {
         status: {
             type: String,
-            enum: Object.keys(orderStatuses),
-            // default: Object.keys(orderStatuses)[0]
+            enum: Object.keys(orderStatuses)
         },
-        group: String
+        group: {
+            type: String,
+            enum: Object.values(orderStatuses).map(status => status.group)
+        }
     },
     stage: String,
     tracking_number: String,
