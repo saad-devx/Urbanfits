@@ -9,7 +9,7 @@ import User from "@/models/user";
 import { verify } from "jsonwebtoken"
 import { parse } from "cookie";
 import { isValidObjectId } from "mongoose";
-import { GetUFBalance, DeductPoints } from "@/utils/uf-points";
+import { GetUFBalance } from "@/utils/uf-points";
 import { HashValue, getDateOfTimezone } from "@/utils/cyphers.js";
 import { shippingRates, paymentOptions, giftCardPrices, giftCardMethods } from "@/uf.config";
 import StandardApi from "@/middlewares/standard_api";
@@ -50,7 +50,6 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         if (!user) return res.status(400).json({ success: false, msg: "Invalid user id or uf-card number" });
         const ufBalance = await GetUFBalance(user._id, user.uf_wallet.card_number, user.timezone);
         if (shipping_info.points_to_use > ufBalance) return res.status(400).json({ success: false, msg: "You can't use more uf-points than your balance." })
-        await DeductPoints(user._id, user.uf_wallet.card_number, user.timezone, shipping_info.points_to_use)
         discountByPoints = shipping_info.points_to_use * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)
     }
     if (shipping_info.gift_code?.length && shipping_info.gift_code.length > 8) {

@@ -54,7 +54,7 @@ export default function UFwallet() {
                         </div>
                         <div className="w-full flex justify-between">
                             <span className="font_copper text-xl">{langObj.aed}</span>
-                            <span className="font_urbanist_bold text-xl">{formatPriceNum(points * (+process.env.NEXT_PUBLIC_UF_POINT_RATE))}</span>
+                            <span className="font_urbanist_bold text-xl">{formatPriceNum(points * parse(process.env.NEXT_PUBLIC_UF_POINT_RATE))}</span>
                         </div>
                     </div>
                     <div className="w-full h-1/2 p-5 flex justify-center items-center">
@@ -101,7 +101,7 @@ export default function UFwallet() {
                         </div>
                         <div className="translate_z w-full flex justify-between">
                             <span className="font_copper text-xl">{langObj.aed}</span>
-                            <span className="font_urbanist_bold text-xl">{formatPriceNum(points * (+process.env.NEXT_PUBLIC_UF_POINT_RATE))}</span>
+                            <span className="font_urbanist_bold text-xl">{formatPriceNum(points * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE))}</span>
                         </div>
                     </div>
                     <div className="w-full h-1/2 p-6 bg-gray-50 flex justify-center items-center">

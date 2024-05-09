@@ -55,8 +55,8 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks, locale }) => {
 
     if (user?._id) return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
         <div className="flex flex-col text-sm lg:text-base text-gray-400">
-            <h6 className="font_urbanist_bold text-black">{title[locale]}</h6>
-            {description[locale]}
+            <h6 className="font_urbanist_bold text-black">{title}</h6>
+            {description}
         </div>
         {image_submitted && !completed ? <span title='approval pending...' className='p-2 px-3 bg-pinky text-white text-sm lg:text-base rounded-md'><i className="fa-regular fa-clock" /></span> :
             <div disabled={disableAction || ssLoading} className={`${disableAction || ssLoading && "opacity-60 pointer-events-none"} flex items-center gap-2 md:gap-3`}>
@@ -71,8 +71,8 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks, locale }) => {
     </div>
     else return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
         <div className="flex flex-col text-sm lg:text-base text-gray-400">
-            <h6 className="font_urbanist_bold text-black">{title[locale]}</h6>
-            {description[locale]}
+            <h6 className="font_urbanist_bold text-black">{title}</h6>
+            {description}
         </div>
         <span className={`px-3 py-2 ${name == "sign_up" ? "bg-gold-land text-white" : "bg-gray-100 text-black"} text-sm lg:text-base rounded-md`}>
             {name == "sign_up" ? <Link target="_blank" href={link}>
@@ -176,7 +176,7 @@ export default function EarnUfPoints() {
         if (!user) { return }
         (async () => {
             await getWeeklyCheckinHistory(setWeeklyHistory)
-            await getUfTasks((data) => setTasks(data.tasks.tasks))
+            await getUfTasks((data) => setTasks(data?.tasks?.tasks || []))
             getUfHistory((history_docs) => setHistory(history_docs), 5);
         })()
         const timer = setInterval(() => {
@@ -290,7 +290,7 @@ export default function EarnUfPoints() {
 
             <section className="bg-white w-full mb-4 px-4 py-6 mid:px-6 mid:p-6 lg:py-10 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-lg gap-4">
                 <h1 className="col-span-full mb-6 font_urbanist_bold text-lg md:text-xl lg:text-[26px]">{langObj.ufTaskTitle}</h1>
-                {tasks.map(task => <TaskComp locale={locale} user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
+                {tasks.length && tasks.map(task => <TaskComp locale={locale} user={user} uploadUfTaskImg={uploadUfTaskImg} task={task} setTasks={setTasks} />)}
             </section>
             <section id='prize_wheel_history' className="bg-white w-full mb-4 px-4 py-6 mid:p-6 lg:p-10 lg:px-8 rounded-lg gap-4 overflow-x-auto scrollbar_x">
                 <div className="w-full mb-6 flex justify-between items-center">

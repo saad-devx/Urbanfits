@@ -34,7 +34,7 @@ const useWallet = create((set, get) => ({
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/tasks/get/user-tasks`)
             if (callback) callback(data)
-        } catch (e) { console.log(e); toaster("error", e.response.data.msg || "Oops! something went wrong, please retry.") }
+        } catch (e) { console.log(e); toaster("error", e?.response?.data?.msg || "Oops! something went wrong, please retry.") }
         finally { set(() => ({ walletLoading: false })) }
     },
 

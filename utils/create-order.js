@@ -6,7 +6,8 @@ import Giftcard from "@/models/giftcard";
 import { shippingRates } from "@/uf.config";
 import GiftCardTemplate from "@/email templates/gift_card";
 import OrderConfirmed from "@/email templates/order_confirm";
-import sendEmail from "@/utils/sendEmail";
+import sendEmail from "./sendEmail";
+import { DeductPoints } from "./uf-points";
 import generatePassword, { HashValue } from "./cyphers";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import axios from "axios";
@@ -14,7 +15,6 @@ import axios from "axios";
 const CreateOrder = async (orderPayload) => {
 
     if (orderPayload.gift_cards?.length) {
-        console.log("Entry point 1")
         const orderData = (await Order.create({
             ...orderPayload,
             order_status: {
@@ -22,7 +22,6 @@ const CreateOrder = async (orderPayload) => {
                 group: "delivered"
             }
         })).toObject();
-        console.log("Entry point 2")
         for (let giftItem of orderData.gift_cards) {
             const { buy_for } = giftItem;
 
@@ -76,7 +75,10 @@ const CreateOrder = async (orderPayload) => {
             }
         }
 
-        if (orderData.user_id) await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } });
+        if (orderData.user_id) {
+            const updatedUser = await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } }, { new: true, lean: true });
+            if (orderPayload.points_used > 0) await DeductPoints(updatedUser._id, updatedUser.uf_wallet.card_number, updatedUser.timezone, orderPayload.points_used);
+        }
 
         let orderTemplate = OrderConfirmed(orderData, true)
         sendEmail({ to: orderData.email, subject: "Your order has been placed." }, orderTemplate);
@@ -92,9 +94,7 @@ const CreateOrder = async (orderPayload) => {
         return orderData;
     }
     else {
-        console.log("Entry point 3")
         const orderData = (await Order.create(orderPayload)).toObject();
-        console.log("Entry point 4")
         const { shipping_address, payment_method } = orderData;
         const swiftOrderData = {
             reference: orderData._id.toString(),
@@ -138,7 +138,6 @@ const CreateOrder = async (orderPayload) => {
             });
         const swiftRes = data.data[0];
 
-        console.log("Entry point 5")
         const finalOrder = await Order.findByIdAndUpdate(orderData._id.toString(), {
             "order_status.status": swiftRes.status,
             stage: swiftRes.stage,
@@ -146,7 +145,6 @@ const CreateOrder = async (orderPayload) => {
             tracking_number: swiftRes.swftboxTracking,
             tracking_url: swiftRes.trackingUrl,
         }, { lean: true, new: true });
-        console.log("Entry point 6")
         // Subtracting the bought quantity from each of the ordered product
         const orderedItems = finalOrder.order_items;
         for (const orderedItem of orderedItems) {
@@ -183,7 +181,8 @@ const CreateOrder = async (orderPayload) => {
             }
         })
         if (orderData.user_id) {
-            await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } });
+            const updatedUser = await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } }, { new: true, lean: true });
+            if (orderData.points_used > 0) await DeductPoints(updatedUser._id, updatedUser.uf_wallet.card_number, updatedUser.timezone, orderData.points_used);
             sendNotification(orderData.user_id, {
                 category: "order",
                 heading: "Order Placed",
