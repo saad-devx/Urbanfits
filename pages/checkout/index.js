@@ -180,11 +180,11 @@ export default function Checkout1() {
                     const newModes = [...prev.available_modes, modeKey];
                     return { mode: modeKey, name: modeName, available_modes: Array.from(new Set(newModes)) }
                 })
-                if (address?.address1) {
+                if (address?.address1 && address?.address1?.address_title) {
                     addressKey = "address1";
                     addAddressMode("address1", address.address1.address_title);
                 }
-                if (address?.address2) {
+                if (address?.address2 && address?.address2?.address_title) {
                     addressKey = "address2";
                     addAddressMode("address2", address.address2.address_title);
                 }
@@ -303,11 +303,13 @@ export default function Checkout1() {
                         {!values.isGiftCard && <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">Enter Your Shipping Address</h1>}
 
                         {!values.isGiftCard && isLoggedIn() && <div className="w-full mb-5 grid grid-cols-3">
-                            {addressMode.available_modes.map((mode, index) =>
-                                <button type='button' key={index} onClick={() => changeAddressMode(mode)} className="flex items-center gap-x-2" name={mode}>
+                            {addressMode.available_modes.map((mode, index) => {
+                                console.log("the fucking mode here: ", mode)
+                                return <button type='button' key={index} onClick={() => changeAddressMode(mode)} className="flex items-center gap-x-2" name={mode}>
                                     <span className={`${addressMode.mode == mode && "bg-pinky"} size-2 lg:size-4 rounded-3xl border`} />
                                     {mode !== "custom" ? address[mode].address_title : addressModes[mode]}
-                                </button>)}
+                                </button>
+                            })}
                         </div>}
 
                         <section className="w-full space-y-10">
@@ -464,6 +466,6 @@ export default function Checkout1() {
                 </section>
                 <Accordians />
             </section>
-        </main>
+        </main >
     </>
 }

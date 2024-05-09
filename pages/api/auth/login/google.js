@@ -47,7 +47,7 @@ const LoginWithGoogle = async (req, res) => StandardApi(req, res, { method: "POS
 
     res.status(200).json({
         success: true,
-        msg: "You are Resgistered successfully !",
+        msg: "You are signed in successfully !",
         payload: SignJwt(user)
     })
     const date = new Date()

@@ -12,7 +12,7 @@ const UpdateUser = async (req, res) => StandardApi(req, res, { method: "PUT", ve
     await ConnectDB()
     let user = await User.findById(user_id).lean()
     if (!user) return res.status(404).json({ success: false, msg: "User not found" })
-    if (user.register_provider !== "urbanfits" && req.body.role !== "customer") return res.status(409).json({ success: false, msg: "This user signed up with google and cannot be assigned this role other than `customer`" })
+    if (user.register_provider !== "urbanfits" && req.body.role && req.body.role !== "customer") return res.status(409).json({ success: false, msg: "This user signed up with google and cannot be assigned this role other than `customer`" })
     if (req.body.email && req.body.email.includes("@")) {
         user = await User.findOne({ email: req.body.email })
         if (user) delete req.body.email
