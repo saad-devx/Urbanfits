@@ -71,7 +71,7 @@ const SecondaryNavbar = (props) => {
 
 export default function Navbar() {
     const { locale } = useLanguage();
-    const { user, country, notifications, getNotifications, address, getAddress } = useUser();
+    const { user, isLoggedIn, country, notifications, getNotifications, address, getAddress } = useUser();
     const { points, getUfBalance, currency } = useWallet();
     const { totalUniqueItems } = useCart();
     const [cart, setCart] = useState(false);
@@ -163,6 +163,7 @@ export default function Navbar() {
         </nav>
         <SecondaryNavbar
             user={user}
+            isLoggedIn={isLoggedIn}
             cart={cart}
             closeCart={closeCart}
             toggleCart={toggleCart}
@@ -177,6 +178,7 @@ export default function Navbar() {
         <Cart cart={cart} toggleCart={toggleCart} setCart={setCart} />
         <MobileNavbar
             user={user}
+            isLoggedIn={isLoggedIn}
             cart={cart}
             toggleCart={toggleCart}
             logout={logout}

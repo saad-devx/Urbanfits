@@ -2,9 +2,16 @@ import mongoose from "mongoose"
 
 const ProductSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: [true, "Please enter a name for your product"],
-        trim: true
+        en: {
+            type: String,
+            required: [true, "Please enter a name for your product"],
+            trim: true
+        },
+        ar: {
+            type: String,
+            required: [true, "Please enter a name for your product"],
+            trim: true
+        }
     },
     sku_number: {
         type: Number,
@@ -25,9 +32,16 @@ const ProductSchema = new mongoose.Schema({
         maxlength: [10, "Price can't be more than 10 figures"]
     },
     description: {
-        type: String,
-        required: [true, "Please enter a description for your product"],
-        trim: true
+        en: {
+            type: String,
+            required: [true, "Please enter a description for your product"],
+            trim: true
+        },
+        ar: {
+            type: String,
+            required: [true, "Please enter a description for your product"],
+            trim: true
+        }
     },
     categories: [{
         type: mongoose.Schema.Types.ObjectId,

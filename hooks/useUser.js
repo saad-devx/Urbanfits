@@ -90,6 +90,7 @@ const useUser = create(persist((set, get) => ({
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, credentials)
             if (data.redirect_url && !data.payload) router.push(data.redirect_url)
             else if (data.payload) {
+                get().cleanUp()
                 await updateUser(data.payload, true)
                 set(() => ({ guestUser: null }));
                 router.replace("/")
@@ -125,6 +126,7 @@ const useUser = create(persist((set, get) => ({
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login/google`, { token, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
             if (data.redirect_url && !data.payload) router.push(data.redirect_url)
             else if (data.payload) {
+                get().cleanUp()
                 await updateUser(data.payload, true)
                 set(() => ({ guestUser: null }));
                 router.replace("/")
@@ -144,6 +146,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/signup/google`, { token, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
+            get().cleanUp()
             await updateUser(data.payload, true)
             set(() => ({ guestUser: null }));
             router.replace("/")
@@ -318,6 +321,14 @@ const useUser = create(persist((set, get) => ({
             return null
         } finally { set(() => ({ userLoading: false })) }
     },
+
+    cleanUp: () => {
+        set(() => ({ user: null, address: null, notifications: [], wishList: [], recentItems: [], country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" } }))
+        localStorage.clear()
+        sessionStorage.clear()
+        useNewsletter.setState({ newsletterData: null })
+    }
+
 }), {
     name: "user_data",
     partialize: (state) => ({

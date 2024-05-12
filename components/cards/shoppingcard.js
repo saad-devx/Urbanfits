@@ -11,18 +11,33 @@ import toaster from '@/utils/toast_function'
 import ImgLoader from '../loaders/imgLoader';
 import DemoImg from '@/public/card imgs/demo-img.png'
 import useWallet from '@/hooks/useWallet';
+import useLanguage from '@/hooks/useLanguage';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-const { formatPrice } = useWallet.getState()
+const { formatPrice } = useWallet.getState();
 // const ImgDataUri = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAAAAAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAGAAoDASEAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABwj/xAAiEAABAwMDBQAAAAAAAAAAAAABAgMRAAQFBgcSEyEiMUL/xAAVAQEBAAAAAAAAAAAAAAAAAAAFB//EACERAAEEAQMFAAAAAAAAAAAAAAECAwQRAAUhMVFhcYGR/9oADAMBAAIRAxEAPwCNtrNMYjMbN6hyd4hAurVm9eaIYCuoW2QvyVyBTEyIBk++1CS3ZWowkST8CrLMS0YMdSU7kG734r5j2uOuITGbUAAGkEUOQeve7v14z//Z"
 
 export default function Shoppingcard({ product }, props) {
-    const { addItem, inCart } = useCart()
-    const { user, wishList, addToWishList, removeFromWishList, inWishList } = useUser()
+    const { addItem, inCart } = useCart();
+    const { user, wishList, addToWishList, removeFromWishList, inWishList } = useUser();
+    const { locale } = useLanguage();
     const [addToListModal, setAddToListModal] = useState(null)
     const [loading, setLoading] = useState(true)
     const [activeVariant, setActiveVariant] = useState(product?.variants ? product?.variants[0] : null)
     const splideRef = useRef(null)
+
+    const dictionary = {
+        en: {
+            addToCart: "Add to cart",
+            added: "Added",
+            earn: "Earn"
+        },
+        ar: {
+            addToCart: "أضف إلى السلة",
+            added: "تمت الإضافة",
+            earn: "اكتسب"
+        }
+    }[locale]
 
     const addToCart = () => {
         if (inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`)) return toaster('info', 'This item is already in the cart!');
@@ -42,7 +57,7 @@ export default function Shoppingcard({ product }, props) {
             color: activeVariant.color_name,
             images: activeVariant.images,
             categories: product.categories
-        }, 1); addToCartToast(product.name, activeVariant.images[0], "cart")
+        }, 1); addToCartToast(product.name[locale], activeVariant.images[0], "cart")
     }
     const addToWishlist = () => {
         if (inWishList(product._id)) {
@@ -52,7 +67,7 @@ export default function Shoppingcard({ product }, props) {
         else {
             if (wishList.length > 79) return toaster("info", "You've reached your maximum limit.")
             addToWishList(product._id)
-            addToCartToast(product.name, product.cover_image, "wishlist")
+            addToCartToast(product.name[locale], product.cover_image, "wishlist")
         }
     }
 
@@ -90,7 +105,7 @@ export default function Shoppingcard({ product }, props) {
                 </Link>
                 <div className="w-full h-[30%] md:h-1/5 text-black flex flex-col">
                     <Link href={props.link || `/products/product/${product._id}?color=${activeVariant?.color_name}`} className="w-full xl:mt-2 2xl:mt-4 font_urbanist_medium text-sm lg:text-base">
-                        <p className="truncate">{product.name}</p>
+                        <p className="truncate">{product.name[locale]}</p>
                     </Link>
                     <div className="w-full flex flex-col lg:flex-row lg:items-center">
                         <span className="w-3/5 mb-1 lg:mb-0 font_urbanist_medium text-gray-300 text-xs lg:text-sm">
@@ -108,14 +123,14 @@ export default function Shoppingcard({ product }, props) {
                             </div>
                                 : <span className='lg:group-hover:-translate-y-full text-[#FF4A60] font_urbanist_bold transition-all duration-300'>{formatPrice(product.price)}</span>}
                             <div className="w-full hidden lg:flex">
-                                {inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="group-hover:-translate-y-full text-pinky transition-all duration-300 cursor-default">Added <i className="fa-solid fa-check" /></span> : <button onClick={addToCart} className='group-hover:-translate-y-full flex flex-col font_urbanist_medium leading-[1] transition-all duration-300'>
-                                    + Add to cart
+                                {inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="group-hover:-translate-y-full text-pinky transition-all duration-300 cursor-default">{dictionary.added} <i className="fa-solid fa-check" /></span> : <button onClick={addToCart} className='group-hover:-translate-y-full flex flex-col font_urbanist_medium leading-[1] transition-all duration-300'>
+                                    + {dictionary.addToCart}
                                 </button>}
                             </div>
                         </div>
-                        {product.uf_points ? <span className='text-pinky font_urbanist_medium'>Earn {product.uf_points}pts</span> : null}
+                        {product.uf_points ? <span className='text-pinky font_urbanist_medium'>{dictionary.earn} {product.uf_points}pts</span> : null}
                     </div>
-                    <div className="w-full lg:hidden">{inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="text-pinky text-left font_urbanist_medium text-10px">Added <i className="fa-solid fa-check" /></span> : <button onClick={addToCart} className="w-full text-left font_urbanist_medium text-10px">+ Add to cart</button>}</div>
+                    <div className="w-full lg:hidden">{inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="text-pinky text-left font_urbanist_medium text-10px">{dictionary.added} <i className="fa-solid fa-check" /></span> : <button onClick={addToCart} className="w-full text-left font_urbanist_medium text-10px">+ {dictionary.addToCart}</button>}</div>
                 </div>
             </div>
         </div>
@@ -146,7 +161,7 @@ export function SmallShoppingcard({ product }, props) {
             sizes: activeVariant.sizes,
             color: activeVariant.color_name,
             images: activeVariant.images
-        }, 1); addToCartToast(product.name, activeVariant.images[0], "cart")
+        }, 1); addToCartToast(product.name[locale], activeVariant.images[0], "cart")
     }
     const addToWishlist = () => {
         if (inWishList(product._id)) {
@@ -156,7 +171,7 @@ export function SmallShoppingcard({ product }, props) {
         else {
             if (wishList.length > 79) return toaster("info", "You've reached your maximum limit.")
             addToWishList(product._id)
-            addToCartToast(product.name, product.cover_image, "wishlist")
+            addToCartToast(product.name[locale], product.cover_image, "wishlist")
         }
     }
 
@@ -195,10 +210,10 @@ export function SmallShoppingcard({ product }, props) {
                 </Link>
                 <div className="w-full h-1/5 pt-1 text-black flex flex-col">
                     <Link href={props.link || `/products/product/${product._id}?color=${activeVariant.color_name}`} className="w-full font_urbanist_medium text-xs">
-                        <p className="truncate">{product.name}</p>
+                        <p className="truncate">{product.name[locale]}</p>
                     </Link>
                     <div className="w-full mt-1 flex items-center">
-                        {product.uf_points ? <span className='w-1/2 text-pinky text-10px font_urbanist_medium'>Earn {product.uf_points}pts</span> : null}
+                        {product.uf_points ? <span className='w-1/2 text-pinky text-10px font_urbanist_medium'>{dictionary.earn} {product.uf_points}pts</span> : null}
                         <span className="flex-1 flex items-center lg:justify-end gap-x-1.5">{product.variants?.map((variant, index) => <button key={index}
                             onClick={() => { splideRef.current.splide.go(index); setActiveVariant(variant) }} style={{ background: variant.color }} className={`w-3 lg:w-4 aspect-square rounded-full border-[0.5px]`} />)}
                         </span>
@@ -212,7 +227,7 @@ export function SmallShoppingcard({ product }, props) {
                                 : <span className='lg:group-hover:-translate-y-full text-[#FF4A60] font_urbanist_bold transition-all duration-300'>{formatPrice(product.price)}</span>}
                             <div className="w-full hidden lg:flex">
                                 {inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="group-hover:-translate-y-full text-pinky text-xs transition-all duration-300 cursor-default">Added <i className="fa-solid fa-check" /></span> : <button onClick={addToCart} className='group-hover:-translate-y-full flex flex-col font_urbanist_medium leading-[1] transition-all duration-300'>
-                                    + Add to cart
+                                    + {dictionary.addToCart}
                                 </button>}
                             </div>
                         </div>

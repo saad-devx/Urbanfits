@@ -126,6 +126,7 @@ export const mobileNavMenu = {
         },
         stories: "Stories",
         about: "About Us",
+        signIn: "Sign In",
         signout: "Sign Out"
     },
     ar: {
@@ -186,6 +187,7 @@ export const mobileNavMenu = {
         },
         stories: "القصص",
         about: "من نحن",
+        signIn: "تسجيل الدخول",
         signout: "تسجيل الخروج"
     }
 }
@@ -745,6 +747,10 @@ export const productPage = {
         addToCart: "Add to Cart",
         inStock: "in Stock",
         shareOnSocial: "Share on Social Media",
+        dimensions: "Dimensions",
+        weight: "Weight",
+        similarItems: "Similar Items",
+        matchWith: "Match With"
     },
     ar: {
         home: "الرئيسية",
@@ -754,6 +760,10 @@ export const productPage = {
         addToCart: "أضف إلى العربة",
         inStock: "غير متوفر",
         shareOnSocial: "مشاركة على وسائل التواصل الاجتماعي",
+        dimensions: "الأبعاد",
+        weight: "الوزن",
+        similarItems: "العناصر المماثلة",
+        matchWith: "مطابقة مع"
     }
 }
 

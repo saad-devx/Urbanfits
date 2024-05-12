@@ -4,6 +4,7 @@ import { useCart } from "react-use-cart";
 import { loadStripe } from '@stripe/stripe-js';
 import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
+import useLanguage from '@/hooks/useLanguage';
 import AlertPage from '@/components/alertPage'
 import DiscountBox, { getCouponDiscount } from '@/components/discountBox';
 import Accordians from '@/components/accordians/accordians';
@@ -11,7 +12,7 @@ import Head from 'next/head';
 import Button from '@/components/buttons/simple_btn';
 import Loader from '@/components/loaders/loader';
 import Image from "next/image"
-import { shippingRates, paymentOptions, UAEStates } from '@/uf.config';
+import { shippingRates, paymentOptions, UAEStates, locales } from '@/uf.config';
 import { get12hFormatTime } from '@/utils/cyphers';
 import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/language';
@@ -44,6 +45,7 @@ const addressModes = {
 export default function Checkout1() {
     const router = useRouter();
     const { isLoggedIn, user, country, address, getAddress } = useUser();
+    const { locale } = useLanguage();0
     const { points, currency, formatPrice } = useWallet();
     const { totalUniqueItems, cartTotal, isEmpty, items } = useCart();
     const [langModal, setLangModal] = useState(false)
@@ -396,7 +398,7 @@ export default function Checkout1() {
                     <div className="w-full max-h-[25rem] flex flex-col overflow-auto">
                         {items.map((item, i) => {
                             if (item.is_giftcard) return <section className="w-full mb-4 md:mb-6 p-4 border rounded-lg">
-                                <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
+                                <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name[locale]}</h3>
                                 <div key={i} className="w-full mb-2 flex justify-between xl:items-center">
                                     <div className="w-24 h-20 flex flex-col justify-center items-center rounded-md md:rounded-lg bg-pinky text-[8px] lg:text-[10px] font-semibold text-white uppercase">
                                         <span className="font_copper text-[10px]">UF E-GIFTCARD</span>
@@ -413,10 +415,10 @@ export default function Checkout1() {
                             </section>
                             return <>
                                 <section className="w-full mb-4 md:mb-6 p-4 border rounded-lg">
-                                    <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
+                                    <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name[locale]}</h3>
                                     <div key={i} className="w-full mb-2 flex justify-between xl:items-center">
                                         <div className="w-20 h-20 rounded-md md:rounded-lg overflow-hidden">
-                                            <Image width={640} height={640} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.images[0]} alt={item.name} className="w-full h-full object-cover object-top" />
+                                            <Image width={640} height={640} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.images[0]} alt={item.name[locale]} className="w-full h-full object-cover object-top" />
                                         </div>
                                         <aside className="flex-1 flex lg:flex-col xl:flex-row items-start justify-between md:justify-start lg:justify-between ml-4 mid:ml-6 lg:ml-3 gap-x-2 md:gap-x-10 lg:gap-y-2.5 xl:gap-x-4 text-10px md:text-[13px]">
                                             <div className="lg:w-full xl:w-1/2 lg:my-0 flex flex-col gap-y-2.5">

@@ -23,17 +23,6 @@ const NewsletterSchema = new mongoose.Schema({
     active_by_phone: {
         type: Boolean,
         default: false
-    },
-    user: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true,
-        set: function (value) {
-            if (mongoose.Types.ObjectId.isValid(value)) {
-                return mongoose.Types.ObjectId(value);
-            }
-            return value.toString();
-        },
-        default: 'guest'
     }
 }, { timestamps: true })
 

@@ -14,20 +14,18 @@ const MobileListItem = (props) => {
             <i className={`${open ? 'rotate-90' : null} fa-solid fa-chevron-right text-xs text-gray-300 transition-all duration-500`} />
         </button>
         <div className={`${open ? 'max-h-[50vh]' : 'max-h-0'} w-full text-sm overflow-y-hidden transition-all duration-500`}>
-            {props.subLinks.map((link, i) => {
-                return <Link key={i} href={link.href} onClick={props.toggleMenu} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
-                    {link.name}<i className="fa-solid fa-chevron-right text-xs text-gray-300" />
-                </Link>
-            })}
+            {props.subLinks.map((link, i) => <Link key={i} href={link.href} onClick={props.toggleMenu} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
+                {link.name}<i className="fa-solid fa-chevron-right text-xs text-gray-300" />
+            </Link>)}
         </div>
     </div>
-    else return <Link {...props} href={props.href} onClick={props.toggleMenu} className="w-full py-[17px] border-b border-gray-50 flex justify-between items-center cursor-pointer">
+    else return <Link {...props} onClick={props.toggleMenu} className="w-full py-[17px] border-b border-gray-50 flex justify-between items-center cursor-pointer">
         <span className="font_urbanist_bold text-base text-black duration-700">{props.name}</span>
         <i className="fa-solid fa-chevron-right text-xs text-gray-300 transition-all duration-500" />
     </Link>
 }
 
-function MobileNavbar({ user, cart, toggleCart, logout, setLogout, totalUniqueItems }) {
+function MobileNavbar({ user, isLoggedIn, cart, toggleCart, logout, setLogout, totalUniqueItems }) {
     const router = useRouter();
     const url = router.pathname;
     const { locale } = useLanguage();
@@ -56,9 +54,9 @@ function MobileNavbar({ user, cart, toggleCart, logout, setLogout, totalUniqueIt
                     { name: langObj.categoryMenu.item5, href: "/products/category/all-categories" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={1} name={langObj.ufPointsMenu.heading} subLinks={[
-                    { name: langObj.ufPointsMenu.item1, href: "/user/myaccount" },
-                    { name: langObj.ufPointsMenu.item2, href: "/user/uf-wallet/history" },
-                    { name: langObj.ufPointsMenu.item3, href: "earn-ufpoints" }
+                    { name: langObj.ufPointsMenu.item1, href: isLoggedIn() ? "/user/myaccount" : "/auth/login" },
+                    { name: langObj.ufPointsMenu.item2, href: isLoggedIn() ? "/user/uf-wallet/history" : "/auth/login" },
+                    { name: langObj.ufPointsMenu.item3, href: "/earn-ufpoints" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={2} name={langObj.saleMenu.heading} subLinks={[
                     { name: langObj.saleMenu.item1, href: "#" },
@@ -96,7 +94,7 @@ function MobileNavbar({ user, cart, toggleCart, logout, setLogout, totalUniqueIt
                 <MobileListItem toggleMenu={toggleMenu} key={9} name={langObj.about} href="/about" />
             </section>
             <p className="my-5 font_urbanist_medium text-sm text-gray-500">Urban Fits LLC (7053037)</p>
-            {user && user.email ? <button onClick={() => setLogout(!logout)} className="w-full py-3 bg-gray-50 rounded-full font_urbanist_medium text-sm">{langObj.signout}</button> : null}
+            {isLoggedIn() ? <button onClick={() => setLogout(!logout)} className="w-full py-3 bg-gray-50 rounded-full font_urbanist_medium text-sm">{langObj.signout}</button> : <Link href="/auth/login" className="w-full py-3 bg-gray-50 rounded-full font_urbanist_medium text-sm text-center" >{langObj.signIn}</Link>}
         </section>
         <section className="fixed z-[60] bottom-4 left-1/2 -translate-x-1/2 bg-gray-50 w-[90%] md:w-3/5 h-14 rounded-full border flex justify-around items-center">
             <button onClick={toggleMenu}>

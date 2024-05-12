@@ -110,7 +110,6 @@ const newsletter_confirm_template = (username, interests) => {
 <body>
     <div class="container">
         <div class="logo">
-            <!-- Insert your logo here -->
             <img src="${process.env.NEXT_PUBLIC_BASE_IMG_URL}/website-copyrights/logo_gold_outlined.webp"
                 alt="Logo">
         </div>

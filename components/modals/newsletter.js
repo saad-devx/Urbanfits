@@ -23,29 +23,19 @@ export default function Newsletter() {
 
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setFieldValue, setFieldError, setValues } = useFormik({
         initialValues: {
-            contact: user?.email || "",
+            email: user?.email || "",
             gender: user?.gender || "",
             interests: []
         },
         validationSchema: Yup.object({
-            contact: Yup.string().required('Email or phone number is required').test('contact', 'Invalid email or phone number', function (value) {
-                const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                const phoneRegex = /^\+\d{1,3}( )?\d{8,16}$/;
-                return emailRegex.test(value) || (phoneRegex.test(value));
-            }),
+            email: Yup.string().email().required('Email or phone number is required'),
             gender: Yup.string().required("Please select your gender"),
             interests: Yup.array(Yup.string().oneOf(newsletterInterests, "This interest is not available.")).min(1, "Please select at least one interest")
         }),
-        onSubmit: async (values0) => {
-            const values = (() => {
-                if (values0.contact.includes('@')) return { email: values0.contact, gender: values0.gender.toLowerCase(), interests: values0.interests }
-                else return { phone: values0.contact, gender: values0.gender.toLowerCase(), interests: values0.interests }
-            })()
-            let id = user?._id;
-            let registerData = user ? { ...values, user: id } : values;
+        onSubmit: async (values) => {
             setLoading(true);
             try {
-                let { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/newsletter/register${user ? `?id=${user._id}` : ''}`, registerData)
+                let { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/newsletter/register`, values, { withCredentials: true });
                 await updateNewsletterData(data.payload, false)
                 toaster("success", data.msg)
                 toggleNewsletterModal()
@@ -65,8 +55,6 @@ export default function Newsletter() {
         else setFieldValue('interests', [...values.interests, name]);
     }
 
-    console.log(values)
-
     if (show) return <>
         <div className={`w-full min-h-screen py-10 md:py-0 font_urbanist fixed left-0 top-0 right-0 z-50 bg-gray-800/40 backdrop-blur flex justify-center items-center overflow-y-scroll hide_scrollbar transition-all duration-500 ${show === false ? "opacity-0 pointer-events-none" : ''}`}>
             <div className={` ${show === false ? "translate-y-10" : ''} relative w-11/12 md:w-3/4 lg:w-[60rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
@@ -85,9 +73,9 @@ export default function Newsletter() {
                         <div className='space-y-3' >
                             <h3 className='text-black font_urbanist_medium text-xs md:text-base'>Email*</h3>
                             <div className="relative w-full data_field flex items-center border-b border-b-gray-400 focus:border-pinky hover:border-pinky transition py-2 mb-4">
-                                {touched.contact && errors.contact ? <Tooltip classes="form-error" content={errors.contact} /> : null}
-                                <input className="w-full bg-transparent outline-none border-none" type="text" name="contact" id="contact" value={values.contact} onBlur={handleBlur} onChange={(e) => {
-                                    if (errors.contact) setFieldError('contact', '');
+                                {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
+                                <input className="w-full bg-transparent outline-none border-none" type="text" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={(e) => {
+                                    if (errors.email) setFieldError('email', '');
                                     handleChange(e);
                                 }} placeholder="example@gmail.com" />
                             </div>

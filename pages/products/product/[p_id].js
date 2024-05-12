@@ -103,24 +103,8 @@ export default function Product(props) {
     }
     return <>
         <Head>
-            <title></title>
-            <meta name="description" content="" />
-
-            <meta property="og:url" content="https://ddc0-116-71-168-213.ngrok-free.app" />
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content="" />
-            <meta property="og:description" content="" />
-            <meta property="og:image" content="" />
-
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta property="twitter:domain" content="ddc0-116-71-168-213.ngrok-free.app" />
-            <meta property="twitter:url" content="https://ddc0-116-71-168-213.ngrok-free.app" />
-            <meta name="twitter:title" content="" />
-            <meta name="twitter:description" content="" />
-            <meta name="twitter:image" content="" />
-
-            <title>{productData.name}</title>
-            {/* <link rel="shortcut icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
+            <title>{productData.name[locale]}</title>
+            <link rel="shortcut icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <link rel="apple-touch-icon" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <link rel="image_src" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <link rel="canonical" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
@@ -135,7 +119,7 @@ export default function Product(props) {
             <meta name="facebook:card" content="summary" />
             <meta name="facebook:domain" content="stackoverflow.com" />
             <meta name="facebook:title" property="og:title" itemprop="name" content={productData.name} />
-            <meta name="facebook:description" property="og:description" itemprop="description" content={productData.description} /> */}
+            <meta name="facebook:description" property="og:description" itemprop="description" content={productData.description} />
         </Head>
         <link itemprop="thumbnailUrl" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
         <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
@@ -145,31 +129,31 @@ export default function Product(props) {
             <div className="w-full pb-20 flex justify-center">
                 <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-20 lg:w-[90%] h-full font_urbanist text-left pt-8' >
                     <div className="w-full flex flex-col lg:flex-row lg:justify-between">
-                        <p className="lg:hidden font_urbanist text-sm text-gray-400"><Link href="/">{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name}`} className='capitalize'>{productData.categories[0].name}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name}</span></p>
+                        <p className="lg:hidden font_urbanist text-sm text-gray-400"><Link href="/">{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name}`} className='capitalize'>{productData.categories[0].name}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name[locale]}</span></p>
                         <div className="w-full lg:w-[55%] mb-3 mt-6 md:mt-10 lg:mt-0">
-                            <h1 className="lg:hidden w-full mb-2 font_urbanist_bold text-xs md:text-lg">{productData.name.toUpperCase()}</h1>
+                            <h1 className="lg:hidden w-full mb-2 font_urbanist_bold text-xs md:text-lg">{productData.name[locale].toUpperCase()}</h1>
                             <ProductCarousel img_array={product.images} />
                         </div>
 
                         <div className="details w-full lg:w-[40%]">
-                            <p className="hidden lg:block mb-5 font_urbanist text-sm text-gray-400"><Link href="/" className='hover:text-pinky'>{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name}`} className='hover:text-pinky capitalize'>{productData.categories[0].name}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name}</span></p>
-                            <h1 className="hidden lg:block w-full mb-4 font_urbanist_bold lg:text-3xl capitalize">{productData.name}</h1>
+                            <p className="hidden lg:block mb-5 font_urbanist text-sm text-gray-400"><Link href="/" className='hover:text-pinky'>{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name}`} className='hover:text-pinky capitalize'>{productData.categories[0].name}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name[locale]}</span></p>
+                            <h1 className="hidden lg:block w-full mb-4 font_urbanist_bold lg:text-3xl capitalize">{productData.name[locale]}</h1>
                             <h2 className="hidden lg:block font_urbanist_bold lg:text-2xl text-pinky">{formatPrice(productData.price)}</h2>
 
                             <div className="w-full my-5 flex items-center text-sm lg:text-base gap-x-6">
-                                <span className="w-12">Color :</span>
+                                <span className="w-12">{langObj.color} :</span>
                                 <span className="flex items-center gap-x-2">
                                     {productData.variants.map(({ color_name, color }, index) => <button key={index} name={color_name} onClick={onColorChange} style={{ background: color }} className={`w-6 aspect-square flex justify-center items-center border-[0.5px] rounded-full ${router.query.color?.toLowerCase() === color_name?.toLowerCase() && "equillibrium_shadow"} transition-all`}>{router.query.color?.toLowerCase() === color_name?.toLowerCase() && <i className={`fa-solid fa-check text-[8px] ${router.query.color?.toLowerCase() !== 'white' && "text-white"}`} />}</button>)}
                                 </span>
                             </div>
                             <div className="w-full my-5 flex items-center text-sm lg:text-base gap-x-6">
-                                <span className="w-12">Size :</span>
+                                <span className="w-12">{langObj.size} :</span>
                                 <span className="flex items-center gap-x-2">
                                     {product.sizes.map(({ size }, index) => <button key={index} onClick={onSizeChange} name={size} className={`w-6 h-6 aspect-square flex justify-center items-center font_urbanist_bold text-[8px] border-[0.5px] border-pinky rounded-full ${size === sizevalue ? "text-white bg-pinky equillibrium_shadow" : "text-black"} transition-all`}>{size}</button>)}
                                 </span>
                             </div>
-                            <p className="w-full mt-5 font_urbanist_medium text-sm lg:text-base text-gray-400">{productData.description}</p>
-                            <p className="w-full font_urbanist_medium text-sm lg:text-base text-gray-400">Dimensions: {productData.shipping_details.width}' x {productData.shipping_details.width}' , Weight: {productData.shipping_details.weight} grams.</p>
+                            <p className="w-full mt-5 font_urbanist_medium text-sm lg:text-base text-gray-400">{productData.description[locale]}</p>
+                            <p className="w-full font_urbanist_medium text-sm lg:text-base text-gray-400">{langObj.dimensions}: {productData.shipping_details.width}' x {productData.shipping_details.width}' , {langObj.weight}: {productData.shipping_details.weight} grams.</p>
                             <p className="my-5 text-sm lg:text-base font_urbanist_bold">{getFilteredQuantity()} {langObj.inStock}</p>
 
                             <span className="max-w-[320px] w-48pr lg:w-1/3 h-9 lg:h-[52px] my-5 px-5 hover:rounded-none font_urbanist border border-pinky rounded-xl flex justify-between items-center transition-all duration-300">
@@ -200,7 +184,7 @@ export default function Product(props) {
 
                             {productData.bundle_items && productData.bundle_items.length !== 0 ?
                                 <div className="w-full pt-7 2xl:pt-7 mt-7 2xl:mt-7 lg:border-t">
-                                    <h1 className="font_urbanist_bold text-sm mid:text-base text-pinky">Match With</h1>
+                                    <h1 className="font_urbanist_bold text-sm mid:text-base text-pinky">{langObj.matchWith}</h1>
                                     <div className="grid w-full grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-2 2xl:gap-4">
                                         {productData.bundle_items.map((product, index) => {
                                             if (window.matchMedia('(min-width: 1024px)').matches) return <SmallShoppingcard key={index} product={product} />
@@ -213,7 +197,7 @@ export default function Product(props) {
                     </div>
 
                     <div className="w-full mt-36">
-                        <h3 className="text-lg md:text-xl lg:text-2xl font_urbanist_bold">Similar Items</h3>
+                        <h3 className="text-lg md:text-xl lg:text-2xl font_urbanist_bold">{langObj.similarItems}</h3>
                         <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-6">
                             {productLoading ? <div className="w-full h-[30vh] col-span-full flex justify-center items-center"><BounceLoader /></div>
                                 : similarProducts.map((product, index) => {

@@ -8,18 +8,15 @@ import MoreToExplore from './more_to_explore';
 import { cart as cartLang } from '@/locales';
 import { shippingRates } from '@/uf.config';
 // Image imports
-import Image from 'next/image'
-import EmptyCartVector from "../public/emptyCart.svg"
-const CartBg = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/cartbg.webp'
+import Image from 'next/image';
+import EmptyCartVector from "../public/emptyCart.svg";
+const CartBg = process.env.NEXT_PUBLIC_BASE_IMG_URL + '/website-copyrights/cartbg.webp';
 import Link from 'next/link';
 
-function CartItem(props) {
-    const { product } = props;
-    const { formatPrice } = useWallet();
-    const { updateItemQuantity, removeItem } = useCart();
+function CartItem({ key, product, locale, toggleCart, updateItemQuantity, removeItem, formatPrice }) {
     const [quantity, setQuantity] = useState(product.quantity);
     const [sizevalue, setSizevalue] = useState(product.size);
-    const isGiftCard = props.product?.is_giftcard;
+    const isGiftCard = product?.is_giftcard;
 
     const onSizeChange = (e) => {
         setQuantity(1)
@@ -46,16 +43,16 @@ function CartItem(props) {
         }
     }
 
-    return <li {...props} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
+    return <li key={key} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
         <div className="relative w-[100px] h-[110px] lg:w-[129px] lg:h-[140px] mr-5 flex justify-center items-center rounded-xl overflow-hidden">
             {isGiftCard ? <div className="size-full flex flex-col justify-center items-center bg-pinky text-white text-xs lg:text-sm font-semibold">
                 <span className='text-xs md:text-sm lg:text-base font_copper'>E-GIFTCARD</span>
                 AED {product.price}
-            </div> : <Image width={129} height={160} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + product.images[0]} alt={product.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>}
+            </div> : <Image width={129} height={160} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + product.images[0]} alt={product.name[locale]} className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700" ></Image>}
         </div>
         {/* to be displayed from md breakpoint */}
         <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_urbanist_medium">
-            <Link href={isGiftCard ? "/giftcard" : `/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_urbanist_bold text-black transition-all duration-700">{isGiftCard ? "UF E-Giftcard" + ` (${product.buy_for == "self" ? "For Self" : "For Friend"})` : product.name}</Link>
+            <Link href={isGiftCard ? "/giftcard" : `/products/product/${product.product_id}?color=${product.color}`} className="w-[145px] font_urbanist_bold text-black transition-all duration-700">{isGiftCard ? "UF E-Giftcard" + ` (${product.buy_for == "self" ? "For Self" : "For Friend"})` : product.name[locale]}</Link>
             <h3 className="w-[100px] font_urbanist_bold capitalize">{isGiftCard ? <span>--</span> : product?.color}</h3>
             {/* <Select /> */}
             {isGiftCard ? <span style={{ width: "6rem" }}>--</span> : <div className='relative'>
@@ -77,8 +74,8 @@ function CartItem(props) {
         </div>
         {/* to be displayed in mobile */}
         <div className="md:hidden flex-1 h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
-            <Link onClick={props.toggleCart} href={isGiftCard ? "/giftcard" : `/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between items-start gap-x-2 text-sm text-black transition-all duration-700">
-                <span>{isGiftCard ? "UF E-Giftcard" : product.name}</span>
+            <Link onClick={toggleCart} href={isGiftCard ? "/giftcard" : `/products/product/${product.product_id}?color=${product.color}`} className="w-full flex justify-between items-start gap-x-2 text-sm text-black transition-all duration-700">
+                <span>{isGiftCard ? "UF E-Giftcard" : product[locale]}</span>
                 <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200" />
             </Link>
             <h3 className="font_urbanist_medium self-start text-xs">{formatPrice(product.price * quantity)}</h3>
@@ -99,8 +96,8 @@ function CartItem(props) {
     </li>
 }
 
-export default function Cart(props) {
-    const { isEmpty, items, cartTotal, removeItem, emptyCart } = useCart();
+export default function Cart({ cart, toggleCart, top_0 }) {
+    const { isEmpty, items, cartTotal, removeItem, updateItemQuantity, emptyCart } = useCart();
     const { locale } = useLanguage();
     const { formatPrice } = useWallet();
     const shippingMethod = shippingRates.standard_shipping;
@@ -117,14 +114,14 @@ export default function Cart(props) {
         return shippingMethod.rate + additionalCharges;
     })()
 
-    return <section className={`bg-white w-full fixed ${props.top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${props.cart ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
+    return <section className={`bg-white w-full fixed ${top_0 ? 'h-screen top-0' : 'h-screen lg_layout_height top-0 md:top-[115px]'} right-0 z-[60] md:z-30 transition-all duration-700 overflow-x-hidden overflow-y-scroll ${cart ? null : "-translate-y-[130%] opacity-0"} font_urbanist`}>
         <div className="w-full flex justify-center">
             {isEmpty ?
                 <section className="w-full layout_height flex flex-col justify-center items-center space-y-4" >
                     <Image width={200} height={200} src={EmptyCartVector} alt="Urban images" className="w-1/2 md:w-auto" />
                     <h4 className="text-3xl text-center">{langObj.emptyTitle}</h4>
                     <p className="w-11/12 md:w-1/2 lg:w-1/3 text-center font_gotam_light">{langObj.emptyCart.msg}</p>
-                    <Button onClick={props.toggleCart} classes="w-1/2 md:w-1/4 lg:w-64">{langObj.emptyCart.btn}</Button>
+                    <Button onClick={toggleCart} classes="w-1/2 md:w-1/4 lg:w-64">{langObj.emptyCart.btn}</Button>
                 </section>
                 :
                 <section className='w-full h-full pt-0 lg:p-10 lg:pb-14 lg:pt-0 text-left' >
@@ -142,23 +139,7 @@ export default function Cart(props) {
                                 <span className='text-gray-300'>{langObj.columns.item4}</span>
                                 <span className='w-[10%] text-gray-300'>{langObj.columns.item5}</span>
                             </div>
-                            {items.map(product => {
-                                // if (product.id.startsWith("giftcard_")) return <li key={index} className="relative group w-full h-[110px] my-10 text-[10px] lg:text-xs flex md:justify-between items-center">
-                                //     <div className={`${product.bg} w-[100px] h-20 lg:w-[129px] lg:h-20 mr-5 flex justify-center items-center rounded-xl font_montserrat_bold text-xs text-white uppercase tracking-1 overflow-hidden`}>{product.d_name}</div>
-                                //     {/* to be displayed from md breakpoint */}
-                                //     <div className="hidden md:flex md:w-[85%] lg:py-3 md:p-0 h-full flex-row justify-between items-center font_urbanist_medium">
-                                //         <Link onClick={props.toggleCart} href="/giftcards" className="w-[145px] font_urbanist_bold text-black transition-all duration-700">{product.name}</Link>
-                                //         <h3 className="font_urbanist_bold self-center text-xs">{formatPrice(product.price)}</h3>
-                                //         <button onClick={() => { removeItem(product.id) }} className="hidden md:block fa-solid fa-xmark font_urbanist_medium text-xs tracking-widest"></button>
-                                //     </div>
-                                //     {/* to be displayed in mobile */}
-                                //     <div className="md:hidden h-full ml-2 flex flex-col justify-between items-start font_urbanist_medium tracking-widest">
-                                //         <Link onClick={props.toggleCart} href="/giftcards" className="w-full flex justify-between font_urbanist_bold text-sm text-black transition-all duration-700">{product.name} <button onClick={() => { removeItem(product.id) }} className="fa-solid fa-xmark text-gray-200" /></Link>
-                                //         <h3 className="font_urbanist_medium self-start text-xs">{formatPrice(product.price)}</h3>
-                                //     </div>
-                                // </li>
-                                return <CartItem key={product.id} toggleCart={props.toggleCart} product={product} />
-                            })}
+                            {items.map(product => <CartItem key={product.id} toggleCart={toggleCart} product={product} removeItem={removeItem} updateItemQuantity={updateItemQuantity} formatPrice={formatPrice} locale={locale} />)}
                             <button onClick={emptyCart} className="text-xs md:text-sm">{langObj.deleteAll} <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
                         <div className="w-full lg:w-[400px] self-center lg:self-end">
@@ -169,7 +150,7 @@ export default function Cart(props) {
                                 <br />
                                 <span className="w-full my-3 mx-auto flex justify-between"><span className='text-gray-400'>{langObj.orderSummary.item3}</span> <span>{formatPrice(cartTotal + totolShippingFee)}</span></span>
                             </div>
-                            <LinkBtn href="/checkout" onClick={props.toggleCart} font='font_urbanist_bold' classes="w-full">{langObj.orderSummary.item4}</LinkBtn>
+                            <LinkBtn href="/checkout" onClick={toggleCart} font='font_urbanist_bold' classes="w-full">{langObj.orderSummary.item4}</LinkBtn>
                         </div>
                     </div>
                     <div className="w-full px-4 lg:px-14 mb-20">
