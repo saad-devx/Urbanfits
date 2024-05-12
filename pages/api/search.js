@@ -5,7 +5,7 @@ import StandardApi from "@/middlewares/standard_api"
 
 const UpdateProducts = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
     await ConnectDB()
-    const searchTerm = req.query.q
+    const searchTerm = req.query.q;
 
     const strRegexQuery = { $regex: searchTerm, $options: "i" }
     const productResults = await Product.find({
