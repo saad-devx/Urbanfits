@@ -36,7 +36,7 @@ export const getCouponDiscount = (Coupon, couponCode, items, cartTotal, user) =>
     } else return 0
 }
 
-export default function DiscountBox({ formatPrice, giftCard, setGiftCard, coupon, setCoupon, values, setFieldValue, errors }) {
+export default function DiscountBox({ langObj, formatPrice, giftCard, setGiftCard, coupon, setCoupon, values, setFieldValue, errors }) {
     const [checkedSection, setCheckedSection] = useState(1)
     const [expand, setExpand] = useState(false)
     const setGiftState = (key, value) => setGiftCard(prevState => ({ ...prevState, [key]: value }))
@@ -70,17 +70,17 @@ export default function DiscountBox({ formatPrice, giftCard, setGiftCard, coupon
     return <>
         <div className="flex items-center text-xs md:text-sm lg:text-base font-semibold">
             <i className="fa-solid fa-circle-info text-gray-500" />&nbsp;
-            <span>Have a Coupon / Gift Card? &nbsp;</span>
-            <button onClick={() => setExpand(prev => !prev)} className="text-gray-500">Click here to enter code</button>
+            <span>{langObj.addOfferCard.pt1} &nbsp;</span>
+            <button onClick={() => setExpand(prev => !prev)} className="text-gray-500">{langObj.addOfferCard.pt2}</button>
         </div>
         <section className={`w-full ${expand ? "max-h-[22rem] mt-2 p-4 border" : "max-h-0"} border-gray-200 rounded-xl transition-all duration-700 overflow-hidden`} tabIndex={2}>
             <div className="w-full flex justify-center items-center text-sm gap-x-4">
                 <button className={`${checkedSection == 1 && "font-semibold"} px-2 flex flex-col justify-between items-center`} onClick={() => { setCheckedSection(1); setCoupon({ card: null, code: '', loading: false }) }}>
-                    Coupon Code
+                    {langObj.addOfferCard.couponCode}
                     <span className={`${checkedSection == 1 ? "w-full" : 'w-0'} h-0.5 lg:h-1 mt-0.5 lg:mt-1 bg-gold-land rounded-md transition-all duration-300`} />
                 </button>
                 <button className={`${checkedSection == 2 && "font-semibold"} px-2 flex flex-col justify-between items-center`} onClick={() => { setCheckedSection(2); setGiftCard({ coupon: null, code: '', loading: false }) }}>
-                    Gift Code
+                    {langObj.addOfferCard.giftCode}
                     <span className={`${checkedSection == 2 ? "w-full" : 'w-0'} h-0.5 lg:h-1 mt-0.5 lg:mt-1 bg-gold-land rounded-md transition-all duration-300`} />
                 </button>
             </div>
@@ -92,12 +92,12 @@ export default function DiscountBox({ formatPrice, giftCard, setGiftCard, coupon
                 </span> : null}
                 <div className="w-full relative flex justify-between items-center">
                     <input onChange={(e) => setCoupontState('code', e.target.value)} value={coupon.code} className={`w-full mt-3 h-10 px-4 py-2 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
-                    <button type='button' onClick={() => checkCoupon(coupon.code)} disabled={coupon.loading} className="bg-[#FF4A60] h-10 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
+                    <button type='button' onClick={() => checkCoupon(coupon.code)} disabled={coupon.loading} className="bg-[#FF4A60] h-10 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">{langObj.addOfferCard.check}</button>
                     <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{errors && errors.point_to_use}</p>
                 </div>
                 {values?.coupon_code ?
-                    <Button type="button" onClick={() => setFieldValue("coupon_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
-                    <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (coupon.code.length > 7) setFieldValue("coupon_code", coupon.code) }} my="mt-2" classes="w-full">Apply</Button>}
+                    <Button type="button" onClick={() => setFieldValue("coupon_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">{langObj.addOfferCard.retract}</Button> :
+                    <Button type="button" disabled={coupon.coupon?.coupon_value ? (!coupon.code || coupon.code.length < 8) : true} onClick={() => { if (coupon.code.length > 7) setFieldValue("coupon_code", coupon.code) }} my="mt-2" classes="w-full">{langObj.addOfferCard.apply}</Button>}
             </> : <>
 
                 {giftCard.card ? <span className="w-full flex flex-col justify-between items-center gap-y-4">
@@ -106,12 +106,12 @@ export default function DiscountBox({ formatPrice, giftCard, setGiftCard, coupon
                 </span> : null}
                 <div className="w-full relative flex justify-between items-center">
                     <input onChange={(e) => setGiftState('code', e.target.value)} value={giftCard.code} className={`w-full mt-3 h-10 px-4 py-2 border border-gray-300 focus:border-pink-500 hover:border-pink-400 border-r-0 transition rounded-l-lg outline-none`} />
-                    <button type='button' onClick={() => checkGiftCard(giftCard.code)} disabled={giftCard.loading} className="bg-[#FF4A60] h-10 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">Check</button>
+                    <button type='button' onClick={() => checkGiftCard(giftCard.code)} disabled={giftCard.loading} className="bg-[#FF4A60] h-10 mt-3 px-2 py-1 text-white text-xs lg:text-sm rounded-r-lg">{langObj.addOfferCard.check}</button>
                     <p className='absolute text-red-400 bottom-[-19px] left-[10px] text-10px'>{errors && errors.point_to_use}</p>
                 </div>
                 {values?.gift_code ?
-                    <Button type="button" onClick={() => setFieldValue("gift_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">Retract</Button> :
-                    <Button type="button" disabled={giftCard.card?._id ? (!giftCard.code || giftCard.code.length < 8 || giftCard.code.length > 10) : true} onClick={() => { if (giftCard.code.length > 8 && giftCard.code.length < 11) { setFieldValue("gift_code", giftCard.code) } }} my="mt-2" classes="w-full">Apply</Button>}
+                    <Button type="button" onClick={() => setFieldValue("gift_code", '')} my="mt-2" bg="bg-gray-100" text="black" classes="w-full">{langObj.addOfferCard.retract}</Button> :
+                    <Button type="button" disabled={giftCard.card?._id ? (!giftCard.code || giftCard.code.length < 8 || giftCard.code.length > 10) : true} onClick={() => { if (giftCard.code.length > 8 && giftCard.code.length < 11) { setFieldValue("gift_code", giftCard.code) } }} my="mt-2" classes="w-full">{langObj.addOfferCard.apply}</Button>}
             </>}
         </section>
     </>

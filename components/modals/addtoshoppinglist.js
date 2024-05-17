@@ -1,10 +1,23 @@
 import { useEffect } from 'react'
 import BounceLoader from '../loaders/bounceLoader';
+import useLanguage from '@/hooks/useLanguage';
 import useShoppingList from '@/hooks/useShoppingList';
 import Link from 'next/link';
 
 export default function AddToShopListModal({ setAddToListModal, product_id }) {
     const { lists, getShoppingLists, addToShoppingList, removeFromShoppingList, listLoading } = useShoppingList();
+    const { locale } = useLanguage();
+
+    const dictionary = {
+        en: {
+            saveToList: "Save to Shopping List",
+            createList: "Create a new shopping list"
+        },
+        ar: {
+            saveToList: "احفظ في قائمة التسوق",
+            createList: "أنشئ قائمة تسوق جديدة"
+        }
+    }[locale];
 
     useEffect(() => {
         if (!lists || !lists.length) getShoppingLists()
@@ -14,7 +27,7 @@ export default function AddToShopListModal({ setAddToListModal, product_id }) {
         <div className={`relative w-11/12 md:w-3/5 lg:w-[30rem] text-sm flex flex-col lg:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500`}>
             <button onClick={() => setAddToListModal(false)} className="material-symbols-rounded text-lg md:text-2xl lg:text-3xl absolute right-5 top-5 cursor-pointer hover:rotate-180 transition-all duration-1000">close</button>
             <section className="w-full h-full p-6">
-                <h2 className="text-black md:text-lg lg:text-xl font_urbanist_bold">Save to Shopping List...</h2>
+                <h2 className="text-black md:text-lg lg:text-xl font_urbanist_bold">{dictionary.saveToList}</h2>
 
                 {listLoading && <div className="flex justify-center"><BounceLoader /></div>}
                 <div className="w-full h-[20rem] my-5 md:mt-8 flex flex-col gap-y-2 md:gap-y-3 overflow-hidden overflow-y-scroll">
@@ -33,7 +46,7 @@ export default function AddToShopListModal({ setAddToListModal, product_id }) {
                 </div>
                 <Link href="/user/shopping-lists" className="w-full flex items-center py-2 px-4 font_urbanist_medium text-sm md:text-base">
                     <span className="material-symbols-outlined">edit_note</span>
-                    &nbsp;&nbsp;&nbsp;Create a shopping list
+                    &nbsp;&nbsp;&nbsp;{dictionary.createList}
                 </Link>
             </section>
         </div>

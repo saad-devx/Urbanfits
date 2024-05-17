@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import useCategories from '@/hooks/useCategories'
-import useProduct from '@/hooks/useProduct'
-import Shoppingcard from './cards/shoppingcard'
-import Button from './buttons/simple_btn'
-import Link from 'next/link'
-import Image from 'next/image';
-const EmtpyOrderImg = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/empty-order.webp"
+import { useEffect, useState } from 'react';
+import useCategories from '@/hooks/useCategories';
+import useProduct from '@/hooks/useProduct';
+import useLanguage from '@/hooks/useLanguage';
+import Shoppingcard from './cards/shoppingcard';
+import Button from './buttons/simple_btn';
+import Link from 'next/link';
+import Image from 'next/image';;
+const EmtpyOrderImg = process.env.NEXT_PUBLIC_BASE_IMG_URL + "/website-copyrights/empty-order.webp";
 
 export const NoProductsSection = () => {
     return <section className="col-span-full w-full flex flex-col items-center gap-y-4 pt-[40%] md:pt-[30%] lg:pt-[16%]">
@@ -17,11 +18,25 @@ export const NoProductsSection = () => {
 }
 
 export default function MoreToExplore({ categoryId = "64a59d5816b4c91fa1967b2e" }) {
-    const { getRelativeCategories, categLoading } = useCategories()
-    const { getProducts, productLoading } = useProduct()
-    const [exploreData, setExploreData] = useState(null)
-    const [displayProducts, setDisplayProducts] = useState([])
-    const [activeItem, setActiveItem] = useState("latest_arrivals")
+    const { getRelativeCategories, categLoading } = useCategories();
+    const { getProducts, productLoading } = useProduct();
+    const { locale } = useLanguage();
+    const [exploreData, setExploreData] = useState(null);
+    const [displayProducts, setDisplayProducts] = useState([]);
+    const [activeItem, setActiveItem] = useState("latest_arrivals");
+
+    const dictionary = {
+        en: {
+            title: "More To Explore",
+            lastestArrivals: "Latest Arrivals",
+            loading: "Loading"
+        },
+        ar: {
+            title: "المزيد للاستكشاف",
+            lastestArrivals: "أحدث الوافدين",
+            loading: "جارٍ التحميل"
+        }
+    }[locale];
 
     const getExploreItems = async (e) => {
         const { name } = e.target
@@ -45,15 +60,15 @@ export default function MoreToExplore({ categoryId = "64a59d5816b4c91fa1967b2e" 
     }, [])
 
     return <div className="w-full mt-12 lg:mt-20 xl:mt-28">
-        <h3 className="text-lg md:text-2xl text-center md:text-left font_urbanist_bold">More To Explore</h3>
+        <h3 className="text-lg md:text-2xl text-center md:text-left font_urbanist_bold">{dictionary.title}</h3>
         <div className="w-full mt-5 flex flex-wrap">
-            <Button name="latest_arrivals" onClick={getExploreItems} fontSize='text-xs md:text-[15px]' classes="mr-3 px-3 md:px-5 whitespace-nowrap" height='h-[34px]' font='font_urbanist_medium' my="my-1" text={activeItem === "latest_arrivals" ? 'white' : 'black'} bg={activeItem === "latest_arrivals" ? 'bg-gold-land' : 'bg-gray-50'}>Latest Arrivals</Button>
+            <Button name="latest_arrivals" onClick={getExploreItems} fontSize='text-xs md:text-[15px]' classes="mr-3 px-3 md:px-5 whitespace-nowrap" height='h-[34px]' font='font_urbanist_medium' my="my-1" text={activeItem === "latest_arrivals" ? 'white' : 'black'} bg={activeItem === "latest_arrivals" ? 'bg-gold-land' : 'bg-gray-50'}>{dictionary.lastestArrivals}</Button>
             {exploreData?.relative_categories ? exploreData?.relative_categories?.map(category =>
-                <Button key={category._id} name={category._id} onClick={getExploreItems} fontSize='text-xs md:text-[15px]' classes="mr-3 px-3 md:px-5 whitespace-nowrap capitalize" height='h-[34px]' font='font_urbanist_medium' my="my-1" text={activeItem === category._id ? 'white' : 'black'} bg={activeItem === category._id ? 'bg-gold-land' : 'bg-gray-50'}>{category.name}</Button>
+                <Button key={category._id} name={category._id} onClick={getExploreItems} fontSize='text-xs md:text-[15px]' classes="mr-3 px-3 md:px-5 whitespace-nowrap capitalize" height='h-[34px]' font='font_urbanist_medium' my="my-1" text={activeItem === category._id ? 'white' : 'black'} bg={activeItem === category._id ? 'bg-gold-land' : 'bg-gray-50'}>{category.name[locale]}</Button>
             ) : null}
         </div>
         <section className="w-full">
-            {productLoading || categLoading ? <span className="self-center w-full min-h-[330px] mid:h-[380px] lg:h-[360px] flex justify-center items-center font_urbanist_bold text-gray-500 text-[10px] md:text-base">Loading...</span> :
+            {productLoading || categLoading ? <span className="self-center w-full min-h-[330px] mid:h-[380px] lg:h-[360px] flex justify-center items-center font_urbanist_bold text-gray-500 text-[10px] md:text-base">{dictionary.loading}...</span> :
                 <div className="w-full h-auto md:h-[290px] lg:h-[380px] xl:h-[430px] 2xl:h-[470px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-3 lg:gap-2 xl:gap-4 2xl:gap-8">
                     {displayProducts.length ? displayProducts.map((product, i) => {
                         if (window.matchMedia('(max-width: 760px)').matches && i > 3) return

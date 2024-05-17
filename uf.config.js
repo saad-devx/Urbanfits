@@ -2,101 +2,25 @@ export const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
 
 export const locales = ["en", "ar"];
 
-// export const DefaultTasks = [
-//     {
-//         name: "sign_up",
-//         title: { en: "Sign Up Bonus", ar: "مكافأة التسجيل" },
-//         description: { en: "Sign up and win 500 points.", ar: "سجل الدخول واحصل على 500 نقطة." },
-//         reward: 500,
-//         completed: true,
-//         link: "/auth/signup"
-//     },
-//     {
-//         name: "place_order",
-//         title: { en: "Place an Order", ar: "قم بطلب" },
-//         description: { en: "Win upto 350 points.", ar: "اربح حتى 350 نقطة." },
-//         link: "/"
-//     },
-//     {
-//         name: "review_product",
-//         title: { en: "Review a Product", ar: "مراجعة منتج" },
-//         description: { en: "Review and win upto 350 points.", ar: "قم بالمراجعة واربح حتى 350 نقطة." },
-//         reward: 350,
-//         disabled: true,
-//         link: "/"
-//     },
-//     {
-//         name: "follow_facebook",
-//         type: "social",
-//         title: { en: "Follow & like us on Facebook", ar: "تابعنا وأعجب بنا على فيسبوك" },
-//         description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
-//         reward: 100,
-//         need_image: true,
-//         image_submitted: false,
-//         link: "https://www.facebook.com"
-//     },
-//     {
-//         name: "follow_instagram",
-//         type: "social",
-//         title: { en: "Follow & like us on Instagram", ar: "تابعنا وأعجب بنا على انستغرام" },
-//         description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
-//         reward: 100,
-//         need_image: true,
-//         image_submitted: false,
-//         link: "https://www.instagram.com"
-//     },
-//     {
-//         name: "follow_tiktok",
-//         type: "social",
-//         title: { en: "Follow & like us on Tiktok", ar: "تابعنا وأعجب بنا على تيك توك" },
-//         description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
-//         reward: 100,
-//         need_image: true,
-//         image_submitted: false,
-//         link: "https://www.tiktok.com/"
-//     },
-//     {
-//         name: "share_on_social",
-//         title: { en: "Share on Social Media", ar: "مشاركة على وسائل التواصل الاجتماعي" },
-//         description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
-//         reward: 100,
-//         need_image: true,
-//         image_submitted: false,
-//         link: "/"
-//     },
-//     {
-//         name: "spin_wheel",
-//         title: { en: "Spin the wheel", ar: "دور العجلة" },
-//         description: { en: "Win upto 500 points.", ar: "اربح حتى 500 نقطة." },
-//         link: "#prize_wheel"
-//     },
-//     {
-//         name: "download_app",
-//         title: { en: "Download mobile app", ar: "تنزيل التطبيق المحمول" },
-//         reward: 500,
-//         description: { en: "Get 500 points.", ar: "احصل على 500 نقطة." },
-//     }
-// ]
-
 export const DefaultTasks = [
     {
         name: "sign_up",
-        title: "Sign Up Bonus",
-        description: "Sign up and win 500 points.",
+        title: { en: "Sign Up Bonus", ar: "مكافأة التسجيل" },
+        description: { en: "Sign up and win 500 points.", ar: "سجل الدخول واحصل على 500 نقطة." },
         reward: 500,
         completed: true,
         link: "/auth/signup"
     },
     {
         name: "place_order",
-        title: "Place an Order",
-        description: "Win upto 350 points.",
+        title: { en: "Place an Order", ar: "قم بطلب" },
+        description: { en: "Win upto 350 points.", ar: "اربح حتى 350 نقطة." },
         link: "/"
     },
     {
         name: "review_product",
-        title: "Review a Product",
-        description: "Review and win upto 350 points.",
+        title: { en: "Review a Product", ar: "مراجعة منتج" },
+        description: { en: "Review and win upto 350 points.", ar: "قم بالمراجعة واربح حتى 350 نقطة." },
         reward: 350,
         disabled: true,
         link: "/"
@@ -104,8 +28,8 @@ export const DefaultTasks = [
     {
         name: "follow_facebook",
         type: "social",
-        title: "Follow & like us on Facebook",
-        description: "Follow and win 100 points.",
+        title: { en: "Follow & like us on Facebook", ar: "تابعنا وأعجب بنا على فيسبوك" },
+        description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
         reward: 100,
         need_image: true,
         image_submitted: false,
@@ -114,8 +38,8 @@ export const DefaultTasks = [
     {
         name: "follow_instagram",
         type: "social",
-        title: "Follow & like us on Instagram",
-        description: "Follow and win 100 points.",
+        title: { en: "Follow & like us on Instagram", ar: "تابعنا وأعجب بنا على انستغرام" },
+        description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
         reward: 100,
         need_image: true,
         image_submitted: false,
@@ -124,8 +48,8 @@ export const DefaultTasks = [
     {
         name: "follow_tiktok",
         type: "social",
-        title: "Follow & like us on Tiktok",
-        description: "Follow and win 100 points.",
+        title: { en: "Follow & like us on Tiktok", ar: "تابعنا وأعجب بنا على تيك توك" },
+        description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
         reward: 100,
         need_image: true,
         image_submitted: false,
@@ -133,8 +57,8 @@ export const DefaultTasks = [
     },
     {
         name: "share_on_social",
-        title: "Share on Social Media",
-        description: "Follow and win 100 points.",
+        title: { en: "Share on Social Media", ar: "مشاركة على وسائل التواصل الاجتماعي" },
+        description: { en: "Follow and win 100 points.", ar: "تابع واربح 100 نقطة." },
         reward: 100,
         need_image: true,
         image_submitted: false,
@@ -142,17 +66,93 @@ export const DefaultTasks = [
     },
     {
         name: "spin_wheel",
-        title: "Spin the wheel",
-        description: "Win upto 500 points.",
+        title: { en: "Spin the wheel", ar: "دور العجلة" },
+        description: { en: "Win upto 500 points.", ar: "اربح حتى 500 نقطة." },
         link: "#prize_wheel"
     },
     {
         name: "download_app",
-        title: "Download mobile app",
+        title: { en: "Download mobile app", ar: "تنزيل التطبيق المحمول" },
         reward: 500,
-        description: "Get 500 points."
+        description: { en: "Get 500 points.", ar: "احصل على 500 نقطة." },
     }
 ]
+
+// export const DefaultTasks = [
+//     {
+//         name: "sign_up",
+//         title: "Sign Up Bonus",
+//         description: "Sign up and win 500 points.",
+//         reward: 500,
+//         completed: true,
+//         link: "/auth/signup"
+//     },
+//     {
+//         name: "place_order",
+//         title: "Place an Order",
+//         description: "Win upto 350 points.",
+//         link: "/"
+//     },
+//     {
+//         name: "review_product",
+//         title: "Review a Product",
+//         description: "Review and win upto 350 points.",
+//         reward: 350,
+//         disabled: true,
+//         link: "/"
+//     },
+//     {
+//         name: "follow_facebook",
+//         type: "social",
+//         title: "Follow & like us on Facebook",
+//         description: "Follow and win 100 points.",
+//         reward: 100,
+//         need_image: true,
+//         image_submitted: false,
+//         link: "https://www.facebook.com"
+//     },
+//     {
+//         name: "follow_instagram",
+//         type: "social",
+//         title: "Follow & like us on Instagram",
+//         description: "Follow and win 100 points.",
+//         reward: 100,
+//         need_image: true,
+//         image_submitted: false,
+//         link: "https://www.instagram.com"
+//     },
+//     {
+//         name: "follow_tiktok",
+//         type: "social",
+//         title: "Follow & like us on Tiktok",
+//         description: "Follow and win 100 points.",
+//         reward: 100,
+//         need_image: true,
+//         image_submitted: false,
+//         link: "https://www.tiktok.com/"
+//     },
+//     {
+//         name: "share_on_social",
+//         title: "Share on Social Media",
+//         description: "Follow and win 100 points.",
+//         reward: 100,
+//         need_image: true,
+//         image_submitted: false,
+//         link: "/"
+//     },
+//     {
+//         name: "spin_wheel",
+//         title: "Spin the wheel",
+//         description: "Win upto 500 points.",
+//         link: "#prize_wheel"
+//     },
+//     {
+//         name: "download_app",
+//         title: "Download mobile app",
+//         reward: 500,
+//         description: "Get 500 points."
+//     }
+// ]
 
 export const signsTypes = ["visit", "signup"];
 

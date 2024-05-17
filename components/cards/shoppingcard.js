@@ -109,7 +109,7 @@ export default function Shoppingcard({ product }, props) {
                     </Link>
                     <div className="w-full flex flex-col lg:flex-row lg:items-center">
                         <span className="w-3/5 mb-1 lg:mb-0 font_urbanist_medium text-gray-300 text-xs lg:text-sm">
-                            <p className='truncate capitalize'>{product?.categories?.map(category => <Link href={`/products/category/${category._id}?name=${category.name}`}>{category.name},&nbsp;</Link>)}</p>
+                            <p className='truncate capitalize'>{product?.categories?.map(category => <Link href={`/products/category/${category._id}?name=${category?.name?.[locale]}`}>{category?.name?.[locale]},&nbsp;</Link>)}</p>
                         </span>
                         <span className="flex-1 flex items-center lg:justify-end gap-x-1.5">{product.variants?.map((variant, index) => <button key={index}
                             onClick={() => { splideRef.current.splide.go(index); setActiveVariant(variant) }} style={{ background: variant.color }} className={`w-3 lg:w-4 aspect-square rounded-full border-[0.5px]`} />)}

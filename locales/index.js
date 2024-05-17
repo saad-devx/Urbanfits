@@ -877,6 +877,84 @@ export const earnPointsPage = {
     }
 }
 
+export const checkoutPage = {
+    en: {
+        back: "Back",
+        addOfferCard: {
+            pt1: "Have a Coupon / Gift Card?",
+            pt2: "Click here to enter code",
+            couponCode: "Coupon Code",
+            giftCode: "Gft Code",
+            check: "Check",
+            apply: "Apply",
+            retract: "Retract"
+        },
+        contactInfo: "Contact Information",
+        name: "Name",
+        email: "Email",
+        shippingInfo: "Shipping Information",
+        develiveryOption: "Devlivery Option",
+        enterShippingInfo: "Enter your Shipping Information",
+        paymentMethod: "Select Payment Method",
+        continuePay: "Continue to Payment",
+        orderSummary: "Order Summary",
+        color: "Color",
+        size: "Size",
+        qty: "Quantity",
+        for: "For",
+        ufPoints: "UF Points",
+        ufEgiftcard: "UF E-Giftcard",
+        price: "Price",
+        totalPrice: "Total Price",
+        cardNum: "Card Number",
+        earnedPoints: "Earned UF-Points",
+        subtotal: "Subtotal",
+        discount: "Discount",
+        shipping: "Shipping Fee",
+        total: "Total",
+        applyUfPoints: "Apply UF-Points",
+        ufBalance: "Your UF Balance"
+    },
+    ar: {
+        back: "العودة",
+        addOfferCard: {
+            pt1: "هل لديك قسيمة / بطاقة هدايا؟",
+            pt2: "انقر هنا لإدخال الرمز",
+            couponCode: "رمز القسيمة",
+            giftCode: "رمز الهدية",
+            check: "تحقق",
+            apply: "تطبيق",
+            retract: "تراجع"
+        },
+        contactInfo: "معلومات الاتصال",
+        name: "الاسم",
+        email: "البريد الإلكتروني",
+        shippingInfo: "معلومات الشحن",
+        develiveryOption: "خيار التسليم",
+        enterShippingInfo: "أدخل معلومات الشحن الخاصة بك",
+        paymentMethod: "اختر طريقة الدفع",
+        continuePay: "متابعة الدفع",
+        orderSummary: "ملخص الطلب",
+        ufPoints: "نقاط UF",
+        color: "اللون",
+        size: "الحجم",
+        qty: "الكمية",
+        for: "لـ",
+        ufEgiftcard: "بطاقة هدايا UF الإلكترونية",
+        ufPoits: "نقاط يو إف",
+        price: "السعر",
+        totalPrice: "السعر الإجمالي",
+        cardNum: "رقم البطاقة",
+        earnedPoints: "النقاط المكتسبة يو إف",
+        subtotal: "المجموع الفرعي",
+        discount: "الخصم",
+        shipping: "رسوم الشحن",
+        total: "المجموع",
+        applyUfPoints: "تطبيق نقاط يو إف",
+        ufBalance: "رصيد نقاط يو إف الخاص بك"
+    }
+}
+
 export const cart = {
     en: {
         title: "Shopping Cart",
@@ -922,6 +1000,73 @@ export const cart = {
         emptyCart: {
             msg: "يبدو أنك لم تقم بإضافة أي شيء إلى عربة التسوق الخاصة بك. تفضل واستكشف الفئات الأعلى.",
             btn: "العودة إلى المتجر"
+        }
+    }
+}
+
+export const accordians = {
+    en: {
+        contact: "Contact",
+        deliveryReturn: "Delivery & Return",
+        contactMsgs: {
+            msg1: "Send us an email : Our customer care team will get back to you as soon as possible.",
+            msg2: "You can also call us on the following number +1 (559) 554-0082 Monday to Saturday from 9am to 8pm, except public holiday."
+        },
+        deliverySection: {
+            pt1: {
+                heading: "Delivery",
+                msgs: [
+                    "-Express delivery made within 2-4 working days(30$)",
+                    "-Potential delays to be communicated due to customs-approved treatment."
+                ]
+            },
+            pt2: {
+                heading: "Return",
+                msgs: [
+                    "-We make return easy for you. For more information see our return policy",
+                    "-Potential delays to be communicated due to customs-approved treatment."
+                ]
+            },
+            pt3: {
+                heading: "Payment",
+                msg: "Credit card, Debit card & Paypal."
+            },
+            pt4: {
+                heading: "FAQ",
+                msg: "Looking for information? See our FAQs"
+            }
+        }
+    },
+    ar: {
+        contact: "اتصال",
+        deliveryReturn: "التوصيل والإرجاع",
+        contactMsgs: {
+            msg1: "أرسل لنا بريدًا إلكترونيًا: سيقوم فريق خدمة العملاء لدينا بالرد عليك في أقرب وقت ممكن.",
+            msg2: "يمكنك أيضًا الاتصال بنا على الرقم التالي +1 (559) 554-0082 من الاثنين إلى السبت من الساعة 9 صباحًا حتى 8 مساءً، باستثناء العطلات الرسمية."
+        },
+        deliverySection: {
+            pt1: {
+                heading: "التوصيل",
+                msgs: [
+                    "- التوصيل السريع يتم في غضون 2-4 أيام عمل (30$)",
+                    "- قد يتم تأخير الشحنات بسبب إجراءات المعالجة المعتمدة من قبل الجمارك."
+                ]
+            },
+            pt2: {
+                heading: "الإرجاع",
+                msgs: [
+                    "- نحن نجعل عملية الإرجاع سهلة بالنسبة لك. لمزيد من المعلومات، اطلع على سياسة الإرجاع لدينا",
+                    "- قد يتم تأخير الشحنات بسبب إجراءات المعالجة المعتمدة من قبل الجمارك."
+                ]
+            },
+            pt3: {
+                heading: "الدفع",
+                msg: "بطاقة الائتمان، بطاقة الخصم، و PayPal."
+            },
+            pt4: {
+                heading: "الأسئلة الشائعة",
+                msg: "هل تبحث عن معلومات؟ اطلع على أسئلتنا الشائعة"
+            }
         }
     }
 }

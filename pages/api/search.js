@@ -20,10 +20,10 @@ const UpdateProducts = async (req, res) => StandardApi(req, res, { verify_user: 
     })
     const categoryResults = await Category.find({
         $or: [
-            { "name": strRegexQuery },
-            // { "name.ar": strRegexQuery },
-            { "description": strRegexQuery },
-            // { "description.ar": strRegexQuery }
+            { "name.en": strRegexQuery },
+            { "name.ar": strRegexQuery },
+            { "description.en": strRegexQuery },
+            { "description.ar": strRegexQuery }
         ]
     })
 

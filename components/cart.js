@@ -143,7 +143,7 @@ export default function Cart({ cart, toggleCart, top_0 }) {
                             <button onClick={emptyCart} className="text-xs md:text-sm">{langObj.deleteAll} <i className="fa-solid fa-xmark ml-10" /> </button>
                         </div>
                         <div className="w-full lg:w-[400px] self-center lg:self-end">
-                            <h3 className="text-center text-sm lg:text-[17px] font_urbanist_bold mb-5 uppercase">{langObj.orderSummary.heading}</h3>
+                            <h3 className="text-center text-sm lg:text-[17px] font_urbanist_bold mb-5">{langObj.orderSummary.heading}</h3>
                             <div className="w-full h-auto p-4 rounded-2xl font_urbanist_bold bg-white items-center border">
                                 <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>{langObj.orderSummary.item1}</span> <span>{formatPrice(cartTotal)}</span></span>
                                 <span className="w-full my-3 mx-auto flex justify-between"><span className='font_urbanist_medium text-gray-400'>{langObj.orderSummary.item2}</span> <span>{formatPrice(totolShippingFee)}</span></span>

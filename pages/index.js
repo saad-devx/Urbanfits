@@ -85,8 +85,6 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* <HomeCarousel2 /> */}
-
                 {/* Men Collection Section */}
                 {indexContent?.menCollection.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">

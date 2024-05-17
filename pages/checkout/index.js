@@ -5,6 +5,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import useUser from '@/hooks/useUser';
 import useWallet from '@/hooks/useWallet';
 import useLanguage from '@/hooks/useLanguage';
+import { checkoutPage as checkoutLang } from '@/locales';
 import AlertPage from '@/components/alertPage'
 import DiscountBox, { getCouponDiscount } from '@/components/discountBox';
 import Accordians from '@/components/accordians/accordians';
@@ -12,7 +13,7 @@ import Head from 'next/head';
 import Button from '@/components/buttons/simple_btn';
 import Loader from '@/components/loaders/loader';
 import Image from "next/image"
-import { shippingRates, paymentOptions, UAEStates, locales } from '@/uf.config';
+import { shippingRates, paymentOptions, UAEStates } from '@/uf.config';
 import { get12hFormatTime } from '@/utils/cyphers';
 import countryCodes from '@/static data/countryCodes';
 import LanguageModal from '@/components/modals/language';
@@ -45,7 +46,7 @@ const addressModes = {
 export default function Checkout1() {
     const router = useRouter();
     const { isLoggedIn, user, country, address, getAddress } = useUser();
-    const { locale } = useLanguage();0
+    const { locale } = useLanguage(); 0
     const { points, currency, formatPrice } = useWallet();
     const { totalUniqueItems, cartTotal, isEmpty, items } = useCart();
     const [langModal, setLangModal] = useState(false)
@@ -55,8 +56,10 @@ export default function Checkout1() {
         mode: user?._id ? "shipping_address" : "custom",
         available_modes: ["custom"]
     })
-    const name = useRef(null)
-    const email = useRef(null)
+    const name = useRef(null);
+    const email = useRef(null);
+
+    const langObj = checkoutLang[locale];
 
     const [readOnly, setReadOnly] = useState(user?._id ? true : false)
     const handleModify = (e) => {
@@ -263,9 +266,11 @@ export default function Checkout1() {
         {loader}
         <LanguageModal show={langModal} setLangModal={setLangModal} />
         <main className='bg-gray-100 w-full h-full px-4 md:px-5 lg:px-10 xl:px-14 2xl:px-20 flex flex-col lg:flex-row lg:flex-wrap p-5 md:p-7 lg:p-0 lg:pt-10 font_urbanist text-left' >
-            <div className="w-full mb-2"><span onClick={router.back} className='cursor-pointer font_urbanist_medium'><i className="fa-solid fa-chevron-left text-xs mr-2"></i>Back</span></div>
+            <div className="w-full mb-2"><span onClick={router.back} className='cursor-pointer font_urbanist_medium'><i className="fa-solid fa-chevron-left text-xs mr-2"></i>{langObj.back}</span></div>
             <section className="bg-white w-full lg:w-[56%] mb-10 p-4 md:p-5 lg:p-7 mr-auto rounded-2xl">
                 <DiscountBox
+                    langObj={langObj}
+                    locale={locale}
                     formatPrice={formatPrice}
                     values={values}
                     setFieldValue={setFieldValue}
@@ -276,25 +281,25 @@ export default function Checkout1() {
                     setCoupon={setCoupon}
                 />
                 <form className="w-full mt-4 lg:mt-6 text-sm" onSubmit={handleSubmit} onReset={handleReset} >
-                    <span className=" mb-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>1. Contact Information</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
+                    <span className=" mb-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>1. {langObj.contactInfo}</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
                     <span className="flex flex-col mb-6">
-                        <label className='font_urbanist_medium md:text-lg' htmlFor="name">Name</label>
+                        <label className='font_urbanist_medium md:text-lg' htmlFor="name">{langObj.name}</label>
                         <div className="relative w-full data_field flex justify-between items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                             {touched.name && errors.name ? <Tooltip classes="form-error" content={errors.name} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.name} readOnly={readOnly} ref={name} type="text" name="name" id="name" placeholder="John Doe" /><button type='button' onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="name">edit_square</i></button>
                         </div>
                     </span>
                     <span className="flex flex-col">
-                        <label className='font_urbanist_medium md:text-lg' htmlFor="email">Email</label>
+                        <label className='font_urbanist_medium md:text-lg' htmlFor="email">{langObj.email}</label>
                         <div className="relative w-full data_field flex justify-between items-center border-b focus:border-pink-300 hover:border-pink-400 transition py-2 mb-4">
                             {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
                             <input className="w-full bg-transparent outline-none border-none" onBlur={() => { if (!user || !user.email) return; setReadOnly(true) }} onChange={handleChange} value={values.email} readOnly={readOnly} ref={email} type="email" name="email" id="email" placeholder="johndoe.123@gmail.com" /><button type='button' onClick={handleModify} ><i className={`${user && user.email ? null : "hidden"} material-symbols-outlined text-xl`} title='Edit' name="email">edit_square</i></button>
                         </div>
                     </span>
-                    {!values.isGiftCard && <span className=" my-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>2. Shipping Information</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>}
+                    {!values.isGiftCard && <span className=" my-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>2. {langObj.shippingInfo}n</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>}
                     <div className="flex flex-col mb-6">
                         {!values.isGiftCard && <>
-                            <label className='w-full border-b pb-3 font_urbanist_medium' htmlFor="delivery_options">Delivery Option</label>
+                            <label className='w-full border-b pb-3 font_urbanist_medium' htmlFor="delivery_options">{langObj.deliveryOption}</label>
                             {touched.delivery_option && errors.delivery_option ? <Tooltip classes="form-error" content={errors.delivery_option} /> : null}
                             <div id="delivery_options" className="w-full py-3 grid grid-cols-3 xl:gap-x-4 font_urbanist_medium">
                                 <ShipmentOption selected={values.delivery_option} method="standard_shipping" handleChange={handleChange} handleBlur={handleBlur} />
@@ -302,7 +307,7 @@ export default function Checkout1() {
                                 <ShipmentOption selected={values.delivery_option} method="express_4h_shipping" handleChange={handleChange} handleBlur={handleBlur} />
                             </div>
                         </>}
-                        {!values.isGiftCard && <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">Enter Your Shipping Address</h1>}
+                        {!values.isGiftCard && <h1 className=" my-7 font_urbanist_bold text-lg lg:text-xl">{langObj.enterShippingInfo}</h1>}
 
                         {!values.isGiftCard && isLoggedIn() && <div className="w-full mb-5 grid grid-cols-3">
                             {addressMode.available_modes.map((mode, index) => {
@@ -375,7 +380,7 @@ export default function Checkout1() {
                                     </div>
                                 </div></>}
                         </section>
-                        <span className="my-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>{values.isGiftCard ? 2 : 3}. Select Payment Method</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
+                        <span className="my-7 flex justify-between items-center font_urbanist_bold text-xl lg:text-2xl"> <h1>{values.isGiftCard ? 2 : 3}. {langObj.paymentMethod}</h1> <i className="fa-solid fa-circle-check text-base md:text-xl"></i> </span>
                         <div className="grid grid-cols-2">
                             <span className="flex">
                                 <input className='rounded mr-2 translate-y-0.5' type="radio" id="online_payment" name="payment_option" value="online_payment" defaultChecked onBlur={handleBlur} onChange={handleChange} />
@@ -386,14 +391,14 @@ export default function Checkout1() {
                                 <label className='flex flex-col cursor-pointer text-10px md:text-sm leading-tight' htmlFor="cash_on_delivery">Cash On Delivery <p className="text-[9px] lg:text-xs text-gray-400">Charges will be {formatPrice(totalAmount / 100 * 3.3)}</p></label>
                             </span>}
                         </div>
-                        <span className="flex justify-end"> <Button onClick={() => { if (Object.keys(errors).length > 0) toaster("error", "Please fill out all the information") }} loading={!loader ? false : true} type="submit" classes="px-8" >Continue to Payment</Button> </span>
+                        <span className="flex justify-end"> <Button onClick={() => { if (Object.keys(errors).length > 0) toaster("error", "Please fill out all the information") }} loading={!loader ? false : true} type="submit" classes="px-8" >{langObj.continuePay}</Button> </span>
                     </div>
                 </form>
             </section>
             {/* Checkout Calculation Section */}
             <section className="w-full lg:w-[42%] max-w-[850px] pb-4 flex flex-col gap-y-5">
                 <section className="bg-white w-full p-4 md:p-5 lg:p-7 flex flex-col items-center rounded-xl">
-                    <h3 className="text-xl md:text-2xl font-bold mb-3">Order Summary ({totalUniqueItems})</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-3">{langObj.orderSummary} ({totalUniqueItems})</h3>
 
                     <div className="w-full max-h-[25rem] flex flex-col overflow-auto">
                         {items.map((item, i) => {
@@ -406,9 +411,9 @@ export default function Checkout1() {
                                     </div>
                                     <aside className="flex-1 flex lg:flex-col xl:flex-row items-start justify-between md:justify-start lg:justify-between ml-4 mid:ml-6 lg:ml-3 gap-x-2 md:gap-x-10 lg:gap-y-2.5 xl:gap-x-4 text-10px md:text-[13px]">
                                         <div className="w-full lg:my-0 flex flex-col gap-y-2.5">
-                                            <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Price:</span> <span>{formatPrice(item.price)}</span></div>
-                                            <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>For:</span> <span>{item.buy_for === "self" ? "Self" : "Friend"}</span></div>
-                                            <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Quantity:</span> <span>{item.quantity}</span></div>
+                                            <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.price}:</span> <span>{formatPrice(item.price)}</span></div>
+                                            <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.for}:</span> <span>{item.buy_for === "self" ? "Self" : "Friend"}</span></div>
+                                            <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.quantity}:</span> <span>{item.quantity}</span></div>
                                         </div>
                                     </aside>
                                 </div>
@@ -422,14 +427,14 @@ export default function Checkout1() {
                                         </div>
                                         <aside className="flex-1 flex lg:flex-col xl:flex-row items-start justify-between md:justify-start lg:justify-between ml-4 mid:ml-6 lg:ml-3 gap-x-2 md:gap-x-10 lg:gap-y-2.5 xl:gap-x-4 text-10px md:text-[13px]">
                                             <div className="lg:w-full xl:w-1/2 lg:my-0 flex flex-col gap-y-2.5">
-                                                <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold capitalize"><span className='font_urbanist_medium text-gray-400'>Color:</span> <span className='truncate'>{item.color}</span></div>
-                                                <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Size:</span> <span>{item.size}</span></div>
-                                                <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Quantity:</span> <span>{item.quantity}</span></div>
+                                                <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold capitalize"><span className='font_urbanist_medium text-gray-400'>{langObj.color}:</span> <span className='truncate'>{item.color}</span></div>
+                                                <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.size}:</span> <span>{item.size}</span></div>
+                                                <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.qauntity}:</span> <span>{item.quantity}</span></div>
                                             </div>
                                             <div className="lg:w-full xl:w-1/2 lg:my-0 flex flex-col gap-y-2.5">
-                                                {item.uf_points ? <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-red-500'>UF Points:</span> <span>{item.uf_points}</span></div> : null}
-                                                <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Price:</span> <span>{formatPrice(item.price)}</span></div>
-                                                <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>Total Price:</span> <span>{formatPrice(item.price * item.quantity)}</span></div>
+                                                {item.uf_points ? <div key={1} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-red-500'>{langObj.ufPoints}:</span> <span>{item.uf_points}</span></div> : null}
+                                                <div key={2} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.price}:</span> <span>{formatPrice(item.price)}</span></div>
+                                                <div key={3} className="w-full mx-auto flex justify-between font_urbanist_bold"><span className='font_urbanist_medium text-gray-400'>{langObj.totalPrice}:</span> <span>{formatPrice(item.price * item.quantity)}</span></div>
                                             </div>
                                         </aside>
                                     </div>
@@ -438,24 +443,24 @@ export default function Checkout1() {
                         })}
                     </div>
                     <div className="w-full h-auto flex flex-col my-5 md:my-3 font_urbanist_bold text-sm md:text-base gap-y-3 md:gap-y-4">
-                        {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Card Number</span> <span>xxx-xxxxxxxxxxxxx-{user.uf_wallet.card_number.slice(-4)}</span></div>}
-                        {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-red-500'>Earned UF-Points</span> <span>{totalUfPoints}</span></div>}
-                        <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Subtotal</span> <span>{formatPrice(cartTotal)}</span></div>
-                        <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Discount</span> <span>{displayTotalAmount(true)}%</span></div>
-                        <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>Shipping</span> <span>{formatPrice(totalShippingFee) || "We don't ship here"}</span></div>
+                        {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>{langObj.cardNum}</span> <span>xxx-xxxxxxxxxxxxx-{user.uf_wallet.card_number.slice(-4)}</span></div>}
+                        {user && <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-red-500'>{langObj.earnedPoints}</span> <span>{totalUfPoints}</span></div>}
+                        <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>{langObj.subtotal}</span> <span>{formatPrice(cartTotal)}</span></div>
+                        <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>{langObj.discount}</span> <span>{displayTotalAmount(true)}%</span></div>
+                        <div className="w-full mx-auto flex justify-between"><span className='font_urbanist text-gray-400'>{langObj.shipping}</span> <span>{formatPrice(totalShippingFee) || "We don't ship here"}</span></div>
                     </div>
                     {values.points_to_use ? parseFloat(values.points_to_use) > 0 && <div className="w-full py-2 flex justify-between font_urbanist_bold text-base">
                         <h4>Saved</h4>
                         <h4>{formatPrice(cartTotal + totalShippingFee - ((cartTotal + totalShippingFee) - parseFloat(values.points_to_use) * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE)))}</h4>
                     </div> : null}
                     <div className="w-full py-2 flex justify-between font_urbanist_bold text-lg border-t border-t-gray-">
-                        <h4>Total</h4>
+                        <h4>{langObj.total}</h4>
                         <h4>{formatPrice(totalAmount + parsedPaymentDiscount)}</h4>
                     </div>
                     {user && <div className="w-full mt-4 p-2 border rounded-lg">
-                        <h4 className="mb-3 font_urbanist_bold text-lg">Apply UF-Points</h4>
+                        <h4 className="mb-3 font_urbanist_bold text-lg">{langObj.applyUfPoints}</h4>
                         <span className="w-full flex justify-between items-center">
-                            Your UF Balance: <p>{values.points_to_use && parseFloat(values.points_to_use) > 0 ? <span>{points} - {values.points_to_use} = {points - values.points_to_use}</span> : points} pts</p>
+                            {langObj.ufBalance}: <p>{values.points_to_use && parseFloat(values.points_to_use) > 0 ? <span>{points} - {values.points_to_use} = {points - values.points_to_use}</span> : points} pts</p>
                         </span>
                         <div className="w-full relative flex flex-col">
                             <input name='points_to_use' id='points_to_use' type='number' onChange={(e) => {

@@ -78,7 +78,7 @@ export default function Personalinfo() {
         phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save')
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', gender: 'Gender', phone_prefix: 'Select Country Code', phone_number: '' },
+        initialValues: { title: 'Title', firstname: '', lastname: '', gender: '', phone_prefix: '+971', phone_number: '' },
         validationSchema: validatedSchema,
         onSubmit: values => updateUser(values)
     })
@@ -200,10 +200,10 @@ export default function Personalinfo() {
                     <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-6">
                         {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                         <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                            <option disabled >{langObj.genderMenu.heading}</option>
+                            <option disabled value='' >{langObj.genderMenu.heading}</option>
                             <option value="male">{langObj.genderMenu.item1}</option>
                             <option value="female">{langObj.genderMenu.item2}</option>
-                            <option value="fluid">{langObj.genderMenu.item3}</option>
+                            <option value="other">{langObj.genderMenu.item3}</option>
                         </select>
                     </div>
                 </div>

@@ -38,7 +38,7 @@ const CheckShell = ({ dayCode, day, history }) => {
 }
 
 const TaskComp = ({ user, task, uploadUfTaskImg, setTasks, locale }) => {
-    const { name, type, title, description, link, need_image, image_submitted, completed } = task
+    const { name, type, title, description, link, need_image, image_submitted, completed } = task;
     const disableAction = user && name == "sign_up" ? true : (!user && name !== "sign_up" ? true : false)
     const [ssLoading, setSsLoading] = useState(false);
     const goDic = { en: "Go", ar: "اذهب" }
@@ -55,8 +55,8 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks, locale }) => {
 
     if (user?._id) return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
         <div className="flex flex-col text-sm lg:text-base text-gray-400">
-            <h6 className="font_urbanist_bold text-black">{title}</h6>
-            {description}
+            <h6 className="font_urbanist_bold text-black">{title[locale]}</h6>
+            {description[locale]}
         </div>
         {image_submitted && !completed ? <span title='approval pending...' className='p-2 px-3 bg-pinky text-white text-sm lg:text-base rounded-md'><i className="fa-regular fa-clock" /></span> :
             <div disabled={disableAction || ssLoading} className={`${disableAction || ssLoading && "opacity-60 pointer-events-none"} flex items-center gap-2 md:gap-3`}>
@@ -71,8 +71,8 @@ const TaskComp = ({ user, task, uploadUfTaskImg, setTasks, locale }) => {
     </div>
     else return <div key={name} className="w-full border rounded-lg flex justify-between items-center px-4 py-2">
         <div className="flex flex-col text-sm lg:text-base text-gray-400">
-            <h6 className="font_urbanist_bold text-black">{title}</h6>
-            {description}
+            <h6 className="font_urbanist_bold text-black">{title[locale]}</h6>
+            {description[locale]}
         </div>
         <span className={`px-3 py-2 ${name == "sign_up" ? "bg-gold-land text-white" : "bg-gray-100 text-black"} text-sm lg:text-base rounded-md`}>
             {name == "sign_up" ? <Link target="_blank" href={link}>

@@ -84,7 +84,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
         const respectedVariant = dbProduct.variants.find(variant => variant._id.toString() === orderItem?.variant_id || '');
         if (!respectedVariant) return res.status(400).json({ success: false, msg: "Each order item must have a vaild existing `variant_id`." });
         const respectedSize = respectedVariant.sizes.find(sizeObj => sizeObj.size.toLowerCase() === orderItem.size.toLowerCase());
-        if (!respectedSize || respectedSize.quantity < orderItem.quantity) return res.status(400).json({ success: false, msg: `Selected size of ${dbProduct.name}'s ${respectedVariant.color_name} variant is currently unavailable.` })
+        if (!respectedSize || respectedSize.quantity < orderItem.quantity) return res.status(400).json({ success: false, msg: `Selected size of ${dbProduct.name.en}'s ${respectedVariant.color_name} variant is currently unavailable.` })
 
         const finalProduct = {
             product_id: dbProduct._id,

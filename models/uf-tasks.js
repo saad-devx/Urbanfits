@@ -14,11 +14,21 @@ const UfTasksSchema = new mongoose.Schema({
                 immutable: true
             },
             title: {
-                type: String,
-                required: true,
-                immutable: true
+                en: {
+                    type: String,
+                    required: true,
+                    immutable: true
+                },
+                ar: {
+                    type: String,
+                    required: true,
+                    immutable: true
+                }
             },
-            description: String,
+            description: {
+                en: String,
+                ar: String
+            },
             type: {
                 type: String,
                 default: 'in_app',

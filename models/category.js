@@ -2,9 +2,16 @@ import mongoose from "mongoose"
 
 const CategorySchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true,
-        unique: true
+        en: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        ar: {
+            type: String,
+            required: true,
+            unique: true
+        }
     },
     slug: {
         type: String
@@ -22,7 +29,8 @@ const CategorySchema = new mongoose.Schema({
         ref: 'Category'
     }],
     description: {
-        type: String
+        en: String,
+        ar: String,
     }
 }, { timestamps: true })
 
