@@ -203,18 +203,18 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     else if (selectedPaymentMethod === "online_payment") {
         // Create Checkout Sessions from body params.
         const stripSession = await stripe.checkout.sessions.create({
-            shipping_options: [
-                {
-                    shipping_rate_data: {
-                        type: 'fixed_amount',
-                        fixed_amount: {
-                            amount: Math.floor(finalShippingFees * 100),
-                            currency: "aed",
-                        },
-                        display_name: shipping_info.delivery_option
-                    }
-                }
-            ],
+            // shipping_options: [
+            //     {
+            //         shipping_rate_data: {
+            //             type: 'fixed_amount',
+            //             fixed_amount: {
+            //                 amount: Math.floor(finalShippingFees * 100),
+            //                 currency: "aed",
+            //             },
+            //             display_name: shipping_info.delivery_option
+            //         }
+            //     }
+            // ],
             line_items: [
                 {
                     price_data: {

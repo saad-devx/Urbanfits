@@ -34,8 +34,14 @@ const OrderSessionSchema = new mongoose.Schema({
             variant: String,
             size: String,
             name: {
-                type: String,
-                required: true,
+                en: {
+                    type: String,
+                    required: true,
+                },
+                ar: {
+                    type: String,
+                    required: true,
+                }
             },
             price: {
                 type: Number,

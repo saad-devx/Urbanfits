@@ -99,7 +99,7 @@ export default function Product(props) {
             images: product.images,
             categories: productData.categories.map(category => category._id)
         }, quantity);
-        addToCartToast(productData.name, product.images[0], "cart")
+        addToCartToast(productData.name[locale], product.images[0], "cart")
     }
     return <>
         <Head>
@@ -114,11 +114,11 @@ export default function Product(props) {
             <meta property="og:image" itemprop="image primaryImageOfPage" content={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
             <meta name="twitter:card" content="summary" />
             <meta name="twitter:domain" content="stackoverflow.com" />
-            <meta name="twitter:title" property="og:title" itemprop="name" content={productData.name} />
+            <meta name="twitter:title" property="og:title" itemprop="name" content={productData.name.en} />
             <meta name="twitter:description" property="og:description" itemprop="description" content={productData.description} />
             <meta name="facebook:card" content="summary" />
             <meta name="facebook:domain" content="stackoverflow.com" />
-            <meta name="facebook:title" property="og:title" itemprop="name" content={productData.name} />
+            <meta name="facebook:title" property="og:title" itemprop="name" content={productData.name.en} />
             <meta name="facebook:description" property="og:description" itemprop="description" content={productData.description} />
         </Head>
         <link itemprop="thumbnailUrl" href={process.env.NEXT_PUBLIC_BASE_IMG_URL + productData.cover_image} />
@@ -129,14 +129,14 @@ export default function Product(props) {
             <div className="w-full pb-20 flex justify-center">
                 <section className='w-full p-5 md:p-7 lg:p-0 lg:pt-20 lg:w-[90%] h-full font_urbanist text-left pt-8' >
                     <div className="w-full flex flex-col lg:flex-row lg:justify-between">
-                        <p className="lg:hidden font_urbanist text-sm text-gray-400"><Link href="/">{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name}`} className='capitalize'>{productData.categories[0].name}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name[locale]}</span></p>
+                        <p className="lg:hidden font_urbanist text-sm text-gray-400"><Link href="/">{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name[locale]}`} className='capitalize'>{productData.categories[0].name[locale]}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name[locale]}</span></p>
                         <div className="w-full lg:w-[55%] mb-3 mt-6 md:mt-10 lg:mt-0">
                             <h1 className="lg:hidden w-full mb-2 font_urbanist_bold text-xs md:text-lg">{productData.name[locale].toUpperCase()}</h1>
                             <ProductCarousel img_array={product.images} />
                         </div>
 
                         <div className="details w-full lg:w-[40%]">
-                            <p className="hidden lg:block mb-5 font_urbanist text-sm text-gray-400"><Link href="/" className='hover:text-pinky'>{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name}`} className='hover:text-pinky capitalize'>{productData.categories[0].name}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name[locale]}</span></p>
+                            <p className="hidden lg:block mb-5 font_urbanist text-sm text-gray-400"><Link href="/" className='hover:text-pinky'>{langObj.home}</Link>&nbsp;/&nbsp;{langObj.catalogue}&nbsp;/&nbsp;<Link href={`/products/category/${productData.categories[0]._id}?name=${productData.categories[0].name[locale]}`} className='hover:text-pinky capitalize'>{productData.categories[0].name[locale]}</Link>&nbsp;/&nbsp;<span className="text-pinky font_urbanist_medium">{productData.name[locale]}</span></p>
                             <h1 className="hidden lg:block w-full mb-4 font_urbanist_bold lg:text-3xl capitalize">{productData.name[locale]}</h1>
                             <h2 className="hidden lg:block font_urbanist_bold lg:text-2xl text-pinky">{formatPrice(productData.price)}</h2>
 

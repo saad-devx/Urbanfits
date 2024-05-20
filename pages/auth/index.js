@@ -7,7 +7,7 @@ export default function AuthPage(props) {
         <Head><title>Urban Fits</title></Head>
         <main className={`bg-white w-full h-screen flex ${props.height || "lg_layout_height"} px-4 md:px-20 lg:overflow-x-hidden`}>
             <section className="hidden lg:flex w-1/4 flex-col justify-center items-center md:w-full ">
-                <h2 className="mb-6 font_urbanist text-2xl text-center lg:text-[38px] lg:leading-[47px]">Join Our Urban Fits <br /> Program and get free <br /> Shipping and 200 <br /> Points Sign Up Bonus</h2>
+                <h2 className="mb-6 font_urbanist text-2xl text-center lg:text-[38px] lg:leading-[47px]">Join Our Urban Fits <br /> Program and get free <br /> Shipping and 500 <br /> Points Sign Up Bonus</h2>
                 <p className="font_urbanist_light text-xl md:text-2xl text-center">Urban Members get Exclusive access to <br /> products, events, and offers. Just provide <br /> a few details. It’s free to join and <br /> open to all.</p>
             </section>
             {props.loading ? <Loader /> : null}

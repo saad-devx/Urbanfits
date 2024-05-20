@@ -403,7 +403,7 @@ export default function Checkout1() {
                     <div className="w-full max-h-[25rem] flex flex-col overflow-auto">
                         {items.map((item, i) => {
                             if (item.is_giftcard) return <section className="w-full mb-4 md:mb-6 p-4 border rounded-lg">
-                                <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name[locale]}</h3>
+                                <h3 key={-i - 1} className="mb-2 self-start font_urbanist_medium text-sm md:text-base text-left capitalize">{item?.name}</h3>
                                 <div key={i} className="w-full mb-2 flex justify-between xl:items-center">
                                     <div className="w-24 h-20 flex flex-col justify-center items-center rounded-md md:rounded-lg bg-pinky text-[8px] lg:text-[10px] font-semibold text-white uppercase">
                                         <span className="font_copper text-[10px]">UF E-GIFTCARD</span>

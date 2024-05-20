@@ -35,8 +35,14 @@ const OrderSchema = new mongoose.Schema({
             variant_id: mongoose.Schema.ObjectId,
             variant: String,
             name: {
-                type: String,
-                required: true,
+                en: {
+                    type: String,
+                    required: true,
+                },
+                ar: {
+                    type: String,
+                    required: true,
+                }
             },
             price: {
                 type: Number,

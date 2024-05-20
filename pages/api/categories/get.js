@@ -1,6 +1,6 @@
-import ConnectDB from "@/utils/connect_db"
-import Category from "@/models/category"
-import StandardApi from "@/middlewares/standard_api"
+import ConnectDB from "@/utils/connect_db";
+import Category from "@/models/category";
+import StandardApi from "@/middlewares/standard_api";
 
 const getCategories = async (req, res) => StandardApi(req, res, { verify_admin: false, verify_user: false }, async () => {
     const { populate_parents } = req.query

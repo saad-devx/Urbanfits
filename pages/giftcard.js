@@ -25,7 +25,7 @@ export default function Giftcard() {
     const [giftcardConflictWarning, setGiftcardConflictWarning] = useState(false);
     const { addItem, inCart, items, emptyCart } = useCart();
 
-    const { values, errors, handleChange, handleReset, handleSubmit, setFieldValue } = useFormik({
+    const { values, errors, handleChange, handleSubmit, setFieldValue } = useFormik({
         initialValues: {
             price: giftCardPrices[0],
             quantity: 1,
@@ -79,7 +79,7 @@ export default function Giftcard() {
                 setGiftcardConflictWarning(true);
                 return toaster("info", "You can't add/checkout gift card along with other items, please refer to the Giftcard Terms.")
             }
-            else if (inCart(giftCardId)) return toaster("info", "Already in cart")
+            else if (inCart(giftCardId)) return toaster("info", "Already in cart");
 
             const giftCardData = {
                 ...values,
@@ -87,16 +87,29 @@ export default function Giftcard() {
                 is_giftcard: true
             }
             addItem(giftCardData, values.quantity)
-            toaster("success", "Giftcard added to the cart")
+            return toaster("success", "Giftcard added to the cart");
         }
     })
 
     const isError = Object.keys(errors).length > 0;
 
     const checkOut = () => {
-        if (isError) return toaster("Please fill out all the information")
-        handleSubmit();
+        const giftCardId = "giftcard-" + values.price;
+        const notGifts = items.find(item => !item.is_giftcard)
+        if (notGifts) {
+            setGiftcardConflictWarning(true);
+            return toaster("info", "You can't add/checkout gift card along with other items, please refer to the Giftcard Terms.")
+        }
+        else if (inCart(giftCardId)) return toaster("info", "Already in cart")
+
+        const giftCardData = {
+            ...values,
+            id: giftCardId,
+            is_giftcard: true
+        }
+        addItem(giftCardData, values.quantity)
         router.push("/checkout")
+        return toaster("success", "Giftcard added to the cart")
     }
 
 
@@ -155,11 +168,11 @@ export default function Giftcard() {
                     </Accordian>
                 </nav>
                 <nav className="w-full lg:w-3/5 p-4 lg:p-6 overflow-x-hidden overflow-y-visible">
-                    {giftcardConflictWarning && <div className="relative w-full p-4 text-[10px] lg:text-xs text-red-600 bg-red-100 border border-red-600 rounded-lg">
-                        <button onClick={() => setGiftcardConflictWarning(false)} className="fa fa-xmark absolute top-1 right-1 text-sm text-red-600" />
+                    {giftcardConflictWarning && <div className="relative w-full p-3 my-2 text-[10px] lg:text-xs text-red-600 bg-red-100 border border-red-600 rounded-lg">
+                        <button onClick={() => setGiftcardConflictWarning(false)} className="fa fa-xmark absolute top-2 right-2 text-sm text-red-600" />
                         You cannot checkout or add the gift card to cart along with other product items due to the system policy.
                         You can only make a gift card purchase individually with online payment since it's an E-Giftcard.
-                        Click here to remove existing cart items. <button onClick={() => { emptyCart(); setGiftcardConflictWarning(false) }} className="px-2 py-0.5 rounded-2xl text-[8px] lg:text-[10px] text-white bg-red-500">Remove Items</button>
+                        Click here to remove existing cart items. <button onClick={() => { emptyCart(); setGiftcardConflictWarning(false) }} className="px-2 py-0.5 my-1 rounded-2xl text-[8px] lg:text-[10px] text-white bg-red-500">Remove Items</button>
                     </div>}
                     <div className="w-full flex justify-between items-center">
                         <h2 className="font_copper text-base lg:text-xl text-black">URBAN FITS</h2>
