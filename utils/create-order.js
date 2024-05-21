@@ -13,8 +13,10 @@ import { sendNotification, sendAdminNotification } from "@/utils/send_notificati
 import axios from "axios";
 
 const CreateOrder = async (orderPayload) => {
+    console.log("Entry point 1")
 
     if (orderPayload.gift_cards?.length) {
+        console.log("Entry point 2")
         const orderData = (await Order.create({
             ...orderPayload,
             order_status: {
@@ -22,6 +24,7 @@ const CreateOrder = async (orderPayload) => {
                 group: "delivered"
             }
         })).toObject();
+        console.log("Entry point 3")
         for (let giftItem of orderData.gift_cards) {
             const { buy_for } = giftItem;
 
@@ -32,6 +35,7 @@ const CreateOrder = async (orderPayload) => {
             }
 
             for (const code of giftCodes) {
+                console.log("Entry point 4")
                 await Giftcard.create({
                     ...giftItem,
                     gift_code: HashValue(code)
@@ -51,6 +55,7 @@ const CreateOrder = async (orderPayload) => {
                     })
 
                 } else if (buy_for === "friend") {
+                    console.log("Entry point 5")
                     console.log("This is gift card bought for a Friend: ", giftItem);
                     const receiver = await User.findOne({ email: giftItem.receiver.email })
 
@@ -74,6 +79,7 @@ const CreateOrder = async (orderPayload) => {
                 }
             }
         }
+        console.log("Entry point 6")
 
         if (orderData.user_id) {
             const updatedUser = await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } }, { new: true, lean: true });
@@ -94,8 +100,10 @@ const CreateOrder = async (orderPayload) => {
         return orderData;
     }
     else {
+        console.log("Entry point 7")
         const orderData = (await Order.create(orderPayload)).toObject();
         const { shipping_address, payment_method } = orderData;
+        console.log("Entry point 8")
         const swiftOrderData = {
             reference: orderData._id.toString(),
             brandName: "Urban Fits",
@@ -128,6 +136,7 @@ const CreateOrder = async (orderPayload) => {
                 weightUnit: "grams"
             }))
         }
+        console.log("Entry point 9")
 
         const { data } = await axios.post(`${process.env.NEXT_PUBLIC_SWFT_BASE_ENDPOINT}/api/direct-integration/orders`,
             swiftOrderData,

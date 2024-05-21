@@ -46,6 +46,7 @@ const webhookHandler = async (req, res) => {
                     const orderSessionId = paymentIntent.metadata.order_session_id;
 
                     const orderSession = await OrderSession.findById(orderSessionId).lean();
+                    delete orderSession._id;
                     await CreateOrder(orderSession);
                     OrderSession.findByIdAndDelete(orderSessionId);
                     break;
