@@ -6,14 +6,13 @@ import Giftcard from "@/models/giftcard";
 import { shippingRates } from "@/uf.config";
 import GiftCardTemplate from "@/email templates/gift_card";
 import OrderConfirmed from "@/email templates/order_confirm";
-import sendEmail from "./sendEmail";
+import { sendAPIEmail } from "./sendEmail";
 import { DeductPoints } from "./uf-points";
 import generatePassword, { HashValue } from "./cyphers";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import axios from "axios";
 
 const CreateOrder = async (orderPayload) => {
-    console.log("Entry point 1")
 
     if (orderPayload.gift_cards?.length) {
         console.log("Entry point 2")
@@ -44,7 +43,7 @@ const CreateOrder = async (orderPayload) => {
                 if (buy_for === "self") {
                     console.log("This is gift card bought for Self: ", giftItem);
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes, true);
-                    sendEmail({ to: orderData.email, subject: "Claim your Giftcard" }, giftTemplate);
+                    sendAPIEmail(orderData.email, "Claim your Giftcard", giftTemplate);
 
                     if (orderData.user_id) sendNotification(orderData.user_id, {
                         category: "order",
@@ -60,7 +59,7 @@ const CreateOrder = async (orderPayload) => {
                     const receiver = await User.findOne({ email: giftItem.receiver.email })
 
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes);
-                    sendEmail({ to: receiver.email, subject: "Congratulation, You've got a gift!" }, giftTemplate)
+                    sendAPIEmail(receiver.email, "Congratulation, You've got a gift!", giftTemplate)
                     const occassion = giftItem.cover.includes("birthday") ? "Happy Birthday" : "Happy Christmas";
                     sendNotification(receiver._id, {
                         category: "primary",
@@ -79,7 +78,6 @@ const CreateOrder = async (orderPayload) => {
                 }
             }
         }
-        console.log("Entry point 6")
 
         if (orderData.user_id) {
             const updatedUser = await User.findByIdAndUpdate(orderData.user_id, { $inc: { purchases: 1 } }, { new: true, lean: true });
@@ -87,7 +85,7 @@ const CreateOrder = async (orderPayload) => {
         }
 
         let orderTemplate = OrderConfirmed(orderData, true)
-        sendEmail({ to: orderData.email, subject: "Your order has been placed." }, orderTemplate);
+        sendAPIEmail(orderData.email, "Your order has been placed.", orderTemplate);
         // Sending notification to admin panel
         sendAdminNotification({
             category: "order",
@@ -103,7 +101,6 @@ const CreateOrder = async (orderPayload) => {
         console.log("Entry point 7")
         const orderData = (await Order.create(orderPayload)).toObject();
         const { shipping_address, payment_method } = orderData;
-        console.log("Entry point 8")
         const swiftOrderData = {
             reference: orderData._id.toString(),
             brandName: "Urban Fits",
@@ -179,7 +176,7 @@ const CreateOrder = async (orderPayload) => {
 
         // Sending confirmation email to customer
         let template = OrderConfirmed(finalOrder)
-        sendEmail({ to: orderPayload.email, subject: "Your order has been placed." }, template)
+        sendAPIEmail(finalOrder.email, "Your order has been placed.", template)
 
         // Sending notifications
         sendAdminNotification({

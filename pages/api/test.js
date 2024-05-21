@@ -1,11 +1,16 @@
-// import ConnectDB from "@/utils/connect_db";
-// import Category from "@/models/category";
-import sendEmail from "@/utils/sendEmail";
+import ConnectDB from "@/utils/connect_db";
+import Order from "@/models/orders";
+// import sendEmail from "@/utils/sendEmail";
+import OrderConfirmed from "@/email templates/order_confirm";
+import { sendAPIEmail } from "@/utils/sendEmail";
 
 const TestApiHandler = async (req, res) => {
-    // await ConnectDB();
+    await ConnectDB();
+    const order = await Order.findById("664cfc8715095a614bd550ac").lean();
 
-    sendEmail({ to: "binarshadsaad6@gmail.com", subject: "Testing email from Urban Fits." }, "<h1>This is a test email sent to you to test the new SMTP credentials.</h1>");
+    let template = OrderConfirmed(order)
+
+    sendAPIEmail({ to: "binarshadsaad6@gmail.com", subject: "Your order has been placed.", template })
 
     res.status(200).json({
         success: true,

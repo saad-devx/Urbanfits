@@ -121,6 +121,18 @@ export const RemoveSessionCookie = (res) => {
     res.setHeader('Set-Cookie', [sessionTokenCookie, isLoggedInCookie, guestSessionCooie])
 }
 
+export const getAuthHeader = () => {
+    const authToken = SignJwt({
+        originated_from: "urbanfits-server"
+    });
+    return {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+        }
+    }
+}
+
 export const generateGiftCode = async (length) => {
     const key = `ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`;
 
