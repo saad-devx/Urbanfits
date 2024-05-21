@@ -955,6 +955,57 @@ export const checkoutPage = {
     }
 }
 
+export const thanksPage = {
+    en: {
+        heading: "Thanks",
+        thanksMsg: "Thank you for doing business with us. We have emailed you the purchases receipt for the transaction.",
+        byAdmin: "By Admin",
+        shippingDetails: "Shipping Details",
+        online_payment: "Payment is processing further.",
+        cod: "Payment to be made upon delivery.",
+        paymentStatusMsg: {
+            for_giftcard: "Your Giftcard details will be delivered after the final payment approval.",
+            for_product: "Order status changed from Pending payment to processing."
+        },
+        orderItems: "Itmes(s) On This Order",
+        qty: "Qty",
+        priceDetails: "Price Details",
+        subtotal: "Subtotal",
+        discount: "Discount",
+        shippingFee: "Shipping Fee",
+        totalAmount: "Total Amount",
+        trackingDetails: "Tracking Details",
+        orderReference: "Order Reference",
+        trackingNumber: "Tracking Number",
+        trackOrder: "Track Your Order",
+        checkoutSuccessfullMsg: "The order tracking details have been sent to your Email"
+    },
+    ar: {
+        heading: "شكراً",
+        thanksMsg: "شكرًا لتعاملكم معنا. لقد أرسلنا لك عبر البريد الإلكتروني إيصال المشتريات للمعاملة.",
+        byAdmin: "بواسطة المسؤول",
+        shippingDetails: "تفاصيل الشحن",
+        online_payment: "يتم معالجة الدفع بشكل أكبر.",
+        cod: "يتم الدفع عند التسليم.",
+        paymentStatusMsg: {
+            for_giftcard: "سيتم تسليم تفاصيل بطاقة الهدايا الخاصة بك بعد الموافقة النهائية على الدفع.",
+            for_product: "تغيرت حالة الطلب من الدفع المعلق إلى المعالجة."
+        },
+        orderItems: "العناصر في هذا الطلب",
+        qty: "الكمية",
+        priceDetails: "تفاصيل السعر",
+        subtotal: "الإجمالي الفرعي",
+        discount: "الخصم",
+        shippingFee: "رسوم الشحن",
+        totalAmount: "المبلغ الإجمالي",
+        trackingDetails: "تفاصيل التتبع",
+        orderReference: "مرجع الطلب",
+        trackingNumber: "رقم التتبع",
+        trackOrder: "تتبع طلبك",
+        checkoutSuccessfullMsg: "تم إرسال تفاصيل تتبع الطلب إلى بريدك الإلكتروني"
+    }
+}
+
 export const cart = {
     en: {
         title: "Shopping Cart",
