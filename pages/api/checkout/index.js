@@ -30,6 +30,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     else if (!shippingMethods.includes(shipping_info.delivery_option)) return res.status(400).json({ success: false, msg: "Invalid shipping method, Available method args: " + shippingMethods })
     if (shipping_info.gift_code && (shipping_info.gift_code.length < 8 || shipping_info.gift_code.length > 10)) return res.status(400).json({ success: false, msg: "Invalid Gift Code format." })
     if (shipping_info.coupon_code && shipping_info.coupon_code.length < 4) return res.status(400).json({ success: false, msg: "Invalid Coupon Code format." })
+    if (order_items.some(item => item.is_giftcard) && order_items.some(item => !item.is_giftcard)) return res.status(400).json({ success: false, msg: "Sorry you can't checkout with both Gift Card(s) and Product items. Please choose either one of them." })
     // if (shipping_info.points_to_use && !shipping_info.card_number) return res.status(400).json({ success: false, msg: "user uf card number is required." })
 
     await ConnectDB()
