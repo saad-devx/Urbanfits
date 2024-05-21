@@ -130,6 +130,7 @@ const CreateOrder = async (orderPayload) => {
 
             items: orderData.order_items.map(item => ({
                 ...item,
+                name: item.name.en,
                 weight: parseFloat(item.weight),
                 variantId: item.variant_id,
                 skuNumber: item.sku,
