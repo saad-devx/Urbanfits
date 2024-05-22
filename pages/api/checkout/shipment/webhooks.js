@@ -1,6 +1,8 @@
 import ConnectDB from "@/utils/connect_db";
 import { sendNotification, sendAdminNotification } from "@/utils/send_notification";
 import Order, { getOrderStatus } from "@/models/orders";
+import { sendAPIEmail } from "@/utils/sendEmail";
+import orderStatusUpdate from "@/email templates/order-status-update";
 import StandardApi from "@/middlewares/standard_api";
 
 const ShipmentWebhookHandler = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false }, async () => {
@@ -17,6 +19,9 @@ const ShipmentWebhookHandler = async (req, res) => StandardApi(req, res, { metho
         state,
         shippingLabelUrl
     }, { new: true, lean: true });
+
+    const template = orderStatusUpdate(order);
+    sendAPIEmail(order.email, `Your Order Status was just updated to "${orderData.order_status.status}"`, template);
 
     await sendAdminNotification({
         category: "order",

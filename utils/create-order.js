@@ -15,7 +15,6 @@ import axios from "axios";
 const CreateOrder = async (orderPayload) => {
 
     if (orderPayload.gift_cards?.length) {
-        console.log("Entry point 2")
         const orderData = (await Order.create({
             ...orderPayload,
             order_status: {
@@ -23,7 +22,6 @@ const CreateOrder = async (orderPayload) => {
                 group: "delivered"
             }
         })).toObject();
-        console.log("Entry point 3")
         for (let giftItem of orderData.gift_cards) {
             const { buy_for } = giftItem;
 
@@ -41,7 +39,6 @@ const CreateOrder = async (orderPayload) => {
                 });
 
                 if (buy_for === "self") {
-                    console.log("This is gift card bought for Self: ", giftItem);
                     let giftTemplate = GiftCardTemplate(giftItem, giftCodes, true);
                     sendAPIEmail(orderData.email, "Claim your Giftcard", giftTemplate);
 
@@ -98,7 +95,6 @@ const CreateOrder = async (orderPayload) => {
         return orderData;
     }
     else {
-        console.log("Entry point 7")
         const orderData = (await Order.create(orderPayload)).toObject();
         const { shipping_address, payment_method } = orderData;
         const swiftOrderData = {
@@ -134,7 +130,6 @@ const CreateOrder = async (orderPayload) => {
                 weightUnit: "grams"
             }))
         }
-        console.log("Entry point 9")
 
         const { data } = await axios.post(`${process.env.NEXT_PUBLIC_SWFT_BASE_ENDPOINT}/api/direct-integration/orders`,
             swiftOrderData,
