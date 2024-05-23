@@ -47,7 +47,7 @@ const Login = async (req, res) => StandardApi(req, res, { method: "POST", verify
         res.status(200).json({
             success: true,
             msg: "You are Logged in successfully !",
-            payload: SignJwt(user)
+            user
         })
         const date = new Date()
         sendNotification(user._id, {

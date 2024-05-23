@@ -32,7 +32,6 @@ const CreateOrder = async (orderPayload) => {
             }
 
             for (const code of giftCodes) {
-                console.log("Entry point 4")
                 await Giftcard.create({
                     ...giftItem,
                     gift_code: HashValue(code)

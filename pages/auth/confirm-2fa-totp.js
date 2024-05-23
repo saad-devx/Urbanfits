@@ -10,9 +10,9 @@ import { useRouter } from 'next/router'
 import Error404 from '../404'
 
 export default function Login() {
-    const { user, isLoggedIn, updateUser, userLoading } = useUser()
-    const router = useRouter()
-    const [totp, setTotp] = useState('')
+    const { user, isLoggedIn, updateUser, userLoading } = useUser();
+    const router = useRouter();
+    const [totp, setTotp] = useState('');
 
     const onVerifyClick = async (user_id) => {
         if (isLoggedIn()) return toaster("info", "You are already singned in")
@@ -20,7 +20,7 @@ export default function Login() {
         useUser.setState({ userLoading: true });
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/2fa/verify-totp?user_id=${user_id}&totp_code=${totp}`)
-            await updateUser(data.payload, true)
+            await updateUser(data.user, true)
             useUser.setState({ guestUser: null });
             router.replace('/')
             toaster("success", data.msg)

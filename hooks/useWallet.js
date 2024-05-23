@@ -81,7 +81,7 @@ const useWallet = create((set, get) => ({
                     last_spin_reward: data.reward,
                     ...(data.next_uf_spin ? { next_uf_spin: data.next_uf_spin } : {})
                 }
-            }, true, true)
+            }, true)
             get().getUfBalance()
             return data
         } catch (e) { console.log(e); toaster("error", e.response.data.msg) }

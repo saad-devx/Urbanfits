@@ -2,8 +2,7 @@ import OTP from "@/models/otp";
 import User from "@/models/user";
 import ConnectDB from "@/utils/connect_db";
 import StandardApi from "@/middlewares/standard_api";
-import { SignJwt, SetSessionCookie } from "@/utils/cyphers";
-import user from "@/models/user";
+import { SetSessionCookie } from "@/utils/cyphers";
 
 const AuthOtpAndChangeEmail = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
     const { otp_id, otp, } = req.body;
@@ -22,7 +21,7 @@ const AuthOtpAndChangeEmail = async (req, res) => StandardApi(req, res, { method
         email: updatedUser.email,
         register_provider: updatedUser.register_provider,
         user_agent: updatedUser.user_agent,
-        timezone: user.timezone,
+        timezone: updatedUser.timezone,
         two_fa_enabled: updatedUser.two_fa_enabled,
         uf_wallet: updatedUser.uf_wallet,
         last_checkin: updatedUser.last_checkin,
@@ -34,7 +33,7 @@ const AuthOtpAndChangeEmail = async (req, res) => StandardApi(req, res, { method
     res.status(200).json({
         success: true,
         msg: "Your email has been updated!",
-        payload: SignJwt(user)
+        user: updatedUser
     })
 })
 export default AuthOtpAndChangeEmail

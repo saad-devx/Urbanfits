@@ -10,9 +10,9 @@ import { useRouter } from 'next/router'
 import Error404 from '@/pages/404'
 
 export default function VerifyOtp() {
-    const { user, updateUser, userLoading } = useUser()
-    const router = useRouter()
-    const [otp, setOtp] = useState('')
+    const { user, updateUser, userLoading } = useUser();
+    const router = useRouter();
+    const [otp, setOtp] = useState('');
 
     const onVerifyClick = async (otpId) => {
         if (!otpId || otpId.length < 18) return toaster("error", "Something went wrong, please try login again.")
@@ -22,7 +22,7 @@ export default function VerifyOtp() {
                 otp_id: otpId,
                 otp
             })
-            await updateUser(data.payload, true)
+            await updateUser(data.user, true)
             router.replace('/');
             toaster("success", data.msg)
         } catch (error) {

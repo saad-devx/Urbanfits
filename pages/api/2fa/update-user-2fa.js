@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import User from "@/models/user";
 import { sendNotification } from "@/utils/send_notification";
-import { SignJwt, SetSessionCookie } from "@/utils/cyphers";
+import { SetSessionCookie } from "@/utils/cyphers";
 import StandardApi from "@/middlewares/standard_api";
 
 const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
@@ -44,7 +44,7 @@ const Update2FA = async (req, res) => StandardApi(req, res, { method: "PUT" }, a
         res.status(200).json({
             success: true,
             msg: `Your 2FA has been ${updatedUser.two_fa_enabled ? "enabled" : "disabled"} successfully.`,
-            payload: SignJwt(updatedUser)
+            user: updatedUser
         })
         sendNotification(updatedUser._id, {
             category: "account",

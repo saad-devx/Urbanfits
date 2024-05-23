@@ -73,7 +73,7 @@ const SignupWithGoogle = async (req, res) => StandardApi(req, res, { method: "PO
     res.status(200).json({
         success: true,
         msg: "You are Resgistered successfully !",
-        payload: SignJwt(user)
+        user
     })
     sendNotification(user._id, {
         category: "reward",

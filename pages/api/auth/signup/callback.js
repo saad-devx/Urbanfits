@@ -61,7 +61,7 @@ const SignupCallback = async (req, res) => StandardApi(req, res, { method: "POST
         res.status(200).json({
             success: true,
             msg: "You're Resgistered successfully !",
-            payload: SignJwt(user),
+            user,
         })
         sendNotification(user._id, {
             category: "reward",

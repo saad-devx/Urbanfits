@@ -50,7 +50,7 @@ export default function Security() {
                 qr_secret: qrSecret,
                 totp_code: totp
             })
-            await updateUser(data.payload, true)
+            await updateUser(data.user, true)
             router.push('/user/security')
             toaster("success", data.msg)
         } catch (error) {

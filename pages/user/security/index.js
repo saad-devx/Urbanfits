@@ -25,7 +25,7 @@ const Update2FA = ({ user, updateUser, show, setTfaModal, setLoading, langObj })
                 totp_code: totp,
                 two_fa_enabled: !user.two_fa_enabled
             })
-            updateUser({ ...user, two_fa_enabled: !user.two_fa_enabled }, true, true)
+            updateUser({ ...user, two_fa_enabled: !user.two_fa_enabled }, true)
             toaster("success", data.msg)
             setTotp('')
             setPassword('')

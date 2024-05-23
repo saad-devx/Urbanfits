@@ -1,6 +1,5 @@
 import ConnectDB from "@/utils/connect_db"
 import Addresses from "@/models/addresses"
-import { SignJwt } from "@/utils/cyphers"
 import StandardApi from "@/middlewares/standard_api"
 
 const UpdateAddress = async (req, res) => StandardApi(req, res, { method: "PUT" }, async () => {
@@ -9,7 +8,7 @@ const UpdateAddress = async (req, res) => StandardApi(req, res, { method: "PUT" 
     return res.status(200).json({
         success: true,
         msg: "Your Address updated successfully",
-        payload: SignJwt(updatedAddress)
+        addresses: updatedAddress
     })
 })
 export default UpdateAddress

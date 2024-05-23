@@ -43,7 +43,7 @@ const CreateUser2FA = async (req, res) => StandardApi(req, res, { method: "POST"
         return res.status(201).json({
             success: true,
             msg: "2 Factor Authentication is Enabled",
-            payload: SignJwt(user)
+            user
         })
     }
     else return res.status(401).json({

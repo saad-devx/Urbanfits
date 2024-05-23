@@ -7,11 +7,11 @@ import axios from 'axios';
 import toaster from '@/utils/toast_function';
 
 export default function TwoFa({ show, setMfaModal, langObj }) {
-    const { user, updateUser } = useUser()
-    const [qrUrl, setQrUrl] = useState(null)
-    const [qrSecret, setQrSecret] = useState(null)
-    const [totp, setTotp] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const { user, updateUser } = useUser();
+    const [qrUrl, setQrUrl] = useState(null);
+    const [qrSecret, setQrSecret] = useState(null);
+    const [totp, setTotp] = useState(null);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const getQrCode = async () => {
             if (qrUrl && qrSecret) return
@@ -40,7 +40,7 @@ export default function TwoFa({ show, setMfaModal, langObj }) {
                 qr_secret: qrSecret,
                 totp_code: totp
             })
-            await updateUser(data.payload, true)
+            await updateUser(data.user, true)
             toaster("success", data.msg)
             setMfaModal(false)
         } catch (error) {

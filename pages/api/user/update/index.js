@@ -1,6 +1,6 @@
 import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
-import { SignJwt, SetSessionCookie } from "@/utils/cyphers"
+import { SetSessionCookie } from "@/utils/cyphers"
 import { sendNotification } from "@/utils/send_notification"
 import StandardApi from "@/middlewares/standard_api"
 
@@ -26,7 +26,7 @@ const UpdateUser = async (req, res) => StandardApi(req, res, { method: "PUT" }, 
     res.status(200).json({
         success: true,
         msg: `Your data has been updated successfully`,
-        payload: SignJwt(user)
+        user
     })
     sendNotification(user._id, {
         category: "account",

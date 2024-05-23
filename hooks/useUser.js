@@ -32,7 +32,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/get/me`)
-            await updateUser(data.payload, true)
+            await updateUser(data.user, true)
             set(() => ({ guestUser: null }));
         }
         catch (error) {
@@ -47,7 +47,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/check-in`);
-            updateUser({ ...user, last_checkin: data.last_checkin }, true, true);
+            updateUser({ ...user, last_checkin: data.last_checkin }, true);
             toaster("success", data.msg);
             useWallet.getState().getUfBalance()
         }
@@ -88,10 +88,10 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, credentials)
-            if (data.redirect_url && !data.payload) router.push(data.redirect_url)
-            else if (data.payload) {
+            if (data.redirect_url && !data.user) router.push(data.redirect_url)
+            else if (data.user) {
                 get().cleanUp()
-                await updateUser(data.payload, true)
+                await updateUser(data.user, true)
                 set(() => ({ guestUser: null }));
                 router.replace("/")
                 toaster("success", data.msg)
@@ -124,10 +124,10 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login/google`, { token, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
-            if (data.redirect_url && !data.payload) router.push(data.redirect_url)
-            else if (data.payload) {
+            if (data.redirect_url && !data.user) router.push(data.redirect_url)
+            else if (data.user) {
                 get().cleanUp()
-                await updateUser(data.payload, true)
+                await updateUser(data.user, true)
                 set(() => ({ guestUser: null }));
                 router.replace("/")
                 toaster("success", data.msg)
@@ -147,7 +147,7 @@ const useUser = create(persist((set, get) => ({
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/signup/google`, { token, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
             get().cleanUp()
-            await updateUser(data.payload, true)
+            await updateUser(data.user, true)
             set(() => ({ guestUser: null }));
             router.replace("/")
             toaster("success", data.msg)
@@ -248,16 +248,14 @@ const useUser = create(persist((set, get) => ({
         })
     },
     inWishList: (item) => get().wishList.includes(item),
-    updateUser: async (valuesObj, updateLocally = false, updateDirectly = false) => {
+    updateUser: async (user, updateLocally = false) => {
         if (!get().isLoggedIn()) return
-        if (updateLocally) set(() => ({
-            user: updateDirectly ? valuesObj : jwt.decode(valuesObj)
-        }))
+        if (updateLocally) set(() => ({ user }))
         else {
             set(() => ({ userLoading: true }));
             try {
-                const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/update`, valuesObj)
-                set(() => ({ user: jwt.decode(data.payload) }))
+                const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/update`, user)
+                set(() => ({ user: data.user }))
                 toaster("success", data.msg)
             } catch (error) {
                 console.log(error)
@@ -285,7 +283,7 @@ const useUser = create(persist((set, get) => ({
     matchOtpAndUpdate: async (values) => {
         try {
             const { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/auth/otp/change-email`, values)
-            set(() => ({ user: jwt.decode(data.payload) }))
+            set(() => ({ user: data.user }))
             toaster("success", data.msg)
             window.location.href = '/'
         } catch (error) {
@@ -299,7 +297,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/addresses/get`, { withCredentials: true })
-            set(() => ({ address: jwt.decode(data.payload) }));
+            set(() => ({ address: jwt.decode(data.addresses) }));
         } catch (err) {
             console.log(err.response.data.msg)
             return null
@@ -310,7 +308,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             let { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/addresses/update`, values)
-            const address = jwt.decode(data.payload)
+            const address = jwt.decode(data.addresses)
             set(() => ({ address }));
             toaster("success", data.msg);
             return address;
