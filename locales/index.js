@@ -309,6 +309,87 @@ export const footer = {
     }
 }
 
+export const authPage = {
+    en: {
+        offer: {
+            msg1: "Join Our Urban Fits Program and get free Shipping and 500 Points Sign Up Bonus",
+            msg2: "Urban Members get Exclusive access to products, events, and offers. Just provide a few details. It’s free to join and open to all."
+        },
+        policiesMsg: {
+            pt1: "By creating an account, I agree to the ",
+            pt2: "Terms & Conditions.",
+            pt3: " I have read the ",
+            pt4: "Legal Notice",
+            pt5: " and ",
+            pt6: "Privacy Policy."
+        },
+        usernameOrEmail: "Username or Email",
+        username: "Username",
+        email: "Email",
+        selectCountryCode: "Select country code",
+        phone: "Phone Number",
+        password: "Password",
+        newPass: "New Password",
+        confirmPass: "Confirm Password",
+        enterOtp: "Enter OTP code",
+        enterTotp: "Enter TOTP code",
+        passInstruction: "Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.",
+        otpInstruction: "Please enter your username or email address. You will receive an email with an OTP code, submit it here to reset password.",
+        enterOtpInstruction: "Please open your Email inbox and check for an OTP code and submit it here for registration.",
+        totpInstruction: "Please open your Google Authenticator app in mobile and enter the Urban Fits - 2FA key code.",
+        didntGetEmail: "Didn't get the email?",
+        login: "Login",
+        signup: "Sign Up",
+        comfirmTotp: "Confirm 2FA code",
+        confirmOtp: "Confirm OTP code",
+        verify: "Verify",
+        sendCode: "Send Code",
+        remeberMe: "Remember Me",
+        forgotPass: "Forgot Password?",
+        loginWithAccount: "Login with and existing account",
+        createAccount: "Create a New Account",
+    },
+    ar: {
+        offer: {
+            msg1: "انضم إلى برنامج Urban Fits واحصل على شحن مجاني ومكافأة تسجيل قدرها 500 نقطة",
+            msg2: "يحصل أعضاء Urban على وصول حصري إلى المنتجات والأحداث والعروض. فقط قدم بعض التفاصيل. الانضمام مجاني ومتاح للجميع."
+        },
+        policiesMsg: {
+            pt1: "بإنشاء حساب، أوافق على ",
+            pt2: "الشروط والأحكام.",
+            pt3: " لقد قرأت ",
+            pt4: "الإشعار القانوني",
+            pt5: " و ",
+            pt6: "سياسة الخصوصية."
+        },
+        usernameOrEmail: "اسم المستخدم أو البريد الإلكتروني",
+        username: "اسم المستخدم",
+        email: "البريد الإلكتروني",
+        selectCountryCode: "اختر رمز البلد",
+        phone: "رقم الهاتف",
+        password: "كلمة المرور",
+        newPass: "كلمة مرور جديدة",
+        confirmPass: "تأكيد كلمة المرور",
+        enterOtp: "أدخل رمز OTP",
+        enterTotp: "أدخل رمز TOTP",
+        passInstruction: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل ولا يمكن أن تكون سهلة التخمين - كلمات المرور الشائعة أو الخطيرة غير مسموح بها.",
+        otpInstruction: "يرجى إدخال اسم المستخدم أو عنوان البريد الإلكتروني الخاص بك. ستتلقى بريدًا إلكترونيًا يحتوي على رمز OTP، قدمه هنا لإعادة تعيين كلمة المرور.",
+        totpInstruction: "يرجى فتح تطبيق Google Authenticator في الهاتف المحمول وإدخال رمز المفتاح Urban Fits - 2FA.",
+        enterOtpInstruction: "يرجى فتح بريدك الإلكتروني والتحقق من رمز OTP وإرساله هنا للتسجيل.",
+        didntGetEmail: "لم تتلق البريد الإلكتروني؟",
+        login: "تسجيل الدخول",
+        signup: "اشتراك",
+        comfirmTotp: "تأكيد رمز المصادقة الثنائية",
+        confirmOtp: "تأكيد رمز OTP",
+        verify: "تحقق",
+        rememberMe: "تذكرني",
+        sendCode: "إرسال الرمز",
+        forgotPass: "نسيت كلمة المرور",
+        loginWithAccount: "تسجيل الدخول بحساب موجود",
+        createAccount: "إنشاء حساب جديد"
+    }
+}
+
 export const home = {
     en: {
         latestArrival: "Urban Fits Latest Arrivals",

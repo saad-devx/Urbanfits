@@ -7,7 +7,9 @@ import Tooltip from '@/components/tooltip'
 import AlertPage from '@/components/alertPage'
 import countryCodes from '@/static data/countryCodes'
 import { useRouter } from 'next/router'
-import useUser from '@/hooks/useUser'
+import useUser from '@/hooks/useUser';
+import useLanguage from '@/hooks/useLanguage';
+import { authPage as authLang } from '@/locales';
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 //Image imports
@@ -15,10 +17,12 @@ import Image from 'next/image'
 import google_logo from '@/public/logos/google-logo.svg'
 
 export default function Signup() {
-    const router = useRouter()
-    const { user, signUp, userLoading, signUpWithGoogle } = useUser()
-    const [showPass, setShowPass] = useState(false)
-    const passRef = useRef()
+    const router = useRouter();
+    const { user, signUp, userLoading, signUpWithGoogle } = useUser();
+    const { locale } = useLanguage();
+    const [showPass, setShowPass] = useState(false);
+    const passRef = useRef();
+    const langObj = authLang[locale];
 
     const signupuSchema = Yup.object({
         username: Yup.string().min(5, 'Username must be at least 5 characters long').max(24, 'Username cannot exceed 24 characters').matches(/^[A-Za-z0-9_]+$/, 'Username must contain only letters, numbers, and underscores').notOneOf([' ', '-'], 'Username should not contain any spaces or hyphen symbols').required('Username is required'),
@@ -57,22 +61,22 @@ export default function Signup() {
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     return <>
         <Head><title>Urban Fits - Sign Up</title></Head>
-        <AuthPage loading={userLoading} height="lg:h-[110vh]" mblNav="/auth/login" mblNavName="Sign in" >
+        <AuthPage loading={userLoading} height="lg:h-[110vh]" mblNav="/auth/login" mblNavName={langObj.login} langObj={langObj} >
             <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around lg:block" onReset={handleReset} onSubmit={handleSubmit} >
                 <section className="w-full mb-6">
-                    <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Sign Up</h1>
+                    <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">{langObj.signup}</h1>
                     <div className="relative data_field flex items-center border-b focus:border-pink-300 transition py-2 mb-4">
                         {touched.username && errors.username ? <Tooltip classes="form-error" content={errors.username} /> : null}
-                        <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder="Username" />
+                        <input className="w-full outline-none border-none" type="text" name="username" id="username" value={values.username} onBlur={handleBlur} onChange={handleChange} placeholder={langObj.username} />
                     </div>
                     <div className={`relative data_field lex items-center border-b focus:border-pink-300 transition py-2 mb-4`}>
                         {touched.email && errors.email ? <Tooltip classes="form-error" content={errors.email} /> : null}
-                        <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder='Email' />
+                        <input className="w-full outline-none border-none" name="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} placeholder={langObj.email} />
                     </div>
                     <div className={` relative data_field flex items-center border-b focus:border-pink-300 transition py-2 mb-4`}>
                         {touched.phone_prefix && errors.phone_prefix ? <Tooltip classes="form-error" content={errors.phone_prefix} /> : null}
                         <select defaultValue='Country Code' value={values.phone_prefix} name='phone_prefix' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
-                            <option value={null}>Select country code</option>
+                            <option value={null}>{langObj.selectCountryCode}</option>
                             {countryCodes.map((item) => {
                                 if (!item.code) return <option disabled>{item.name}</option>
                                 return <option value={item.code}>{item.name} {item.code}</option>
@@ -81,11 +85,11 @@ export default function Signup() {
                     </div>
                     <div className={`relative data_field flex items-center border-b focus:border-pink-300 transition py-2 mb-4`}>
                         {touched.phone_number && errors.phone_number ? <Tooltip classes="form-error" content={errors.phone_number} /> : null}
-                        <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
+                        <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder={langObj.phone} />
                     </div>
                     <div className={`relative data_field flex items-center border-b focus:border-pink-300 transition py-2 mb-4`}>
                         {touched.password && errors.password ? <Tooltip classes="form-error" content={errors.password} /> : null}
-                        <input ref={passRef} className={`w-full outline-none border-none ${values.password ? "tracking-2" : null}`} type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder='Password' />
+                        <input ref={passRef} className={`w-full outline-none border-none ${values.password ? "tracking-2" : null}`} type={showPass ? "text" : "password"} name="password" id="password" value={values.password} onBlur={handleBlur} onChange={handleChange} placeholder={langObj.password} />
                         <i onClick={() => {
                             passRef.current.focus();
                             if (showPass) return setShowPass(false);
@@ -93,7 +97,7 @@ export default function Signup() {
                         }} className={`fa-regular ${showPass ? "fa-eye-slash" : "fa-eye"} text-black font-bold cursor-pointer select-none`} />
                     </div>
                     <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
-                        Password must be at least 8 characters and can’t be easy to guess - commonly used or risky passwords are not premitted.
+                        {langObj.passInstruction}
                     </div>
                 </section>
 
@@ -104,20 +108,20 @@ export default function Signup() {
                             <input className='rounded' type="checkbox" id="accept_policies" name="accept_policies" value={values.accept_policies} onChange={handleChange} />
                         </div>
                         <label htmlFor='accept_policies' className="w-full cursor-pointer text-sm text-left">
-                            <p className="ml-1 text-gray-400">By creating an account, I agree to the <Link href="/policies/terms&conditions" className=' text-black underline' >Terms & Conditions</Link>.I have read the <Link href="/policies/legalnotice" className=' text-black underline' >Legal Notice</Link> and <Link href="/policies/privacypolicy" className=' text-black underline' >Privacy Policy</Link></p>
+                            <p className="ml-1 text-gray-400">{langObj.policiesMsg.pt1}<Link href="/policies/terms&conditions" className=' text-black underline' >{langObj.policiesMsg.pt2}</Link>{langObj.policiesMsg.pt3}<Link href="/policies/legalnotice" className=' text-black underline' >{langObj.policiesMsg.pt4}</Link>{langObj.policiesMsg.pt5}<Link href="/policies/privacypolicy" className=' text-black underline' >{langObj.policiesMsg.pt6}</Link></p>
                         </label>
                     </div>
-                    <Button loading={userLoading} classes='w-full' type="submit" >Sign Up</Button>
+                    <Button loading={userLoading} classes='w-full' type="submit" >{langObj.signup}</Button>
                     <div className="lg:hidden w-full flex justify-between items-center font_urbanist text-sm">
                         <span className="w-2/5 h-px bg-gray-200"></span>
                         sign up via
                         <span className="w-2/5 h-px bg-gray-200"></span>
                     </div>
-                    <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >Log in with an Existing Account</h1></Link>
+                    <Link href='/auth/login' className='hidden lg:block underline text-xs md:text-sm'><h1 className='w-full text-center' >{langObj.loginWithAccount}</h1></Link>
                     <button type='button' name='google' onClick={() => document.querySelector("#signin_with_google_btn").click()} className="relative group cursor-default w-full h-12 my-4 py-2 px-2 flex justify-center items-center bg-gray-50 text-lg border border-gray-200 rounded-full hover:shadow-xl transition">
                         <span id="signin_with_google_btn" className='absolute left-1/2 -translate-x-1/2 opacity-0'></span>
                         <Image src={google_logo} width={50} height={50} className='w-6 md:w-8 mr-3' alt="google" />
-                        <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>Sign Up with&nbsp;</span>
+                        <span className='max-w-0 whitespace-nowrap overflow-hidden transition-all duration-500 group-hover:max-w-[8rem]'>{langObj.createAccount}&nbsp;</span>
                         Google
                     </button>
                 </section>

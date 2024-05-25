@@ -20,8 +20,8 @@ export const AddPoints = async (user_id, card_number, timezone, data) => {
                 { expirationDate: { $exists: false } },
                 { expirationDate: { $gt: currentDate } }
             ]
-        })
-        const totalBalance = pointsDocs.reduce((prevTotal, currentObj) => prevTotal + currentObj.points, 0)
+        }).lean();
+        const totalBalance = pointsDocs.reduce((prevTotal, currentObj) => prevTotal + currentObj.points, 0);
 
         await UFpoints.create({
             user_id,
@@ -35,15 +35,14 @@ export const AddPoints = async (user_id, card_number, timezone, data) => {
             month: monthNames[currentDate.getMonth()],
             year: currentDate.getFullYear(),
             ...(expirationDate && { expiration_date: expirationDate }),
-        })
+        });
 
         if (source === "daily_checkin") {
-            const weeklyPointsHistory = await WeeklyCheckinPointsHistory.create({
+            await WeeklyCheckinPointsHistory.create({
                 user_id,
                 card_number,
                 points: earned
             })
-            console.log(weeklyPointsHistory)
         }
     } catch (error) { console.log(error) }
 }

@@ -6,7 +6,9 @@ import Button from '@/components/buttons/simple_btn'
 import Image from 'next/image'
 import Tooltip from '@/components/tooltip'
 import toaster from '@/utils/toast_function'
-import useUser from '@/hooks/useUser'
+import useUser from '@/hooks/useUser';
+import useLanguage from '@/hooks/useLanguage';
+import { authPage as authLang } from '@/locales';
 import axios from 'axios'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
@@ -15,11 +17,13 @@ import google_logo from '@/public/logos/google-logo.svg'
 export default function ForgotPassword() {
     const router = useRouter();
     const { userLoading, signUpWithGoogle } = useUser();
+    const { locale } = useLanguage();
     const [otp, setOtp] = useState('');
     const [otpId, setOtpId] = useState(null);
+    const langObj = authLang[locale];
     const [resendOption, setResendOption] = useState(
         <div className="mt-4 text-gray-400 text-xs md:text-sm text-left">
-            Please enter your username or email address. You will receive an email with an OTP code, submit it here to reset password.
+            {langObj.otpInstruction}
         </div>)
 
     useEffect(() => {
@@ -90,7 +94,7 @@ export default function ForgotPassword() {
     }
 
     return <>
-        <AuthPage loading={userLoading} mblNav="/auth/login" mblNavName="Sign in" >
+        <AuthPage loading={userLoading} mblNav="/auth/login" mblNavName={langObj.login} >
             <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around items-center lg:justify-center" onReset={handleReset} onSubmit={handleSubmit} >
                 <section className="w-full mb-6 md:mb-0">
                     <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Forgot Password</h1>

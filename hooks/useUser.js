@@ -297,7 +297,7 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/addresses/get`, { withCredentials: true })
-            set(() => ({ address: jwt.decode(data.addresses) }));
+            set(() => ({ address: data.addresses }));
         } catch (err) {
             console.log(err.response.data.msg)
             return null
@@ -308,10 +308,9 @@ const useUser = create(persist((set, get) => ({
         set(() => ({ userLoading: true }));
         try {
             let { data } = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/user/addresses/update`, values)
-            const address = jwt.decode(data.addresses)
-            set(() => ({ address }));
+            set(() => ({ address: data.addresses }));
             toaster("success", data.msg);
-            return address;
+            return data.addresses;
         }
         catch (e) {
             console.log(e)

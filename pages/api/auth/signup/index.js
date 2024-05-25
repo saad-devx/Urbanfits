@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import User from "@/models/user"
 import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
-import sendEmail from "@/utils/sendEmail"
+import { sendAPIEmail } from "@/utils/sendEmail"
 import { generateRandomInt, isValidTimeZone } from "@/utils/cyphers.js";
 import StandardApi from "@/middlewares/standard_api"
 
@@ -25,7 +25,7 @@ const Signup = async (req, res) => StandardApi(req, res, { method: "POST", verif
             expireAt: Date.now()
         })
         const template = verifyEmail(otp)
-        await sendEmail({ to: req.body.email, subject: "Verify your email for registration on Urban Fits" }, template)
+        sendAPIEmail(req.body.email, "Verify your email for registration on Urban Fits", template)
         res.status(200).json({
             success: true,
             otp_id: dbOtp._id,

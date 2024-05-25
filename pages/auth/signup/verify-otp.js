@@ -2,7 +2,9 @@ import { useState } from 'react'
 import AuthPage from '..'
 import Button from '@/components/buttons/simple_btn'
 import Head from 'next/head'
-import useUser from '@/hooks/useUser'
+import useUser from '@/hooks/useUser';
+import useLanguage from '@/hooks/useLanguage';
+import { authPage as authLang } from '@/locales';
 import toaster from '@/utils/toast_function'
 import AlertPage from '@/components/alertPage'
 import axios from 'axios'
@@ -11,8 +13,10 @@ import Error404 from '@/pages/404'
 
 export default function VerifyOtp() {
     const { user, updateUser, userLoading } = useUser();
+    const { locale } = useLanguage();
     const router = useRouter();
     const [otp, setOtp] = useState('');
+    const langObj = authLang[locale];
 
     const onVerifyClick = async (otpId) => {
         if (!otpId || otpId.length < 18) return toaster("error", "Something went wrong, please try login again.")
@@ -35,18 +39,18 @@ export default function VerifyOtp() {
     if (user && user.email) return <AlertPage type="success" heading="You are already signed in !" />
     return <>
         <Head><title>Urban Fits - Confirm 2FA TOTP code</title></Head>
-        <AuthPage loading={userLoading} mblNav="/auth/signup" mblNavName="Register">
+        <AuthPage loading={userLoading} mblNav="/auth/signup" mblNavName={langObj.signup} langObj={langObj}>
             <main className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around lg:block" >
                 <section className="w-full mb-6 md:mb-0">
-                    <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Confirm OTP code</h1>
+                    <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">{langObj.confirmOtp}</h1>
                     <div className="relative data_field lex items-center border-b focus:border-pink-300 transition py-2 mb-4">
-                        <input className="w-full outline-none border-none" type='number' name="otp" id="otp" value={otp} onChange={(e) => setOtp(e.target.value)} placeholder='Enter OTP code' />
+                        <input className="w-full outline-none border-none" type='number' name="otp" id="otp" value={otp} onChange={(e) => setOtp(e.target.value)} placeholder={langObj.enterOtp} />
                     </div>
                     <div className="my-3 text-gray-400 text-xs md:text-sm text-left">
-                        Please open your Email inbox and check for an OTP code and submit it here for registration.
+                        {langObj.enterOtpInstruction}
                     </div>
                 </section>
-                <Button disabled={!otp || otp.length < 5 || otp.length > 10} onClick={() => onVerifyClick(router.query.otp_id)} loading={userLoading} my="my-4" classes='w-full'>Verify</Button>
+                <Button disabled={!otp || otp.length < 5 || otp.length > 10} onClick={() => onVerifyClick(router.query.otp_id)} loading={userLoading} my="my-4" classes='w-full'>{langObj.verify}</Button>
             </main>
         </AuthPage>
     </>
