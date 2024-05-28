@@ -21,7 +21,7 @@ const ShipmentWebhookHandler = async (req, res) => StandardApi(req, res, { metho
     }, { new: true, lean: true });
 
     const template = orderStatusUpdate(order);
-    sendAPIEmail(order.email, `Your Order Status was just updated to "${orderData.order_status.status}"`, template);
+    sendAPIEmail(order.email, `Your Order Status was just updated to "${order.order_status.status}"`, template);
 
     await sendAdminNotification({
         category: "order",
