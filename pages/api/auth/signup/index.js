@@ -4,7 +4,8 @@ import OTP from "@/models/otp"
 import verifyEmail from "@/email templates/verify_email"
 import { sendAPIEmail } from "@/utils/sendEmail"
 import { generateRandomInt, isValidTimeZone } from "@/utils/cyphers.js";
-import StandardApi from "@/middlewares/standard_api"
+import StandardApi from "@/middlewares/standard_api";
+import axios from "axios";
 
 const Signup = async (req, res) => StandardApi(req, res, { method: "POST", verify_user: false, verify_admin: false }, async () => {
     const { username, email, phone_prefix, phone_number, password, timezone } = req.body;
@@ -13,6 +14,10 @@ const Signup = async (req, res) => StandardApi(req, res, { method: "POST", verif
     let user = await User.findOne().or([{ email }, { username }])
     if (user) return res.status(409).json({ success: false, msg: "This Email or Username already in use." })
     if (!req.body.accept_policies) return res.status(403).json({ success: false, msg: "A user can't register without accepting our policies and terms of use." })
+
+    // Disposable email check
+    const { data } = await axios.get(`http://open.kickbox.com/v1/disposable/${email}`);
+    if (data.disposable) return res.status(400).json({ success: false, msg: "A disposable email is strictly prohibited. Please use an authentic email." });
 
     let dbOtp = await OTP.findOne({ email })
     if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'registration' session, try after 5 minutes." })

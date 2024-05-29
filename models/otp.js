@@ -1,9 +1,9 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const OTPSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        unique: true
+        default: null
     },
     otp: {
         type: String,
@@ -33,5 +33,5 @@ const OTPSchema = new mongoose.Schema({
         expires: 300,
         default: Date.now()
     }
-}, {strict: false})
+}, { strict: false })
 export default mongoose.models.OTP || mongoose.model("OTP", OTPSchema)

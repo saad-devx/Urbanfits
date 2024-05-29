@@ -1,16 +1,16 @@
-import ConnectDB from "@/utils/connect_db";
-import Order from "@/models/orders";
+// import ConnectDB from "@/utils/connect_db";
+// import Order from "@/models/orders";
 // import sendEmail from "@/utils/sendEmail";
-import OrderConfirmed from "@/email templates/order_confirm";
-import { sendAPIEmail } from "@/utils/sendEmail";
+// import OrderConfirmed from "@/email templates/order_confirm";
+// import { sendAPIEmail } from "@/utils/sendEmail";
+import axios from "axios";
 
 const TestApiHandler = async (req, res) => {
-    await ConnectDB();
-    const order = await Order.findById("664cfc8715095a614bd550ac").lean();
-
-    let template = OrderConfirmed(order)
-
-    sendAPIEmail({ to: "binarshadsaad6@gmail.com", subject: "Your order has been placed.", template })
+    // await ConnectDB();
+    try {
+        const objDeletion = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/S3/delete-object?object_url=carousel-images/home/1716994438444.webp`)
+        console.log(`Image deleted successfully.`)
+    } catch (e) { console.log("Error deleting an S3 object: ", e) }
 
     res.status(200).json({
         success: true,

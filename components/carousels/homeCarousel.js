@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import Link from 'next/link';
+import axios from 'axios';
 
 import Image from 'next/image';
 import image1 from '@/public/carousel imgs/carousel img1.webp'
@@ -12,11 +13,24 @@ import image5 from '@/public/carousel imgs/carousel img5.webp'
 import image6 from '@/public/carousel imgs/carousel img6.webp'
 
 export default function HomeCarousel() {
-    const [play, setPlay] = useState(true)
+    const [play, setPlay] = useState(true);
+    const [slides, setSlides] = useState([{ title: "Urban Fits Classic", image: image1, href: "#", local: true }]);
     const togglePlay = () => {
         if (play === true) return setPlay(false)
         if (play === false) return setPlay(true)
     }
+
+    useEffect(() => {
+        getCarousel()
+    }, [])
+
+    const getCarousel = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/carousels/home/get`);
+            setSlides(data.carousel.slides)
+        } catch (error) { console.log(error) }
+    }
+
     return <Splide fixed className="w-full h-full relative font_urbanist transition-all duration-1000" hasTrack={false}
         options={{
             type: 'loop',
@@ -35,13 +49,11 @@ export default function HomeCarousel() {
             pagination: false
         }}>
         <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
-            {[image1, image2, image3, image4, image5, image6].map((img, index) => {
-                return <SplideSlide key={index} className="w-full h-full">
-                    <Link className="w-full h-full" href="#">
-                        <Image className='w-full h-full object-cover' src={img} priority placeholder='blur' alt="Urban images" />
-                    </Link>
-                </SplideSlide>
-            })}
+            {slides.map((slide, index) => <SplideSlide key={index} className="w-full h-full">
+                <Link className="w-full h-full" href={slide.href || "#"}>
+                    <Image className='w-full h-full object-cover' width={1500} height={650} src={slide.local ? slide.image : process.env.NEXT_PUBLIC_BASE_IMG_URL + slide.image} priority alt={slide.title} />
+                </Link>
+            </SplideSlide>)}
         </SplideTrack>
 
         {/* Carousel Title */}
