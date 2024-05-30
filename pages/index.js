@@ -1,30 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 const HomeCarousel = dynamic(() => import('@/components/carousels/homeCarousel'));
+import useCarousel from '@/hooks/useCarousel';
 import SkeletonRow from "@/components/cards/card-skeleton";
 import useLanguage from "@/hooks/useLanguage";
 import Link from "next/link";
 import ListingShopSection from "@/components/listingShop_section";
 import OfferCard from "@/components/cards/offerCard";
 import Shoppingcard from "@/components/cards/shoppingcard";
-import axios from "axios";
 import { home as homeLang } from "@/locales";
 
 export default function Home() {
-    const [indexContent, setIndexContent] = useState(null);
-    const [indexLoading, setIndexLoading] = useState(true);
+    const { indexContent, indexLoading, getIndexContent, homeSlides, getHomeSlides } = useCarousel();
     const { locale } = useLanguage();
     const langObj = homeLang[locale];
 
     useEffect(() => {
-        (async () => {
-            try {
-                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/get-index-content`);
-                setIndexContent(data);
-            } catch (error) { console.log(error); } finally { setIndexLoading(false) }
-        })()
-        return () => setIndexContent(null)
+        getIndexContent()
     }, [])
 
     return <>
@@ -32,7 +25,7 @@ export default function Home() {
         <main className="w-full">
             <main className='w-full bg-white flex flex-col transition-all gap-y-7 lg:gap-y-10 overflow-hidden' >
                 <section className="w-full layout_height mb-4 flex justify-center items-center transition-all duration-700 ease-linear overflow-hidden">
-                    <HomeCarousel />
+                    <HomeCarousel homeSlides={homeSlides} getHomeSlides={getHomeSlides} />
                 </section>
                 {/* Latest Arrivals */}
                 {indexContent?.latestArrivals?.length ? <section>
@@ -53,7 +46,7 @@ export default function Home() {
                         <Link href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">{langObj.visitCollection}</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
-                        {indexContent?.newCollection.map((product, index) => {
+                        {indexContent?.newCollection?.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
@@ -76,7 +69,7 @@ export default function Home() {
                         <Link href='/products/category/64a59d5816b4c91fa1967b2e?name=women' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">{langObj.visitCollection}</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
-                        {indexContent?.womenCollection.map((product, index) => {
+                        {indexContent?.womenCollection?.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
@@ -86,13 +79,13 @@ export default function Home() {
                 </section>
 
                 {/* Men Collection Section */}
-                {indexContent?.menCollection.length ? <section>
+                {indexContent?.menCollection?.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">{langObj.menCollection}</h2>
                         <Link href='/products/category/649b292762a7c100cfb7207f?name=men' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">{langObj.visitCollection}</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
-                        {indexContent?.menCollection.map((product, index) => {
+                        {indexContent?.menCollection?.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return
@@ -102,13 +95,13 @@ export default function Home() {
                 </section> : (indexLoading && <SkeletonRow />)}
 
                 {/* Kids Collection Section */}
-                {indexContent?.kidsCollection.length ? <section>
+                {indexContent?.kidsCollection?.length ? <section>
                     <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
                         <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">{langObj.kidsCollection}</h2>
                         <Link href='/products/category/64d4dfa643c643cc9c60c672?name=kids' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">{langObj.visitCollection}</Link>
                     </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
-                        {indexContent?.kidsCollection.map((product, index) => {
+                        {indexContent?.kidsCollection?.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
                             else if (window.matchMedia('(min-width: 760px) and (max-width: 1024px)').matches && index > 2) return
                             else if (index > 4) return

@@ -6,7 +6,6 @@ import PusherClient from 'pusher-js';
 import { toast, Slide } from "react-toastify";
 import toaster from "@/utils/toast_function";
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import cookie from "cookie";
 import Link from 'next/link';
 
@@ -334,6 +333,6 @@ const useUser = create(persist((set, get) => ({
         country: state.country,
         wishList: state.wishList,
         recentItems: state.recentItems
-    }),
+    })
 }))
 export default useUser

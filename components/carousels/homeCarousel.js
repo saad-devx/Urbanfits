@@ -2,40 +2,18 @@ import { useState, useEffect } from 'react'
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import Link from 'next/link';
-import axios from 'axios';
-
 import Image from 'next/image';
-import image1 from '@/public/carousel imgs/carousel img1.webp'
-import image2 from '@/public/carousel imgs/carousel img2.webp'
-import image3 from '@/public/carousel imgs/carousel img3.webp'
-import image4 from '@/public/carousel imgs/carousel img4.webp'
-import image5 from '@/public/carousel imgs/carousel img5.webp'
-import image6 from '@/public/carousel imgs/carousel img6.webp'
 
-export default function HomeCarousel() {
+export default function HomeCarousel({ homeSlides, getHomeSlides }) {
     const [play, setPlay] = useState(true);
-    const [slides, setSlides] = useState([{ title: "Urban Fits Classic", image: image1, href: "#", local: true }]);
-    const togglePlay = () => {
-        if (play === true) return setPlay(false)
-        if (play === false) return setPlay(true)
-    }
 
     useEffect(() => {
-        getCarousel()
+        getHomeSlides()
     }, [])
-
-    const getCarousel = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/carousels/home/get`);
-            setSlides(data.carousel.slides)
-        } catch (error) { console.log(error) }
-    }
 
     return <Splide fixed className="w-full h-full relative font_urbanist transition-all duration-1000" hasTrack={false}
         options={{
             type: 'loop',
-            // fixedWidth: '100vw',
-            // fixedHeight: '99.5vh',
             speed: 900,
             gap: '0.5rem',
             cover: true,
@@ -49,17 +27,16 @@ export default function HomeCarousel() {
             pagination: false
         }}>
         <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
-            {slides.map((slide, index) => <SplideSlide key={index} className="w-full h-full">
-                <Link className="w-full h-full" href={slide.href || "#"}>
+            {homeSlides.map((slide, index) => <SplideSlide key={index} className="w-full h-full">
+                <Link className="w-full h-full relative" href={slide.href || "#"}>
+                    <span className="absolute left-[3%] bottom-[12%] lg:bottom-[10%] text-xl md:text-2xl lg:text-3xl text-white font-smibold">{slide.title}</span>
                     <Image className='w-full h-full object-cover' width={1500} height={650} src={slide.local ? slide.image : process.env.NEXT_PUBLIC_BASE_IMG_URL + slide.image} priority alt={slide.title} />
                 </Link>
             </SplideSlide>)}
         </SplideTrack>
 
         {/* Carousel Title */}
-        <div className="w-full text-center absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-cente space-y-5">
-            <h1 className="text-3xl md:text-[64px] text-white font_copper tracking-3">URBAN FITS</h1>
-        </div>
+        <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl md:text-[64px] whitespace-nowrap text-white font_copper tracking-3">URBAN FITS</h1>
 
         {/* Buttons for next, prev slide and to pause the carousel */}
         <div className="splide__arrows absolute flex items-center gap-x-5 right-[3%] bottom-[12%] lg:bottom-[10%]">
@@ -71,9 +48,8 @@ export default function HomeCarousel() {
                     </svg>
                 </span>
             </button>
-            {/* <button className="splide__arrow--prev font_copper px-3 py-1.5 skew-x-12 rounded text-[8px] md:text-10px tracking-2 bg-white hover:bg-black hover:text-white transition-all duration-300">PREV</button> */}
 
-            <button onClick={togglePlay} className="splide__toggle hover:bg-pink-200 flex justify-center items-center w-8 h-8 rounded-full bg-white  transition-all duration-500" >
+            <button onClick={() => setPlay(!play)} className="splide__toggle hover:bg-pink-200 flex justify-center items-center w-8 h-8 rounded-full bg-white  transition-all duration-500" >
                 {play === false ? <span className="w-3 lg:w-5 aspect-square">
                     <svg className='w-full' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8751 14.1986C18.3751 13.3326 18.3751 11.1675 16.8751 10.3015L9.37506 5.97134C7.87506 5.10532 6.00006 6.18785 6.00006 7.9199L6.00006 16.5802C6.00006 18.3122 7.87506 19.3947 9.37506 18.5287L16.8751 14.1986ZM17.6251 9.00243C20.1251 10.4458 20.1251 14.0542 17.6251 15.4976L10.1251 19.8277C7.62506 21.2711 4.50006 19.4669 4.50006 16.5802L4.50006 7.9199C4.50006 5.03315 7.62506 3.22893 10.1251 4.67231L17.6251 9.00243Z" fill="black" />
@@ -85,7 +61,6 @@ export default function HomeCarousel() {
                     </svg>}
             </button>
 
-            {/* <button className="splide__arrow--next font_copper px-3 py-1.5 -skew-x-12 rounded text-[8px] md:text-10px tracking-2 bg-white hover:bg-black hover:text-white transition-all duration-300">NEXT</button> */}
             <button className="splide__arrow--next hover:bg-pink-200 flex justify-center items-center w-8 h-8 rounded-full bg-white transition-all duration-500" >
                 <span className="w-3 md:w-5 aspect-square">
                     <svg className='w-full' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

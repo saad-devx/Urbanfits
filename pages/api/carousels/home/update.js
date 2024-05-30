@@ -4,7 +4,6 @@ import StandardApi from "@/middlewares/standard_api";
 import axios from "axios";
 
 const UpdateHomeCarousel = async (req, res) => StandardApi(req, res, { method: "POST", verify_admin: true }, async () => {
-    console.log("This is the slides payload we're getting on the server: ", req.body)
     const { slides } = req.body;
     if (!slides.length) return res.status(400).json({ success: false, msg: "The slides array can't be empty." });
 
@@ -13,7 +12,6 @@ const UpdateHomeCarousel = async (req, res) => StandardApi(req, res, { method: "
     const oldCarousel = await HomeCarousel.findOne({}).lean();
     for (let [index, slide] of oldCarousel.slides.entries()) {
         try {
-            console.log("The cutout url: ", slide.image.substring(1))
             const objDeletion = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/S3/delete-object?object_url=${slide.image.substring(1)}`)
             console.log(`Image #${index} deleted successfully.`)
         } catch (e) { console.log("Error deleting an S3 object: ", e) }

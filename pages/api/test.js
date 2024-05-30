@@ -1,8 +1,3 @@
-// import ConnectDB from "@/utils/connect_db";
-// import Order from "@/models/orders";
-// import sendEmail from "@/utils/sendEmail";
-// import OrderConfirmed from "@/email templates/order_confirm";
-// import { sendAPIEmail } from "@/utils/sendEmail";
 import axios from "axios";
 
 const TestApiHandler = async (req, res) => {
