@@ -10,13 +10,15 @@ const UpdateHomeCarousel = async (req, res) => StandardApi(req, res, { method: "
     await ConnectDB();
 
     const oldCarousel = await HomeCarousel.findOne({}).lean();
-    for (let [index, slide] of oldCarousel.slides.entries()) {
-        try {
-            const objDeletion = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/S3/delete-object?object_url=${slide.image.substring(1)}`)
-            console.log(`Image #${index} deleted successfully.`)
-        } catch (e) { console.log("Error deleting an S3 object: ", e) }
+    if (oldCarousel) {
+        for (let [index, slide] of oldCarousel.slides.entries()) {
+            try {
+                const objDeletion = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/S3/delete-object?object_url=${slide.image.substring(1)}`)
+                console.log(`Image #${index} deleted successfully.`)
+            } catch (e) { console.log("Error deleting an S3 object: ", e) }
+        }
+        await HomeCarousel.deleteMany({});
     }
-    await HomeCarousel.deleteMany({});
 
     const carousel = await HomeCarousel.findOneAndUpdate({}, { slides }, { upsert: true, lean: true, new: true });
     res.status(200).json({

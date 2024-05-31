@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css'; // Default theme
 import Image from 'next/image';
 import Logo from '@/public/logos/logo_black.svg'
+import useCarousel from '@/hooks/useCarousel';
 import displayImg1 from '@/public/catalogueCarousel imgs/display_img1.webp'
 import displayImg2 from '@/public/catalogueCarousel imgs/display_img2.webp'
 import displayImg3 from '@/public/catalogueCarousel imgs/display_img3.webp'
@@ -11,15 +13,14 @@ import pairImg2 from '@/public/catalogueCarousel imgs/img2.webp'
 import pairImg3 from '@/public/catalogueCarousel imgs/img3.webp'
 
 export default function CatalogueCarousel() {
+    const { catalogueSlides, getCatalogueSlides } = useCarousel();
     const slideData = [{ img: displayImg1, pairImg: pairImg1 }, { img: displayImg2, pairImg: pairImg2 }, { img: displayImg3, pairImg: pairImg3 }, { img: displayImg1, pairImg: pairImg1 }, { img: displayImg2, pairImg: pairImg2 }]
     const onPGMounted = () => {
         let pagination = document.querySelector('.splide__pagination')
         if (window.matchMedia('(min-width: 1000px)').matches) {
             pagination.style.left = `calc(25% - ((${slideData.length * 0.9 * 2}rem + ${slideData.length * 2}px) / 2))`
         }
-        else {
-            pagination.style.width = `calc(${slideData.length * 0.9 * 2}rem + ${slideData.length * 2}px)`
-        }
+        else pagination.style.width = `calc(${slideData.length * 0.9 * 2}rem + ${slideData.length * 2}px)`
         let pageItems = document.querySelectorAll('.splide__pagination__page')
         pageItems.forEach((item) => {
             item.style.width = '2px'
@@ -31,12 +32,14 @@ export default function CatalogueCarousel() {
         })
     }
 
+    useEffect(() => {
+        getCatalogueSlides()
+    }, [])
+
     return <Splide onPaginationMounted={onPGMounted} className="catalogue_carousel w-full layout_height relative transition-all duration-1000" hasTrack={false}
         options={{
             type: 'fade',
             rewind: true,
-            // fixedWidth: '100vw',
-            // fixedHeight: '100vh',
             speed: 900,
             gap: '0.5rem',
             arrows: false,
@@ -49,23 +52,20 @@ export default function CatalogueCarousel() {
             pauseOnFocus: false,
         }}>
         <SplideTrack className='w-full h-full transition-all duration-1000 ease-linear' >
-            {slideData.map((pair, index) => {
+            {catalogueSlides.map((slide, index) => {
                 return <SplideSlide key={index} className="w-full h-full p-10">
                     <section className="flex justify-center items-center w-full h-full bg-white">
                         <div className="w-full lg:w-1/2 h-full flex justify-center items-center">
-                            <Link href='/products/Carousel Item' className='w-3/5 h-[45%] md:h-3/5 lg:w-[42%] lg:h-[68%] z-20 flex flex-col justify-center items-center bg-gray-100 overflow-hidden' >
-                                <Image src={pair.pairImg} priority placeholder='blur' alt='product image' className='w-4/5' />
-                                <span className="w-36 my-4 justify-self-end font_urbanist_medium text-[10px] tracking-widest">
-                                    SATIN FINISH PLAYSUIT DRESS <br />
-                                    $26
-                                </span>
-                            </Link>
+                            <nav className='relative w-3/5 h-[45%] md:h-3/5 lg:w-[42%] lg:h-[68%] z-20 flex flex-col justify-center items-center' >
+                                <span className="absolute -left-10 top-1/2 -rotate-90 translate-x-[-36%] text-black font_urbanist_medium lg:text-xl tracking-widest uppercase">{slide.title}</span>
+                                <Image src={process.env.NEXT_PUBLIC_BASE_IMG_URL + slide.image1} width={314} height={442} priority className='w-full object-cover' alt={slide.title} />
+                            </nav>
                         </div>
-                        <div className="absolute top-0 left-0 z-[5] opacity-10 lg:opacity-100 lg:static pointer-events-none lg:pointer-events-auto w-full lg:w-1/2 h-full">
-                            <Image className='h-full object-cover' priority placeholder='blur' src={pair.img} alt="Urban images" />
+                        <div className="absolute top-0 left-0 z-[5] opacity-40 lg:opacity-100 lg:static pointer-events-none lg:pointer-events-auto w-full lg:w-1/2 h-full">
+                            <Image className='h-full object-cover' width={828} height={724} priority src={process.env.NEXT_PUBLIC_BASE_IMG_URL + slide.image2} alt={slide.title} />
                         </div>
                     </section>
-                    <Link href="/products/New Item" className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_urbanist_bold tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >BUY</Link>
+                    <Link href={slide.href || "#"} className="hidden lg:block absolute z-20 left-1/2 bottom-10 -translate-x-1/2 font_urbanist_bold tracking-[1.5em] hover:tracking-[2.5em] transition-all duration-500 text-xs md:text-base" >BUY</Link>
                 </SplideSlide>
             })}
         </SplideTrack>

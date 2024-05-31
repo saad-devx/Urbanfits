@@ -17,7 +17,7 @@ export default function Home() {
     const langObj = homeLang[locale];
 
     useEffect(() => {
-        getIndexContent()
+        getIndexContent();
     }, [])
 
     return <>

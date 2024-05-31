@@ -13,13 +13,28 @@ const useCarousel = create(persist((set, get) => ({
     indexLoading: false,
 
     getHomeSlides: async (callback) => {
-        const { refreshAfter, homeSlides } = get();
-        if (homeSlides.length && refreshAfter && Date.now() < new Date(refreshAfter).getTime()) return console.log("carousel request cancelled.");
+        const { refreshAfter } = get();
+        if (refreshAfter && Date.now() < new Date(refreshAfter).getTime()) return console.log("carousel request cancelled.");
         try {
-            console.log("makin carousel request.");
+            console.log("making carousel request.");
             set(() => ({ carouselLoading: true }))
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/carousels/home/get`);
-            set(() => ({ homeSlides: data.carousel.slides, refreshAfter: new Date(new Date().getTime() + 5 * 60000) }))
+            set(() => ({ homeSlides: data.carousel.slides, refreshAfter: new Date(new Date().getTime() + 5 * 60000) }));
+            if (callback) callback(data.carousel.slides);
+        } catch (error) {
+            console.log(error)
+            toaster("error", error?.response?.data?.msg || "Network Error")
+        } finally { set(() => ({ carouselLoading: false })) }
+    },
+
+    getCatalogueSlides: async (callback) => {
+        const { refreshAfter } = get();
+        if (refreshAfter && new Date().getTime() < new Date(refreshAfter).getTime()) return console.log("carousel request cancelled.");
+        try {
+            console.log("making carousel request.");
+            set(() => ({ carouselLoading: true }))
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/carousels/catalogue/get`);
+            set(() => ({ catalogueSlides: data.carousel.slides }))
             if (callback) callback(data.carousel.slides)
         } catch (error) {
             console.log(error)
@@ -29,7 +44,7 @@ const useCarousel = create(persist((set, get) => ({
 
     getIndexContent: async (callback) => {
         const { refreshAfter, homeSlides } = get();
-        if (homeSlides.length && refreshAfter && Date.now() < new Date(refreshAfter).getTime()) return console.log("index content request cancelled.");
+        if (homeSlides.length && refreshAfter && new Date().getTime() < new Date(refreshAfter).getTime()) return console.log("index content request cancelled.");
         try {
             console.log("making index content request.");
             set(() => ({ indexLoading: true }))
