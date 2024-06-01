@@ -1203,6 +1203,27 @@ export const accordians = {
     }
 }
 
+export const newsletter = {
+    en: {
+        title: "Move To The Urban Fits",
+        description: "Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit.",
+        email: "Eamil",
+        gender: "Gender",
+        genders: ["male", "female", "other"],
+        subscribe: "Subscribe",
+        interests: "Interests"
+    },
+    ar: {
+        title: "الانتقال إلى Urban Fits",
+        description: "كن على اطلاع بما يحدث في Maison الباريسي: لا تفوت أحدث الاتجاهات، وأحدث المجموعات والمشاريع الخاصة المثيرة من Urban fit.",
+        email: "البريد الإلكتروني",
+        gender: "الجنس",
+        genders: ["ذكر", "أنثى", "آخر"],
+        subscribe: "اشترك",
+        interests: "الاهتمامات"
+    }
+}
+
 export const deleteModal = {
     en: {
         delete: "Delete",

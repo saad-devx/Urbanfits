@@ -2,10 +2,9 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import toaster from "@/utils/toast_function";
 import axios from "axios";
-import image1 from '@/public/carousel imgs/carousel img1.webp';
 
 const useCarousel = create(persist((set, get) => ({
-    homeSlides: [[{ title: "Urban Fits Classic", image: image1, href: "#", local: true }]],
+    homeSlides: [],
     catalogueSlides: [],
     indexContent: null,
     refreshAfter: null,
@@ -28,10 +27,7 @@ const useCarousel = create(persist((set, get) => ({
     },
 
     getCatalogueSlides: async (callback) => {
-        const { refreshAfter } = get();
-        if (refreshAfter && new Date().getTime() < new Date(refreshAfter).getTime()) return console.log("carousel request cancelled.");
         try {
-            console.log("making carousel request.");
             set(() => ({ carouselLoading: true }))
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/carousels/catalogue/get`);
             set(() => ({ catalogueSlides: data.carousel.slides }))

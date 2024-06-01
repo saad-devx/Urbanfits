@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Button from '../buttons/simple_btn';
 import useUser from '@/hooks/useUser';
 import useNewsletter from '@/hooks/useNewsletter';
+import useLanguage from '@/hooks/useLanguage';
+import { newsletter as newsletterLang } from '@/locales';
 import toaster from '@/utils/toast_function';
 import axios from 'axios';
 import Image from 'next/image';
@@ -14,8 +16,11 @@ import * as Yup from 'yup'
 
 export default function Newsletter() {
     const { user } = useUser();
+    const { locale } = useLanguage();
     const { newsletterData, show, toggleNewsletterModal, updateNewsletterData, getNewsletterData } = useNewsletter();
     const [loading, setLoading] = useState(false);
+
+    const langObj = newsletterLang[locale];
 
     useEffect(() => {
         if (!newsletterData) getNewsletterData()
@@ -64,10 +69,10 @@ export default function Newsletter() {
                 <section className="w-full h-full p-5 pt-8 md:pt-5">
                     <div className="w-full space-y-5">
                         <div className="w-full flex justify-between items-center">
-                            <h3 className="text-black font_urbanist_medium text-sm md:text-base">Move To The Urban Fits</h3>
+                            <h3 className="text-black font_urbanist_medium text-sm md:text-base">{langObj.title}</h3>
                             <button onClick={() => { handleReset(); setLoading(false); toggleNewsletterModal() }} className="material-symbols-rounded text-2xl">close</button>
                         </div>
-                        <p className='font_urbanist_light text-xs md:text-sm' >Be in the know about what’s happening at the Parisian Maison: never miss out on the latest trend, newest collections and exciting special projects from Urban fit. </p>
+                        <p className='font_urbanist_light text-xs md:text-sm'>{langObj.description}</p>
                     </div>
                     <form className="mt-7 font_urbanist space-y-5 md:space-y-7" onReset={handleReset} onSubmit={handleSubmit} >
                         <div className='space-y-3' >
@@ -81,24 +86,23 @@ export default function Newsletter() {
                             </div>
                         </div>
                         <div className='relative space-y-4' >
-                            <h3 className='text-black font_urbanist_medium text-xs md:text-base' >Gender*</h3>
+                            <h3 className='text-black font_urbanist_medium text-xs md:text-base'>{langObj.gender}</h3>
                             {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                             <div className="font_urbanist_light w-full md:w-3/5 flex justify-between items-center ">
-                                {["male", "female", "other"].map((gender, index) => <button type='button' key={index} onClick={() => setFieldValue("gender", gender)} className="flex items-center gap-x-2 capitalize" name={gender} title={gender}>
+                                {langObj.genders.map((gender, index) => <button type='button' key={index} onClick={() => setFieldValue("gender", gender)} className="flex items-center gap-x-2 capitalize" name={gender} title={gender}>
                                     <span className={`${values.gender == gender && "bg-pinky"} size-2 lg:size-4 rounded-3xl border`} />
                                     {gender}
                                 </button>)}
                             </div>
                         </div>
                         <div className="relative space-y-4">
-                            <h3 className="text-black font_urbanist_medium text-xs md:text-base">Favourite Subjects*</h3>
+                            <h3 className="text-black font_urbanist_medium text-xs md:text-base">{langObj.interests}*</h3>
                             <div className="pill-container w-full flex flex-wrap text-xs md:text-sm space-y-2 md:space-y-0 space-x-1">
                                 {touched.interests && errors.interests ? <Tooltip classes="form-error" content={errors.interests} /> : null}
                                 {newsletterInterests.map((interest, index) => <button key={index} onClick={onCheck} type='button' name={interest} title={interest} className={`${values.interests.includes(interest) && "bg-pinky text-white"} px-4 py-1.5 border rounded-full text-xs md:text-sm lg:text-base transition-all capitalize`}>{interest}</button>)}
                             </div>
                         </div>
-                        <p className='font_gotam_light text-[10px] md:text-sm'>Mandatory information: if you chose not to give your consent for the collection of mandatory data you will not be able to save your payment method.</p>
-                        <Button type="submit" loading={loading} classes="w-11/12 mx-auto" >Subscribe</Button>
+                        <Button type="submit" loading={loading} classes="w-11/12 mx-auto">{langObj.subscribe}</Button>
                     </form>
                 </section>
             </div>

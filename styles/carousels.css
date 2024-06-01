@@ -139,12 +139,6 @@
   transition: all 0.4s;
 }
 
-.bg_grain {
-  background-image: url(../public/catalogueCarousel\ imgs/grainbg.webp);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 /* Css for product carousel */
 #thumbnail-carousel .splide__slide {
   opacity: 0.7;
