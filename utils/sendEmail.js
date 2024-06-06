@@ -11,9 +11,14 @@ const sendEmail = async (options, template) => {
                 user: process.env.NEXT_PUBLIC_SMTP_USER,
                 pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD
             },
-            tls: {
-                rejectUnauthorized: false
+            options: {
+                priority: "high",
+                connectionTimeout: 10000,
             }
+
+            // tls: {
+            //     rejectUnauthorized: false
+            // }
         });
         const message = {
             from: `"${options.senderName ? options.senderName : "Urban Fits"}" <${options.from ? options.from : process.env.NEXT_PUBLIC_SMTP_SENDER_EMAIL}>`,

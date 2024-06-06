@@ -1,11 +1,11 @@
 import axios from "axios";
+import { sendAPIEmail } from "@/utils/sendEmail";
+import verifyEmail from "@/email templates/verify_email";
 
 const TestApiHandler = async (req, res) => {
-    // await ConnectDB();
-    try {
-        const objDeletion = await axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/S3/delete-object?object_url=carousel-images/home/1716994438444.webp`)
-        console.log(`Image deleted successfully.`)
-    } catch (e) { console.log("Error deleting an S3 object: ", e) }
+
+    const template = verifyEmail("123456")
+    sendAPIEmail("faizandevp@gmail.com", "Verify your email for registration on Urban Fits", template)
 
     res.status(200).json({
         success: true,

@@ -86,7 +86,8 @@ const useUser = create(persist((set, get) => ({
         if (isLoggedIn()) return toaster("info", "You are already logged in.");
         set(() => ({ userLoading: true }));
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, credentials)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, credentials)
+            const { data } = res;
             if (data.redirect_url && !data.user) router.push(data.redirect_url)
             else if (data.user) {
                 get().cleanUp()
@@ -96,6 +97,7 @@ const useUser = create(persist((set, get) => ({
                 toaster("success", data.msg)
                 if (callback) callback(data)
             }
+            console.log("Here are the login headers: ", res.headers, res)
         }
         catch (error) {
             console.log(error)
