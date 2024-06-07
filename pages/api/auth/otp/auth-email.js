@@ -12,9 +12,9 @@ const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT"
     if (!new_email || !password) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: new_email, password" })
     await ConnectDB()
 
-    let user = await User.findOne({ email: new_email })
+    let user = await User.findOne({ email: new_email }).lean();
     if (user) return res.status(409).json({ success: false, msg: "The new email is already registered." })
-    user = await User.findOne({ email: old_email })
+    user = await User.findOne({ email: old_email }).lean();
     if (!user) {
         RemoveSessionCookie(res)
         return res.status(401).json({ success: false, msg: "User not found, the email you want to change is not registered." })

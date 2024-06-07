@@ -8,7 +8,7 @@ const AuthOtpAndChangeEmail = async (req, res) => StandardApi(req, res, { method
     const { otp_id, otp, } = req.body;
     if (!otp_id || !otp) return res.status(400).json({ success: false, msg: "All valid parameters required. Body Parameters: otp_id, otp" })
     await ConnectDB()
-    const dbOtp = await OTP.findById(otp_id)
+    const dbOtp = await OTP.findById(otp_id).lean();
     if (!dbOtp) return res.status(401).json({ success: false, msg: "OTP has expired." })
     if (otp !== dbOtp.otp) return res.status(401).json({ success: false, msg: "Incorrect OTP" })
     const updatedUser = await User.findByIdAndUpdate(dbOtp.user_id, {
