@@ -94,7 +94,7 @@ export default function ForgotPassword() {
     }
 
     return <>
-        <AuthPage loading={userLoading} mblNav="/auth/login" mblNavName={langObj.login} >
+        <AuthPage loading={userLoading} mblNav="/auth/login" mblNavName={langObj.login} langObj={langObj}>
             <form className="w-full h-full lg:h-auto bg-white p-2 lg:p-0 font_urbanist text-base flex flex-col justify-between md:justify-around items-center lg:justify-center" onReset={handleReset} onSubmit={handleSubmit} >
                 <section className="w-full mb-6 md:mb-0">
                     <h1 className="lg:hidden text-[22px] mb-5 text-left font_urbanist">Forgot Password</h1>

@@ -344,7 +344,7 @@ export const authPage = {
         confirmOtp: "Confirm OTP code",
         verify: "Verify",
         sendCode: "Send Code",
-        remeberMe: "Remember Me",
+        rememberMe: "Remember Me",
         forgotPass: "Forgot Password?",
         loginWithAccount: "Login with and existing account",
         createAccount: "Create a New Account",
