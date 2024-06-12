@@ -13,9 +13,8 @@ const sendEmail = async (options, template) => {
             },
             options: {
                 priority: "high",
-                connectionTimeout: 10000,
+                connectionTimeout: 20000,
             }
-
             // tls: {
             //     rejectUnauthorized: false
             // }
