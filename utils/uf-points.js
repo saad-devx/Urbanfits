@@ -58,7 +58,7 @@ export const GetUFBalance = async (user_id, card_number, timezone) => {
             { expirationDate: { $gt: currentDate } }
         ]
     })
-    const totalPoints = pointsDocs.reduce((prevTotal, currentObj) => prevTotal + currentObj.points, 0);
+    const totalPoints = pointsDocs.reduce((prevTotal, currentObj) => prevTotal + parseFloat(currentObj.points), 0);
     return totalPoints;
 }
 

@@ -2,7 +2,7 @@ import ConnectDB from "@/utils/connect_db"
 import speakeasy from 'speakeasy';
 import User from "@/models/user";
 import StandardApi from "@/middlewares/standard_api";
-import { SignJwt, SetSessionCookie } from "@/utils/cyphers";
+import { SetSessionCookie } from "@/utils/cyphers";
 
 const CreateUser2FA = async (req, res) => StandardApi(req, res, { method: "POST" }, async () => {
     const { qr_secret, totp_code } = req.body;

@@ -10,8 +10,9 @@ const getManyOrders = async (req, res) => StandardApi(req, res, { verify_admin: 
 
     const queryObj = status ? { "order_status.status": status.toUpperCase() } : {};
 
-    const LIMIT = +limit || 50;
     let totalOrders = await Order.countDocuments(queryObj);
+    console.log("The status here: ", status, totalOrders)
+    const LIMIT = +limit || 50;
 
     const totalPages = Math.ceil(totalOrders / LIMIT);
     const page = parseInt(req.query.page) || 1;

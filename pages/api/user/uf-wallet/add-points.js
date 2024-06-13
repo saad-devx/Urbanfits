@@ -14,7 +14,7 @@ const AddUFpoints = async (req, res) => StandardApi(req, res, { method: "POST", 
     if (!user) return res.status(401).json({ success: false, msg: "Invalid information of user or uf-card" })
     if (points !== 0) {
         await AddPoints(user._id, user.uf_wallet.card_number, user.timezone, {
-            earned: points,
+            earned: parseFloat(points),
             source,
             ...(expiration_date && { expirationDate: expiration_date })
         });
