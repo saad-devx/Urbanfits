@@ -11,7 +11,7 @@ import { parse } from "cookie";
 import { isValidObjectId } from "mongoose";
 import { GetUFBalance } from "@/utils/uf-points";
 import { HashValue, getDateOfTimezone } from "@/utils/cyphers.js";
-import { shippingRates, paymentOptions, giftCardPrices, giftCardMethods } from "@/uf.config";
+import { shippingRates, paymentOptions, giftCardMethods } from "@/uf.config";
 import StandardApi from "@/middlewares/standard_api";
 
 const shippingMethods = Object.keys(shippingRates);
@@ -164,6 +164,7 @@ const handler = async (req, res) => StandardApi(req, res, { method: "POST", veri
     else if (paymentMethodObj.discount) paymentDiscount = -amountAfterDiscounts / 100 * paymentMethodObj.discount;
 
     const FinalPayableAmount = amountAfterDiscounts + paymentDiscount;
+    if (FinalPayableAmount < 20) return res.status(400).json({ success: false, msg: "The minimum price to be checked out with should be at least 20 AED." })
 
     // Creating order session data
     const orderSession = (await OrderSession.create({
