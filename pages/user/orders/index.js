@@ -73,7 +73,7 @@ export default function OrdersPage(props) {
             </section>
             {orderLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
                 orders.length ? <section className="w-full h-full p-4">
-                    {orders.map((order, index) => <OrderItem langObj={langObj} marginClass={orders.length == index + 1 && "mb-16 mt-3"} key={index} order={order} />)}
+                    {orders.map((order, index) => <OrderItem langObj={langObj} locale={locale} marginClass={orders.length == index + 1 && "mb-16 mt-3"} key={index} order={order} />)}
                 </section> : <NoOrderSection langObj={langObj} />}
         </main>
     </>
@@ -93,7 +93,7 @@ export default function OrdersPage(props) {
             <section className="w-full my-5 font_urbanist">
                 {orderLoading ? <div className="w-full py-40 flex justify-center"><Spinner forBtn variant="border-black" /></div> :
                     orders.length ? <section className="w-full h-full p-4">
-                        {orders.map((order, index) => <OrderItem langObj={langObj} key={index} order={order} />)}
+                        {orders.map((order, index) => <OrderItem langObj={langObj} locale={locale} key={index} order={order} />)}
                     </section> : <NoOrderSection langObj={langObj} />}
             </section>
         </User>

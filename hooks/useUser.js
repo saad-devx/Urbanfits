@@ -19,6 +19,7 @@ const useUser = create(persist((set, get) => ({
     country: { name: "United Arab Emirates", code: "+971", country: "ae", src: process.env.NEXT_PUBLIC_BASE_IMG_URL + "/country-flags/AE.webp" },
     geo_selected_by_user: false,
     address: null,
+    CSModal: false,
 
     isLoggedIn: () => {
         const { "is_logged_in": isLoggedIn } = cookie.parse(document.cookie);

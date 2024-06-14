@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/navbars/navbar';
 import Footer from '@/components/footer';
 import Newsletter from '@/components/modals/newsletter';
+import ComingSoonModal from '@/components/modals/coming-soon';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify'
 import useUser from '@/hooks/useUser';
@@ -17,7 +18,7 @@ import { urbanist } from '@/fonts';
 
 function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter();
-  const { getMe, user, isLoggedIn, notifyIfNotCheckedIn, getNotifications, emitPresenceEvent, subscribePersonalChannel, recordVisit } = useUser();
+  const { getMe, user, isLoggedIn, notifyIfNotCheckedIn, getNotifications, emitPresenceEvent, subscribePersonalChannel, recordVisit, CSModal } = useUser();
   const { newsletterData } = useNewsletter();
   const [progress, setProgress] = useState(0);
 
@@ -53,14 +54,17 @@ function App({ Component, pageProps: { ...pageProps } }) {
     router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
+  console.log("The modal state here: ", CSModal)
+
   return <main className={`max-w-[2000px] mx-auto ${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
     <Newsletter />
     <CartProvider>
       <Navbar />
+      <ComingSoonModal show={CSModal} closeModal={() => useUser.setState({ CSModal: false })} />
       <Component {...pageProps} />
-      <Footer />
+      <Footer openCSModal={() => useUser.setState({ CSModal: true })} />
     </CartProvider>
   </main>
 }

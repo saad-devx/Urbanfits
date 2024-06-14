@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { orderStatuses } from '@/uf.config';
 import toaster from '@/utils/toast_function';
 
-export default function OrderCard({ key, order, marginClass, langObj }) {
+export default function OrderCard({ key, order, marginClass, langObj, locale }) {
     const [invoice, setInvoice] = useState(false);
     const { formatPrice } = useWallet();
     const date = new Date(order.createdAt)
@@ -35,10 +35,8 @@ export default function OrderCard({ key, order, marginClass, langObj }) {
     }
     const haveGiftCard = order?.gift_cards?.length && order?.gift_cards?.some(item => item.is_giftcard);
 
-    console.log("Shipping label url here: ", order.shipping_label_url)
-
     return <>
-        <Invoice key={`invoice-${key}`} order={order} setInvoice={setInvoice} show={invoice} />
+        <Invoice key={`invoice-${key}`} order={order} setInvoice={setInvoice} show={invoice} locale={locale} />
         <div key={key} className={`w-full h-48 md:h-52 ${marginClass || "my-3"} flex flex-col items-start rounded-xl overflow-clip`}>
             <nav className="bg-gray-50 w-full h-[30%] px-2 md:px-5 py-2 font_urbanist_light text-[10px] md:text-xs grid grid-cols-3">
                 <div className='flex flex-col gap-y-2' >
@@ -64,7 +62,7 @@ export default function OrderCard({ key, order, marginClass, langObj }) {
                     </span> : <span className={`${order.gift_cards[0]?.bg} w-24 md:w-28 aspect-video rounded-xl flex justify-center items-center font_montserrat_bold text-white text-xs tracking-1 uppercase overflow-hidden mr-10`}>{order.gift_cards[0]?.d_name}</span>}
                     <div className="flex-1 h-full md:h-auto flex flex-col md:flex-row justify-between">
                         <div className="flex flex-col">
-                            <h3 className="font_urbanist_bold text-sm md:text-base">{haveGiftCard ? "UF Gift Card(s)" : order.order_items[0]?.name}</h3>
+                            <h3 className="font_urbanist_bold text-sm md:text-base">{haveGiftCard ? "UF Gift Card(s)" : order.order_items[0]?.name[locale]}</h3>
                             <p className="lg:mt-2 font_urbanist text-[10px] md:text-xs">{haveGiftCard ? "No return window available" : handleReturnWindow(order.createdAt)}</p>
                         </div>
                         <div className='w-full mt-3 md:mt-0 flex justify-between items-center md:hidden text-[10px] gap-x-4'>

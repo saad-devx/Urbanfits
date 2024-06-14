@@ -6,13 +6,13 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Loader from '../loaders/loader';
 
-const OrderItem = ({ item, index }) => {
+const OrderItem = ({ item, index, locale }) => {
     const { formatPrice } = useWallet()
     const isGfitCard = item.is_giftcard;
     return <div style={{ display: "grid", gridTemplateColumns: "0.3fr 0.8fr 2.5fr 0.5fr 0.5fr 0.4fr 0.5fr 0.5fr" }} className={`items-center w-full py-3 border-b text-[10px] md:text-sm ${index % 2 ? 'bg-white' : 'bg-gray-50'}`}>
         <span className=" ml-2">{index}</span>
-        {isGfitCard ? <div className="w-14 aspect-square bg-pinky rounded-lg flex justify-center items-center text-[7px] lg:text-[8px] text-white font_copper">E-GIFTCARD</div> : <Image width={100} height={100} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.image} className='w-14 aspect-square rounded-lg object-cover object-top' alt={item.name} />}
-        <span>{isGfitCard ? (item.buy_for == "self" ? "UF E-Giftcard (For Self)" : "UF E-Giftcard (For Friend)") : item.name}</span>
+        {isGfitCard ? <div className="w-14 aspect-square bg-pinky rounded-lg flex justify-center items-center text-[7px] lg:text-[8px] text-white font_copper">E-GIFTCARD</div> : <Image width={100} height={100} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.image} className='w-14 aspect-square rounded-lg object-cover object-top' alt={item.name[locale]} />}
+        <span>{isGfitCard ? (item.buy_for == "self" ? "UF E-Giftcard (For Self)" : "UF E-Giftcard (For Friend)") : item.name[locale]}</span>
         <span>{isGfitCard ? "--" : item.variant}</span>
         <span>{isGfitCard ? "--" : item.size}</span>
         <span>{item.quantity}</span>
@@ -37,8 +37,6 @@ export default function Invoice({ order, show, setInvoice }, props) {
     }
 
     const orderItems = order.gift_cards?.some(item => item.is_giftcard) ? order.gift_cards : order.order_items;
-    console.log("the items here ", order)
-
     const shareInvoice = () => {
         const element = document.getElementById('invoice');
         html2canvas(element).then((canvas) => {

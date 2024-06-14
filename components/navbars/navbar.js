@@ -23,8 +23,13 @@ import useLanguage from '@/hooks/useLanguage';
 import { navbar as navLang } from '@/locales';
 
 const ListItem = (props) => {
-    const router = useRouter()
-    if (props.categories) return <Link {...props} className="group flex flex-col">
+    const router = useRouter();
+
+    if (props.comingSoon) return <button onClick={() => useUser.setState({ CSModal: true })} className={props.classes || "group flex flex-col"}>
+        {props.children}
+        <span className={`${router.asPath.includes(props.href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-3 justify-self-start bg-gold-land transition-all duration-1000`}></span>
+    </button>
+    else if (props.categories) return <Link {...props} className="group flex flex-col">
         <div className="flex items-center gap-x-4">
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.566709 6.14375L0.566709 6.14375L0.567045 6.14441C0.612783 6.23422 0.65045 6.28362 0.687623 6.32028C0.725975 6.35809 0.782047 6.4003 0.885451 6.45568L0.972253 6.5H3.51431H6.05646L6.15624 6.4491L6.1569 6.44876C6.24686 6.40303 6.29634 6.36537 6.33304 6.32822C6.37087 6.28992 6.41309 6.23393 6.46849 6.13069L6.51273 6.0442V3.50481V0.965417L6.4685 0.878953C6.41309 0.77569 6.37088 0.719701 6.33304 0.681395C6.29634 0.64425 6.24686 0.606586 6.1569 0.560857L6.15624 0.56052L6.05567 0.509214L3.55707 0.500823C2.6733 0.498627 2.01112 0.500835 1.56001 0.507367C1.33391 0.510641 1.16456 0.514952 1.04826 0.520116C0.999508 0.522281 0.96343 0.524455 0.938169 0.526441C0.743945 0.610951 0.584784 0.787259 0.525972 0.959131C0.525145 0.97156 0.521384 1.01193 0.517665 1.09655C0.512561 1.21268 0.508381 1.37873 0.505381 1.60075C0.499394 2.04395 0.498274 2.69643 0.50267 3.59017C0.50267 3.59021 0.50267 3.59024 0.502671 3.59028L0.515261 6.04309L0.566709 6.14375ZM0.902272 0.530108C0.902414 0.530142 0.90474 0.529868 0.908821 0.529187C0.90417 0.529735 0.90213 0.530075 0.902272 0.530108Z" stroke="black" />
@@ -52,10 +57,10 @@ const SecondaryNavbar = (props) => {
 
     if (window.matchMedia('(min-width: 760px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full max-w-[2000px] mx-auto h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
         <ListItem onClick={closeCart} key={1} href='/products/category/all-categories' categories>{langObj.categories.item1}</ListItem>
-        <ListItem onClick={closeCart} key={2} href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>{langObj.categories.item2}</ListItem>
-        <ListItem onClick={closeCart} key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>{langObj.categories.item3}</ListItem>
-        <ListItem onClick={closeCart} key={4} href='/products/category/649b292762a7c100cfb7207f?name=men'>{langObj.categories.item4}</ListItem>
-        <ListItem onClick={closeCart} key={5} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>{langObj.categories.item5}</ListItem>
+        <ListItem onClick={closeCart} key={2} comingSoon href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection'>{langObj.categories.item2}</ListItem>
+        <ListItem onClick={closeCart} key={3} comingSoon href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>{langObj.categories.item3}</ListItem>
+        <ListItem onClick={closeCart} key={4} comingSoon href='/products/category/649b292762a7c100cfb7207f?name=men'>{langObj.categories.item4}</ListItem>
+        <ListItem onClick={closeCart} key={5} comingSoon href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>{langObj.categories.item5}</ListItem>
         <ListItem onClick={closeCart} key={7} href='/products/category/sale'>{langObj.categories.item6}</ListItem>
         <ListItem onClick={closeCart} key={8} href='/giftcard' classes="group hidden xl:flex flex-col">{langObj.categories.item7}</ListItem>
         <ListItem onClick={closeCart} key={9} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">{langObj.categories.item8}</ListItem>
