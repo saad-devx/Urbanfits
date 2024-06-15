@@ -2,6 +2,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useUser from '@/hooks/useUser';
 import useLanguage from '@/hooks/useLanguage';
 const Search = dynamic(() => import('../search'));
 import { mobileNavMenu as mblNavLang } from '@/locales';
@@ -14,9 +15,14 @@ const MobileListItem = (props) => {
             <i className={`${open ? 'rotate-90' : null} fa-solid fa-chevron-right text-xs text-gray-300 transition-all duration-500`} />
         </button>
         <div className={`${open ? 'max-h-[50vh]' : 'max-h-0'} w-full text-sm overflow-y-hidden transition-all duration-500`}>
-            {props.subLinks.map((link, i) => <Link key={i} href={link.href} onClick={props.toggleMenu} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
-                {link.name}<i className="fa-solid fa-chevron-right text-xs text-gray-300" />
-            </Link>)}
+            {props.subLinks.map((link, i) => {
+                if (link.comingSoon) return <div key={i} onClick={() => useUser.setState({ CSModal: true })} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
+                    {link.name}<i className="fa-solid fa-chevron-right text-xs text-gray-300" />
+                </div>
+                else return <Link key={i} href={link.href} onClick={props.toggleMenu} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
+                    {link.name}<i className="fa-solid fa-chevron-right text-xs text-gray-300" />
+                </Link>
+            })}
         </div>
     </div>
     else return <Link {...props} onClick={props.toggleMenu} className="w-full py-[17px] border-b border-gray-50 flex justify-between items-center cursor-pointer">
@@ -47,11 +53,11 @@ function MobileNavbar({ user, isLoggedIn, cart, toggleCart, logout, setLogout, t
             </nav>
             <section className="w-full mt-16">
                 <MobileListItem toggleMenu={toggleMenu} key={0} name={langObj.categoryMenu.heading} subLinks={[
-                    { name: langObj.categoryMenu.item1, href: "/products/category/64d517f6218f4e9ee6253b18?name=new+collection" },
-                    { name: langObj.categoryMenu.item2, href: "/products/category/64a59d5816b4c91fa1967b2e?name=women" },
-                    { name: langObj.categoryMenu.item3, href: "/products/category/649b292762a7c100cfb7207f?name=men" },
-                    { name: langObj.categoryMenu.item4, href: "/products/category/64d4dfa643c643cc9c60c672?name=kids" },
-                    { name: langObj.categoryMenu.item5, href: "/products/category/all-categories" }
+                    { comingSoon: true, name: langObj.categoryMenu.item1, href: "/products/category/64d517f6218f4e9ee6253b18?name=new+collection" },
+                    { comingSoon: true, name: langObj.categoryMenu.item2, href: "/products/category/64a59d5816b4c91fa1967b2e?name=women" },
+                    { comingSoon: true, name: langObj.categoryMenu.item3, href: "/products/category/649b292762a7c100cfb7207f?name=men" },
+                    { comingSoon: true, name: langObj.categoryMenu.item4, href: "/products/category/64d4dfa643c643cc9c60c672?name=kids" },
+                    { comingSoon: true, name: langObj.categoryMenu.item5, href: "/products/category/all-categories" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={1} name={langObj.ufPointsMenu.heading} subLinks={[
                     { name: langObj.ufPointsMenu.item1, href: isLoggedIn() ? "/user/myaccount" : "/auth/login" },
@@ -65,9 +71,9 @@ function MobileNavbar({ user, isLoggedIn, cart, toggleCart, logout, setLogout, t
                     { name: langObj.saleMenu.item4, href: "#" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={3} name={langObj.accessoriesMenu.heading} subLinks={[
-                    { name: langObj.accessoriesMenu.item1, href: "#" },
-                    { name: langObj.accessoriesMenu.item2, href: "#" },
-                    { name: langObj.accessoriesMenu.item3, href: "#" }
+                    { comingSoon: true, name: langObj.accessoriesMenu.item1, href: "#" },
+                    { comingSoon: true, name: langObj.accessoriesMenu.item2, href: "#" },
+                    { comingSoon: true, name: langObj.accessoriesMenu.item3, href: "#" }
                 ]} />
                 <MobileListItem toggleMenu={toggleMenu} key={4} name={langObj.sizeGuideMenu.heading} subLinks={[
                     { name: langObj.sizeGuideMenu.item1, href: "/customerservices/sizeguide/women" },

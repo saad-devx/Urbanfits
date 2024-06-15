@@ -163,8 +163,12 @@ export default function Product(props) {
                             </span>
                             {getFilteredQuantity() < 1 ? <span className="lg:max-w-[320px] w-full lg:w-48pr h-9 lg:h-[52px] my-2 flex justify-center items-center font_urbanist_bold italic text-center text-xs text-gray-300">Out of Stock</span>
                                 : <>
-                                    <button onClick={addToCart} className="group hidden lg:flex bg-gold hover:rounded-none max-w-[320px] w-48pr lg:w-1/3 h-9 lg:h-[52px] px-5 justify-between items-center rounded-xl font_urbanist_bold text-white text-sm transition-all duration-300"><p className="group-hover:translate-x-3 transition-all duration-300">{langObj.addToCart} </p><i className="fas fa-plus text-white group-hover:rotate-45 transition-all duration-300" /></button>
-                                    <Button onClick={addToCart} classes='w-full lg:hidden uppercase' my='my-1' bg='bg-gold' fontSize='text-[10px]' text='white' >{langObj.addToCart} | {formatPrice(productData.price)}</Button>
+                                    <button
+                                        // onClick={addToCart}
+                                        className="group hidden lg:flex bg-gold hover:rounded-none max-w-[320px] w-48pr lg:w-1/3 h-9 lg:h-[52px] px-5 justify-between items-center rounded-xl font_urbanist_bold text-white text-sm transition-all duration-300"><p className="group-hover:translate-x-3 transition-all duration-300">{langObj.addToCart} </p><i className="fas fa-plus text-white group-hover:rotate-45 transition-all duration-300" /></button>
+                                    <Button
+                                        // onClick={addToCart}
+                                        classes='w-full lg:hidden uppercase' my='my-1' bg='bg-gold' fontSize='text-[10px]' text='white' >{langObj.addToCart} | {formatPrice(productData.price)}</Button>
                                 </>}
                             <h5 className="mt-5 mb-2 text-sm lg:text-base font-semibold text-gray-500">{langObj.shareOnSocial}</h5>
                             <div className="flex items-center lg:text-lg text-gray-400 gap-x-4">

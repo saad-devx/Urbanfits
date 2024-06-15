@@ -54,8 +54,6 @@ function App({ Component, pageProps: { ...pageProps } }) {
     router.events.on("routeChangeComplete", () => setProgress(100))
   }, [router.events])
 
-  console.log("The modal state here: ", CSModal)
-
   return <main className={`max-w-[2000px] mx-auto ${urbanist.className} antialiased`}>
     <LoadingBar color='#FF4A60' height={4} waitingTime={1} loaderSpeed={1200} shadow={true} progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ToastContainer className={`toast ${urbanist.className} antialiased`} />
