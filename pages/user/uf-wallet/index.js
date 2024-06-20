@@ -37,16 +37,7 @@ export default function UFwallet() {
             <section className="w-full p-4">
                 <h1 className="mb-5 mid:text-lg font_urbanist_bold">{langObj.walletTitle}</h1>
 
-                <div
-                    className="w-full mid:w-96 h-[13rem] mb-10 text-white equillibrium_shadow select-none rounded-2xl overflow-hidden"
-                    style={{ transformStyle: "preserve-3d" }}
-                // glareEnable
-                // glareMaxOpacity={0.5}
-                // gyroscope={true}
-                // transitionSpeed={1500}
-                // tiltMaxAngleX={10}
-                // tiltMaxAngleY={10}
-                >
+                <div className="w-full mid:w-96 h-[13rem] mb-10 text-white equillibrium_shadow select-none rounded-2xl overflow-hidden">
                     <div className="w-full h-1/2 py-5 px-7 gap-y-4 bg-[#FF4A60]">
                         <div className="w-full flex justify-between">
                             <span style={{ transform: "translateZ(25px)" }} className="font_copper font-thin text-xl">{langObj.points}</span>
@@ -54,7 +45,7 @@ export default function UFwallet() {
                         </div>
                         <div className="w-full flex justify-between">
                             <span className="font_copper text-xl">{langObj.aed}</span>
-                            <span className="font_urbanist_bold text-xl">{formatPriceNum(points * parse(process.env.NEXT_PUBLIC_UF_POINT_RATE))}</span>
+                            <span className="font_urbanist_bold text-xl">{formatPriceNum(points * parseFloat(process.env.NEXT_PUBLIC_UF_POINT_RATE))}</span>
                         </div>
                     </div>
                     <div className="w-full h-1/2 p-5 flex justify-center items-center">

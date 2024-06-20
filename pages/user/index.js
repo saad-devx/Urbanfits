@@ -20,6 +20,7 @@ import {
     EmailIcon,
     HeartShopListIcon,
     TrackOrderIcon,
+    DiamondIcon,
     LogoutIcon,
     HelpCenterIcon,
     CameraIcon,
@@ -167,7 +168,7 @@ export default function User({ loading, profileNull, children }) {
                         <CameraIcon />
                         {langObj.accountMenu.item3}
                     </Link>
-                    <Link href="/products/category/gifts" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <Link href="/products/category/giftcard" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <GiftBoxIcon />
                         {langObj.accountMenu.item4}
                     </Link>
@@ -252,10 +253,10 @@ export default function User({ loading, profileNull, children }) {
                     <HelpCenterIcon />
                     {langObj.services.item3}
                 </Link>
-                <Link href="/faq" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
-                    <FaqIcon />
+                <a href="#" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <DiamondIcon />
                     {langObj.services.item4}
-                </Link>
+                </a>
             </div>
             {user && user.email ? <><h2 className="mt-5 font_urbanist_bold text-base">{langObj.newsletterMenu.heading}</h2>
                 <section className="flex items-center w-full md:w-3/4 my-7 gap-x-8 text-[13px] font_urbanist_medium">
@@ -271,9 +272,9 @@ export default function User({ loading, profileNull, children }) {
                 {recentItems.length ? recentItems.map((item, i) => {
                     return <Link href={item.href} key={i} className="w-full font_urbanist_medium text-sm flex flex-col items-center justify-center gap-y-2">
                         <span className="w-full aspect-square rounded-xl overflow-hidden">
-                            <Image width={250} height={250} src={item.image} alt={item.name} className='w-full h-full object-cover' />
+                            <Image width={250} height={250} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + item.image} alt={item.name[locale]} className='w-full h-full object-cover' />
                         </span>
-                        {item.name}
+                        {item.name[locale]}
                     </Link>
                 }) :
                     <div className="w-full flex flex-col justify-center items-center col-span-full gap-y-4">

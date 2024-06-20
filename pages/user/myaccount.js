@@ -135,7 +135,7 @@ export default function Personalinfo() {
                         <i className="fa-solid fa-camera text-white" />{langObj.upload}
                     </span>
                     {imgSpinner}
-                    <Image className="w-full h-full object-cover" width={150} height={150} src={process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()} alt="avatar" />
+                    <Image className="w-full h-full object-cover" width={150} height={150} src={photo.includes("google") ? photo : process.env.NEXT_PUBLIC_BASE_IMG_URL + photo + '?timestamp=' + Date.now()} alt="avatar" />
                 </label>
                 <input type="file" id='pfp' name='pfp' accept="image/*" onChange={onFileChange} className="opacity-0 w-0 h-0 appearance-none" />
                 <button onClick={() => setUserInfoModal(true)} className="flex font_urbanist_bold text-base gap-x-2">{user.firstname} {user.lastname} <EditIcon /></button>

@@ -20,16 +20,15 @@ export const navbar = {
             item5: "Log Out"
         },
         categories: {
-            item1: "All Categories",
-            item2: "New Collection",
+            item1: "Home",
+            item2: "Men",
             item3: "Women",
-            item4: "Men",
-            item5: "Kids",
-            item6: "Sales",
-            item7: "Gifts",
-            item8: "Accessories",
-            item9: "Earn Uf Points",
-            item10: "Wishlist",
+            item4: "Kids",
+            item5: "Stories",
+            item6: "Gifts",
+            item7: "Accessories",
+            item8: "Earn Uf Points",
+            item9: "Wishlist",
         }
     },
     ar: {
@@ -53,16 +52,15 @@ export const navbar = {
             item5: "تسجيل الخروج"
         },
         categories: {
-            item1: "جميع الفئات",
-            item2: "مجموعة جديدة",
+            item1: "الصفحة الرئيسية",
+            item2: "رجال",
             item3: "نساء",
-            item4: "رجال",
-            item5: "أطفال",
-            item6: "تخفيضات",
-            item7: "هدايا",
-            item8: "إكسسوارات",
-            item9: "كسب نقاط يوإف",
-            item10: "قائمة الرغبات",
+            item4: "أطفال",
+            item5: "قصص",
+            item6: "هدايا",
+            item7: "إكسسوارات",
+            item8: "اكسب نقاط UF",
+            item9: "قائمة الرغبات"
         }
     }
 }
@@ -312,7 +310,7 @@ export const footer = {
 export const authPage = {
     en: {
         offer: {
-            msg1: "Join Our Urban Fits Program and get free Shipping and 500 Points Sign Up Bonus",
+            msg1: "Join Our Urban Fits Program and get a 500 UF-Points signup bonus, equivalent to 25 AED",
             msg2: "Urban Members get Exclusive access to products, events, and offers. Just provide a few details. It’s free to join and open to all."
         },
         policiesMsg: {
@@ -351,7 +349,7 @@ export const authPage = {
     },
     ar: {
         offer: {
-            msg1: "انضم إلى برنامج Urban Fits واحصل على شحن مجاني ومكافأة تسجيل قدرها 500 نقطة",
+            msg1: "انضم إلى برنامج Urban Fits لدينا واحصل على 500 نقطة UF كمكافأة تسجيل، ما يعادل 25 درهمًا إماراتيًا",
             msg2: "يحصل أعضاء Urban على وصول حصري إلى المنتجات والأحداث والعروض. فقط قدم بعض التفاصيل. الانضمام مجاني ومتاح للجميع."
         },
         policiesMsg: {
@@ -454,7 +452,7 @@ export const myAccount = {
             item1: "Categories",
             item2: "Track Order",
             item3: "Contact Us",
-            item4: "FAQ",
+            item4: "Membership",
         },
         newsletterMenu: {
             heading: "Newsletter Subscription",
@@ -507,7 +505,7 @@ export const myAccount = {
             item1: "الفئات",
             item2: "تتبع الطلب",
             item3: "اتصل بنا",
-            item4: "الأسئلة الشائعة",
+            item4: "العضوية",
         },
         newsletterMenu: {
             heading: "النشرة الإخبارية",

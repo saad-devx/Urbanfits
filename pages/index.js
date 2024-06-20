@@ -29,7 +29,10 @@ export default function Home() {
                 </section>
                 {/* Latest Arrivals */}
                 {indexContent?.latestArrivals?.length ? <section>
-                    <h2 className="w-full font_urbanist_bold text-center text-pinky text-lg md:xl lg:text-2xl">{langObj.latestArrival}</h2>
+                    <div className="w-full px-5 md:px-7 lg:px-14 xl:px-20 mb-3 md:mb-5 flex justify-between items-center">
+                        <h2 className="font_urbanist_bold text-lg md:xl lg:text-2xl">{langObj.latestArrival}</h2>
+                        {/* <Link href='/products/category/64d517f6218f4e9ee6253b18?name=new+collection' className="px-4 py-2 bg-gray-100 text-xs md:text-[15px] rounded-full font_urbanist_medium">{langObj.visitCollection}</Link> */}
+                    </div>
                     <div className="box_2 w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-2 xl:gap-4 2xl:gap-14">
                         {indexContent?.latestArrivals.map((product, index) => {
                             if (window.matchMedia('(max-width: 760px)').matches && index > 3) return
@@ -57,9 +60,9 @@ export default function Home() {
 
                 <section className="w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 gap-4 xl:gap-7">
                     <OfferCard key={1} href="#" badge="Clearance" heading="Up To" offer="50% Off" />
-                    <OfferCard key={2} href="#" badge="Shop Women" heading="All Under" offer="$50.00" />
-                    <OfferCard key={2} href="#" badge="Shop Men" heading="All Under" offer="$50.00" />
-                    <OfferCard key={4} href="#" badge="Accessories Zone" heading="Stars From" offer="$30.00" />
+                    <OfferCard key={2} href="#" badge="Shop Women" heading="Up To" offer="30% Off" />
+                    <OfferCard key={2} href="#" badge="Shop Men" heading="All Under" offer="AED $200" />
+                    <OfferCard key={4} href="#" badge="Accessories Zone" heading="Stars From" offer="AED $50" />
                 </section>
 
                 {/* Women Collection Section */}
