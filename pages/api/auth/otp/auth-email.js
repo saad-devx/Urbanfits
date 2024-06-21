@@ -14,7 +14,7 @@ const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT"
 
     let user = await User.findOne({ email: new_email }).lean();
     if (user) return res.status(409).json({ success: false, msg: "The new email is already registered." })
-    user = await User.findOne({ email: old_email }).lean();
+    user = await User.findOne({ email: old_email }).select("password").lean();
     if (!user) {
         RemoveSessionCookie(res)
         return res.status(401).json({ success: false, msg: "User not found, the email you want to change is not registered." })
@@ -24,16 +24,16 @@ const AuthEmailByOtp = async (req, res) => StandardApi(req, res, { method: "PUT"
     if (password !== originalPassword) return res.status(401).json({ success: false, msg: "Your password is incorrect" })
 
     // Creating an opt and sending to new email
-    let dbOtp = await OTP.findOne({ user_id: user._id })
+    let dbOtp = await OTP.findOne({ user_id: user._id }).lean()
     if (dbOtp) return res.status(401).json({ success: false, msg: "You already have 'change email' session, try after 5 minutes." })
     else if (!dbOtp) {
         let otp = generateRandomInt(10001, 999999)
-        dbOtp = await OTP.create({
+        dbOtp = (await OTP.create({
             user_id: user._id,
             otp,
             new_email,
             expireAt: Date.now()
-        })
+        })).toObject()
 
         const template = changeEmail(`${user.firstname} ${user.lastname}`, otp)
         await sendEmail({ to: new_email, subject: "Confirm your OTP to change your Email" }, template)
