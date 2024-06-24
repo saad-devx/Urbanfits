@@ -8,7 +8,7 @@ import { navbar as navLang } from '@/locales';
 export default function LanguageModal(props) {
     const { locale, switchLanguage } = useLanguage();
     const { currency, setCurrency } = useWallet();
-    const { country, setCountry } = useUser();
+    const { country } = useUser();
 
     const langObj = navLang[locale];
 
@@ -32,25 +32,6 @@ export default function LanguageModal(props) {
                         <span className="w-7 h-5 mr-2 overflow-hidden" title={country.country}><Image width={50} height={40} src={country.src} /></span>
                         {country.name}
                         <span className="absolute top-full w-full h-4 bg-transparent pointer-events-none group-hover:pointer-events-auto"></span>
-                        <div className="absolute z-50 top-full translate-y-4 left-1/2 -translate-x-1/2 bg-white equillibrium_shadow w-full max-h-[15rem] text-xs rounded-lg overflow-y-auto transition-all opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
-                            {/* {countryCodes.map((c, index) => { */}
-                            <button onClick={() => {
-                                // if (c.disabled) return
-                                // setLoading(true)
-                                // await setCountry(c)
-                                // setLoading(false)
-                                // props.setLangModal(false)
-                                // useUser.setState({ geo_selected_by_user: true })
-                            }} title={country.country} className={`w-full px-4 hover:bg-slate-100 flex justify-between items-center py-3 transition-all`}>
-                                <div className="flex items-center gap-x-2 capitalize">
-                                    <span className="w-5 h-4 overflow-hidden">
-                                        <Image width={50} height={40} src={country.src} />
-                                    </span>
-                                    {country.name}
-                                </div>
-                                {country.code}
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <h3 className='text-sm md:text-base font_urbanist_bold'>{langObj.chooseCurrencyHeading}</h3>
@@ -72,5 +53,4 @@ export default function LanguageModal(props) {
             </form>
         </div>
     </section>
-    else return
 }

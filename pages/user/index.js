@@ -168,7 +168,7 @@ export default function User({ loading, profileNull, children }) {
                         <CameraIcon />
                         {langObj.accountMenu.item3}
                     </Link>
-                    <Link href="/products/category/giftcard" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                    <Link href="/giftcard" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                         <GiftBoxIcon />
                         {langObj.accountMenu.item4}
                     </Link>
@@ -218,19 +218,19 @@ export default function User({ loading, profileNull, children }) {
                     <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
                         <Link href="/contact" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <HelpCenterIcon />
-                            Contact Us
+                            {langObj.services.item3}
                         </Link>
                         <Link href="/products/category/wishlist" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <HeartShopListIcon />
-                            Wishlist
+                            {langObj.menu.item6}
                         </Link>
                         <Link href="/stories" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <CameraIcon />
-                            Stories
+                            {langObj.accountMenu.item3}
                         </Link>
-                        <Link href="/products/category/gifts" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                        <Link href="/giftcard" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <GiftBoxIcon />
-                            Gifts
+                            {langObj.accountMenu.item4}
                         </Link>
                     </div>
                 </>}

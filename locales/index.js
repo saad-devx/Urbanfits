@@ -8,7 +8,7 @@ export const navbar = {
         searchProducts: "Search Products",
         noResults: "No Results Found",
         countryLangHeading: "Country and Language",
-        chooseShippingHeading: "Choose your shipping destination :",
+        chooseShippingHeading: "Your shipping destination :",
         chooseLangHeading: "Choose your language :",
         chooseCurrencyHeading: "Choose preffered currency :",
         minimumOrder: "Minimum Order",
@@ -40,7 +40,7 @@ export const navbar = {
         searchProducts: "البحث عن المنتجات",
         noResults: "لم يتم العثور على نتائج",
         countryLangHeading: "البلد واللغة",
-        chooseShippingHeading: "اختر وجهة الشحن الخاصة بك :",
+        chooseShippingHeading: "وجهة الشحن الخاصة بك :",
         chooseLangHeading: "اختر لغتك :",
         chooseCurrencyHeading: "اختر العملة المفضلة :",
         minimumOrder: "الحد الأدنى للطلب",
@@ -210,7 +210,7 @@ export const footer = {
         },
         footerDescription: {
             pt1: "This is a celebration of everything that moves you. For the power of choosing and the freedom of being. Here’s to the big, beautiful mess of movement and mindfulness that simply makes you feel good",
-            pt2: "500 4th St NW Suite 102 PMB 1958 Albuquerque, NM 87102"
+            pt2: "Dubai, United Arab Emirates"
         },
         servicesMenu: {
             heading: "Services",
@@ -267,7 +267,7 @@ export const footer = {
         },
         footerDescription: {
             pt1: "هذا احتفال بكل ما يحركك. من أجل قوة الاختيار وحرية الوجود. إليكم الفوضى الكبيرة والجميلة من الحركة واليقظة التي تجعلك تشعر بالارتياح",
-            pt2: "500 4th St NW Suite 102 PMB 1958 ألباكركي، نيو مكسيكو 87102"
+            pt2: "دبي، الإمارات العربية المتحدة"
         },
         servicesMenu: {
             heading: "خدمات",

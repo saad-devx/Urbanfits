@@ -59,7 +59,7 @@ export default function Footer({ openCSModal }) {
                 <section className="w-full mt-10 px-6 lg:px-0 font_urbanist_light text-sm grid grid-cols-2 md:flex md:flex-wrap justify-between items-start md:items-start">
                     <nav className="w-full lg:w-1/5 col-span-2 lg:mr-0 text-sm pb-10 md:pb-3 space-y-5 lg:space-y-4 flex flex-col items-start">
                         <Link className="text-[26px] md:mb-3 lg:mb-0 font_copper whitespace-nowrap tracking-3" href="/">URBAN FITS</Link>
-                        <p className='hidden lg:block text-[13px] text-start font_urbanist_light'>{langObj.footerDescription.pt1}<br /><br />{langObj.footerDescription.pt2}<br /><br />+0123.456.8386</p>
+                        <p className='hidden lg:block text-[13px] text-start font_urbanist_light'>{langObj.footerDescription.pt1}<br /><br />{langObj.footerDescription.pt2}<br /><br />support@urbanfits.ae</p>
                     </nav>
                     <nav className="list-none pb-7 md:pb-3 gap-y-2 lg:gap-y-4 flex flex-col items-start">
                         <h3 className="text-sm lg:text-base font_urbanist_bold">{langObj.servicesMenu.heading}</h3>
@@ -152,7 +152,7 @@ export default function Footer({ openCSModal }) {
                 </section>
             </section>
             <div className="w-4/5 m-10 pb-20 lg:pb-0 text-[10px] md:text-xs mx-auto text-center leading-3">
-                <p>{langObj.siteAddress.pt1} <br /> {langObj.siteAddress.pt2}</p>
+                Urban Fits &copy; 2024 - 2025 All rights reserved
             </div>
         </footer>
     </>

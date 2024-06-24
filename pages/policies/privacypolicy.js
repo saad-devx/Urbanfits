@@ -42,9 +42,8 @@ export default function PrivacyPolicy() {
                     The Policy applies only to personal data collected via our website www.urbanfits.ae and in our stores. <br />
                     Please note that some sections, at the end, are applicable to residents of named territories, outside the European Union, with local privacy regulations requiring specificities in addition to the requirements of the GDPR.<br /><br /><br />
                     <h1 id='question1' className="mb-2 text-base lg:text-lg font_urbanist_medium">1. Who is responsible for processing your personal data?</h1>
-                    The data controller is URBAN FITS, having its registered office at Dubai United Arab Emirates and registered in the Dubai Trade and Companies Register under the number 0000000.<br />
+                    The data controller is URBAN FITS, having its registered office at Dubai United Arab Emirates and registered in the Dubai Trade and Companies Registered under the number 7053037.<br />
                     Email address: support@urbanfits.ae<br />
-                    Telephone number: +971500000000<br />
                     Urban Fits ensures that its processing of personal data is lawful, justified by a valid legal basis and that the data is kept for a reasonable period of time necessary for the operations for which it was collected, in compliance with the legislation in force and taking into account the limitation periods.<br /><br />
                     <h1 id='question2' className="mb-4 text-base lg:text-lg font_urbanist_medium">2. What personal data do we process? For what purpose? On what legal basis? For how long?</h1>
                     <div className="w-full overflow-x-scroll scrollbar_x">

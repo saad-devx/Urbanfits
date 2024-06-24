@@ -61,8 +61,8 @@ export default function Home() {
                 <section className="w-full px-5 md:px-7 lg:px-14 xl:px-20 grid grid-cols-2 gap-4 xl:gap-7">
                     <OfferCard key={1} href="#" badge="Clearance" heading="Up To" offer="50% Off" />
                     <OfferCard key={2} href="#" badge="Shop Women" heading="Up To" offer="30% Off" />
-                    <OfferCard key={2} href="#" badge="Shop Men" heading="All Under" offer="AED $200" />
-                    <OfferCard key={4} href="#" badge="Accessories Zone" heading="Stars From" offer="AED $50" />
+                    <OfferCard key={2} href="#" badge="Shop Men" heading="All Under" offer="AED 200" />
+                    <OfferCard key={4} href="#" badge="Accessories Zone" heading="Stars From" offer="AED 50" />
                 </section>
 
                 {/* Women Collection Section */}
