@@ -27,11 +27,15 @@ const ListItem = (props) => {
     const { href, classes } = props;
     const { asPath } = router;
 
-    if (props.comingSoon) return <button onClick={() => {useUser.setState({ CSModal: true }); scrollTo(0, 0)}} className={classes || "group flex flex-col"}>
+    if (props.comingSoon) return <button onClick={() => { useUser.setState({ CSModal: true }); scrollTo(0, 0) }} className={classes || "group flex flex-col"}>
         {props.children}
         <span className={`${asPath.includes(href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-3 justify-self-start bg-gold-land transition-all duration-1000`}></span>
     </button>
-    else return <Link {...props} className={classes || "group flex flex-col"}>
+    else if (href === "/") return <Link {...props} onClick={() => { useUser.setState({ CSModal: false }); scrollTo(0, 0) }} className={classes || "group flex flex-col"}>
+        {props.children}
+        <span className={`${asPath === "/" ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-3 justify-self-start bg-gold-land transition-all duration-1000`}></span>
+    </Link>
+    else return <Link {...props} onClick={() => { useUser.setState({ CSModal: false }); scrollTo(0, 0) }} className={classes || "group flex flex-col"}>
         {props.children}
         <span className={`${asPath.includes(href) ? 'w-full' : 'w-0'} group-hover:w-full h-[3px] mt-3 justify-self-start bg-gold-land transition-all duration-1000`}></span>
     </Link>

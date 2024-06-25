@@ -214,15 +214,15 @@ export default function User({ loading, profileNull, children }) {
                     </Link>
                 </div></> :
                 <>
-                    <h2 className="mt-5 font_urbanist_bold text-base">Explore</h2>
+                    <h2 className="mt-5 font_urbanist_bold text-base">{langObj.explore}</h2>
                     <div className="py-5 grid grid-cols-4 place-content-center border-b border-gray-50">
                         <Link href="/contact" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <HelpCenterIcon />
                             {langObj.services.item3}
                         </Link>
-                        <Link href="/products/category/wishlist" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
+                        <Link href="/auth/login" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <HeartShopListIcon />
-                            {langObj.menu.item6}
+                            {langObj.dashboardMenu.item4}
                         </Link>
                         <Link href="/stories" className="h-11 flex flex-col justify-between items-center font_urbanist text-xs">
                             <CameraIcon />
@@ -306,7 +306,7 @@ export default function User({ loading, profileNull, children }) {
                 <Option icon={<OrderPackageIcon />} href='/user/orders/processing'>{langObj.menu.item5}</Option>
                 <Option icon={<HeartShopListIcon />} href='/user/shopping-lists'>{langObj.menu.item6}</Option>
                 <Option icon={<AddressIcon />} href='/user/address'>{langObj.menu.item7}</Option>
-                <Option icon={<PackageBagIcon />} href='/user/orders/single-use-package-fees'>{langObj.menu.item8}</Option>
+                <Option icon={<PackageBagIcon />} href='/user/packaging'>{langObj.menu.item8}</Option>
                 <button onClick={() => setLogout(!logout)} className="w-full py-5 flex justify-between items-center px-4 bg-white transition-all overflow-hidden">
                     <span className="opacity-70 focus:opacity-100 flex items-center gap-x-3">
                         <LogoutIcon />

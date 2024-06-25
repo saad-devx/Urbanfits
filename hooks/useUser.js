@@ -20,6 +20,7 @@ const useUser = create(persist((set, get) => ({
     geo_selected_by_user: false,
     address: null,
     CSModal: false,
+    packageType: "with_packing",
 
     isLoggedIn: () => {
         const { "is_logged_in": isLoggedIn } = cookie.parse(document.cookie);
@@ -335,7 +336,8 @@ const useUser = create(persist((set, get) => ({
         geo_selected_by_user: state.geo_selected_by_user,
         country: state.country,
         wishList: state.wishList,
-        recentItems: state.recentItems
+        recentItems: state.recentItems,
+        packageType: state.packageType
     })
 }))
 export default useUser

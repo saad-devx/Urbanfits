@@ -133,6 +133,11 @@ export const paymentOptions = {
     }
 }
 
+export const packageTypes = {
+    with_packing: 20,
+    without_packing: 0
+}
+
 export const orderStatuses = {
     'REQUESTED': { group: "processing", bg: "#64748b", text: "#ffff" },
     'ASSIGNED': { group: "processing", bg: "#64748b", text: "#ffff" },

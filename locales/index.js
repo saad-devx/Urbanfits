@@ -428,6 +428,7 @@ export const myAccount = {
         ufPoints: "UF Points",
         register: "Register",
         signIn: "Sign In",
+        explore: "Explore",
         accountMenu: {
             item1: "My Profile",
             item2: "Wishlist",
@@ -466,6 +467,7 @@ export const myAccount = {
         welcome: "مرحبًا",
         welcomeMsg: "احفظ معلوماتك وتفاصيل عنوانك هنا لعملية تسليم سريعة وسهلة في المستقبل.",
         mblWelcomeMsg: "مرحبًا بك في Urban Fits",
+        explore: "استكشف",
         menu: {
             item1: "حسابي",
             item2: "محفظتي يوإف",
@@ -994,7 +996,18 @@ export const checkoutPage = {
         shipping: "Shipping Fee",
         total: "Total",
         applyUfPoints: "Apply UF-Points",
-        ufBalance: "Your UF Balance"
+        ufBalance: "Your UF Balance",
+        packaging: {
+            heading: "How would you like your order to be packed?",
+            method1: {
+                heading: "Packed without bags or boxes (Free).",
+                msg: "Go packing free and receive your items individually."
+            },
+            method2: {
+                heading: "Packed in paper bags and boxes (additional charge).",
+                msg: "Items are packed in environment-friendly paper bags / boxes. A small fee will be estimated at checkout."
+            }
+        }
     },
     ar: {
         back: "العودة",
@@ -1032,7 +1045,18 @@ export const checkoutPage = {
         shipping: "رسوم الشحن",
         total: "المجموع",
         applyUfPoints: "تطبيق نقاط يو إف",
-        ufBalance: "رصيد نقاط يو إف الخاص بك"
+        ufBalance: "رصيد نقاط يو إف الخاص بك",
+        packaging: {
+            heading: "كيف تود أن يتم تغليف طلبك؟",
+            method1: {
+                heading: "معبأة بدون أكياس أو صناديق (مجاني).",
+                msg: "اذهب بدون تغليف واستلم أغراضك بشكل فردي."
+            },
+            method2: {
+                heading: "معبأة في أكياس ورقية وصناديق (رسوم إضافية).",
+                msg: "يتم تعبئة العناصر في أكياس / صناديق ورقية صديقة للبيئة. سيتم تقدير رسوم صغيرة عند الدفع."
+            }
+        }
     }
 }
 

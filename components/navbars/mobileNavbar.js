@@ -16,7 +16,7 @@ const MobileListItem = (props) => {
         </button>
         <div className={`${open ? 'max-h-[50vh]' : 'max-h-0'} w-full text-sm overflow-y-hidden transition-all duration-500`}>
             {props.subLinks.map((link, i) => {
-                if (link.comingSoon) return <div key={i} onClick={() => useUser.setState({ CSModal: true })} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
+                if (link.comingSoon) return <div key={i} onClick={() => { useUser.setState({ CSModal: true }); props.toggleMenu() }} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
                     {link.name}<i className="fa-solid fa-chevron-right text-xs text-gray-300" />
                 </div>
                 else return <Link key={i} href={link.href} onClick={props.toggleMenu} className='w-full pb-4 pl-8 font_urbanist text-black flex justify-between items-center'>
