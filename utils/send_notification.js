@@ -22,7 +22,7 @@ export const sendNotification = async (user_id, params, options = {}) => {
                 }
             }
         },
-        { upsert: true, new: true }
+        { upsert: true, new: true, lean: true }
     );
     if (notify) pusherServer.trigger(`uf-user_${user_id}`, "new-notification", {
         notify: !notifySilently,
