@@ -7,7 +7,7 @@ import StandardApi from "@/middlewares/standard_api";
 const GetProductByCategory = async (req, res) => StandardApi(req, res, { verify_user: false }, async () => {
     const { id, min_price, max_price, limit = 30 } = req.query;
 
-    if (!id || !mongoose.Types.ObjectId.isValid(id))
+    if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({
             success: false,
             msg: 'A valid category id is required. Query parameters: id',

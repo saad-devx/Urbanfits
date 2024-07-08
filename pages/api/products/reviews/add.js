@@ -8,22 +8,24 @@ const AddReview = async (req, res) => StandardApi(req, res, { method: "POST" }, 
     const { product_id, rating, review, images } = req.body;
     const user_id = req.user._id;
 
+    req.body.rating = Math.ceil(rating);
     if (!isValidObjectId(product_id) || !rating) return res.status(400).json({
         success: false,
         msg: "Invalid arguments. product_id, user_id and rating are required."
     })
-    if (rating < 1 || rating > 5) return res.status(400).json({
+    if (typeof rating !== "number" || rating < 1 || rating > 5) return res.status(400).json({
         success: false,
-        msg: "Rating must be a non decimal integer between 1 and 5"
+        msg: "Rating must be a non decimal number between 1 and 5"
     })
     if (review && (typeof review !== "string" || review.length > 500)) return res.status(400).json({
         success: false,
         msg: "`reviews` must be a valid string containing maximum of 500 characters."
     })
-    if (images?.length && images.find(img => typeof img !== "string")) return res.status(400).json({
+    if (images?.length && (images.find(img => typeof img !== "string") || images.length > 5)) return res.status(400).json({
         success: false,
-        msg: "`images` must be an array containing of only string URLs."
+        msg: "`images` must be an array containing of only string URLs. Maximum 5 images allowed."
     })
+
     await ConnectDB();
 
     const newReview = await Reviews.findOneAndUpdate({ user_id }, req.body, { upsert: true, new: true, lean: true });
