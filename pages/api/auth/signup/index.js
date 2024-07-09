@@ -31,13 +31,13 @@ const Signup = async (req, res) => StandardApi(req, res, { method: "POST", verif
         })
         const template = verifyEmail(otp)
         // sendAPIEmail(req.body.email, "Verify your email for registration on Urban Fits", template)
+        await sendEmail({ to: req.body.email, subject: "Verify your email for registration on Urban Fits" }, template)
         res.status(200).json({
             success: true,
             otp_id: dbOtp._id,
             msg: `Verification Email sent to ${email}`,
             redirect_url: `/auth/signup/verify-otp?otp_id=${dbOtp._id}`
         })
-        await sendEmail({ to: req.body.email, subject: "Verify your email for registration on Urban Fits" }, template)
     }
 })
 export default Signup
