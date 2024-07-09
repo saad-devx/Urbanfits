@@ -67,6 +67,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ["male", "female", "other"]
     },
+    birth_date: { type: Date },
     country: String,
     is_active: {
         type: Boolean,

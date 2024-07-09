@@ -26,6 +26,11 @@ export const get12hFormatTime = (timestamp) => {
     return `${hour % 12 || 12} ${ampm}`;
 }
 
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
 export const generateRandIntWithProbabilities = (numbers, probabilities) => {
     if (numbers.length !== probabilities.length) throw new Error("Arrays 'numbers' and 'probabilities' must have the same length.");
     // Calculate the total probability sum

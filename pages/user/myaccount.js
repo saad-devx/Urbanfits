@@ -12,6 +12,7 @@ import useWallet from '@/hooks/useWallet'
 import Button from '../../components/buttons/simple_btn';
 import countryCodes from '@/static data/countryCodes';
 import { accountTab as accountLang } from '@/locales';
+import { formatDate } from '@/utils/cyphers';
 import dynamic from 'next/dynamic';
 const GenderSelect = dynamic(() => import('@/components/modals/mobile/genderSelect'));
 const UserInfoModal = dynamic(() => import('@/components/modals/mobile/userInfo'));
@@ -74,13 +75,14 @@ export default function Personalinfo() {
         firstname: Yup.string().min(2).required("Please enter your First name"),
         lastname: Yup.string().min(2).required("Please enter your Last name"),
         gender: Yup.string().required('Gender is required field'),
+        birth_date: Yup.date().required('Date of Birth is required'),
         phone_prefix: Yup.string().required('Phone prefix is required to save'),
         phone_number: Yup.string().min(6, 'Phone number can be a minimum of 6 digits').max(14, 'Phone number can be a maximum of 14 digits').required('Phone number is required to save')
     })
     const { values, errors, touched, handleBlur, handleChange, handleReset, handleSubmit, setValues } = useFormik({
-        initialValues: { title: 'Title', firstname: '', lastname: '', gender: '', phone_prefix: '+971', phone_number: '' },
+        initialValues: { title: 'Title', firstname: '', lastname: '', gender: '', phone_prefix: '+971', phone_number: '', birth_date: '' },
         validationSchema: validatedSchema,
-        onSubmit: values => updateUser(values)
+        onSubmit: values => updateUser({ ...values, birth_date: new Date(values.birth_date) })
     })
 
     const newsletterSubToggle = async (e) => {
@@ -106,10 +108,10 @@ export default function Personalinfo() {
     useEffect(() => {
         if (user) {
             setValues({
-                title: user.title || '',
                 firstname: user.firstname || '',
                 lastname: user.lastname || '',
                 gender: user.gender || '',
+                birth_date: user.birth_date || '',
                 phone_prefix: user.phone_prefix || '',
                 phone_number: user.phone_number || ''
             })
@@ -179,24 +181,24 @@ export default function Personalinfo() {
             <form className="mt-10 font_urbanist gap-y-5" onReset={handleReset} onSubmit={handleSubmit} >
                 <h1 className='text-sm lg:text-base font_urbanist_bold'>{langObj.personalInfo}</h1>
                 <div className="flex flex-col md:flex-row md:items-end justify-between w-full text-sm ">
-                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 my-6">
+                    {/* <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 my-6">
                         {touched.title && errors.title ? <Tooltip classes="form-error" content={errors.title} /> : null}
                         <select value={values.title} name='title' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
                             <option >Title</option>
                             <option id="Mr" value="Mr.">Mr</option>
                             <option id="Mrs" value="Mrs.">Ms</option>
                         </select>
-                    </div>
+                    </div> */}
                     <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-6">
                         {touched.firstname && errors.firstname ? <Tooltip classes="form-error" content={errors.firstname} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" type="text" name="firstname" id="firstname" value={values.firstname} onChange={handleChange} onBlur={handleBlur} placeholder="First Name" />
                     </div>
-                </div>
-                <div className="flex flex-col md:flex-row justify-between w-full text-sm">
                     <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-6">
                         {touched.lastname && errors.lastname ? <Tooltip classes="form-error" content={errors.lastname} /> : null}
                         <input className="w-full bg-transparent outline-none border-none" type="lastname" name="lastname" id="lastname" value={values.lastname} onChange={handleChange} onBlur={handleBlur} placeholder="Last Name" />
                     </div>
+                </div>
+                <div className="flex flex-col md:flex-row justify-between w-full text-sm">
                     <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-6">
                         {touched.gender && errors.gender ? <Tooltip classes="form-error" content={errors.gender} /> : null}
                         <select value={values.gender} name='gender' onBlur={handleBlur} className="w-full border-none outline-none bg-transparent border-b-gray-800" onChange={handleChange}>
@@ -205,6 +207,10 @@ export default function Personalinfo() {
                             <option value="female">{langObj.genderMenu.item2}</option>
                             <option value="other">{langObj.genderMenu.item3}</option>
                         </select>
+                    </div>
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-6">
+                        {touched.phone_number && errors.birth_date ? <Tooltip classes="form-error" content={errors.birth_date} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" type="date" name="birth_date" id="birth_date" size="15" maxLength={15} value={formatDate(values.birth_date)} onBlur={handleBlur} onChange={handleChange} placeholder="Date of Birth" />
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between w-full text-sm">
@@ -222,6 +228,12 @@ export default function Personalinfo() {
                         <input className="w-full bg-transparent outline-none border-none" type="tel" name="phone_number" id="phone_number" size="15" maxLength={15} value={values.phone_number} onBlur={handleBlur} onChange={handleChange} placeholder="Phone Number" />
                     </div>
                 </div>
+                {/* <div className="flex flex-col md:flex-row justify-between w-full text-sm">
+                    <div className="relative w-full md:w-2/5 data_field flex items-center border-b border-b-gray-200 hover:border-pink-300 transition py-2 mb-6">
+                        {touched.phone_number && errors.birth_date ? <Tooltip classes="form-error" content={errors.birth_date} /> : null}
+                        <input className="w-full bg-transparent outline-none border-none" type="date" name="birth_date" id="birth_date" size="15" maxLength={15} value={values.birth_date} onBlur={handleBlur} onChange={handleChange} placeholder="Date of Birth" />
+                    </div>
+                </div> */}
                 <div className="w-full text-sm">
                     <h1 className="text-sm lg:text-base font_urbanist_bold mt-5">{langObj.newsletterSub}</h1>
                     <div className="flex items-center w-full md:w-3/4 my-7 gap-x-16">
