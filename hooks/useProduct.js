@@ -43,7 +43,7 @@ const useProduct = create((set, get) => ({
     getSimilarProducts: async (product_id, callback) => {
         set(() => ({ productLoading: true }))
         try {
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get-relative-products?product_id=${product_id}`)
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/get/relative-products?product_id=${product_id}`)
             set(() => ({ productLoading: false }))
             callback(data.relative_products)
             return data.relative_products
