@@ -188,4 +188,101 @@ export const giftCardCovers = {
         "/giftcard-covers/christmas4.webp"
     ]
 }
-export const adminRoles = ['administrator', 'editor', 'author']
+export const adminRoles = ['administrator', 'editor', 'author'];
+
+export const membershipData = {
+    level1: {
+        title: {
+            en: "Level 1",
+            ar: "مستوى 1"
+        },
+        benefits: [
+            {
+                name: "new_member_deals",
+                title: {
+                    en: "New Member Exclusive Deals",
+                    ar: "عروض حصرية للأعضاء الجدد"
+                }
+            },
+            {
+                name: "monthly_coupons",
+                title: {
+                    en: "Monthly Coupons",
+                    ar: "كوبونات شهرية"
+                }
+            }
+        ],
+        required_orders: 0
+    },
+    level2: {
+        title: {
+            en: "Level 2",
+            ar: "مستوى 2"
+        },
+        benefits: [
+            {
+                name: "birthday_gifts",
+                title: {
+                    en: "Birthday Gifts",
+                    ar: "هدايا عيد الميلاد"
+                }
+            }
+        ],
+        required_orders: 2
+    },
+    level3: {
+        title: {
+            en: "Level 3",
+            ar: "مستوى 3"
+        },
+        benefits: [
+            {
+                name: "vip_customer_service",
+                title: {
+                    en: "VIP Customer Service",
+                    ar: "خدمة العملاء لكبار الشخصيات"
+                }
+            }
+        ],
+        required_orders: 4
+    },
+    level4: {
+        title: {
+            en: "Level 4",
+            ar: "مستوى 4"
+        },
+        benefits: [
+            {
+                name: "free_shipping",
+                title: {
+                    en: "Free Shipping",
+                    ar: "شحن مجاني"
+                }
+            }
+        ],
+        required_orders: 6
+    },
+    level5: {
+        title: {
+            en: "Level 5",
+            ar: "مستوى 5"
+        },
+        benefits: [
+            {
+                name: "member_exc_price",
+                title: {
+                    en: "Member Exclusive Price",
+                    ar: "سعر حصري للأعضاء"
+                }
+            },
+            {
+                name: "upgrade_gift",
+                title: {
+                    en: "Upgrade Gift",
+                    ar: "هدية الترقية"
+                }
+            }
+        ],
+        required_orders: 8
+    }
+}
