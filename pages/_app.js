@@ -60,17 +60,8 @@ function App({ Component, pageProps: { ...pageProps } }) {
         <Newsletter />
         <CartProvider>
             <Navbar />
-            {CSModal ? <section className="w-full h-[80vh] flex justify-center items-center">
-                <div className="flex flex-col items-center">
-                    <h2 className="mb-4 lg:mb-6 text-2xl lg:text-3xl xl:text-4xl font-semibold">Coming Soon</h2>
-                    <p className='text-sm'>In September, 2024. Stay Tuned!</p>
-                    <div className="flex items-center gap-x-2 lg:gap-x-4">
-                        {!isLoggedIn && <Link href="/auth/signup" onClick={() => useUser.setState({ CSModal: false })} className="mt-4 px-6 py-1 rounded-2xl text-sm lg:text-base bg-gray-100- shadow-lg border border-pinky text-pinky hover:bg-pinky hover:text-white transition-all">Sign Up</Link>}
-                        {/* <button onClick={() => useUser.setState({ CSModal: false })} className="mt-4 px-4 py-1 rounded-2xl text-sm lg:text-base bg-gray-200">Return</button> */}
-                    </div>
-                </div>
-            </section> : <Component {...pageProps} />}
-            <Footer openCSModal={() => { useUser.setState({ CSModal: true }); scrollTo(0, 0) }} />
+            <Component {...pageProps} />
+            <Footer />
         </CartProvider>
     </main>
 }

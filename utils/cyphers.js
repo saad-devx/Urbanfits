@@ -3,7 +3,7 @@ import ConnectDB from "./connect_db";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
-import { jwtExpiries, isProdEnv } from "@/uf.config";
+import { jwtExpiries, isProdEnv, topLevelDomain } from "@/uf.config";
 
 export const generateRandomInt = (from, to) => Math.floor(Math.random() * (to - from + 1)) + from;
 export const HashValue = (value) => CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);
@@ -81,7 +81,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAfter = jwtExpiri
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain: isProdEnv ? topLevelDomain : "localhost",
         path: "/",
         secure: isProdEnv,
         maxAge: expiryDate
@@ -90,7 +90,7 @@ export const SetSessionCookie = (req, res, sessionData, expiresAfter = jwtExpiri
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         priority: "high",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain: isProdEnv ? topLevelDomain : "localhost",
         path: "/",
         secure: isProdEnv,
         maxAge: expiryDate
@@ -103,7 +103,7 @@ export const RemoveSessionCookie = (res) => {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         path: "/",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain: isProdEnv ? topLevelDomain : "localhost",
         secure: isProdEnv,
         maxAge: 0
     })
@@ -111,7 +111,7 @@ export const RemoveSessionCookie = (res) => {
         httpOnly: false,
         sameSite: isProdEnv ? "none" : "lax",
         path: "/",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain: isProdEnv ? topLevelDomain : "localhost",
         secure: isProdEnv,
         maxAge: 0
     })
@@ -119,7 +119,7 @@ export const RemoveSessionCookie = (res) => {
         httpOnly: true,
         sameSite: isProdEnv ? "none" : "lax",
         path: "/",
-        domain: isProdEnv ? ".urbanfits.ae" : "localhost",
+        domain: isProdEnv ? topLevelDomain : "localhost",
         secure: isProdEnv,
         maxAge: 0
     })

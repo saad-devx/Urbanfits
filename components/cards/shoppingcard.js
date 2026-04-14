@@ -28,14 +28,14 @@ export default function Shoppingcard({ product }, props) {
 
     const dictionary = {
         en: {
-            // addToCart: "Add to cart",
-            addToCart: "Coming soon",
+            addToCart: "Add to cart",
+            // addToCart: "Coming soon",
             added: "Added",
             earn: "Earn"
         },
         ar: {
-            // addToCart: "أضف إلى السلة",
-            addToCart: "قريباً",
+            addToCart: "أضف إلى السلة",
+            // addToCart: "قريباً",
             added: "تمت الإضافة",
             earn: "اكتسب"
         }
@@ -125,7 +125,7 @@ export default function Shoppingcard({ product }, props) {
                                 : <span className='lg:group-hover:-translate-y-full text-[#FF4A60] font_urbanist_bold transition-all duration-300'>{formatPrice(product.price)}</span>}
                             <div className="w-full hidden lg:flex">
                                 {inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="group-hover:-translate-y-full text-pinky transition-all duration-300 cursor-default">{dictionary.added} <i className="fa-solid fa-check" /></span> : <button
-                                    //  onClick={addToCart}
+                                    onClick={addToCart}
                                     className='group-hover:-translate-y-full flex flex-col font_urbanist_medium leading-[1] transition-all duration-300'>
                                     + {dictionary.addToCart}
                                 </button>}
@@ -134,7 +134,7 @@ export default function Shoppingcard({ product }, props) {
                         {product.uf_points ? <span className='text-pinky font_urbanist_medium'>{dictionary.earn} {product.uf_points}pts</span> : null}
                     </div>
                     <div className="w-full lg:hidden">{inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="text-pinky text-left font_urbanist_medium text-10px">{dictionary.added} <i className="fa-solid fa-check" /></span> : <button
-                        //  onClick={addToCart}
+                        onClick={addToCart}
                         className="w-full text-left font_urbanist_medium text-10px">+ {dictionary.addToCart}</button>}</div>
                 </div>
             </div>
@@ -232,7 +232,7 @@ export function SmallShoppingcard({ product }, props) {
                                 : <span className='lg:group-hover:-translate-y-full text-[#FF4A60] font_urbanist_bold transition-all duration-300'>{formatPrice(product.price)}</span>}
                             <div className="w-full hidden lg:flex">
                                 {inCart(`${activeVariant._id}${activeVariant.sizes[0].size}`) ? <span className="group-hover:-translate-y-full text-pinky text-xs transition-all duration-300 cursor-default">Added <i className="fa-solid fa-check" /></span> : <button
-                                    //  onClick={addToCart}
+                                    onClick={addToCart}
                                     className='group-hover:-translate-y-full flex flex-col font_urbanist_medium leading-[1] transition-all duration-300'>
                                     + {dictionary.addToCart}
                                 </button>}

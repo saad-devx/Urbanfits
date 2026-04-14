@@ -1,4 +1,6 @@
-export const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PRODUCTION";
+export const isProdEnv = process.env.NEXT_PUBLIC_DEV_ENV === "PROD";
+
+export const topLevelDomain = '.saad.to';
 
 export const locales = ["en", "ar"];
 

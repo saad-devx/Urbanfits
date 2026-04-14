@@ -51,12 +51,12 @@ const SecondaryNavbar = (props) => {
 
     if (window.matchMedia('(min-width: 760px)').matches) return <nav className="sticky top-0 left-0 right-0 z-40 w-full max-w-[2000px] mx-auto h-[50px] flex justify-between items-end px-7 lg:px-8 xl:px-10 2xl:px-16 font_urbanist text-[15px] bg-white shadow transition-all duration-300">
         <ListItem onClick={closeCart} key={1} href='/'>{langObj.categories.item1}</ListItem>
-        <ListItem onClick={closeCart} key={2} comingSoon href='/products/category/649b292762a7c100cfb7207f?name=men'>{langObj.categories.item2}</ListItem>
-        <ListItem onClick={closeCart} key={3} comingSoon href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>{langObj.categories.item3}</ListItem>
-        <ListItem onClick={closeCart} key={4} comingSoon href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>{langObj.categories.item4}</ListItem>
+        <ListItem onClick={closeCart} key={2} href='/products/category/649b292762a7c100cfb7207f?name=men'>{langObj.categories.item2}</ListItem>
+        <ListItem onClick={closeCart} key={3} href='/products/category/64a59d5816b4c91fa1967b2e?name=women'>{langObj.categories.item3}</ListItem>
+        <ListItem onClick={closeCart} key={4} href='/products/category/64d4dfa643c643cc9c60c672?name=kids'>{langObj.categories.item4}</ListItem>
         <ListItem onClick={closeCart} key={5} href='/stories'>{langObj.categories.item5}</ListItem>
         <ListItem onClick={closeCart} key={7} href='/giftcard'>{langObj.categories.item6}</ListItem>
-        <ListItem onClick={closeCart} key={8} comingSoon href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">{langObj.categories.item7}</ListItem>
+        <ListItem onClick={closeCart} key={8} href='/products/category/64b5391e2c57908f1e94dc27?name=accessories' classes="group hidden xl:flex flex-col">{langObj.categories.item7}</ListItem>
         <ListItem onClick={closeCart} key={10} href='/earn-ufpoints' classes="group hidden lg:flex flex-col">{langObj.categories.item8}</ListItem>
         <ListItem onClick={closeCart} key={11} href='/products/category/wishlist'>{langObj.categories.item9}</ListItem>
         <span className="hidden lg:flex mb-2 flex-col justify-center items-center text-sm">

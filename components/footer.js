@@ -9,7 +9,7 @@ import Image from 'next/image'
 import truck from '../public/truck.svg';
 import { footer as footerLang } from '@/locales';
 
-export default function Footer({ openCSModal }) {
+export default function Footer() {
     const { user } = useUser();
     const { locale } = useLanguage();
     const [modal2, setModal2] = useState(false)
@@ -85,10 +85,10 @@ export default function Footer({ openCSModal }) {
                             <Link href='/stories'>{langObj.exploreMenu.item1}</Link>
                         </li>
                         <li>
-                            <button onClick={openCSModal} href='/collections'>{langObj.exploreMenu.item2}</button>
+                            <button href='/collections'>{langObj.exploreMenu.item2}</button>
                         </li>
                         <li>
-                            <button onClick={openCSModal} href='/sales'>{langObj.exploreMenu.item3}</button>
+                            <button href='/sales'>{langObj.exploreMenu.item3}</button>
                         </li>
                         {user && user.email ?
                             <li>

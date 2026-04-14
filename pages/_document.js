@@ -12,7 +12,7 @@ export default function Document() {
       <Main />
       <NextScript />
       <script src="https://accounts.google.com/gsi/client" async></script>
-      <script src="https://kit.fontawesome.com/4e881d944d.js" crossorigin="anonymous" />
+      <script src="https://kit.fontawesome.com/4e881d944d.js" crossOrigin="anonymous" />
     </body>
   </Html>
 }

@@ -24,7 +24,7 @@ const CreateProduct = async (req, res) => StandardApi(req, res, { method: "POST"
     console.log("the body here", { ...req.body, uf_points })
 
     const lastProduct = await Product.findOne().sort({ _id: -1 }).select("sku_number").lean();
-    const newSkuNumber = +lastProduct.sku_number + 1;
+    const newSkuNumber = +(lastProduct?.sku_number || 1000) + 1;
 
     product = (await Product.create({ ...req.body, sku_number: newSkuNumber, uf_points })).toObject();
     res.status(200).json({
